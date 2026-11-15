@@ -1,0 +1,38 @@
+{
+  "schema": "vi-log2-provider-hosted-root-source-admission-v1",
+  "status": "PASS_HOSTED_SOURCE_ONLY_NO_DISPATCH_AUTHORITY",
+  "controller_source": "4421e216009961d0180136ba806ae78b3c0439a2",
+  "workflow": {
+    "path": ".github/workflows/vi-log2-provider-diagnostic.yml",
+    "sha256": "edb80ca081641c6e55ea9177c863345647647a9ed4c7d8862746911a6e6b418e"
+  },
+  "source_handoff": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/source-handoff-v1.json",
+    "sha256": "062243af3fa56d56eda6e9bcc91fbbc59cb62e6763e887b464c2c7cb9b2518e4"
+  },
+  "source_guard_scope": "27actualcompleteaffectedinerttests per retainedPython, normalconftest/plugins0science, inlinePythoncompiled. Rootverified84proofs/cleanfrozen5additions/direct7dcparent and inspectedwhole327lineworkflow+384linerunner. Notcomplete169 or releasequalification.",
+  "root_review": "Capacity beforefirstcheckout/download; exactsuccessfulproducer/artifact/rootproduct/stager/current16/runtime975/14wheel/offlineverify. CPUAVX512 eligibility before productinstall, actualNumPy1.24 compiled/default-enabledSKX before helper. ReusesonceexistingF1sourcebuiltprepare/32controls. One basechild2NumPyarrays+112exactGLIBC2.29scalar; onefreshchild2arrays disables all actualcompiled+enabledAVX512 targetnamesinclSKX, nonAVX512unchanged. Raw32 snapshots/fullcallerrestore/actualcounts/exit/authority/samehost/bitwords; existingoncepostbatchidentityevenfailure; noVIcalls/timing/retry/hostsearch. Ineligibleterminalzeroprimitives.",
+  "limits": {
+    "numpy_log2_array_calls_max": 4,
+    "scalar_log2_values_max": 128,
+    "scalar_log2_values_expected": 112,
+    "VI_original_calls": 0,
+    "VI_native_calls": 0,
+    "timed_batches": 0,
+    "retries": 0,
+    "feature_children_max": 2,
+    "FP_save_max": 24,
+    "FP_restore_max": 16,
+    "F1_ABI_queries_max": 2,
+    "F1_glibc_queries_max": 2,
+    "dlvsym_queries_max": 1,
+    "dladdr_queries_max": 1
+  },
+  "unmet": [
+    "Exactremotebranch/workflowregistration/actualno-prior-run/producerartifactliveidentity and distinctconditionalUTC GO",
+    "Actualconditionalhost+compiledNumPygates andruntime/helperpreparation",
+    "Actualraw/exits/postidentity and rootruntimeadmission"
+  ],
+  "scope_limit": "No perkerneldispatchtrace, exactold9V45failedvaluecause, VIparity/performance or releasepromotion. LocalAVX2baseline112matchesretained separately.",
+  "next_owner_trigger": "Root registers exactmanualYAML onmain, pushesprivatefrozenref, verifiesactualremote/API and issuesoneconditionalGO; no dependency on pendingintegrationsourcefix."
+}

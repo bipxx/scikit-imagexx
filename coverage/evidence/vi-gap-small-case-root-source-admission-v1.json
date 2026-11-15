@@ -1,0 +1,86 @@
+{
+  "status": "PASS_ROOT_SOURCE_ONLY_SMALL_VI_CASE_DIAGNOSIS_NO_NUMERICAL_CREDIT",
+  "owner": "/root",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "historical_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "source_packet": {
+    "path": "build\\vi-performance-gate-reconciliation-resume-v1\\source-diagnosis-16a5-v2.json",
+    "sha256": "b38cd929e23f0357cfc4352ea72ebb6ac67ee664b0c207a5346a5e267065dccb",
+    "root_verified_metadata_proofs": 8
+  },
+  "root_actual_source_byte_projection": [
+    {
+      "path": "src/variation_of_information.cpp",
+      "canonical_LF_sha256": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "src/bind_variation_of_information.cpp",
+      "canonical_LF_sha256": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "python/skimagexx/_variation_of_information.py",
+      "canonical_LF_sha256": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "python/skimagexx/_contingency_table.py",
+      "canonical_LF_sha256": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "src/label_pair_metrics.cpp",
+      "canonical_LF_sha256": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "include/skimagexx/variation_of_information.hpp",
+      "canonical_LF_sha256": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "benchmarks/label_pair_metrics.py",
+      "canonical_LF_sha256": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+      "DDA_equals_16a5": true
+    },
+    {
+      "path": "benchmarks/variation_of_information_cases_v1.py",
+      "canonical_LF_sha256": "dc773437ab4c79a21f590e746553df848208939ab2fd694e8bb4b244b18c6046",
+      "DDA_equals_16a5": true
+    }
+  ],
+  "findings": {
+    "prospective_factory_shape": [
+      128,
+      128
+    ],
+    "contingency_shape": [
+      8,
+      8
+    ],
+    "positive_cells": 56,
+    "included_samples": 14336,
+    "final_dot_n": 8,
+    "large_16_lane_FMA_or_gt128_tree": "not_executed_by_firstcase; earlierlarge-reductionfixcannotexplainit",
+    "dtype": "fixed plainpathfloat64constructors disfavor dtypeerror, not an actual failed-value observation",
+    "remaining_unproven_boundaries": [
+      "coefficient/CSRsmallreductions",
+      "NumPylog2_vs_scalarstdlog2",
+      "referencedot_vs_scalar8tail"
+    ]
+  },
+  "limits": "Old failed actual dtype/words/inputbytes are missing. Pureinteger prospectivefixture reconstruction is not recovered oldrawdata. CPUcapability flags do not prove selected kernel or cause. No numerical/native/FP/parity/performance/shipping gate passes here.",
+  "execution": {
+    "original_calls": 0,
+    "native_calls": 0,
+    "helper_calls": 0,
+    "scientific_imports": 0,
+    "builds": 0,
+    "timing": 0,
+    "archives_rehashed": 0,
+    "retired_source_copies_recreated": 0
+  },
+  "next_owner_trigger": "A prepares minimal PRIVATE current16onepair witness on actuallocal3.11.14, rootsource/runtime/GO before execution; C fixes genuinecontroller/sourcebinding on3.11.17; B integrates qualifiedproduction/support. Oldcausal/VI4/finalshippinggatesremainopen.",
+  "waste_review": "Reused retained source and8smallmetadata proofs; directly verified8canonicalsourcebyte identities without oldcheckouts or archives. Rulesout an unverifiedlarge-reductionexplanation; no extra scientificruns."
+}

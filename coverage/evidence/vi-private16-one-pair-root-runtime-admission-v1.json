@@ -1,0 +1,79 @@
+{
+  "status": "PASS_ROOT_PRIVATE_LOCAL_CURRENT16_ONE_PAIR_ONLY",
+  "owner": "/root",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "handoff": {
+    "path": "build\\vi-value-diagnostic-workflow-v2\\gap-closure-v1\\private16-runtime-handoff-v1.json",
+    "sha256": "a5507f708a1d6046b68fd989c503b2ca5ea14ae8864b4a7c59e9ae2b85fe4d94",
+    "proof_hashes_verified": 11
+  },
+  "actual_terminal": {
+    "path": "build\\vi-value-diagnostic-workflow-v2\\gap-closure-v1\\root-private16-execution-terminal-v1.json",
+    "sha256": "3418715d2ed9df297aa417493183acb8c665d1ca01a196649a3a0f70eb4fb87e",
+    "PID": 45900,
+    "exit_code": 0
+  },
+  "raw_values": {
+    "path": "build\\vi-value-diagnostic-workflow-v2\\gap-closure-v1\\private16-one-pair-values-v1.json",
+    "sha256": "758cbc707931c5ec908a857a156151a36196bd8849fba455b053190bf5d6911e",
+    "dtype": "float64",
+    "shape": [
+      2
+    ],
+    "expected_equals_actual_bytes": "9a413c87e4cb0740cda826ad66420640",
+    "payload_sha256": "a170e50e512c81b086eacc71be5f7a6d33ac1b08830c4448804c9a4d59f8164f"
+  },
+  "actual_result": {
+    "original_topcalls": 1,
+    "native_topcalls": 1,
+    "inner_native_returns": 11,
+    "required_ownership_returns": {
+      "get_num_threads": 2,
+      "label_pair_check_storage": 7,
+      "label_pair_counts_preweighted": 1,
+      "variation_of_information_csr": 1
+    },
+    "accepted": [
+      true
+    ],
+    "counts_suffix_accepted": [
+      true
+    ],
+    "FP_saves": 11,
+    "full32_restores": 5,
+    "target_before_and_after": {
+      "control": 895,
+      "status": 32,
+      "mxcsr": 8098
+    },
+    "target_FP_limit": "Observed incoming sticky state; not clean-flag/all-mode coverage",
+    "caller32_exact": true,
+    "outer32_exact_after_writer_actualexit": true,
+    "input_payload_layout_policy_preserved": true,
+    "reference_native_CSR_encoded_records_equal": true,
+    "warnings": 0,
+    "secondary_errors": 0,
+    "sampler": 0,
+    "timing": 0,
+    "retries": 0
+  },
+  "coefficient_witness": {
+    "path": "build\\vi-value-diagnostic-workflow-v2\\gap-closure-v1\\private16-log2-coefficient-inputs-v1.json",
+    "sha256": "144808de2c3dfb7c49eec0abcbed59a9783eeab20dfbfd359c0057a28e151bd6",
+    "vectors": 2,
+    "words_each": 56,
+    "total_words": 112,
+    "bytes": 896,
+    "actual_raw_payload_lineage": "Root matched all112integerword bits to alreadyobserved original_xlogx inputdata; allpositive normalfinite<1, no floatconversion/newscientificcall",
+    "concatenated_payload_sha256": "31729e0dcb882ce246ddaf996a6733cf7d00006b2dfc4509c6d0d6af4384d78e"
+  },
+  "scope": "PRIVATE localPy3.11.14/NumPy1.24.4/SciPy1.15.3/skimage0.26.0/Intel12700KAVX2, authenticated16core/frontend. Not genuine975/Py3.11.17, no AVX512/old9V45causal pass, no VI4performance/shippingcredit. No extraobserver numericalcall or repeatedtarget.",
+  "gates": {
+    "one_private_values_FP_CSR_andfullcaller_restoration": "passed",
+    "old9V45cause": "unresolved",
+    "AVX512_feature_boundary": "pending_separate_source_and_GO_on_availablehost",
+    "genuine_VI4_and281_shipping": "held"
+  },
+  "next_owner_trigger": "Root dispatches current16genuinevaluepair only after capacitysource successor/actualbinding gates; any featurecontrolled provider experiment separateexplicitbudget, no hostsearch/automaticretry.",
+  "waste_review": "Existing16product/core/private3.11.14env/helper reused, no builds/archive/env/SDKcopy. Newcurrentpairretainedvalues+112coeffwords inonecall each; no favorable retime or redundant successfulpair."
+}

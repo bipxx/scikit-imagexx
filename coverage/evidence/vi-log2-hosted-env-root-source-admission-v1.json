@@ -1,0 +1,98 @@
+{
+  "schema": "vi-log2-hosted-env-root-source-admission-v1",
+  "status": "PASS_CHANGED_HOSTED_ENVIRONMENT_SOURCE_ONLY_NO_RUNTIME_AUTHORITY",
+  "source": "324c9fc90cda5e1d497fac74ea6c2789a4c81ff5",
+  "parent": "4421e216009961d0180136ba806ae78b3c0439a2",
+  "root_actual_checks": {
+    "proofs_verified": 41,
+    "clean_nativeGit_fourfiledelta": true,
+    "oldbranch_v1context_input_preserved": true,
+    "original27tests_byteprefix_preserved": true,
+    "only_runner_functions_changed": [
+      "check_go",
+      "child"
+    ],
+    "context_science_FP_limits_unchanged": true,
+    "actual_complete_checks": [
+      {
+        "profile": "windows311",
+        "tests": 49,
+        "exit": 0,
+        "science": 0,
+        "terminal_sha256": "5e39d4d2e33ae0a356924831200a89b34e771a51dcbf119d0edb284bea1e7dd7",
+        "XML_sha256": "3cf0ae76e796bba7951db3bc3708c6053fd4e0c6d99653e0e94061c05edbfa53"
+      },
+      {
+        "profile": "windows313",
+        "tests": 49,
+        "exit": 0,
+        "science": 0,
+        "terminal_sha256": "1a3f9ab1c418b3bba62fa1e568640c444e07e153b82f3c7a0b8aee7271ee21a6",
+        "XML_sha256": "592d149c0e9f441dfc8453961c0a7a2e3fbeaf68018fc3a961d35358cbb51ee4"
+      }
+    ]
+  },
+  "root_delta_review": "Hostedfirstauthenticatesruntime975/exactPython, then actualsys.base_prefix==GO==fixedobservedtoolcacheprefix andLD_LIBRARY_PATH==GO==contract==baseprefix/lib. Arbitrary/colon/relative/spoofedprefixes andotherinjections reject; privateblankunchanged. Child onlyaddsloaderrecord, no numericbody/FP/seed/limits/feature/codecs/controlchange. WholeYAMLdeltaonlynewv2runner/contextpins, exactloaderassertions andnewGOfields; existingcapacity/product/F1/identity unchanged.",
+  "regression": "Actualcheck_gobody exercisedwithobservedhostedprefix/path andbadpath/prefix/GO/runtime/version/private negatives usingexplicitinertmetadata standins; not genuine/runtimecredit.",
+  "files": {
+    ".github/workflows/vi-log2-provider-diagnostic.yml": {
+      "sha256": "0d1e4ccf86a552475d6be4fa22add0b5409562c2de510cce11bc126ab8569352",
+      "bytes": 21230
+    },
+    "coverage/contracts/vi-log2-provider-v2.json": {
+      "sha256": "470d6d974503b4c17920a3a6c67c15e3fd035b07334bae518f26b65f2e78e25e",
+      "bytes": 6758
+    },
+    "tests/test_vi_log2_provider_diagnostic.py": {
+      "sha256": "39cf01e20f6c1f7b5832cfac19734d6055174027b2c0fd42e0a01be6c0f3356f",
+      "bytes": 23372
+    },
+    "tools/vi_log2_provider_diagnostic.py": {
+      "sha256": "e2f86c5780c4997f749113110a29f2fd6489f767764851c0fa42a104e6d3d87e",
+      "bytes": 21221
+    }
+  },
+  "handoff": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/hosted-env-successor-v1/source-handoff-v1.json",
+    "sha256": "c2f50f0c0d472ddf7942e97b45e204e036f908a57db96bce4d10f8fcc3af9784"
+  },
+  "proof_index": {
+    "path": "build/vi-value-diagnostic-workflow-v2/log2-provider-v1/hosted-env-successor-v1/source-proof-index-v1.json",
+    "sha256": "5809a395ad9b23d4ae5556d92b20bc2d1776649d2736187e7ea44e189afe847b"
+  },
+  "retained_failure": {
+    "run": 43752511132,
+    "source": "4421e216009961d0180136ba806ae78b3c0439a2",
+    "root_admission_path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\vi-log2-hosted-environment-root-failure-admission-v1.json",
+    "root_admission_sha256": "f2b46d847cef3c3e47b8a6fa9a1caaa96e3e33e71cd6dccca4a11bae2fadd6ef",
+    "actual_result": "Provider environment assertion failed beforechildren; allprovider counts0; postidentity0; old allocation GO consumed. Failure/raw receipts untouched."
+  },
+  "private_reuse": "Old112/112AVX2 resultretainsoriginal4421/3.11.14scope, no numericalreplay; noold9V45causecredit.",
+  "unmet": [
+    "Exactnewremoteprivatebranch/mainYAML+liveproducerartifact/no-prior-newbranch-runs",
+    "FreshconditionalGO forchangedsetupsource; oldauthorityconsumed",
+    "Actualnewhost/primitives/exits/FP/maps/runtimeidentity/rawrootadmission"
+  ],
+  "waste_reuse": {
+    "avoidable": "Original hosted loader-path omission consumed one eligible setup. This successor corrects that concrete boundary; no new failed checks or speculative features.",
+    "actual_cost": "One complete affected49testselector each retainedPython, reported0.75s311/0.87s313; no science or timing work. Reused clean worktree/nativeGit/sharedobjects/environments and prior full failure admission.",
+    "next_plan_correction": "Root may independently admit this source, update its existing plan/ledger/checklist, then choose a fresh bounded conditional allocation. No unchanged retry/automatic host search."
+  },
+  "cleanup": {
+    "schema": "vi-log2-hosted-env-inert-fixture-disposal-v1",
+    "exact_target": "D:\\Scratch\\vi-log2-provider-env-fixture-v1",
+    "logical_bytes": 262990.0,
+    "files": 210,
+    "free_bytes_before": 359691476992,
+    "gate": "All retained Windows source-only guard processes terminated; only fresh fake-provider pytest outputs/caches, no scientific import or dependency root",
+    "previously_blocked_targets_excluded": true,
+    "started_utc": "2026-11-15T19:48:14.6572530Z",
+    "removed": true,
+    "exit_code": 0,
+    "free_bytes_after": 359691902976,
+    "observed_free_delta_bytes": 425984,
+    "physical_scope": "Volume free-space observation, concurrent writes possible; logical size is not an exclusive physical-allocation measurement",
+    "completed_utc": "2026-11-15T19:48:14.8235490Z"
+  },
+  "next_owner_trigger": "RootpublishesexactYAML/receiptsandprivatefrozenref, verifiesactualremote/livebinding andauthorizesONEchanged-sourceconditionalallocation. No unchangedretry/automaticsearch/localVI/timing."
+}

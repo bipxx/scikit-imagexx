@@ -1,0 +1,63 @@
+{
+  "schema": "current281-historical64-root-reuse-admission-v1",
+  "status": "PASS_RELEVANT_UNCHANGED_FAMILY_PERFORMANCE_EVIDENCE_NOT_EXACT16_TIMING",
+  "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "historical_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "root_decision": {
+    "credit": "Keep the actual root-admitted DDA64 as relevant one-worker original-public family-performance evidence for the same unchanged Radon/flood/JOIN/util/rolling implementations and measured domains in qualified16. This is positive evidence availability and preserves every loss; it is not a requirement to rerun unchanged favorable or unfavorable cases.",
+    "basis": "All measured family kernels, binders, wrappers, selected support, benchmark executors/cases/sampler and method contracts in the four pinned maps have identical native-Git blobs. The only changed mapped files are CMakeLists.txt and, for Radon/JOIN, tools/public_qualification.py. Their actual deltas concern find_boundaries strict flags and MARK-wide qualification support, respectively. The13 external wheel pins are unchanged; old public evidence does not become irrelevant merely because the whole product/source-manifest identity changed.",
+    "retain_identity": "Every original report retains sourceDDA, producer42347579925, its own controller/run/runtime/core/host and original timings. Shipping may cite these as historical measurements of unchanged family implementations, subject to root admission of this reuse boundary and final integration projection.",
+    "not_established": "Exact16a5 timing values, equal machine-code layout/performance of the newly linked whole core, a same-host64or80-case table, full API/domain/platform speed superiority, VI4 performance or main delivery are not established. Do not change old literal pins or old report labels.",
+    "next_measurement": "No new measurement is proposed by this packet. Literal source guards would need a genuine new binding if a separately justified affected experiment were authorized; historical evidence reuse does not execute or waive those guards."
+  },
+  "actual_root_checks": {
+    "unique_retained_proofs": 76,
+    "native_git_distinct_mapped_paths": 144,
+    "mapped_blob_identity_checked": true,
+    "changed_scope": [
+      "CMakeLists.txt",
+      "tools/public_qualification.py"
+    ],
+    "actual_full_CMake_qualifier_diff_matched": true,
+    "actual_reader_exit": 0
+  },
+  "totals": {
+    "cases": 64,
+    "samples": 896,
+    "warmup_groups": 128,
+    "wins": 38,
+    "losses": 26,
+    "ties": 0
+  },
+  "runtime_host_boundary": {
+    "qualified16": {
+      "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+      "producer_run": "43706703018",
+      "prepared_source_files": 2988,
+      "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+      "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+      "production_fingerprint": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090"
+    },
+    "external_packages": "All13 nonproject wheel hashes are identical in each retained old lock and qualified16 minimum lock. Project wheel changes b3c217df126039d347a8c55db3f10238d2903c0ca5c16a6d1676b9ce320f2f1d ->4d8d6d80ede560ab8649126e75893a539f4fecdf0710f13865dfa4647f40ffc4. Observed Python3.11.17/GCC13.3.0 and NumPy1.24.4/reference0.26.0 labels agree. Different whole runtime-manifest hashes do not alone establish changed external providers. No new interpreter/binary equivalence or provider execution trace claimed.",
+    "host": "Radon42360529492 and rolling42362296718 ran on AMD EPYC9V45; flood42360529644 and JOIN42362296756 on AMD EPYC9V74. Each paired comparison is same-host, but the64aggregate is not one physical-host measurement. Current16 MARK12 on Intel6975P-C remains separate; no pooling/80-case same-host claim.",
+    "transport": "Historical artifact IDs/digests are retained receipt identities only. No transport availability claim, recreation, download, archive/core rehash or record-seal replay."
+  },
+  "limits": [
+    "Preserve all26historical losses:4flood_fill and22JOIN/util; no favorable retime, normalization or performance superiority claim.",
+    "Earlier373JOIN/rolling attempts failed before timing and remain failed. Later8ed successful source-specific runs do not relabel those predecessors.",
+    "Cohort semantic FP/caller restoration booleans and helper raw32 controls retain their original evidence boundary; no new per-target fullraw32or per-call SIMD/getter trace is manufactured."
+  ],
+  "proofs": {
+    "disposition": {
+      "path": "build/current281-historical64-disposition-v1/disposition-v1.json",
+      "sha256": "65d66e4457bb0a9a7d2c637bfd02c6e1c575600de71419611dadae39638c590c"
+    },
+    "appendix": {
+      "path": "build/current281-historical64-disposition-v1/dependency-and-evidence-v2.json",
+      "sha256": "a8363e85435bc073eeee3fc64e342d562798a66d26bee9bc7b5a08fdb0cf6e8e"
+    }
+  },
+  "final_shipping_condition": "Final production map must still equal qualified16; source barriers/VI4 remain separate pending gates. No alteration of historical literal source guards, raw values/timings or host labels.",
+  "waste_review": "Reused admitted raw/root/source/runtime evidence without retiming, environment copies or archive/core/seal replay. Avoidable reader assumptions and verbose manifest inspection were narrowly corrected; failed reader evidence retained. Scientific cost0; other historical costs unknown. Source and output footprint only, no disposable fixture root or new protected dependency.",
+  "next_owner_trigger": "Root retains VI4 diagnosis/performance and finalsource/delivery. No historical64 timing replay for bookkeeping."
+}

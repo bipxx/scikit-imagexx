@@ -1,0 +1,138 @@
+{
+  "status": "PASS_ROOT_INTEGRATED_281_SOURCE_PROJECTION_ONLY_FULL_BARRIERS_PENDING",
+  "source": {
+    "commit": "ccff849333d421df2889abb9cebe36dd2b4c61ba",
+    "branch": "integrate/current281-main-v1",
+    "worktree": "D:\\Scratch\\scikit-imagexx-active-worktrees\\current281-main-integration-v1",
+    "main_base": "7239bc6d6cc65bd1504498d7e4c23cb9ea540d1e",
+    "qualified": "16a5b50193125199ad26cf5a89acec5babf5290c",
+    "admitted_controller": "2c089a8d8f139f87037362cec101480924f92b2e",
+    "first_private_merge": "9afc835d704510b2b307985d26bc8b3c19f7502e",
+    "clean": true,
+    "main_HEAD_unchanged": true,
+    "pushed": false,
+    "ancestry": "all67 main-only commits retained; qualified16a5 and C2c089a8d are ancestors"
+  },
+  "worker_handoff": {
+    "path": "build\\current281-main-integration-v1\\handoff-v1.json",
+    "sha256": "f8a4470502a1917c37cbb3fcd6fe9ff686c89fbed06ba355d91715f1f291b598",
+    "verified_proof_hashes": 102
+  },
+  "root_actual_source": {
+    "clean": true,
+    "ancestry_main16C2": "passed_nativeGit",
+    "production_files": 544,
+    "entire_production_and_API_tree_equals_qualified16": true,
+    "C12_raw_source_equals_admitted_2c": true,
+    "reserved_policy_tracking_tooling": "committedmainbytespreserved; rootuserWIPseparateunchanged",
+    "queue_test_delta": "OnlyexplicitUTF8read; actualcorrectednodepassesbothPythons"
+  },
+  "validation_scope": "Focusedpartial91/UTF8failed-nodecorrection/routes andC128/MARK99 matching-scope reuse inspected; no union claimedascomplete169. FullfinalworkflowcommandbothPythonsstillrequired.",
+  "root_reader_correction": "Readerusedwronggenerator-testfilename/quote-normalization; stoppedbeforeadmission, inspected actualretainedpreservedpathlistand1linediff, correctedmetadataonly. No source/science changes orreplay.",
+  "failures_preserved": [
+    {
+      "actual_exit": 1,
+      "terminal": "merge-terminal.json",
+      "conflicts": 4,
+      "raw_diff": "conflicts-before-resolution.diff",
+      "resolution": "workflow-resolution-v1.json",
+      "meaning": "independent add/add templates; choose coherent qualified selectors/assertions matching incoming probes/contracts; no dispatch"
+    },
+    {
+      "actual_exit": 1,
+      "terminal": "controller-merge-terminal.json",
+      "conflicts": 2,
+      "raw_diff": "controller-conflicts-before-resolution.diff",
+      "resolution": "controller-resolution-v1.json",
+      "meaning": "VI old-v3/v1 templates replaced by exact admitted C v4/v3 controller/host gate/postbatch bytes; old contexts retained"
+    }
+  ],
+  "gates": [
+    {
+      "gate": "isolated projection and coherent support/source conflict resolution",
+      "state": "passed",
+      "owner": "/root/tracking_repair",
+      "evidence": [
+        "source-projection-v1.json",
+        "controller-projection-v2.json",
+        "final-git-terminal.json"
+      ]
+    },
+    {
+      "gate": "affected focused source/metadata and route checks",
+      "state": "passed_with_reused_matching_scope",
+      "owner": "/root/tracking_repair",
+      "evidence": "actual_validation above; failures and narrow correction retained"
+    },
+    {
+      "gate": "root independent candidate admission",
+      "state": "pending",
+      "owner": "/root",
+      "evidence": "this immutable handoff and source commits"
+    },
+    {
+      "gate": "complete current workflow169 source barrier on both retained Pythons",
+      "state": "pending",
+      "owner": "/root",
+      "trigger": "final VI/source disposition stable; exact actual workflow selectors/normal conftest/plugins/no failfast"
+    },
+    {
+      "gate": "current16 genuine VI one-pair diagnostic/runtime/host/F1/clock authority",
+      "state": "pending",
+      "owner": "/root",
+      "trigger": "root exact-source hosted/runtime GO; C source readiness alone has zero runtime authority"
+    },
+    {
+      "gate": "VI4 one-thread public performance",
+      "state": "pending",
+      "owner": "/root",
+      "trigger": "successful bounded actual diagnostic admission then separate timing GO; old9V45 failure cause remains unresolved"
+    },
+    {
+      "gate": "historical64 public-performance dependency reuse/disposition",
+      "state": "pending_root_disposition",
+      "owner": "/root",
+      "evidence": "prior shipping-projection-review-v1.json and retained DDA admissions; API body scope unchanged, literal CMake/qualifier/core/runtime differ",
+      "limit": "retain DDA64/38wins26losses as historical; current MARK/LBP12/3wins9losses scoped separately; no pooled80case one-host claim"
+    },
+    {
+      "gate": "genuine exact-source four-profile evidence",
+      "state": "retained_scoped_pass",
+      "owner": "/root",
+      "evidence": "16a5 all4profiles+3stagers root admission and exact matching production fingerprint",
+      "limit": "source-only/controller projection does not rerun science; any future VI numerical/build closure change invalidates affected evidence and requires root affected gates"
+    },
+    {
+      "gate": "current checklist/plan/ledger and main merge/push/delivery",
+      "state": "pending",
+      "owner": "/root",
+      "trigger": "independent admission, final complete barriers and unresolved shipping gates; root applies state/doc guards and delivers"
+    },
+    {
+      "gate": "fresh small fixture release",
+      "state": "manual_only_blocked_once",
+      "owner": "manual user action",
+      "evidence": "fresh-fixture-retirement-terminal-v1.json",
+      "trigger": "manual removal; no automated retry"
+    }
+  ],
+  "manual_cleanup": {
+    "target": "D:/Scratch/current281-main-integration-v1",
+    "attempts": 1,
+    "status": "MANUAL_ONLY_AUTOMATIC_APPROVAL_REJECTED_BEFORE_SHELL_START",
+    "exact_tool_reason": "exec_command CreateProcess rejected: blocked by policy",
+    "still_exists": true,
+    "retained_files": 40,
+    "retained_logical_bytes": 4513704,
+    "free_after_rejection_bytes": 379675820032,
+    "physical_allocation_bytes": null,
+    "removed_paths": [],
+    "free_space_change_from_removal": 0,
+    "free_space_note": "global free observations include concurrent activity; no physical allocation claim",
+    "no_retry_or_alternate_mechanism": true,
+    "owner": "manual user action",
+    "release_trigger": "manual removal after retained diagnostics; no dependent allocation needs this4.5MB released",
+    "protected_source_environments_and_previously_blocked_paths": "untouched"
+  },
+  "next_owner_trigger": "Root mayadvanceasversionedcandidate bymergingadmitted7dc capacityonly, thenactualcompleteworkflow169bothPythons withnormalconftest/plugins/no-failfast beforemainshipping. VIcause/VI4/history64disposition/mainremote remainpending; no scientificgate waived."
+}
