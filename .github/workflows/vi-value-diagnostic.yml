@@ -74,12 +74,12 @@ jobs:
           from datetime import datetime, timezone
           from pathlib import Path
           assert os.environ['DIAGNOSTIC_AUTHORITY'] == 'ROOT_AUTHORIZED_ONE_VI_VALUE_DIAGNOSTIC', 'UNBOUND: no diagnostic helper/target authority'
-          assert hashlib.sha256(Path('controller/tools/vi_cohort_value_diagnostic.py').read_bytes()).hexdigest() == '6a364503af212c43234815887942b4f7df3042a58c6878981552adad033327fe'
-          assert hashlib.sha256(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v1.json').read_bytes()).hexdigest() == '706dead93e3840d9516db4f5cd225db7ee6577be22f83114ff16643f0b5edd3e'
+          assert hashlib.sha256(Path('controller/tools/vi_cohort_value_diagnostic.py').read_bytes()).hexdigest() == 'be825d35304c323c4ee17c41131a336dd572ced4c90eae2780a52e14112551e2'
+          assert hashlib.sha256(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v3.json').read_bytes()).hexdigest() == 'fff37df1acbc8b683f2ca0e6610942cdafe0166d962f6f0a61d435fbe765abd1'
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
-          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v3.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v4.json').read_bytes())
           assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: root genuine-source binding required'
           assert (run, revision, artifact, digest) == tuple(str(frozen['producer'][key]) for key in ('run','revision','artifact','sha256'))
           created = datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])
@@ -109,13 +109,37 @@ jobs:
           assert not selected['expired'] and 0 < selected['size_in_bytes'] < 512 * 1024**2
           assert selected['workflow_run']['id'] == int(run) and selected['workflow_run']['head_sha'] == revision
           Path('results/selection.json').write_text(json.dumps(selected, indent=2) + '\n')
+          # ROOT_CURRENT_PRODUCT_HOST_GATE_BEGIN
+          host_policy = json.loads(Path('controller/coverage/contracts/vi-cohort-value-diagnostic-v3.json').read_bytes())['host_eligibility_proposal']
+          assert host_policy['purpose'] == 'CURRENT16_GENUINE_PRODUCT_VALUE_WITNESS'
+          cpu_text = Path('/proc/cpuinfo').read_text(encoding='utf-8').split('\n\n', 1)[0]
+          cpu = {key.strip(): value.strip() for key, value in (line.split(':', 1) for line in cpu_text.splitlines() if ':' in line)}
+          observed = {key: cpu.get(field) for key, field in (('vendor','vendor_id'),('model','model name'),('family','cpu family'),('model_id','model'),('stepping','stepping'))}
+          flags = set(cpu.get('flags', '').split())
+          host = os.uname()
+          required = host_policy['required_host']
+          eligible = host.sysname == required['system'] and host.machine == required['machine'] and set(host_policy['required_features']) <= flags
+          host_record = dict(schema='vi-current-product-host-eligibility-v1', eligible=eligible,
+              purpose=host_policy['purpose'],
+              status='ELIGIBLE_CURRENT_PRODUCT_NO_TARGETS_YET' if eligible else 'INELIGIBLE_HOST_ZERO_TARGETS',
+              observed_cpu=observed, observed_flags=sorted(flags), observed_system=host.sysname,
+              observed_machine=host.machine, required_host=required,
+              required_features=host_policy['required_features'], original_calls=0, native_calls=0,
+              sampler_body_calls=0, timed_batches=0, prior_failed_host_causal_credit=False,
+              scope='Current16 genuine-host witness only; before transport/helpers/targets. No old9V45 cause claim, automatic host search or retry; local311.14 is separate.')
+          Path('results/host-eligibility.json').write_text(json.dumps(host_record, indent=2)+'\n', encoding='utf-8')
+          with Path(os.environ['GITHUB_ENV']).open('a', encoding='utf-8') as stream:
+              stream.write('VI_HOST_ELIGIBLE='+('1' if eligible else '0')+'\n')
+          print(json.dumps(host_record))
           PY
       - uses: actions/checkout@v4
+        if: env.VI_HOST_ELIGIBLE == '1'
         with:
           ref: ${{ inputs.producer_revision }}
           path: snapshot
           fetch-depth: 1
       - name: Install the authenticated product offline
+        if: env.VI_HOST_ELIGIBLE == '1'
         shell: bash
         run: |
           set -euo pipefail
@@ -143,7 +167,7 @@ jobs:
           Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
           Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
           assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
-          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v3.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi-measurement-v4.json').read_bytes())
           sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
           assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
           first=frozen['first_cohort']
@@ -183,6 +207,7 @@ jobs:
           "$RUNNER_TEMP/runtime/bin/python" -m pip install --no-index --no-deps --only-binary=:all: --require-hashes --find-links stage/wheels -r stage/runtime-lock.txt 2>&1 | tee results/offline-install.log
           "$RUNNER_TEMP/runtime/bin/python" snapshot/tools/ci_measurement_artifacts.py verify --wheel-dir stage/wheels --artifact stage/runtime.json 2>&1 | tee results/original-identity.log
       - name: Prepare the authenticated small F1 helper once on this measurement host
+        if: env.VI_HOST_ELIGIBLE == '1'
         shell: bash
         run: |
           set -euo pipefail
@@ -203,6 +228,7 @@ jobs:
                   stream.write(key+'='+value+'\n')
           PY
       - name: Run one root-authorized VI value diagnostic and never timing
+        if: env.VI_HOST_ELIGIBLE == '1'
         shell: bash
         run: |
           set -euo pipefail
@@ -215,6 +241,8 @@ jobs:
           workspace=Path(os.environ['GITHUB_WORKSPACE']).resolve()
           controller=workspace/'controller';snapshot=workspace/'snapshot';results=workspace/'results'
           assert os.environ['DIAGNOSTIC_AUTHORITY']=='ROOT_AUTHORIZED_ONE_VI_VALUE_DIAGNOSTIC','UNBOUND diagnostic'
+          host=json.loads((results/'host-eligibility.json').read_bytes())
+          assert host['eligible'] is True, 'INELIGIBLE: zero-target host gate required'
           clock=json.loads((results/'execution-clock.json').read_bytes())
           created=datetime.fromisoformat(clock['created_utc']);deadline=datetime.fromisoformat(clock['deadline_utc'])
           assert created==datetime.fromisoformat(os.environ['EXECUTION_CREATED_UTC'])and deadline==datetime.fromisoformat(os.environ['DEADLINE_UTC'])
@@ -225,7 +253,7 @@ jobs:
           authorities=probe['prepare_cohorts'](controller,snapshot,results,frozen,sys.executable,Path(sysconfig.get_paths()['purelib']).resolve(),clock['deadline_utc'])
           assert set(authorities)=={'vi'}
           wrapper=controller/'tools/vi_cohort_value_diagnostic.py'
-          context_path=controller/'coverage/contracts/vi-cohort-value-diagnostic-v1.json'
+          context_path=controller/'coverage/contracts/vi-cohort-value-diagnostic-v3.json'
           context=json.loads(context_path.read_bytes())
           assert context['first_case']==frozen['first_cohort']['routes']['vi']['first_case']
           assert context['qualified_source']==frozen['producer']['revision']
@@ -249,9 +277,15 @@ jobs:
           with(results/'vi-value-diagnostic.log').open('w')as log:
               done=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT)
           (results/'vi-value-diagnostic-exit.json').write_text(json.dumps(dict(exit=done.returncode))+'\n')
-          # Preserve the original assertion's nonzero exit. A matched cohort also
-          # stops here: no measurement or report-validation stage exists.
-          raise SystemExit(done.returncode)
+          # Run the existing identity verifier once after the batch, including failures.
+          verifier=[sys.executable,str(snapshot/'tools/ci_measurement_artifacts.py'),'verify',
+              '--wheel-dir',str(workspace/'stage/wheels'),'--artifact',str(workspace/'stage/runtime.json')]
+          (results/'vi-postbatch-identity-command.json').write_text(json.dumps(verifier,indent=2)+'\n')
+          with(results/'vi-postbatch-identity.log').open('w')as log:
+              verified=subprocess.run(verifier,stdout=log,stderr=subprocess.STDOUT)
+          (results/'vi-postbatch-identity-exit.json').write_text(json.dumps(dict(exit=verified.returncode))+'\n')
+          # Preserve the diagnostic's primary nonzero exit; identity failure also fails a passing diagnostic.
+          raise SystemExit(done.returncode if done.returncode else verified.returncode)
           PY
       - uses: actions/upload-artifact@v4
         if: always()

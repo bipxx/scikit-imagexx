@@ -6,7 +6,7 @@ import hashlib,importlib,importlib.util,inspect,json,os
 from pathlib import Path
 import runpy,subprocess,sys,traceback
 
-CONTRACT='coverage/contracts/mark-lbp-measurement-v4.json'
+CONTRACT='coverage/contracts/mark-lbp-measurement-v7.json'
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -85,7 +85,7 @@ def read_manifest(controller):
     assert tuple(scope[k]for k in('canonical_cases','canonical_raw_samples','warmup_groups','workers','repeat','target_ms','warmup_min_ms'))==(12,168,24,1,7,100,250)
     assert scope['untimed_topcalls']==dict(original=2,native=2)
     assert scope['single_host_same_installed_runtime']is scope['no_automatic_retry']is scope['retain_all_losses']is True
-    for route_id,name in (('mark','mark-boundaries-benchmark-execution-v5.json'),('lbp','draw-multiblock-lbp-benchmark-execution-v4.json')):
+    for route_id,name in (('mark','mark-boundaries-benchmark-execution-v7.json'),('lbp','draw-multiblock-lbp-benchmark-execution-v7.json')):
         context=json.loads((Path(controller)/'coverage/contracts'/name).read_bytes());route=manifest['first_cohort']['routes'][route_id]
         assert route==context['route']
         assert manifest['families'][context['report_family']]==dict(contract=route['contract'],cases=len(context['cases']),case_ids=[v['id']for v in context['cases']],untimed_calls_per_case=1)
@@ -193,7 +193,7 @@ def main():
     assert Path(sys.executable).resolve()==Path(binding['interpreter']).resolve()
     assert all(os.environ[k]=='1'for k in('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS'))
     assert os.environ['PYTHONDONTWRITEBYTECODE']=='1'and not os.environ.get('SKIMAGEXX_DISABLE_SIMD')
-    folder=Path(binding['output_root'])/args.route;folder.mkdir(parents=True,exist_ok=False)
+    folder=Path(binding['output_root'])/'first-cohort'/args.route;folder.mkdir(parents=True,exist_ok=False)
     output=folder/'never-written.json';oldpath=list(sys.path);sys.path[:0]=[binding['installed_site'],str(root/'benchmarks'),str(root/'tools'),str(root)]
     import numpy as np
     import skimage
@@ -254,18 +254,19 @@ def main():
 
 
 def prepare_cohorts(controller,snapshot,results,manifest,python,site,deadline):
+    assert manifest['deadline_utc']is None and manifest['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
+    assert datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
     controller=Path(controller);snapshot=Path(snapshot);results=Path(results);first=manifest['first_cohort'];routes=first['routes']
     assert manifest['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON'and first['status']=='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS'
     assert set(routes)=={'mark','lbp'}and manifest['execution_scope']['untimed_topcalls']==dict(original=2,native=2)
     assert first['source_revision']==manifest['producer']['revision']==manifest['prepared_source']['revision']
-    assert deadline==manifest['deadline_utc']and datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
     probe=controller/first['probe_path'];assert sha(probe)==first['probe_sha256']
     admission=controller/first['root_admission_path'];stager=controller/first['root_stager_path'];runtime=controller.parent/'stage/runtime.json'
     assert sha(admission)==first['root_admission_sha256']and sha(stager)==first['root_stager_sha256']and sha(runtime)==manifest['runtime_sha256']
     actual=json.loads(runtime.read_bytes());SDK=actual['runtime']['sdk_sha256'];assert len(SDK)==manifest['SDK_members']and type(manifest['SDK_members'])is int and manifest['SDK_members']>0
     core=Path(site)/first['core_member'];assert core.resolve().is_relative_to(Path(site).resolve())and sha(core)==manifest['core_sha256']
     helper=results/'helper-binding.json';assert helper.is_file()
-    common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],prepared_source=manifest['prepared_source'],producer=manifest['producer'],interpreter=str(python),installed_site=str(site),numpy=actual['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],SDK_members=SDK,runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],helper_binding_path=str(helper.resolve()),helper_binding_sha256=sha(helper),output_root=str((results/'first-cohort').resolve()))
+    common=dict(status='ROOT_AUTHORIZED_GENUINE_FIRST_COHORTS',product_kind='GENUINE_INSTALLED_WHOLE_PRODUCT',source_root=str(snapshot.resolve()),source_revision=first['source_revision'],git_argv=['git','-C',str(snapshot.resolve())],prepared_source=manifest['prepared_source'],producer=manifest['producer'],interpreter=str(python),installed_site=str(site),numpy=actual['runtime']['versions']['numpy'],core_path=str(core.resolve()),core_sha256=manifest['core_sha256'],SDK_members=SDK,runtime_path=str(runtime.resolve()),runtime_sha256=manifest['runtime_sha256'],genuine_root_admission_path=str(admission.resolve()),genuine_root_admission_sha256=first['root_admission_sha256'],genuine_root_stager_path=str(stager.resolve()),genuine_root_stager_sha256=first['root_stager_sha256'],helper_binding_path=str(helper.resolve()),helper_binding_sha256=sha(helper),output_root=str(results.resolve()))
     verify_source_state(common,manifest);index={}
     for cohort,route in routes.items():
         context=json.loads((snapshot/route['contract']).read_bytes());assert context['route']==route and context['route_id']==cohort
@@ -295,17 +296,18 @@ def scoped_measurement(manifest,route,parent_sha256,authority,terminal_path,summ
 
 
 def measurement_commands(snapshot,results,manifest,python,authorities,deadline):
-    assert deadline==manifest['deadline_utc']
     return {name:[str(python),str(Path(snapshot)/route['driver']),'--threads','1','--repeat','7','--api',route['api'],'--output',str(Path(results)/(name+'.json')),'--root-binding',authorities[name]['binding'],'--measurement-go',authorities[name]['measurement']]for name,route in manifest['first_cohort']['routes'].items()}
 
 
 def run_measurements(snapshot,results,manifest,python,authorities,deadline):
+    assert manifest['deadline_utc']is None and manifest['execution_clock']=='ROOT_DISPATCH_INPUT_BOUND'
+    assert datetime.now(timezone.utc)<datetime.fromisoformat(deadline)
     results=Path(results);controller=Path(snapshot).parent/'controller';parent=controller/CONTRACT;parent_pin=sha(parent)
     assert json.loads(parent.read_bytes())==manifest and manifest['status']=='ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON'
     summary=json.loads((results/'first-cohort-summary.json').read_bytes())
     for name,route in manifest['first_cohort']['routes'].items():
         target=Path(authorities[name]['measurement']);assert not target.exists()
-        write_json(target,scoped_measurement(manifest,route,parent_pin,authorities[name],results/'first-cohort'/name/'terminal.json',summary))
+        scoped=scoped_measurement(manifest,route,parent_pin,authorities[name],results/'first-cohort'/name/'terminal.json',summary);scoped['deadline_utc']=deadline;write_json(target,scoped)
     verifier=[str(python),str(Path(snapshot)/'tools/ci_measurement_artifacts.py'),'verify','--wheel-dir',str(Path(snapshot).parent/'stage/wheels'),'--artifact',str(Path(snapshot).parent/'stage/runtime.json')]
     for cohort,command in measurement_commands(snapshot,results,manifest,python,authorities,deadline).items():
         assert sha(parent)==parent_pin
