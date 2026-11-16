@@ -4,6 +4,8 @@ from pathlib import Path
 CONTEXT='coverage/contracts/mark-lbp-fp-integration-v2.json'
 # Exact source-only successor before the immutable v2 historical guards.
 SOURCE_SUCCESSOR='coverage/contracts/mark-lbp-controller-source-successor-v1.json'
+VI_PUBLIC_REFERENCE_CONTEXT_SHA256='3f2e5cc3ad1330daa7455fff9d503b88493cc0a9a0314dcffe0d78c951de00f3'
+VI_PUBLIC_REFERENCE_HELPER_SHA256='905cc4a68b9475a672dfaf81cb432390420a497eaa572d5545d4261d1d8bceba'
 VI_PROVIDER_SDK_CONTEXT_SHA256='a95edd6c736a2cbce6fb9530b1cfec000390b8368d6422640dfc1d6438e1714d'
 VI_PROVIDER_SDK_HELPER_SHA256='77b8494697b9c52290be0705de7b8bab7bfeafafa3097637433b3baf37aa0c33'
 VI_PUBLIC_LOG2_CONTEXT_SHA256='3b21af81541ffdc87104be4c6f22205778f3c60d55a561d431937c939833b143'
@@ -11,6 +13,12 @@ VI_PUBLIC_LOG2_HELPER_SHA256='83ad5f62c746b10fd29ab787fe2674710a16087265caa0a4bb
 SOURCE_PREDECESSOR_SHA256={'tools/join_source_context.py': '3c5c566931632ad354bf5d25e850becd39157863cf3f1bb2aa8a603f2838b1bc', 'tools/mark_lbp_fp_context.py': '4ccccf650a774e17d917ae8fe1a71cdd2017609129f5198510e866c7370795f6', 'tools/public_qualification.py': '2f10933aa9c1b548e8e67693f8f24ab26f40830afea8ae1d864901fb80a7f2d1', 'tests/test_rolling_ball_enabled_source.py': '1b8ab178aa85e9693ee5bb540ba586959af4d6f166a61b2be0c843e5e0a0eaeb', 'tests/test_mark_lbp_fp_integration_source.py': '4a94cf41684e51c792db00e7e2422a0b6b026a7fde203518305ad2f56cbfd2a2', 'tests/test_mark_lbp_controller.py': '3286e1f57a8ee1625e2f8130150ed452593f3c99b5236fb00289fe234811f1e0', 'tests/test_vi_controller.py': '231e5db18a8ecbb598979bdfca73133ad55060c1ae0599a08171470bce91992c'}
 
 def source_successor_predecessor_bytes(root,name,raw,canonical=False):
+ path=Path(root)/'coverage/contracts/vi-public-log2-reference-source-v2.json'
+ if path.is_file():
+  helper=Path(root)/'tools/vi_public_reference_context_v2.py'
+  assert hashlib.sha256(helper.read_bytes()).hexdigest()==VI_PUBLIC_REFERENCE_HELPER_SHA256
+  from tools.vi_public_reference_context_v2 import predecessor_bytes as vi_reference_predecessor
+  raw=vi_reference_predecessor(root,name,raw,VI_PUBLIC_REFERENCE_CONTEXT_SHA256,canonical)
  path=Path(root)/'coverage/contracts/vi-provider-sdk-source-v1.json'
  if path.is_file():
   helper=Path(root)/'tools/vi_provider_sdk_context.py'

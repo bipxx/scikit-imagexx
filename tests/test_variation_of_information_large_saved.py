@@ -1,11 +1,16 @@
-"""Strict admitted large records; original computation is never invoked."""
+"""Legacy scalar SDK-gateway records/retained FP only; not current public VI parity."""
+import ast
 import ctypes
+import hashlib
+import importlib
+from types import SimpleNamespace
 import json
 from pathlib import Path
 import warnings
 import numpy as np
 import pytest
-from test_variation_of_information_public import target
+from test_variation_of_information_public import target as public_target
+from variation_of_information_source_context import provider_predecessor_source
 from label_pair_metrics_observer import observation
 from util_views_fenv import FEnv, backend
 
@@ -13,9 +18,29 @@ ROOT=Path(__file__).resolve().parents[1]
 SAVED=json.loads((ROOT/'tests/data/variation_of_information_large_saved_v1.json').read_bytes())
 
 
+LEGACY_FRONTEND_SHA256='f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa'
+
+
+def legacy_scalar_gateway(module,core):
+    """Exact32e Python prefix -> unchanged scalar SDK/core ABI, provider omitted/None."""
+    source=provider_predecessor_source(ROOT,'python/skimagexx/_variation_of_information.py')
+    assert hashlib.sha256(source).hexdigest()==LEGACY_FRONTEND_SHA256
+    tree=ast.parse(source);definitions=[n for n in tree.body if isinstance(n,ast.FunctionDef)]
+    namespace=dict(__name__='_vi_legacy_scalar_sdk',np=np,sparse=importlib.import_module('scipy.sparse'),
+        _core=core,contingency_table=module.contingency_table)
+    exec(compile(ast.Module(body=definitions,type_ignores=[]),'<exact32e legacy scalar SDK gateway>','exec'),namespace)
+    return SimpleNamespace(variation_of_information=namespace['variation_of_information'],_core=core)
+
+
+@pytest.fixture(scope='module')
+def target(public_target):
+    module,core=public_target
+    return legacy_scalar_gateway(module,core),core
+
+
 @pytest.mark.parametrize('index',range(4))
 @pytest.mark.parametrize('workers',(1,4))
-def test_admitted_large_public_words_and_state(target,index,workers):
+def test_admitted_large_legacy_scalar_words_and_state(target,index,workers):
     reference=SAVED['profiles'][np.__version__]['rows'][index]
     module,core=target
     # Existing frozen benchmark recipe, including its allocation/layout policy.

@@ -294,7 +294,7 @@ SDK_MEMBERS = 68
 CURRENT_PRODUCT_SCOPE = 'current281'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball')
 CURRENT_SDK_CLIENT_SCOPE = 'current38 required installed clients; complete rolling-ball floating/typed-storage owning operations plus admitted VI/flood families; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v6.json'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v7.json'
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('coverage/contracts/mark-lbp-controller-source-successor-v1.json','tests/test_mark_lbp_controller.py','tests/test_vi_controller.py',
     'include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
@@ -749,7 +749,7 @@ def applicable_public_groups(groups,profile):
         selected['public-radon-saved-linux']=('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py')
         selected['public-radon-ABI-policy-linux']=('test_finite_radon_numpy_abi_public.py',)
         selected['public-VI-saved-linux']=('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py')
-        selected['public-VI-large-saved-linux']=('test_variation_of_information_large_saved.py',)
+        selected['public-VI-large-saved-linux']=('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
         selected['public-flood-saved-linux'] = ('test_flood_fill_public.py',)
         selected['public-rolling-ball-saved-linux'] = ('test_rolling_ball_public.py',)
     return selected
@@ -798,6 +798,11 @@ def runtime_pins(profile):
 
 
 DRAW_SOURCE_PATHS += ('benchmarks/vi_public_log2_provider_consumer.py', 'benchmarks/vi_public_log2_provider_execution.py', 'coverage/contracts/vi-public-log2-provider-v1.json', 'coverage/contracts/vi-public-log2-provider-benchmark-v1.json', 'coverage/contracts/vi-public-log2-provider-source-v1.json', 'tests/test_vi_public_log2_provider_source.py', 'tools/vi_public_log2_context.py', 'tests/test_vi_log2_provider_diagnostic.py', 'tests/test_vi_reduction_integration_source.py')
+
+DRAW_SOURCE_PATHS += ('tools/vi_public_reference_context_v2.py','coverage/contracts/vi-public-log2-reference-source-v2.json')
+
+# Current-runtime VI large-reference inputs retain legacy scalar checks separately.
+DRAW_SOURCE_PATHS += ('tools/vi_public_reference_context.py', 'coverage/contracts/vi-public-log2-reference-source-v1.json', 'coverage/contracts/current-public-qualification-v7.json', 'tests/test_vi_public_log2_provider_large.py', 'tests/test_vi_public_log2_large_source.py', 'tools/vi_cohort_value_diagnostic.py', 'tests/test_vi_cohort_value_diagnostic.py')
 
 # Current VI SDK/capture validation source closure, not historical qualification.
 DRAW_SOURCE_PATHS += ('tools/vi_provider_sdk_context.py', 'coverage/contracts/vi-provider-sdk-source-v1.json', 'tests/variation_of_information_provider_controls.hpp', 'tests/test_vi_owning_sdk_source.py', 'tools/vi4_failure_capture.py', 'coverage/contracts/vi4-failure-capture-v1.json', 'tests/test_vi4_failure_capture.py', '.github/workflows/vi-initial-failure-capture.yml')
@@ -1054,12 +1059,16 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py'},
             'current qualification selector contract differs')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
     require(data.get('Linux_saved_mark_lbp_profiles')==['minimum','modern','debug'],'Linux saved MARK/LBP profile scope differs')
     require(data.get('Linux_saved_rolling_ball_profiles')==['minimum','modern','debug'] and data.get('rolling_ball_saved_nodes_per_mode')==81,'Linux rolling-ball saved scope differs')
+    require(data.get('VI_current_runtime_large_reference')=={'profiles': ['minimum', 'modern', 'debug'], 'legacy_scalar_gateway': 'tests/test_variation_of_information_large_saved.py', 'current_public_pairs': 'tests/test_vi_public_log2_provider_large.py', 'source_guard': 'tests/test_vi_public_log2_large_source.py', 'legacy_nodes_per_mode': 8, 'current_nodes_per_mode': 8, 'current_records_per_mode': 8, 'source_cases': 4, 'workers': [1, 4], 'provider': 'current public numpy.log2 elementary batch computation', 'FP': 'natural current caller for fresh original/native pairs; retained semantic FP only in explicitly legacy scalar SDK gateway', 'historical_records': 'Preserved unchanged; never relabeled current CPU/ufunc or new genuine qualification.'},
+            'current VI large-reference domain/provider scope differs')
+    require(contracts.get('metrics.variation_of_information')=='tests/test_vi_public_log2_provider_large.py',
+            'current VI public original-pair contract missing')
     return data
 
 
@@ -2130,6 +2139,7 @@ def child(out, group):
     if group=='public-VI-large-saved-linux':
         require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIlargeforbidsprivatecomponentorWindowsFPclaim')
         os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['VI_PUBLIC_LOG2_LARGE_RECORD_DIR']=str(out/(mode+'-VI-current-large-rows'))
     if group=='public-VI-saved-linux':
         require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIforbidsprivatecomponentorWindowsFPclaim')
         os.environ.update(util_views_fenv_environment(out,state))
@@ -2348,7 +2358,7 @@ def sdk(out, state, journal):
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
             if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
-                    or name == 'tests/variation_of_information_large_controls.hpp'
+                    or name in ('tests/variation_of_information_large_controls.hpp','tests/variation_of_information_provider_controls.hpp')
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
@@ -2422,6 +2432,34 @@ def qualify(out):
     sdk(out, state, journal)
 
 
+def validate_VI_current_large_rows(directory):
+    """Authenticate the eight current-pair records retained by the pinned tests."""
+    paths=list(Path(directory).glob('*.json'))
+    require(len(paths)==8,'VI current-large exact8 records required')
+    rows=[json.loads(p.read_text(encoding='utf-8'))for p in paths]
+    require({(v.get('index'),v.get('workers'))for v in rows}=={(i,w)for i in range(4)for w in(1,4)},'VI current-large case/worker coverage differs')
+    for value in rows:
+        require(value.get('primary')is None and value.get('timing')is False and value.get('diagnostics')==[],'VI current-large primary/diagnostic/timing failure')
+        require(value.get('counts')==dict(original=1,native=1)and value.get('accepted')==value.get('suffix')==[True],'VI current-large public ownership failure')
+        requirements=value.get('requirements',{});returned=value.get('returned',[])
+        require(sum(requirements.values())==len(returned)==11 and {k:returned.count(k)for k in requirements}==requirements,'VI current-large native markers incomplete')
+        expected=value.get('expected',{});actual=value.get('actual',{})
+        require(expected==actual and expected.get('type')==['numpy','ndarray']and expected.get('dtype')=='<f8'and expected.get('shape')==[2]and expected.get('nbytes')==16,'VI current-large words/type/shape differ')
+        raw=expected.get('raw_hex','')
+        require(bool(re.fullmatch('[0-9a-f]{32}',raw))and hashlib.sha256(bytes.fromhex(raw)).hexdigest()==expected.get('payload_sha256'),'VI current-large raw output hash differs')
+        require(expected.get('flags',{}).get('owndata')is True and value.get('output_pair_alias')is False and value.get('output_input_aliases')is False,'VI current-large output ownership differs')
+        caller=value.get('caller32',{});natural=value.get('natural_caller_raw32','')
+        require(caller.get('exact')is True and caller.get('saved')==caller.get('actual')and bool(re.fullmatch('[0-9a-f]{64}',caller.get('saved',''))),'VI current-large caller32 differs')
+        reference=value.get('reference_FP',{});native=value.get('native_FP',{})
+        require(bool(re.fullmatch('[0-9a-f]{64}',natural))and reference.get('before_raw32')==native.get('before_raw32')==natural,'VI current-large natural FP entry differs')
+        require(set(reference.get('before',{}))=={'control','status','mxcsr'}and reference.get('before')==native.get('before')and reference.get('after')==native.get('after'),'VI current-large FP effects differ')
+        require(value.get('provider')=='current true numpy.log2 ufunc computation'and value.get('provider_type')=='ufunc'and len(value.get('provider_batches',[]))==2,'VI current-large current provider missing')
+        require(all(b.get('provider')=='numpy.log2'for b in value['provider_batches']),'VI current-large provider batches differ')
+        require(value.get('input_before')==value.get('input_after')and value.get('pointers_before')==value.get('pointers_after')and value.get('pointers_stable')is True,'VI current-large input mutation')
+        require(value.get('software_context_unchanged')is True and value.get('namespace_identity_unchanged')is True,'VI current-large software/namespace restoration differs')
+    return rows
+
+
 def seal(out):
     state = json.loads((out / 'state.json').read_text()); require(source_state(ROOT) == state['source'], 'source changed')
     commands = json.loads((out / 'commands.json').read_text())
@@ -2454,7 +2492,9 @@ def seal(out):
             if group=='public-flood-saved-linux':
                 rows=[json.loads(p.read_text())for p in(out/(mode+'-flood-caller-rows')).glob('*.json')]
                 require(len(rows)==100 and all(r['exact32']and r['saved']==r['actual']and r['workers']in(1,4)for r in rows),'Floodcaller32/global-worker records incomplete')
-            if group=='public-VI-large-saved-linux':require(row['tests']==8,'Full8 large VI saved-domain nodes required; strict word/FP/caller assertions are in each pinned test')
+            if group=='public-VI-large-saved-linux':
+                require(row['tests']==16,'Full8 legacy scalar SDK plus8 fresh current-public VI pair nodes required')
+                validate_VI_current_large_rows(out/(mode+'-VI-current-large-rows'))
             if group=='public-VI-saved-linux':
                 require(row['tests']==40,'Full40 VI saved/current-count nodes required; no partial selector')
                 callers=list((out/(mode+'-VI-caller-rows')).glob('*.json'))

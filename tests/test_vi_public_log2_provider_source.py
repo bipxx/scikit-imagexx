@@ -21,7 +21,14 @@ def load(path):
     m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 
 
+def reference_bridge(root,name,raw,canonical=False):
+    from tools.mark_lbp_fp_context import VI_PUBLIC_REFERENCE_CONTEXT_SHA256
+    from tools.vi_public_reference_context_v2 import predecessor_bytes
+    return predecessor_bytes(root,name,raw,VI_PUBLIC_REFERENCE_CONTEXT_SHA256,canonical)
+
+
 def sdk_bridge(root,name,raw,canonical=False):
+    raw=reference_bridge(root,name,raw,canonical)
     from tools.mark_lbp_fp_context import VI_PROVIDER_SDK_CONTEXT_SHA256
     from tools.vi_provider_sdk_context import predecessor_bytes
     return predecessor_bytes(root,name,raw,VI_PROVIDER_SDK_CONTEXT_SHA256,canonical)
@@ -212,7 +219,8 @@ def test_source_bridge_refuses_changed_and_double_projected_inputs(canonical):
 
 
 def source_root(tmp_path):
-    names=['tools/vi_provider_sdk_context.py','coverage/contracts/vi-provider-sdk-source-v1.json',
+    names=['tools/vi_public_reference_context.py','coverage/contracts/vi-public-log2-reference-source-v1.json',
+        'tools/vi_public_reference_context_v2.py','coverage/contracts/vi-public-log2-reference-source-v2.json','tools/vi_provider_sdk_context.py','coverage/contracts/vi-provider-sdk-source-v1.json',
         'tools/vi_public_log2_context.py','tools/mark_lbp_fp_context.py',CONTEXT,
         'coverage/contracts/mark-lbp-controller-source-successor-v1.json',
         'coverage/contracts/mark-lbp-fp-integration-v2.json','coverage/contracts/mark-lbp-fp-integration-v1.json',
@@ -305,9 +313,105 @@ def test_current_SDK_and_capture_guards_and_collector_are_complete():
     data=json.loads((ROOT/'coverage/contracts/vi-provider-sdk-source-v1.json').read_bytes())
     qualifier=load(ROOT/'tools/public_qualification.py')
     assert set(data['sources'])|set(data['new_collector_inputs'])<=set(qualifier.DRAW_SOURCE_PATHS)
-    line=next(x.strip()for x in(ROOT/'.github/workflows/public-qualification.yml').read_text().splitlines()if x.strip().startswith('python -m pytest -q --capture=sys'))
+    prior=reference_bridge(ROOT,'.github/workflows/public-qualification.yml',(ROOT/'.github/workflows/public-qualification.yml').read_bytes())
+    line=next(x.strip()for x in prior.decode().splitlines()if x.strip().startswith('python -m pytest -q --capture=sys'))
     args=shlex.split(line);selectors=[a for a in args[:args.index('|')]if a.startswith('tests/')]
     assert len(selectors)==len(set(selectors))==data['source_selector_count']==172
     assert selectors==data['prior_source_selectors']+data['added_source_selectors']
     assert data['added_source_selectors']==['tests/test_vi_owning_sdk_source.py','tests/test_vi4_failure_capture.py']
     assert data['execution_authority']is None
+
+
+@pytest.mark.parametrize('canonical',(False,True))
+def test_reference_successor_exact_123_source_domains(canonical):
+    data=json.loads((ROOT/'coverage/contracts/vi-public-log2-reference-source-v2.json').read_bytes())
+    assert data['predecessor_source']=='1237655d691740d20b35fe28109b4dc08642896a'
+    for name,row in data['sources'].items():
+        raw=(ROOT/name).read_bytes();transported=raw.replace(b'\n',b'\r\n')if canonical else raw
+        old=reference_bridge(ROOT,name,transported,canonical)
+        assert H(old)==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
+        with pytest.raises(AssertionError):reference_bridge(ROOT,name,transported+b' ',canonical)
+        with pytest.raises(AssertionError):reference_bridge(ROOT,name,old,canonical)
+
+
+@pytest.mark.parametrize('fault',('context','helper','parent','old-reference'))
+def test_reference_successor_rejects_authentication_changes(tmp_path,fault):
+    root=source_root(tmp_path);name='tools/public_qualification.py';raw=(ROOT/name).read_bytes()
+    assert reference_bridge(root,name,raw)==reference_bridge(ROOT,name,raw)
+    path=root/({'context':'coverage/contracts/vi-public-log2-reference-source-v2.json','helper':'tools/vi_public_reference_context_v2.py','parent':'coverage/contracts/vi-provider-sdk-source-v1.json','old-reference':'coverage/contracts/vi-public-log2-reference-source-v1.json'}[fault])
+    path.write_bytes(path.read_bytes()+b' ')
+    with pytest.raises(AssertionError):reference_bridge(root,name,raw)
+
+
+def test_reference_successor_retains_old172_and_adds_complete173_guard():
+    q=load(ROOT/'tools/public_qualification.py');data=json.loads((ROOT/'coverage/contracts/vi-public-log2-reference-source-v2.json').read_bytes())
+    assert set(data['sources'])|set(data['new_collector_inputs'])<=set(q.DRAW_SOURCE_PATHS)
+    assert {'tools/vi_cohort_value_diagnostic.py','tests/test_vi_cohort_value_diagnostic.py'}<=set(data['new_collector_inputs'])
+    current=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    def selectors(text):
+        args=shlex.split(next(x.strip()for x in text.splitlines()if x.strip().startswith('python -m pytest -q --capture=sys')))
+        return [a for a in args[:args.index('|')]if a.startswith('tests/')]
+    assert selectors(current)==data['prior_source_selectors']+['tests/test_vi_public_log2_large_source.py']
+    assert len(selectors(current))==len(set(selectors(current)))==173
+    assert data['execution_authority']is None
+    contract=q.current_contract(lambda name:(ROOT/name).read_bytes())
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v7.json'
+    assert len(contract['required_selectors'])==160
+    assert contract['post203_contracts']['metrics.variation_of_information']=='tests/test_vi_public_log2_provider_large.py'
+    for profile in('minimum','modern','debug'):
+        groups=q.applicable_public_groups(q.GROUPS,profile)
+        assert groups['public-VI-large-saved-linux']==('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
+    assert 'public-VI-large-saved-linux'not in q.applicable_public_groups(q.GROUPS,'windows')
+    text=(ROOT/'tools/public_qualification.py').read_text()
+    assert "os.environ['VI_PUBLIC_LOG2_LARGE_RECORD_DIR']=str(out/(mode+'-VI-current-large-rows'))"in text
+    assert "require(row['tests']==16,'Full8 legacy scalar SDK plus8 fresh current-public VI pair nodes required')"in text
+    assert "validate_VI_current_large_rows(out/(mode+'-VI-current-large-rows'))"in text
+
+
+def test_current_owning_SDK_archive_extractor_keeps_all_included_headers():
+    text=(ROOT/'tools/public_qualification.py').read_text()
+    sdk=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='sdk')
+    predicate=next(n.test for n in ast.walk(sdk)if isinstance(n,ast.If)and 'tests/fixtures/bezier_curve_originals_v1.bin'in ast.unparse(n.test))
+    expression=compile(ast.Expression(predicate),'<actual SDK source archive extractor>','eval')
+    for name in('tests/variation_of_information_provider_controls.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/variation_of_information_large_controls.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/cmake_consumer/variation_of_information_enabled_consumer.cpp'):
+        assert (ROOT/name).is_file()and eval(expression,{'name':name}),name
+    for name in('tests/variation_of_information_provider_controls.hpp/','tests/unassessed_provider.hpp','python/skimagexx/_variation_of_information.py'):
+        assert not eval(expression,{'name':name}),name
+
+
+@pytest.mark.parametrize('fault',('missing-current','missing-legacy','wrong-map','wrong-policy'))
+def test_reference_current_contract_rejects_scope_reduction(fault):
+    q=load(ROOT/'tools/public_qualification.py');data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
+    if fault=='missing-current':data['required_selectors'].remove('tests/test_vi_public_log2_provider_large.py')
+    elif fault=='missing-legacy':data['required_selectors'].remove('tests/test_variation_of_information_large_saved.py')
+    elif fault=='wrong-map':data['post203_contracts']['metrics.variation_of_information']='tests/test_variation_of_information_large_saved.py'
+    else:data['VI_current_runtime_large_reference']['current_nodes_per_mode']=4
+    with pytest.raises(q.QualificationError):q.current_contract(lambda name:json.dumps(data).encode())
+
+
+@pytest.mark.parametrize('fault',(None,'missing','duplicate','words','FP','caller','provider','ownership','markers','diagnostic','inputs','software'))
+def test_reference_seal_requires_all8_independent_current_records(tmp_path,fault):
+    q=load(ROOT/'tools/public_qualification.py');raw='00000000000000000000000000000000';fp={'control':895,'status':32,'mxcsr':8098}
+    value=dict(primary=None,timing=False,diagnostics=[],counts=dict(original=1,native=1),accepted=[True],suffix=[True],requirements={'native_marker':11},returned=['native_marker']*11,
+        expected=dict(type=['numpy','ndarray'],dtype='<f8',shape=[2],nbytes=16,raw_hex=raw,payload_sha256=H(bytes.fromhex(raw)),flags={'owndata':True}),
+        caller32=dict(saved='00'*32,actual='00'*32,exact=True),natural_caller_raw32='00'*32,
+        reference_FP=dict(before=fp,after=fp,before_raw32='00'*32),native_FP=dict(before=fp,after=fp,before_raw32='00'*32),
+        provider='current true numpy.log2 ufunc computation',provider_type='ufunc',provider_batches=[{'provider':'numpy.log2'}]*2,
+        output_pair_alias=False,output_input_aliases=False,input_before={'saved':1},input_after={'saved':1},pointers_before={'a':4},pointers_after={'a':4},pointers_stable=True,software_context_unchanged=True,namespace_identity_unchanged=True)
+    rows=[json.loads(json.dumps(dict(value,index=i,workers=w)))for i in range(4)for w in(1,4)]
+    for row in rows:row['actual']=dict(row['expected'])
+    if fault=='missing':rows.pop()
+    elif fault=='duplicate':rows[0]['index']=rows[1]['index'];rows[0]['workers']=rows[1]['workers']
+    elif fault=='words':rows[0]['actual']['raw_hex']='01'*16
+    elif fault=='FP':rows[0]['native_FP']['after']['status']=33
+    elif fault=='caller':rows[0]['caller32']['exact']=False
+    elif fault=='provider':rows[0]['provider_batches']=[]
+    elif fault=='ownership':rows[0]['accepted']=[False]
+    elif fault=='markers':rows[0]['returned'].pop()
+    elif fault=='diagnostic':rows[0]['diagnostics']=[{'error':'failed'}]
+    elif fault=='inputs':rows[0]['input_after']={}
+    elif fault=='software':rows[0]['software_context_unchanged']=False
+    for i,row in enumerate(rows):(tmp_path/(str(i)+'.json')).write_text(json.dumps(row),encoding='utf-8')
+    if fault:
+        with pytest.raises(q.QualificationError):q.validate_VI_current_large_rows(tmp_path)
+    else:assert len(q.validate_VI_current_large_rows(tmp_path))==8
