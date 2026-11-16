@@ -39500,7 +39500,7 @@
       "readiness_reviewer": "Nonauthorreview C93f64source/72proof/823affectedchecks; focussharedSDK/wiring/contexts/workflow169, importedRkernels onlypinsagainstoldB/rootadmissions. No self-admission or checks/science reruns.",
       "root": "ActualLBP2firstcase strict controls+flood636 admitted. OwnGLCM0b6 countfix69each+Breview/fresh8prefix64; nextnonauthoractualprefix readiness beforemin8neworiginal. Rootsharedcandidateadmission/full169/rootnativeSDK+release/genuine/perf/main."
     },
-    "next_action": "ROOTexecuteactualcomplete173313same8ac/76b afterrootactual311PASS4346XML/0bad/indexHEADpost/source0science; exact311fixturecleanupblockedmanualrecorded. Actual313fullXML/normalconfig/postidentity beforefreshroot4profileGO8ac/281. No sourcefix/retry/science/SDK/perf.",
+    "next_action": "Root313 same7756 onlyafter B exactfresh311fixture eligibility/one cleanupboundary orpolicyblockmanual; actual311 passedfull173 4338+8/44plugins/cleanHEAD/index/raw/science0. Inparallel failed4384artifact retention/narrowrawVI diagnostics; no newhostedGO until ALL demonstrated Linux/Windows causes closed andfrozen successorfull173both pass.",
     "current_checkpoint": {
       "main_image_names": 271,
       "resume_20261115": {
@@ -39530,7 +39530,7 @@
           "root": "Independent source/compiled-product admitted85257; admits harness/rootGO/main. Shipped271."
         },
         "capacity": "Actual entry C free396955144192B, D free288221495296B. Conservative combined next peak: 20GiB full source-barrier scratch plus 1GiB tracking worktree and 1GiB worker guards; destination exceeds peak plus20GiB and30GiB floor. Reuse retained Windows311 executable and project Windows313 environment; no environment/download rebuild. Keep raw command/XML/evidence outside disposable roots; release terminal scratch after excluding protected dependencies; previously denied targets untouched.",
-        "next_gate": "ROOTexecuteactualcomplete173313same8ac/76b afterrootactual311PASS4346XML/0bad/indexHEADpost/source0science; exact311fixturecleanupblockedmanualrecorded. Actual313fullXML/normalconfig/postidentity beforefreshroot4profileGO8ac/281. No sourcefix/retry/science/SDK/perf.",
+        "next_gate": "Root313 same7756 onlyafter B exactfresh311fixture eligibility/one cleanupboundary orpolicyblockmanual; actual311 passedfull173 4338+8/44plugins/cleanHEAD/index/raw/science0. Inparallel failed4384artifact retention/narrowrawVI diagnostics; no newhostedGO until ALL demonstrated Linux/Windows causes closed andfrozen successorfull173both pass.",
         "tracking_delivery": {
           "source": "1cd85168416635de5784efd61f1bb890d4c94bda",
           "main": "pushed_and_remote_verified",
@@ -41451,7 +41451,7 @@
                 }
               },
               "integrated_validation_correction": {
-                "status": "ROOT_SUCCESSOR30e_AFFECTED780BOTH_PASS_PENDING_FULL173",
+                "status": "ROOT_COMPLETE_ACTUAL173_BOTH_PASS_8ac_GENUINE_PENDING",
                 "context": "coverage/contracts/current281-validation-source-v1.json",
                 "sha256": "2051f9296848982d5487216eb52a3d2ee08f66b2cf1878425147e7c923f22e96",
                 "NativeGit_raw_canonical_equations": 26,
@@ -41616,7 +41616,7 @@
                   "release_trigger": "Usermanualremovalonly; no target/child/parent/alternative/implicitpytest retry. All22raw/90source/780XML evidenceoutside. Explicitmanualretentionexception, not protectedproducts ornewcurrentfullsource allocation."
                 },
                 "full173_v4_execution": {
-                  "status": "ROOT311_PASS_313_LIVE_PID24972_SESSION31555_NOT_PASS",
+                  "status": "ROOT_BOTH_COMPLETE_ACTUAL_PASS_4338_PLUS8_EACH",
                   "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
                   "workflow": "7252a926d63bd61c32a7e150782f08dd2e9aaeaa1da2e84c89cb1367b7f274b6",
                   "selectors": 173,
@@ -41648,18 +41648,23 @@
                     "root_reader_correction": "bb6066 stoppedbeforewrites on guessedtestcase4346. Actualschema b83698: suite4346includes8subtests while4338testcase nodes==4338collectedIDs;0badnodes/external0 unchanged. Correctedmetadatareader only, no product/source/science rerun or waiver."
                   },
                   "actual313": {
-                    "status": "LIVE_NOT_PASS",
-                    "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\current281-final-source-v4\\root-windows313-GO-v4.json",
-                    "GO_sha256": "aa6d041ce3da3dd11dcffd6d3109b7a5c650716df5cf9c06e7e7f5dbdb4f0135",
-                    "Dfree_before_GO": 297408696320,
-                    "same_binding": "76b11dbdbe9ce7b39f94379ba97dd99e6738112ef5f1979ea7eed971ef244bf9",
+                    "status": "ROOT_ACTUAL_COMPLETE_PASS",
                     "PID": 24972,
                     "session": 31555,
-                    "actual_selector_count": 173,
-                    "actual_collected_unique_IDs": 4338,
+                    "actual_external_exit": 0,
+                    "XML": {
+                      "tests": 4346,
+                      "failures": 0,
+                      "errors": 0,
+                      "skipped": 0
+                    },
+                    "ordinary_checks": 4338,
+                    "subtests": 8,
+                    "normal_plugins": 44,
                     "normal_conftest": true,
-                    "plugin_autoload": true,
-                    "no_failfast": true
+                    "source_HEAD_index_postchecks": "PASS_ROOT_ACTUAL",
+                    "science": 0,
+                    "seconds": 401.8049004999921
                   },
                   "remaining": "Actualcompletefull173 each/no-failfast/normalplugins/conftest/cleanHEAD+index/postidentity/science0; rootinspectactual311before313, no hosteduntilbothPASS. Preservefailedf10/2051.",
                   "windows311_fixture_cleanup": {
@@ -41674,6 +41679,24 @@
                     "reason": "ExactnativePS Remove-Item action rejectedbeforeCreateProcess as blockedbypolicy; entirecommandneverstarted/removalreceiptunavailable.",
                     "owner_release": "root/manual release only; no retry/parent/alternate/implicitpytestdelete. Rawsource/XML/index/logs outside, rootadmission21673.",
                     "necessary_budget_exception": "root/manual release exception afterpolicyblock. Actualold3116.95GB and priorv2manual1.15GB. Conservative313peak16GiB maytemporarilyexceed20GiBcombinedtarget; necessaryexceptionbecause requiredexact173/313 andreleaseblocked. Retainprotectedinstalledbaselines/products. Newallocationonlyfresh313child, sameone-root; retireeligible313once atterminal."
+                  },
+                  "root_both_receipt": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\vi-public-log2-current-complete-source-readiness-v1.json",
+                  "root_both_receipt_sha256": "0558eda6ba42ad8581198f4d634b890e2f2ede15d93aae6ee70002de3e3563c8",
+                  "completed_raw_proofs": 20,
+                  "raw_index_sha256": "b597f807e95d1892fcf24df4ca3b1af8e2378cc216a05c160d83ed99ef435c2f",
+                  "windows313_fixture_cleanup": {
+                    "status": "POLICY_BLOCKED_MANUAL_ONLY",
+                    "exact_target": "D:/Scratch/current281-final-source-controls-v4/windows313",
+                    "cached_logical_bytes": 6947951398,
+                    "cached_files": 84757,
+                    "eligibility_sha256": "4b667e7f7394d0dd59e567ec3ceb869abb2447dec300cedd3d666190585d688b",
+                    "submission_attempts": 1,
+                    "executed_commands": 0,
+                    "removed_paths": [],
+                    "reason": "Exact native PowerShell Remove-Item was rejected before CreateProcess as blocked by policy. No command executed and no removal receipt exists.",
+                    "owner": "root/manual",
+                    "release_trigger": "User manual removal only. Never retry this child, parent/ancestor, alternate mechanism or implicit pytest cleanup. Raw20/source/index/XML proofs remain outside it.",
+                    "reader_correction": "8b0775 display-only reader guessed excluded_targets; actual313 key is exclusions (caa99f). Required eligibility fields passed, no writes or deletion before correction; no product/science rerun."
                   }
                 },
                 "qualification_dispatch_data_v3": {
@@ -41692,6 +41715,411 @@
                   "actual_four_capacity_receipts": "PENDING_REAL_HOSTED_JOBS_BEFORE_PRODUCT_ADMISSION",
                   "root_actual_GO": "NOT_GRANTED",
                   "scope": "Prepared exactsource8ac/WF725/expected281; pointintime metadata only. Rootrefreshes mutable state atactualGO afterfull173BOTH."
+                },
+                "genuine_qualification": {
+                  "status": "ACTUAL_ALL4_TERMINAL_FAILURE_NO_RELEASE",
+                  "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
+                  "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-root-dispatch-v1\\root-GO-v1.json",
+                  "GO_sha256": "1cb4225b53269a67de590992a7661f936d6406cfda9491c6323d215577f0237a",
+                  "maximum_dispatches": 1,
+                  "actual_run": {
+                    "id": 43817382620,
+                    "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43817382620",
+                    "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
+                    "workflow_id": 394745989,
+                    "status": "completed",
+                    "dispatch_actual_exit": 0,
+                    "dispatch_attempts": 1,
+                    "handle_receipt": "build/vi-public-log2-provider-v1/qualification-root-dispatch-v1/actual-run-handle-v1.json",
+                    "jobs": [
+                      {
+                        "id": 133132412004,
+                        "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
+                        "status": "in_progress",
+                        "conclusion": null,
+                        "steps": [
+                          {
+                            "name": "Set up job",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/checkout@v4",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/setup-python@v5",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Verify qualification scratch capacity",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Tooling guards before preparation",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Build and qualify one genuine whole product on this fresh host",
+                            "status": "in_progress",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Independently rehash a terminal qualification seal",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Stage a bounded controlled product after successful independent verification",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/setup-python@v5",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/checkout@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          }
+                        ]
+                      },
+                      {
+                        "id": 133132412226,
+                        "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
+                        "status": "in_progress",
+                        "conclusion": null,
+                        "steps": [
+                          {
+                            "name": "Set up job",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/checkout@v4",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/setup-python@v5",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Verify qualification scratch capacity",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Tooling guards before preparation",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Build and qualify one genuine whole product on this fresh host",
+                            "status": "in_progress",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Independently rehash a terminal qualification seal",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Stage a bounded controlled product after successful independent verification",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/setup-python@v5",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/checkout@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          }
+                        ]
+                      },
+                      {
+                        "id": 133132412260,
+                        "name": "qualify (windows-latest, windows, 3.13.16)",
+                        "status": "in_progress",
+                        "conclusion": null,
+                        "steps": [
+                          {
+                            "name": "Set up job",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/checkout@v4",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/setup-python@v5",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Verify qualification scratch capacity",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Tooling guards before preparation",
+                            "status": "in_progress",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Build and qualify one genuine whole product on this fresh host",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Independently rehash a terminal qualification seal",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Stage a bounded controlled product after successful independent verification",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/setup-python@v5",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/checkout@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          }
+                        ]
+                      },
+                      {
+                        "id": 133132412271,
+                        "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
+                        "status": "in_progress",
+                        "conclusion": null,
+                        "steps": [
+                          {
+                            "name": "Set up job",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/checkout@v4",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Run actions/setup-python@v5",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Verify qualification scratch capacity",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Tooling guards before preparation",
+                            "status": "completed",
+                            "conclusion": "success"
+                          },
+                          {
+                            "name": "Build and qualify one genuine whole product on this fresh host",
+                            "status": "in_progress",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Independently rehash a terminal qualification seal",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Stage a bounded controlled product after successful independent verification",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Run actions/upload-artifact@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/setup-python@v5",
+                            "status": "pending",
+                            "conclusion": null
+                          },
+                          {
+                            "name": "Post Run actions/checkout@v4",
+                            "status": "pending",
+                            "conclusion": null
+                          }
+                        ]
+                      }
+                    ],
+                    "conclusion": "failure"
+                  },
+                  "actual_capacity_receipts": 0,
+                  "actual_profiles_accepted": 0,
+                  "actual_SDK_checks_accepted": 0,
+                  "actual_stagers_accepted": 0,
+                  "root_full_source_readiness_sha256": "0558eda6ba42ad8581198f4d634b890e2f2ede15d93aae6ee70002de3e3563c8",
+                  "fresh_root_metadata_sha256": "3c89f985612a37d7ec138f9048805d9dbb6eaac5d455c97c149f594cc67d7b48",
+                  "remaining": "438 all4 failed: Windows raw checkout failure known, Linux3 first-failure raw log intake C live request; no unchanged retry or new exactsource dispatch until ALL demonstrated causes closed. Source2270 full173v5 311 live; 313 held.",
+                  "watcher": {
+                    "PID": 54220,
+                    "session": 18132,
+                    "run": 43817382620,
+                    "status": "LIVE_READ_ONLY",
+                    "launch": "build/vi-public-log2-provider-v1/qualification-root-dispatch-v1/watch.launch-v1.json"
+                  },
+                  "capacity_steps_completed_success_observed": 4,
+                  "capacity_scope": "Initial job API reports all four capacity steps success; raw receipt/source/job/artifact/order admission remains pending.",
+                  "Windows_failure": {
+                    "job": 133132412260,
+                    "source_check_failed": 1,
+                    "source_check_passed": 4337,
+                    "subtests": 8,
+                    "product_build": "SKIPPED",
+                    "root_cause": "Unspecified pyproject.toml Git text/eol permits CRLF checkout75d9, expected rawLF8bb6. Exact root byte conversion reproduces hosted hash.",
+                    "receipt": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\vi-public-log2-windows-byte-policy-root-failure-v1.json",
+                    "receipt_sha256": "8b0552786d89feff63ef610ed92130203a079df8d2cff2ad8f6b4c011ccd8e47"
+                  },
+                  "linux_failure_intake": {
+                    "owner": "mark_release_readiness",
+                    "scope": "3raw Linuxjob logs, commands/exits/source/run correlation only; no archives or science",
+                    "status": "LIVE_CONFIRMED_RAW_LOGS3_AND_METADATA_PASS",
+                    "first_outer_failure": "VI current-large primary/diagnostic/timing failure at qualifier2446 in seal; underlying primary stillunknown, needactualJSON/XML/childlogs beforefix/dispatch"
+                  },
+                  "retention": {
+                    "status": "ACTUAL_ONCE_ONLY_RETENTION_LIVE",
+                    "binding": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-readers-8ac-v1\\freeze-contract-run43817382620-root-v1.json",
+                    "binding_sha256": "4011473dc878f4b00cd3876e08ea20344aecb91ce78d1e530b0d375c547b0e32",
+                    "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
+                    "run": 43817382620,
+                    "artifact_roles": 4,
+                    "bytes": 4696883335,
+                    "stagers": 0,
+                    "required_free_bytes": 47244640256,
+                    "reader_profiles_accepted": 0,
+                    "whole_product_accepted": false,
+                    "PID": 57228,
+                    "exec_session": 62919,
+                    "launch": "build/vi-public-log2-provider-v1/qualification-readers-8ac-v1/retention.executor.launch-v1.json"
+                  }
+                },
+                "windows_checkout_policy_successor": {
+                  "owner": "/root",
+                  "status": "ACTUAL_FULL173_V5_311_PASS_313_PENDING_CLEANUP_BOUNDARY",
+                  "file": ".gitattributes",
+                  "change": "Add only pyproject.toml -text; keep all raw refs/source/assertions unchanged",
+                  "gates": "Actual NativeWindowsGit core.autocrlf=true fresh checkout, affected guards and COMPLETE actual173both on frozen successor, then exact-sourcefour-profile release. No source8ac unchanged retry.",
+                  "source_8ac_readiness": "0558 preserved actualPASS local LF scope, superseded for hosted-root checkout readiness.",
+                  "independent_evidence": "Preserve ongoing Linux3/raws; no aggregate4profile admission, VI4 ormain until successor gates.",
+                  "actual_rule": "/pyproject.toml -text",
+                  "actual_checkout_receipt": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\windows-byte-policy-successor-v1\\actual-checkout-receipt-v1.json",
+                  "actual_checkout_receipt_sha256": "2a6559127a32b06a71c50857d99a2ff310656c67e82cedb4ad9b30995e9b9c51",
+                  "initial_fixture_setup_failure": "31c479 initialunchangedworkingfile checkout didnotmaterialize newbytes; preservedinitial-fixture-finding-v1.json. Corrected onlyfixture withdistinctplaceholder before actualnativeforcedcheckout. Requiredold75d/new8bb equations unchanged; no source/test/science replay.",
+                  "source": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
+                  "source_freeze_receipt": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\windows-byte-policy-successor-v1\\source-freeze-v1.json",
+                  "source_freeze_sha256": "6db35e9fac61c62ce2d7c70541172b5ee6c15e968f19ceef2b2aa8ed14e9b003",
+                  "full173_v5": {
+                    "source": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
+                    "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\current281-final-source-v5\\root-GO-v5.json",
+                    "GO_sha256": "7756d7cb0564655471d50017b859a93fee3616c4c16a425d76e2421cabd56209",
+                    "runner_sha256": "d7ca687e3fee7d7b0c3bcbf54053c10008e1312f407c6c35f1a627e81cfb81fd",
+                    "root_launcher_admission_sha256": "07361a8022a7732d2be9903356ce5042ebd86554d43cf7527241d9293dfe9986",
+                    "Dfree_before_GO": 290342064128,
+                    "required_free_bytes": 40802189312,
+                    "actual311": {
+                      "PID": 52804,
+                      "exec_session": 33626,
+                      "source": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
+                      "status": "ACTUAL_PASS_ROOT_ADMITTED",
+                      "launch": "build/current281-final-source-v5/windows311.executor.launch-v5.json",
+                      "started_utc": "2026-11-16T07:20:45.8224505Z",
+                      "actual_external_exit": 0,
+                      "ordinary_checks": 4338,
+                      "passed_subtests": 8,
+                      "XML_suite_tests": 4346,
+                      "seconds": 438.219000000041,
+                      "root_receipt": "build/current281-final-source-v5/root-windows311-admission-v5.json",
+                      "root_receipt_sha256": "715d15613225d7657e7e05300a9aa37caa180a7a37730777cdae1b7db6c26bb8"
+                    },
+                    "actual313": null,
+                    "next": "Actualcomplete173both before newexactsourcefour-profile GO; no affected union orunchangedsource8ac retry."
+                  },
+                  "tiny_reproducer_retention": {
+                    "path": "build/vi-public-log2-provider-v1/windows-byte-policy-successor-v1/checkout-fixture",
+                    "owner": "root",
+                    "release_trigger": "After actualsuccessorWindows tooling confirmsbytepolicy; retain tinytwo-input Gitfailure reproducer outsidefullsource scratch inmeantime."
+                  }
+                },
+                "VI4_main_workflow_registration": {
+                  "owner": "root",
+                  "status": "DOCUMENT_GATES_PASSED_READY_TO_PUBLISH",
+                  "path": ".github/workflows/vi-initial-failure-capture.yml",
+                  "sha256": "b0117717c438f5ccfe274228285927ec1c3e6f8082f22f65015c04ccd9001f4e",
+                  "source": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
+                  "review": "Root actually read complete b011 YAML; onlyworkflow_dispatch, readonlytoken, capacityfirst, producer/root/stager/current-source binding, offline install, cohortbeforetiming, all-losses and failure retention preserved. Same YAML passed actualcomplete173both on8ac; attrs-only2270 didnotchange it. Placement alone grants no execution; bound controller/accepted newproducer/actual gates remainpending.",
+                  "sequence_receipt": "build/vi-public-log2-provider-v1/shared-history-correction-v2/vi4-binding-sequence-v1.json",
+                  "sequence_sha256": "fb9403160cc70b1e8a2e14ab384e3e193cacdfc9921e4f1775af448131fb5b9d",
+                  "dispatches": 0,
+                  "validation": {
+                    "work_queue_311": "actualfc762e exit0/368packets",
+                    "work_queue_313": "actuald85a05 exit0/368packets",
+                    "JSON_added_links_whitespace_WIP": "actual457c49 exit0/10links",
+                    "affected_YAMLsource_controls": "Reused actual8ac full173both0558, literalb011 unchanged; mainregistration no runtime execution",
+                    "unmet": "commit/push/actualremote workflow registration; boundcontroller andacceptedproducer allpending"
+                  }
                 }
               }
             }

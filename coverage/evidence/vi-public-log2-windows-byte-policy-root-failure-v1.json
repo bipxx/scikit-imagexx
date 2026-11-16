@@ -1,0 +1,42 @@
+{
+  "status": "FAILED_HOSTED_WINDOWS_TOOLING_RAW_PYPROJECT_BYTE_POLICY_ROOT_CAUSE",
+  "owner": "/root",
+  "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
+  "workflow_run": 43817382620,
+  "Windows_job": 133132412260,
+  "actual_job_conclusion": "failure",
+  "failed_step": "Tooling guards before preparation",
+  "actual_source_result": {
+    "ordinary_failed": 1,
+    "ordinary_passed": 4337,
+    "passed_subtests": 8,
+    "test": "tests/test_mark_lbp_controller.py::test_current16a5_bound_source_and_historical_scope",
+    "line": 46
+  },
+  "Windows_product_build": "SKIPPED_AFTER_MANDATORY_SOURCE_FAILURE",
+  "Windows_independent_seal": "FAILED_NO_TERMINAL_SEAL",
+  "actual_expected_raw_pyproject_sha256": "8bb611200035980a4df9e212d1d80c12ffa6890174fc851936976a51d6197866",
+  "actual_hosted_raw_pyproject_sha256": "75d9de83cf1cd77086ab217e1a34e43cae83acc837cc6e51e93ed7c338fee141",
+  "root_actual_byte_equation": "SHA256(local pinned LF bytes converted only LF->CRLF) exactly equals hosted failing75d9. CMake root already-text; all other raw-bound paths under existing -text directories. Only uncovered raw dependency is pyproject.toml.",
+  "current_Git_attributes": "pyproject.toml: text: unspecified\npyproject.toml: eol: unspecified\n",
+  "old_gitattributes_sha256": "a024d89308c0ad7e73586ed002fbe011aa0b20ebca5cb16c6b2f0c8c54e8e16e",
+  "actual_log": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-root-dispatch-v1\\windows-job-log-raw-v1.bin",
+    "bytes": 65433,
+    "sha256": "d91a2ccd27c289f01d0e53fbb16e7c69b8ca93aaf81ea341df58cffcd3018cb4",
+    "format": "UTF8 BOM plain job log, not archive",
+    "API_request_exit": 0
+  },
+  "readiness_scope_correction": "Immutable0558 sourcefull173both remains genuine PASS for the actual local LF root runtime scope; its hosted-entry eligibility claim is superseded by this missing root checkout byte-policy dependency. Local launcher forced faithful Git fixture checkout but did not recreate actual root pyproject checkout. Preserve this campaign and all failures; no unchanged retry or relabeling.",
+  "independent_jobs": "Three Linux profiles remain running; preserve their useful results within exact8ac scope, no aggregate release admission or dependent VI4/main.",
+  "narrow_correction": "Root owns .gitattributes only: add pyproject.toml -text to preserve stored raw bytes. No raw reference/hash/test assertion or production/SDK/math change. Verify actual NativeWindowsGit checkout with core.autocrlf=true, then full173both on frozen successor before any new exact-sourcefour-profile qualification.",
+  "required_acceptance_gates": {
+    "actual_Windows_failure_and_byte_equation": "PASS_ROOT_ACTUAL",
+    "one_file_attribute_change": "PENDING_ROOT",
+    "fresh_actual_windows_style_checkout_8bb": "PENDING",
+    "complete_actual173_successor_both": "PENDING_REQUIRED",
+    "fresh_exact_source_four_profile_qualification": "PENDING_NO_GO",
+    "VI4_main": "HELD"
+  },
+  "waste_reuse": "Missed root pyproject raw checkout dependency caused one Windows source failure before any product build. Other Linux work stays independent. Reuse private16/4SDK/math/benchmarks within unchanged scope; no retiming or speculative numerical correction. Retain raw failure and superseded readiness before narrow source-policy successor."
+}
