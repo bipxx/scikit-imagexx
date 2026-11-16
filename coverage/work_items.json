@@ -17842,7 +17842,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -17864,7 +17864,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -26856,7 +26856,7 @@
             "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
             "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
           },
-          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs×7paired rounds×3profiles; one worker, all regressions retained."
         }
       }
     },
@@ -32149,7 +32149,7 @@
           },
           "native_contract_checks": 184,
           "native_pending": 0,
-          "scope": "184 actual installed C++SDK consumer tests:23families\u00d7normal/scalar\u00d74profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
+          "scope": "184 actual installed C++SDK consumer tests:23families×normal/scalar×4profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
         }
       }
     },
@@ -35312,7 +35312,7 @@
           "acceptance_pass": false
         }
       },
-      "native_check_unit": "946 case/worker combinations per mode\u00d76=5676;25,836 grouped assertions each mode, not independent-case credit.",
+      "native_check_unit": "946 case/worker combinations per mode×6=5676;25,836 grouped assertions each mode, not independent-case credit.",
       "genuine_preparation": {
         "status": "verified_private_prepare_only",
         "run": 40790763016,
@@ -36355,7 +36355,7 @@
         "draw-polygon-reference-v1"
       ],
       "acceptance": "Roottypedreviewd11f4d48 accepteded8f; existing24referenceIDs/profile,17success/7sourceprefixerrors. Exactc,r classifierreuse, singlelabelsraster/rowprefix, scalar/SIMD/optionalworkers/default1/FENV/refusal/analyticparallelcontrols andactualMSVC. No neworiginal/fullSDK/core/env/timing; explicitnumericboundsprovider/generalcontractgapsstayopen.",
-      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs\u00d7workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
+      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs×workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
       "next_gate": {
         "owner": "qualification251_readiness",
         "action": "Restoreonlyaccepted4nativepaths into260candidate; strictFP/unit/exportsourceclosure andgenuineplatform/performance gates remain."
@@ -36370,7 +36370,7 @@
           },
           "native_contract_checks": 136,
           "native_pending": 0,
-          "scope": "17savedreturnIDs\u00d7workers1/4\u00d74modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
+          "scope": "17savedreturnIDs×workers1/4×4modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
         }
       }
     },
@@ -36471,7 +36471,7 @@
         "draw-polygon-sdk-v1",
         "draw-polygon-benchmark-v1"
       ],
-      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14\u20131.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
+      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14–1.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
       "next_gate": {
         "owner": "root",
         "action": "Publish everyrawsample/journal/ratio/loss in existingDISCARDcapsule; no retry/noiseattribution/waiver. A source+profile constructorbottleneck review: preparealreadystridedwalk and1609bytes/15relocations identical, no divisionpatch. LocalcProfile metadata~71%isdiagnostic only, nothostcausereproduction. Newmaterialproposal requirespeer/genuine/newfixedexperiment; polygon12measurement/full4release remain."
@@ -39500,7 +39500,7 @@
       "readiness_reviewer": "Nonauthorreview C93f64source/72proof/823affectedchecks; focussharedSDK/wiring/contexts/workflow169, importedRkernels onlypinsagainstoldB/rootadmissions. No self-admission or checks/science reruns.",
       "root": "ActualLBP2firstcase strict controls+flood636 admitted. OwnGLCM0b6 countfix69each+Breview/fresh8prefix64; nextnonauthoractualprefix readiness beforemin8neworiginal. Rootsharedcandidateadmission/full169/rootnativeSDK+release/genuine/perf/main."
     },
-    "next_action": "C finishes owningSDKtest successor and B finishes isolated failure-onlyVI4source; root integrates minimal shared lineage/collector/selectors, admits source, then fresh owningSDKcompile/runtimeGO. Reuse private4pairPASS unchangedproduction/runtime; no repeat. Full finalsourcecommand both/new4profiles/VI4 andmain remain gates.",
+    "next_action": "Root finishes currentlarge-reference source integration/admission (Bfinal3file21inertboth; Aindependent exactbudget; Csharedqualifier review), then distinct bounded16node privatevalidation. Full final173 actualsourcecommand both/stablecandidate/genuine4profiles/VI4/mainpending. All4privateSDKmodesclosed without replay.",
     "current_checkpoint": {
       "main_image_names": 271,
       "resume_20261115": {
@@ -39524,13 +39524,13 @@
         "authorization": "User replied sure to the recommendation to resume with the frozen MARK/LBP correction, complete source/SDK/release/performance gates and one compatible delivered increment. This resumes implementation only; no approval of the separate 154-worktree ancestry exception and no permission to retry policy-blocked deletions. User subsequently set active goal close the gap; this authorizes necessary implementation/diagnosis/release work toward the remaining271-to281gap, preserving scientific gates and manual-only cleanup restrictions.",
         "acceptance": "Independent exact9e15 five-file source admission before root complete169 commands on both retained Pythons with normal conftest/plugins/no fail-fast. Reuse unchanged math/native/SDK/performance only within actual dependency scope; finish affected public/modes/installed SDK, exact-source four-profile qualification, remaining bound original-public performance and final shipping projection before merge/push. Root owns independent admission, main and shared integration; no unvalidated implementation ancestry imported.",
         "worker_ownership": {
-          "mark_source_reviewer": "Terminal actual4+4 campaign admitted5fcee6; no livejob/bodyGO or follow-on authority.",
-          "mark_release_readiness": "Versioned SDK-controls source successor only in owning VI client/headers and narrow FENV target wiring; source budget evidence, no compile/math.",
-          "tracking_repair": "New VI4 failure-only capture source successor in four isolated files; no math/runtime/build/main authority; oldB114ed packet retained.",
+          "mark_source_reviewer": "Read-only newcurrentlarge/legacytest runtime envelope/FPbudgets; staticmodeproducts admitted21c8, no tests/math beyond newfreshGO.",
+          "mark_release_readiness": "Current scalar/SAN installedSDK consumers compile/link+metadata only8commands; bodyGO pendingindependentbinaryadmission.",
+          "tracking_repair": "New source-only largepublic reference scope correction in3ownedtest files; preservealloldscalar assertions/golds, addcurrentnaturalFPpair semantics. No runtime/main/shared edits.",
           "root": "Independent source/compiled-product admitted85257; admits harness/rootGO/main. Shipped271."
         },
         "capacity": "Actual entry C free396955144192B, D free288221495296B. Conservative combined next peak: 20GiB full source-barrier scratch plus 1GiB tracking worktree and 1GiB worker guards; destination exceeds peak plus20GiB and30GiB floor. Reuse retained Windows311 executable and project Windows313 environment; no environment/download rebuild. Keep raw command/XML/evidence outside disposable roots; release terminal scratch after excluding protected dependencies; previously denied targets untouched.",
-        "next_gate": "C finishes owningSDKtest successor and B finishes isolated failure-onlyVI4source; root integrates minimal shared lineage/collector/selectors, admits source, then fresh owningSDKcompile/runtimeGO. Reuse private4pairPASS unchangedproduction/runtime; no repeat. Full finalsourcecommand both/new4profiles/VI4 andmain remain gates.",
+        "next_gate": "Root finishes currentlarge-reference source integration/admission (Bfinal3file21inertboth; Aindependent exactbudget; Csharedqualifier review), then distinct bounded16node privatevalidation. Full final173 actualsourcecommand both/stablecandidate/genuine4profiles/VI4/mainpending. All4privateSDKmodesclosed without replay.",
         "tracking_delivery": {
           "source": "1cd85168416635de5784efd61f1bb890d4c94bda",
           "main": "pushed_and_remote_verified",
@@ -39763,7 +39763,7 @@
           "GO_state": "All retained SDK stage GOs are consumed historical evidence.",
           "root_terminal_receipt": "coverage/evidence/mark-lbp-private-sdk-modes-root-terminal-admission-v8.json"
         },
-        "private_runtime_closed_scope": "Retained normal/runtime-disabled752 plus current compiler-scalar/ASanUBSan752 for94recipes\u00d72profiles\u00d7workers1/4;1504entries across8cells, no fullAPI/wholemodecore/SDK/speed claim.",
+        "private_runtime_closed_scope": "Retained normal/runtime-disabled752 plus current compiler-scalar/ASanUBSan752 for94recipes×2profiles×workers1/4;1504entries across8cells, no fullAPI/wholemodecore/SDK/speed claim.",
         "qualification_successor": {
           "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
           "branch": "fix/mark-lbp-portable-sourceguard-v1",
@@ -40128,7 +40128,7 @@
         },
         "gap_closure_goal": {
           "objective": "close the gap",
-          "current_main": "3e18874280ae58c538806dba70304926ced9cc15 (production271unchanged)",
+          "current_main": "ca7c08e8174773e5b8e696a7e040e01d43db0763 (production271unchanged)",
           "owner": "/root",
           "previous_turn_classification": "The immediately preceding acknowledgment changed no authoritative state. This goal turn revalidated currentmain/source/receipts and resumed3dependency-ready read-only analyses.",
           "acceptance": {
@@ -40956,11 +40956,13 @@
             "reader_correction": "Initial proof filename assumption failed read-only before writes; used actual handoff plan-proof-index-v1.json, verified38. No scientific/dependent action.",
             "source_successor_assignment": {
               "owner": "/root/tracking_repair",
-              "status": "SOURCE_ONLY_READY_ASSIGNMENT",
+              "status": "ROOT_ADMITTED_219PROOFS_56EACH_SOURCE_ONLY",
               "scope": "Implement admitted A failure-capture plan for changed public-log2 provider route using existing workflow/driver/F1 and error-only capture; preserve successful timing, stop first failure/no retries. Own four proposed new source files/test/manualworkflow only; root shared integration after C SDK freezes.",
               "plan": "build/vi4-failure-capture-plan-v1/capture-plan-v1.md",
               "authority": "No compiler/scientific/native/F1/workflow dispatch/timing. Source-only checks on both retainedPythons mandatory; exact future product authority unbound.",
-              "gates": "Root actual frozen source/inert guards/collector/selector/FPbudgets before any publication/fresh product runtimeGO. No old16 authority retarget."
+              "gates": "Root actual frozen source/inert guards/collector/selector/FPbudgets before any publication/fresh product runtimeGO. No old16 authority retarget.",
+              "receipt": "build/vi4-failure-capture-v1/root-source-admission-v1.json",
+              "sha256": "992b378a3aec6f22e3bbe410f2071a287c7f23ae965f37c622ba4397f360adab"
             }
           },
           "VI_provider_policy": {
@@ -41145,12 +41147,185 @@
             },
             "private_SDK_preparation": {
               "owner": "/root/mark_release_readiness",
-              "status": "source_plan_reviewed_missing_controls_require_successor",
+              "status": "PRIVATE_NORMAL_RUNTIME_DISABLED_TRUE_SCALAR_SANITIZER_OWNING_CONTROLS_ROOT_ADMITTED; genuineprofile/mainpending",
               "path": "build/vi-public-log2-provider-v1/private-owning-SDK-plan-v1.json",
               "scope": "CompleteactualowningVIconsumer/default+compatiblecallbackgroup commands/identities/finitecall/FENVbounds from currentcode; source-only.",
               "remaining": "C owns versioned SDK controls successor: current-counts/large compatible coverage, null/firstfalse/secondfalse/throw complete-output untouched, explicit1/global4, nondefault FENV refusal/full32 caller restore. No body/compile GO yet.",
-              "sha256": "7b7229e176da580c0042007323725bf2db9ac61303daeb051af827bd03b53590"
+              "sha256": "7b7229e176da580c0042007323725bf2db9ac61303daeb051af827bd03b53590",
+              "compile_GO": "build/vi-public-log2-provider-v1/sdk-controls-source-v1/root-compile-only-GO-v1.json",
+              "compile_GO_sha256": "ff106d4ba225f8a6fe8c34c8c9dbffb19f1fa0433cc07eae985f7efa41733f83",
+              "source_proposal_sha256": "adad7863f8e64681052c6fe7796426a03ce3d540f776529471d761836e16143a",
+              "runtime_authority": 0,
+              "source_envelope_not_actual": {
+                "old_topcalls": 136,
+                "new_default_FENV_refusals": 10,
+                "new_compatible_topcalls": 142,
+                "total_topcalls": 288,
+                "old_callbacks": 18,
+                "new_callbacks": 220,
+                "total_callbacks": 238,
+                "Caller32_groups": 20,
+                "F1_restores": 20,
+                "fegetenv_reads": 65,
+                "direct_fesetround": 5,
+                "direct_MXCSR_sets": 3,
+                "direct_x87_fldcw": 1,
+                "scope": "Normal successful Linuxx86_64/glibc full control path source counts/ceilings, not measured runtime counters. Other platforms explicitly UNASSESSED full32."
+              },
+              "root_source_finding": "Refusal full32 entered/after assertion missing in preliminarysource; corrected before any compile/runtime. Allnamedoutputfields and first/secondrefusal/throw identity covered.",
+              "source_compile_admission": "build/vi-public-log2-provider-v1/sdk-controls-source-v1/root-source-compile-admission-v1.json",
+              "source_compile_admission_sha256": "2b00e9ffbb610b70f109bd9f3a787ff7ca9ef20bff15a577242dc1f54b16a843",
+              "runtime_GO": "build/vi-public-log2-provider-v1/sdk-controls-source-v1/root-two-mode-runtime-GO-v1.json",
+              "runtime_GO_sha256": "0c89694329d50af300712b3b3beac593cc0b40041d94bdec61f72ee224832c38",
+              "runtime_status": "NOT_YET_EXECUTED_max2normal_then_disabled_stopfirstfailure",
+              "bound_each_topcalls": 288,
+              "bound_each_callbacks": 238,
+              "bound_each_F1_restores": 20,
+              "bound_each_reads": 65,
+              "runtime_admission": "coverage/evidence/vi-public-log2-private-owning-sdk-root-admission-v1.json",
+              "runtime_admission_sha256": "dd01d236b75b123b115f04ba42db7ec236fa1e205757c0d80bfb17d0602fd898",
+              "mode_client_compile_GO": "build/vi-public-log2-provider-v1/root-current-mode-SDK-clients-compile-only-GO-v1.json",
+              "mode_client_compile_GO_sha256": "8daff7f3b2ac6d455cbdcb9000bf41ee8742ba5333452737db7a8edc0395d744",
+              "normal_disabled_runtime": "Bothactual0/XML1,20caller32+20refusal32each,observednew142/220/10 +20F1/65reads; old136/18boundsnottraced",
+              "current_mode_compile_admission": {
+                "status": "ROOT_PASS",
+                "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\root-compile-admission-v1.json",
+                "sha256": "d0347550e29f188302abeb7cf57771551b2a83f5a89ee0b5d49f07f4039837ec",
+                "actual_proofs_hashed": 58,
+                "actual_commands_zero": 8,
+                "bodies": 0
+              },
+              "current_mode_runtime": {
+                "status": "ROOT_ADMITTED_PASS",
+                "owner": "/root",
+                "path": "coverage/evidence/vi-public-log2-private-sdk-current-modes-root-admission-v1.json",
+                "sha256": "ffae8ee25a1f3cfac7f16978d498e47c5556266b3ecba95b4716bf5fad6301bb",
+                "actual_proofs_hashed": 33,
+                "CTest_runs": 2,
+                "XML_tests": 2,
+                "zero_bad": true,
+                "actual_new_compatible_calls": 284,
+                "actual_new_callback_calls": 440,
+                "actual_new_default_refusals": 20,
+                "caller32_exact": 40,
+                "refusal32_exact": 40,
+                "F1_restores": 40,
+                "fegetenv_reads": 130,
+                "SIMD_available": [
+                  0,
+                  1
+                ],
+                "sanitizer_diagnostics": 0,
+                "GO_consumed": true,
+                "no_release_or_performance_credit": true
+              },
+              "closeout_document_correction": "First document check assumed coverage/api.json had a schema field and failed after all JSON/links/whitespace/WIP/ledger-scope checks. Actual API dict has no such requirement; root corrected to verify API/source files absent from diff. Both368-packet ledger checks remain valid; no scientific/job replay. Shared large-source handoff found before its proof index existed; admission stopped and awaits final complete packet."
+            },
+            "private_mode_build_preparation": {
+              "owner": "/root/mark_source_reviewer",
+              "status": "ROOT_ACTUAL50PROOFS_6COMMANDS_ALL111_188_PRODUCT_ADMITTED",
+              "scope": "Reuse existing admitted native source114ed/4production pins and compiler/launcher; inspect retained exact scalar/SAN commands/cache/product locations without loads/build/science or source changes. Need current owningSDK mode validation, not old16 modes credit.",
+              "required_evidence": "Exact flag/toolchain/source/currentcache availability and simple prospective standardCMake commands/size estimates/requiredseparatebodyGO; privateAVX2/runtime-disable is not compiler-scalar/SAN.",
+              "execution": "No compiler/configure/library/helper/SDK/science/timing/bodyGO; no buildoutput allocation.",
+              "receipt": "build/vi-public-log2-provider-v1/private-sdk-mode-entry-v1.json",
+              "receipt_sha256": "ee288ffa4ebaa8310f4e4f242059c79746f8912a7e076d66d8dad9891d383c8b",
+              "GO": "build/vi-public-log2-provider-v1/root-private-static-sdk-modes-compile-only-GO-v1.json",
+              "GO_sha256": "c98525192e12be4714018d407d973cdc7562055098872c3174d78325908f01a7",
+              "mode_scope": {
+                "scalar": "Retained owning scalar flags: O2/OpenMP, AVX2OFF plus fno-openmp-simd/fno-tree-vectorize/fno-tree-slp-vectorize, fno-lto, strictFP and UNDEBUG. This is compiler-scalar; it does not claim that external scalar libm itself uses no SIMD instructions.",
+                "sanitize": "Use retained owning ASan+UBSan O1/g/framepointer/fno-lto/strictFP/UNDEBUG flags. Preserve prior whole SAN cache AVX2ON mode selection. Historical inherited base additionally had float-cast-overflow and O2, while the admitted fresh named owning leaves were O1/address+undefined; this plan deliberately discloses that mixed history and claims no exact binary or numerical transfer. All current new static TUs receive selected SAN flags through ordinary CMake.",
+                "OpenMP": "ON in both, preserving process workers/default1 scope. Effective flags and symbols remain to be inspected after actual compilation."
+              },
+              "numeric_authority": 0,
+              "scalar_configure": "Authoractual0/session63617/PID4188; no build/install/SAN yet",
+              "metadata_reader_failure": {
+                "path": "build/vi-public-log2-provider-v1/static-sdk-modes-compile-v1/scalar-configure-inspection-failure-v1.json",
+                "sha256": "f5abc9f91be97b79a0b759a1065ad092d1446303c168a8ffcaca6927ad78ed44",
+                "gate": "pending metadata inspection, no dependentbuild",
+                "cause": "PurestdlibreaderSyntaxError missing conditional-expression whitespace before execution; no CMake/science replay.",
+                "owner": "/root/mark_source_reviewer",
+                "correction": "Root authorizes only reader whitespacefix and fresh metadatainspection; reuse actualconfigure0, then remainingoriginalcompileGO commands behindactual0metadata. Noconfigure rerun or criteria changes."
+              },
+              "root_product_admission": "build/vi-public-log2-provider-v1/static-sdk-modes-compile-v1/root-product-admission-v1.json",
+              "root_product_admission_sha256": "21c8f13975d9eb4b8cf9ebc1e96d8642b192dcdec53c0bc3930e9a9aaa9d3bd3",
+              "SDK_files_each": 108,
+              "headers_each": 94,
+              "body_authority": 0
+            },
+            "shared_validation_source_successor": {
+              "owner": "/root",
+              "status": "V1_SOURCE_ADMITTED_PRIVATE_VERSIONED_FREEZE_READY",
+              "base": "114ed9b3e0662982bfd82d217b59ee11acba9e25",
+              "scope": "Exact7 historicalinput equations for SDK aggregate/CMake +earliestMARK/directVI reader +provider sourceguard +realcollector +actualsource workflow; old public-log2v1/oldercontexts/helper immutable. Newhelper/context only sourcehistory, no production/math. CurrentC4 sourcepins/B4capturefiles untouched.",
+              "gates": "Actual seven raw/canonical nativeGit inverses, every priorV1/older gate stilltraversed/tamperrefusals; realcollector includesallnewinputs; allold170selectors retained plus complete CSDK/Bcapture guards=172. Complete affectedprovider source module bothPythons normalplugins/scienceblocker. Finalfull172both remainsmandatory; no partialunion proxy.",
+              "next": "Compile-onlyC and read-onlyA modeplan independent; SDKruntime fresh rootGO after Csource/binary admission; main and qualification helduntil complete finalsource.",
+              "context_sha256": "a95edd6c736a2cbce6fb9530b1cfec000390b8368d6422640dfc1d6438e1714d",
+              "helper_sha256": "77b8494697b9c52290be0705de7b8bab7bfeafafa3097637433b3baf37aa0c33",
+              "actual_checks_each": 29,
+              "actual_exits": [
+                0,
+                0
+              ],
+              "full172both": "PENDING",
+              "setup_failure": "Own quadratic metadata diffauthor stoppedverifiedPID59848/actualexit1; linear exactsingle-middle equations finished0/0. No source/math worker stopped or scientific replay.",
+              "source_files": 15,
+              "source_checks_each": {
+                "provider_source": 29,
+                "SDK_source": 13,
+                "capture_source": 56
+              },
+              "commit_gate": "All15 whitelistedsource/compileproofs admitted; no production/API delta. PrivateSKDv1 snapshot preservesa95 before new large-reference successor; finalfull173/qualification/runtime remaining."
+            },
+            "large_public_reference_scope_correction": {
+              "owner": "/root/tracking_repair",
+              "status": "SOURCE_ONLY_IMPLEMENTATION_REQUIRED_BEFORE_HOSTED_QUALIFICATION",
+              "finding": "Actualcurrent43765280748 onminimumAVX512 returnedreference9b... vsoldscalar9a...; newpublicfrontend now delegatescurrentNumPylog2. Unchanged tests/test_variation_of_information_large_saved.py hardcodesold9a per NumPyversion only and seedsretainedtargetsemanticFP. It would rejectcorrectnewprovider9b onthatCPU; oldSDKscalarfixedgold remainsvalid.",
+              "effect": "No hostednewrelease dispatched; finalsourcefreeze/barrier held for scopedtestcorrection. Private4pairPASS/source/SDK compile+currentruntime work staysvalid,4productionbytes unchanged.",
+              "scope": "Preservealloldlarge functionassertions/records as explicit hash-bound legacy scalarSDKgateway test. Add freshcurrentpublic original/native4case×workers1,4 test oncurrentruntime withnatural incomingtargetFP, exactwords/fullmetadata/input/policy/ownership/hotswap/nativephases/caller restoration. Newsourceguardbothversions, no numericalbodies untilfreshGO.",
+              "paths": [
+                "tests/test_variation_of_information_large_saved.py",
+                "tests/test_vi_public_log2_provider_large.py",
+                "tests/test_vi_public_log2_large_source.py"
+              ],
+              "root_shared_gate": "Root integrates actualqualificationgroup+collector/requiredcurrentselectors/history equations/newsourceguard selector. Bothlegacyandcurrenttests mandatory; no omission/tolerance/CPUdisable/oldgoldrewrite. Alloldfrozencontexts/producerreceipts preserved.",
+              "new_science_authority": 0,
+              "next": "Bsource-onlygrouped successor/rootadmission thenfreshbounded privatevalidation andfullcurrent-source barriers before4profiles.",
+              "independent_runtime_envelope_owner": "/root/mark_source_reviewer",
+              "independent_runtime_envelope_scope": "Read actual3Bsource files+existingF1/observation/nativeguard; source-only call/FP/metadata/fixture/exception/restoration and prospectiveprivate normalgroup command, no implementation/runtime/test/library loads. Exactsourcepins before rootGO."
+            },
+            "reference_validation_source_successor": {
+              "owner": "/root",
+              "status": "AUTHORING_PENDING_ADMISSION",
+              "base": "1237655d691740d20b35fe28109b4dc08642896a",
+              "scope": "Distinct currentlarge-reference source-history gate before immutable SDKv1a95 and alloldgates. Newqualificationcontractv7 keepsold159 selectors andadds currentpublictest; mapVI tocurrentpair andretainlegacylargefile mandatory. SameLinuxgroup16nodes/8currentpairJSON/mode-specificenv; Sourceworkflow173 addsfullnewsourceguard. Realcollector includesallnewsource.",
+              "preserved": "SDKv1helper77b/contexta95 and alloldercontexts/producer/evidence, original4production/currentproducts/C4SDKsources untouched.",
+              "required_checks": "Exact newBASE source inverses raw/canonical; new/current/old sourceguardcompletebothPythons normalplugins; actualqualgroup/requiredselectors/diagnosticdir+sealguard assertions andrealcollector. Full final173 both afterstablemain refresh beforehostedqualification.",
+              "remaining": "Bnewsource3 frozen18inertchecks each; Aindependent call/FPbudget; rootfreshprivateGO/naturalreference8pairs+legacy8native; genuine4profiles/VI4/main pending.",
+              "authoring_correction": {
+                "failure": "Root nested-triple-quote one-off writer raised SyntaxError before any script creation or candidate mutation. Original terminal retained in session; root script now at build/vi-public-log2-provider-v1/root-author-reference-validation-v1.py.",
+                "material_effect": "No source/FP/science validation or dependent dispatch ran from failed authoring command.",
+                "correction": "Wrote one-off script with apply_patch; actual execution exit0 applied only root-owned reference source wiring. No waived gate/scientific rerun."
+              }
             }
+          },
+          "final_source_barrier_preparation": {
+            "owner": "/root/mark_source_reviewer",
+            "status": "ROOT_SOURCE_ADMITTED_UNBOUND_PENDING_STABLE_SOURCE",
+            "retained_launcher": "build/current281-final-source-v1/run_sourcebarrier_v1.py",
+            "new_output": "build/current281-final-source-v2/run_sourcebarrier_v2.py",
+            "scope": "Adapt existing completeworkflow launcher only for final source/count pins and genuinely fresh roots; preserve exact selectors/order/options/normalconftest/plugins/allfailures. No pytest/fullrunner/science/build execution or fixture allocation. Root binds stable source/actualworkflow and capacity after C/Bintegration.",
+            "future_capacity_estimate_per_profile_bytes": 17179869184,
+            "reserve_bytes": 21474836480,
+            "floor_bytes": 32212254720,
+            "prior_actual_each_bytes": [
+              6704842375,
+              6704838022
+            ],
+            "policy": "Serializeprofiles, neverreuse/deleteoldblockedroot; evidenceoutsidefixtures; requiredfullbarrierboth cannotbereplacedbycollection/partialunion.",
+            "receipt": "build/current281-final-source-v2/root-source-admission-v1.json",
+            "sha256": "3a1197d6b91f36187d1181803030d6e204c853795ff38744833b7042d3fa994e",
+            "runner_sha256": "7b14f9a2684ec7d89940cc669994f0ea12f6c0c5e6be3414e2ae8e3b6693e169",
+            "source_checks_each_version": 21
           }
         }
       },
@@ -41277,7 +41452,7 @@
         "actual_exit": 0,
         "calls": 8,
         "C_entries": 16,
-        "result": "Attributiononly; assignment0.384714\u20130.449367ms. No parity/speed credit. Root owns next bounded indexing fix dispatch after MARK review, independent source/native/performance gates remain.",
+        "result": "Attributiononly; assignment0.384714–0.449367ms. No parity/speed credit. Root owns next bounded indexing fix dispatch after MARK review, independent source/native/performance gates remain.",
         "waste_review": "Used once-restored ownwheel and existing cProfile, helper/runtime; eight calls only, no warmup/fullbuild/duplicate archive/core authentication. Cold copy outlier remains visible; no retiming for favorable result."
       },
       "mark_wide_corrected_native": {

@@ -1,0 +1,283 @@
+{
+  "status": "ROOT_PASS_PRIVATE_TRUE_SCALAR_AND_ASAN_UBSAN_OWNING_SDK_V1",
+  "owner": "/root",
+  "admitted_utc": "2026-11-16T02:53:47.055439+00:00",
+  "production_source": "114ed9b3e0662982bfd82d217b59ee11acba9e25",
+  "SDK_test_source": "1237655d691740d20b35fe28109b4dc08642896a",
+  "compile_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\root-compile-admission-v1.json",
+    "sha256": "d0347550e29f188302abeb7cf57771551b2a83f5a89ee0b5d49f07f4039837ec"
+  },
+  "handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\handoff-v1.json",
+    "sha256": "9468af767e553ae0652e07896ae248ce1ef55dddcd6ae5ef7bd3061426641f55"
+  },
+  "proof_index": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\proof-index-v1.json",
+    "bytes": 9330,
+    "sha256": "d1ad9146f63bab996022cf44684da0754bce0e89b9801a73ab834f6dd7380dd2"
+  },
+  "actual_proofs_hashed": 33,
+  "GO": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\root-two-current-mode-runtime-GO-v1.json",
+    "bytes": 9636,
+    "sha256": "a390473dafc6c95979cabbdefb1853514d7d0150e79bbbf1d5b75bf8ebd4509a"
+  },
+  "GO_consumed": true,
+  "actual_CTest_invocations": 2,
+  "actual_ldd_metadata_invocations": 2,
+  "modes": [
+    {
+      "mode": "scalar",
+      "actual_CTest_exit": 0,
+      "actual_XML": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "raw_client": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\scalar\\ctest\\client-output.log",
+        "bytes": 8387,
+        "sha256": "a54467b10425e855c619cec260e30895bd33f62115adb07e9eca1697688d9e5e"
+      },
+      "LastTest": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\scalar\\ctest\\LastTest.log",
+        "bytes": 9252,
+        "sha256": "1807d4ecbaa505aaa6c44b39757d645c41cc4fdb22cb124b226554aaffe3efbe"
+      },
+      "processes": {
+        "ldd": {
+          "command": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\scalar\\ldd\\command.json",
+            "bytes": 842,
+            "sha256": "de1637531ccd06db7210cd66eba5ce1dfd0fc6470c20e3f2d9c03d6fa9f5e7be"
+          },
+          "terminal": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\scalar\\ldd\\terminal.json",
+            "bytes": 4977,
+            "sha256": "825039d646f1b06e5c94558dc6f6a77feadfbe6298dd1af02a7d3b813dfe94b8"
+          },
+          "actual_exit": 0,
+          "Windows_WSL_PID": 32256,
+          "seconds": 4.797000000020489,
+          "started_utc": "2026-11-16T02:47:55.939338+00:00",
+          "completed_utc": "2026-11-16T02:48:00.739902+00:00"
+        },
+        "ctest": {
+          "command": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\scalar\\ctest\\command.json",
+            "bytes": 1126,
+            "sha256": "afa7577165cb4c8b1fa4394cd605cc7ff0f9ddce96350184843e7d940996551f"
+          },
+          "terminal": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\scalar\\ctest\\terminal.json",
+            "bytes": 4873,
+            "sha256": "bc57d89e12a322a00529cd5552157891f23ec5fbc9a79b0dd1308d975aef212d"
+          },
+          "actual_exit": 0,
+          "Windows_WSL_PID": 33972,
+          "seconds": 0.2809999999590218,
+          "started_utc": "2026-11-16T02:48:06.033005+00:00",
+          "completed_utc": "2026-11-16T02:48:06.323656+00:00"
+        }
+      },
+      "new_counters": {
+        "new_compatible_calls": 142,
+        "new_default_FENV_refusals": 10,
+        "new_callbacks": 220,
+        "caller32checks": 20,
+        "F1_restores": 20,
+        "fegetenv_reads": 65,
+        "defaultworkers": 1,
+        "originals": 0,
+        "timing": 0
+      },
+      "caller32_exact": 20,
+      "refusal32_exact": 20,
+      "resolved_dependencies": {
+        "libreference_fenv_restore.so": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+        "libgomp.so.1": "/lib/x86_64-linux-gnu/libgomp.so.1",
+        "libstdc++.so.6": "/lib/x86_64-linux-gnu/libstdc++.so.6",
+        "libm.so.6": "/lib/x86_64-linux-gnu/libm.so.6",
+        "libgcc_s.so.1": "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+        "libc.so.6": "/lib/x86_64-linux-gnu/libc.so.6"
+      },
+      "sanitizer_diagnostics": 0
+    },
+    {
+      "mode": "sanitize",
+      "actual_CTest_exit": 0,
+      "actual_XML": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "raw_client": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\sanitize\\ctest\\client-output.log",
+        "bytes": 8387,
+        "sha256": "00196cb49db3423ceb1f3f626ea8616c5e12e02abe8f7793ae83d2b19ed8a49b"
+      },
+      "LastTest": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\sanitize\\ctest\\LastTest.log",
+        "bytes": 9256,
+        "sha256": "fca5158cc78f49c0d943a553c744726ad730228f6a2891d0b94e32f9f17b0d39"
+      },
+      "processes": {
+        "ldd": {
+          "command": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\sanitize\\ldd\\command.json",
+            "bytes": 953,
+            "sha256": "0a6852445901e16e669394de874fd900ed8a8980866b350aa955e0ee8c4a03b4"
+          },
+          "terminal": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\sanitize\\ldd\\terminal.json",
+            "bytes": 5098,
+            "sha256": "8153fb9864fe6a5c92202cab14a6558dbfd269cd8e955a9e91fe31f3b7edec07"
+          },
+          "actual_exit": 0,
+          "Windows_WSL_PID": 19724,
+          "seconds": 5.125,
+          "started_utc": "2026-11-16T02:49:42.604574+00:00",
+          "completed_utc": "2026-11-16T02:49:47.724925+00:00"
+        },
+        "ctest": {
+          "command": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\sanitize\\ctest\\command.json",
+            "bytes": 1246,
+            "sha256": "62f2799d6a6ab4b8dd769b5902c16dae501e29007ab2ae2eb5b8b6bf3d742ccf"
+          },
+          "terminal": {
+            "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\sdk-current-modes-v1\\runtime-v1\\sanitize\\ctest\\terminal.json",
+            "bytes": 4890,
+            "sha256": "83ad515fdda6614e1839c09096decb86a17ffcc09e1117b8d5c57f096e0e5585"
+          },
+          "actual_exit": 0,
+          "Windows_WSL_PID": 49384,
+          "seconds": 0.5619999999762513,
+          "started_utc": "2026-11-16T02:49:57.286296+00:00",
+          "completed_utc": "2026-11-16T02:49:57.858588+00:00"
+        }
+      },
+      "new_counters": {
+        "new_compatible_calls": 142,
+        "new_default_FENV_refusals": 10,
+        "new_callbacks": 220,
+        "caller32checks": 20,
+        "F1_restores": 20,
+        "fegetenv_reads": 65,
+        "defaultworkers": 1,
+        "originals": 0,
+        "timing": 0
+      },
+      "caller32_exact": 20,
+      "refusal32_exact": 20,
+      "resolved_dependencies": {
+        "libasan.so.8": "/lib/x86_64-linux-gnu/libasan.so.8",
+        "libreference_fenv_restore.so": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+        "libgomp.so.1": "/lib/x86_64-linux-gnu/libgomp.so.1",
+        "libstdc++.so.6": "/lib/x86_64-linux-gnu/libstdc++.so.6",
+        "libm.so.6": "/lib/x86_64-linux-gnu/libm.so.6",
+        "libubsan.so.1": "/lib/x86_64-linux-gnu/libubsan.so.1",
+        "libgcc_s.so.1": "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+        "libc.so.6": "/lib/x86_64-linux-gnu/libc.so.6"
+      },
+      "sanitizer_diagnostics": 0
+    }
+  ],
+  "observed_totals": {
+    "new_compatible_calls": 284,
+    "new_default_FENV_refusals": 20,
+    "new_callbacks": 440,
+    "exact_caller32_rows": 40,
+    "exact_refusal32_rows": 40,
+    "F1_restore_counters": 40,
+    "fegetenv_read_counters": 130,
+    "default_worker_after_each": 1,
+    "unexpected_primary_secondary": 0,
+    "sanitizer_diagnostics": 0
+  },
+  "helper": {
+    "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+    "mode": "private-fixed-v1",
+    "glibc": "2.39",
+    "ABI": [
+      32,
+      0,
+      4,
+      8,
+      12,
+      20,
+      28,
+      8
+    ],
+    "sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "bytes": 15632
+  },
+  "source_derived_bounds_not_traced": {
+    "source_bounds_each": {
+      "old_topcalls": 136,
+      "old_callbacks": 18,
+      "new_topcalls": 152,
+      "new_callbacks": 220,
+      "complete_topcalls_each": 288,
+      "complete_callbacks_each": 238,
+      "two_mode_topcalls": 576,
+      "two_mode_callbacks": 476,
+      "provider_max_words_per_batch": 4096,
+      "provider_element_upper_each": 974848
+    },
+    "source_FP_bounds_each": {
+      "Caller32groups": 20,
+      "F1restores": 20,
+      "fegetenv_reads": 65,
+      "fesetround": 5,
+      "MXCSR_sets": 3,
+      "x87_fldcw": 1
+    },
+    "actual_new_printed_counters_are_separate": true,
+    "complete_old136_topcalls18_callbacks_not_independently_traced": true,
+    "external_per_call_tracer": false
+  },
+  "zero_activity": {
+    "original": 0,
+    "Python_science": 0,
+    "NumPy": 0,
+    "benchmark": 0,
+    "timing": 0,
+    "warmup": 0,
+    "sampler": 0,
+    "build": 0,
+    "download": 0,
+    "retry": 0,
+    "cleanup": 0,
+    "source_edits": 0
+  },
+  "scope": "Current private compiler-scalar and ASan+UBSan installed SDK, GNU13/glibc2.39/AVX2 host. Disclosed stdlog2 SDK callback; no NumPy/SVML/genuine hosted release/performance claim. Exact sanitizers options retained in commands; no diagnostics observed.",
+  "unmet": [
+    "Final exact-source complete173 source command both Python versions",
+    "Exact-source four-profile genuine qualification",
+    "Current genuine VI4 one-thread public performance with all losses",
+    "Final source projection/main delivery"
+  ],
+  "retention": {
+    "all_raw_commands_PIDs_stdout_stderr_XML_client_LastTest_outside_build": true,
+    "archive_transports": 0,
+    "active_consumer_builds": "D:/Scratch/vi-owning-sdk-current-modes-v1",
+    "protected_mode_products": "D:/Scratch/vi-public-log2-provider-sdk-modes-v1",
+    "removed_paths": [],
+    "cleanup_authority": 0,
+    "old_blocked_paths_touched": false,
+    "owner": "/root",
+    "release_trigger": "After independent runtime admission and remaining readers/dependencies release active caches; preserve concise raw/source/products required for pending work. No automatic cleanup attempted."
+  },
+  "waste_reuse": {
+    "result": "Both requested CTests and allowed dependency listings passed once without source fixes/retries",
+    "reuse": "Same-mode existing products/compiler/F1/source13/full old controls; no repeated library build/hash, Python4case campaign or source barrier",
+    "observed_cost": "Per-command wall clocks retained for ldd/CTest only, not public performance or a speed comparison",
+    "next_owner": "/root",
+    "next_trigger": "Inspect frozen raw40+40 comparisons/counters/XML/source/runtime chain and admit; update existing plan/ledger/checklist. Full final-source/qualification/VI4/main remain separate."
+  },
+  "root_independent_review": "All33hashes, four actual0 terminals, two XML exact1, own parsing40caller32/40refusal32 full bytes+5mode register bits/grid, new284/440/20 counters, legacy progress rows, actual ldd paths and no sanitizer/primary diagnostics. Reused unchanged source13/SDK archive admission and stat; no repeat science."
+}
