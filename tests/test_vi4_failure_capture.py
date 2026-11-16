@@ -9,6 +9,7 @@ import shutil
 import sys
 from types import SimpleNamespace
 import pytest
+from vi_public_matmul_source_view import _vi_2270_source_epoch
 
 ROOT=Path(__file__).resolve().parents[1]
 CONTEXT='coverage/contracts/vi4-failure-capture-v2.json'
@@ -89,7 +90,9 @@ def fake_array(label,raw,shape=(2,),kind='f',itemsize=8,events=None,bad=False,ob
     return value
 
 
-def observed_error(index,line,*,cohort=False,bad_expected=False,restore_failure=False,execute_root=ROOT,probe_root=ROOT):
+def observed_error(index,line,*,cohort=False,bad_expected=False,restore_failure=False,execute_root=None,probe_root=None):
+    if execute_root is None:execute_root=ROOT
+    if probe_root is None:probe_root=ROOT
     events=[];spec=DATA['capture']['cases'][index];n=spec['shape'][0]*spec['shape'][1];state=[b'O'*32 if cohort else(b'S'*32 if line>141 else b'C'*32)]
     def save():events.append('save');return state[0]
     def restore(saved):

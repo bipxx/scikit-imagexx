@@ -199,7 +199,7 @@ endif()
 add_test(NAME installed_finite_radon_consumer COMMAND finite_radon_consumer)
 
 # Complete owning VI operation with current-count dense/fallback/CSR controls.
-add_executable(variation_of_information_consumer variation_of_information_enabled_consumer.cpp)
+add_executable(variation_of_information_consumer variation_of_information_matmul_consumer_v1.cpp)
 target_link_libraries(variation_of_information_consumer PRIVATE skimagexx::skimagexx)
 target_include_directories(variation_of_information_consumer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/..")
 # VI_SDK_FENV32_BEGIN

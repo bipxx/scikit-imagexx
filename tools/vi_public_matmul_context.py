@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v1.json'
+CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v3.json'
 SELF_PIN_PATH = 'tools/mark_lbp_fp_context.py'
 PREDECESSOR = '2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d'
 

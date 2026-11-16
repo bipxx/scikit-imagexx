@@ -294,7 +294,14 @@ SDK_MEMBERS = 68
 CURRENT_PRODUCT_SCOPE = 'current281'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball')
 CURRENT_SDK_CLIENT_SCOPE = 'current38 required installed clients; complete rolling-ball floating/typed-storage owning operations plus admitted VI/flood families; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v7.json'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v8.json'
+VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
+VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
+VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
+VI_OBSERVER_CANONICAL_SHA256 = '476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc'
+VI_CURRENT_LARGE_REFERENCE_POLICY = {"profiles": ["minimum", "modern", "debug"], "legacy_scalar_gateway": "tests/test_variation_of_information_large_saved.py", "current_public_pairs": "tests/test_vi_public_log2_provider_large.py", "source_guard": "tests/test_vi_public_log2_large_source.py", "legacy_nodes_per_mode": 8, "current_nodes_per_mode": 8, "current_records_per_mode": 8, "source_cases": 4, "workers": [1, 4], "provider": "current public numpy.log2 elementary batches and numpy.matmul inner products", "FP": "natural current caller for fresh original/native pairs; retained semantic FP only in explicitly legacy scalar SDK gateway", "historical_records": "Preserved unchanged; never relabeled current CPU/ufunc or new genuine qualification.", "provider_order": ["numpy.log2", "numpy.matmul", "numpy.log2", "numpy.matmul"], "provider_types": {"log2": "ufunc", "matmul": "ufunc"}}
+VI_CURRENT_PUBLIC_REFERENCE_POLICY = {"linux_profiles": ["minimum", "modern", "debug"], "linux_module": "tests/test_vi_public_matmul_provider_public.py", "linux_group": "public-VI-current-public-linux", "linux_nodes_per_mode": 16, "linux_records_per_mode": 16, "windows_profiles": ["windows"], "windows_module": "tests/test_vi_public_matmul_windows_public.py", "windows_group": "public-VI-current-windows", "windows_nodes_per_mode": 34, "windows_pair_records_per_mode": 16, "windows_worker_records_per_mode": 34, "windows_portable_control_nodes_per_mode": 18, "case_ids": ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"], "workers": [1, 4], "provider_order": ["numpy.log2", "numpy.matmul", "numpy.log2", "numpy.matmul"], "successful_pairs_per_mode": 14, "expected_None_errors_per_mode": 2, "Linux_FP": "Natural current target semantics and exact caller32; separate from retained-semantic legacy gateway", "Windows_FP": "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim", "historical_records": "Preserved unchanged; no historical/genuine or cross-platform scope promotion"}
+VI_CURRENT_PROVIDER_CONTROLS_POLICY = {"Linux_full_saved_group_nodes_per_mode": 56, "retained_saved_and_counts_subset": 40, "added_phase_and_scalar_transport_nodes": 16, "Windows_portable_controls": 18, "hotswap_module": "tests/test_variation_of_information_integration.py", "hotswap_profiles": ["minimum", "modern", "debug", "windows"], "Linux_saved_observation_records_per_mode": 16}
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
 DRAW_SOURCE_PATHS = ('coverage/contracts/mark-lbp-controller-source-successor-v1.json','tests/test_mark_lbp_controller.py','tests/test_vi_controller.py',
     'include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
@@ -750,8 +757,11 @@ def applicable_public_groups(groups,profile):
         selected['public-radon-ABI-policy-linux']=('test_finite_radon_numpy_abi_public.py',)
         selected['public-VI-saved-linux']=('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py')
         selected['public-VI-large-saved-linux']=('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
+        selected['public-VI-current-public-linux']=('test_vi_public_matmul_provider_public.py',)
         selected['public-flood-saved-linux'] = ('test_flood_fill_public.py',)
         selected['public-rolling-ball-saved-linux'] = ('test_rolling_ball_public.py',)
+    if 'public-post203' in selected and profile=='windows':
+        selected['public-VI-current-windows']=('test_vi_public_matmul_windows_public.py',)
     return selected
 
 
@@ -810,6 +820,35 @@ DRAW_SOURCE_PATHS += ('tools/vi_public_reference_context.py', 'coverage/contract
 
 # Current VI SDK/capture validation source closure, not historical qualification.
 DRAW_SOURCE_PATHS += ('tools/vi_provider_sdk_context.py', 'coverage/contracts/vi-provider-sdk-source-v1.json', 'tests/variation_of_information_provider_controls.hpp', 'tests/test_vi_owning_sdk_source.py', 'tools/vi4_failure_capture.py', 'coverage/contracts/vi4-failure-capture-v1.json', 'tests/test_vi4_failure_capture.py', '.github/workflows/vi-initial-failure-capture.yml')
+
+
+# Current public log2/matmul qualification; immutable predecessors stay collected.
+DRAW_SOURCE_PATHS += (
+    "benchmarks/vi_public_matmul_provider_consumer.py",
+    "benchmarks/vi_public_matmul_provider_execution.py",
+    "coverage/contracts/vi-public-matmul-provider-v1.json",
+    "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json",
+    "tests/test_vi_public_matmul_provider_source.py",
+    "tests/test_vi_public_matmul_provider_public.py",
+    "tools/vi_public_matmul_context.py",
+    "coverage/contracts/vi-public-matmul-source-history-v1.json",
+    "coverage/contracts/vi-public-matmul-source-history-v2.json",
+    "coverage/contracts/vi-public-matmul-source-history-v3.json",
+    "tests/vi_public_matmul_source_view.py",
+    "tests/cmake_consumer/variation_of_information_matmul_consumer_v1.cpp",
+    "tests/variation_of_information_matmul_controls_v1.hpp",
+    "tests/test_vi_public_matmul_sdk_source.py",
+    "tools/vi4_public_matmul_capture.py",
+    "coverage/contracts/vi4-public-matmul-capture-v1.json",
+    "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json",
+    "benchmarks/vi_public_matmul_provider_execution_v2.py",
+    "benchmarks/vi_public_matmul_provider_consumer_v2.py",
+    "tests/test_vi4_public_matmul_capture.py",
+    "tests/test_vi_public_matmul_qualification_source.py",
+    "tests/test_vi_public_matmul_windows_public.py",
+    "coverage/contracts/current-public-qualification-v8.json",
+    "tests/test_vi_value_diagnostic_workflow.py",
+)
 
 
 def environment(package=None, scalar=False):
@@ -1063,14 +1102,18 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py'},
             'current qualification selector contract differs')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
     require(data.get('Linux_saved_mark_lbp_profiles')==['minimum','modern','debug'],'Linux saved MARK/LBP profile scope differs')
     require(data.get('Linux_saved_rolling_ball_profiles')==['minimum','modern','debug'] and data.get('rolling_ball_saved_nodes_per_mode')==81,'Linux rolling-ball saved scope differs')
-    require(data.get('VI_current_runtime_large_reference')=={'profiles': ['minimum', 'modern', 'debug'], 'legacy_scalar_gateway': 'tests/test_variation_of_information_large_saved.py', 'current_public_pairs': 'tests/test_vi_public_log2_provider_large.py', 'source_guard': 'tests/test_vi_public_log2_large_source.py', 'legacy_nodes_per_mode': 8, 'current_nodes_per_mode': 8, 'current_records_per_mode': 8, 'source_cases': 4, 'workers': [1, 4], 'provider': 'current public numpy.log2 elementary batch computation', 'FP': 'natural current caller for fresh original/native pairs; retained semantic FP only in explicitly legacy scalar SDK gateway', 'historical_records': 'Preserved unchanged; never relabeled current CPU/ufunc or new genuine qualification.'},
+    require(data.get('VI_current_runtime_large_reference')==VI_CURRENT_LARGE_REFERENCE_POLICY,
             'current VI large-reference domain/provider scope differs')
+    require(data.get('VI_current_runtime_public_reference')==VI_CURRENT_PUBLIC_REFERENCE_POLICY,
+            'current VI public Linux/Windows reference scope differs')
+    require(data.get('VI_current_provider_controls')==VI_CURRENT_PROVIDER_CONTROLS_POLICY,
+            'current VI saved/provider/hot-swap scope differs')
     require(contracts.get('metrics.variation_of_information')=='tests/test_vi_public_log2_provider_large.py',
             'current VI public original-pair contract missing')
     return data
@@ -2144,6 +2187,14 @@ def child(out, group):
         require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIlargeforbidsprivatecomponentorWindowsFPclaim')
         os.environ.update(util_views_fenv_environment(out,state))
         os.environ['VI_PUBLIC_LOG2_LARGE_RECORD_DIR']=str(out/(mode+'-VI-current-large-rows'))
+    if group=='public-VI-current-public-linux':
+        require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIcurrentforbidsprivatecomponentorWindowsFPclaim')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['VI_PUBLIC_MATMUL_SMALL_RECORD_DIR']=str(out/(mode+'-VI-current-public-rows'))
+    if group=='public-VI-current-windows':
+        require(state['profile']=='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIWindowsforbidsprivatecomponentorLinuxFPclaim')
+        os.environ['VI_PUBLIC_MATMUL_WINDOWS_RECORD_DIR']=str(out/(mode+'-VI-current-windows-rows'))
+        os.environ['VI_PUBLIC_MATMUL_WINDOWS_WORKER_RECORD_DIR']=str(out/(mode+'-VI-current-windows-workers'))
     if group=='public-VI-saved-linux':
         require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIforbidsprivatecomponentorWindowsFPclaim')
         os.environ.update(util_views_fenv_environment(out,state))
@@ -2362,7 +2413,7 @@ def sdk(out, state, journal):
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
             if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
-                    or name in ('tests/variation_of_information_large_controls.hpp','tests/variation_of_information_provider_controls.hpp')
+                    or name in ('tests/variation_of_information_large_controls.hpp','tests/variation_of_information_provider_controls.hpp','tests/variation_of_information_matmul_controls_v1.hpp')
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
@@ -2457,11 +2508,131 @@ def validate_VI_current_large_rows(directory):
         reference=value.get('reference_FP',{});native=value.get('native_FP',{})
         require(bool(re.fullmatch('[0-9a-f]{64}',natural))and reference.get('before_raw32')==native.get('before_raw32')==natural,'VI current-large natural FP entry differs')
         require(set(reference.get('before',{}))=={'control','status','mxcsr'}and reference.get('before')==native.get('before')and reference.get('after')==native.get('after'),'VI current-large FP effects differ')
-        require(value.get('provider')=='current true numpy.log2 ufunc computation'and value.get('provider_type')=='ufunc'and len(value.get('provider_batches',[]))==2,'VI current-large current provider missing')
-        require(all(b.get('provider')=='numpy.log2'for b in value['provider_batches']),'VI current-large provider batches differ')
+        require(value.get('provider')=='current true numpy.log2 and numpy.matmul ufunc computation'and value.get('provider_types')==dict(log2='ufunc',matmul='ufunc')and len(value.get('provider_batches',[]))==4,'VI current-large current providers missing')
+        require(tuple(b.get('provider')for b in value['provider_batches'])==VI_CURRENT_PROVIDER_ORDER,'VI current-large provider batches differ')
         require(value.get('input_before')==value.get('input_after')and value.get('pointers_before')==value.get('pointers_after')and value.get('pointers_stable')is True,'VI current-large input mutation')
         require(value.get('software_context_unchanged')is True and value.get('namespace_identity_unchanged')is True,'VI current-large software/namespace restoration differs')
     return rows
+
+
+def validate_VI_current_public_rows(directory, *, windows=False, installed_paths=None):
+    """Seal16 current pairs; expected input errors are distinct from14 f64 returns."""
+    paths = list(Path(directory).glob('*.json'))
+    require(len(paths) == 16, 'VI current-public exact16 records required')
+    rows = [json.loads(path.read_text(encoding='utf-8')) for path in paths]
+    require({(v.get('case', {}).get('id'), v.get('workers')) for v in rows} ==
+            {(case, worker) for case in VI_CURRENT_PUBLIC_CASE_IDS for worker in (1, 4)},
+            'VI current-public case/worker coverage differs')
+    if windows:
+        require(isinstance(installed_paths, dict) and set(installed_paths) == {'core', 'frontend'},
+                'Windows VI installed ownership paths required')
+    for value in rows:
+        require(value.get('primary') is None and value.get('diagnostics') == [] and value.get('timing') is False,
+                'VI current-public primary/diagnostic/timing failure')
+        require(value.get('counts') == dict(original=1, native=1), 'VI current-public exact1+1 calls required')
+        reference = value.get('reference_observation'); actual = value.get('native_observation')
+        require(isinstance(reference, dict) and reference == actual, 'VI current-public observations differ')
+        require(reference.get('id') == value['case']['id'] and reference.get('checks', {}).get('policy_restored') is True
+                and reference.get('checks', {}).get('input_buffer_addresses_stable') is True,
+                'VI current-public policy/input state differs')
+        events = value.get('provider_events')
+        require(isinstance(events, list) and len(events) == 1, 'VI current-public provider journal absent')
+        error_case = value['case']['id'] == 'variation_of_information/table-with-None-images'
+        if error_case:
+            require(value['case'].get('images_none') is True and reference.get('result') is None
+                    and reference.get('error') == dict(type='AttributeError', module='builtins', message="'NoneType' object has no attribute 'shape'")
+                    and value.get('accepted') == [False] and value.get('returned') == value.get('suffix') == []
+                    and events == [[]] and 'expected' not in value and 'actual' not in value,
+                    'VI expected None-image error/callback scope differs')
+        else:
+            require(not value['case'].get('images_none') and reference.get('error') is None,
+                    'VI successful public pair has an error')
+            require(tuple(event.get('provider') for event in events[0]) == VI_CURRENT_PROVIDER_ORDER
+                    and all(event.get('dtype') == '<f8' for event in events[0]),
+                    'VI current-public four providers differ')
+            requirements = (dict(get_num_threads=1, label_pair_check_storage=3, variation_of_information_csr=1)
+                if value['case']['id'] in ('variation_of_information/table-normalized', 'variation_of_information/table-raw-counts')
+                else dict(get_num_threads=2, label_pair_check_storage=7, label_pair_counts_preweighted=1, variation_of_information_csr=1))
+            returned = value.get('returned', [])
+            require(len(returned) == sum(requirements.values()) and
+                    {key: returned.count(key) for key in requirements} == requirements
+                    and value.get('accepted') == [True]
+                    and value.get('suffix') == ([] if len(returned) == 5 else [True]),
+                    'VI current-public native markers differ')
+            expected = value.get('expected', {}); result = value.get('actual', {})
+            require(expected == result and expected.get('type') == ['numpy', 'ndarray'] and expected.get('dtype') == '<f8'
+                    and expected.get('shape') == [2] and expected.get('strides') == [8] and expected.get('nbytes') == 16
+                    and expected.get('flags', {}).get('owndata') is True, 'VI current-public output ownership/type/words differ')
+            raw = expected.get('raw_hex', '')
+            require(bool(re.fullmatch('[0-9a-f]{32}', raw)) and
+                    hashlib.sha256(bytes.fromhex(raw)).hexdigest() == expected.get('payload_sha256'),
+                    'VI current-public raw output hash differs')
+            aliases = reference.get('output_input_aliases')
+            require(isinstance(aliases, dict) and set(aliases) == {'0'} and
+                    all(alias is False for alias in aliases['0'].values()), 'VI current-public output/input alias')
+        if windows:
+            require(value.get('FP_scope') == VI_WINDOWS_FP_SCOPE and
+                    not any(name in value for name in ('target_FP', 'caller32', 'natural_caller_raw32')),
+                    'Windows VI must not claim Linux hardware FP')
+            require(value.get('native_core_path') == installed_paths['core'] and
+                    value.get('native_frontend_path') == installed_paths['frontend'] and
+                    value.get('public_signature') == '(image0=None, image1=None, *, table=None, ignore_labels=())',
+                    'Windows VI installed owner/signature differs')
+            require(value.get('provider_types') == dict(log2='ufunc', matmul='ufunc') and
+                    value.get('software_context_unchanged') is True and value.get('namespace_identity_unchanged') is True
+                    and value.get('software_restored') is True, 'Windows VI provider/software/namespace differs')
+            states = value.get('target_software', {}); restored = value.get('restored_software', {})
+            require(set(states) == set(restored) == {'reference', 'native'}, 'Windows VI software states missing')
+            natural = value.get('natural_software')
+            require(isinstance(natural, dict) and restored['reference'] == restored['native'] == natural,
+                    'Windows VI natural software handler/policy/buffer not restored')
+            for role in ('reference', 'native'):
+                require(len(states[role]) == 2 and states[role][0] == states[role][1],
+                        'Windows VI per-target exact software identity changed')
+            for index in (0, 1):
+                left, right = states['reference'][index], states['native'][index]
+                require(left.get('policy') == right.get('policy') and left.get('buffer') == right.get('buffer')
+                        and left.get('handler_type') == right.get('handler_type') == 'function'
+                        and left.get('handler_module') == right.get('handler_module')
+                        and left.get('handler_name') == right.get('handler_name') == 'observe.<locals>.callback',
+                        'Windows VI paired software policy/callback/buffer differs')
+                code = left.get('handler_code')
+                require(isinstance(code, dict) and code == right.get('handler_code') and code.get('identity')
+                        and code.get('source_canonical_sha256') == VI_OBSERVER_CANONICAL_SHA256
+                        and code.get('first_line', 0) > 0 and code.get('source_path'),
+                        'Windows VI callback code/source witness differs')
+        else:
+            caller = value.get('caller32', {}); natural = value.get('natural_caller_raw32', '')
+            require(caller.get('exact') is True and caller.get('saved') == caller.get('actual')
+                    and bool(re.fullmatch('[0-9a-f]{64}', caller.get('saved', ''))), 'VI current-public caller32 differs')
+            states = value.get('target_FP', {})
+            require(set(states) == {'reference', 'native'} and all(len(states[role]) == 2 for role in states),
+                    'VI current-public target FP records absent')
+            require(bool(re.fullmatch('[0-9a-f]{64}', natural)) and
+                    states['reference'][0].get('raw32') == states['native'][0].get('raw32') == natural,
+                    'VI current-public natural target FP differs')
+            for index in (0, 1):
+                left, right = states['reference'][index], states['native'][index]
+                require(set(left.get('semantic', {})) == {'control', 'status', 'mxcsr'} and
+                        left.get('semantic') == right.get('semantic') and
+                        all(bool(re.fullmatch('[0-9a-f]{64}', state.get('raw32', ''))) for state in (left, right)),
+                        'VI current-public paired target FP effects differ')
+
+
+def validate_VI_windows_workers(directory):
+    rows = [json.loads(path.read_text(encoding='utf-8')) for path in Path(directory).glob('*.json')]
+    require(len(rows) == 34 and len({row.get('node') for row in rows}) == 34,
+            'Windows VI exact34 unique worker receipts required')
+    expected = dict(test_windows_current_public_original_pair=16,
+                    test_owned_entropy_uses_only_explicit_log2_and_matmul=2,
+                    test_current_provider_primary_stops_later_callbacks=8,
+                    test_current_matmul_rejects_nonplain_scalar_transport=8)
+    require(collections.Counter(row.get('test') for row in rows) == expected and
+            collections.Counter(row.get('selected') for row in rows) == {1: 17, 4: 17},
+            'Windows VI full pair/phase/refusal worker coverage differs')
+    require(all(row.get('before') == row.get('after') == 1 and row.get('exact_default1') is True
+                and row.get('FP_scope') == VI_WINDOWS_FP_SCOPE for row in rows),
+            'Windows VI default1 restoration differs')
 
 
 def seal(out):
@@ -2499,10 +2670,18 @@ def seal(out):
             if group=='public-VI-large-saved-linux':
                 require(row['tests']==16,'Full8 legacy scalar SDK plus8 fresh current-public VI pair nodes required')
                 validate_VI_current_large_rows(out/(mode+'-VI-current-large-rows'))
+            if group=='public-VI-current-public-linux':
+                require(row['tests']==16,'Full16 current-public Linux VI pairs required')
+                validate_VI_current_public_rows(out/(mode+'-VI-current-public-rows'))
+            if group=='public-VI-current-windows':
+                require(row['tests']==34,'Full16 Windows VI pairs plus18 portable provider controls required')
+                paths=dict(core=str((out/'package'/record['sole_core']).resolve()), frontend=str((out/'package'/'skimagexx/_variation_of_information.py').resolve()))
+                validate_VI_current_public_rows(out/(mode+'-VI-current-windows-rows'),windows=True,installed_paths=paths)
+                validate_VI_windows_workers(out/(mode+'-VI-current-windows-workers'))
             if group=='public-VI-saved-linux':
-                require(row['tests']==40,'Full40 VI saved/current-count nodes required; no partial selector')
+                require(row['tests']==56,'Full40 retained VI saved/count nodes plus16 current provider/refusal nodes required; no partial selector')
                 callers=list((out/(mode+'-VI-caller-rows')).glob('*.json'))
-                require(len(callers)==40,'VI caller record pool incomplete')
+                require(len(callers)==56,'VI caller record pool incomplete')
                 for item in callers:
                     value=json.loads(item.read_text())
                     require(value['exact32']is True and value['saved']==value['actual']and value['workers']in(1,4),'VI caller restoration failed')
