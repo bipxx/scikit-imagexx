@@ -1,0 +1,135 @@
+name: VI failed438 stage diagnostic
+on:
+  workflow_dispatch:
+    inputs:
+      root_authorization:
+        description: Root-bound failed438-only one-pair authority; default executes nothing
+        type: string
+        required: false
+        default: UNBOUND
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vi-failed438-stage-diagnostic
+  cancel-in-progress: false
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PYTHONNOUSERSITE: '1'
+  PYTHONUNBUFFERED: '1'
+  PYTHONOPTIMIZE: '0'
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+  PIP_CONFIG_FILE: /dev/null
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  OMP_WAIT_POLICY: PASSIVE
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      ROOT_AUTHORIZATION_JSON: ${{ inputs.root_authorization }}
+    steps:
+      - name: Require authority and capacity before checkout or download
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          python3 - <<'PY'
+          import json,os,shutil
+          from pathlib import Path
+          from datetime import datetime,timedelta,timezone
+          raw=os.environ['ROOT_AUTHORIZATION_JSON']
+          assert raw.strip() and raw.strip()!='UNBOUND','UNBOUND: no preparation/target authority'
+          go=json.loads(raw)
+          assert go['status']=='ROOT_AUTHORIZED_FAILED438_STAGE_HOSTED_ENTRY_V1'
+          assert go['purpose']=='FAILED438_SOURCE_STAGE_DIAGNOSTIC_ONLY'and go['allow_failed438']is True
+          assert go['controller_revision']==os.environ['GITHUB_SHA']and os.environ['GITHUB_RUN_ATTEMPT']=='1'
+          issued=datetime.fromisoformat(go['issued_utc']);deadline=datetime.fromisoformat(go['deadline_utc'])
+          assert issued.utcoffset()==deadline.utcoffset()==timedelta(0)
+          assert issued<=datetime.now(timezone.utc)<deadline and timedelta(0)<deadline-issued<=timedelta(hours=1)
+          peak=8*1024**3;reserve=20*1024**3;floor=30*1024**3
+          free={name:shutil.disk_usage(path).free for name,path in {'workspace':Path.cwd(),'runtime':Path(os.environ['RUNNER_TEMP'])}.items()}
+          record=dict(schema='vi-failed438-capacity-v1',estimated_peak_bytes=peak,reserve_bytes=reserve,minimum_free_floor_bytes=floor,required_free_bytes=max(peak+reserve,floor),concurrent_job_allocation_bytes=0,observed_free_bytes=free,passed=all(v>=max(peak+reserve,floor)for v in free.values()),original_calls=0,native_calls=0)
+          Path('results/preparation-capacity.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
+          assert record['passed'],'Insufficient capacity before checkout/download'
+          with (Path(os.environ['RUNNER_TEMP'])/'vi438-authority.json').open('x',encoding='utf-8')as stream:stream.write(json.dumps(go,indent=2)+'\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: controller
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: 8ac153c6659a3056e3e6ac18063213af4642a768
+          path: snapshot
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Authenticate failed producer and select one minimum role
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python controller/tools/vi_qualification_stage_hosted_entry.py --phase authenticate \
+            --authorization "$RUNNER_TEMP/vi438-authority.json" --inputs controller/coverage/contracts/vi-qualification-stage-inputs-v1.json \
+            --controller controller --snapshot snapshot --stage "$RUNNER_TEMP/vi438-stage" --results results
+      - name: Once-only fresh-host transport and selected package intake
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python controller/tools/vi_qualification_stage_hosted_entry.py --phase intake \
+            --authorization "$RUNNER_TEMP/vi438-authority.json" --inputs controller/coverage/contracts/vi-qualification-stage-inputs-v1.json \
+            --controller controller --snapshot snapshot --stage "$RUNNER_TEMP/vi438-stage" --results results
+      - name: Install exactly13 hash-locked nonproduct dependencies offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python controller/tools/vi_qualification_stage_hosted_entry.py --phase check \
+            --authorization "$RUNNER_TEMP/vi438-authority.json" --inputs controller/coverage/contracts/vi-qualification-stage-inputs-v1.json \
+            --controller controller --snapshot snapshot --stage "$RUNNER_TEMP/vi438-stage" --results results
+          test ! -e "$RUNNER_TEMP/vi438-stage/runtime"
+          python -m pip install --no-index --no-deps --no-compile --only-binary=:all: --require-hashes \
+            --target "$RUNNER_TEMP/vi438-stage/runtime" --find-links "$RUNNER_TEMP/vi438-stage/wheels" \
+            -r "$RUNNER_TEMP/vi438-stage/requirements.txt" 2>&1 | tee results/offline-install.log
+      - name: Build and control the source-built F1 helper once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python controller/tools/vi_qualification_stage_hosted_entry.py --phase check \
+            --authorization "$RUNNER_TEMP/vi438-authority.json" --inputs controller/coverage/contracts/vi-qualification-stage-inputs-v1.json \
+            --controller controller --snapshot snapshot --stage "$RUNNER_TEMP/vi438-stage" --results results
+          PYTHONPATH="$RUNNER_TEMP/vi438-stage/runtime" python snapshot/tests/util_views_fenv_build.py \
+            --output "$PWD/results/fenv" --control-python "$(command -v python)" 2>&1 | tee results/helper-build.log
+      - name: Bind actual package runtime helper and observer authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          python controller/tools/vi_qualification_stage_hosted_entry.py --phase bind \
+            --authorization "$RUNNER_TEMP/vi438-authority.json" --inputs controller/coverage/contracts/vi-qualification-stage-inputs-v1.json \
+            --controller controller --snapshot snapshot --stage "$RUNNER_TEMP/vi438-stage" --results results
+      - name: One paired stage observation with durable final terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python controller/tools/vi_qualification_stage_hosted_entry.py --phase run \
+            --authorization "$RUNNER_TEMP/vi438-authority.json" --inputs controller/coverage/contracts/vi-qualification-stage-inputs-v1.json \
+            --controller controller --snapshot snapshot --stage "$RUNNER_TEMP/vi438-stage" --results results
+      - name: Preserve diagnostic and primary failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vi-failed438-stage-diagnostic-${{ github.run_id }}
+          path: results/
+          retention-days: 90
+          include-hidden-files: true
+          if-no-files-found: warn
