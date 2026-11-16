@@ -1,0 +1,396 @@
+{
+  "status": "ROOT_ADMITTED_PRIVATE_FOUR_PAIRS_EXACT_WORD_FP_OWNERSHIP_PASS",
+  "utc": "2026-11-16T00:44:27.572020+00:00",
+  "owner": "/root",
+  "source": "114ed9b3e0662982bfd82d217b59ee11acba9e25",
+  "scope": "PRIVATE Linux Python3.11.14 / NumPy1.24.4 / SciPy1.15.3 / skimage0.26.0 / Intel i7-12700K AVX2, no AVX512. Untimed instrumented diagnostic of four normalized public image cases/default software policy and worker1.",
+  "source_compile_admission": {
+    "path": "build/vi-public-log2-provider-v1/root-source-compile-admission-v1.json",
+    "sha256": "85257da9db9c9f95a313a3ddb13492ac77102274922d52469c886c00e4283804",
+    "source_files": 26,
+    "inverse_equations": 19,
+    "actual_proofs": 236,
+    "source_checks_each_version": 1706,
+    "source_complete_modules": 30,
+    "source_nodes": 1,
+    "build_exits": {
+      "configure-v1": 0,
+      "changed-objects-v1": 0,
+      "full-core-v1": 0,
+      "install-v1": 0,
+      "python-stage-v1": 0
+    },
+    "compile_inputs": 267,
+    "installed_files": 216,
+    "SDK_members": 108,
+    "production_changed": [
+      "include/skimagexx/variation_of_information.hpp",
+      "python/skimagexx/_variation_of_information.py",
+      "src/bind_variation_of_information.cpp",
+      "src/variation_of_information.cpp"
+    ],
+    "production_unchanged_canonical_exact16": 540
+  },
+  "harness_admission": {
+    "path": "build/vi-public-log2-provider-v1/root-private-witness-source-admission-v1.json",
+    "sha256": "237b4acacd88088e5faf1b8b2ae1c69a4b6b2fa1b04bc16560819eab08d90914",
+    "inert_checks_each_version": 40
+  },
+  "authority": {
+    "path": "build/vi-public-log2-provider-v1/root-private-four-case-GO-v1.json",
+    "sha256": "63ac35b1909e5d59ee265b1e2c9aaa59a7599c2d5ba5fb9a4cc559eb8219f933",
+    "consumed": true,
+    "retries": 0
+  },
+  "proof_index": {
+    "path": "build/vi-public-log2-provider-v1/private-four-case-runtime-proof-index-v1.json",
+    "sha256": "a0be928e016660cc7bfaba1771212598e479028c25423305cff10b574495af1c",
+    "actual_files_hashed": 9
+  },
+  "handoff": {
+    "path": "build/vi-public-log2-provider-v1/private-four-case-runtime-handoff-v1.json",
+    "sha256": "205db8eed2bcef26a68b5485f0845320f268db7b6fb672796bf381cf350018c4"
+  },
+  "raw": {
+    "path": "build/vi-public-log2-provider-v1/private-four-case-result-v1.json",
+    "sha256": "a598169de5104312a45c9b3e74bf3ef7664111e80b94b5db4c13f223e8d367f4",
+    "bytes": 231562
+  },
+  "terminal": {
+    "path": "build/vi-public-log2-provider-v1/private-four-case-execution-terminal-v1.json",
+    "sha256": "17e1d919752f89c7d3b6daa2eb52e6a74e4e7f027bd1e31d8f0c36fe65fdd4a6",
+    "actual_exit": 0,
+    "launches": 1,
+    "started_utc": "2026-11-16T00:39:18.131360+00:00",
+    "completed_utc": "2026-11-16T00:39:33.575967+00:00",
+    "Windows_WSL_PID": 60048,
+    "stderr_bytes": 0
+  },
+  "loaded_identity": {
+    "interpreter": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python",
+    "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+    "versions": {
+      "numpy": "1.24.4",
+      "scipy": "1.15.3",
+      "skimage": "0.26.0",
+      "skimagexx": "0.1.0"
+    },
+    "core": "/mnt/d/Scratch/vi-public-log2-provider-native-v1/private-install-minimum/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+    "authenticated_core_sha256": "75ad8f2cd0a0926b13401c4687fb425d0ed215e9461a5182e3aa86769b48471e",
+    "original": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/metrics/_variation_of_information.py",
+    "native": "/mnt/d/Scratch/vi-public-log2-provider-native-v1/private-install-minimum/skimagexx/_variation_of_information.py"
+  },
+  "actual_counts": {
+    "original": 4,
+    "native": 4,
+    "fixtures": 4,
+    "native_provider_calls": 8,
+    "provider_raw_bytes": 88256,
+    "FP_save": 35,
+    "FP_restore": 14,
+    "software_getters": 33,
+    "software_setters": 3,
+    "outside_native_worker_getters": 11,
+    "worker_restores": 1,
+    "fallback_setters": 2
+  },
+  "source_bounds_not_independent_counters": {
+    "original_internal_log2_calls_max": 8,
+    "F1_ABI_queries_max": 1,
+    "F1_glibc_queries_max": 1
+  },
+  "cases": [
+    {
+      "case_id": "metrics.variation_of_information/128x128/8/C",
+      "calls": {
+        "original": 1,
+        "native": 1
+      },
+      "output_words_hex": "9a413c87e4cb0740cda826ad66420640",
+      "output_dtype": "<f8",
+      "output_shape": [
+        2
+      ],
+      "all14_predicates_pass": true,
+      "native_return_counts": {
+        "get_num_threads": 2,
+        "label_pair_check_storage": 7,
+        "label_pair_counts_preweighted": 1,
+        "variation_of_information_csr": 1
+      },
+      "batch_lengths": [
+        56,
+        56
+      ],
+      "caller_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "caller_restored_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "semantic_target_FP": {
+        "control": 895,
+        "status": 32,
+        "mxcsr": 8098
+      },
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "shape": [
+            128,
+            128
+          ],
+          "strides": [
+            1024,
+            8
+          ],
+          "payload_sha256": "b16f992e14ae2f4e5f430648daa581130fb04610dedcac8dba4cdd90996328d5"
+        },
+        {
+          "dtype": "<i8",
+          "shape": [
+            128,
+            128
+          ],
+          "strides": [
+            1024,
+            8
+          ],
+          "payload_sha256": "73df2e1081c0a023603c7c843f96e75522eecb99567e9f638eed6dc62efee04c"
+        }
+      ]
+    },
+    {
+      "case_id": "metrics.variation_of_information/128x128/64/F",
+      "calls": {
+        "original": 1,
+        "native": 1
+      },
+      "output_words_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+      "output_dtype": "<f8",
+      "output_shape": [
+        2
+      ],
+      "all14_predicates_pass": true,
+      "native_return_counts": {
+        "get_num_threads": 2,
+        "label_pair_check_storage": 7,
+        "label_pair_counts_preweighted": 1,
+        "variation_of_information_csr": 1
+      },
+      "batch_lengths": [
+        1323,
+        1323
+      ],
+      "caller_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "caller_restored_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "semantic_target_FP": {
+        "control": 895,
+        "status": 32,
+        "mxcsr": 8098
+      },
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "shape": [
+            128,
+            128
+          ],
+          "strides": [
+            8,
+            1024
+          ],
+          "payload_sha256": "7273db67d63276856e7daa5331f56fc174b77dc942352927d5dc9c98d7a98715"
+        },
+        {
+          "dtype": "<i8",
+          "shape": [
+            128,
+            128
+          ],
+          "strides": [
+            8,
+            1024
+          ],
+          "payload_sha256": "41bf3a302470549311f51de6576c5cd2b12f55f0af34aa077268f7c214c8597b"
+        }
+      ]
+    },
+    {
+      "case_id": "metrics.variation_of_information/256x256/8/F",
+      "calls": {
+        "original": 1,
+        "native": 1
+      },
+      "output_words_hex": "e66289cebfcb0740dd96ce603b420640",
+      "output_dtype": "<f8",
+      "output_shape": [
+        2
+      ],
+      "all14_predicates_pass": true,
+      "native_return_counts": {
+        "get_num_threads": 2,
+        "label_pair_check_storage": 7,
+        "label_pair_counts_preweighted": 1,
+        "variation_of_information_csr": 1
+      },
+      "batch_lengths": [
+        56,
+        56
+      ],
+      "caller_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "caller_restored_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "semantic_target_FP": {
+        "control": 895,
+        "status": 32,
+        "mxcsr": 8098
+      },
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            8,
+            2048
+          ],
+          "payload_sha256": "d840196f83380d04dd2227184c90dbbc5b5b2409e4c57ec9b26c021f4af210c9"
+        },
+        {
+          "dtype": "<i8",
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            8,
+            2048
+          ],
+          "payload_sha256": "442bacc93d2d6752a530f7ce001d51cfc23e314261b94e9a4eaed99679888d17"
+        }
+      ]
+    },
+    {
+      "case_id": "metrics.variation_of_information/256x256/64/C",
+      "calls": {
+        "original": 1,
+        "native": 1
+      },
+      "output_words_hex": "af50ed2dad911140169d3463cb7a1140",
+      "output_dtype": "<f8",
+      "output_shape": [
+        2
+      ],
+      "all14_predicates_pass": true,
+      "native_return_counts": {
+        "get_num_threads": 2,
+        "label_pair_check_storage": 7,
+        "label_pair_counts_preweighted": 1,
+        "variation_of_information_csr": 1
+      },
+      "batch_lengths": [
+        1323,
+        1323
+      ],
+      "caller_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "caller_restored_raw32": "7f03ffff2000ffffffffffff52a08b9900000000000000000000ffffa21f0000",
+      "semantic_target_FP": {
+        "control": 895,
+        "status": 32,
+        "mxcsr": 8098
+      },
+      "inputs": [
+        {
+          "dtype": "<i8",
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "payload_sha256": "1779c45cf9115c764859c244839a6af2ddad8fe8340a621e66e71f13c8471dd1"
+        },
+        {
+          "dtype": "<i8",
+          "shape": [
+            256,
+            256
+          ],
+          "strides": [
+            2048,
+            8
+          ],
+          "payload_sha256": "2ca7ef7be42a839e1860fa6c3a0f76755849add8b2521c32d5354d3043ef1a69"
+        }
+      ]
+    }
+  ],
+  "caller_outer_raw32": {
+    "before": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+    "after": "7f03ffff0000ffffffffffff0000000000000000000000000000ffffa01f0000",
+    "exact": true
+  },
+  "final_restore_resolution": "Immutable raw was written before final writer cleanup: pending=true and34save/13restore. Bound source executes final full32 restore then returns stdout35/14; actual process exit0/stdout final_raw32_restored=true closes that final gate. Raw retained unchanged.",
+  "global_restore_checks": {
+    "software": {
+      "error_policy": true,
+      "handler_identity": true,
+      "buffer": true
+    },
+    "workers": true,
+    "fallback": true
+  },
+  "post_identity": {
+    "passed": true,
+    "scope": "All admitted pins were hashed before imports; post-campaign checks compare their sizes/mtimes and the complete GO hash. No archive or repeated scientific body authentication."
+  },
+  "claim_limits": [
+    "No genuine975/Python3.11.17 or AVX512/old9V45 cause credit",
+    "No arbitrary-table/error-policy/completeAPI-domain or SDK proof",
+    "No timing/performance or full170/four-profile release/main delivery credit",
+    "Existing16 qualification cannot qualify changed VI"
+  ],
+  "remaining_gates": [
+    {
+      "gate": "Owning SDK callback/dense/large/FP controls and execution",
+      "status": "PENDING",
+      "owner": "/root/mark_release_readiness"
+    },
+    {
+      "gate": "Complete actual170-plus-final-source selectors both retained Python versions",
+      "status": "PENDING",
+      "owner": "/root"
+    },
+    {
+      "gate": "Exact-source four-profile release qualification",
+      "status": "PENDING",
+      "owner": "/root"
+    },
+    {
+      "gate": "VI4 one-thread public performance incl all slower cases",
+      "status": "PENDING",
+      "owner": "/root"
+    },
+    {
+      "gate": "Validated final source projection/main merge and push",
+      "status": "PENDING",
+      "owner": "/root"
+    }
+  ],
+  "waste_reuse_next": {
+    "result": "One authorized campaign15.445s wall, no failure/retry/warmup/timing. Existing runtime/F1/fixtures/codec/newproduct reused; no source/product mutations/archives.",
+    "avoidable_work": "Stdlib worker receipt reconciliation had harmless SyntaxWarning, no runner warning or replay. Prior command length/source schema setup corrections retained; no changed scientific input replay.",
+    "next_correction": "Use this passing four-case diagnostic evidence for unchanged production/runtime scope while SDK controls and failure-only VI4 workflow source mature. Root admits stable source then full source barrier/new qualification; no repeated four-pair experiment to refresh bookkeeping."
+  },
+  "storage": {
+    "protected_private_product_root": "D:/Scratch/vi-public-log2-provider-native-v1",
+    "protected_logical_bytes": 180170312,
+    "source_fixture_manual_root": "D:/Scratch/vi-public-log2-provider-controls-v1",
+    "source_fixture_manual_logical_bytes": 27160139139,
+    "automatic_cleanup": "Allfive sourcefixturechildren blockedbeforeexecution; no removal/retry/ancestor/alternative.",
+    "physical_allocation_bytes": null,
+    "archives_created": 0,
+    "removed_paths": []
+  },
+  "shipping_native_API_count": 271
+}
