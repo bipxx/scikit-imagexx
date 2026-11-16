@@ -111,7 +111,8 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     q=load('grid_public_profile_'+profile,'tools/public_qualification.py')
     original=q.groups_for_source(ROOT);groups=q.applicable_public_groups(original,profile)
     assert all(groups[name]==value for name,value in original.items())
-    if profile=='windows':assert groups==original
+    if profile=='windows':
+        assert groups==dict(original,**{'public-VI-current-windows':('test_vi_public_matmul_windows_public.py',)})
     else:
         expected={
             'public-regular-grid-saved-linux':('test_regular_grid_public.py',),
@@ -124,6 +125,7 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
             'public-radon-ABI-policy-linux':('test_finite_radon_numpy_abi_public.py',),
             'public-VI-saved-linux':('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py'),
             'public-VI-large-saved-linux':('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py'),
+            'public-VI-current-public-linux':('test_vi_public_matmul_provider_public.py',),
             'public-flood-saved-linux':('test_flood_fill_public.py',),
             'public-rolling-ball-saved-linux':('test_rolling_ball_public.py',),
         }

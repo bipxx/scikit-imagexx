@@ -2363,7 +2363,11 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['SDK_checks']==76 and 'current38 required' in result['SDK_client_scope']
     assert len(result['public_groups']['public-post203'])==145
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert len(q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors'])==160
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v8.json'
+    selectors=q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors']
+    previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v7.json').read_bytes())['required_selectors']
+    assert len(previous)==160 and len(selectors)==162
+    assert selectors==previous+['tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py']
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)

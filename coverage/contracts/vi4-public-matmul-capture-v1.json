@@ -51,7 +51,7 @@
     "tools/vi4_public_matmul_capture.py": "47858f7623bafe7106a7d04cff8aec39c53bf14839d80ceb2656833e1b3fc8d6",
     "tests/test_vi4_public_matmul_capture.py": "bd8997b764d2a568b7c04a28da2e716a9838153b6819c536e6a04e75c6adf356",
     "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json": "98aa288de7a3bedb230f74e8629af20c86b9d90246cf98e0154c90980e1f4e1b",
-    "tools/public_qualification.py": "1cbce76b264c33b17aa0f8af632bda69e76ccee3d32f202f21ef63f7a8ba166d",
+    "tools/public_qualification.py": "a87ecf485a3673bceaaaea03a418de7b24c95638d6e49687275e0c1bcc5b602c",
     ".github/workflows/public-qualification.yml": "628deb4ab1c2b227f7845dd681418a702c1dc5ecb208cbbac5697efe404d0042",
     "CMakeLists.txt": "06ead19d2848e3d83fd3041a03cdb7ea6600abaf82faa8112497487ec3535fcc",
     "tests/cmake_consumer/CMakeLists.txt": "a8e73809365f5b2fab940d65a396de0a8dd1b3f2422163b085b78c8c8b1f8a0f",
@@ -114,7 +114,7 @@
       "coverage/contracts/vi-public-log2-provider-benchmark-v2.json": "e67de2b48bf387819b099cd72faf9684269f8106c70cf76c221d5d512f68c46d",
       "coverage/contracts/vi-public-log2-provider-v1.json": "4f30e29469dcaa72594c0482a6a04954f04582b2593a0521b0df2a9b71e46096",
       "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json": "98aa288de7a3bedb230f74e8629af20c86b9d90246cf98e0154c90980e1f4e1b",
-      "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json": "0650d44fe7013f4702b8ad96ef7bc8f1c052b4cb9d6a9273db5d5d5970b4c89d",
+      "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json": "3e15453147c299525dc4bf271e678d367b3471f8acf043d078a8e3496b6f84da",
       "coverage/contracts/vi-public-matmul-provider-v1.json": "0369b39b6ccb67e2f89b0683415415d42250d50a356629496335bfb006c782d8",
       "coverage/contracts/vi4-failure-capture-v1.json": "8dcde72d7f4f3b97782c31ca09690b5d2bd7963025069cc4735060519f64ed53",
       "coverage/contracts/vi4-failure-capture-v2.json": "42c44333aca6dc38298cc928ef815a1f36152d6660fd65ede4338f7f8342e232",
@@ -153,7 +153,7 @@
       "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
       "tests/variation_of_information_matmul_controls_v1.hpp": "c99531f32f2e52dee3cc67d033d79b915a10fd6d1cedf08c1f458e458735cf89",
       "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
-      "tools/public_qualification.py": "1cbce76b264c33b17aa0f8af632bda69e76ccee3d32f202f21ef63f7a8ba166d",
+      "tools/public_qualification.py": "a87ecf485a3673bceaaaea03a418de7b24c95638d6e49687275e0c1bcc5b602c",
       "tools/vi4_public_matmul_capture.py": "47858f7623bafe7106a7d04cff8aec39c53bf14839d80ceb2656833e1b3fc8d6",
       "tools/vi_cohort_value_diagnostic.py": "3f5c025b6d7d91b9b136c535f95e4f386f3fddfa0ae7791f7f5d746bb56d0c07",
       "tools/vi_first_cohort_probe.py": "4346f3663fceced18c90167f2a37f3fbb76998baf31179c58bd8edc22bae5948"
@@ -339,7 +339,7 @@
       "coverage/contracts/vi-public-log2-provider-benchmark-v2.json": "e67de2b48bf387819b099cd72faf9684269f8106c70cf76c221d5d512f68c46d",
       "coverage/contracts/vi-public-log2-provider-v1.json": "4f30e29469dcaa72594c0482a6a04954f04582b2593a0521b0df2a9b71e46096",
       "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json": "98aa288de7a3bedb230f74e8629af20c86b9d90246cf98e0154c90980e1f4e1b",
-      "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json": "0650d44fe7013f4702b8ad96ef7bc8f1c052b4cb9d6a9273db5d5d5970b4c89d",
+      "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json": "3e15453147c299525dc4bf271e678d367b3471f8acf043d078a8e3496b6f84da",
       "coverage/contracts/vi-public-matmul-provider-v1.json": "0369b39b6ccb67e2f89b0683415415d42250d50a356629496335bfb006c782d8",
       "coverage/contracts/vi4-failure-capture-v1.json": "8dcde72d7f4f3b97782c31ca09690b5d2bd7963025069cc4735060519f64ed53",
       "coverage/contracts/vi4-failure-capture-v2.json": "42c44333aca6dc38298cc928ef815a1f36152d6660fd65ede4338f7f8342e232",
@@ -378,7 +378,7 @@
       "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
       "tests/variation_of_information_matmul_controls_v1.hpp": "c99531f32f2e52dee3cc67d033d79b915a10fd6d1cedf08c1f458e458735cf89",
       "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
-      "tools/public_qualification.py": "1cbce76b264c33b17aa0f8af632bda69e76ccee3d32f202f21ef63f7a8ba166d",
+      "tools/public_qualification.py": "a87ecf485a3673bceaaaea03a418de7b24c95638d6e49687275e0c1bcc5b602c",
       "tools/vi4_public_matmul_capture.py": "47858f7623bafe7106a7d04cff8aec39c53bf14839d80ceb2656833e1b3fc8d6",
       "tools/vi_cohort_value_diagnostic.py": "3f5c025b6d7d91b9b136c535f95e4f386f3fddfa0ae7791f7f5d746bb56d0c07",
       "tools/vi_first_cohort_probe.py": "4346f3663fceced18c90167f2a37f3fbb76998baf31179c58bd8edc22bae5948"
@@ -599,7 +599,7 @@
       },
       "provider_context": {
         "path": "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json",
-        "sha256": "0650d44fe7013f4702b8ad96ef7bc8f1c052b4cb9d6a9273db5d5d5970b4c89d"
+        "sha256": "3e15453147c299525dc4bf271e678d367b3471f8acf043d078a8e3496b6f84da"
       },
       "provider_predecessor_context": {
         "path": "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json",

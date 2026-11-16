@@ -97,7 +97,7 @@ def test_vi_default_factory_and_checker_are_strict_without_runtime():
 
 def test_genuine_collector_transport_and_scope_are_fail_closed():
     q=(ROOT/'tools/public_qualification.py').read_text()
-    for fragment in("row['tests']==224","row['tests']==18","row['tests']==40","len(callers)==40","len(policy_rows)==18","'VI_CALLER_RECORD_DIR'","'FINITE_RADON_ABI_POLICY_RECORDS'"):
+    for fragment in("row['tests']==224","row['tests']==18","row['tests']==56","len(callers)==56","len(policy_rows)==18","'VI_CALLER_RECORD_DIR'","'FINITE_RADON_ABI_POLICY_RECORDS'"):
         assert fragment in q,fragment
     public=(ROOT/'tests/test_variation_of_information_public.py').read_text()
     assert "if not os.environ.get('VI_COMPONENT_DIR')"in public
@@ -108,7 +108,7 @@ def test_genuine_collector_transport_and_scope_are_fail_closed():
 
 
 
-@pytest.mark.parametrize('group,count', [('public-radon-ABI-policy-linux',18),('public-VI-saved-linux',40),('public-VI-large-saved-linux',16),('public-flood-saved-linux',100)])
+@pytest.mark.parametrize('group,count', [('public-radon-ABI-policy-linux',18),('public-VI-saved-linux',56),('public-VI-large-saved-linux',16),('public-VI-current-public-linux',16),('public-VI-current-windows',34),('public-flood-saved-linux',100)])
 def test_actual_new_group_parser_and_seal_count(group,count,monkeypatch):
     q=qualifier();calls=[]
     monkeypatch.setattr(q,'child',lambda out,name:calls.append(name)or 0)
@@ -124,5 +124,6 @@ def test_actual_new_group_parser_and_seal_count(group,count,monkeypatch):
     exec(code,dict(group=group,row=dict(tests=count),require=q.require))
     wrong_counts=(0,count-1,count+1)
     if group=='public-VI-large-saved-linux':wrong_counts+=(8,)
+    if group=='public-VI-saved-linux':wrong_counts+=(40,)  # Old40 omits the16 current provider/refusal nodes.
     for wrong in wrong_counts:
         with pytest.raises(q.QualificationError):exec(code,dict(group=group,row=dict(tests=wrong),require=q.require))

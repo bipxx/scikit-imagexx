@@ -834,6 +834,9 @@ DRAW_SOURCE_PATHS += (
     "coverage/contracts/vi-public-matmul-source-history-v1.json",
     "coverage/contracts/vi-public-matmul-source-history-v2.json",
     "coverage/contracts/vi-public-matmul-source-history-v3.json",
+    "coverage/contracts/vi-public-matmul-source-history-v4.json",
+    "coverage/contracts/vi-public-matmul-source-history-v5.json",
+    "coverage/contracts/vi-public-matmul-source-history-v6.json",
     "tests/vi_public_matmul_source_view.py",
     "tests/cmake_consumer/variation_of_information_matmul_consumer_v1.cpp",
     "tests/variation_of_information_matmul_controls_v1.hpp",
@@ -2730,7 +2733,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-flood-saved-linux','public-rolling-ball-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-VI-current-public-linux','public-VI-current-windows','public-flood-saved-linux','public-rolling-ball-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

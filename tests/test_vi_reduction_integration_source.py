@@ -30,9 +30,15 @@ def test_actual_qualification_source_census_and_large_group(profile):
     value=q.plan(ROOT,profile,281)
     assert(value['registry']['image_count'],value['registry']['registered_count'],value['product_members'],value['SDK_members'],len(value['SDK_families']),value['SDK_checks'])==(281,284,228,108,38,76)
     group='public-VI-large-saved-linux'
-    if profile=='windows':assert group not in value['public_groups']
-    else:assert value['public_groups'][group]==('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
-    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v7.json'
+    if profile=='windows':
+        assert group not in value['public_groups']
+        assert value['public_groups']['public-VI-current-windows']==('test_vi_public_matmul_windows_public.py',)
+        assert 'public-VI-current-public-linux' not in value['public_groups']
+    else:
+        assert value['public_groups'][group]==('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
+        assert value['public_groups']['public-VI-current-public-linux']==('test_vi_public_matmul_provider_public.py',)
+        assert 'public-VI-current-windows' not in value['public_groups']
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v8.json'
     large=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())['VI_current_runtime_large_reference']
     assert(large['legacy_nodes_per_mode'],large['current_nodes_per_mode'])==(8,8)
     consumer=(ROOT/'tests/cmake_consumer/variation_of_information_enabled_consumer.cpp').read_text()
