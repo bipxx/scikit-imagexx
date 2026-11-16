@@ -1,0 +1,115 @@
+{
+  "status": "ROOT_ACTUAL_RETAINED_REDUCEAT_CPU_INELIGIBLE_ZERO_OPERATIONS",
+  "owner": "/root",
+  "run": 43850878993,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43850878993",
+  "job": 133242791140,
+  "controller": "c9c641bcfdd194cb8299b561c5abe255623f6e68",
+  "workflow_id": 420002145,
+  "attempts": 1,
+  "dispatch_actual_exit": 0,
+  "API_actual_exits": [
+    0,
+    0,
+    0
+  ],
+  "workflow_conclusion": "success",
+  "scientific_outcome": "INELIGIBLE; no reduction result exists",
+  "expected_CPU": {
+    "vendor_id": "AuthenticAMD",
+    "model name": "AMD EPYC 9V74 80-Core Processor",
+    "cpu family": "25",
+    "model": "17",
+    "stepping": "1"
+  },
+  "observed_CPU": {
+    "vendor_id": "AuthenticAMD",
+    "model name": "AMD EPYC 7763 64-Core Processor",
+    "cpu family": "25",
+    "model": "1",
+    "stepping": "1"
+  },
+  "CPU_eligible": false,
+  "actual_primitive_calls": 0,
+  "original_calls": 0,
+  "native_calls": 0,
+  "log2_calls": 0,
+  "dot_calls": 0,
+  "FP_helper_body_calls": 0,
+  "helper_builds": 0,
+  "large_transport_downloads": 0,
+  "skipped_steps": [
+    "Run actions/checkout@v4",
+    "Run actions/checkout@v4",
+    "Run actions/setup-python@v5",
+    "Authenticate failed producer and select one minimum role",
+    "Once-only fresh-host transport and selected package intake",
+    "Install exactly13 hash-locked nonproduct dependencies offline",
+    "Build and control the source-built F1 helper once",
+    "Bind actual package runtime helper and primitive authority",
+    "One retained row reduceat with durable final terminal"
+  ],
+  "capacity": {
+    "schema": "vi-failed438-capacity-v1",
+    "estimated_peak_bytes": 8589934592,
+    "reserve_bytes": 21474836480,
+    "minimum_free_floor_bytes": 32212254720,
+    "required_free_bytes": 32212254720,
+    "concurrent_job_allocation_bytes": 0,
+    "observed_free_bytes": {
+      "workspace": 91517255680,
+      "runtime": 91517255680
+    },
+    "passed": true,
+    "original_calls": 0,
+    "native_calls": 0
+  },
+  "authority_sha256": "3cc8fe1cd003f840ade6403de8f3cce56fc9421d30d7a7ad1d6a7f21dc3de3fe",
+  "authority_status": "CONSUMED_ONCE_TERMINAL_NO_REUSE_NO_HOST_SEARCH_OR_RETRY",
+  "source_admission_sha256": "159984b93417b3183b2cbd22a8a094c2e874109a6520e9bfbb6d98dbd8b6a387",
+  "raw": {
+    "status": "ACTUAL_INELIGIBLE_RESULT_MEMORY_TRANSPORT_EXTRACTED",
+    "run": 43850878993,
+    "artifact": 14218025464,
+    "API_actual_exit": 0,
+    "archive_bytes": 1997,
+    "archive_sha256": "e8e488717167923560a8bad337c8b61b3d5fceb8468f404d6e3a51475479b3c6",
+    "archive_hash_passes": 1,
+    "physical_archive_files_created": 0,
+    "physical_archive_retained": false,
+    "raw_files": [
+      {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-retained-row-root-dispatch-v1\\results-run43850878993-v1\\cpu-precheck.json",
+        "member": "cpu-precheck.json",
+        "bytes": 249,
+        "sha256": "1acf1c29e0a204a22761adb173ee96dc49368edb9d0d40879197b39f66c5b5be"
+      },
+      {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-retained-row-root-dispatch-v1\\results-run43850878993-v1\\preparation-capacity.json",
+        "member": "preparation-capacity.json",
+        "bytes": 385,
+        "sha256": "7eb6c8c9b931babd7aa77335933ce3f874f3a421960eedcfba51b6ffbf26dfdf"
+      },
+      {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-retained-row-root-dispatch-v1\\results-run43850878993-v1\\root-authorization.json",
+        "member": "root-authorization.json",
+        "bytes": 2337,
+        "sha256": "3cc8fe1cd003f840ade6403de8f3cce56fc9421d30d7a7ad1d6a7f21dc3de3fe"
+      }
+    ],
+    "raw_bytes": 2971,
+    "job_log_sha256": "9239f062081b7ab2e9de6ead5d72ceffd7cd1228029f96bca05ecd955770220d",
+    "previous_policy_blocked_targets_touched": 0
+  },
+  "source_binding": {
+    "input_sha256": "0241883b2bcc1393064719c7d4c0dd22927f5187afa5f097db55a2ba5e20eb35",
+    "model_result_sha256": "7c636d5586c45edca3b690a2fdbc30646fbbe65b0fd0591e45cd5ff550433830"
+  },
+  "scope": "This verifies capacity, authority, CPU cutoff and zero operator work. It provides no NumPy-runtime/F1/body caller32, numerical, parity, qualification or performance evidence. Original case0 row-reduction versus final-dot distinction remains pending.",
+  "closeout": {
+    "reuse": "All source18 controls per Python and saved case0 data/model remain valid; no replay. Only three tiny raw records and the job log were retained.",
+    "cost": "Job setup-to-complete approximately3seconds from recorded steps; no1.438GB failed-profile transfer/install/helper allocation. Other costs unknown.",
+    "avoidable_work": "A single eligible-host attempt was authorized; ineligible host is a useful boundary result. No repeated host search.",
+    "next_owner_trigger": "Root records this terminal outcome. Existing source reviewers may inspect exact pinned NumPy reduction/OpenBLAS dot source only; no primitive retry, target call or math edit until sufficient causal source evidence."
+  }
+}
