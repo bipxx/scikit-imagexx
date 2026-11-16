@@ -21,7 +21,14 @@ def load(path):
     m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 
 
+def capacity_bridge(root,name,raw,canonical=False):
+    from tools.mark_lbp_fp_context import QUALIFICATION_CAPACITY_CONTEXT_SHA256
+    from tools.qualification_capacity_context import predecessor_bytes
+    return predecessor_bytes(root,name,raw,QUALIFICATION_CAPACITY_CONTEXT_SHA256,canonical)
+
+
 def reference_bridge(root,name,raw,canonical=False):
+    raw=capacity_bridge(root,name,raw,canonical)
     from tools.mark_lbp_fp_context import VI_PUBLIC_REFERENCE_CONTEXT_SHA256
     from tools.vi_public_reference_context_v2 import predecessor_bytes
     return predecessor_bytes(root,name,raw,VI_PUBLIC_REFERENCE_CONTEXT_SHA256,canonical)
@@ -219,7 +226,8 @@ def test_source_bridge_refuses_changed_and_double_projected_inputs(canonical):
 
 
 def source_root(tmp_path):
-    names=['tools/vi_public_reference_context.py','coverage/contracts/vi-public-log2-reference-source-v1.json',
+    names=['tools/qualification_capacity_context.py','coverage/contracts/qualification-capacity-source-v1.json',
+        'tools/vi_public_reference_context.py','coverage/contracts/vi-public-log2-reference-source-v1.json',
         'tools/vi_public_reference_context_v2.py','coverage/contracts/vi-public-log2-reference-source-v2.json','tools/vi_provider_sdk_context.py','coverage/contracts/vi-provider-sdk-source-v1.json',
         'tools/vi_public_log2_context.py','tools/mark_lbp_fp_context.py',CONTEXT,
         'coverage/contracts/mark-lbp-controller-source-successor-v1.json',
@@ -377,6 +385,46 @@ def test_current_owning_SDK_archive_extractor_keeps_all_included_headers():
         assert (ROOT/name).is_file()and eval(expression,{'name':name}),name
     for name in('tests/variation_of_information_provider_controls.hpp/','tests/unassessed_provider.hpp','python/skimagexx/_variation_of_information.py'):
         assert not eval(expression,{'name':name}),name
+
+
+@pytest.mark.parametrize('workspace_free,temp_free,passed',((40*1024**3,40*1024**3,True),(40*1024**3-1,40*1024**3,False),(40*1024**3,40*1024**3-1,False),(0,0,False)))
+def test_hosted_capacity_runs_before_allocation_and_retains_boundary_failures(tmp_path,monkeypatch,workspace_free,temp_free,passed):
+    text=(ROOT/'.github/workflows/public-qualification.yml').read_text()
+    start=text.index('      - name: Verify qualification scratch capacity\n')
+    end=text.index('      - name: Tooling guards before preparation\n',start)
+    assert text.index('      - uses: actions/setup-python@v5')<start<end<text.index('python tools/public_qualification.py all ')
+    block=text[start:end];lines=block.splitlines();a=next(i for i,line in enumerate(lines)if line.strip()=="python - <<'PY'")+1
+    b=next(i for i in range(a,len(lines))if lines[i].strip()=='PY')
+    source='\n'.join(line[10:]for line in lines[a:b])+'\n'
+    assert 'build/qualification-capacity-${{ matrix.profile }}.json'in text[text.index('name: public-qualification-${{ matrix.profile }}'):]
+    workspace=tmp_path/'workspace';workspace.mkdir();temporary=tmp_path/'temporary';temporary.mkdir()
+    monkeypatch.setenv('GITHUB_WORKSPACE',str(workspace));monkeypatch.setenv('RUNNER_TEMP',str(temporary));monkeypatch.setenv('QUALIFICATION_PROFILE','minimum');monkeypatch.chdir(tmp_path)
+    def disk(path):return SimpleNamespace(free=workspace_free if Path(path)==workspace else temp_free)
+    monkeypatch.setattr(shutil,'disk_usage',disk)
+    if passed:exec(compile(source,'<actual hosted capacity step>','exec'),{})
+    else:
+        with pytest.raises(SystemExit,match='scratch capacity below required'):exec(compile(source,'<actual hosted capacity step>','exec'),{})
+    record=json.loads((tmp_path/'build/qualification-capacity-minimum.json').read_bytes())
+    assert record['status']==('PASS'if passed else'FAIL')
+    assert record['estimated_peak_bytes']==record['reserve_bytes']==20*1024**3
+    assert record['minimum_free_bytes']==30*1024**3 and record['required_free_bytes']==40*1024**3
+    assert set(record['locations'])=={'GITHUB_WORKSPACE','RUNNER_TEMP'}
+    assert record['locations']['GITHUB_WORKSPACE']['free_bytes']==workspace_free
+    assert record['locations']['RUNNER_TEMP']['free_bytes']==temp_free
+
+
+@pytest.mark.parametrize('canonical',(False,True))
+def test_capacity_source_context_preserves_exact_a378_before_reference_history(canonical):
+    q=load(ROOT/'tools/public_qualification.py');data=json.loads((ROOT/'coverage/contracts/qualification-capacity-source-v1.json').read_bytes())
+    assert data['predecessor_source']=='a378969be8e857e8ac904ec10e3cde472637af5d'
+    assert data['source_selector_count']==173 and data['added_source_selectors']==[] and data['execution_authority']is None
+    assert set(data['sources'])|set(data['new_collector_inputs'])<=set(q.DRAW_SOURCE_PATHS)
+    for name,row in data['sources'].items():
+        raw=(ROOT/name).read_bytes();transported=raw.replace(b'\n',b'\r\n')if canonical else raw
+        old=capacity_bridge(ROOT,name,transported,canonical)
+        assert H(old)==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
+        with pytest.raises(AssertionError):capacity_bridge(ROOT,name,transported+b' ',canonical)
+        with pytest.raises(AssertionError):capacity_bridge(ROOT,name,old,canonical)
 
 
 @pytest.mark.parametrize('fault',('missing-current','missing-legacy','wrong-map','wrong-policy'))

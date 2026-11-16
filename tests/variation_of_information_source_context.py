@@ -14,6 +14,10 @@ def provider_predecessor_source(root,name,raw=None,canonical=False):
     """Exact32e source only, for immutable VI history; not current acceptance."""
     root=Path(root)
     if raw is None:raw=(root/name).read_bytes()
+    if (root/'coverage/contracts/qualification-capacity-source-v1.json').is_file():
+        from tools.mark_lbp_fp_context import QUALIFICATION_CAPACITY_CONTEXT_SHA256
+        from tools.qualification_capacity_context import predecessor_bytes as capacity_predecessor
+        raw=capacity_predecessor(root,name,raw,QUALIFICATION_CAPACITY_CONTEXT_SHA256,canonical)
     if (root/'coverage/contracts/vi-public-log2-reference-source-v2.json').is_file():
         from tools.mark_lbp_fp_context import VI_PUBLIC_REFERENCE_CONTEXT_SHA256
         from tools.vi_public_reference_context_v2 import predecessor_bytes as reference_predecessor

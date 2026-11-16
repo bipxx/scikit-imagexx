@@ -51,6 +51,32 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
+      - name: Verify qualification scratch capacity
+        shell: bash
+        env:
+          QUALIFICATION_PROFILE: ${{ matrix.profile }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          peak = 20 * 1024**3
+          reserve = 20 * 1024**3
+          floor = 30 * 1024**3
+          required = max(peak + reserve, floor)
+          locations = {name: dict(path=str(Path(os.environ[name]).resolve()), free_bytes=shutil.disk_usage(os.environ[name]).free)
+                       for name in ('GITHUB_WORKSPACE', 'RUNNER_TEMP')}
+          passed = all(value['free_bytes'] >= required for value in locations.values())
+          record = dict(status='PASS' if passed else 'FAIL', locations=locations,
+                        estimated_peak_bytes=peak, reserve_bytes=reserve, minimum_free_bytes=floor, required_free_bytes=required,
+                        estimate_basis='14GiB source/control scratch plus6GiB environments/build/products/capsules/transport/logs; conservative estimate, not measured host peak')
+          directory = Path('build'); directory.mkdir(exist_ok=True)
+          path = directory / ('qualification-capacity-' + os.environ['QUALIFICATION_PROFILE'] + '.json')
+          path.write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(record))
+          if not passed:
+              raise SystemExit('Qualification scratch capacity below required peak plus reserve/free floor')
+          PY
       - name: Tooling guards before preparation
         shell: bash
         run: |
@@ -108,3 +134,4 @@ jobs:
             build/qualification-tool-guards.xml
             build/qualification-tool-guards.log
             build/qualification-verify-${{ matrix.profile }}.json
+            build/qualification-capacity-${{ matrix.profile }}.json

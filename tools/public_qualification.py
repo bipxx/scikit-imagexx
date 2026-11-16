@@ -799,6 +799,8 @@ def runtime_pins(profile):
 
 DRAW_SOURCE_PATHS += ('benchmarks/vi_public_log2_provider_consumer.py', 'benchmarks/vi_public_log2_provider_execution.py', 'coverage/contracts/vi-public-log2-provider-v1.json', 'coverage/contracts/vi-public-log2-provider-benchmark-v1.json', 'coverage/contracts/vi-public-log2-provider-source-v1.json', 'tests/test_vi_public_log2_provider_source.py', 'tools/vi_public_log2_context.py', 'tests/test_vi_log2_provider_diagnostic.py', 'tests/test_vi_reduction_integration_source.py')
 
+DRAW_SOURCE_PATHS += ('tools/qualification_capacity_context.py','coverage/contracts/qualification-capacity-source-v1.json')
+
 DRAW_SOURCE_PATHS += ('tools/vi_public_reference_context_v2.py','coverage/contracts/vi-public-log2-reference-source-v2.json')
 
 # Current-runtime VI large-reference inputs retain legacy scalar checks separately.
