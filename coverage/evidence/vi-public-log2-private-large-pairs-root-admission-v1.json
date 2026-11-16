@@ -1,0 +1,107 @@
+{
+  "status": "ROOT_PASS_PRIVATE_LARGE_LEGACY8_CURRENT_PUBLIC8_V1",
+  "owner": "/root",
+  "source_anchor": "f10e04ae14f27055f5a09d540cbd3b616073d7ad",
+  "production_source": "114ed9b3e0662982bfd82d217b59ee11acba9e25",
+  "exact_executed_source35": "Authenticated before andafter againstGO andretained exactsnapshots. Independent worker edits outsideclosure allowed; entireworktreecleanliness notclaimed.",
+  "GO": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-large-scope-v1\\root-private16-GO-v2.json",
+    "sha256": "f463760a65ae0b5977801c40eaf3b313d9c17a4ef970b4d34f15df5f58307ae2",
+    "consumed": true
+  },
+  "proof_index": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-large-scope-v1\\private16-root-result-proof-index-v1.json",
+    "sha256": "d30a2fec13095ad593df2d7e2b7513d39e6166d34d0b8fadb458ab80f01e14c4",
+    "actual_files_hashed": 57
+  },
+  "actual_terminal": {
+    "exit": 0,
+    "Windows_WSL_PID": 16176,
+    "started_utc": "2026-11-16T04:02:05.458197+00:00",
+    "completed_utc": "2026-11-16T04:02:21.473849+00:00",
+    "seconds": 16.015659700031392,
+    "stdout_sha256": "31e03bc8d8b7b9a05e7805a760a5b95202f9dde8c3cef5f96072d2d36ee61306",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "GO_sha256": "f463760a65ae0b5977801c40eaf3b313d9c17a4ef970b4d34f15df5f58307ae2",
+    "retry": false,
+    "admission": "PENDING_ROOT_RAW_XML_SOURCE_REVIEW"
+  },
+  "XML": {
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "normal_Linux_plugins": 43,
+  "legacy_nodes": 8,
+  "current_nodes": 8,
+  "actual_current_profile_counts": {
+    "original": 8,
+    "native": 8,
+    "native_C_returns": 88,
+    "true_public_ufunc_batches": 16,
+    "batch_elements": 11032,
+    "current_caller32_exact": 8
+  },
+  "case_words": [
+    "9a413c87e4cb0740cda826ad66420640",
+    "4c5ccaa8fa9011405c0029dc1c7a1140",
+    "e66289cebfcb0740dd96ce603b420640",
+    "af50ed2dad911140169d3463cb7a1140"
+  ],
+  "FP": "Actual natural current caller/target895-32-8098, raw32 before/after exactsamefororiginal/native andcallerrestored. Eightlegacy retainedseed tests passedtheir pinned body/golds; notcurrent-publicUF semantics. No additional outerFP state measured.",
+  "source_derived_primitive_bounds_not_counters": {
+    "legacy_scalar_gateway_calls": 8,
+    "current_original_VI_calls": 8,
+    "current_public_VI_calls": 8,
+    "core_VI_calls": 16,
+    "current_true_numpy_log2_batches": 16,
+    "fixtures": 16,
+    "explicit_libc_fegetenv": 120,
+    "helper_restore": 48,
+    "helper_ABI_query": 16,
+    "glibc_query": 16,
+    "explicit_outside_target_worker_getters": 43,
+    "inside_target_worker_getters": 32,
+    "worker_setters": 32,
+    "fallback_setters": 16,
+    "explicit_software_policy_getters": 144,
+    "explicit_software_policy_setters": 56,
+    "wrapper_target_calls": 0,
+    "wrapper_F1_calls": 0,
+    "wrapper_worker_getters": 2,
+    "timing": 0,
+    "sampler": 0,
+    "warmup": 0,
+    "retries": 0
+  },
+  "runtime": {
+    "scope": "PRIVATE Linux3.11.14/NumPy1.24.4/SciPy1.15.3/skimage0.26.0/Intel12700K AVX2-noAVX512, separategenuine975/3.11.17",
+    "core_sha256": "75ad8f2cd0a0926b13401c4687fb425d0ed215e9461a5182e3aa86769b48471e",
+    "helper_sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "helper_scope": "private-fixed-v1/glibc2.39/ABI32,0,4,8,12,20,28,8",
+    "origins": {
+      "numpy": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy/__init__.py",
+      "scipy": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy/__init__.py",
+      "skimage": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/__init__.py",
+      "skimagexx": "/mnt/d/Scratch/vi-public-log2-provider-native-v1/private-install-minimum/skimagexx/__init__.py",
+      "skimagexx._core": "/mnt/d/Scratch/vi-public-log2-provider-native-v1/private-install-minimum/skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+      "skimagexx._variation_of_information": "/mnt/d/Scratch/vi-public-log2-provider-native-v1/private-install-minimum/skimagexx/_variation_of_information.py"
+    },
+    "default_workers_entry_exit": [
+      1,
+      1
+    ],
+    "postidentity": true
+  },
+  "gates": {
+    "private16_fullXML_words_owned_graph_target_FP_caller_default_identity": "PASS",
+    "complete_source173both": "FAILED27_ON_F10_PENDING_SUCCESSOR",
+    "genuine4profile_currentSDK_hostcapacity": "PENDING",
+    "VI4_one_thread_public_performance_all_losses": "PENDING",
+    "main_delivery271to281": "PENDING"
+  },
+  "scope_limits": "Normalizedint64 fourimagecases only/workers1,4. No arbitrarysuppliedCSR/errorpolicy/fullcontract/wholelibrary speed/AVX512/old9V45cause orreleasedAPI credit. Exactlyonecampaign; no timing/warmup/retry/build/download.",
+  "retention": "Raw8records/16XML/actualcommands/PIDs/trace/source35 snapshots/proofs outside disposable D:/Scratch/vi-public-log2-large-private-controls-v2; root mayrelease thatsmallpytestbasetemp after readers/dependencies excluded, never policyblockedoldroots. Installedruntime/core/helper/source remain dependencies.",
+  "waste_reuse": "Rootcaught3Linuxpath+guessedselector defects beforecalls, correctedprep2 preservedprep1. Firstnew16testbodyrun actual16.016s,pytest6.53s; no scientificfailure/retry orrepeatedold4pair/SDK/performance. Next root reuses this withinexactmath/test/sourceclosure whilecorrecting27metadata guards, thenfullsource/genuine/VI4/main."
+}
