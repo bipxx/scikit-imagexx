@@ -1,0 +1,357 @@
+{
+  "status": "ROOT_FAILED_FOUR_PROFILE_438_RAW_DIAGNOSTIC_INTAKE_NOT_RELEASE",
+  "owner": "/root",
+  "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
+  "run": 43817382620,
+  "run_url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43817382620",
+  "profiles_failed": 4,
+  "actual_raw_reader_exit": 0,
+  "raw_files": 558,
+  "raw_bytes": 163622496,
+  "current_large_records": 48,
+  "current_large_failed": 28,
+  "current_large_passed": 20,
+  "recorded_current_target_observations": {
+    "original": 48,
+    "native": 48,
+    "native_returns": 528,
+    "true_numpy_log2_batches": 96,
+    "diagnostic_calls": 0,
+    "timing_batches": 0
+  },
+  "observed_current_invariants": "All48 recorded1+1 ownership/11returns/2trueUFbatches/diagnostics[]/exactcaller32/reference-native semanticFP equality. Independently passed from28word failures; no numericalclosure.",
+  "capacity_receipts": 4,
+  "profiles": [
+    {
+      "profile": "minimum",
+      "artifact": 14204078491,
+      "job": 133132412004,
+      "extracted_files": 185,
+      "current_large_rows": 16,
+      "current_large_word_mismatches": 12,
+      "current_large_passes": 4,
+      "cases_identical_across_both_workers_and_modes": [
+        {
+          "index": 0,
+          "expected_hex": "9b413c87e4cb0740cda826ad66420640",
+          "actual_hex": "9a413c87e4cb0740cda826ad66420640",
+          "actual_minus_reference_word_units": [
+            -1,
+            0
+          ],
+          "primary_type": "AssertionError"
+        },
+        {
+          "index": 1,
+          "expected_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "actual_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "actual_minus_reference_word_units": [
+            0,
+            0
+          ],
+          "primary_type": null
+        },
+        {
+          "index": 2,
+          "expected_hex": "e66289cebfcb0740de96ce603b420640",
+          "actual_hex": "e66289cebfcb0740dd96ce603b420640",
+          "actual_minus_reference_word_units": [
+            0,
+            -1
+          ],
+          "primary_type": "AssertionError"
+        },
+        {
+          "index": 3,
+          "expected_hex": "af50ed2dad911140149d3463cb7a1140",
+          "actual_hex": "af50ed2dad911140169d3463cb7a1140",
+          "actual_minus_reference_word_units": [
+            0,
+            2
+          ],
+          "primary_type": "AssertionError"
+        }
+      ],
+      "failed_XML": [
+        {
+          "member": "public-qualification/minimum/normal-public-VI-large-saved-linux.xml",
+          "testcase_nodes": 16,
+          "failed_nodes": [
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-2]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-3]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-2]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-3]"
+          ]
+        },
+        {
+          "member": "public-qualification/minimum/normal-public-VI-saved-linux.xml",
+          "testcase_nodes": 40,
+          "failed_nodes": [
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[1-ignored1-4096]",
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[1-ignored1-4099]",
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[4-ignored1-4096]",
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[4-ignored1-4099]"
+          ]
+        },
+        {
+          "member": "public-qualification/minimum/scalar-public-VI-large-saved-linux.xml",
+          "testcase_nodes": 16,
+          "failed_nodes": [
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-2]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-3]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-2]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-3]"
+          ]
+        },
+        {
+          "member": "public-qualification/minimum/scalar-public-VI-saved-linux.xml",
+          "testcase_nodes": 40,
+          "failed_nodes": [
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[1-ignored1-4096]",
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[1-ignored1-4099]",
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[4-ignored1-4096]",
+            "tests.test_variation_of_information_current_counts_public::test_current_dense_fallback_CSR_and_physical_storage[4-ignored1-4099]"
+          ]
+        }
+      ],
+      "capacity_receipt": {
+        "member": "qualification-capacity-minimum.json",
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\minimum\\raw\\qualification-capacity-minimum.json",
+        "bytes": 581,
+        "sha256": "80af29113e1d2e6bd55a9fe5396ad547f76ce4c63ce4039e1cb656eeb59bab69"
+      },
+      "capacity_external_source_run_job_step_binding": true,
+      "capacity_PASS": true,
+      "whole_product_accepted": false
+    },
+    {
+      "profile": "modern",
+      "artifact": 14204762566,
+      "job": 133132412226,
+      "extracted_files": 185,
+      "current_large_rows": 16,
+      "current_large_word_mismatches": 8,
+      "current_large_passes": 8,
+      "cases_identical_across_both_workers_and_modes": [
+        {
+          "index": 0,
+          "expected_hex": "9b413c87e4cb0740cda826ad66420640",
+          "actual_hex": "9a413c87e4cb0740cda826ad66420640",
+          "actual_minus_reference_word_units": [
+            -1,
+            0
+          ],
+          "primary_type": "AssertionError"
+        },
+        {
+          "index": 1,
+          "expected_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "actual_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "actual_minus_reference_word_units": [
+            0,
+            0
+          ],
+          "primary_type": null
+        },
+        {
+          "index": 2,
+          "expected_hex": "e66289cebfcb0740dd96ce603b420640",
+          "actual_hex": "e66289cebfcb0740dd96ce603b420640",
+          "actual_minus_reference_word_units": [
+            0,
+            0
+          ],
+          "primary_type": null
+        },
+        {
+          "index": 3,
+          "expected_hex": "af50ed2dad911140149d3463cb7a1140",
+          "actual_hex": "af50ed2dad911140169d3463cb7a1140",
+          "actual_minus_reference_word_units": [
+            0,
+            2
+          ],
+          "primary_type": "AssertionError"
+        }
+      ],
+      "failed_XML": [
+        {
+          "member": "public-qualification/modern/normal-public-VI-large-saved-linux.xml",
+          "testcase_nodes": 16,
+          "failed_nodes": [
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-3]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-3]"
+          ]
+        },
+        {
+          "member": "public-qualification/modern/scalar-public-VI-large-saved-linux.xml",
+          "testcase_nodes": 16,
+          "failed_nodes": [
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-3]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-3]"
+          ]
+        }
+      ],
+      "capacity_receipt": {
+        "member": "qualification-capacity-modern.json",
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\modern\\raw\\qualification-capacity-modern.json",
+        "bytes": 581,
+        "sha256": "3bb71b7bc1693fd1639f16e55daa95e0830b43c014e322c8e69e1173f96988a8"
+      },
+      "capacity_external_source_run_job_step_binding": true,
+      "capacity_PASS": true,
+      "whole_product_accepted": false
+    },
+    {
+      "profile": "debug",
+      "artifact": 14204513127,
+      "job": 133132412271,
+      "extracted_files": 185,
+      "current_large_rows": 16,
+      "current_large_word_mismatches": 8,
+      "current_large_passes": 8,
+      "cases_identical_across_both_workers_and_modes": [
+        {
+          "index": 0,
+          "expected_hex": "9b413c87e4cb0740cda826ad66420640",
+          "actual_hex": "9a413c87e4cb0740cda826ad66420640",
+          "actual_minus_reference_word_units": [
+            -1,
+            0
+          ],
+          "primary_type": "AssertionError"
+        },
+        {
+          "index": 1,
+          "expected_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "actual_hex": "4c5ccaa8fa9011405c0029dc1c7a1140",
+          "actual_minus_reference_word_units": [
+            0,
+            0
+          ],
+          "primary_type": null
+        },
+        {
+          "index": 2,
+          "expected_hex": "e66289cebfcb0740dd96ce603b420640",
+          "actual_hex": "e66289cebfcb0740dd96ce603b420640",
+          "actual_minus_reference_word_units": [
+            0,
+            0
+          ],
+          "primary_type": null
+        },
+        {
+          "index": 3,
+          "expected_hex": "af50ed2dad911140149d3463cb7a1140",
+          "actual_hex": "af50ed2dad911140169d3463cb7a1140",
+          "actual_minus_reference_word_units": [
+            0,
+            2
+          ],
+          "primary_type": "AssertionError"
+        }
+      ],
+      "failed_XML": [
+        {
+          "member": "public-qualification/debug/normal-public-VI-large-saved-linux.xml",
+          "testcase_nodes": 16,
+          "failed_nodes": [
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-3]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-3]"
+          ]
+        },
+        {
+          "member": "public-qualification/debug/scalar-public-VI-large-saved-linux.xml",
+          "testcase_nodes": 16,
+          "failed_nodes": [
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[1-3]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-0]",
+            "tests.test_vi_public_log2_provider_large::test_current_public_large_original_pair[4-3]"
+          ]
+        }
+      ],
+      "capacity_receipt": {
+        "member": "qualification-capacity-debug.json",
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\debug\\raw\\qualification-capacity-debug.json",
+        "bytes": 581,
+        "sha256": "809e20d9bc703bafb98dbe90b16995a984353d69f8689a0e7ce0f53171f8b0c1"
+      },
+      "capacity_external_source_run_job_step_binding": true,
+      "capacity_PASS": true,
+      "whole_product_accepted": false
+    },
+    {
+      "profile": "windows",
+      "artifact": 14203312460,
+      "job": 133132412260,
+      "extracted_files": 3,
+      "current_large_rows": 0,
+      "current_large_word_mismatches": 0,
+      "current_large_passes": 0,
+      "cases_identical_across_both_workers_and_modes": [],
+      "failed_XML": [
+        {
+          "member": "qualification-tool-guards.xml",
+          "testcase_nodes": 4338,
+          "failed_nodes": [
+            "tests.test_mark_lbp_controller::test_current16a5_bound_source_and_historical_scope"
+          ]
+        }
+      ],
+      "capacity_receipt": {
+        "member": "qualification-capacity-windows.json",
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\windows\\raw\\qualification-capacity-windows.json",
+        "bytes": 580,
+        "sha256": "aea7d5094fe678c3d7c91695e2b23aa9854a6c7ff9968a809d955e8c42ae0880"
+      },
+      "capacity_external_source_run_job_step_binding": true,
+      "capacity_PASS": true,
+      "whole_product_accepted": false
+    }
+  ],
+  "raw_report_proofs": [
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\minimum\\raw-diagnostics.json",
+      "bytes": 370098,
+      "sha256": "f0ee6d5ca02c5f99a58d25365a794586da49d0695279524d9cc995a5cb40515b"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\modern\\raw-diagnostics.json",
+      "bytes": 547853,
+      "sha256": "3c26f874a93afd7419a0e62806789fa04eb5653fb9b92e8ed886e8fd0fb3a46e"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\debug\\raw-diagnostics.json",
+      "bytes": 547164,
+      "sha256": "13417a9c30b6dc6c99f95108d39e8dc99c64d6daac46590e80fa8aec4d313b29"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\actual-raw-v1\\windows\\raw-diagnostics.json",
+      "bytes": 5744,
+      "sha256": "654c7fb87792c903a868e8a35d4be3d86eb88ce4e493134361a14f53bcd3f49a"
+    }
+  ],
+  "raw_reader_binding_sha256": "1c3a3fc6ba8722a8ed8360d4754cd0ea923241a7f5ff102d133ce07d8510a1ed",
+  "retention_admission": "build/vi-public-log2-provider-v1/qualification-readers-8ac-v1/root-retention-admission-v1.json",
+  "archive_digest_replays": 0,
+  "full_seals_verified": 0,
+  "stagers_accepted": 0,
+  "product_profiles_accepted": 0,
+  "local_scientific_calls_in_intake": 0,
+  "Windows": "Buildskipped after1rawpyprojectCRLF sourcefailure; attrsonly2270 actualNativecheckoutproof/local311full173PASS. No hostedretry.",
+  "causal_scope": "Nativewordsidentical acrossprofiles/modes/workers; minimumreferencecase2 differs. Bsourcecausal receipt pending; no assumption aboutmissingold373words. Minimum VI40 sourcepolicy failures are directscalar-default vs publicprovider comparison, distinct fromlargepairwords.",
+  "remaining": "Cneededuniqueproducts/rawretention thentransportdisposal; Bcausalclosure/narrowfixorboundeddiagnostic; finalfreeze/full173both/exactsource4profiles/VI4/main281. 313attrs-only2270 held toavoidobsoletecheck. Private16/SDKretainoldsource/runtime scope; math/headerfixrerunsaffected checks.",
+  "waste_reuse": "4API-exact once-transfers +163.62MB rawextraction; no scientificexperiment/timing/wholearchive orseal replay. Root independentlyhash-checked558rawfiles once. Metadata9c09ad SyntaxError else8 before anyexecution/writes; corrected spacing only and preservedfailure, no scientific/source-control rerun."
+}

@@ -39500,7 +39500,7 @@
       "readiness_reviewer": "Nonauthorreview C93f64source/72proof/823affectedchecks; focussharedSDK/wiring/contexts/workflow169, importedRkernels onlypinsagainstoldB/rootadmissions. No self-admission or checks/science reruns.",
       "root": "ActualLBP2firstcase strict controls+flood636 admitted. OwnGLCM0b6 countfix69each+Breview/fresh8prefix64; nextnonauthoractualprefix readiness beforemin8neworiginal. Rootsharedcandidateadmission/full169/rootnativeSDK+release/genuine/perf/main."
     },
-    "next_action": "Root313 same7756 onlyafter B exactfresh311fixture eligibility/one cleanupboundary orpolicyblockmanual; actual311 passedfull173 4338+8/44plugins/cleanHEAD/index/raw/science0. Inparallel failed4384artifact retention/narrowrawVI diagnostics; no newhostedGO until ALL demonstrated Linux/Windows causes closed andfrozen successorfull173both pass.",
+    "next_action": "Root oneexactfresh311fixture cleanupattempt after230a actualadmission; hold313attrs-only2270 pending demonstratedLinux numericalcausal closure toavoid obsolete barrier. B actual48row/sourcecausal review; C minimaluniqueproduct/rawretention fromactualinventory beforetransportdisposal. Root independentadmission, narrowfix/diagnosticGO ifneeded, thenfinalfrozen173both andexactsource4profiles. No unchangedretry/tolerance orwhole-originalforward.",
     "current_checkpoint": {
       "main_image_names": 271,
       "resume_20261115": {
@@ -39530,7 +39530,7 @@
           "root": "Independent source/compiled-product admitted85257; admits harness/rootGO/main. Shipped271."
         },
         "capacity": "Actual entry C free396955144192B, D free288221495296B. Conservative combined next peak: 20GiB full source-barrier scratch plus 1GiB tracking worktree and 1GiB worker guards; destination exceeds peak plus20GiB and30GiB floor. Reuse retained Windows311 executable and project Windows313 environment; no environment/download rebuild. Keep raw command/XML/evidence outside disposable roots; release terminal scratch after excluding protected dependencies; previously denied targets untouched.",
-        "next_gate": "Root313 same7756 onlyafter B exactfresh311fixture eligibility/one cleanupboundary orpolicyblockmanual; actual311 passedfull173 4338+8/44plugins/cleanHEAD/index/raw/science0. Inparallel failed4384artifact retention/narrowrawVI diagnostics; no newhostedGO until ALL demonstrated Linux/Windows causes closed andfrozen successorfull173both pass.",
+        "next_gate": "Root oneexactfresh311fixture cleanupattempt after230a actualadmission; hold313attrs-only2270 pending demonstratedLinux numericalcausal closure toavoid obsolete barrier. B actual48row/sourcecausal review; C minimaluniqueproduct/rawretention fromactualinventory beforetransportdisposal. Root independentadmission, narrowfix/diagnosticGO ifneeded, thenfinalfrozen173both andexactsource4profiles. No unchangedretry/tolerance orwhole-originalforward.",
         "tracking_delivery": {
           "source": "1cd85168416635de5784efd61f1bb890d4c94bda",
           "main": "pushed_and_remote_verified",
@@ -41717,7 +41717,7 @@
                   "scope": "Prepared exactsource8ac/WF725/expected281; pointintime metadata only. Rootrefreshes mutable state atactualGO afterfull173BOTH."
                 },
                 "genuine_qualification": {
-                  "status": "ACTUAL_ALL4_TERMINAL_FAILURE_NO_RELEASE",
+                  "status": "ALL4_FAILED_RAW_NUMERICAL_FAILURE_ROOT_ADMITTED_NO_RELEASE",
                   "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
                   "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-root-dispatch-v1\\root-GO-v1.json",
                   "GO_sha256": "1cb4225b53269a67de590992a7661f936d6406cfda9491c6323d215577f0237a",
@@ -41735,291 +41735,468 @@
                       {
                         "id": 133132412004,
                         "name": "qualify (ubuntu-24.04, minimum, 3.11.17)",
-                        "status": "in_progress",
-                        "conclusion": null,
+                        "status": "completed",
+                        "conclusion": "failure",
                         "steps": [
                           {
                             "name": "Set up job",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 1,
+                            "started_at": "2026-11-16T06:32:00Z",
+                            "completed_at": "2026-11-16T06:32:03Z"
                           },
                           {
                             "name": "Run actions/checkout@v4",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 2,
+                            "started_at": "2026-11-16T06:32:03Z",
+                            "completed_at": "2026-11-16T06:32:11Z"
                           },
                           {
                             "name": "Run actions/setup-python@v5",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 3,
+                            "started_at": "2026-11-16T06:32:11Z",
+                            "completed_at": "2026-11-16T06:32:17Z"
                           },
                           {
                             "name": "Verify qualification scratch capacity",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 4,
+                            "started_at": "2026-11-16T06:32:17Z",
+                            "completed_at": "2026-11-16T06:32:18Z"
                           },
                           {
                             "name": "Tooling guards before preparation",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 5,
+                            "started_at": "2026-11-16T06:32:18Z",
+                            "completed_at": "2026-11-16T06:34:32Z"
                           },
                           {
                             "name": "Build and qualify one genuine whole product on this fresh host",
-                            "status": "in_progress",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 6,
+                            "started_at": "2026-11-16T06:34:32Z",
+                            "completed_at": "2026-11-16T07:10:04Z"
                           },
                           {
                             "name": "Independently rehash a terminal qualification seal",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 7,
+                            "started_at": "2026-11-16T07:10:04Z",
+                            "completed_at": "2026-11-16T07:10:04Z"
                           },
                           {
                             "name": "Stage a bounded controlled product after successful independent verification",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 8,
+                            "started_at": "2026-11-16T07:10:04Z",
+                            "completed_at": "2026-11-16T07:10:04Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 9,
+                            "started_at": "2026-11-16T07:10:04Z",
+                            "completed_at": "2026-11-16T07:10:04Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 10,
+                            "started_at": "2026-11-16T07:10:04Z",
+                            "completed_at": "2026-11-16T07:11:33Z"
                           },
                           {
                             "name": "Post Run actions/setup-python@v5",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 19,
+                            "started_at": "2026-11-16T07:11:33Z",
+                            "completed_at": "2026-11-16T07:11:33Z"
                           },
                           {
                             "name": "Post Run actions/checkout@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 20,
+                            "started_at": "2026-11-16T07:11:33Z",
+                            "completed_at": "2026-11-16T07:11:33Z"
+                          },
+                          {
+                            "name": "Complete job",
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 21,
+                            "started_at": "2026-11-16T07:11:33Z",
+                            "completed_at": "2026-11-16T07:11:34Z"
                           }
                         ]
                       },
                       {
                         "id": 133132412226,
                         "name": "qualify (ubuntu-24.04, modern, 3.13.16)",
-                        "status": "in_progress",
-                        "conclusion": null,
+                        "status": "completed",
+                        "conclusion": "failure",
                         "steps": [
                           {
                             "name": "Set up job",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 1,
+                            "started_at": "2026-11-16T06:32:00Z",
+                            "completed_at": "2026-11-16T06:32:00Z"
                           },
                           {
                             "name": "Run actions/checkout@v4",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 2,
+                            "started_at": "2026-11-16T06:32:00Z",
+                            "completed_at": "2026-11-16T06:32:08Z"
                           },
                           {
                             "name": "Run actions/setup-python@v5",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 3,
+                            "started_at": "2026-11-16T06:32:08Z",
+                            "completed_at": "2026-11-16T06:32:14Z"
                           },
                           {
                             "name": "Verify qualification scratch capacity",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 4,
+                            "started_at": "2026-11-16T06:32:14Z",
+                            "completed_at": "2026-11-16T06:32:14Z"
                           },
                           {
                             "name": "Tooling guards before preparation",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 5,
+                            "started_at": "2026-11-16T06:32:14Z",
+                            "completed_at": "2026-11-16T06:35:03Z"
                           },
                           {
                             "name": "Build and qualify one genuine whole product on this fresh host",
-                            "status": "in_progress",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 6,
+                            "started_at": "2026-11-16T06:35:03Z",
+                            "completed_at": "2026-11-16T07:07:22Z"
                           },
                           {
                             "name": "Independently rehash a terminal qualification seal",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 7,
+                            "started_at": "2026-11-16T07:07:22Z",
+                            "completed_at": "2026-11-16T07:07:22Z"
                           },
                           {
                             "name": "Stage a bounded controlled product after successful independent verification",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 8,
+                            "started_at": "2026-11-16T07:07:22Z",
+                            "completed_at": "2026-11-16T07:07:22Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 9,
+                            "started_at": "2026-11-16T07:07:22Z",
+                            "completed_at": "2026-11-16T07:07:22Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 10,
+                            "started_at": "2026-11-16T07:07:22Z",
+                            "completed_at": "2026-11-16T07:08:54Z"
                           },
                           {
                             "name": "Post Run actions/setup-python@v5",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 19,
+                            "started_at": "2026-11-16T07:08:54Z",
+                            "completed_at": "2026-11-16T07:08:54Z"
                           },
                           {
                             "name": "Post Run actions/checkout@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 20,
+                            "started_at": "2026-11-16T07:08:54Z",
+                            "completed_at": "2026-11-16T07:08:54Z"
+                          },
+                          {
+                            "name": "Complete job",
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 21,
+                            "started_at": "2026-11-16T07:08:54Z",
+                            "completed_at": "2026-11-16T07:08:54Z"
                           }
                         ]
                       },
                       {
                         "id": 133132412260,
                         "name": "qualify (windows-latest, windows, 3.13.16)",
-                        "status": "in_progress",
-                        "conclusion": null,
+                        "status": "completed",
+                        "conclusion": "failure",
                         "steps": [
                           {
                             "name": "Set up job",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 1,
+                            "started_at": "2026-11-16T06:32:00Z",
+                            "completed_at": "2026-11-16T06:32:00Z"
                           },
                           {
                             "name": "Run actions/checkout@v4",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 2,
+                            "started_at": "2026-11-16T06:32:00Z",
+                            "completed_at": "2026-11-16T06:32:13Z"
                           },
                           {
                             "name": "Run actions/setup-python@v5",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 3,
+                            "started_at": "2026-11-16T06:32:13Z",
+                            "completed_at": "2026-11-16T06:33:13Z"
                           },
                           {
                             "name": "Verify qualification scratch capacity",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 4,
+                            "started_at": "2026-11-16T06:33:13Z",
+                            "completed_at": "2026-11-16T06:33:14Z"
                           },
                           {
                             "name": "Tooling guards before preparation",
-                            "status": "in_progress",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 5,
+                            "started_at": "2026-11-16T06:33:14Z",
+                            "completed_at": "2026-11-16T06:38:54Z"
                           },
                           {
                             "name": "Build and qualify one genuine whole product on this fresh host",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 6,
+                            "started_at": "2026-11-16T06:38:54Z",
+                            "completed_at": "2026-11-16T06:38:54Z"
                           },
                           {
                             "name": "Independently rehash a terminal qualification seal",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 7,
+                            "started_at": "2026-11-16T06:38:54Z",
+                            "completed_at": "2026-11-16T06:38:54Z"
                           },
                           {
                             "name": "Stage a bounded controlled product after successful independent verification",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 8,
+                            "started_at": "2026-11-16T06:38:54Z",
+                            "completed_at": "2026-11-16T06:38:54Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 9,
+                            "started_at": "2026-11-16T06:38:54Z",
+                            "completed_at": "2026-11-16T06:38:54Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 10,
+                            "started_at": "2026-11-16T06:38:54Z",
+                            "completed_at": "2026-11-16T06:38:55Z"
                           },
                           {
                             "name": "Post Run actions/setup-python@v5",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 19,
+                            "started_at": "2026-11-16T06:38:55Z",
+                            "completed_at": "2026-11-16T06:38:55Z"
                           },
                           {
                             "name": "Post Run actions/checkout@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 20,
+                            "started_at": "2026-11-16T06:38:55Z",
+                            "completed_at": "2026-11-16T06:38:57Z"
+                          },
+                          {
+                            "name": "Complete job",
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 21,
+                            "started_at": "2026-11-16T06:38:57Z",
+                            "completed_at": "2026-11-16T06:38:57Z"
                           }
                         ]
                       },
                       {
                         "id": 133132412271,
                         "name": "qualify (ubuntu-24.04, debug, 3.13.16)",
-                        "status": "in_progress",
-                        "conclusion": null,
+                        "status": "completed",
+                        "conclusion": "failure",
                         "steps": [
                           {
                             "name": "Set up job",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 1,
+                            "started_at": "2026-11-16T06:31:59Z",
+                            "completed_at": "2026-11-16T06:32:02Z"
                           },
                           {
                             "name": "Run actions/checkout@v4",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 2,
+                            "started_at": "2026-11-16T06:32:02Z",
+                            "completed_at": "2026-11-16T06:32:10Z"
                           },
                           {
                             "name": "Run actions/setup-python@v5",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 3,
+                            "started_at": "2026-11-16T06:32:10Z",
+                            "completed_at": "2026-11-16T06:32:15Z"
                           },
                           {
                             "name": "Verify qualification scratch capacity",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 4,
+                            "started_at": "2026-11-16T06:32:15Z",
+                            "completed_at": "2026-11-16T06:32:16Z"
                           },
                           {
                             "name": "Tooling guards before preparation",
                             "status": "completed",
-                            "conclusion": "success"
+                            "conclusion": "success",
+                            "number": 5,
+                            "started_at": "2026-11-16T06:32:16Z",
+                            "completed_at": "2026-11-16T06:34:32Z"
                           },
                           {
                             "name": "Build and qualify one genuine whole product on this fresh host",
-                            "status": "in_progress",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 6,
+                            "started_at": "2026-11-16T06:34:32Z",
+                            "completed_at": "2026-11-16T07:12:27Z"
                           },
                           {
                             "name": "Independently rehash a terminal qualification seal",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "failure",
+                            "number": 7,
+                            "started_at": "2026-11-16T07:12:27Z",
+                            "completed_at": "2026-11-16T07:12:27Z"
                           },
                           {
                             "name": "Stage a bounded controlled product after successful independent verification",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 8,
+                            "started_at": "2026-11-16T07:12:27Z",
+                            "completed_at": "2026-11-16T07:12:27Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 9,
+                            "started_at": "2026-11-16T07:12:27Z",
+                            "completed_at": "2026-11-16T07:12:27Z"
                           },
                           {
                             "name": "Run actions/upload-artifact@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 10,
+                            "started_at": "2026-11-16T07:12:27Z",
+                            "completed_at": "2026-11-16T07:14:22Z"
                           },
                           {
                             "name": "Post Run actions/setup-python@v5",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "skipped",
+                            "number": 19,
+                            "started_at": "2026-11-16T07:14:22Z",
+                            "completed_at": "2026-11-16T07:14:22Z"
                           },
                           {
                             "name": "Post Run actions/checkout@v4",
-                            "status": "pending",
-                            "conclusion": null
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 20,
+                            "started_at": "2026-11-16T07:14:22Z",
+                            "completed_at": "2026-11-16T07:14:22Z"
+                          },
+                          {
+                            "name": "Complete job",
+                            "status": "completed",
+                            "conclusion": "success",
+                            "number": 21,
+                            "started_at": "2026-11-16T07:14:22Z",
+                            "completed_at": "2026-11-16T07:14:22Z"
                           }
                         ]
                       }
                     ],
                     "conclusion": "failure"
                   },
-                  "actual_capacity_receipts": 0,
+                  "actual_capacity_receipts": 4,
                   "actual_profiles_accepted": 0,
                   "actual_SDK_checks_accepted": 0,
                   "actual_stagers_accepted": 0,
                   "root_full_source_readiness_sha256": "0558eda6ba42ad8581198f4d634b890e2f2ede15d93aae6ee70002de3e3563c8",
                   "fresh_root_metadata_sha256": "3c89f985612a37d7ec138f9048805d9dbb6eaac5d455c97c149f594cc67d7b48",
-                  "remaining": "438 all4 failed: Windows raw checkout failure known, Linux3 first-failure raw log intake C live request; no unchanged retry or new exactsource dispatch until ALL demonstrated causes closed. Source2270 full173v5 311 live; 313 held.",
+                  "remaining": "Terminalfailed438/source8ac preserved;28/48currentword failures, separateminimumVI40scalar-default/public testpolicyissue, WindowsCRLF. B staticcause/narrowcorrection pending; C neededproducts/rawretention thentransportdiscard pending. Finalsource complete173both +exact4profiles/SDK304/stagers3/VI4/main281 required. No unchangedsource retry.",
                   "watcher": {
                     "PID": 54220,
                     "session": 18132,
                     "run": 43817382620,
-                    "status": "LIVE_READ_ONLY",
-                    "launch": "build/vi-public-log2-provider-v1/qualification-root-dispatch-v1/watch.launch-v1.json"
+                    "status": "TERMINAL_ACTUAL_EXIT1",
+                    "launch": "build/vi-public-log2-provider-v1/qualification-root-dispatch-v1/watch.launch-v1.json",
+                    "actual_exit": 1
                   },
                   "capacity_steps_completed_success_observed": 4,
                   "capacity_scope": "Initial job API reports all four capacity steps success; raw receipt/source/job/artifact/order admission remains pending.",
@@ -42036,11 +42213,14 @@
                   "linux_failure_intake": {
                     "owner": "mark_release_readiness",
                     "scope": "3raw Linuxjob logs, commands/exits/source/run correlation only; no archives or science",
-                    "status": "LIVE_CONFIRMED_RAW_LOGS3_AND_METADATA_PASS",
-                    "first_outer_failure": "VI current-large primary/diagnostic/timing failure at qualifier2446 in seal; underlying primary stillunknown, needactualJSON/XML/childlogs beforefix/dispatch"
+                    "status": "ROOT_LOG_METADATA23_PROOFS_ADMITTED_UNDERLYING_CAUSE_UNKNOWN",
+                    "first_outer_failure": "VI current-large primary/diagnostic/timing failure at qualifier2446 in seal; underlying primary stillunknown, needactualJSON/XML/childlogs beforefix/dispatch",
+                    "handoff": "build/vi-public-log2-provider-v1/qualification-failure-438-v1/handoff-v1.json",
+                    "handoff_sha256": "e3e70e03ac1d63a58ca42fcc14aaa548db543709a389ed15ec95b7ee4938328b",
+                    "root_actual_raw_inspection": "a03f10:all3Linux4320+8 tooling PASS; first2446VIrecordfailure/dependentno seal"
                   },
                   "retention": {
-                    "status": "ACTUAL_ONCE_ONLY_RETENTION_LIVE",
+                    "status": "ACTUAL4_ONCE_TRANSFERS_ROOT_ADMITTED_READER_PENDING",
                     "binding": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-readers-8ac-v1\\freeze-contract-run43817382620-root-v1.json",
                     "binding_sha256": "4011473dc878f4b00cd3876e08ea20344aecb91ce78d1e530b0d375c547b0e32",
                     "source": "8ac153c6659a3056e3e6ac18063213af4642a768",
@@ -42053,12 +42233,44 @@
                     "whole_product_accepted": false,
                     "PID": 57228,
                     "exec_session": 62919,
-                    "launch": "build/vi-public-log2-provider-v1/qualification-readers-8ac-v1/retention.executor.launch-v1.json"
+                    "launch": "build/vi-public-log2-provider-v1/qualification-readers-8ac-v1/retention.executor.launch-v1.json",
+                    "actual_external_exit": 0,
+                    "total_bytes": 4696883335,
+                    "root_receipt": "build/vi-public-log2-provider-v1/qualification-readers-8ac-v1/root-retention-admission-v1.json",
+                    "root_receipt_sha256": "c4357984cd1a7ca22ae37a4c8a7804a4b3b8c97b70f5022e6426169349252e79",
+                    "archive_digest_replays": 0
+                  },
+                  "raw_diagnostics": {
+                    "status": "ACTUAL_EXTERNAL0_RAW_RECORDS_RETAINED_NUMERICAL_FAILURE_CONFIRMED",
+                    "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-log2-provider-v1\\qualification-failure-438-diagnostics-v1\\root-GO-v1.json",
+                    "GO_sha256": "1c3a3fc6ba8722a8ed8360d4754cd0ea923241a7f5ff102d133ce07d8510a1ed",
+                    "reader_sha256": "17ab9fd283a107e7a03bf0fad64772a33384168eb2973477900de30857dad2c1",
+                    "controls_each": 8,
+                    "actual_raw_counts": null,
+                    "scope": "All4 failed438 roles, selective raw rows/XML/logs/capacity+preservationinventory only; no product/seal/science acceptance",
+                    "root_metadata_setup_correction": "165838 assumed flatproofs key and stoppedKeyError beforewrites/archive. Actualschema270015 files13 inspected; onlymetadata reader corrected, no controls/science repeated.",
+                    "PID": 31920,
+                    "actual_external_exit": 0,
+                    "selected_bytes": 163622496,
+                    "extracted_files": 558,
+                    "current_large_rows": 48,
+                    "parse_errors": 0,
+                    "archive_digest_replays": 0,
+                    "science_calls": 0,
+                    "reader_terminal": "build/vi-public-log2-provider-v1/qualification-failure-438-diagnostics-v1/actual-raw-v1/terminal.json",
+                    "finding": "Real current public strictoutputword mismatches; counts1+1/11returns/2trueNPlog2batches/exactcaller32/diagnostics[]. Minimumcase0/2/3,modern/debug0/3 eachworkers/mode. Nativewordsconsistent acrossprofiles; B frozen causalreviewpending. Windowsbuildneverran.",
+                    "root_receipt": "coverage/evidence/vi-public-log2-four-profile-failure-root-intake-v1.json",
+                    "root_receipt_sha256": "9e2c06b3f7493ca1da0d1f005f58f2f79ffdc82654b0809360df1b463fe3988f",
+                    "root_raw_file_hashes_verified": 558,
+                    "current_large_passed": 20,
+                    "current_large_failed": 28,
+                    "actual_capacity4_admitted": true,
+                    "root_metadata_correction": "9c09ad SyntaxError else8 stoppedbeforeanyexecution/writes; correctedspacing only foractualcfbc16 intake, no scientific/sourcecontrol rerun"
                   }
                 },
                 "windows_checkout_policy_successor": {
                   "owner": "/root",
-                  "status": "ACTUAL_FULL173_V5_311_PASS_313_PENDING_CLEANUP_BOUNDARY",
+                  "status": "2270_311_PASS_313_HELD_PENDING_LINUX_CAUSAL_CORRECTION",
                   "file": ".gitattributes",
                   "change": "Add only pyproject.toml -text; keep all raw refs/source/assertions unchanged",
                   "gates": "Actual NativeWindowsGit core.autocrlf=true fresh checkout, affected guards and COMPLETE actual173both on frozen successor, then exact-sourcefour-profile release. No source8ac unchanged retry.",
@@ -42095,7 +42307,27 @@
                       "root_receipt_sha256": "715d15613225d7657e7e05300a9aa37caa180a7a37730777cdae1b7db6c26bb8"
                     },
                     "actual313": null,
-                    "next": "Actualcomplete173both before newexactsourcefour-profile GO; no affected union orunchangedsource8ac retry."
+                    "next": "New438actual outputword failures require causal closure; hold313onattrs-only2270 toavoid fullbarrieron source awaiting numericalcorrection. Afterreviewedcorrectionfreeze finalsource runmandatory173both beforeany successorhostedGO. 311438.219sPASS preserved scoped2270, notrelabeledtofuture.",
+                    "cleanup311": {
+                      "owner": "root/manual user action",
+                      "status": "POLICY_BLOCKED_BEFORE_CREATEPROCESS_MANUAL_ONLY",
+                      "target": "D:\\Scratch\\current281-final-source-controls-v5\\windows311",
+                      "eligible_logical_bytes": 6947955808,
+                      "eligible_files": 84757,
+                      "eligibility_receipt": "build\\current281-final-source-v5\\fixture-windows311-entry-v5.json",
+                      "eligibility_sha256": "230a6d0fbc2ea740274975c3ec4badbb6dd0b70c5c9e4a3f205b652bb9b27637",
+                      "retained_evidence_hashes_root_verified": 12,
+                      "no_alternate": "Allpriorblockedv4/v1/v2 protected; anyblocknewtarget becomesmanual withno ancestor/child/alternate retry.",
+                      "attempts": 1,
+                      "exact_reason": "Automatic approvalreview rejected exact nativePowerShell Remove-Item with blocked bypolicy beforeCreateProcess; commanddidnotexecute.",
+                      "actual_removed_paths": 0,
+                      "actual_removed_logical_bytes": 0,
+                      "physical_reclaim_bytes": null,
+                      "removal_receipt_exists": false,
+                      "observed_Dfree_after_block": 278578802688,
+                      "release_trigger": "Userperformedexacttargetremoval; rootverifiesabsence beforeanylaterreuse. No alternate/child/ancestor retry orimplicitpytestreuse.",
+                      "oldblockedpaths": "All remainprotected, not retried."
+                    }
                   },
                   "tiny_reproducer_retention": {
                     "path": "build/vi-public-log2-provider-v1/windows-byte-policy-successor-v1/checkout-fixture",
@@ -42105,7 +42337,7 @@
                 },
                 "VI4_main_workflow_registration": {
                   "owner": "root",
-                  "status": "DOCUMENT_GATES_PASSED_READY_TO_PUBLISH",
+                  "status": "PUBLISHED_REGISTERED_ACTIVE_NO_DISPATCH",
                   "path": ".github/workflows/vi-initial-failure-capture.yml",
                   "sha256": "b0117717c438f5ccfe274228285927ec1c3e6f8082f22f65015c04ccd9001f4e",
                   "source": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
@@ -42119,7 +42351,14 @@
                     "JSON_added_links_whitespace_WIP": "actual457c49 exit0/10links",
                     "affected_YAMLsource_controls": "Reused actual8ac full173both0558, literalb011 unchanged; mainregistration no runtime execution",
                     "unmet": "commit/push/actualremote workflow registration; boundcontroller andacceptedproducer allpending"
-                  }
+                  },
+                  "main_commit": "8dacc16be93e5e3326c6945c512045aaf0b274ae",
+                  "actual_push_exit": 0,
+                  "actual_remote_verified": true,
+                  "workflow_id": 419847283,
+                  "workflow_state": "active",
+                  "actual_registry_tool": "c097f6",
+                  "remaining": "Accepted successorproducer +actual boundversioned controller context/runtime/core/SDK/stager/root receipts; registration grantsnoexecution orperformance/shippingcredit"
                 }
               }
             }
