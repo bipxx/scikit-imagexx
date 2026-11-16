@@ -1,0 +1,188 @@
+{
+  "schema": "vi-current-matmul-local-readiness-qualification-dispatch-root-progress-v2",
+  "status": "ALL_LOCAL_GATES_PASS_GENUINE43949036485_RUNNING_MAIN271",
+  "owner": "/root",
+  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "receipts": [
+    {
+      "path": "build/current281-final-source-v7/root-both-admission-v1.json",
+      "bytes": 3165,
+      "sha256": "5c81441d3ee5c250fe06eba07b5b0f8a12f21a3231dd09c63efdf9a9d7f2ef20",
+      "status": "ROOT_COMPLETE_ACTUAL_WORKFLOW181_BOTH_PASS"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/root-private60-runtime-admission-v1.json",
+      "bytes": 2583,
+      "sha256": "6c5cd57306020de961a5dba402ab017c38f4b9b1789237ea1d79f97eb1a43d78",
+      "status": "ROOT_PRIVATE60_RUNTIME_PASS_SCOPED_AVX2_NUMPY124_ONLY"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/current-SDK-ordinary-entry-v2/root-ordinary-runtime-admission-v1.json",
+      "bytes": 4238,
+      "sha256": "35cc0cc7f371c7281233b3652dacad866ac1866a08a5755bbeb5b9f89f506d68",
+      "status": "ROOT_PRIVATE_ORDINARY_INSTALLED_SDK_NORMAL_DISABLED_RUNTIME_PASS"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/current-SDK-mode-entry-v2/root-mode-runtime-admission-v1.json",
+      "bytes": 3952,
+      "sha256": "874612942af023570364a784e7b02ec0efc4a60ab66a351aa3f1a4b55f68ebf2",
+      "status": "ROOT_CURRENT_TRUE_COMPILER_SCALAR_AND_ASAN_UBSAN_INSTALLED_OWNING_SDK_RUNTIME_PASS"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/qualification-root-dispatch-v1/root-GO-v1.json",
+      "bytes": 3056,
+      "sha256": "101a38034e60cdacde4be2922399cb1391334f60ca7a2ae510ef064321838ef4",
+      "status": "ROOT_AUTHORIZED_ONE_EXACT_CURRENT_MATMUL_FOUR_PROFILE_QUALIFICATION"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/qualification-root-dispatch-v1/actual-dispatch-binding-v1.json",
+      "bytes": 519,
+      "sha256": "7f5ea241b4674da20b0ca6c05c1c0e9df9347883883dd2e1bafcd020025405ca",
+      "status": "in_progress"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/qualification-root-dispatch-v1/initial-live-jobs-v1.json",
+      "bytes": 8882,
+      "sha256": "40481724dc8892c8e4e9e318a5d4b094cbdb8db7a2077ed9af8ded9934fddd57",
+      "status": "RETAINED_ACTUAL_METADATA_NO_TERMINAL_ACCEPTANCE"
+    }
+  ],
+  "source_barrier": {
+    "profiles": [
+      "Windows Python3.11.11",
+      "Windows Python3.13.14"
+    ],
+    "exact_workflow_selectors": 181,
+    "ordinary_cases_each": 4635,
+    "subtests_each": 8,
+    "XML_each": {
+      "tests": 4643,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "normal_plugins_conftest": true,
+    "source55_before_after_live": true,
+    "science_imports": 0,
+    "all22_frozen_proof_bytes_root_verified": true
+  },
+  "private60": {
+    "runtime": "Linux3.11.14/NumPy1.24.4/SciPy1.15.3/Intel12700K AVX2",
+    "XML": {
+      "tests": 60,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "normal_plugins": 43,
+    "legacy_saved": 16,
+    "exact_returns": 14,
+    "expected_None_errors": 2,
+    "caller32_restores": 56,
+    "worker_records": {
+      "1": 28,
+      "4": 28
+    },
+    "default1_postidentity": true,
+    "owned_source78_and_167proofbytes": true,
+    "fresh_original_metric_calls": 0,
+    "warnings_retained": 4,
+    "FP_scope": "Caller56 only; integration4 nohardwareFP envelope. Priorprivate32 24freshpairs/naturaltargetFP remainseparate. Sourcecall counts notglobalinstrumentation."
+  },
+  "ordinarySDK": {
+    "actual_normal_and_disabled_CTests": [
+      0,
+      0
+    ],
+    "XML_tests_each": 1,
+    "raw32_pairs_equal": 190,
+    "binary_sha256": "06f1479fb670032bb7f938c97c1fa386676d3bf5da59810bb63cb2de905ebe6e",
+    "installed_static_sha256": "8aebb271d3e4b8f33450928792189c99459e91b3623e341f396fdf8bc5aa619f",
+    "provider_scope": "C++ SDK hostscalar-libm/linear-dot callbacks, not NumPy/BLAS parity orpure-nativeprovider claim.337top/330callback/49F1/170read sourcepathbounds perbody are notglobaltrace.",
+    "normal_default1_and_source14_binary_protected_DSO7_postidentity": true,
+    "proofbytes": 37
+  },
+  "true_modes": {
+    "status": "ROOT_TRUE_COMPILER_SCALAR_AND_ASAN_UBSAN_INSTALLED_SDK_RUNTIME_PASS",
+    "scalar_static": "05f739bda1c512a04544760087ba6cb4c7ec44a355029bde0405f9a969f59fa4",
+    "SAN_static": "b8bb044408bfc7710d6f8887f4ad9e920617993f136288878ed060f771933dab",
+    "ordinary_disabled_is_true_compiler_scalar": false,
+    "runtime_admission": "build/vi-public-matmul-provider-v1/current-SDK-mode-entry-v2/root-mode-runtime-admission-v1.json",
+    "actual_CTest_exits": [
+      0,
+      0
+    ],
+    "XML_each": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "raw32_pairs_each": 95,
+    "callback_word_records_each": 92,
+    "default_workers": 1,
+    "SIMD_available": [
+      0,
+      1
+    ],
+    "resolved_DSOs": [
+      7,
+      9
+    ],
+    "sanitizer_diagnostics": 0,
+    "proofs": 40,
+    "source9_currentheaders_binary_SDK108_oldbaselines_F1_DSO_postidentity": true,
+    "provider_scope": "C++ scalar-libm/linear-dot callback controls; not public NumPy parity.337/330/49/170 are source path bounds perbody, not globally traced counters."
+  },
+  "cleanup": {
+    "full311_target": "D:/Scratch/current281-final-source-controls-v7/windows311",
+    "full311_logical_bytes": 7097731401,
+    "full313_target": "D:/Scratch/current281-final-source-controls-v7/windows313",
+    "full313_logical_bytes": 7097718111,
+    "full_fixture_outcome": "EachONE exact native recursive removal rejected beforeCreateProcess blocked by policy;0removed/manualonly/no retry/alternate/parent/sibling. Allraw/source55/index/tinyepochreceiptoutside/protecteddeps retained.",
+    "empty_private60_target": "D:/Scratch/vi-public-matmul-private-controls-v1",
+    "empty_outcome": "e49fdd all19eligibilityproofs; b766f0 finalpath/empty/readers; af69c0 ONE NONrecursive nativeRemoveItem0/exactpathabsent",
+    "empty_logical_bytes": 0,
+    "reclaim_claimed_bytes": 0,
+    "physical_allocation": null,
+    "earlier153retirement": "coverage/evidence/clean-worktree153-retirement-root-closeout-v1.json;105084395313logicalB removed/101457489920B observed free increase, branches/commitsretained; historical, no newclaim"
+  },
+  "pending": [
+    "ExactAA genuine four-profile actualcapacity/products/304SDKchecks and3stagers admission",
+    "Matched genuine minimum3.11.17 product/runtime/source-builtF1 and actualVI4 four-case one-thread public performance with all losses",
+    "Independent shipping281 projection/merge/push/remote;main remains271"
+  ],
+  "waste_review": "Reused complete181BOTH/private60/ordinarySDK and110+187unchanged staticobjects. True-mode SDK runtimes each executed once with0retries/builds/original/timing calls. Root independently verified40proofs,190raw32 pairs and184callbackwordrecords. Unsupported gh workflow view --json and connector workflow-collection GET were corrected with working read-only ghAPI; no duplicate dispatch or science. Interrupted broad build-file search before dependent action; no extra inventory or mutation. Documentation/state checks only for publication.",
+  "next_owner_trigger": "Root monitor existing43949036485; A narrow existing profile-reader successor, C stager-reader successor, B transport/materialization preparation in exclusive ignored roots. Actual artifacts/terminal evidence required before extraction/admission; no new frameworks or source changes. Root retains independent genuine/VI4/main admission.",
+  "predecessor": {
+    "path": "coverage/evidence/vi-public-matmul-source-private-SDK-root-progress-v1.json",
+    "sha256": "bbc23a6128984749e85287a500072bfcebe9e902bf434f83873452472b9670a8",
+    "immutable": true
+  },
+  "genuine_qualification": {
+    "run": 43949036485,
+    "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43949036485",
+    "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+    "workflow": 394745989,
+    "status": "IN_PROGRESS_NOT_ADMITTED",
+    "dispatches": 1,
+    "attempt": 1,
+    "retries": 0,
+    "actual_dispatch_exit": 0,
+    "root_GO_sha256": "101a38034e60cdacde4be2922399cb1391334f60ca7a2ae510ef064321838ef4",
+    "source55_HEAD_clean_remote_verified": true,
+    "job_ids": {
+      "debug": 133586293874,
+      "minimum": 133586294028,
+      "modern": 133586294075,
+      "windows": 133586294478
+    },
+    "capacity": "All4job step summaries show PASS; actual40GiB capacity receipts and job/source ordering remain PENDING root admission.",
+    "expected": {
+      "profiles": 4,
+      "SDK_checks": 304,
+      "stagers": 3
+    },
+    "actual_terminal_products_admitted": 0
+  }
+}
