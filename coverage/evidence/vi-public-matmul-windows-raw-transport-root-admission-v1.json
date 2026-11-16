@@ -1,0 +1,196 @@
+{
+  "schema": "vi-public-matmul-windows-raw-transport-root-admission-v1",
+  "status": "PASS_PRIVATE_WINDOWS_TRANSPORT_SOURCE_CORRECTION_ONLY",
+  "owner": "/root",
+  "source_parent": "6c0275433a44b9eb896c092481dbe76d0ef597f1",
+  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "branch": "implement/vi-public-matmul-provider-v1",
+  "actual_private_commit": "54d5e4 exit0",
+  "actual_private_push": "2c0942 exit0",
+  "independent_clean_HEAD_index_remote": "42c495 exact PASS",
+  "defect": {
+    "actual_tool": "9b4f79 exit0",
+    "cause": "NativeWindowsGit core.autocrlf=true converts LF-only .gitignore71to79 and LICENSE1533to1560; all2064 historical files enter unconditional rawGitblob+size check. Mixed .gitattributes/AGENTS/README checkout filters were exact. Canonical qualifier hashes do not substitute for raw historical check.",
+    "failed_conservative_attribute_audit": "903d6a exit1, five unspecified attributes; retained unchanged. Only two demonstrated raw transport failures required correction.",
+    "setup_failure": "952192 WinError206 before Git CreateProcess due argvlength; corrected to Git -z --stdin, no source/test/science executed."
+  },
+  "correction": {
+    "exact_added_attributes": [
+      "/.gitignore -text",
+      "/LICENSE -text"
+    ],
+    "history": "Versioned V7 strict .gitattributes current-to2270 inverse, active helper/hook updated and collector includes V7; V1toV6 bytes unchanged. No raw check weakened.",
+    "context_sha256": "b4bfd12bca7b7c1546525838d68005ea3dfe5762180a9a279132bab3217acb8a",
+    "helper_sha256": "64f1aaa732bb95ed0229a0f55ce1ee39b5d2d3d941aa42cb9e55597188cf3999",
+    "private_source_paths": {
+      ".gitattributes": "d7f5670e3b5393e7300e7ee238dd52f052d9327c2358cc89b58f3f524b654109",
+      "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json": "245137ca67360f99dc450bc39b6e18738d23e23f32b15852fa78fde9c0a2c86c",
+      "coverage/contracts/vi-public-matmul-source-history-v7.json": "b4bfd12bca7b7c1546525838d68005ea3dfe5762180a9a279132bab3217acb8a",
+      "coverage/contracts/vi4-public-matmul-capture-v1.json": "e17cacc23666905fe5b862f2cb91437dc8c75db4ce9f97cd13b143a51d1ca5d5",
+      "tools/mark_lbp_fp_context.py": "fc064bd27c1231f9525068a61f6e6138a373d7f1712ee46ad26e838fe1a851cd",
+      "tools/public_qualification.py": "ca138b572ec4a93568b9e9dbb2c84418f25dca80e38c83e7c54e51a81642f6a6",
+      "tools/vi_public_matmul_context.py": "64f1aaa732bb95ed0229a0f55ce1ee39b5d2d3d941aa42cb9e55597188cf3999"
+    },
+    "actual_filter_tool": "d9b92f exit0 NativeWindowsGit filters from exact staged bytes",
+    "actual_filter_rows": [
+      {
+        "path": ".gitattributes",
+        "bytes": 38199,
+        "raw_sha256": "d7f5670e3b5393e7300e7ee238dd52f052d9327c2358cc89b58f3f524b654109",
+        "Windows_checkout_filter_exact": true
+      },
+      {
+        "path": ".gitignore",
+        "bytes": 71,
+        "raw_sha256": "b1e69619db5ae71937e950a00c4b650c70fc4199c8e0398fa5b1c1f1b72d6e81",
+        "Windows_checkout_filter_exact": true
+      },
+      {
+        "path": "AGENTS.md",
+        "bytes": 15461,
+        "raw_sha256": "bd8eb939a9478ca7f633982d15e3ac2b0033a66ef8019013891ca6f6cc01587e",
+        "Windows_checkout_filter_exact": true
+      },
+      {
+        "path": "LICENSE",
+        "bytes": 1533,
+        "raw_sha256": "ebd4695587343d60389d138b4471cd437d049b430ac4795737370888f11045d2",
+        "Windows_checkout_filter_exact": true
+      },
+      {
+        "path": "README.md",
+        "bytes": 85420,
+        "raw_sha256": "8b771bae7731d88f31e5f5fc148f2c31f5b3754a86903a4cb147166d8068024c",
+        "Windows_checkout_filter_exact": true
+      }
+    ],
+    "actual_source_equations": {
+      "status": "ROOT_ACTUAL_DIRECT_VI_AND_SHARED2270_SOURCE_EQUATIONS_PASS",
+      "successor": "v7 exact Windows raw checkout attributes and strict .gitattributes predecessor inverse; all earlier contexts retained",
+      "context_sha256": "b4bfd12bca7b7c1546525838d68005ea3dfe5762180a9a279132bab3217acb8a",
+      "helper_sha256": "64f1aaa732bb95ed0229a0f55ce1ee39b5d2d3d941aa42cb9e55597188cf3999",
+      "changed_paths": [
+        ".gitattributes",
+        ".github/workflows/public-qualification.yml",
+        ".github/workflows/vi-initial-failure-capture.yml",
+        "include/skimagexx/variation_of_information.hpp",
+        "python/skimagexx/_variation_of_information.py",
+        "src/bind_variation_of_information.cpp",
+        "src/variation_of_information.cpp",
+        "tests/cmake_consumer/CMakeLists.txt",
+        "tests/conftest.py",
+        "tests/test_abi_vi_integration_source.py",
+        "tests/test_join_util_views_density_source.py",
+        "tests/test_public_qualification.py",
+        "tests/test_util_metadata_source.py",
+        "tests/test_variation_of_information_current_counts_public.py",
+        "tests/test_variation_of_information_integration.py",
+        "tests/test_variation_of_information_public.py",
+        "tests/test_vi4_failure_capture.py",
+        "tests/test_vi_cohort_value_diagnostic.py",
+        "tests/test_vi_controller.py",
+        "tests/test_vi_owning_sdk_source.py",
+        "tests/test_vi_public_log2_large_source.py",
+        "tests/test_vi_public_log2_provider_large.py",
+        "tests/test_vi_public_log2_provider_source.py",
+        "tests/test_vi_reduction_integration_source.py",
+        "tests/test_vi_value_diagnostic_workflow.py",
+        "tests/variation_of_information_source_context.py",
+        "tools/mark_lbp_fp_context.py",
+        "tools/public_qualification.py"
+      ],
+      "inverse_equations": 56,
+      "tamper_refusals": 56,
+      "historical_inputs": 2064,
+      "historical_bytes": 73980143,
+      "actual_direct_VI_reader_equations": 8,
+      "frozen_prepared_dependency_equations": 14,
+      "actual_frozen_controller_boundary_and_support": true,
+      "actual_pure_case_bounds_source_closure": true,
+      "prepared_source_files": 17,
+      "science_model_compile_FP_helpers": 0,
+      "full_affected_source_gate": "PENDING_COMPLETE_BOTH_SUCCESSOR"
+    },
+    "paired_metadata_delta": {
+      "actual": "2c92ea exit0",
+      "fields": 7,
+      "all_pins": {
+        "benchmark55": 55,
+        "capture-benchmark": 55,
+        "firstcohort-raw": 69,
+        "capture-dependencies": 69
+      },
+      "benchmark_sha256": "245137ca67360f99dc450bc39b6e18738d23e23f32b15852fa78fde9c0a2c86c",
+      "capture_sha256": "e17cacc23666905fe5b862f2cb91437dc8c75db4ce9f97cd13b143a51d1ca5d5"
+    },
+    "production4_benchmark_computation_prior_reference_contexts": "unchanged"
+  },
+  "proofs": [
+    {
+      "path": "build/current281-final-source-v7/root-windows-attributes-v1.json",
+      "bytes": 1131,
+      "sha256": "89a744edf8fdfd51a5ac416cf3730c254413f365855522dd5ca0b97e214e225a"
+    },
+    {
+      "path": "build/current281-final-source-v7/root-windows-filter-bytes-v1.json",
+      "bytes": 2071,
+      "sha256": "0e8c40be1a6fd447d330f4c8d053a16e5e0d940bf0c28658dbfbe9a9676e53fe"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/windows-raw-transport-v1/private-prefreeze-v1.json",
+      "bytes": 1364,
+      "sha256": "88e777ef122487f05119ab7cd6bf7eb0541e49ea001107db65b5c164768692a3"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/windows-raw-transport-v1/index-filter-admission-v1.json",
+      "bytes": 2347,
+      "sha256": "1eab9a5332b765d1b53cdbba9c17d87ba3eb7adaa53f42bc9e46a044c6b01728"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/windows-raw-transport-v1/metadata-delta-v1.json",
+      "bytes": 2738,
+      "sha256": "7f1d8a523856bc8ef37d3fd8967f945f5dd6ed1d9fbc26d8fecd72a5f4e582c7"
+    },
+    {
+      "path": "build/vi-public-matmul-shared-history-v1/root-history-equations-v13.json",
+      "bytes": 2159,
+      "sha256": "17dfe137df4b01723d0e57b586ed9103fb5f0984bc08de502f719f20b63d8a75"
+    },
+    {
+      "path": "build/current281-final-source-v7/root-GO-v7.json",
+      "bytes": 8751,
+      "sha256": "2c73552452ec309c5a93b8428134944494198a7eb95ec06af4a3b3872c2c2b78"
+    }
+  ],
+  "source_gates": {
+    "prior_complete_affected_both": "PASS2052 each on6c027 bytes, root23414d; retained original scope, no final181 credit",
+    "exact_private_source_syntax_JSON_whitespace_production_and_oldcontexts": "PASS39b6f0",
+    "exact7_live_index_and5actual_Windows_checkout_bytes": "PASSd9b92f",
+    "inverse56_tamper56_historical2064_direct8_prepared14_case17": "PASS705600",
+    "paired7fields_55canonical69raw": "PASS2c92ea",
+    "final_complete181_both": "PENDING at this admission; bound runner/rootGO ready42c495, includes all41affected modules+pure node; onlycache/XML substitution, normalplugins/conftest/no-failfast, absolute GO path required",
+    "SDK_private60_modes_genuine4_VI4_main281": "PENDING_SEPARATE_GATES"
+  },
+  "cleanup": {
+    "last_exact_target": "D:/Scratch/vi-public-matmul-provider-controls-v1/windows313-sourcebarrier-repair-v2",
+    "logical_bytes": 5825496627,
+    "files": 74035,
+    "actual": "Rootbb8916 proofs/gates+d0567d finalpaths/readers; ONE exact nativeRemoveItem rejected before CreateProcess as blocked by policy.0removed/no removal receipt.",
+    "status": "MANUAL_ONLY_NO_RETRY_OR_ALTERNATE",
+    "physical_allocation_bytes": null,
+    "reclaim_claimed_bytes": 0,
+    "protected": "Source/currentSDK/installedenvironments/runningjobs/rawsource+XML/logs/epochreceipt outside fixtures; oldblocked siblings excluded.",
+    "retention_owner_trigger": "root/manual user release; necessary exception while capacity permits serialized freshjobs",
+    "earlier_worktree_cleanup": "coverage/evidence/clean-worktree153-retirement-root-closeout-v1.json confirms153 retired, branches/commits retained,105084395313logicalB removed/101457489920B observed free increase; historical measurement, no new reclaimed bytes claimed."
+  },
+  "shipping": {
+    "main_advertised_functions": 271,
+    "target": 281,
+    "change": 0,
+    "qualification_or_performance_promotion": false
+  },
+  "waste_review": {
+    "result": "Useful predispatch transport defect, fixed before full181/hosted allocation. Reused passed source/math/private32 evidence within scope and unchanged objects/products; no science/compiler/helper/FP/runtime/benchmark replay.",
+    "next_owner_trigger": "B exact full181 source311; root actual terminal/postsource/fixture/capacity admission before313, then only eligible dependent work."
+  }
+}
