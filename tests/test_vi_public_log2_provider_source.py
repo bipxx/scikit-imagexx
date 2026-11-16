@@ -10,6 +10,7 @@ import shutil
 import sys
 from types import SimpleNamespace
 import pytest
+from vi_public_matmul_source_view import _vi_2270_source_epoch
 ROOT=Path(__file__).resolve().parents[1]
 CONTEXT='coverage/contracts/vi-public-log2-provider-source-v1.json'
 POLICY='coverage/contracts/vi-public-log2-provider-v1.json'

@@ -231,4 +231,46 @@ bool variation_of_information_compatible(const detail::LabelPairInput& input,
     if(!variation_of_information_compatible({table.data.data(),table.indices.data(),table.indptr.data(),table.rows,table.columns,table.data.size()},result,provider,snapshot))return false;
     result.normalization_fp_status=table.normalization_fp_status;output=result;return true;
 }
+
+bool variation_of_information_compatible(VariationTableView a,VariationInformation& output,
+    VariationLog2Batch logarithm,VariationInnerProduct inner_product,int workers) {
+    const int snapshot=workers==0?get_num_threads():workers;
+    if(!logarithm.function||!inner_product.function||snapshot<1||snapshot>1024
+       ||!environment()||!validate(a))return false;
+    std::vector<double> px(a.rows,0.),py(a.columns,0.);
+    for(std::size_t r=0;r<a.rows;++r) {
+        const auto first=a.indptr[r],last=a.indptr[r+1];
+        px[r]=minor_sum(std::size_t(last-first),[&](auto i){return a.data[first+i];});
+        for(auto j=first;j<last;++j)py[std::size_t(a.indices[j])]+=a.data[j];
+    }
+    std::vector<double> ix(px),iy(py);
+    for(auto& v:ix)if(v!=0.)v=1./v;
+    for(auto& v:iy)if(v!=0.)v=1./v;
+    VariationInformation result;result.captured_workers=snapshot;
+    std::vector<double> row_entropy(a.rows,0.);
+    if(!batch_entropy(a,ix,true,logarithm,row_entropy))return false;
+    for(auto& v:px)v=-v;
+    if(!inner_product.function(px.data(),row_entropy.data(),a.rows,
+        &result.values[0],inner_product.context))return false;
+    // Preserve the original two operator directions and their source order.
+    std::vector<double> column_entropy(a.columns,0.);
+    if(!batch_entropy(a,iy,false,logarithm,column_entropy))return false;
+    for(auto& v:column_entropy)v=-v;
+    if(!inner_product.function(column_entropy.data(),py.data(),a.columns,
+        &result.values[1],inner_product.context))return false;
+    output=result;return true;
+}
+
+bool variation_of_information_compatible(const detail::LabelPairInput& input,
+    VariationInformation& output,VariationLog2Batch logarithm,
+    VariationInnerProduct inner_product,int workers) {
+    if(!logarithm.function||!inner_product.function)return false;
+    const int snapshot=workers==0?get_num_threads():workers;
+    auto normalized=input;normalized.normalize=true;detail::LabelPairCsr table;
+    if(!detail::label_pair_counts(normalized,table,snapshot))return false;
+    VariationInformation result;
+    if(!variation_of_information_compatible({table.data.data(),table.indices.data(),table.indptr.data(),
+        table.rows,table.columns,table.data.size()},result,logarithm,inner_product,snapshot))return false;
+    result.normalization_fp_status=table.normalization_fp_status;output=result;return true;
+}
 } // namespace skimagexx

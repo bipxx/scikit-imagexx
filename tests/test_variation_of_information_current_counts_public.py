@@ -22,8 +22,8 @@ def test_current_dense_fallback_CSR_and_physical_storage(target,workers,n,ignore
     shape,indptr,indices,data=core.label_pair_counts_preweighted(a,b,weights,workers)
     logical=int(indptr[-1]);assert shape==(4,8)and logical==32
     assert data.size==indices.size==n and logical<n
-    assert core.variation_of_information_csr(data,indices,indptr,*shape,workers)is None
-    direct=core.variation_of_information_csr(data[:logical],indices[:logical],indptr,*shape,workers)
+    assert core.variation_of_information_csr(data,indices,indptr,*shape,workers,np.log2,np.matmul)is None
+    direct=core.variation_of_information_csr(data[:logical],indices[:logical],indptr,*shape,workers,np.log2,np.matmul)
     assert direct.tobytes()==dense.tobytes()
     table=sparse.csr_array((data[:logical],indices[:logical],indptr),shape=shape,copy=False)
     arrays=[v.copy()for v in(data,indices,indptr)]

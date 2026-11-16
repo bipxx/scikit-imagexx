@@ -1,4 +1,4 @@
-"""Eight fresh public large pairs; current original/provider, natural caller FP, no timing."""
+"""Eight fresh public pairs; current log2/matmul, natural caller FP, no timing."""
 import ctypes
 import importlib
 import inspect
@@ -78,7 +78,8 @@ def test_current_public_large_original_pair(index,workers):
     package=Path(xx.__file__).resolve().parent;assert core.__name__=='skimagexx._core'
     assert Path(core.__file__).resolve().is_relative_to(package)and Path(owned.__file__).resolve().is_relative_to(package)
     assert str(inspect.signature(native))==str(inspect.signature(reference))=='(image0=None, image1=None, *, table=None, ignore_labels=())'
-    assert isinstance(np.log2,np.ufunc);true_provider=np.log2
+    assert isinstance(np.log2,np.ufunc)and isinstance(np.matmul,np.ufunc)
+    true_provider=np.log2;true_matmul=np.matmul
     libc,helper=backend()
     def env():
         state=FEnv();assert libc.fegetenv(ctypes.byref(state))==0;return state
@@ -101,7 +102,7 @@ def test_current_public_large_original_pair(index,workers):
         phase=['setup'];counts=dict(original=0,native=0);returned=[];accepted=[];suffix=[]
         guard=ownership_profile(reference,native,owned.contingency_table,compat.fallback,entries,phase,counts,returned,accepted,suffix)
         record.update(counts=counts,returned=returned,requirements=requirements,accepted=accepted,suffix=suffix)
-        providers=runpy.run_path(str(ROOT/'benchmarks/vi_public_log2_provider_execution.py'))['candidate_providers']
+        providers=runpy.run_path(str(ROOT/'benchmarks/vi_public_matmul_provider_execution.py'))['candidate_providers']
         core.set_num_threads(workers);xx.set_fallback_enabled(False)
         def pipeline(backend):return backend.metrics.variation_of_information(*args,**options)
         natural=env();record['natural_caller_raw32']=bytes(natural).hex()
@@ -121,7 +122,7 @@ def test_current_public_large_original_pair(index,workers):
             actual,native_before,native_after=call_once(lambda:pipeline(xx),(),{},env,guard,outputs,'actual',diagnostics)
             record['native_FP']=dict(before=semantic(native_before),after=semantic(native_after),before_raw32=bytes(native_before).hex(),after_raw32=bytes(native_after).hex())
             record['actual']=encode(actual,output=True)
-        record.update(counts=counts,returned=returned,requirements=requirements,accepted=accepted,suffix=suffix,provider_batches=batches,provider='current true numpy.log2 ufunc computation')
+        record.update(counts=counts,returned=returned,requirements=requirements,accepted=accepted,suffix=suffix,provider_batches=batches,provider='current true numpy.log2 and numpy.matmul ufunc computation',provider_types=dict(log2=type(true_provider).__name__,matmul=type(true_matmul).__name__))
         assert type(expected)is type(actual)is np.ndarray and expected.shape==actual.shape==(2,)
         assert expected.dtype==actual.dtype==np.dtype('float64')and expected.tobytes()==actual.tobytes()
         assert observation(actual,np)==expected_metadata
@@ -130,7 +131,9 @@ def test_current_public_large_original_pair(index,workers):
         assert not reference_notices and not native_notices
         assert counts==dict(original=1,native=1)and accepted==suffix==[True]
         assert {k:returned.count(k)for k in requirements}==requirements and len(returned)==11
-        assert len(batches)==2 and np.log2 is true_provider and isinstance(np.log2,np.ufunc)
+        assert [row['provider']for row in batches]==['numpy.log2','numpy.matmul','numpy.log2','numpy.matmul']
+        assert len(batches)==4 and np.log2 is true_provider and np.matmul is true_matmul
+        assert isinstance(np.log2,np.ufunc)and isinstance(np.matmul,np.ufunc)
         assert expected.flags.owndata and actual.flags.owndata and not np.shares_memory(expected,actual)
         assert not any(np.shares_memory(value,a)for value in(expected,actual)for a in args)
         assert pointers=={k:v.ctypes.data for k,v in buffers.items()}and observation((args,options,buffers),np)==before
@@ -159,7 +162,7 @@ def test_current_public_large_original_pair(index,workers):
                 restore(caller)
                 assert np.geterr()==policy[0]and np.geterrcall()is policy[1]and np.getbufsize()==policy[2]
                 assert core.get_num_threads()==initial_workers and compat._fallback_enabled==initial_fallback
-                assert xx.metrics.variation_of_information is native and skimage.metrics.variation_of_information is reference and np.log2 is true_provider
+                assert xx.metrics.variation_of_information is native and skimage.metrics.variation_of_information is reference and np.log2 is true_provider and np.matmul is true_matmul
             except BaseException as error:
                 if primary is None:raise
                 sys.stderr.write('VI_LARGE_RESTORE_SECONDARY '+str(error)+'\n')

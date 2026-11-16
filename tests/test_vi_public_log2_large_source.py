@@ -85,8 +85,12 @@ def assert_current_source(text):
     assert "pytest.mark.parametrize('index', range(4))"in decorators and "pytest.mark.parametrize('workers', (1, 4))"in decorators
     assert text.count('restore(natural)')==2 and 'natural=env()'in text
     assert not any(s in text for s in('target_immediate','SAVED','allclose','isclose','pytest.skip','NPY_DISABLE_CPU_FEATURES','SKIMAGEXX_DISABLE_SIMD'))
-    for required in("phase[0]='reference'","phase[0]='native'",'reference_runtime()',"pipeline(skimage)","pipeline(xx)","counts==dict(original=1,native=1)","len(returned)==11","sum(requirements.values())==11","len(batches)==2",'isinstance(np.log2,np.ufunc)',"VI_PUBLIC_LOG2_LARGE_RECORD_DIR",'expected.tobytes()==actual.tobytes()',"observation(actual,np)==expected_metadata",'restore(caller)'):
+    for required in("phase[0]='reference'","phase[0]='native'",'reference_runtime()',"pipeline(skimage)","pipeline(xx)","counts==dict(original=1,native=1)","len(returned)==11","sum(requirements.values())==11","len(batches)==4",'isinstance(np.log2,np.ufunc)','isinstance(np.matmul,np.ufunc)',"VI_PUBLIC_LOG2_LARGE_RECORD_DIR",'expected.tobytes()==actual.tobytes()',"observation(actual,np)==expected_metadata",'restore(caller)',"['numpy.log2','numpy.matmul','numpy.log2','numpy.matmul']",'np.matmul is true_matmul','benchmarks/vi_public_matmul_provider_execution.py'):
         assert required in text,required
+    # Both checkpoints are required. A second occurrence of one short token
+    # must not conceal removal of the post-target or final identity assertion.
+    assert 'assert len(batches)==4 and np.log2 is true_provider and np.matmul is true_matmul'in text
+    assert 'assert xx.metrics.variation_of_information is native and skimage.metrics.variation_of_information is reference and np.log2 is true_provider and np.matmul is true_matmul'in text
     assert text.index("record['expected']=encode(expected,output=True)")<text.index('expected_metadata=observation')
     assert text.index("record['actual']=encode(actual,output=True)")<text.index('assert observation(actual,np)')
     call=node(text,'call_once');body=ast.get_source_segment(text,call)
@@ -99,7 +103,7 @@ def test_current_source_is_exact_eight_fresh_natural_public_pairs():
     assert_current_source((ROOT/CURRENT).read_text())
 
 
-@pytest.mark.parametrize('old,new',(('restore(natural)','restore(caller)'),('len(batches)==2','len(batches)==0'),('len(returned)==11','len(returned)>=1'),("phase[0]='reference'","phase[0]='native'"),('expected.tobytes()==actual.tobytes()','True')))
+@pytest.mark.parametrize('old,new',(('restore(natural)','restore(caller)'),('len(batches)==4','len(batches)==0'),('len(returned)==11','len(returned)>=1'),("phase[0]='reference'","phase[0]='native'"),('expected.tobytes()==actual.tobytes()','True'),('np.matmul is true_matmul','True')))
 def test_current_source_guard_refuses_weakened_or_seeded_protocol(old,new):
     text=(ROOT/CURRENT).read_text();assert old in text
     with pytest.raises(AssertionError):assert_current_source(text.replace(old,new,1))

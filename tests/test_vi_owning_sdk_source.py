@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 
 import pytest
+from vi_public_matmul_source_view import _vi_2270_source_epoch
 
 ROOT = Path(__file__).resolve().parents[1]
 HEADER = ROOT / 'tests/variation_of_information_provider_controls.hpp'

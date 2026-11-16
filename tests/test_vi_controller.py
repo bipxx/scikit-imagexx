@@ -4,7 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 from tools.mark_lbp_fp_context import source_successor_predecessor_bytes
-from variation_of_information_source_context import provider_predecessor_source
+from variation_of_information_source_context import provider_predecessor_source, qualified_diagnostic_source
 ROOT=Path(__file__).resolve().parents[1]
 CONTRACT=ROOT/'coverage/contracts/vi-measurement-v5.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
@@ -14,6 +14,22 @@ BOUND_PREDECESSOR_PATH='coverage/contracts/vi-measurement-v3.json'
 BOUND_PREDECESSOR=json.loads((ROOT/BOUND_PREDECESSOR_PATH).read_bytes())
 spec=importlib.util.spec_from_file_location('vi_outer',ROOT/'tools/vi_first_cohort_probe.py');PROBE=importlib.util.module_from_spec(spec);spec.loader.exec_module(PROBE)
 H=lambda b:hashlib.sha256(b).hexdigest()
+
+
+@pytest.fixture
+def prepared_driver_root(tmp_path):
+    # The frozen VIv6 controller executes against its prepared16a5 inputs.
+    # Keep the actual boundary/support checks and every frozen dependency pin.
+    root=tmp_path/'frozen-vi-driver-source'
+    context=json.loads((ROOT/'coverage/contracts/vi-cohort-value-diagnostic-v4.json').read_bytes())
+    for name in context['prepared_dependencies']:
+        path=root/name;path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes(qualified_diagnostic_source(ROOT,name))
+    for name in ('tools/montage_sustained.py','coverage/contracts/variation-of-information-benchmark-v1.json','benchmarks/label_pair_metrics.py'):
+        raw=(ROOT/name).read_bytes()
+        assert H(raw.replace(b'\r\n',b'\n'))==DATA['prepared_source']['files_sha256'][name]
+        path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
+    return root
 
 def synthetic(tmp_path,monkeypatch):
  from test_variation_of_information_benchmark_execution import synthetic as source_synthetic
@@ -56,13 +72,14 @@ def test_current281_bound_source_and_historical_scope():
     for name,pin in DATA['helper']['source_sha256'].items():assert H(source_successor_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin
 
 
-def frame_fixture(name):
- route=ROUTES[name];cases=runpy.run_path(str(ROOT/'benchmarks/variation_of_information_cases_v1.py'));requirements=cases['native_requirements'](route['first_case']);cli=SimpleNamespace(first_cohort=True,measurement_go=None)
+def frame_fixture(name,root=None):
+ root=ROOT if root is None else Path(root)
+ route=ROUTES[name];cases=runpy.run_path(str(root/'benchmarks/variation_of_information_cases_v1.py'));requirements=cases['native_requirements'](route['first_case']);cli=SimpleNamespace(first_cohort=True,measurement_go=None)
  state=lambda value,np,input=None:('state',value)
  caller=dict(cli=cli,spec=copy.deepcopy(route['first_case']),api=route['api'],context={'route':route['driver_route'],'cases':route['cases']},accepted=[True],suffix=[True],rows=[],returns=[k for k,v in requirements.items()for _ in range(v)],requirements=requirements,expected='result',actual='result',reference_FP={'control':895,'status':32,'mxcsr':8096},native_FP={'control':895,'status':32,'mxcsr':8096},reference_before={'control':895,'status':0,'mxcsr':8096},native_before={'control':895,'status':0,'mxcsr':8096},save=lambda:bytes(32),caller=bytes(32),sample_state=bytes(32),args=('truth','test'),options={'ignore_labels':[0]},before=[state(v,None)for v in('truth','test')],np=None,index=0,common=SimpleNamespace(array_state=state),module={'native_requirements':cases['native_requirements']})
- execute=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(ROOT/'benchmarks/variation_of_information_execution.py'),co_name='execute'),f_locals=caller,f_globals={})
- bridge=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(ROOT/'benchmarks/mark_boundaries_execution.py'),co_name='sample_entry'),f_back=execute,f_locals=dict(cli=cli,spec=caller['spec'],index=0))
- frame=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(ROOT/'tools/montage_sustained.py'),co_name='measure'),f_back=bridge,f_locals={})
+ execute=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(root/'benchmarks/variation_of_information_execution.py'),co_name='execute'),f_locals=caller,f_globals={})
+ bridge=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(root/'benchmarks/mark_boundaries_execution.py'),co_name='sample_entry'),f_back=execute,f_locals=dict(cli=cli,spec=caller['spec'],index=0))
+ frame=SimpleNamespace(f_code=SimpleNamespace(co_filename=str(root/'tools/montage_sustained.py'),co_name='measure'),f_back=bridge,f_locals={})
  return route,frame,dict(counts=dict(original=1,native=1),accepted=[True],input_state=lambda v:v,inputs_before=[(caller['args'],caller['options'])])
 
 
@@ -288,12 +305,12 @@ def test_actual_report_validator_uses_admitted_pass0_and_retains_losses(tmp_path
         assert not(results/'summary.json').exists()
 
 
-def test_actual_current_driver_metadata_and_Montage_pass0_interfaces():
+def test_actual_current_driver_metadata_and_Montage_pass0_interfaces(prepared_driver_root):
  source=(ROOT/'benchmarks/variation_of_information_execution.py').read_text();tree=ast.parse(source);execute=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='execute');report=next(n for n in ast.walk(execute)if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='dict'and any(k.arg=='metadata'for k in n.keywords));metadata=next(k.value for k in report.keywords if k.arg=='metadata')
  assert any(k.arg=='source_before'and ast.unparse(k.value)=='source_before'for k in metadata.keywords)and all(k.arg is not None for k in metadata.keywords)
  assert PROBE.sampler_order_scope(ROOT)==0 and DATA['current_interface']['validate_binding_keywords']==['path','root','context_path']
  assert all(v is None for v in HISTORICAL['producer'].values())and HISTORICAL['prepared_source']is None;assert DATA['prepared_source']['revision']==DATA['producer']['revision']=='16a5b50193125199ad26cf5a89acec5babf5290c'
- adapter=PROBE.driver_adapter(ROOT);shared=adapter.boundary(ROOT);assert list(__import__('inspect').signature(shared.validate_binding).parameters)==['path','root','context_path']
+ adapter=PROBE.driver_adapter(ROOT);shared=adapter.boundary(prepared_driver_root);assert list(__import__('inspect').signature(shared.validate_binding).parameters)==['path','root','context_path']
  adapter.require_sdk_dependencies({'SDK_members':{'include/skimagexx/variation_of_information.hpp':'inert','include/skimagexx/label_pair_metrics.hpp':'inert'}})
  with pytest.raises(AssertionError):adapter.require_sdk_dependencies({'SDK_members':{'include/skimagexx/variation_of_information.hpp':'inert'}})
 
@@ -316,16 +333,16 @@ def test_actual_UNBOUND_probe_cli_before_cold_cached_requests(monkeypatch,cached
 
 
 @pytest.mark.parametrize('observer_mode',('stop','non-stopping','replacing'))
-def test_actual_source_tail_and_real_sampler_frames_with_inert_prepared_locals(tmp_path,observer_mode):
- route,frame,k=frame_fixture('vi');prepared=dict(frame.f_back.f_back.f_locals);adapter=PROBE.driver_adapter(ROOT);shared=adapter.boundary(ROOT);common=shared.support(ROOT,json.loads((ROOT/PROBE.DRIVER_CONTEXT).read_bytes()));measure=runpy.run_path(str(ROOT/'tools/montage_sustained.py'))['measure'];callbacks=[];body=[];restores=[];accepted=[]
+def test_actual_source_tail_and_real_sampler_frames_with_inert_prepared_locals(tmp_path,observer_mode,prepared_driver_root):
+ root=prepared_driver_root;route,frame,k=frame_fixture('vi',root);prepared=dict(frame.f_back.f_back.f_locals);adapter=PROBE.driver_adapter(root);shared=adapter.boundary(prepared_driver_root);common=shared.support(prepared_driver_root,json.loads((prepared_driver_root/PROBE.DRIVER_CONTEXT).read_bytes()));measure=runpy.run_path(str(root/'tools/montage_sustained.py'))['measure'];callbacks=[];body=[];restores=[];accepted=[]
  prepared.update(measure=measure,shared=shared,reference=lambda:callbacks.append('original'),native=lambda:callbacks.append('native'),restore=lambda value:restores.append(value),deadline='2099-01-01T00:00:00+00:00');prepared['cli'].output=tmp_path/'never.json';prepared['common'].first_cohort_profile=common.first_cohort_profile
- source=(ROOT/'benchmarks/variation_of_information_execution.py').read_text();original=next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef)and n.name=='execute');assignment=next(n for n in ast.walk(original)if isinstance(n,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='sample_state'for t in n.targets));tail=next(n for n in ast.walk(original)if isinstance(n,ast.Try)and n.body and isinstance(n.body[0],ast.Assign)and isinstance(n.body[0].value,ast.Call)and isinstance(n.body[0].value.func,ast.Attribute)and n.body[0].value.func.attr=='sample_entry')
- prefix=[ast.Assign(targets=[ast.Name(id='_prepared',ctx=ast.Store())],value=ast.Name(id='module',ctx=ast.Load()))]+[ast.Assign(targets=[ast.Name(id=name,ctx=ast.Store())],value=ast.Subscript(value=ast.Name(id='_prepared',ctx=ast.Load()),slice=ast.Constant(value=name),ctx=ast.Load()))for name in prepared];node=copy.deepcopy(original);node.body=[*prefix,copy.deepcopy(assignment),copy.deepcopy(tail)];namespace={};exec(compile(ast.fix_missing_locations(ast.Module(body=[node],type_ignores=[])),str(ROOT/'benchmarks/variation_of_information_execution.py'),'exec'),namespace)
+ source=(root/'benchmarks/variation_of_information_execution.py').read_text();original=next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef)and n.name=='execute');assignment=next(n for n in ast.walk(original)if isinstance(n,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='sample_state'for t in n.targets));tail=next(n for n in ast.walk(original)if isinstance(n,ast.Try)and n.body and isinstance(n.body[0],ast.Assign)and isinstance(n.body[0].value,ast.Call)and isinstance(n.body[0].value.func,ast.Attribute)and n.body[0].value.func.attr=='sample_entry')
+ prefix=[ast.Assign(targets=[ast.Name(id='_prepared',ctx=ast.Store())],value=ast.Name(id='module',ctx=ast.Load()))]+[ast.Assign(targets=[ast.Name(id=name,ctx=ast.Store())],value=ast.Subscript(value=ast.Name(id='_prepared',ctx=ast.Load()),slice=ast.Constant(value=name),ctx=ast.Load()))for name in prepared];node=copy.deepcopy(original);node.body=[*prefix,copy.deepcopy(assignment),copy.deepcopy(tail)];namespace={};exec(compile(ast.fix_missing_locations(ast.Module(body=[node],type_ignores=[])),str(root/'benchmarks/variation_of_information_execution.py'),'exec'),namespace)
  class Stopped(BaseException):pass
  previous_profile,previous_trace=sys.getprofile(),sys.gettrace()
  def profile(frame,event,value):
   if event=='call'and frame.f_code is measure.__code__:
-   PROBE.validate_native_entry(frame,route,ROOT,**k);accepted.append(True)
+   PROBE.validate_native_entry(frame,route,root,**k);accepted.append(True)
    if observer_mode=='stop':raise Stopped()
    if observer_mode=='replacing':sys.setprofile(None)
  def trace(frame,event,value):
@@ -368,7 +385,7 @@ def test_v2_current_213_interface_and_frozen_predecessor():
  assert route['cases']==old['first_cohort']['routes']['vi']['cases']and route['argv']==old['first_cohort']['routes']['vi']['argv']
  assert context['cases']==json.loads((ROOT/'coverage/contracts/variation-of-information-benchmark-execution-v4.json').read_bytes())['cases']
  assert context['method']==json.loads((ROOT/'coverage/contracts/variation-of-information-benchmark-execution-v4.json').read_bytes())['method']
- assert "CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v7.json'"in(ROOT/'benchmarks/mark_boundaries_execution.py').read_text()
+ assert "CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v7.json'"in qualified_diagnostic_source(ROOT,'benchmarks/mark_boundaries_execution.py').decode('utf-8')
  assert DATA['prospective_source']['revision']=='213b986504b6f62f79a98b21be0581f1bc9b3559'and DATA['prospective_source']['native_images']==281
  assert DATA['prospective_source']['SDK_members']==108 and DATA['SDK_members']is None
  assert 'python/skimagexx/coverage.py'in DATA['benchmark_source_sha256']

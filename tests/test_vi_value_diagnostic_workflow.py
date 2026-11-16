@@ -106,8 +106,9 @@ def test_actual_host_GO_writer_one_way_wrapper_interface_and_exit_retention(tmp_
     context=json.loads((ROOT/context_path).read_bytes())
     for name in [*context['controller_dependencies'],'tools/vi_cohort_value_diagnostic.py',context_path]:
         destination=controller/name;destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,destination)
+    from variation_of_information_source_context import qualified_diagnostic_source
     for name in context['prepared_dependencies']:
-        destination=snapshot/name;destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,destination)
+        destination=snapshot/name;destination.parent.mkdir(parents=True,exist_ok=True);destination.write_bytes(qualified_diagnostic_source(ROOT,name))
     created=datetime.now(timezone.utc)-timedelta(minutes=1)
     deadline=datetime.now(timezone.utc)+timedelta(minutes=30)
     if mode=='expired':created=datetime.now(timezone.utc)-timedelta(minutes=31);deadline=datetime.now(timezone.utc)-timedelta(minutes=1)

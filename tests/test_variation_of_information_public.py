@@ -1,4 +1,4 @@
-"""Private saved-reference comparison; no original metric import or call."""
+"""Legacy scalar saved words and distinct current public provider controls."""
 import importlib
 import importlib.util
 import inspect
@@ -66,11 +66,14 @@ def workers(target,request):
 
 
 @pytest.mark.parametrize('spec',SPECS,ids=lambda s:s['id'])
-def test_all_saved_original_fields(target,spec,workers):
+def test_legacy_scalar_saved_original_fields(target,spec,workers):
     version=np.__version__;assert version in('1.24.4','2.5.4')
     data=json.loads((ROOT/'coverage/contracts/label-pair-metrics-v1.json').read_bytes())
     expected=next(r for r in data['original_observations'][version]if r['id']==spec['id'])
-    actual=observe(target[0].variation_of_information,spec,np)
+    # These immutable CPU-specific words qualify the unchanged scalar SDK
+    # gateway. Current public providers have independent same-runtime pairs.
+    from test_variation_of_information_large_saved import legacy_scalar_gateway
+    actual=observe(legacy_scalar_gateway(*target).variation_of_information,spec,np)
     if os.environ.get('VI_RESULT_DIR'):
         path=Path(os.environ['VI_RESULT_DIR']);path.mkdir(exist_ok=True)
         (path/(spec['id'].split('/')[-1]+'-workers'+str(workers)+'.json')).write_text(json.dumps(actual,indent=2)+'\n')
@@ -80,28 +83,64 @@ def test_all_saved_original_fields(target,spec,workers):
     assert target[1].get_num_threads()==workers
 
 
-def test_owned_entropy_uses_only_explicit_log2_batches(target,monkeypatch):
+def test_owned_entropy_uses_only_explicit_log2_and_matmul(target,monkeypatch):
     import scipy.sparse as sparse
-    original=np.log2;batches=[]
+    original=np.log2,np.matmul;batches=[]
     def log2(values):
         assert type(values)is np.ndarray and values.dtype==np.dtype('float64')
         assert values.ndim==1 and values.flags.owndata and values.flags.c_contiguous
-        batches.append(values.shape)
-        return original(values)
+        batches.append(('log2',values.shape))
+        return original[0](values)
+    def matmul(left,right):
+        for value in(left,right):
+            assert type(value)is np.ndarray and value.dtype==np.dtype('float64')
+            assert value.ndim==1 and value.flags.owndata and value.flags.c_contiguous
+        assert left.shape==right.shape
+        batches.append(('matmul',left.shape))
+        result=original[1](left,right);assert type(result)is np.float64
+        return result
     def forbidden(*a,**k):raise AssertionError('Other entropy arithmetic provider forbidden')
-    monkeypatch.setattr(np,'log2',log2);monkeypatch.setattr(np,'log',forbidden)
+    monkeypatch.setattr(np,'log2',log2);monkeypatch.setattr(np,'matmul',matmul);monkeypatch.setattr(np,'log',forbidden)
     monkeypatch.setattr(np,'sum',forbidden)
     for cls in(sparse.csr_matrix,sparse.csr_array):
         monkeypatch.setattr(cls,'__matmul__',forbidden);monkeypatch.setattr(cls,'sum',forbidden)
     a=np.array([[0,1,1],[2,2,2]],dtype=np.int16)
     actual=target[0].variation_of_information(a,a)
     assert actual.tobytes()==bytes(16)and actual.flags.owndata
-    assert len(batches)==2 and batches[0]==batches[1]
+    assert [name for name,shape in batches]==['log2','matmul','log2','matmul']
+    assert batches[0]==batches[2]and batches[1]==batches[3]
     primary=RuntimeError('VI_PROVIDER_PRIMARY')
     def refused(values):raise primary
     monkeypatch.setattr(np,'log2',refused)
     with pytest.raises(RuntimeError)as error:target[0].variation_of_information(a,a)
     assert error.value is primary
+
+
+@pytest.mark.parametrize('phase',range(4))
+def test_current_provider_primary_stops_later_callbacks(target,monkeypatch,phase):
+    originals=np.log2,np.matmul;events=[];primary=RuntimeError('VI_PROVIDER_PRIMARY_'+str(phase))
+    def call(index,*args):
+        current=len(events);events.append(index)
+        if current==phase:raise primary
+        return originals[index](*args)
+    monkeypatch.setattr(np,'log2',lambda value:call(0,value))
+    monkeypatch.setattr(np,'matmul',lambda left,right:call(1,left,right))
+    a=np.array([[0,1],[1,0]],dtype=np.int64)
+    with pytest.raises(RuntimeError)as error:target[0].variation_of_information(a,a)
+    assert error.value is primary and events==[0,1,0,1][:phase+1]
+
+
+@pytest.mark.parametrize('kind',('python-float','float32','array','subclass'))
+def test_current_matmul_rejects_nonplain_scalar_transport(target,monkeypatch,kind):
+    class Derived(np.float64):pass
+    wrong={'python-float':lambda:0.,'float32':lambda:np.float32(0),
+        'array':lambda:np.array(0.,dtype=np.float64),'subclass':lambda:Derived(0)}
+    calls=[]
+    def bad(left,right):calls.append((left.shape,right.shape));return wrong[kind]()
+    monkeypatch.setattr(np,'matmul',bad)
+    a=np.array([[0,1],[1,0]],dtype=np.int64)
+    with pytest.raises(TypeError,match='plain native float64 scalar'):target[0].variation_of_information(a,a)
+    assert len(calls)==1
 
 
 def test_plain_CSR_buffers_and_caches_are_not_mutated(target):

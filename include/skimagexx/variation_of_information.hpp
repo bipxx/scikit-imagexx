@@ -50,4 +50,24 @@ bool variation_of_information_compatible(VariationTableView,VariationInformation
     VariationLog2Batch,int workers=0);
 bool variation_of_information_compatible(const detail::LabelPairInput&,VariationInformation&,
     VariationLog2Batch,int workers=0);
+// Explicit dense inner-product provider. The callback receives two read-only
+// contiguous vectors of count doubles and writes one scalar. Input spans live
+// throughout the synchronous callback only; count0 permits null inputs.
+// Call order is log2/inner-product/log2/inner-product. No later callback runs
+// after false or an exception, and the complete output stays unpublished.
+// Host arithmetic and FP/error effects are disclosed and retained unchanged.
+struct VariationInnerProduct {
+    using Function=bool(*)(const double*,const double*,std::size_t,double*,void*);
+    Function function=nullptr;
+    void* context=nullptr;
+};
+// Additive host-compatible operation. The scalar-libm and log2-only overloads
+// above retain their existing ABI, native-dot graphs and semantics exactly.
+// Marginals, inverses, sparse scaling/coalescing/products and reductions stay
+// native; both providers run serially on the calling thread, with one captured
+// worker budget. Hosts own both contexts for the entire operation.
+bool variation_of_information_compatible(VariationTableView,VariationInformation&,
+    VariationLog2Batch,VariationInnerProduct,int workers=0);
+bool variation_of_information_compatible(const detail::LabelPairInput&,VariationInformation&,
+    VariationLog2Batch,VariationInnerProduct,int workers=0);
 }

@@ -52,12 +52,16 @@ def test_vi_swappable_public_saved_perfect_and_strict_checker(monkeypatch):
     before=observation((args,options,buffers),np)
     policy=np.geterr(),np.geterrcall(),np.getbufsize()
     def pipeline(backend):return backend.metrics.variation_of_information(*args,**options)
-    original_log2=np.log2;provider_batches=[]
+    original_log2=np.log2;original_matmul=np.matmul;provider_batches=[];inner_products=[]
     def public_log2(values):
         provider_batches.append(values.shape)
         return original_log2(values)
+    def public_matmul(left,right):
+        inner_products.append((left.shape,right.shape))
+        return original_matmul(left,right)
     monkeypatch.setattr(np,'log2',public_log2)
-    actual=pipeline(xx);assert len(provider_batches)==2
+    monkeypatch.setattr(np,'matmul',public_matmul)
+    actual=pipeline(xx);assert len(provider_batches)==2 and len(inner_products)==2
     expected_raw=zlib.decompress(base64.b64decode(row['result']['raw_zlib_base64']))
     assert hashlib.sha256(expected_raw).hexdigest()==row['result']['raw_sha256']and actual.tobytes()==expected_raw
     expected=np.frombuffer(expected_raw,np.float64).copy()

@@ -4,6 +4,8 @@ from pathlib import Path
 CONTEXT='coverage/contracts/mark-lbp-fp-integration-v2.json'
 # Exact source-only successor before the immutable v2 historical guards.
 SOURCE_SUCCESSOR='coverage/contracts/mark-lbp-controller-source-successor-v1.json'
+VI_PUBLIC_MATMUL_CONTEXT_SHA256='f4a18d8e37b8e111f4d2760ef96409b08996e9b95fbf68d0faea883039addb1a'
+VI_PUBLIC_MATMUL_HELPER_SHA256='45308766c63b586326304d5a63d6aab51ef9b8f3c4d460e08b91c12f40f3e5c2'
 CURRENT_VALIDATION_CONTEXT_SHA256='30e078cce3e012ce4cd5dbe29b3ef727fcc4aaf59413b0b7e22996b2b13303a5'
 CURRENT_VALIDATION_HELPER_SHA256='52d8eb80b2138d8d11fb8df7ef3b214c964faadc1bbf71419825d6ce0dc3d064'
 QUALIFICATION_CAPACITY_CONTEXT_SHA256='88dfda9a5df6f7abc1f43e008e0a61511a03e5b661189de285a5e26d77596512'
@@ -17,6 +19,12 @@ VI_PUBLIC_LOG2_HELPER_SHA256='83ad5f62c746b10fd29ab787fe2674710a16087265caa0a4bb
 SOURCE_PREDECESSOR_SHA256={'tools/join_source_context.py': '3c5c566931632ad354bf5d25e850becd39157863cf3f1bb2aa8a603f2838b1bc', 'tools/mark_lbp_fp_context.py': '4ccccf650a774e17d917ae8fe1a71cdd2017609129f5198510e866c7370795f6', 'tools/public_qualification.py': '2f10933aa9c1b548e8e67693f8f24ab26f40830afea8ae1d864901fb80a7f2d1', 'tests/test_rolling_ball_enabled_source.py': '1b8ab178aa85e9693ee5bb540ba586959af4d6f166a61b2be0c843e5e0a0eaeb', 'tests/test_mark_lbp_fp_integration_source.py': '4a94cf41684e51c792db00e7e2422a0b6b026a7fde203518305ad2f56cbfd2a2', 'tests/test_mark_lbp_controller.py': '3286e1f57a8ee1625e2f8130150ed452593f3c99b5236fb00289fe234811f1e0', 'tests/test_vi_controller.py': '231e5db18a8ecbb598979bdfca73133ad55060c1ae0599a08171470bce91992c'}
 
 def source_successor_predecessor_bytes(root,name,raw,canonical=False):
+ path=Path(root)/'coverage/contracts/vi-public-matmul-source-history-v1.json'
+ if path.is_file():
+  helper=Path(root)/'tools/vi_public_matmul_context.py'
+  assert hashlib.sha256(helper.read_bytes()).hexdigest()==VI_PUBLIC_MATMUL_HELPER_SHA256
+  from tools.vi_public_matmul_context import predecessor_bytes as matmul_predecessor
+  raw=matmul_predecessor(root,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,canonical)
  path=Path(root)/'coverage/contracts/current281-validation-source-v1.json'
  if path.is_file():
   helper=Path(root)/'tools/current_validation_context.py'

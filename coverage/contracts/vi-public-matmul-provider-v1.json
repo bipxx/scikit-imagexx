@@ -1,0 +1,78 @@
+{
+  "schema": "vi-public-matmul-provider-v1",
+  "status": "SOURCE_ONLY_ALL_COMPILED_NUMERICAL_SDK_QUALIFICATION_PERFORMANCE_GATES_PENDING",
+  "execution_authority": null,
+  "API": "metrics.variation_of_information",
+  "public_signature": "(image0=None, image1=None, *, table=None, ignore_labels=())",
+  "compiled": false,
+  "public_parity": false,
+  "SDK_parity": false,
+  "release_qualified": false,
+  "performance": false,
+  "source_base": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
+  "root_policy": "Explicit public NumPy MATMUL for the two dense inner products, beside the two log2 batches. Repairs demonstrated operator-contract variability, with no sole-cause/oldfailure/numerical claim.",
+  "provider_order": [
+    "numpy.log2",
+    "numpy.matmul",
+    "numpy.log2",
+    "numpy.matmul"
+  ],
+  "provider": {
+    "log2": "Current public whole nonzero native-f64 array batch, including empty, via PyObject_CallOneArg",
+    "matmul": "Current public ufunc on two plain owned contiguous native-f64 vectors via PyObject_CallFunctionObjArgs; strict plain np.float64 scalar, public buffer exact8B",
+    "lifetime": "Opaque callable held for entire synchronous operation; calling-thread GIL/current error context; callback spans live only during call",
+    "failure": "First false/throw stops later callbacks; full VariationInformation output publishes only after allfour succeed; primary/error/FP effects propagate naturally",
+    "native_owned": [
+      "marginals",
+      "inverses",
+      "sparse scaling",
+      "duplicate coalescing",
+      "xlogx products",
+      "row and column reductions"
+    ],
+    "forbidden": [
+      "whole original forwarding",
+      "private NumPy ABI/kernel discovery",
+      "CPUforcing",
+      "magic sample words/coefficients",
+      "tolerance or expected-output weakening",
+      "FPseeding or normalization for parity",
+      "cached provider guard bypass",
+      "undeclared NumPy entropy/reduction/dot or SciPy arithmetic"
+    ]
+  },
+  "SDK_legacy": "Unchanged scalar-libm and log2-only ABI/graphs/golds",
+  "SDK_additive": "VariationInnerProduct bool(const double*,const double*,size_t,double*,void*) plus two additive compatible overloads. SDKhost computation is explicit and separate from public NumPy evidence.",
+  "workers": "Default1; existing public two snapshots; native ordered serial stages and synchronous same-thread callbacks.",
+  "legacy_CPP_raw_sha256": "11a379e1f84531d113fec594b59aadd52e08835d421056c02fd39ff480778535",
+  "legacy_header_raw_sha256": "c6b00c5c7fedcd8d9467a9a69262d59e63e32b60242ee9760487bad8a32229d8",
+  "source_raw_sha256": {
+    "include/skimagexx/variation_of_information.hpp": "c910703f0b5315dc4cb6751c7b6d7eb90c7a9442f81b440da55bbc10a8658bb4",
+    "src/variation_of_information.cpp": "e4131ef47cdb66af20f3a7adcc29d8f95eeacafeb1e89f652d21bb29a661b2e9",
+    "src/bind_variation_of_information.cpp": "8d3310debba4a10aa59f185fe938b2db48f79fb0ed5afafac081078578dc83a3",
+    "python/skimagexx/_variation_of_information.py": "8e25cd3f76ecc32e9441e42c0bff4c93817e5b02c1e46f147f04829113abcd0c"
+  },
+  "frozen_contracts_raw_sha256": {
+    "coverage/contracts/vi-public-log2-provider-v1.json": "4f30e29469dcaa72594c0482a6a04954f04582b2593a0521b0df2a9b71e46096",
+    "coverage/contracts/vi-public-log2-provider-source-v1.json": "3b21af81541ffdc87104be4c6f22205778f3c60d55a561d431937c939833b143",
+    "coverage/contracts/vi-public-log2-provider-benchmark-v1.json": "223f5e24ef18abcfecba0081640470ef17d18f82e87f64933997df7bf9bb3ca6",
+    "coverage/contracts/vi-public-log2-provider-benchmark-v2.json": "e67de2b48bf387819b099cd72faf9684269f8106c70cf76c221d5d512f68c46d",
+    "coverage/contracts/vi-provider-sdk-source-v1.json": "a95edd6c736a2cbce6fb9530b1cfec000390b8368d6422640dfc1d6438e1714d",
+    "tests/data/variation_of_information_large_saved_v1.json": "0c59120f511ef5b2368c01b3b6d010e45bc233deacd52f5c630d568141ec2f55"
+  },
+  "validation": {
+    "legacy_saved": "Old fixed CPU-specific words only via authenticated legacy_scalar_gateway; all original assertions/golds retained",
+    "current_small": "Fresh all8assessed recipe pairs x workers1/4; natural FP/software/errors/observations/ownership;16nodes",
+    "current_large": "Fresh4frozen large pairs x workers1/4 with strict words/metadata/caller32/11native returns and4trueprovider events;8nodes",
+    "sampler": "Unchanged old strict cases/method/56batches; wrappers onlypreflight; no timing authority",
+    "runtime": "Source packet gives no runtime credit; every original/native/provider/FP/helper/model/build call is0until separate rootGO"
+  },
+  "pending": [
+    "Root early authenticated2270 source predecessor/collector/selector closure",
+    "Complete affected source-only modules bothsupported Pythons",
+    "Rootsource admission",
+    "Explicitcompile/build/native/SDK/public/hotswap/FP validation",
+    "Complete sourcebarrier and exact-source4profile qualification",
+    "Eligible VI4 performance and independentmain admission"
+  ]
+}

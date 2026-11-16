@@ -295,7 +295,8 @@ def test_external_GO_one_way_binding_and_early_refusal(tmp_path,fault):
 def test_frozen_probe_driver_assertion_and_dependencies_exact():
     context=json.loads((ROOT/D.CONTEXT).read_bytes())
     for name,pin in context['controller_dependencies'].items():assert D.digest(ROOT/name)==pin
-    for name,pin in context['prepared_dependencies'].items():assert D.digest(ROOT/name)==pin
+    from variation_of_information_source_context import qualified_diagnostic_source
+    for name,pin in context['prepared_dependencies'].items():assert hashlib.sha256(qualified_diagnostic_source(ROOT,name)).hexdigest()==pin
     tree=ast.parse((ROOT/'tools/vi_cohort_value_diagnostic.py').read_bytes())
     run=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='run_diagnostic')
     assert sum(isinstance(n,ast.Call)and isinstance(n.func,ast.Attribute)and n.func.attr=='main'for n in ast.walk(run))==1
