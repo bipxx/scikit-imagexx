@@ -39500,7 +39500,7 @@
       "readiness_reviewer": "Nonauthorreview C93f64source/72proof/823affectedchecks; focussharedSDK/wiring/contexts/workflow169, importedRkernels onlypinsagainstoldB/rootadmissions. No self-admission or checks/science reruns.",
       "root": "ActualLBP2firstcase strict controls+flood636 admitted. OwnGLCM0b6 countfix69each+Breview/fresh8prefix64; nextnonauthoractualprefix readiness beforemin8neworiginal. Rootsharedcandidateadmission/full169/rootnativeSDK+release/genuine/perf/main."
     },
-    "next_action": "Actual final181 WINDOWS311 V7 LIVE session75630/Python12760/PowerShell10520 on clean aaea1b06; root c559ab command/source/nativeGit/absoluteGO/capacity verified. B owns execution, root must independently admit actual terminal/fullXML/IDs/plugins/source55/index/binding and fixturecloseout/capacity before313. Runtime/SDK/genuine/VI4/main281 held.",
+    "next_action": "Private60 andordinarynormal/disabledSDK areROOTPASS; Bactualscalar/SANclientbuilds thenrootfreshdeps/ELF/runtimeGOs. A/Creadonlyqualifieddispatch/VI4binding questionsprepareexistingnextsteps; genuine4/VI4/main281 stillpending.",
     "current_checkpoint": {
       "main_image_names": 271,
       "resume_20261115": {
@@ -39517,13 +39517,21 @@
         "complete169_authority": "build/mark-lbp9e15-complete-source-v1/execution-authority-root-v1.json; exact unchanged workflow169, locator-only faithful runner compiled on retained311/313. Fresh D:/Scratch/m9e15-v1 verified absent; actual free capacity exceeds conservative22GiB combined peak+20GiB reserve and30GiB floor. Authorized source-only runs, not hosted release or original/performance computation.",
         "live_handles": {
           "source_full181_windows311": {
-            "owner": "/root/tracking_repair",
+            "status": "TERMINAL_PASS_ROOT_CORE_ADMITTED",
             "session": 75630,
             "Python_PID": 12760,
-            "PowerShell_PID": 10520,
+            "parent_PID": 10520,
+            "actual_external_exit": 0,
+            "root_receipt": "build/current281-final-source-v7/root-windows311-admission-v1.json"
+          },
+          "source_full181_windows313": {
+            "status": "TERMINAL_PASS_EXTERNAL_E2343C_ROOT_BOTH",
+            "owner": "/root/tracking_repair",
+            "session": 29032,
+            "Python_PID": 31092,
+            "parent_PID": 21708,
             "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
-            "status": "LIVE rootc559ab",
-            "313": "held until rootterminal/fixture/capacity admission"
+            "actual_external_exit": 0
           }
         },
         "live_evidence": "All3existingagents resumed through actualfollowup_task, read-only dependency-ready VI/source, VI/controller and shipping-projection analyses. No scientific process/hosted job dispatched; previous qualification/performance/cleanup commands terminal.",
@@ -39536,7 +39544,7 @@
           "root": "Independent source/compiled-product admitted85257; admits harness/rootGO/main. Shipped271."
         },
         "capacity": "Actual entry C free396955144192B, D free288221495296B. Conservative combined next peak: 20GiB full source-barrier scratch plus 1GiB tracking worktree and 1GiB worker guards; destination exceeds peak plus20GiB and30GiB floor. Reuse retained Windows311 executable and project Windows313 environment; no environment/download rebuild. Keep raw command/XML/evidence outside disposable roots; release terminal scratch after excluding protected dependencies; previously denied targets untouched.",
-        "next_gate": "Actual final181 WINDOWS311 V7 LIVE session75630/Python12760/PowerShell10520 on clean aaea1b06; root c559ab command/source/nativeGit/absoluteGO/capacity verified. B owns execution, root must independently admit actual terminal/fullXML/IDs/plugins/source55/index/binding and fixturecloseout/capacity before313. Runtime/SDK/genuine/VI4/main281 held.",
+        "next_gate": "Private60 andordinarynormal/disabledSDK areROOTPASS; Bactualscalar/SANclientbuilds thenrootfreshdeps/ELF/runtimeGOs. A/Creadonlyqualifieddispatch/VI4binding questionsprepareexistingnextsteps; genuine4/VI4/main281 stillpending.",
         "tracking_delivery": {
           "source": "1cd85168416635de5784efd61f1bb890d4c94bda",
           "main": "pushed_and_remote_verified",
@@ -40134,7 +40142,7 @@
         },
         "gap_closure_goal": {
           "objective": "close the gap",
-          "current_main": "cac788c4b5fc97d2d3dceb842d049eb0ad1cad12 (production271 unchanged; private source corrections unshipped)",
+          "current_main": "7c3f0231d8c7234a65352b40227fffcee8acc703",
           "owner": "/root",
           "previous_turn_classification": "PROGRESS: source/runtime evidence and exact private checkpoints were retained/published; actual full-source failures changed the correction path, not merely status restatement. Current acceptance remains delivery281 with exact source/runtime/SDK/release/performance evidence.",
           "acceptance": {
@@ -40144,10 +40152,10 @@
             "delivery": "Independent exactshipping projection281, finalsource/API/receipt check, validated increment merged/pushedmain with actualremoteverification.",
             "storage": "Small disposablefootprint; protectedsource/env/product/raw/dependencies retained; no archives beyond requiredtransientuse; allpreviouspolicyblocked targets manual-only."
           },
-          "current_gate": "Actual final181 WINDOWS311 V7 LIVE session75630/Python12760/PowerShell10520 on clean aaea1b06; root c559ab command/source/nativeGit/absoluteGO/capacity verified. B owns execution, root must independently admit actual terminal/fullXML/IDs/plugins/source55/index/binding and fixturecloseout/capacity before313. Runtime/SDK/genuine/VI4/main281 held.",
+          "current_gate": "Private60 andordinarynormal/disabledSDK areROOTPASS; Bactualscalar/SANclientbuilds thenrootfreshdeps/ELF/runtimeGOs. A/Creadonlyqualifieddispatch/VI4binding questionsprepareexistingnextsteps; genuine4/VI4/main281 stillpending.",
           "unmet": [
-            "Actual complete181 workflow command BOTH on frozen aaea1b06; Windows rawtransport correction passed and2052 prior affected evidence retained within6c027 scope.",
-            "Installed current owningSDK ordinary/scalar/sanitizer and private60 public-control runtime evidence; prepared entries remain UNBOUND until source gates close.",
+            "Truecompiler-scalar andASAN+UBSAN installedowningSDKclients/runtime currentAA; private60 andordinarynormal/disabled SDK now independentlypassed.",
+            "Exact-source genuinefourprofile qualification/wholeproducts+SDK/3stagers; privateAVX2/currentCppSDK are not releaseauthority.",
             "Exact-source genuine four-profile qualification, whole products/SDK and three stagers; current public log2+matmul broader profiles are not credited from private AVX2 alone.",
             "Actual source/runtime-bound VI4 original-public one-thread strict comparison, all slower cases retained.",
             "Independent final281 shipping projection and validated merge/push/main remote; shipping remains271.",
@@ -40242,7 +40250,7 @@
           },
           "integration_candidate": {
             "owner": "/root/tracking_repair",
-            "status": "PRIVATE_AAEA1B06_FROZEN_FULL181_BOTH_PENDING",
+            "status": "ROOT_FINAL_WORKFLOW181_BOTH_PASS_RUNTIME_RELEASE_PENDING",
             "base": "7239bc6d6cc65bd1504498d7e4c23cb9ea540d1e",
             "qualified_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
             "source_root": "D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1",
@@ -40255,8 +40263,8 @@
               "minimum_free_floor_bytes": 32212254720
             },
             "runtime_authority": 0,
-            "full_source_barrier": "Root42c495 exact181/allaffected42 selectors bound tocurrentfrozenHEAD; final BOTH execution pending. Old failed181 preserved; passing2052 are separately scoped.",
-            "next_gate": "Actual final181 WINDOWS311 V7 LIVE session75630/Python12760/PowerShell10520 on clean aaea1b06; root c559ab command/source/nativeGit/absoluteGO/capacity verified. B owns execution, root must independently admit actual terminal/fullXML/IDs/plugins/source55/index/binding and fixturecloseout/capacity before313. Runtime/SDK/genuine/VI4/main281 held.",
+            "full_source_barrier": "PASS exactactual181both root-both-admission-v1; earlierfailedV6retained",
+            "next_gate": "C exactV7/windows313 fixtureeligibility thenrootonecleanup ormanualexception+freshcapacity; sourcebarrier gate nowclosed. RootcurrentLinuxmetadata admission/freshprivate60 andordinary/scalar/SAN SDKcompile/runtime stageGOs. Genuine4profiles/wholeSDKproducts/stagers/VI4/main281 remainpending; no source-only releasepromotion.",
             "admitted_controller_merge": "RootauthorizedC2c089a8d/parent17a source-only integration into samecandidate, preserveexactC12bytes/immutablecontexts andallmainhistory; no mathchange.",
             "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
             "branch": "implement/vi-public-matmul-provider-v1",
@@ -42666,7 +42674,7 @@
               "scope": "Four VI production files plus coherent family API/source/SDK/hotswap/public-contract tests and new versioned family contracts. Root retains shared source-history/registry/build/workflow/collector files; no other family/main records.",
               "acceptance": "Additive stable host inner-product callback, old ABI/defaults/gold bytes unchanged; actual current true NumPy matmul with public Python/GIL/buffer transport, no private NumPy ABI, CPU mapping/forcing, hardcoded expected words, whole-original forwarding, hidden fallback or tolerance. Preserve ordered dataflow/refusal/throw publication, native ownership/disclosure, natural FP/software/input/output/caller state and default1/global workers. Complete affected source-only guards both with normal conftest/plugins/no-failfast; root independently admits before runtime.",
               "runtime": 0,
-              "next_owner_trigger": "Actual final181 WINDOWS311 V7 LIVE session75630/Python12760/PowerShell10520 on clean aaea1b06; root c559ab command/source/nativeGit/absoluteGO/capacity verified. B owns execution, root must independently admit actual terminal/fullXML/IDs/plugins/source55/index/binding and fixturecloseout/capacity before313. Runtime/SDK/genuine/VI4/main281 held.",
+              "next_owner_trigger": "Private60 andordinarynormal/disabledSDK areROOTPASS; Bactualscalar/SANclientbuilds thenrootfreshdeps/ELF/runtimeGOs. A/Creadonlyqualifieddispatch/VI4binding questionsprepareexistingnextsteps; genuine4/VI4/main281 stillpending.",
               "live_workers": {
                 "A": {
                   "owner": "mark_source_reviewer",
@@ -43303,9 +43311,9 @@
                 "gates": "No new runtime/build/hosted/timing by workers. Source-only edits/static metadata controls permitted. Root waits actual deltas before strict history successor; complete affected source checks both normal plugins before dependent SDK execution; final complete workflow both and exact-source four-profile/VI4 before main281. New environment/build/science unsupported by this source assignment.",
                 "reuse": "Private77088f53 source4/core83d19/private32/legacy evidence retained; metadata deltas invalidate affected source guards/literal pins, not unchanged numerical code. Source proofs and failed predecessors retained; blocked cleanup manual only.",
                 "live_workers": {
-                  "A": "LIVE read-only private60 oldentry dependency/reuse question; no edits/body authority",
-                  "B": "ACTUAL LIVE full181/311 session75630/PID12760;313held untilrootactualterminal admission",
-                  "C": "LIVE read-only SDK all3 oldentry dependency/reuse question; no edits/compiler/body authority"
+                  "A": "ASSIGNED readonlygenuinedispatchinputs/gates,private60+emptycloseoutcomplete",
+                  "B": "ACTUAL LIVE scalarclientbuild session20904/PID57748 thenindependentSANbuild",
+                  "C": "ASSIGNED readonlyVI4source/runtimebinding prerequisites;ordinaryruntimeROOTPASS"
                 },
                 "root_delta": "bd773d existingSDK target source changed once preservingF1/strict flags/link; active helper points V2 successor, f4V1 unchanged; old hook pin temporarily pending until finalsource. No dependent checks/runtime during pending state.",
                 "scope_note": "Portable Windows successor avoids unconditional Linux F1 setup. Existing44/public339c/private32 source bytes remain unchanged and old contexts remain immutable; Windows software-state/strictwords will be checked separately with no invented hardwareFP claim.",
@@ -43351,7 +43359,7 @@
                   "root_read": "fa8ee3 smallmetadata passed expectedhash/source4/cacherecipe/PythonOFF/nextgates",
                   "scope": "Retained111scalar/188SAN staticobjects/cachemetadata exact. Only1nativeVI TU predicted each; distinct newSDK-onlyprefixes/owningclient, oldinstalledbaselines protected. No mode_core/Python/publicprovidercredit; actualbuild/install/client/headers/link/ELF/F1/runtime allpending."
                 },
-                "next_owner_trigger": "Actual final181 WINDOWS311 V7 LIVE session75630/Python12760/PowerShell10520 on clean aaea1b06; root c559ab command/source/nativeGit/absoluteGO/capacity verified. B owns execution, root must independently admit actual terminal/fullXML/IDs/plugins/source55/index/binding and fixturecloseout/capacity before313. Runtime/SDK/genuine/VI4/main281 held.",
+                "next_owner_trigger": "Private60 andordinarynormal/disabledSDK areROOTPASS; Bactualscalar/SANclientbuilds thenrootfreshdeps/ELF/runtimeGOs. A/Creadonlyqualifieddispatch/VI4binding questionsprepareexistingnextsteps; genuine4/VI4/main281 stillpending.",
                 "current_source_execution": {
                   "status": "ROOT_COMPLETE5_SOURCE_BOTH170_PASS_FULL181PENDING",
                   "owner": "root",
@@ -43632,7 +43640,7 @@
                   }
                 },
                 "full_workflow_v7_preparation": {
-                  "status": "ACTUAL_COMPLETE181_WINDOWS311_LIVE_313_HELD",
+                  "status": "ROOT_COMPLETE_ACTUAL_WORKFLOW181_BOTH_PASS",
                   "runner": "build/current281-final-source-v7/run_sourcebarrier_v7.py",
                   "sha256": "858b8cd8da6cef45b67d9edbb7b89dafb50a63ddd87ced9c969fa12f1f8c0d0f",
                   "actual": "6e204c/664a9b source-only10controls each; exact2literal V6successor, preserved all source/index/no-failfast/rawpost gates. No launcher allocated/executed.",
@@ -43645,7 +43653,44 @@
                   "actual_session": 75630,
                   "Python_PID": 12760,
                   "PowerShell_PID": 10520,
-                  "actual_entry": "B e7834a all55 before snapshots+GO/runner; rootc559ab independently reads exact181/nativeGit/normalconftest/plugins/nofailfast/absoluteGO/sourceaaea/Dfree221903753216>=38654705664 and actuallive PIDs."
+                  "actual_entry": "B e7834a all55 before snapshots+GO/runner; rootc559ab independently reads exact181/nativeGit/normalconftest/plugins/nofailfast/absoluteGO/sourceaaea/Dfree221903753216>=38654705664 and actuallive PIDs.",
+                  "root_311_admission": "build/current281-final-source-v7/root-windows311-admission-v1.json",
+                  "actual_311": "64c5ae actualfullcore PASS;all11ownedproof bytes rootchecked;external1eb2ec0/487.781s/4635IDs+8subtests4643XML0bad/44normalplugins+conftest/source55+GO+runner/indexcleanHEADunchanged/science0.",
+                  "fixture_311_closeout": {
+                    "target": "D:/Scratch/current281-final-source-controls-v7/windows311",
+                    "status": "AUTOMATIC_APPROVAL_BLOCKED_BY_POLICY_MANUAL_ONLY",
+                    "actual": "5dbabf independently all12eligibility proofbytes/gates PASS;808098 freshnative exactpath/type/ancestors/reparse/oldPIDs/no-new-reader PASS. ONE exact native Remove-Item rejected before CreateProcess as blocked by policy;0executed/0removed/no removal receipt. No retry/alternative/parent/sibling action.",
+                    "files": 90243,
+                    "logical_bytes": 7097731401,
+                    "physical_allocation_bytes": null,
+                    "reclaim_claimed_bytes": 0,
+                    "owner_trigger": "root/manualuserrelease; necessaryoldfixture retentionexception, all raw11/source55/epoch175B outside and protecteddependencies excluded."
+                  },
+                  "entry_313": "build/current281-final-source-v7/root-windows313-entry-v1.json",
+                  "actual_313_capacity": {
+                    "D_free_bytes": 214667816960,
+                    "profile_peak_bytes": 17179869184,
+                    "concurrent_peak_bytes": 0,
+                    "reserve_bytes": 21474836480,
+                    "minimum_floor_bytes": 32212254720,
+                    "required_free_bytes": 38654705664
+                  },
+                  "actual_313_session": 29032,
+                  "actual_313_Python_PID": 31092,
+                  "actual_313_parent_PID": 21708,
+                  "actual_313_entry": "402662 independently currentaaea/exact181/absoluteGO2c7355/normalautoload+conftest/nofailfast/tworeportpaths/nativeGit/runtime3.13.14/live31092+21708. Bbefore55snapshot ea4a9d; ordered4635IDs identical311386c7a. No terminal orBOTHpass yet.",
+                  "root_both_admission": "build/current281-final-source-v7/root-both-admission-v1.json",
+                  "actual_both": "91f95e actualbothcore +all22ownedproofbytes/cleanexactHEAD/index PASS;4635IDs+8subtests4643XML0bad each/44normalplugins+conftest/181actual/tworeportchanges/source55beforeafterlive/science0.",
+                  "fixture_313_closeout": {
+                    "target": "D:/Scratch/current281-final-source-controls-v7/windows313",
+                    "status": "AUTOMATIC_APPROVAL_BLOCKED_BY_POLICY_MANUAL_ONLY",
+                    "actual": "4c57ce retained11proofbytepasses thenstopped wrongoldexcluded_paths key; actualexact_exclusions corrected644500 fullintake0; freshnativeboundaryb2ef3c0. ONE exactnative Remove-Item rejected before CreateProcess as blocked by policy;0executed/removed/no removalreceipt/no retry oralternative.",
+                    "files": 90243,
+                    "logical_bytes": 7097718111,
+                    "physical_allocation_bytes": null,
+                    "reclaim_claimed_bytes": 0,
+                    "owner_trigger": "root/manualuserrelease; allraw11/source55/index/175Bepochreceipt outside; protectedsource/env/products excluded; necessaryretentionexception."
+                  }
                 },
                 "document_fullsource_failure_v1": {
                   "status": "DOCUMENT_CHECKS_PASSED_FINAL_STAGE_READY",
@@ -43749,11 +43794,270 @@
                   "admission": "build/vi-public-matmul-provider-v1/windows-raw-transport-v1/index-filter-admission-v1.json"
                 },
                 "document_transport_closeout_v1": {
-                  "status": "DOCUMENT_CHECKS_PASS_READY_PUBLICATION",
+                  "status": "PUBLISHED_MAIN_DOCUMENTS_ONLY",
                   "receipt": "coverage/evidence/vi-public-matmul-windows-raw-transport-root-admission-v1.json",
                   "sha256": "0411a110c23654673b87b2ef972364934025ed7aad85dd92fe6d07da8c0f5d5a",
                   "validation": "d0e1d0 actual12newlinks/unchangedAPI+membertable rows/7receiptproofs/JSON/CRLF-aware whitespace/protectedWIP hashes PASS;0b2fba workqueue368unchanged PASS. Sourcefull live separatelyc559ab, no scientific rerun for docs.",
-                  "scope": "3owned tracking docs+1durable rootreceipt only; preserve userAGENTS/cleanupscript/4unrelated receipts. No private implementation merge orshipping promotion."
+                  "scope": "3owned tracking docs+1durable rootreceipt only; preserve userAGENTS/cleanupscript/4unrelated receipts. No private implementation merge orshipping promotion.",
+                  "commit": "7c3f0231d8c7234a65352b40227fffcee8acc703",
+                  "actual": "390a2c exact4index/doc/WIP gate0;f4fde8 commit0/4d7335 push0/f49ad5 exactmainremote+onlyprotecteduserWIP remains; no scientific/source promotion."
+                },
+                "entry_source_binding_successor_v2": {
+                  "status": "ROOT_ALL32_PROOFS_SOURCE_PREPARATION_PASS_EXECUTION_UNBOUND",
+                  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+                  "reason": "A actual19fixedpins: onlyconftest changed5d7d to246199bc, launcher preventsfutureGOoverride. C actualordinary14/modes9inputs allmatch, but executableba17 literalbinding cannot acceptcurrentaaea. Newmetadata effects only, no math/client/flag/recipe change.",
+                  "A_owner_scope": "/root/mark_source_reviewer exclusively ignored private-controls-entry-v2; immutableV1 retained; exactconftestpin andtemplate locator successor,60selectors/budgets/body unchanged; runtimeGO remainsUNBOUND.",
+                  "C_owner_scope": "/root/mark_release_readiness exclusively ignored current-SDK-ordinary-entry-v2 and current-SDK-mode-entry-v2; root transfers B modeentry successor authorship toC for one coherent3mode source-binding batch. ImmutableV1/proofs retained; onlyrevision/locator/derivedhash literals, no command/client/flags changes.",
+                  "acceptance": "Each author one frozenhandoff/index after exactbyte delta equations againstV1 and relevantpure entry controls both retainedPythons. No newcontrols/framework justrefresh; reuse unchangedproofs/objects/private32/SDKproducts in establishedscope. Current full181BOTH rootadmission and fresh root once-only executionGOs remain mandatory; no compiler/runtime/science/FP/helper/hosted/cleanup. Root independently reads actual newproofbytes before admission.",
+                  "next_owner_trigger": "Afteractual181BOTH/currentrootreceipt andfreshcapacity/runtime/product/stoppedcache gates, root freshboundprivate60/ordinarySDK/scalarSAN stepGOs. Reuse allunchanged math/client/flags/object/product proofs within scope.",
+                  "waste_review": "Concrete literal blockers identified before dependent execution; reviewed,no coverage change. Batch3SDKmode literalupdates toavoid serialadministrative handoffs; no numerical or unchanged objectscan replay.",
+                  "root_admission": "build/vi-public-matmul-provider-v1/root-current-runtime-entry-successors-admission-v2.json",
+                  "sha256": "7be9c269d36065be1c94f5adb18187c025ca999dbba9236aebea9404f29f01f9",
+                  "actual": "e0ce45 complete corrected rootread32proofs/8strictSDKbyteequations+inverses/private60exacttemplatedelta/19livefixedpins/SDK14ordinary+9modesrawcanonical/actualpure87each and4SDKcommands0. c2d0b0 wronglist.items intakefailure preserved; actualmanifest schemas4dae32 thencompleteintakepassed beforeanyGO orbody.",
+                  "current_Linux_metadata_entry": {
+                    "owner": "/root/mark_source_reviewer",
+                    "status": "ROOT_ACTUAL_METADATA_ADMITTED",
+                    "changed_input": "New exactaaea source revision/activeV7helperhook andcurrentconftest bindings; retained private32 production4/prefix107/core83d19/runtime libraries unchanged.",
+                    "ownership": "Ignored private-controls-current-entry-v1 only; no Dsource/installedprefix/shared/main writes orfixtureallocation.",
+                    "acceptance": "Reuse actualworking explicitLinuxentry/NativeWindowsGit launcher; record currentaaea NativeGit atactualWSL entry, retainedLinuxPython/runtime/software METADATA+protectedfile stat identity, actualsource55pins asneeded. No scientificpackage imports/original/native/provider/F1/fenv/helper/body/FP/compiler/test/benchmark/download/cleanup. Reuse valid unchanged107package/10runtime binaries receipts withmatchingstats rather than repeatedhash/build. One concise actualcommand/exit/rawmetadata receipt andremainingfull181BOTH/currentboundentry/GO gates; no speculative newentry framework.",
+                    "root_admission": "build/vi-public-matmul-provider-v1/root-current-Linux-metadata-admission-v1.json",
+                    "sha256": "1a17102e11275be4919de9aca1bbd511571cf3a0bd4b04a7f0152100ee6ece85",
+                    "actual": "da7a10 actual8proofs/NativeWindowsGit55/currentruntimeMETADATA/10protectedstats/107sizes PASS;0science/helper/FP/binaryhash;107rawidentities historicaluntilprivate60hashbeforebodies."
+                  }
+                },
+                "runtime_SDK_capacity_entry_v1": {
+                  "status": "ROOT_FULLSOURCE_TERMINAL_CLOSEOUT_AND_THREE_LANE_CAPACITY_PASS",
+                  "receipt": "build/current281-final-source-v7/root-runtime-SDK-capacity-entry-v1.json",
+                  "capacity": {
+                    "D_free_bytes": 207431888896,
+                    "C_free_bytes": 456678084608,
+                    "combined_conservative_peak_bytes": 17179869184,
+                    "reserve_bytes": 21474836480,
+                    "floor_bytes": 32212254720,
+                    "required_free_bytes": 38654705664,
+                    "planned_lanes": {
+                      "A_private60_peak_bytes": 536870912,
+                      "B_scalar_SAN_sequential_peak_bytes": 8589934592,
+                      "C_ordinary_SDK_peak_bytes": 4294967296
+                    }
+                  },
+                  "owners": {
+                    "A": "private60 runtime",
+                    "B": "scalar+SAN SDK build/install/client",
+                    "C": "ordinary owningSDK build/client"
+                  },
+                  "execution_authority": "NONE untilfreshroot bound specificstageGOs"
+                },
+                "current_private60_execution_v1": {
+                  "owner": "/root/mark_source_reviewer",
+                  "status": "ROOT_PRIVATE60_RUNTIME_PASS_SCOPED_AVX2_NUMPY124_ONLY",
+                  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+                  "entry": "build/vi-public-matmul-provider-v1/private-controls-entry-v2/root-controls-entry-v1.json",
+                  "entry_sha256": "34bbf2739a17b988c158f60dd95a6cb76822159c5bd15102e4463e700f513a93",
+                  "GO": "build/vi-public-matmul-provider-v1/private-controls-entry-v2/root-private60-GO-v1.json",
+                  "GO_sha256": "fbf85abfbfef50f13c4739db30df686a9e22606d7605813564fba740162a2d47",
+                  "actual_prerequisites": "f895e6 sourceBOTH44a26f/prep32e0ce45/currentLinux8da7a10/terminal313manualcloseout+capacityae3514/cache_readers8fa42d PASS.78currenttextsource/107package/2upstream/10protected(8admittedSHA+2stat-onlyscope) bound.7ddfbbprewrite schemafailure corrected52b74b no bodyreplay.",
+                  "acceptance": "ONE exact60collection/normalplugins+conftest/private stopfirstfailure,sourcecaps unchanged,no freshoriginals/timing/sampler/retry. Actualexternal/XML/rawlegacy16/caller56/software/HotSwap/installedownership/default1/source107+78+2/protectedstatpost evidence androotadmission. Preservefailure/noretry ifsetuprefuses.",
+                  "capacity": "Dfree207431888896>=34896609280 for.5GiBprivate+12GiBfutureSDK+20reserve/min30. Source3137097718111B policyblockedmanualretentionexception; no oldblockedcleanup.",
+                  "deadline_utc": "2026-11-16T19:34:07.464928+00:00",
+                  "next_owner_trigger": "A actuallive/terminal receipt;rootindependentadmission andterminalfixturecloseout. C/B compile-onlystages separatelyauthorized, no benchmark/hosted/mainpromotion.",
+                  "actual": "session28450/WSL28692/shell59860 external0; root4abfaf actual60XML0bad/60uniqueIDs/16rawsaved+56caller hashes/default1/global+postidentity/newprefixownership PASS; A finalgold/caller78sourceintake freezing.",
+                  "root_admission": "build/vi-public-matmul-provider-v1/root-private60-runtime-admission-v1.json",
+                  "sha256": "6c5cd57306020de961a5dba402ab017c38f4b9b1789237ea1d79f97eb1a43d78",
+                  "fixture_closeout": {
+                    "status": "EMPTY_EXACT_DIRECTORY_REMOVED_NATIVE_EXIT0",
+                    "target": "D:/Scratch/vi-public-matmul-private-controls-v1",
+                    "actual": "e49fdd all19eligibilityproofbytes; b766f0 freshempty/path/type/reparse/PIDgate0; af69c0 ONE exactNONrecursiveRemoveItem0 andpathabsent.",
+                    "logical_bytes": 0,
+                    "files": 0,
+                    "physical_allocation_bytes": null,
+                    "reclaim_claimed_bytes": 0,
+                    "protected_dependencies": "all167raw/source78/product/runtime outside unchanged",
+                    "waste": "RetainedAmetadataExitCapture/emptyfailurestdoutparsecorrectedbeforeeligibility, no runtime orfixture replay."
+                  }
+                },
+                "SDK_compile_execution_v2": {
+                  "status": "ROOT_FRESH_THREE_MODE_COMPILE_GOS_READY_DISPATCH_NOW",
+                  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+                  "owner_ordinary": "/root/mark_release_readiness",
+                  "owner_scalar_SAN": "/root/tracking_repair",
+                  "GOs": [
+                    {
+                      "kind": "ordinary",
+                      "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-ordinary-entry-v2\\root-compile-only-GO-v1.json",
+                      "sha256": "836764ecb931c8993ca5bfaf4c3ee054b916ea60eb8c33e3e13886a3e7fe930d"
+                    },
+                    {
+                      "kind": "scalar",
+                      "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-scalar-build-GO-v1.json",
+                      "sha256": "0dfed7e67329ea5d075f9a65dfd28a60a0e43af62504d873b10d8ed07fe13eda",
+                      "command_id": "scalar/incremental-static-build"
+                    },
+                    {
+                      "kind": "sanitize",
+                      "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-sanitize-build-GO-v1.json",
+                      "sha256": "a1bfd2823c1cfede366953ecbf6614668d18822c35d9cf4bfbbe2b911f132f27",
+                      "command_id": "sanitize/incremental-static-build"
+                    }
+                  ],
+                  "actual_prerequisites": "Full181BOTH44a26f/5c81441,32preparedproofse0ce45,CacheRead8fa42d/currentLinuxda7a10/new313fixturemanualcloseout+capacityae3514 PASS. CurrentDfree207431888896>=36GiB forcombined16peak+20reserve/min30.",
+                  "acceptance": "Cconfigure0/rootimporttargetflagsadmission beforeoneclientbuild0/depsELF. Btwoprofilesindependentstaticbuildsonly, actualexits/flags/Ninjachangedunits/newlibs/source9/oldinstalledbaselinepoststats/rootadmission beforeinstall/client/runtime. No SDKbody orPythonmodecore authority.",
+                  "next_owner_trigger": "Cconfigureactual+inspector beforeBstep1; Bbothstaticterminalmetadata. Rootreadsactuals thenfreshdependentstageGOs.",
+                  "ordinary_configure_admission": {
+                    "status": "ROOT_CONFIGURE_IMPORTED_TARGET_FLAGS_PASS",
+                    "path": "build/vi-public-matmul-provider-v1/current-SDK-ordinary-entry-v2/root-configure-admission-v1.json",
+                    "sha256": "3cbf4b6965c2a6a690e3321fe45783aa5c7267390bf9580314f57bd1419f5085",
+                    "actual": "dca89d/bbe82d configure0/11.292s,529b7e inspector0,root1dde3a actual14proofs; source/privateprefixoldstats preserved.",
+                    "next": "C index1then2,3actualprereqs;SDKbodyheld"
+                  },
+                  "ordinary_compiled_admission": {
+                    "status": "ROOT_ORDINARY_OWNING_SDK_COMPILED_OWNERSHIP_PASS_RUNTIME_PENDING",
+                    "path": "build/vi-public-matmul-provider-v1/current-SDK-ordinary-entry-v2/root-compiled-ownership-admission-v1.json",
+                    "sha256": "8f6f522aed3c42b2f924238c799ebd01ee0306b25443e0e012f627bc7bcccfc8"
+                  },
+                  "scalar_SAN_build_admission": {
+                    "status": "ROOT_SCALAR_AND_SAN_STATIC_BUILD_PRODUCTS_PASS_INSTALLS_PENDING",
+                    "path": "build/vi-public-matmul-provider-v1/current-SDK-mode-entry-v2/root-static-builds-admission-v1.json",
+                    "sha256": "9ea1961578cd098ca65a791c85ebb27b55c11bf3e4c052fe8856ed3ac342b570"
+                  },
+                  "mode_installs": {
+                    "status": "ROOT_FRESH_TWO_PROFILE_INSTALL_GOS_READY",
+                    "owner": "/root/tracking_repair",
+                    "GOs": [
+                      {
+                        "mode": "scalar",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-scalar-install-GO-v1.json",
+                        "sha256": "71434b27c7a158c6fb5592460d942cf14c366ae3b252bbfaeef6575c43a80591"
+                      },
+                      {
+                        "mode": "sanitize",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-sanitize-install-GO-v1.json",
+                        "sha256": "634562a9e04301c4917249d2b97134a2c7acd0d750eda303e0fc3e6ec4079b7c"
+                      }
+                    ],
+                    "actual_prerequisite": "c22faf independent38proofs/twoactualstaticbuildproducts/flags/exports/oldinstalledstats admitted9ea196; no buildrerun. Actualsourceboth/cache/currentcapacity passed.",
+                    "acceptance": "No clientconfigure/build/body before actualinstall0/new108SDK94headers/staticmatch/currentexports/source9/oldstats independentrootadmission; tiny stage receipts/manifest suffice, no standalonehandoffframework.",
+                    "D_free_bytes": 207430422528
+                  },
+                  "ordinary_runtime_dependency_entry": {
+                    "status": "ASSIGNED_METADATA_ONLY",
+                    "owner": "/root/mark_release_readiness",
+                    "acceptance": "Rootc22faf compiledownership8f6f522 PASS; read exactfuture2CTestcommands and resolveELFdependencies withoutmain/helperexecution (workingld.so--list/ldd metadata), recordactualF1/systemDSOpaths/currentstat+source14/protectedstats/freshcapacity; no bodies untilrootfreshruntimeGO."
+                  },
+                  "ordinary_runtime": {
+                    "status": "ROOT_ORDINARY_NORMAL_DISABLED_RUNTIME_PASS",
+                    "owner": "/root/mark_release_readiness",
+                    "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-ordinary-entry-v2\\root-ordinary-runtime-GO-v1.json",
+                    "sha256": "35cc0cc7f371c7281233b3652dacad866ac1866a08a5755bbeb5b9f89f506d68",
+                    "dependency_admission_sha256": "93bc2df7023c5f07c6386cbfde91c8d324a443d46e2c6f68d5b2a9801c684c2c",
+                    "acceptance": "Normal actualexternal0/complete1testXML/fullstdoutstderr+LastTestlog preserved before disabled; stop immediately on anyrefusal/failure, no retry. Commands remain exactdeclaredargv; no reconfigure/rebuild.",
+                    "capacity": {
+                      "D_free_bytes": 207153942528,
+                      "estimated_peak_bytes": 536870912,
+                      "concurrent_upper_bytes": 8589934592,
+                      "reserve_bytes": 21474836480,
+                      "floor_bytes": 32212254720
+                    },
+                    "root_admission": "build/vi-public-matmul-provider-v1/current-SDK-ordinary-entry-v2/root-ordinary-runtime-admission-v1.json",
+                    "actual": "eae080 independent37proofs/twoactualexternal0/XML1each/190rawfull32pairs/14source+binary+7DSO+protectedpost/default1. No trueSCALAR/SAN/genuine/perf credit."
+                  },
+                  "mode_client_configure": {
+                    "status": "ROOT_ACTUAL_INSTALLS_ADMITTED_FRESH_CONFIGURE_GOS_READY",
+                    "owner": "/root/tracking_repair",
+                    "install_admission_sha256": "65526b0f9f65ca13828a981e3e8bab1c5e08326f1b4c5d4a6547b46351599cd7",
+                    "GOs": [
+                      {
+                        "mode": "scalar",
+                        "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-scalar-configure-GO-v1.json",
+                        "sha256": "4f208cdcc97c91569a1df590730038db8363ff8efff80d3f054505db51053980"
+                      },
+                      {
+                        "mode": "sanitize",
+                        "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-sanitize-configure-GO-v1.json",
+                        "sha256": "1886ef4f084897d36582345f4e681008273793585783731ff40a9e196c9ae1de"
+                      }
+                    ],
+                    "acceptance": "Onlyactual2configures/importmetadata;rootactuals beforefreshclientcompile/runtimeGOs."
+                  },
+                  "mode_client_builds": {
+                    "status": "ROOT_CONFIGURE_IMPORTS_ADMITTED_MAP_PARENTS_CREATED_BUILD_GOS_READY",
+                    "owner": "/root/tracking_repair",
+                    "admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-mode-configures-admission-v1.json",
+                      "sha256": "fdeb47ba6850f255d02f4a10c879be276b6095b4bdf49f3d35d66054e2b9172f"
+                    },
+                    "GOs": [
+                      {
+                        "mode": "scalar",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-scalar-client-build-GO-v1.json",
+                        "sha256": "62318183449a69740f1cffc09d662518624e60444b3b0e78786ebeb86c5d4bd5"
+                      },
+                      {
+                        "mode": "sanitize",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-sanitize-client-build-GO-v1.json",
+                        "sha256": "00e1eb7c62296bc1ae8d566ce98816c7d6085eff05432284b0d59249a6d291d0"
+                      }
+                    ],
+                    "D_free_bytes": 207152361472,
+                    "acceptance": "Compile/linkonly. Actual0thenfreshmetadata-stageGOs forheaderdeps/ELF; runtimehelduntilactualbinary/ownership/dependencies/rootadmission."
+                  },
+                  "mode_client_metadata": {
+                    "status": "ROOT_TWO_BUILDS_ADMITTED_FOUR_METADATA_GOS_READY",
+                    "owner": "/root/tracking_repair",
+                    "admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-mode-client-builds-admission-v1.json",
+                      "sha256": "8c9e89e6408d0ec8b979913ec8ad11d1b0a7d9bab9e57965e1d666ae31b9c948"
+                    },
+                    "GOs": [
+                      {
+                        "mode": "scalar",
+                        "stage": "header-dependencies",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-scalar-header-dependencies-GO-v1.json",
+                        "sha256": "9208e15190bdfea563263cfc6cadb0d1608554697c4b1d49239cd06ac687a29b"
+                      },
+                      {
+                        "mode": "scalar",
+                        "stage": "ELF-symbol-dependency-metadata",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-scalar-ELF-symbol-dependency-metadata-GO-v1.json",
+                        "sha256": "778780f53fcaf83c8f5eea0e80d09e76803893fa6bab458a5265a0e04d68a1bc"
+                      },
+                      {
+                        "mode": "sanitize",
+                        "stage": "header-dependencies",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-sanitize-header-dependencies-GO-v1.json",
+                        "sha256": "81b42badce46a44c5e08bd1e47b2edc12575a2458a0c3ac6f523458c0e875562"
+                      },
+                      {
+                        "mode": "sanitize",
+                        "stage": "ELF-symbol-dependency-metadata",
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\current-SDK-mode-entry-v2\\root-sanitize-ELF-symbol-dependency-metadata-GO-v1.json",
+                        "sha256": "e18c89c317c8e68318b704f15ee4b2faf2ee2bd4dbeaecad41d2ca5c088b6063"
+                      }
+                    ],
+                    "acceptance": "Fouractual0/rawheaderdeps/map/ELFsymbols/runtime-needed+same-modeinstalledstatic/header/no sourceproductionincludes/source9/oldnewstats beforeactualmetadata/rootclientownershipadmission. DistinctSCALAR/SANruntimeGOs later."
+                  },
+                  "mode_runtime_dependencies": {
+                    "status": "ASSIGNED_INDEPENDENT_READ_ONLY_ENTRY_NO_BODY_AUTHORITY",
+                    "owner": "/root/mark_release_readiness",
+                    "scope": "Exclusive ignored current-SDK-mode-runtime-entry-v1; two trustednewclientbinaries alreadyrootcompileadmitted8c9e89/currentheader9f774768 scalar andb2bbb7ce SAN; Bfourmetadata actual0 beingfrozen. Loadertrace/stat onlycanoverlap Bfinalfilemetadata, no constructor/helper/FP/test/nativeSDKbody.",
+                    "acceptance": "Workingordinaryldd/stat primitive reused; actual2same-modebinarydependencyresolution incl SANlibasanfirst/libubsan/F1/rootdistinctSDK linkscope, source9/newSDK/oldbaseline/compiledbin stats+7ormoreDSOs resolved. No newCppcontrol/ABIquery/binarylibhash/sourceguard; one conciseentry/handoff neededforruntimeGO, allrootcompiledownership prerequisites stillpendingbody.",
+                    "next_owner_trigger": "C returnsactualpaths/exits/fingerprint/binary/runtime/specificCTestcommands fromexistingmodeplan. RootadmissionafterBcompiledownership thenfreshruntimeGOs."
+                  }
+                },
+                "readiness_parallel_questions_v1": {
+                  "status": "READ_ONLY_PREPARATION_WHILE_MODE_CLIENTS_BUILD",
+                  "A_owner_scope": "/root/mark_source_reviewer: exactnextpublic-qualification dispatchinputs/currentsourceAA+V8selectors/collector/baselinecounts/profiles/stagers andunchangedexistingreadiness gates. Readsource/retainedreceipts only, no dispatch/downloads/controls/math/environmentchanges. Rootretainsdispatch/independentadmission.",
+                  "C_owner_scope": "/root/mark_release_readiness: exactVI4currentmatmulsourcebinding/runtime-product-profile/CPU/FP/one-thread prerequisites usingexistingcontract/controller; clarifycurrentprivate3.11.14vsworkflowgenuine3.11.17compatibilityscope. No calls/measurements/trace/helper/newbindings/packets orsourceedits. RootretainsGO/runtimeproductadmission.",
+                  "acceptance": "Conciseactualsource/receiptlinefindings/minimalnextaction+unmetgates; no newframework/checklists/scientific/fullsource/artifactauth replay. BexclusivecurrentCPPclients remainsactualimplementationlane.",
+                  "waste_review": "Usewaitingtime foractualnextdispatch prerequisites, not inventedlanes. No newreportingpacket orscience."
+                },
+                "durable_source_private_SDK_progress_v1": {
+                  "status": "DOCUMENT_CHECKS_PASS_READY_MAIN_SKIPCI_COMMIT",
+                  "receipt": "coverage/evidence/vi-public-matmul-source-private-SDK-root-progress-v1.json",
+                  "sha256": "bbc23a6128984749e85287a500072bfcebe9e902bf434f83873452472b9670a8",
+                  "scope": "Only3trackingdocs+1durablereceipt;rootprotecteduserWIP untouched;sourceAA/actualmath/scope unchanged. Docchecks andskipCI beforepublication; no science.",
+                  "validation": "76a92a actual9newlinks/onlyVIevidencerowchanged/allotherAPI-memberrows+fullboxesidentical/3rootreceiptrefs/JSON+CRLF-awarewhitespace/protectedWIP hashes;workqueue368packets0/no cycles orfileconflicts. No scientificrerun.",
+                  "next_owner_trigger": "Root stageexact3trackingdocs+1receipt only, checkactualindex/rawbytes thenprivateprogresspublication; shipping remains271."
                 }
               }
             }

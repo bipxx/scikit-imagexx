@@ -1,0 +1,108 @@
+{
+  "schema": "vi-current-matmul-source-private60-ordinarySDK-root-progress-v1",
+  "status": "SCOPED_PRIVATE_PROGRESS_MAIN271_NO_RELEASE_PROMOTION",
+  "owner": "/root",
+  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "receipts": [
+    {
+      "path": "build/current281-final-source-v7/root-both-admission-v1.json",
+      "bytes": 3165,
+      "sha256": "5c81441d3ee5c250fe06eba07b5b0f8a12f21a3231dd09c63efdf9a9d7f2ef20",
+      "status": "ROOT_COMPLETE_ACTUAL_WORKFLOW181_BOTH_PASS"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/root-private60-runtime-admission-v1.json",
+      "bytes": 2583,
+      "sha256": "6c5cd57306020de961a5dba402ab017c38f4b9b1789237ea1d79f97eb1a43d78",
+      "status": "ROOT_PRIVATE60_RUNTIME_PASS_SCOPED_AVX2_NUMPY124_ONLY"
+    },
+    {
+      "path": "build/vi-public-matmul-provider-v1/current-SDK-ordinary-entry-v2/root-ordinary-runtime-admission-v1.json",
+      "bytes": 4238,
+      "sha256": "35cc0cc7f371c7281233b3652dacad866ac1866a08a5755bbeb5b9f89f506d68",
+      "status": "ROOT_PRIVATE_ORDINARY_INSTALLED_SDK_NORMAL_DISABLED_RUNTIME_PASS"
+    }
+  ],
+  "source_barrier": {
+    "profiles": [
+      "Windows Python3.11.11",
+      "Windows Python3.13.14"
+    ],
+    "exact_workflow_selectors": 181,
+    "ordinary_cases_each": 4635,
+    "subtests_each": 8,
+    "XML_each": {
+      "tests": 4643,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "normal_plugins_conftest": true,
+    "source55_before_after_live": true,
+    "science_imports": 0,
+    "all22_frozen_proof_bytes_root_verified": true
+  },
+  "private60": {
+    "runtime": "Linux3.11.14/NumPy1.24.4/SciPy1.15.3/Intel12700K AVX2",
+    "XML": {
+      "tests": 60,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "normal_plugins": 43,
+    "legacy_saved": 16,
+    "exact_returns": 14,
+    "expected_None_errors": 2,
+    "caller32_restores": 56,
+    "worker_records": {
+      "1": 28,
+      "4": 28
+    },
+    "default1_postidentity": true,
+    "owned_source78_and_167proofbytes": true,
+    "fresh_original_metric_calls": 0,
+    "warnings_retained": 4,
+    "FP_scope": "Caller56 only; integration4 nohardwareFP envelope. Priorprivate32 24freshpairs/naturaltargetFP remainseparate. Sourcecall counts notglobalinstrumentation."
+  },
+  "ordinarySDK": {
+    "actual_normal_and_disabled_CTests": [
+      0,
+      0
+    ],
+    "XML_tests_each": 1,
+    "raw32_pairs_equal": 190,
+    "binary_sha256": "06f1479fb670032bb7f938c97c1fa386676d3bf5da59810bb63cb2de905ebe6e",
+    "installed_static_sha256": "8aebb271d3e4b8f33450928792189c99459e91b3623e341f396fdf8bc5aa619f",
+    "provider_scope": "C++ SDK hostscalar-libm/linear-dot callbacks, not NumPy/BLAS parity orpure-nativeprovider claim.337top/330callback/49F1/170read sourcepathbounds perbody are notglobaltrace.",
+    "normal_default1_and_source14_binary_protected_DSO7_postidentity": true,
+    "proofbytes": 37
+  },
+  "true_modes": {
+    "status": "CurrenttwoSDK108/94headers installed andtwoowningclientscompiled; headers/ELF/finalownership/runtime stillpending",
+    "scalar_static": "05f739bda1c512a04544760087ba6cb4c7ec44a355029bde0405f9a969f59fa4",
+    "SAN_static": "b8bb044408bfc7710d6f8887f4ad9e920617993f136288878ed060f771933dab",
+    "ordinary_disabled_is_true_compiler_scalar": false
+  },
+  "cleanup": {
+    "full311_target": "D:/Scratch/current281-final-source-controls-v7/windows311",
+    "full311_logical_bytes": 7097731401,
+    "full313_target": "D:/Scratch/current281-final-source-controls-v7/windows313",
+    "full313_logical_bytes": 7097718111,
+    "full_fixture_outcome": "EachONE exact native recursive removal rejected beforeCreateProcess blocked by policy;0removed/manualonly/no retry/alternate/parent/sibling. Allraw/source55/index/tinyepochreceiptoutside/protecteddeps retained.",
+    "empty_private60_target": "D:/Scratch/vi-public-matmul-private-controls-v1",
+    "empty_outcome": "e49fdd all19eligibilityproofs; b766f0 finalpath/empty/readers; af69c0 ONE NONrecursive nativeRemoveItem0/exactpathabsent",
+    "empty_logical_bytes": 0,
+    "reclaim_claimed_bytes": 0,
+    "physical_allocation": null,
+    "earlier153retirement": "coverage/evidence/clean-worktree153-retirement-root-closeout-v1.json;105084395313logicalB removed/101457489920B observed free increase, branches/commitsretained; historical, no newclaim"
+  },
+  "pending": [
+    "True compiler-scalar/SAN clients actualownership/dependencies andfreshSDKruntime",
+    "ExactAA genuinefourprofile qualification,304SDKchecks and3stagers",
+    "Matchedgenuineminimum3.11.17 producer/runtime/F1source-built-v1 andactualVI4fourcaseone-threadpublicperformance",
+    "Independent shipping281projection/merge/push/remote;mainremains271"
+  ],
+  "waste_review": "Reused private32 math/oldqualifiedscope/unchanged objects110+187/installedproducts/runtime identities. Metadata/parser/CLIpin/relativeproofpath mistakes preserved and corrected beforedependentactions, without numerical/build retries. Documentationchecksonlyforthispublication; no scientificreplay.",
+  "next_owner_trigger": "B fourmetadataactuals/compiledownership/deps thentrue-modeSDKruntime; rootreadinessaftermandatorygates thenpromptfreshgenuinequalification. A/C read-onlydispatch/VI4prereqs reviewed,no sourcechange."
+}
