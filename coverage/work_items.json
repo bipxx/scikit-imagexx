@@ -40142,7 +40142,7 @@
         },
         "gap_closure_goal": {
           "objective": "close the gap",
-          "current_main": "383e2426863db59bcce8bd51960c28b094a7ac40",
+          "current_main": "d2b9ba58eb1e1d04dd33f3872fe5c622abe0598b",
           "owner": "/root",
           "previous_turn_classification": "PROGRESS: source/runtime evidence and exact private checkpoints were retained/published; actual full-source failures changed the correction path, not merely status restatement. Current acceptance remains delivery281 with exact source/runtime/SDK/release/performance evidence.",
           "acceptance": {
@@ -40152,14 +40152,11 @@
             "delivery": "Independent exactshipping projection281, finalsource/API/receipt check, validated increment merged/pushedmain with actualremoteverification.",
             "storage": "Small disposablefootprint; protectedsource/env/product/raw/dependencies retained; no archives beyond requiredtransientuse; allpreviouspolicyblocked targets manual-only."
           },
-          "current_gate": "ExactAA genuine4 qualification actualrun43949036485 confirmed; collect actual4capacity/product/304SDK/3stager results. VI4/main remain held.",
+          "current_gate": "CurrentVI4 hosted run43979924366 SUCCESS; one memoryartifact3633678B/API-digest exact,133files/15144735logicalB retained and no diskarchives. A independent rawperformance/cohort/ownership review thenrootadmission; root finalshippingprojection/delivery next.",
           "unmet": [
-            "Truecompiler-scalar andASAN+UBSAN installedowningSDKclients/runtime currentAA; private60 andordinarynormal/disabled SDK now independentlypassed.",
-            "Exact-source genuinefourprofile qualification/wholeproducts+SDK/3stagers; privateAVX2/currentCppSDK are not releaseauthority.",
-            "Exact-source genuine four-profile qualification, whole products/SDK and three stagers; current public log2+matmul broader profiles are not credited from private AVX2 alone.",
-            "Actual source/runtime-bound VI4 original-public one-thread strict comparison, all slower cases retained.",
-            "Independent final281 shipping projection and validated merge/push/main remote; shipping remains271.",
-            "Manual-only cleanup remains pending under explicit protected-dependency and capacity exceptions; no policy-block workaround or archive recreation."
+            "Independent actualVI4 raw cohort/performance/ownership review and root admission for successfulrun43979924366; all losses and exactsource/runtime scope retained.",
+            "Independent final281 shipping projection and validated main merge/push/remote; main stillships271.",
+            "Previously policy-blocked cleanup remains manual-only, delegated to user; protected current dependencies/raw evidence remain."
           ],
           "retained_evidence": [
             "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
@@ -40246,11 +40243,46 @@
             "public_API_delta": 10,
             "qualified_production_fingerprint": "2c0102a64c720a7ca35d8c850cd6035f2c5ef5e869fd93817fb855d1087d6090",
             "support_delta": "1qualificationworkflow/117contracts/192tests/12tools; needthreewayreconciliation, preserve67main-onlycommits.",
-            "historical64": "APIfamilybodies unchanged; literalCMake/sourceguards/preparedsource/core/runtime differ. Retain DDA identity and explicitreuse/disposition; no80caseonehost/current16relabel."
+            "historical64": "APIfamilybodies unchanged; literalCMake/sourceguards/preparedsource/core/runtime differ. Retain DDA identity and explicitreuse/disposition; no80caseonehost/current16relabel.",
+            "current_AA_read_only_entry": {
+              "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+              "main": "d2b9ba58eb1e1d04dd33f3872fe5c622abe0598b",
+              "actual_tools": [
+                "d2df3f",
+                "3f8bef"
+              ],
+              "production_delta_from_qualified16a5": [
+                "include/skimagexx/variation_of_information.hpp",
+                "python/skimagexx/_variation_of_information.py",
+                "src/bind_variation_of_information.cpp",
+                "src/variation_of_information.cpp"
+              ],
+              "other_production_unchanged": true,
+              "final_shipping_projection": "PENDING finalgenuine/VI4 and actualmainintegration; read-only finding is not shipping authority.",
+              "protected_untracked_collision_check": "NativeGit exact5paths not tracked bycandidateAA; no incoming overwrite conflict. AGENTS remains protected unstaged and absentfromcandidate-vs-main production delta.",
+              "API_delta": {
+                "actual_tool": "71174d",
+                "paths": [
+                  "feature.draw_multiblock_lbp",
+                  "metrics.variation_of_information",
+                  "morphology.flood",
+                  "morphology.flood_fill",
+                  "restoration.rolling_ball",
+                  "segmentation.flood",
+                  "segmentation.flood_fill",
+                  "segmentation.mark_boundaries",
+                  "transform.frt2",
+                  "transform.ifrt2"
+                ],
+                "count": 10,
+                "classification": "native-partial",
+                "delivery": "Pending release/performance/finalshippingprojection; no fullcontractcheckboxclosure."
+              }
+            }
           },
           "integration_candidate": {
             "owner": "/root/tracking_repair",
-            "status": "ROOT_FINAL_WORKFLOW181_BOTH_PASS_RUNTIME_RELEASE_PENDING",
+            "status": "ALL_LOCAL_GATES_ROOTPASS_GENUINE43949036485_LIVE",
             "base": "7239bc6d6cc65bd1504498d7e4c23cb9ea540d1e",
             "qualified_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
             "source_root": "D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1",
@@ -40264,7 +40296,7 @@
             },
             "runtime_authority": 0,
             "full_source_barrier": "PASS exactactual181both root-both-admission-v1; earlierfailedV6retained",
-            "next_gate": "C exactV7/windows313 fixtureeligibility thenrootonecleanup ormanualexception+freshcapacity; sourcebarrier gate nowclosed. RootcurrentLinuxmetadata admission/freshprivate60 andordinary/scalar/SAN SDKcompile/runtime stageGOs. Genuine4profiles/wholeSDKproducts/stagers/VI4/main281 remainpending; no source-only releasepromotion.",
+            "next_gate": "Root sameactualgenuine43949036485 terminal/capacity/profiles/304SDK/3stagers admission, then boundVI4 and validatedshipping281. SourceAA unchanged; no localgate replay.",
             "admitted_controller_merge": "RootauthorizedC2c089a8d/parent17a source-only integration into samecandidate, preserveexactC12bytes/immutablecontexts andallmainhistory; no mathchange.",
             "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
             "branch": "implement/vi-public-matmul-provider-v1",
@@ -43311,9 +43343,9 @@
                 "gates": "No new runtime/build/hosted/timing by workers. Source-only edits/static metadata controls permitted. Root waits actual deltas before strict history successor; complete affected source checks both normal plugins before dependent SDK execution; final complete workflow both and exact-source four-profile/VI4 before main281. New environment/build/science unsupported by this source assignment.",
                 "reuse": "Private77088f53 source4/core83d19/private32/legacy evidence retained; metadata deltas invalidate affected source guards/literal pins, not unchanged numerical code. Source proofs and failed predecessors retained; blocked cleanup manual only.",
                 "live_workers": {
-                  "A": "LIVE acknowledged profile-reader successor; no artifact execution",
-                  "B": "LIVE acknowledged artifact transport/materialization preparation; no download/extraction",
-                  "C": "LIVE acknowledged stager-reader successor; no reader execution"
+                  "A": "LIVE resumed independent actualVI4 puremetadata review; confirmed message, exclusive independent-review-v1, no newscience",
+                  "B": "TERMINAL materialization PASS/rootadmitted; no live download",
+                  "C": "TERMINAL full3 PASS/rootaggregate admitted; no live readers"
                 },
                 "root_delta": "bd773d existingSDK target source changed once preservingF1/strict flags/link; active helper points V2 successor, f4V1 unchanged; old hook pin temporarily pending until finalsource. No dependent checks/runtime during pending state.",
                 "scope_note": "Portable Windows successor avoids unconditional Linux F1 setup. Existing44/public339c/private32 source bytes remain unchanged and old contexts remain immutable; Windows software-state/strictwords will be checked separately with no invented hardwareFP claim.",
@@ -44100,15 +44132,18 @@
                   "successor_v2": {
                     "path": "coverage/evidence/vi-public-matmul-source-private-SDK-root-progress-v2.json",
                     "sha256": "a802d2986ae49f5528d773547bf989a7f3593be9c3afd86ded6a2ce73f26790e",
-                    "status": "DOCUMENT_CHECKS_PASS_READY_MAIN_PUBLICATION",
+                    "status": "PUBLISHED_MAIN_DOCUMENT_RECEIPTS_ONLY",
                     "gates": "AlllocalROOTPASS;actualgenuine439running,0terminalproductsadmitted;VI4/mainpending.",
                     "corrected_document_setup": "5a2630 wrote valid UTF8 progressv2 then Windows defaultGBK plan-read failed before plan/checklist edits. Resumed only invalidated document updates using explicitUTF8; no source/runtime/qualification effect or science rerun.",
                     "validation": "2c5612 ledger368/no conflicts;29c1e7 CRLF-aware diffcheck0;ce7d86 sevenreceipt hashes/onlyVIrow201/onlyplan119/fullboxes+protectedWIP unchanged/actualgenuinegatespending.",
-                    "next_owner_trigger": "Root stageexact4docs/receipt, inspect actualindex/whitespace, commit skipCI/pushmain/verifyremote. No science."
+                    "next_owner_trigger": "Root samegenuine43949036485 actualprofile/304SDK/3stager admission; preserve sourceAA/production271 until required release/performance gates.",
+                    "main": "d2b9ba58eb1e1d04dd33f3872fe5c622abe0598b",
+                    "actual": "6dd9b8 exact4index/raw/whitespacePASS;481cc3 commit0;036c60 push0/HEADandremoteexactd2b9/onlyprotectedWIPunstaged.",
+                    "shipping": 271
                   }
                 },
                 "genuine_qualification_dispatch_v1": {
-                  "status": "ACTUAL_DISPATCH_CONFIRMED_RUNNING_GATES_PENDING",
+                  "status": "ACTUAL_ALL_FOUR_JOBS_SUCCESS_PAYLOAD_ADMISSION_PENDING",
                   "owner": "root",
                   "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
                   "GO": {
@@ -44120,8 +44155,8 @@
                   "run": {
                     "id": 43949036485,
                     "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43949036485",
-                    "status": "in_progress",
-                    "conclusion": null,
+                    "status": "completed",
+                    "conclusion": "success",
                     "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
                     "event": "workflow_dispatch",
                     "workflow_id": 394745989,
@@ -44132,7 +44167,445 @@
                     "gates": "Qualification/runtime/capacity/SDK/stagers not yet admitted"
                   },
                   "actual_dispatch_tool": "a58e50 actualexit0/oneattempt; pluginqueryworkflowcollection rejected400before request, ghAPI actualrunread succeeded.",
-                  "next": "Root monitor sameactualrun; A narrowreader successor while it runs; capacity/profile/SDK/stager admissions pending."
+                  "next": "Root monitor sameactualrun; A narrowreader successor while it runs; capacity/profile/SDK/stager admissions pending.",
+                  "phase_observation": "All4actualGitHubjobs capacity+toolingguard steps completedSUCCESS; all4nowbuild/qualify. Retained live-jobs-source-guards-complete-v1.json; rawcapacity/XML/product/SDK/stager admission stillpending.",
+                  "reader_preparation_finding": "C caught Bdraft missing preserved old stager exact allregulararchive-members==product.files_sha256+product.json; narrow correction requested before any download/extraction, no campaign effect/science. Root will inspect actual successor bytes/receipts.",
+                  "reader_source_preparation": {
+                    "status": "ROOT_NARROW_B_EXISTING_DEPENDENCY_REUSE_SUCCESSOR_PASS_A_C_EVIDENCE_REUSED",
+                    "root_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-materializer-readers-source-admission-v1.json",
+                      "sha256": "490b098c768ff8e7750643bf83ffa68fca07224f953d0ef3895cdb9017bd116e"
+                    },
+                    "proofs": 67,
+                    "source_controls_each": {
+                      "A": 26,
+                      "B": 22,
+                      "C": 7
+                    },
+                    "actual_artifact_authority": "UNBOUND_PENDING_TERMINAL_API_CAPACITY_AND_FRESH_GOS",
+                    "successor_root_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-materializer-readers-source-admission-v2.json",
+                      "sha256": "37c9bb978a613169df64da80e9740a404b505cd54c4c28ac82f0f108147e6ed7"
+                    },
+                    "B_current_source": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\materialize_aa_v2.py",
+                      "sha256": "7057d93b596668230103678eaf58b6f06ffadd445f343a2a82387a0bf5c7571b"
+                    }
+                  },
+                  "live_monitor": {
+                    "tool": "cc44e1",
+                    "session": 85898,
+                    "gh_PID": 39960,
+                    "wrapper_PID": 35972,
+                    "refresh_seconds": 60,
+                    "command_receipt": "build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\watch-command-v1.json",
+                    "status": "TERMINAL_EXIT0",
+                    "next": "On actualterminal, rootreadrun/jobs/artifacts andsource/role/digest/capacity beforeBGO; no dispatch retry.",
+                    "actual": "8b3658 actualwatch0;842bf1 UTF8logread after9aea17 GBKdisplay error; no workflow/action effect."
+                  },
+                  "pre_materialization_dependency_reuse": {
+                    "status": "ROOT_VERSIONED_REUSE_CORRECTION_PASS_READY_FRESH_GO",
+                    "owner": "/root/tracking_repair then root",
+                    "source": "AGENTS repositoryworkflow: reuse existing environments/baseline packages/unchanged objects; extracted dependencies retained",
+                    "finding": "Prepared Bc942 deduplicates current artifacts but declares0preexistingdependencyreuse. Before realGO, verify actualoldhash-indexed extractedroots/anchors and current minimum pinned NP1.24.4/SciPy1.15.3/skimage0.26 compatibility. No assumption ofold24retention orhashmatch.",
+                    "correction": "VersionedBsource/interface/handoff successor: pinnedexistingcache lookup, actualincomingfilename+SHA equality beforeuse, preserveallsealedouterstream/bodyhash/source/product/SDK gates. Skip matchingwheel decode/unpack; unmatchedonly maymaterialize. A/C executableinterfacesunchanged, retainpriorproofs; rootreviewonlyaffecteddelta andBchecks.",
+                    "next": "B live acknowledged read-only inventory follow-up. Actualcampaignterminal/artifacts and capacity gates stillpending.",
+                    "actual": "Root14newproofs/29inertchecks each/exits0/13unchangedhelpers+2exactconstructors/A&Cunchanged hashes; allsourcegatePASS before realtransfer.",
+                    "missed_requirement": "Initial Bc942 source overlooked available matching retaineddependencies; no actualallocation/transfer/science yet. Correct before realGO.",
+                    "root_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-materializer-readers-source-admission-v2.json",
+                      "sha256": "37c9bb978a613169df64da80e9740a404b505cd54c4c28ac82f0f108147e6ed7"
+                    }
+                  },
+                  "terminal_API_admission": {
+                    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-terminal-API-admission-v1.json",
+                    "sha256": "d3d6217049d3a27c9b1d7db30de138537991be19ec41cf80406459a1f5a9cfbe"
+                  },
+                  "materialization": {
+                    "status": "ROOT_LOCAL_MATERIALIZATION_FAILURE_ADMITTED_NO_PRODUCT_OR_READER_CREDIT",
+                    "owner": "/root/tracking_repair",
+                    "GO": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\root-materialization-GO-v2.json",
+                      "sha256": "5444878a7eae66707937e371f501cbbc90ce93f34f363f5542d9310aa626c3fa"
+                    },
+                    "command": [
+                      "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                      "-B",
+                      "-X",
+                      "utf8",
+                      "-I",
+                      "-S",
+                      "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\materialize_aa_v2.py",
+                      "--binding",
+                      "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\root-materialization-GO-v2.json",
+                      "--binding-sha256",
+                      "5444878a7eae66707937e371f501cbbc90ce93f34f363f5542d9310aa626c3fa"
+                    ],
+                    "products_root": "D:\\Scratch\\vi-public-matmul-qualification-products-AA-v1",
+                    "capacity": {
+                      "estimated_peak_bytes": 17179869184,
+                      "concurrent_allocation_bytes": 536870912,
+                      "required_available_memory_bytes": 5942399746,
+                      "observed_D_free_bytes": 207142121472,
+                      "required_D_free_bytes": 39191576576,
+                      "observed_available_memory_bytes": 87124316160,
+                      "scope": "One sequential in-memory transfer; other local lanes metadata-only/stopped,512MiB concurrent allowance. Source/product/raw/dependency payloads protected, priorblockedpaths untouched."
+                    },
+                    "actual_prerequisites": "50770b sourcev2actual14proofs/29checks each/13helpers+2constructors exact/A&Cunchanged;583004 actualterminal4success/source/jobsordered/7APIroles+digests; freshliteralDchild/CLIresolution/memory/disk passes here.",
+                    "acceptance": "Actualexternal0/7transfers exactAPIbytecount+digest/complete fullsealedmemberhashpasses/materializedproductsSDKs/source/raw andexistingdep actualdescriptorhits/oldbaselinestatpost. No diskZIP/wheel/source transport files, no library/helper/FP/timing calls, no retries. Stop on any failure. A/C reads remain separatelyunbound.",
+                    "actual_live_handle": "TERMINAL Bsession31231/wrapper10068/Python58464/actualexit1",
+                    "root_failure_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-materialization-failure-admission-v1.json",
+                      "sha256": "eb45131c1c12eb72abfbe716028c85cc33fb1815df1c649b121ed02d6d5357c0"
+                    },
+                    "complete_seals": 0,
+                    "source_size_correction_owner": "/root/mark_release_readiness read-onlybound diagnosis; rootfreshrecoveryauthoritypending",
+                    "recovery_preparation": {
+                      "status": "ROOT_ACTUAL_ALL7_TRANSPORT_SEAL_SOURCE_PRODUCT_MATERIALIZATION_PASS_INDEPENDENT_PROFILES_PENDING",
+                      "source_size_admission": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-source-expanded-bound-admission-v1.json",
+                        "sha256": "a4e705fbaf5cf1a3f500fccfca3722d204b6b09f707d916931aa89ef5383c9ef"
+                      },
+                      "source_limit": 2147483648,
+                      "source_actual_archive_total": "UNKNOWN>512MiB",
+                      "collector_correction": "B V3 retain required -workers metadata; actual485afd falsepredicates tofix andcompleteaffectedinertchecks both. No A/C source or qualifiedAA changes.",
+                      "old_failure": "eb45131 failure11proofs/GO544 consumed/88.8907s/1APItransfer and19.9MBpartialprotected. No freshrecoveryGO yet.",
+                      "root_source_admission": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-materializer-readers-source-admission-v3.json",
+                        "sha256": "6101da823744fb377e9f6f26bf98b14e6608a1eb4d35f7b4000dc8bc302309d6"
+                      },
+                      "source_script": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\materialize_aa_v3.py",
+                        "sha256": "21155fced506fdec9c05cb177c7c27a3dbca2d22b067fce8bfc95e26c454e2b0"
+                      },
+                      "collector_predicate": "Actualrootordinary/scalar workers and rows retain PASS;32sourcecontrols both0, A/Cchecks unchanged.",
+                      "resource_gate": "2GiB sourcesizeconservativebound fromexactfrozenGitmetadata;16GiBphysicalcapunchanged.",
+                      "GO": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\root-materialization-GO-v3.json",
+                        "sha256": "dd1dd348577126a2e648a7e911bed476f8290ba5586ae23bf9a8947f94abdd40"
+                      },
+                      "command": [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\materialize_aa_v3.py",
+                        "--binding",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\root-materialization-GO-v3.json",
+                        "--binding-sha256",
+                        "dd1dd348577126a2e648a7e911bed476f8290ba5586ae23bf9a8947f94abdd40"
+                      ],
+                      "execution_BASE": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\recovery-v3",
+                      "products_root": "D:\\Scratch\\vi-public-matmul-qualification-products-AA-v3",
+                      "capacity": {
+                        "estimated_peak_bytes": 17179869184,
+                        "concurrent_allocation_bytes": 536870912,
+                        "required_available_memory_bytes": 6016836254,
+                        "observed_D_free_bytes": 207122108416,
+                        "required_D_free_bytes": 39191576576,
+                        "observed_available_memory_bytes": 87004274688,
+                        "source_max_blob_transient_allowance_bytes": 74436508,
+                        "scope": "New single sequential source/callback-safe import; other local lanes stopped/metadata only. Prior19.9MB diagnostic child retained outside newroot, already in free observation.16GiB cap+20GiBreserve+512MiBconcurrency/30GiBfloor."
+                      },
+                      "acceptance": "Actualexternal0/7exactAPItransfers+completeallmemberseals/source3455maps/packageSDK/rawworkers/cacheactualhits/rootpostchecks. Rootindependent admissionbeforeA4reads; no standalone extrareviewlayer or scientificreplay.",
+                      "actual_handle": {
+                        "session": 44859,
+                        "PowerShell_PID": 37440,
+                        "Python_PID": 60680,
+                        "first_gh_PID": 60228,
+                        "claim": "qualification-artifacts-AA-v1/recovery-v3/claim-v1.json",
+                        "source": "21155fce",
+                        "GO": "dd1dd348",
+                        "actual_entry_D_free": 207122108416,
+                        "actual_entry_RAM": 87075094528
+                      },
+                      "root_actual_admission": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-recovery-materialization-admission-v1.json",
+                        "sha256": "41f15fcf801752d6f4e5663b91792ba97f65af2a6c9876273cc42dff6092e8d3"
+                      },
+                      "actual_external_exit": 0
+                    }
+                  },
+                  "plan_transition_sync": {
+                    "status": "CURRENT_PLAN_AND_CHECKLIST_SYNCED_TO_TERMINAL_AND_MATERIALIZATION_NEXT_GATE",
+                    "actual": "B liveack no claim/transfer atack; root aligned stale mainpublished all4live wording with583004 terminal/API evidence andbfb266 GO before dependentreader dispatch. No source/qualification result changed.",
+                    "claim_exists_at_sync": true
+                  },
+                  "profile_readers": {
+                    "status": "PASS_ROOT_FOUR_COMPLETE_PROFILES_304SDK",
+                    "owner": "/root/mark_source_reviewer",
+                    "GO": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\root-profile-reader-GO-v1.json",
+                      "sha256": "2184ad99ec9af8890cb26cb770fafd69c2482fc8b95def807fead553efa3d72a"
+                    },
+                    "binding": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\root-profile-binding-v1.json",
+                      "sha256": "0c84999375e72fbdc029c6417bc1c8c9abe808aaa899fbdc84465072e9b755f5"
+                    },
+                    "commands": [
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\review_profile_AA_v1.py",
+                        "minimum",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\root-profile-binding-v1.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\review_profile_AA_v1.py",
+                        "modern",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\root-profile-binding-v1.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\review_profile_AA_v1.py",
+                        "debug",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\root-profile-binding-v1.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\review_profile_AA_v1.py",
+                        "windows",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\root-profile-binding-v1.json"
+                      ]
+                    ],
+                    "acceptance": "Actual4external0/fullprofile source/seal/capacity/joborder/XML/currentVI56+large16+public16orWindows34/SDK76each/12corpora/F1/rawcaller/installedownership/postidentity checks; stopfirstfailure, actualcompleteAcommand notsubset. Root independentadmissionbeforeC3stager GO.",
+                    "failure_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-profile-reader-failure-admission-v1.json",
+                      "sha256": "34d819099f53a0f97656f6b499ad3852d16d71c903cdf2038be0fa57950221c8"
+                    },
+                    "GO_v1": "CONSUMED_FOR_MINIMUM_FAILED_RETIRE_REMAINING_DISPATCH;others0",
+                    "next": "Aauthorizedsource-onlyNone-reportfix/currentJSONsummary/completeaffectedinertboth/freshnamespace. No realreaderuntilrootnewsuccadmission/GO.",
+                    "source_correction": {
+                      "owner": "/root/mark_source_reviewer",
+                      "scope": "New ignored successor reader/output namespace; preserve full validator and all source/runtime/profile/SDK checks. Load already validated JSON solely for summary. Frozen predecessors immutable.",
+                      "acceptance": "Complete affected inert/source controls both retained Python versions, including None-return and actual raw-row schema regression; finalized source hashes/handoff/index. No full reader, network, archive, build, target or scientific calls until root fresh GO.",
+                      "status": "PASS_ROOT_INDEPENDENT_SOURCE_ADMISSION",
+                      "root_admission": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-profile-reader-recovery-source-admission-v1.json",
+                        "sha256": "d46a404e3fdd01683c7fb529189a4286ad6a4ab57ff0b919dc42a1fc26b06a19"
+                      }
+                    },
+                    "GO_v2": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\root-profile-reader-GO-v2.json",
+                      "sha256": "42145acc1465c544195e33d8cbe5ae54cc2382dbd2fb2a95a343c855617ed517"
+                    },
+                    "binding_v2": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\root-profile-binding-v2.json",
+                      "sha256": "f86df1ac4f30a0a8f2d68822c03c6b7021750d32374c37da1d0ab6e55535a42c"
+                    },
+                    "commands_v2": [
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\review_profile_AA_v2.py",
+                        "minimum",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\root-profile-binding-v2.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\review_profile_AA_v2.py",
+                        "modern",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\root-profile-binding-v2.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\review_profile_AA_v2.py",
+                        "debug",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\root-profile-binding-v2.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\review_profile_AA_v2.py",
+                        "windows",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\root-profile-binding-v2.json"
+                      ]
+                    ],
+                    "actual_root_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-four-profile-reader-admission-v1.json",
+                      "sha256": "591e41ff8fe5f8c39128c3a6185a5950d9a6a5615002e2ef028f0456a6eb7b28"
+                    },
+                    "GO_v2_status": "CONSUMED_SUCCESS_4ONCE"
+                  },
+                  "stager_readers": {
+                    "status": "PASS_ROOT_ACTUAL_C3_COMPLETE",
+                    "owner": "/root/mark_release_readiness",
+                    "root_four_profiles": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-four-profile-reader-admission-v1.json",
+                      "sha256": "591e41ff8fe5f8c39128c3a6185a5950d9a6a5615002e2ef028f0456a6eb7b28"
+                    },
+                    "acceptance": "Three complete actual materialized stager reads external0, preserved11source/product/provenance/registry/SDK predicates, exact names/seals/qualification binding; no body/ZIP hash replay/science. Root aggregate admission thenVI4.",
+                    "GO": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\root-stager-reader-GO-v1.json",
+                      "sha256": "24dec62bbca879db06fae95cf930ea57fad74627c4ea5ea936a18cdd31a18764"
+                    },
+                    "binding": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\root-stager-binding-v1.json",
+                      "sha256": "4310c02ab5a43cac5a11401f3648cf53c30ddb16485941b206e624f2fdece288"
+                    },
+                    "commands": [
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\review_stager_only_v3.py",
+                        "minimum",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\root-stager-binding-v1.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\review_stager_only_v3.py",
+                        "modern",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\root-stager-binding-v1.json"
+                      ],
+                      [
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+                        "-B",
+                        "-X",
+                        "utf8",
+                        "-I",
+                        "-S",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\review_stager_only_v3.py",
+                        "windows",
+                        "43949036485",
+                        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\root-stager-binding-v1.json"
+                      ]
+                    ],
+                    "root_aggregate": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\vi-public-matmul-whole-product-root-admission-v1.json",
+                      "sha256": "257635900b3dfc09158c48a740a22331abae592f8195e00354abf47d3ef7eb38"
+                    },
+                    "GO_status": "CONSUMED_SUCCESS_3ONCE"
+                  },
+                  "VI4_current_binding": {
+                    "status": "ACTUAL_HOSTED_SUCCESS_RESULTS_MATERIALIZED_INDEPENDENT_REVIEW_NEXT",
+                    "owner": "/root",
+                    "scope": "Reuse existing AA checkout after all readers stop; metadata-only controller branch with unchanged engine/workflow/production source, real prepared minimum runtime/root4+3/minimumstager refs. No target/helper/timing authority until actual bound guards both supported Pythons and fresh hosted dispatch.",
+                    "acceptance": "Actual finalized root4+3 admission; exact metadata-only diff and frozen55canonical/69raw source pins; actual intrinsic bound read_manifest and metadata guards on both retained Pythons; current-host source-built F1; fresh root dispatch clock/actual workflow source/selector/artifact identity/capacity. Four fixed one-thread cases/56samples/8warmupgroups; every loss/failure retained. No retry unchanged science.",
+                    "evidence": "Existing full181 both source barriers remain valid for unchanged AA product; controller changed metadata requires its own affected source-only guards, not a scientific rerun.",
+                    "preparation": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\binding-preparation-v1.json",
+                      "sha256": "1a7128a27e31f299753120df7e616299977f3cb63298eb610b386b4713a78531"
+                    },
+                    "branch": "measure/vi-public-matmul-AA-initial-v1",
+                    "root_source_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\root-binding-source-admission-v1.json",
+                      "sha256": "28f5313e5d218b403067afe81c1c2cdbdce881c74c5361d42b2613fb90532df3"
+                    },
+                    "controller": "166ccd4801e618f9522832b0066bcc45e1649140",
+                    "GO": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\root-hosted-comparison-GO-v1.json",
+                      "sha256": "3e8ec6e9f3df497501cfda63c4acff12d4f12a7fbc654c859817d2e1b2e41f2c"
+                    },
+                    "inputs": {
+                      "producer_run": "43949036485",
+                      "producer_revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+                      "artifact_id": "14272412077",
+                      "artifact_sha256": "0113d0ba35e81725d3862d38b06e585e566c76c924bb9c3f937405102d277921",
+                      "execution_created_utc": "2026-11-16T23:30:29.902271+00:00",
+                      "deadline_utc": "2026-11-17T01:00:29.902271+00:00"
+                    },
+                    "GO_status": "CONSUMED_ONE_DISPATCH_EXTERNAL0",
+                    "actual_run": {
+                      "status": "ACTUAL_ONE_CURRENT_CONTROLLER_RUN_BOUND_PENDING_CAPACITY_COHORT_PERFORMANCE",
+                      "id": 43979924366,
+                      "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43979924366",
+                      "controller": "166ccd4801e618f9522832b0066bcc45e1649140",
+                      "qualified_source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+                      "workflow_id": 419847283,
+                      "event": "workflow_dispatch",
+                      "branch": "measure/vi-public-matmul-AA-initial-v1",
+                      "created_at": "2026-11-16T23:30:53Z",
+                      "actual_status": "completed",
+                      "actual_conclusion": "success",
+                      "attempt": 1
+                    },
+                    "actual_job": {
+                      "id": 133693459867,
+                      "head": "166ccd4801e618f9522832b0066bcc45e1649140",
+                      "capacity_step": "APIcompletedSUCCESS; actualnumericreceiptpendingterminalartifact",
+                      "initial_raw_jobs": {
+                        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\initial-live-jobs-v1.json",
+                        "sha256": "a1dc6c6f1cea0353c7291647165df2d1b7af222f0235ffe2a90f5d598e7cc57b"
+                      }
+                    },
+                    "actual_terminal_API_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\root-terminal-API-admission-v1.json",
+                      "sha256": "1f2d79566dd9face89ef8da22494a5e7d3a5c3e1cb491f1f09e2112b3d8b1e33"
+                    },
+                    "result_materialization": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\result-materialization-v1.json",
+                      "sha256": "1c73a3a616f3b6f0e20630704b732d2c0dd7ff621c12488a2cb896e423a311ff"
+                    },
+                    "independent_review": {
+                      "owner": "/root/mark_source_reviewer",
+                      "scope": "Read-only puremetadata current43979924366 actual cohort/F1/4caseperformance/raw56samples/8warmups/source/runtime/ownership/postidentity/capacity; preserve every loss. Exclusive new ignored independent-review-v1 under rootVI4 current controller results. No source/main/shared edits, archive/body/SDK rehash or target/native/helper/FP/science/benchmark execution.",
+                      "acceptance": "Complete independent actualevidence review, exactsource andruntime authority, rawsample-derived all4 medians/speedups/losses and strict FP/caller words/default1/ownership/F1/source proofs, final handoff/index/closeout. Root inspects actual proof and admits beforeshipping.",
+                      "status": "LIVE_RESUMED_HANDLE_CONFIRMED"
+                    }
+                  },
+                  "root_genuine_aggregate": {
+                    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\vi-public-matmul-whole-product-root-admission-v1.json",
+                    "sha256": "257635900b3dfc09158c48a740a22331abae592f8195e00354abf47d3ef7eb38"
+                  }
                 }
               }
             }

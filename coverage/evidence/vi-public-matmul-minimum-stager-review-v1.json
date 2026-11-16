@@ -1,0 +1,34 @@
+{
+  "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+  "run": 43949036485,
+  "revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "profile": "minimum",
+  "artifact": 14272412077,
+  "artifact_sha256": "0113d0ba35e81725d3862d38b06e585e566c76c924bb9c3f937405102d277921",
+  "product_json_sha256": "31eb65222527afb6d58a8d830f2051416c3ed2f9cfe1ce49717d262612a2317e",
+  "qualification_raw_review_sha256": "133ed3508a56b04293ebf8f94405ae4dfc40b628a29cc427fcc093138a53401f",
+  "qualification_manifest_sha256": "3377fa83baf91b6354bd087d4ebd5bb8e0a16ac216969ab759eb544383d450ec",
+  "verified_stage_files": 3540,
+  "verified_stage_bytes": 946204316,
+  "stage_files_rehashed_this_invocation": 0,
+  "source_derived_closure": {
+    "product_members": 228,
+    "SDK_members": 108
+  },
+  "SDK_checks": 76,
+  "transfer": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\recovery-v3\\14272412077-transfer.json",
+    "sha256": "fc92407fcd45d9a200e52100083f34b880cd2a1fc1b277b89c0c330a1d4a2a62"
+  },
+  "materialization": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-artifacts-AA-v1\\recovery-v3\\14272412077-materialization.json",
+    "sha256": "f1a4891b69b2f17d12e6cc28012499a9ae752abe5547df911f95043f12732a6d"
+  },
+  "archive_available": false,
+  "whole_qualification_sealed_records_rehashed_again": 0,
+  "closeout": {
+    "result": "Stager materialized metadata/source/complete streamed-once seal/SDK binding authenticated; prior accepted-in-isolation qualification receipt reused.",
+    "waste_and_reuse": "Root-admitted BytesIO transfer and once-streamed complete stage seal reused; zero stage-body/ZIPdigest replay, archive reopen/download, science or build. Discarded transport bytes are unavailable; only actual mapped metadata/products remain.",
+    "next_plan_change": "Authenticates only this actual source/profile stager. Overallfour-profile release and measurement binding require root independent aggregate admission; no future-source reuse inferred."
+  }
+}

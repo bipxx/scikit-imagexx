@@ -1,0 +1,286 @@
+{
+  "schema": "exact281-whole-product-root-admission-v1",
+  "status": "PASS_SCOPED_EXACT_SOURCE_FOUR_PROFILE_PRODUCT_SDK_AND_THREE_STAGERS",
+  "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "run": 43949036485,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43949036485",
+  "passed": true,
+  "root_accepted": true,
+  "profiles": 4,
+  "stagers": 3,
+  "product_kind": "GENUINE_INSTALLED_WHOLE_PRODUCT",
+  "SDK_members": 108,
+  "expected_scope": {
+    "image_paths": 281,
+    "registrations": 284,
+    "package_members_each": 228,
+    "SDK_members_each": 108,
+    "SDK_families_each": 38,
+    "SDK_checks_each": 76,
+    "corpora_each": 12
+  },
+  "aggregate": {
+    "public_XML_tests": 963868,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "SDK_checks": 304,
+    "corpora": 48,
+    "product_members_each": 228,
+    "SDK_members_each": 108,
+    "source_files_each": 3455,
+    "stager_files": 10588,
+    "stager_logical_bytes": 2836120148
+  },
+  "profile_results": {
+    "minimum": {
+      "report": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\minimum-raw-review.json",
+        "sha256": "133ed3508a56b04293ebf8f94405ae4dfc40b628a29cc427fcc093138a53401f"
+      },
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\run43949036485-minimum-terminal-v2.json",
+        "sha256": "b09bed1d507d71da7dbcadb49cd019c59aeb81c2d8daaeadc222e219e2b654e3"
+      },
+      "accepted_in_isolation": true,
+      "xml": {
+        "tests": 241750,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+        "source_files": 3455,
+        "sole_core": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+        "core_sha256": "b14b5e501e1439ec3bef928cb28f53335875eaccd92130a3137de8671b227dfd"
+      },
+      "artifact": 14272800200,
+      "artifact_sha256": "f2a74d301331c3294bb0df4efa89f7528886935cae7e0c1ae01704c92117c3a7",
+      "capacity_order_verified": true
+    },
+    "modern": {
+      "report": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\modern-raw-review.json",
+        "sha256": "31122f45ac14c07c810b248d304b68e74ce6cc048e8960208bbc14495d246c1f"
+      },
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\run43949036485-modern-terminal-v2.json",
+        "sha256": "ecad21ef560aa6deeb2c45383ea6a78578f013196e4d8e6169dd8357c4e4a230"
+      },
+      "accepted_in_isolation": true,
+      "xml": {
+        "tests": 241750,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+        "source_files": 3455,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "bc3614c2983f8340b7f990681e27319b62bbcbff2bbbe2e480243cc7f5038532"
+      },
+      "artifact": 14271226497,
+      "artifact_sha256": "3c40d294ae6386e4c85637e63ec5f36c7b3c7de897ec47c0d48c249aef89cfa8",
+      "capacity_order_verified": true
+    },
+    "debug": {
+      "report": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\debug-raw-review.json",
+        "sha256": "c3b2af5700d10215263379d272dda5511deae6865d2e3ae22249b3df18fb833e"
+      },
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\run43949036485-debug-terminal-v2.json",
+        "sha256": "765769994b8d8dc4167640cf5a61daf9b53b1c2ea6ae979e1b16a9071964d8dc"
+      },
+      "accepted_in_isolation": true,
+      "xml": {
+        "tests": 241750,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+        "source_files": 3455,
+        "sole_core": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+        "core_sha256": "cea1624c7223aa3a8969889caf804b2ac2208ba5c69b73fb9449ce082a73f6ba"
+      },
+      "artifact": 14270957853,
+      "artifact_sha256": "5a6cd622627583955d3c34695ddee36d4655556a821befd9dcd5594b9d631c6c",
+      "capacity_order_verified": true
+    },
+    "windows": {
+      "report": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\windows-raw-review.json",
+        "sha256": "e4cd3568e1f0a7a9a10e69a09772a2322a6b3e3cc31259c60bedacc69549a887"
+      },
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-readers-AA-v1\\reader-recovery-v2\\run43949036485-windows-terminal-v2.json",
+        "sha256": "394ef90ae9c06308401eb82f86489ddaed43129b341e905ad68a4909e40c5f95"
+      },
+      "accepted_in_isolation": true,
+      "xml": {
+        "tests": 238618,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "SDK_checks": 76,
+      "corpora": 12,
+      "source_identity": {
+        "revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+        "source_files": 3455,
+        "sole_core": "skimagexx/_core.cp313-win_amd64.pyd",
+        "core_sha256": "2c93beeb3cdd1af149f9ec88826b468cbc3f1187754d3b521725044229297c56"
+      },
+      "artifact": 14273456887,
+      "artifact_sha256": "3756358a8b1058dc3a6de296f19f69f443523a02eac0321809e3a800998fbb4a",
+      "capacity_order_verified": true
+    }
+  },
+  "stager_results": {
+    "minimum": {
+      "receipt": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\minimum-stager-review.json",
+        "sha256": "2d8236f9adb5fc53ec6f200dd17ac63eb2125c54602414baa72510cc9685c08a"
+      },
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+      "artifact": 14272412077,
+      "artifact_sha256": "0113d0ba35e81725d3862d38b06e585e566c76c924bb9c3f937405102d277921",
+      "product_json_sha256": "31eb65222527afb6d58a8d830f2051416c3ed2f9cfe1ce49717d262612a2317e",
+      "qualification_manifest_sha256": "3377fa83baf91b6354bd087d4ebd5bb8e0a16ac216969ab759eb544383d450ec",
+      "verified_stage_files": 3540,
+      "verified_stage_bytes": 946204316,
+      "SDK_checks": 76,
+      "actual_terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\actual-execution-v1\\minimum\\terminal.json",
+        "sha256": "2fe2040fc67aad60d403306e9296f3b7514636e4ecc05bea0fa81b09d75f525f"
+      }
+    },
+    "modern": {
+      "receipt": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\modern-stager-review.json",
+        "sha256": "40a993fd6d0231ea743fa8835ad99aa356e24e06aa035a05c43b9d16b0694fb0"
+      },
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+      "artifact": 14272330986,
+      "artifact_sha256": "fb8c31397068722a0cf27a457f4ce7e2a7c5cdf8269fa16c5503f21e0cc51f1b",
+      "product_json_sha256": "96e61616a06425619dd59e8698b5fc539603489181b651f74a838421908a0d7d",
+      "qualification_manifest_sha256": "997fd7d08b7d0b73c569b63a36eeae47b7041054354b319c008d1d7ac03d3e7e",
+      "verified_stage_files": 3540,
+      "verified_stage_bytes": 943253102,
+      "SDK_checks": 76,
+      "actual_terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\actual-execution-v1\\modern\\terminal.json",
+        "sha256": "50a68af2af7ce8bf4d4dba748a4ad5dd7ec481cd724e1ec84705421c9d761ebf"
+      }
+    },
+    "windows": {
+      "receipt": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\windows-stager-review.json",
+        "sha256": "422d9228605fc9516438446970b0d461212682df1ce8aa1bc7817be234042f00"
+      },
+      "status": "AUTHENTICATED_STAGED_UNACCEPTED_NOT_WHOLE281_ADMISSION",
+      "artifact": 14272669583,
+      "artifact_sha256": "3116b0dc690974eb5435d76332f35b37387b70cdfc60b419ba147e23c7e61b62",
+      "product_json_sha256": "256428c06e9a2ed179bd1b3defe0ce05d4895aabca6328dae594d682c7405fa6",
+      "qualification_manifest_sha256": "5a2f73f4c0859993d1d955920c482775d20087c7d6062465cb528fd981935900",
+      "verified_stage_files": 3508,
+      "verified_stage_bytes": 946662730,
+      "SDK_checks": 76,
+      "actual_terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\actual-execution-v1\\windows\\terminal.json",
+        "sha256": "5622db66d18b4ff08ef4504789da3d92b4c5c4fdd9deb5c231b7d8faef8b9bf1"
+      }
+    }
+  },
+  "production_source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+  "production_fingerprint": {
+    "source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+  },
+  "complete_source_readiness": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\current281-final-source-v7\\root-both-admission-v1.json",
+    "sha256": "5c81441d3ee5c250fe06eba07b5b0f8a12f21a3231dd09c63efdf9a9d7f2ef20"
+  },
+  "root_reader_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-four-profile-reader-admission-v1.json",
+    "sha256": "591e41ff8fe5f8c39128c3a6185a5950d9a6a5615002e2ef028f0456a6eb7b28"
+  },
+  "reader_source_recovery": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-profile-reader-recovery-source-admission-v1.json",
+    "sha256": "d46a404e3fdd01683c7fb529189a4286ad6a4ab57ff0b919dc42a1fc26b06a19"
+  },
+  "root_materialization_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-recovery-materialization-admission-v1.json",
+    "sha256": "41f15fcf801752d6f4e5663b91792ba97f65af2a6c9876273cc42dff6092e8d3"
+  },
+  "C_actual_handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\actual-execution-v1\\handoff-v1.json",
+    "sha256": "d8cb694d1cd4f59f4e4305fdd59d39b09b007fca64048964f227dbb57eb69946"
+  },
+  "C_actual_proof_index": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\actual-execution-v1\\proof-index-v1.json",
+    "sha256": "c25f1f9d4291d9fbaca6e670ba180067f05c1eaa0a0c8b54ce2b896e184f610f",
+    "proofs": 34
+  },
+  "C_postidentity": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-stager-readers-AA-v1\\actual-execution-v1\\final-source-authority-postidentity-v1.json",
+    "sha256": "a191faa9760436c0a2f32c7739f5c50ac20fe6947022e010c78364f7e381696f"
+  },
+  "root_actual_admission": [
+    "5b1326 completeactual4statuses/source/runtime/raw/XML/capacity/order/SDK/corpora/F1/installedownership, f32b0b48proofs,919fbe root4 admission",
+    "fa4ed3 exactactualC3commands/serialclocks/PIDs/exits0/completeoutputs/provenance/member/product/SDK/seal bindings",
+    "7d3a27 all34frozenCproofs and complete source/authority/all9inputpostidentity",
+    "9d8de8 existing pure provenance.source_fingerprint against unchanged AA, no scientific import"
+  ],
+  "portable_minimum_stager": {
+    "path": "coverage/evidence/vi-public-matmul-minimum-stager-review-v1.json",
+    "sha256": "2d8236f9adb5fc53ec6f200dd17ac63eb2125c54602414baa72510cc9685c08a"
+  },
+  "authority": {
+    "current_source_only": true,
+    "benchmark_binding_eligible": true,
+    "new_source_reuse": false,
+    "scope": "Admits this exact qualified candidate and its three authenticated staged products. Stager status remains staged-unaccepted in isolation; root aggregate closes the combined genuine gate. No main/full-contract or performance credit."
+  },
+  "transport_policy": "No transport archives written to disk for current import; discarded memory archives unavailable locally. Successful recovery7 had one transfer/seal each; minimum had a necessary second total transfer after retained512MiB failure. No archive recreation or redownload for bookkeeping; A/C reuse admitted seals without body/binary/SDK replay.",
+  "failure_history": {
+    "materialization": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-materialization-failure-admission-v1.json",
+      "sha256": "eb45131c1c12eb72abfbe716028c85cc33fb1815df1c649b121ed02d6d5357c0"
+    },
+    "first_reader": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\qualification-root-dispatch-v1\\root-profile-reader-failure-admission-v1.json",
+      "sha256": "34d819099f53a0f97656f6b499ad3852d16d71c903cdf2038be0fa57950221c8"
+    },
+    "root_checker": "0925fa puremetadata spacing SyntaxError before execution; corrected5b1326 passed before admission; no validator/scientific rerun."
+  },
+  "shipping": {
+    "main": "d2b9ba58eb1e1d04dd33f3872fe5c622abe0598b",
+    "main_native_partial_image_paths": 271,
+    "candidate_native_partial_image_paths": 281,
+    "candidate_delivered": false,
+    "full_API_domain_boxes": "OPEN"
+  },
+  "pending": [
+    "Actual exact-source/runtime-bound VI4 original-public one-thread4case/56sample comparison with source-built F1 and all losses retained",
+    "Independent final281 shipping projection, validated main merge/push/remote",
+    "Prior policy-blocked cleanup remains manual-only; retained current products/source/environments/raw evidence stay protected"
+  ],
+  "waste_review": {
+    "reuse": "Same successful hosted4 campaign, local181both/private60/all4SDK, seven once-sealed materialized artifacts,24existingpayloads; no science rerun for reader correction/receipt work.",
+    "observed_costs": "Initial import failure88.8907061s, successful recovery533.6979984s, failed first reader4.3614029s, successor4reader childwall40.387642s, C3childwall0.628557s; these are metadata/transport costs, not performance samples.",
+    "avoidable": "Initial source limit/worker collector and untested validator-None reporting assumption; narrow corrections and failed proof packets retained. Root/A inert checker SyntaxErrors corrected before dependent actions. Unknown other costs stay unknown.",
+    "next_owner_trigger": "Root immediately binds metadata-only VI4 controller to this actual minimum runtime/product and executes affected metadata/source guards on both retained Pythons before fresh hosted dispatch; publish broad progress while hosted work runs."
+  }
+}
