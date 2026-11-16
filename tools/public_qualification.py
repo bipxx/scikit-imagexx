@@ -797,6 +797,9 @@ def runtime_pins(profile):
     return pins
 
 
+DRAW_SOURCE_PATHS += ('benchmarks/vi_public_log2_provider_consumer.py', 'benchmarks/vi_public_log2_provider_execution.py', 'coverage/contracts/vi-public-log2-provider-v1.json', 'coverage/contracts/vi-public-log2-provider-benchmark-v1.json', 'coverage/contracts/vi-public-log2-provider-source-v1.json', 'tests/test_vi_public_log2_provider_source.py', 'tools/vi_public_log2_context.py', 'tests/test_vi_log2_provider_diagnostic.py', 'tests/test_vi_reduction_integration_source.py')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):

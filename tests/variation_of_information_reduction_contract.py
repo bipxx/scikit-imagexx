@@ -8,6 +8,11 @@ CONTEXT=ROOT/'coverage/contracts/variation-of-information-reduction-v2.json'
 
 def historical_vi_source(raw):
     context=json.loads(CONTEXT.read_bytes())
+    # Existing join callers already supply this exact immutable reduction input.
+    # Direct current callers authenticate the new provider successor first.
+    if hashlib.sha256(raw).hexdigest()!=context['source_sha256']:
+        from variation_of_information_source_context import provider_predecessor_source
+        raw=provider_predecessor_source(ROOT,'src/variation_of_information.cpp',raw)
     assert hashlib.sha256(raw).hexdigest()==context['source_sha256']
     for part in reversed(context['source_inverse']):
         assert raw[part['start']:part['end']]==part['current'].encode()

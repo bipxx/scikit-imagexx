@@ -2,8 +2,10 @@
 
 Existing owned contingency aggregation is reused. Its NumPy membership/weight
 normalization and SciPy CSR representation are explicit computation providers;
-they are not counted as native VI arithmetic. All entropy/log/reduction work is
-C++. Supplied plain CSR buffers are read without sorting/mutating their caches.
+they are not counted as native VI arithmetic. NumPy's current public log2 ufunc
+is an explicit elementary-log computation provider, called in whole nonzero
+batches by the native operation. Marginals/scaling/coalescing/xlogx products and
+reductions/dots stay C++. Supplied CSR buffers are read without mutating caches.
 """
 import numpy as np
 import scipy.sparse as sparse
@@ -35,7 +37,7 @@ def variation_of_information(image0=None,image1=None,*,table=None,ignore_labels=
     indices=_aligned(table.indices,np.int64)
     indptr=_aligned(table.indptr,np.int64)
     rows,columns=table.shape
-    result=_core.variation_of_information_csr(data,indices,indptr,rows,columns,_core.get_num_threads())
+    result=_core.variation_of_information_csr(data,indices,indptr,rows,columns,_core.get_num_threads(),np.log2)
     if result is None:
         raise NotImplementedError('VI typed arithmetic/storage/FENV domain refused; no algorithm fallback')
     return result

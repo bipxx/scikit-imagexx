@@ -102,7 +102,7 @@ def test_benchmark_context_successor_only_changes_source_projection():
     assert all(current[k]is None for k in ('prepared_source','SDK_members','core_sha256','runtime_sha256','deadline_utc','benchmark_fingerprint'))
 
 
-def test_actual_active_shared_benchmark_literal_dependencies():
+def test_actual_active_shared_benchmark_literal_dependencies(monkeypatch):
     # Frozen prior contexts retain their exact predecessor pins; active VI is checked below.
     for name in ('rolling-ball-benchmark-execution-v2.json','mark-boundaries-benchmark-execution-v6.json','draw-multiblock-lbp-benchmark-execution-v5.json','variation-of-information-benchmark-execution-v5.json'):
         c=json.loads((ROOT/'coverage/contracts'/name).read_bytes())
@@ -115,8 +115,34 @@ def test_actual_active_shared_benchmark_literal_dependencies():
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
     path='coverage/contracts/variation-of-information-benchmark-execution-v6.json'
     current=json.loads((ROOT/path).read_bytes())
-    for name,row in current['historical_sources'].items():
-        assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']
+    # The old reader keeps every immutable v6 assertion. Only its edited VI
+    # metadata-test input is first authenticated back to the exact32e bytes.
+    from variation_of_information_source_context import provider_predecessor_source
+    reader=adapter['historical_bytes'].__globals__;original=reader['source_bytes']
+    edited='tests/test_variation_of_information_benchmark_execution.py'
+    def source_bytes(source):
+        raw=original(source)
+        if Path(source)==ROOT/edited:
+            return provider_predecessor_source(ROOT,edited,raw,canonical=True)
+        return raw
+    with monkeypatch.context()as patch:
+        patch.setitem(reader,'source_bytes',source_bytes)
+        for name,row in current['historical_sources'].items():
+            assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']
+        def changed_source(source):
+            if Path(source)==ROOT/edited:
+                return provider_predecessor_source(ROOT,edited,original(source)+b' ',canonical=True)
+            return source_bytes(source)
+        with monkeypatch.context()as changed:
+            changed.setitem(reader,'source_bytes',changed_source)
+            with pytest.raises(AssertionError):adapter['historical_bytes'](ROOT,edited,context_path=path)
+        # The unchanged old reader must still check its frozen context row.
+        bad=json.loads((ROOT/path).read_bytes());bad['historical_sources'][edited]['predecessor_canonical_sha256']='0'*64
+        original_read=Path.read_bytes
+        with monkeypatch.context()as changed:
+            changed.setattr(Path,'read_bytes',lambda p:json.dumps(bad).encode()if p==ROOT/path else original_read(p))
+            with pytest.raises(AssertionError):adapter['historical_bytes'](ROOT,edited,context_path=path)
+    assert reader['source_bytes']is original
 
 
 @pytest.mark.parametrize('fault',('unreviewed-current','already-predecessor'))

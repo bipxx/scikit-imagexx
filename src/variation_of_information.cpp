@@ -122,6 +122,36 @@ template<class L,class R> double source_dot(std::size_t n,const L& left,const R&
     for(std::size_t i=packet;i<n;++i)result+=source_dot_product(left(i),right(i));
     return result;
 }
+// Keep each sparse multiplication and its nonzero xlogx batch in the source
+// direction/order. Reuse scaled_row's multiply-before-coalescing graph and the
+// admitted reduction/scatter graphs; the host supplies only elementary log2.
+bool batch_entropy(VariationTableView a,const std::vector<double>& inverse,bool left,
+    VariationLog2Batch provider,std::vector<double>& entropy) {
+    std::vector<double> values;values.reserve(a.nnz);
+    std::vector<std::size_t> columns;columns.reserve(a.nnz);
+    std::vector<std::size_t> offsets(a.rows+1);
+    std::vector<double> coefficients(a.columns);
+    std::vector<unsigned char> seen(a.columns,0);
+    for(std::size_t r=0;r<a.rows;++r) {
+        auto order=scaled_row(a,r,inverse,left,coefficients,seen);
+        for(auto c:order) {
+            if(coefficients[c]!=0.){values.push_back(coefficients[c]);columns.push_back(c);}
+            seen[c]=0;
+        }
+        offsets[r+1]=values.size();
+    }
+    std::vector<double> logarithms(values.size());
+    if(!provider.function(values.data(),logarithms.data(),values.size(),provider.context))return false;
+    // Original z[nz] *= log2(z[nz]): products precede either sparse reduction.
+    for(std::size_t i=0;i<values.size();++i)values[i]*=logarithms[i];
+    if(left) {
+        for(std::size_t r=0;r<a.rows;++r)
+            entropy[r]=minor_sum(offsets[r+1]-offsets[r],[&](auto i){return values[offsets[r]+i];});
+    }else {
+        for(std::size_t i=0;i<values.size();++i)entropy[columns[i]]+=values[i];
+    }
+    return true;
+}
 } // namespace
 
 bool variation_of_information(VariationTableView a,VariationInformation& output,int workers) {
@@ -164,6 +194,41 @@ bool variation_of_information(const detail::LabelPairInput& input,VariationInfor
     if(!detail::label_pair_counts(normalized,table,snapshot))return false;
     VariationInformation result;
     if(!variation_of_information({table.data.data(),table.indices.data(),table.indptr.data(),table.rows,table.columns,table.data.size()},result,snapshot))return false;
+    result.normalization_fp_status=table.normalization_fp_status;output=result;return true;
+}
+
+bool variation_of_information_compatible(VariationTableView a,VariationInformation& output,
+    VariationLog2Batch provider,int workers) {
+    const int snapshot=workers==0?get_num_threads():workers;
+    if(!provider.function||snapshot<1||snapshot>1024||!environment()||!validate(a))return false;
+    std::vector<double> px(a.rows,0.),py(a.columns,0.);
+    for(std::size_t r=0;r<a.rows;++r) {
+        const auto first=a.indptr[r],last=a.indptr[r+1];
+        px[r]=minor_sum(std::size_t(last-first),[&](auto i){return a.data[first+i];});
+        for(auto j=first;j<last;++j)py[std::size_t(a.indices[j])]+=a.data[j];
+    }
+    std::vector<double> ix(px),iy(py);
+    for(auto& v:ix)if(v!=0.)v=1./v;
+    for(auto& v:iy)if(v!=0.)v=1./v;
+    VariationInformation result;result.captured_workers=snapshot;
+    std::vector<double> row_entropy(a.rows,0.);
+    if(!batch_entropy(a,ix,true,provider,row_entropy))return false;
+    result.values[0]=source_dot(a.rows,[&](auto r){return -px[r];},[&](auto r){return row_entropy[r];});
+    // The first complete entropy/dot precedes the second source xlogx batch.
+    std::vector<double> column_entropy(a.columns,0.);
+    if(!batch_entropy(a,iy,false,provider,column_entropy))return false;
+    result.values[1]=source_dot(a.columns,[&](auto c){return -column_entropy[c];},[&](auto c){return py[c];});
+    output=result;return true;
+}
+
+bool variation_of_information_compatible(const detail::LabelPairInput& input,
+    VariationInformation& output,VariationLog2Batch provider,int workers) {
+    if(!provider.function)return false;
+    const int snapshot=workers==0?get_num_threads():workers;
+    auto normalized=input;normalized.normalize=true;detail::LabelPairCsr table;
+    if(!detail::label_pair_counts(normalized,table,snapshot))return false;
+    VariationInformation result;
+    if(!variation_of_information_compatible({table.data.data(),table.indices.data(),table.indptr.data(),table.rows,table.columns,table.data.size()},result,provider,snapshot))return false;
     result.normalization_fp_status=table.normalization_fp_status;output=result;return true;
 }
 } // namespace skimagexx

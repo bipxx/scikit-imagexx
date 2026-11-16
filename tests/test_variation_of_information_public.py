@@ -80,15 +80,28 @@ def test_all_saved_original_fields(target,spec,workers):
     assert target[1].get_num_threads()==workers
 
 
-def test_owned_entropy_never_calls_sparse_or_numpy_log_provider(target,monkeypatch):
+def test_owned_entropy_uses_only_explicit_log2_batches(target,monkeypatch):
     import scipy.sparse as sparse
-    def forbidden(*a,**k):raise AssertionError('Entropy arithmetic provider forbidden')
-    monkeypatch.setattr(np,'log2',forbidden);monkeypatch.setattr(np,'log',forbidden)
-    monkeypatch.setattr(sparse.csr_matrix,'__matmul__',forbidden)
-    monkeypatch.setattr(sparse.csr_array,'__matmul__',forbidden)
+    original=np.log2;batches=[]
+    def log2(values):
+        assert type(values)is np.ndarray and values.dtype==np.dtype('float64')
+        assert values.ndim==1 and values.flags.owndata and values.flags.c_contiguous
+        batches.append(values.shape)
+        return original(values)
+    def forbidden(*a,**k):raise AssertionError('Other entropy arithmetic provider forbidden')
+    monkeypatch.setattr(np,'log2',log2);monkeypatch.setattr(np,'log',forbidden)
+    monkeypatch.setattr(np,'sum',forbidden)
+    for cls in(sparse.csr_matrix,sparse.csr_array):
+        monkeypatch.setattr(cls,'__matmul__',forbidden);monkeypatch.setattr(cls,'sum',forbidden)
     a=np.array([[0,1,1],[2,2,2]],dtype=np.int16)
     actual=target[0].variation_of_information(a,a)
     assert actual.tobytes()==bytes(16)and actual.flags.owndata
+    assert len(batches)==2 and batches[0]==batches[1]
+    primary=RuntimeError('VI_PROVIDER_PRIMARY')
+    def refused(values):raise primary
+    monkeypatch.setattr(np,'log2',refused)
+    with pytest.raises(RuntimeError)as error:target[0].variation_of_information(a,a)
+    assert error.value is primary
 
 
 def test_plain_CSR_buffers_and_caches_are_not_mutated(target):

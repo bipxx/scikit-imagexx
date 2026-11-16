@@ -3,12 +3,13 @@ import hashlib
 import json
 import pytest
 from variation_of_information_reduction_contract import ROOT, CONTEXT, historical_vi_source
+from variation_of_information_source_context import provider_predecessor_source
 
 
 def test_exact_source_and_unchanged_metric_dependency():
     context=json.loads(CONTEXT.read_bytes())
     for name,pin in context['pins'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
+        assert hashlib.sha256(provider_predecessor_source(ROOT,name)).hexdigest()==pin,name
     assert hashlib.sha256((ROOT/'src/metrics.cpp').read_bytes()).hexdigest()==context['metrics_cpp_unchanged_raw_sha256']
     historical_vi_source((ROOT/'src/variation_of_information.cpp').read_bytes())
 

@@ -31,4 +31,23 @@ bool variation_of_information(VariationTableView,VariationInformation&,int worke
 // including per-pixel normalization before duplicate summation. NumPy policy
 // callback delivery remains a separately staged Python boundary, not SDK work.
 bool variation_of_information(const detail::LabelPairInput&,VariationInformation&,int workers=0);
+// Explicit elementary-log provider for hosts whose public log2 differs from
+// platform libm. The owning operation calls exactly one whole nonzero batch
+// per entropy direction, including empty batches, in source order. Pointers
+// are valid only for the callback; count0 permits null pointers. The callback
+// writes count logarithms, must not mutate input/CSR storage, and may return
+// false to refuse. Exceptions propagate; output is published only on success.
+// The host owns context for the whole call. No Python/NumPy ABI is required by
+// this SDK interface. Provider FP/error effects are retained, never normalized.
+struct VariationLog2Batch {
+    using Function=bool(*)(const double*,double*,std::size_t,void*);
+    Function function=nullptr;
+    void* context=nullptr;
+};
+// Additive compatible entry; existing overloads retain scalar platform-libm
+// semantics and ABI. The callback runs serially on the calling thread.
+bool variation_of_information_compatible(VariationTableView,VariationInformation&,
+    VariationLog2Batch,int workers=0);
+bool variation_of_information_compatible(const detail::LabelPairInput&,VariationInformation&,
+    VariationLog2Batch,int workers=0);
 }

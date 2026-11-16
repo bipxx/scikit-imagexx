@@ -1,0 +1,643 @@
+{
+  "schema": "vi-public-log2-provider-source-v1",
+  "status": "SOURCE_ONLY_EXACT_PREDECESSOR_VIEW_NOT_CURRENT_QUALIFICATION",
+  "execution_authority": null,
+  "predecessor_source": "32e44d69d3f74e5058671b14be978e25fb459750",
+  "helper_sha256": "83ad5f62c746b10fd29ab787fe2674710a16087265caa0a4bba059a7f769a352",
+  "self_pin_normalization": "Only tools/mark_lbp_fp_context.py literal VI_PUBLIC_LOG2_CONTEXT_SHA256 is replaced with64zeros for its exact inverse/current hash; all other bytes bound.",
+  "sources": {
+    ".github/workflows/public-qualification.yml": {
+      "current_raw_sha256": "ee10c1215d273b1cc042d34b49ceecde57c2562419cbb682f913a7513b8832d1",
+      "current_canonical_sha256": "ee10c1215d273b1cc042d34b49ceecde57c2562419cbb682f913a7513b8832d1",
+      "predecessor_raw_sha256": "35bd082ccb33365723c855efe025e2124035a83d1e769fd9054d9251dfaddc18",
+      "predecessor_canonical_sha256": "35bd082ccb33365723c855efe025e2124035a83d1e769fd9054d9251dfaddc18",
+      "inverse": [
+        {
+          "start": 2185,
+          "end": 13625,
+          "current": "          python -m pytest -q --capture=sys tests/test_public_qualification.py tests/test_level_set_reference_metadata.py tests/test_rolling_ball_kernels_public.py::test_geometry_prospective_manifest tests/test_rolling_ball_kernels_public.py::test_prospective_allocation_bounds_and_rank_frontier_are_explicit tests/test_rolling_ball_kernels_public.py::test_geometry_saved_original_rows tests/test_rolling_ball_kernels_benchmark.py tests/test_approximate_polygon_public.py::test_approximate_polygon_prospective_manifest tests/test_approximate_polygon_public.py::test_approximate_polygon_saved_original_rows tests/test_approximate_polygon_benchmark.py tests/test_approximate_polygon_runtime_reference.py tests/test_subdivide_polygon_public.py::test_subdivide_polygon_prospective_manifest tests/test_subdivide_polygon_public.py::test_subdivide_polygon_saved_original_rows tests/test_subdivide_polygon_benchmark.py tests/test_rank_bilateral_fixture_reuse_metadata.py tests/test_build_identity_facts.py tests/test_rank_statistics_products.py tests/test_rank_corpus_sdk_scope.py tests/test_reconstruction_trace_policy.py tests/test_reconstruction_source_migration_metadata.py tests/test_h_extrema_public_metadata.py tests/test_h_extrema_source_provenance.py tests/test_line_aa_benchmark.py tests/test_regionprops_state_benchmark.py tests/test_regionprops_state_reference.py::test_regionprops_state_frozen_partition tests/test_regionprops_state_reference.py::test_regionprops_state_prospective_source_safety tests/test_regionprops_state_reference.py::test_regionprops_state_saved_rows_without_replay tests/test_regionprops_point_witness.py::test_regionprops_point_frozen_contract tests/test_ci_measurement_isolation.py tests/test_circle_perimeter_aa_benchmark.py tests/test_circle_perimeter_aa_reference.py::test_circle_perimeter_aa_prospective_source_safety tests/test_circle_perimeter_aa_reference.py::test_circle_perimeter_aa_saved_original_rows tests/test_combine_stains_half_benchmark.py tests/test_combine_stains_half_reference.py::test_combine_stains_half_prospective_source_safety tests/test_combine_stains_half_reference.py::test_combine_stains_half_saved_original_rows tests/test_regionprops_public_mutation_reference.py::test_regionprops_public_mutation_prospective_source_safety tests/test_regionprops_public_mutation_reference.py::test_regionprops_public_mutation_saved_original_rows tests/test_line_nd_reference.py::test_line_nd_prospective_matrix_and_source_safety tests/test_line_nd_reference.py::test_line_nd_saved_original_rows_without_replay tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_source_safety_without_science tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_saved_original_only tests/test_line_nd_benchmark.py::test_line_nd_benchmark_source_and_independent_large_bounds tests/test_line_nd_benchmark.py::test_line_nd_benchmark_import_refuses_scientific_modules tests/test_line_nd_benchmark.py::test_line_nd_benchmark_storage_and_preflight_guard_source -o cache_dir=build/qualification-tool-cache --junitxml=build/qualification-tool-guards.xml tests/test_ellipsoid_reference.py::test_ellipsoid_prospective_matrix_and_source_safety tests/test_ellipsoid_reference.py::test_ellipsoid_saved_observations_without_replay tests/test_draw_ellipsoid_default.py::test_ellipsoid_saved_sdk_oracle_metadata_without_science tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_source_method_and_larger_domain_bound tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_import_refuses_science tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_actual_factory_original_refused tests/test_ellipsoid_benchmark.py::test_ellipsoid_source_safety_refuses_unaudited_cases tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_actual_guard_order_and_metadata_source tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_prospective_source_safety tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_saved_observations_without_replay tests/test_draw_ellipse_perimeter_default.py::test_ellipse_perimeter_saved_sdk_oracle_metadata_without_science tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_source_bounds_and_pins tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_import_refuses_science tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_factory_original_refused tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_rejects_unsafe_specs tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_guards_and_timed_boundary tests/test_ellipse_perimeter_benchmark.py::test_ellipse_fallback_runtime_binding_preserves_historical_contract_and_body tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_prospective_source_and_scope tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_saved_rows_and_declared_pixel_mutation tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_saved_scalar_types_errors_and_FP_phases tests/test_regionprops_scalars_benchmark.py tests/test_regionprops_performance_v2.py tests/test_region_stain_compare.py::test_imports_refuse_scientific_algorithms tests/test_region_stain_compare.py::test_fixed_contract_workflow_sources_and_pool_scope tests/test_region_stain_compare.py::test_exact_baseline_selection tests/test_region_stain_compare.py::test_artifact_authentication_negative tests/test_region_stain_compare.py::test_prepare_only_actual_step_admission tests/test_region_stain_compare.py::test_both_pairs_and_all40_fixed_gates tests/test_region_stain_compare.py::test_every_cohort_each_pair_rejects_regression tests/test_region_stain_compare.py::test_original_normalized_gate_cannot_be_hidden_by_direct_gain tests/test_region_stain_compare.py::test_raw_journal_medians_warmup_sample_order tests/test_region_stain_compare.py::test_raw_journal_negative tests/test_region_stain_compare.py::test_controller_rejects_non_UTC_before_any_execution tests/test_regionprops_strided_sdk_scope.py tests/test_matrix_transform_numpy124_skylakex_certificate.py tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_prospective_scope_and_source tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_sequences_and_accounting tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_payload_words_and_declared_mutations tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_sdk_default_and_focused_route tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_reuses_installed_component_family tests/test_regionprops_coords_scaled_benchmark.py tests/test_draw_polygon_reference.py tests/test_draw_polygon_benchmark.py tests/test_draw_polygon_sdk_scope.py tests/test_draw_polygon_default.py::test_polygon_defaults_source_and_saved_contract_without_science tests/test_draw_polygon_dtype_tag_reference.py::test_draw_polygon_tagged_saved_reference_complete tests/test_draw_polygon_dtype_tag_reference.py::test_draw_polygon_tagged_saved_payloads tests/test_draw_bezier_reference.py::test_bezier_prospective_cases_and_source_safety tests/test_draw_bezier_reference.py::test_bezier_saved_original_rows_without_replay tests/test_bezier_curve_benchmark.py tests/test_bezier_curve_default.py::test_bezier_default_saved_contract_without_science tests/test_draw_set_color_reference.py tests/test_draw_set_color_benchmark.py tests/test_draw_set_color_default.py::test_set_color_default_saved_contract_without_science tests/test_matrix_prescott_contract.py tests/test_label_pair_metrics_reference.py::test_label_pair_manifest_and_source_order_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_header_scope_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_saved_rows_without_replay tests/test_label_pair_metrics_reference.py::test_label_pair_per_function_saved_contract_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_profile_specific_supplied_table_mutation_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_saved_FP_and_error_prefix_without_science tests/test_label_pair_metrics_reference.py::test_contingency_context_rejects_tampered_source tests/test_contingency_table_public.py::test_contingency_prospective_scope_without_science tests/test_contingency_table_public.py::test_contingency_sdk_default_and_focused_source tests/test_label_pair_metrics_default.py::test_label_pair_default_source_scope_without_science tests/test_label_pair_metrics_default.py::test_ARE_metadata_context_rejects_tampered_source tests/test_label_pair_metrics_benchmark.py tests/test_find_boundaries_reference.py tests/test_find_boundaries_frontend_contract.py tests/test_find_boundaries_sdk_scope.py tests/test_find_boundaries_layout_integration.py tests/test_find_boundaries_benchmark.py tests/test_find_boundaries_default.py::test_find_boundaries_shared_source_without_science  tests/test_join_integration_source.py tests/test_join_segmentations_native_contract.py tests/test_join_segmentations_benchmark.py tests/test_util_metadata_source.py tests/test_crop_benchmark.py tests/test_regular_grid_native_contract.py tests/test_regular_grid_benchmark.py tests/test_join_util_views_density_source.py tests/test_util_views_source.py tests/test_next_util_benchmark_execution.py tests/test_util_views_fenv.py tests/test_join_windows_fenv.py tests/test_mark_lbp_enabled_source.py tests/test_draw_multiblock_lbp_native_source.py tests/test_draw_multiblock_lbp_codec.py tests/test_mark_boundaries_native_contract.py tests/test_mark_boundaries_benchmark_execution.py tests/test_draw_multiblock_lbp_benchmark_execution.py tests/test_draw_multiblock_lbp_metadata_source.py tests/test_util_view_boundary_source.py tests/test_join_segmentations_fenv_input_source.py tests/test_finite_radon_source.py tests/test_finite_radon_native_source.py tests/test_finite_radon_benchmark_execution.py tests/test_finite_radon_numpy_abi_source.py tests/test_variation_of_information_source.py tests/test_variation_of_information_current_counts_source.py tests/test_variation_of_information_benchmark_execution.py tests/test_variation_of_information_integration.py::test_vi_shared_source tests/test_abi_vi_integration_source.py tests/test_flood_fill_native_source.py tests/test_flood_fill_integration.py::test_flood_shared_source tests/test_variation_of_information_reduction_source.py tests/test_mark_lbp_controller.py tests/test_finite_radon_controller.py tests/test_join_util_current275_controller.py tests/test_vi_reduction_integration_source.py tests/test_rolling_ball_source.py tests/test_rolling_ball_native_source.py tests/test_rolling_ball_sdk_dtype_source.py tests/test_rolling_ball_benchmark.py tests/test_rolling_ball_controller.py tests/test_rolling_ball_enabled_source.py tests/test_rolling_ball_sentinel.py tests/test_rolling_ball_integration.py::test_rolling_ball_shared_source tests/test_current281_integration_fixes_source.py tests/test_mark_wide_outer_source.py tests/test_mark_wide_outer_capture.py tests/test_mark_wide_outer_private_compare.py tests/test_mark_wide_compatibility_source.py tests/test_mark_wide_outer_sdk.py tests/test_draw_multiblock_lbp_entry_fp.py tests/test_mark_lbp_fp_integration_source.py tests/test_vi_public_log2_provider_source.py 2>&1 | tee build/qualification-tool-guards.log\n",
+          "predecessor": "          python -m pytest -q --capture=sys tests/test_public_qualification.py tests/test_level_set_reference_metadata.py tests/test_rolling_ball_kernels_public.py::test_geometry_prospective_manifest tests/test_rolling_ball_kernels_public.py::test_prospective_allocation_bounds_and_rank_frontier_are_explicit tests/test_rolling_ball_kernels_public.py::test_geometry_saved_original_rows tests/test_rolling_ball_kernels_benchmark.py tests/test_approximate_polygon_public.py::test_approximate_polygon_prospective_manifest tests/test_approximate_polygon_public.py::test_approximate_polygon_saved_original_rows tests/test_approximate_polygon_benchmark.py tests/test_approximate_polygon_runtime_reference.py tests/test_subdivide_polygon_public.py::test_subdivide_polygon_prospective_manifest tests/test_subdivide_polygon_public.py::test_subdivide_polygon_saved_original_rows tests/test_subdivide_polygon_benchmark.py tests/test_rank_bilateral_fixture_reuse_metadata.py tests/test_build_identity_facts.py tests/test_rank_statistics_products.py tests/test_rank_corpus_sdk_scope.py tests/test_reconstruction_trace_policy.py tests/test_reconstruction_source_migration_metadata.py tests/test_h_extrema_public_metadata.py tests/test_h_extrema_source_provenance.py tests/test_line_aa_benchmark.py tests/test_regionprops_state_benchmark.py tests/test_regionprops_state_reference.py::test_regionprops_state_frozen_partition tests/test_regionprops_state_reference.py::test_regionprops_state_prospective_source_safety tests/test_regionprops_state_reference.py::test_regionprops_state_saved_rows_without_replay tests/test_regionprops_point_witness.py::test_regionprops_point_frozen_contract tests/test_ci_measurement_isolation.py tests/test_circle_perimeter_aa_benchmark.py tests/test_circle_perimeter_aa_reference.py::test_circle_perimeter_aa_prospective_source_safety tests/test_circle_perimeter_aa_reference.py::test_circle_perimeter_aa_saved_original_rows tests/test_combine_stains_half_benchmark.py tests/test_combine_stains_half_reference.py::test_combine_stains_half_prospective_source_safety tests/test_combine_stains_half_reference.py::test_combine_stains_half_saved_original_rows tests/test_regionprops_public_mutation_reference.py::test_regionprops_public_mutation_prospective_source_safety tests/test_regionprops_public_mutation_reference.py::test_regionprops_public_mutation_saved_original_rows tests/test_line_nd_reference.py::test_line_nd_prospective_matrix_and_source_safety tests/test_line_nd_reference.py::test_line_nd_saved_original_rows_without_replay tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_source_safety_without_science tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_saved_original_only tests/test_line_nd_benchmark.py::test_line_nd_benchmark_source_and_independent_large_bounds tests/test_line_nd_benchmark.py::test_line_nd_benchmark_import_refuses_scientific_modules tests/test_line_nd_benchmark.py::test_line_nd_benchmark_storage_and_preflight_guard_source -o cache_dir=build/qualification-tool-cache --junitxml=build/qualification-tool-guards.xml tests/test_ellipsoid_reference.py::test_ellipsoid_prospective_matrix_and_source_safety tests/test_ellipsoid_reference.py::test_ellipsoid_saved_observations_without_replay tests/test_draw_ellipsoid_default.py::test_ellipsoid_saved_sdk_oracle_metadata_without_science tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_source_method_and_larger_domain_bound tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_import_refuses_science tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_actual_factory_original_refused tests/test_ellipsoid_benchmark.py::test_ellipsoid_source_safety_refuses_unaudited_cases tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_actual_guard_order_and_metadata_source tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_prospective_source_safety tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_saved_observations_without_replay tests/test_draw_ellipse_perimeter_default.py::test_ellipse_perimeter_saved_sdk_oracle_metadata_without_science tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_source_bounds_and_pins tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_import_refuses_science tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_factory_original_refused tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_rejects_unsafe_specs tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_guards_and_timed_boundary tests/test_ellipse_perimeter_benchmark.py::test_ellipse_fallback_runtime_binding_preserves_historical_contract_and_body tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_prospective_source_and_scope tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_saved_rows_and_declared_pixel_mutation tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_saved_scalar_types_errors_and_FP_phases tests/test_regionprops_scalars_benchmark.py tests/test_regionprops_performance_v2.py tests/test_region_stain_compare.py::test_imports_refuse_scientific_algorithms tests/test_region_stain_compare.py::test_fixed_contract_workflow_sources_and_pool_scope tests/test_region_stain_compare.py::test_exact_baseline_selection tests/test_region_stain_compare.py::test_artifact_authentication_negative tests/test_region_stain_compare.py::test_prepare_only_actual_step_admission tests/test_region_stain_compare.py::test_both_pairs_and_all40_fixed_gates tests/test_region_stain_compare.py::test_every_cohort_each_pair_rejects_regression tests/test_region_stain_compare.py::test_original_normalized_gate_cannot_be_hidden_by_direct_gain tests/test_region_stain_compare.py::test_raw_journal_medians_warmup_sample_order tests/test_region_stain_compare.py::test_raw_journal_negative tests/test_region_stain_compare.py::test_controller_rejects_non_UTC_before_any_execution tests/test_regionprops_strided_sdk_scope.py tests/test_matrix_transform_numpy124_skylakex_certificate.py tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_prospective_scope_and_source tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_sequences_and_accounting tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_payload_words_and_declared_mutations tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_sdk_default_and_focused_route tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_reuses_installed_component_family tests/test_regionprops_coords_scaled_benchmark.py tests/test_draw_polygon_reference.py tests/test_draw_polygon_benchmark.py tests/test_draw_polygon_sdk_scope.py tests/test_draw_polygon_default.py::test_polygon_defaults_source_and_saved_contract_without_science tests/test_draw_polygon_dtype_tag_reference.py::test_draw_polygon_tagged_saved_reference_complete tests/test_draw_polygon_dtype_tag_reference.py::test_draw_polygon_tagged_saved_payloads tests/test_draw_bezier_reference.py::test_bezier_prospective_cases_and_source_safety tests/test_draw_bezier_reference.py::test_bezier_saved_original_rows_without_replay tests/test_bezier_curve_benchmark.py tests/test_bezier_curve_default.py::test_bezier_default_saved_contract_without_science tests/test_draw_set_color_reference.py tests/test_draw_set_color_benchmark.py tests/test_draw_set_color_default.py::test_set_color_default_saved_contract_without_science tests/test_matrix_prescott_contract.py tests/test_label_pair_metrics_reference.py::test_label_pair_manifest_and_source_order_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_header_scope_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_saved_rows_without_replay tests/test_label_pair_metrics_reference.py::test_label_pair_per_function_saved_contract_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_profile_specific_supplied_table_mutation_without_science tests/test_label_pair_metrics_reference.py::test_label_pair_saved_FP_and_error_prefix_without_science tests/test_label_pair_metrics_reference.py::test_contingency_context_rejects_tampered_source tests/test_contingency_table_public.py::test_contingency_prospective_scope_without_science tests/test_contingency_table_public.py::test_contingency_sdk_default_and_focused_source tests/test_label_pair_metrics_default.py::test_label_pair_default_source_scope_without_science tests/test_label_pair_metrics_default.py::test_ARE_metadata_context_rejects_tampered_source tests/test_label_pair_metrics_benchmark.py tests/test_find_boundaries_reference.py tests/test_find_boundaries_frontend_contract.py tests/test_find_boundaries_sdk_scope.py tests/test_find_boundaries_layout_integration.py tests/test_find_boundaries_benchmark.py tests/test_find_boundaries_default.py::test_find_boundaries_shared_source_without_science  tests/test_join_integration_source.py tests/test_join_segmentations_native_contract.py tests/test_join_segmentations_benchmark.py tests/test_util_metadata_source.py tests/test_crop_benchmark.py tests/test_regular_grid_native_contract.py tests/test_regular_grid_benchmark.py tests/test_join_util_views_density_source.py tests/test_util_views_source.py tests/test_next_util_benchmark_execution.py tests/test_util_views_fenv.py tests/test_join_windows_fenv.py tests/test_mark_lbp_enabled_source.py tests/test_draw_multiblock_lbp_native_source.py tests/test_draw_multiblock_lbp_codec.py tests/test_mark_boundaries_native_contract.py tests/test_mark_boundaries_benchmark_execution.py tests/test_draw_multiblock_lbp_benchmark_execution.py tests/test_draw_multiblock_lbp_metadata_source.py tests/test_util_view_boundary_source.py tests/test_join_segmentations_fenv_input_source.py tests/test_finite_radon_source.py tests/test_finite_radon_native_source.py tests/test_finite_radon_benchmark_execution.py tests/test_finite_radon_numpy_abi_source.py tests/test_variation_of_information_source.py tests/test_variation_of_information_current_counts_source.py tests/test_variation_of_information_benchmark_execution.py tests/test_variation_of_information_integration.py::test_vi_shared_source tests/test_abi_vi_integration_source.py tests/test_flood_fill_native_source.py tests/test_flood_fill_integration.py::test_flood_shared_source tests/test_variation_of_information_reduction_source.py tests/test_mark_lbp_controller.py tests/test_finite_radon_controller.py tests/test_join_util_current275_controller.py tests/test_vi_reduction_integration_source.py tests/test_rolling_ball_source.py tests/test_rolling_ball_native_source.py tests/test_rolling_ball_sdk_dtype_source.py tests/test_rolling_ball_benchmark.py tests/test_rolling_ball_controller.py tests/test_rolling_ball_enabled_source.py tests/test_rolling_ball_sentinel.py tests/test_rolling_ball_integration.py::test_rolling_ball_shared_source tests/test_current281_integration_fixes_source.py tests/test_mark_wide_outer_source.py tests/test_mark_wide_outer_capture.py tests/test_mark_wide_outer_private_compare.py tests/test_mark_wide_compatibility_source.py tests/test_mark_wide_outer_sdk.py tests/test_draw_multiblock_lbp_entry_fp.py tests/test_mark_lbp_fp_integration_source.py 2>&1 | tee build/qualification-tool-guards.log\n"
+        }
+      ]
+    },
+    "include/skimagexx/variation_of_information.hpp": {
+      "current_raw_sha256": "c6b00c5c7fedcd8d9467a9a69262d59e63e32b60242ee9760487bad8a32229d8",
+      "current_canonical_sha256": "c6b00c5c7fedcd8d9467a9a69262d59e63e32b60242ee9760487bad8a32229d8",
+      "predecessor_raw_sha256": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+      "predecessor_canonical_sha256": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+      "inverse": [
+        {
+          "start": 1637,
+          "end": 2827,
+          "current": "// Explicit elementary-log provider for hosts whose public log2 differs from\n// platform libm. The owning operation calls exactly one whole nonzero batch\n// per entropy direction, including empty batches, in source order. Pointers\n// are valid only for the callback; count0 permits null pointers. The callback\n// writes count logarithms, must not mutate input/CSR storage, and may return\n// false to refuse. Exceptions propagate; output is published only on success.\n// The host owns context for the whole call. No Python/NumPy ABI is required by\n// this SDK interface. Provider FP/error effects are retained, never normalized.\nstruct VariationLog2Batch {\n    using Function=bool(*)(const double*,double*,std::size_t,void*);\n    Function function=nullptr;\n    void* context=nullptr;\n};\n// Additive compatible entry; existing overloads retain scalar platform-libm\n// semantics and ABI. The callback runs serially on the calling thread.\nbool variation_of_information_compatible(VariationTableView,VariationInformation&,\n    VariationLog2Batch,int workers=0);\nbool variation_of_information_compatible(const detail::LabelPairInput&,VariationInformation&,\n    VariationLog2Batch,int workers=0);\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "python/skimagexx/_variation_of_information.py": {
+      "current_raw_sha256": "ab5c17e2a8b4aee353c28269dff9d624bf111a7d71226425258251a210c89f15",
+      "current_canonical_sha256": "ab5c17e2a8b4aee353c28269dff9d624bf111a7d71226425258251a210c89f15",
+      "predecessor_raw_sha256": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+      "predecessor_canonical_sha256": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+      "inverse": [
+        {
+          "start": 237,
+          "end": 555,
+          "current": "they are not counted as native VI arithmetic. NumPy's current public log2 ufunc\nis an explicit elementary-log computation provider, called in whole nonzero\nbatches by the native operation. Marginals/scaling/coalescing/xlogx products and\nreductions/dots stay C++. Supplied CSR buffers are read without mutating caches.\n",
+          "predecessor": "they are not counted as native VI arithmetic. All entropy/log/reduction work is\nC++. Supplied plain CSR buffers are read without sorting/mutating their caches.\n"
+        },
+        {
+          "start": 2057,
+          "end": 2169,
+          "current": "    result=_core.variation_of_information_csr(data,indices,indptr,rows,columns,_core.get_num_threads(),np.log2)\n",
+          "predecessor": "    result=_core.variation_of_information_csr(data,indices,indptr,rows,columns,_core.get_num_threads())\n"
+        }
+      ]
+    },
+    "src/bind_variation_of_information.cpp": {
+      "current_raw_sha256": "7c843713f3388781d953f18104f8f1ec87a5e662fe555b29af5d6c9f89e49311",
+      "current_canonical_sha256": "7c843713f3388781d953f18104f8f1ec87a5e662fe555b29af5d6c9f89e49311",
+      "predecessor_raw_sha256": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+      "predecessor_canonical_sha256": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+      "inverse": [
+        {
+          "start": 162,
+          "end": 181,
+          "current": "#include <utility>\n",
+          "predecessor": ""
+        },
+        {
+          "start": 204,
+          "end": 1826,
+          "current": "namespace {\nstruct Log2Provider {\n    py::object callable;\n    static bool batch(const double* values,double* logarithms,std::size_t count,void* context) {\n        // Native entropy stays on the calling thread. Enter the caller's Python\n        // context only for the explicitly supplied public whole-array provider.\n        py::gil_scoped_acquire acquire;\n        const auto& owner=*static_cast<Log2Provider*>(context);\n        py::array_t<double> input(count);\n        if(count)std::memcpy(input.mutable_data(),values,count*sizeof(double));\n        PyObject* returned=PyObject_CallOneArg(owner.callable.ptr(),input.ptr());\n        if(!returned)throw py::error_already_set();\n        auto result=py::reinterpret_steal<py::object>(returned);\n        if(Py_TYPE(result.ptr())!=Py_TYPE(input.ptr()))\n            throw py::type_error(\"VI log2 provider must return a plain ndarray\");\n        auto array=py::reinterpret_borrow<py::array>(result);\n        if(array.ndim()!=1||array.size()!=static_cast<py::ssize_t>(count)\n           ||array.itemsize()!=8||array.dtype().kind()!='f'\n           ||!py::cast<bool>(array.dtype().attr(\"isnative\"))\n           ||!(array.flags()&py::array::c_style)||!array.owndata()\n           ||!py::cast<bool>(array.attr(\"flags\").attr(\"aligned\"))\n           ||(count&&array.strides(0)!=static_cast<py::ssize_t>(sizeof(double))))\n            throw py::type_error(\"VI log2 provider must return owned contiguous native float64 words\");\n        skimagexx::bindings::check_array_storage(array);\n        if(count)std::memcpy(logarithms,array.data(),count*sizeof(double));\n        return true;\n    }\n};\n}\n",
+          "predecessor": ""
+        },
+        {
+          "start": 2032,
+          "end": 2112,
+          "current": "        std::size_t columns,int workers,py::object log2_provider)->py::object {\n",
+          "predecessor": "        std::size_t columns,int workers)->py::object {\n"
+        },
+        {
+          "start": 2792,
+          "end": 3055,
+          "current": "        if(!log2_provider.is_none()&&!PyCallable_Check(log2_provider.ptr()))\n            throw py::type_error(\"VI log2 provider must be callable\");\n        Log2Provider provider{std::move(log2_provider)};\n        const bool supplied=!provider.callable.is_none();\n",
+          "predecessor": ""
+        },
+        {
+          "start": 3171,
+          "end": 3260,
+          "current": "            skimagexx::VariationTableView table{static_cast<const double*>(data.data()),\n",
+          "predecessor": "            accepted=skimagexx::variation_of_information({static_cast<const double*>(data.data()),\n"
+        },
+        {
+          "start": 3374,
+          "end": 3667,
+          "current": "                rows,columns,static_cast<std::size_t>(data.size())};\n            accepted=supplied\n                ?skimagexx::variation_of_information_compatible(table,result,{Log2Provider::batch,&provider},workers)\n                :skimagexx::variation_of_information(table,result,workers);\n",
+          "predecessor": "                rows,columns,static_cast<std::size_t>(data.size())},result,workers);\n"
+        },
+        {
+          "start": 3939,
+          "end": 4046,
+          "current": "      py::arg(\"rows\"),py::arg(\"columns\"),py::arg(\"workers\")=0,\n      py::arg(\"log2_provider\")=py::none());\n",
+          "predecessor": "      py::arg(\"rows\"),py::arg(\"columns\"),py::arg(\"workers\")=0);\n"
+        }
+      ]
+    },
+    "src/variation_of_information.cpp": {
+      "current_raw_sha256": "11a379e1f84531d113fec594b59aadd52e08835d421056c02fd39ff480778535",
+      "current_canonical_sha256": "11a379e1f84531d113fec594b59aadd52e08835d421056c02fd39ff480778535",
+      "predecessor_raw_sha256": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+      "predecessor_canonical_sha256": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+      "inverse": [
+        {
+          "start": 6023,
+          "end": 7553,
+          "current": "// Keep each sparse multiplication and its nonzero xlogx batch in the source\n// direction/order. Reuse scaled_row's multiply-before-coalescing graph and the\n// admitted reduction/scatter graphs; the host supplies only elementary log2.\nbool batch_entropy(VariationTableView a,const std::vector<double>& inverse,bool left,\n    VariationLog2Batch provider,std::vector<double>& entropy) {\n    std::vector<double> values;values.reserve(a.nnz);\n    std::vector<std::size_t> columns;columns.reserve(a.nnz);\n    std::vector<std::size_t> offsets(a.rows+1);\n    std::vector<double> coefficients(a.columns);\n    std::vector<unsigned char> seen(a.columns,0);\n    for(std::size_t r=0;r<a.rows;++r) {\n        auto order=scaled_row(a,r,inverse,left,coefficients,seen);\n        for(auto c:order) {\n            if(coefficients[c]!=0.){values.push_back(coefficients[c]);columns.push_back(c);}\n            seen[c]=0;\n        }\n        offsets[r+1]=values.size();\n    }\n    std::vector<double> logarithms(values.size());\n    if(!provider.function(values.data(),logarithms.data(),values.size(),provider.context))return false;\n    // Original z[nz] *= log2(z[nz]): products precede either sparse reduction.\n    for(std::size_t i=0;i<values.size();++i)values[i]*=logarithms[i];\n    if(left) {\n        for(std::size_t r=0;r<a.rows;++r)\n            entropy[r]=minor_sum(offsets[r+1]-offsets[r],[&](auto i){return values[offsets[r]+i];});\n    }else {\n        for(std::size_t i=0;i<values.size();++i)entropy[columns[i]]+=values[i];\n    }\n    return true;\n}\n",
+          "predecessor": ""
+        },
+        {
+          "start": 10067,
+          "end": 12161,
+          "current": "\nbool variation_of_information_compatible(VariationTableView a,VariationInformation& output,\n    VariationLog2Batch provider,int workers) {\n    const int snapshot=workers==0?get_num_threads():workers;\n    if(!provider.function||snapshot<1||snapshot>1024||!environment()||!validate(a))return false;\n    std::vector<double> px(a.rows,0.),py(a.columns,0.);\n    for(std::size_t r=0;r<a.rows;++r) {\n        const auto first=a.indptr[r],last=a.indptr[r+1];\n        px[r]=minor_sum(std::size_t(last-first),[&](auto i){return a.data[first+i];});\n        for(auto j=first;j<last;++j)py[std::size_t(a.indices[j])]+=a.data[j];\n    }\n    std::vector<double> ix(px),iy(py);\n    for(auto& v:ix)if(v!=0.)v=1./v;\n    for(auto& v:iy)if(v!=0.)v=1./v;\n    VariationInformation result;result.captured_workers=snapshot;\n    std::vector<double> row_entropy(a.rows,0.);\n    if(!batch_entropy(a,ix,true,provider,row_entropy))return false;\n    result.values[0]=source_dot(a.rows,[&](auto r){return -px[r];},[&](auto r){return row_entropy[r];});\n    // The first complete entropy/dot precedes the second source xlogx batch.\n    std::vector<double> column_entropy(a.columns,0.);\n    if(!batch_entropy(a,iy,false,provider,column_entropy))return false;\n    result.values[1]=source_dot(a.columns,[&](auto c){return -column_entropy[c];},[&](auto c){return py[c];});\n    output=result;return true;\n}\n\nbool variation_of_information_compatible(const detail::LabelPairInput& input,\n    VariationInformation& output,VariationLog2Batch provider,int workers) {\n    if(!provider.function)return false;\n    const int snapshot=workers==0?get_num_threads():workers;\n    auto normalized=input;normalized.normalize=true;detail::LabelPairCsr table;\n    if(!detail::label_pair_counts(normalized,table,snapshot))return false;\n    VariationInformation result;\n    if(!variation_of_information_compatible({table.data.data(),table.indices.data(),table.indptr.data(),table.rows,table.columns,table.data.size()},result,provider,snapshot))return false;\n    result.normalization_fp_status=table.normalization_fp_status;output=result;return true;\n}\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "tests/cmake_consumer/variation_of_information_enabled_consumer.cpp": {
+      "current_raw_sha256": "a690e5c6836f5b1d2d5c8da1826ecd97875fa6efa00386f175290bb8f01f63ef",
+      "current_canonical_sha256": "a690e5c6836f5b1d2d5c8da1826ecd97875fa6efa00386f175290bb8f01f63ef",
+      "predecessor_raw_sha256": "e2b34637408d606f63f667ac066a6097b3dd29668da37698e6e7500c6657213b",
+      "predecessor_canonical_sha256": "e2b34637408d606f63f667ac066a6097b3dd29668da37698e6e7500c6657213b",
+      "inverse": [
+        {
+          "start": 283,
+          "end": 300,
+          "current": "#include <cmath>\n",
+          "predecessor": ""
+        },
+        {
+          "start": 340,
+          "end": 1932,
+          "current": "// Explicit host callback plumbing. This provider is scalar std::log2 and is\n// not evidence of NumPy/SVML semantics; public Python provider evidence is separate.\nstruct ViLog2Audit {unsigned calls=0;unsigned empty=0;unsigned fail_on=0;};\nbool sdk_log2(const double* values,double* logs,std::size_t count,void* data) {\n    auto& audit=*static_cast<ViLog2Audit*>(data);++audit.calls;\n    if(audit.calls==audit.fail_on)return false;\n    if(!count)++audit.empty;\n    for(std::size_t i=0;i<count;++i)logs[i]=std::log2(values[i]);\n    return true;\n}\nint provider_controls() {\n    const std::int64_t columns[]={1,1,0,1},rows[]={0,3,4};\n    const double values[]={0.,.25,.25,.5};\n    const skimagexx::VariationTableView table{values,columns,rows,2,2,4};\n    skimagexx::VariationInformation baseline,result;\n    ViLog2Audit audit;\n    if(!skimagexx::variation_of_information(table,baseline,1))return 20;\n    if(!skimagexx::variation_of_information_compatible(table,result,{sdk_log2,&audit},1))return 21;\n    if(audit.calls!=2||std::memcmp(baseline.values.data(),result.values.data(),16))return 22;\n    result.values={123.,456.};audit={0,0,2};\n    if(skimagexx::variation_of_information_compatible(table,result,{sdk_log2,&audit},1))return 23;\n    if(audit.calls!=2||result.values[0]!=123.||result.values[1]!=456.)return 24;\n    const std::int64_t empty_rows[]={0,0,0};audit={};\n    if(!skimagexx::variation_of_information_compatible({nullptr,nullptr,empty_rows,2,2,0},result,{sdk_log2,&audit},0))return 25;\n    if(audit.calls!=2||audit.empty!=2||result.captured_workers!=1)return 26;\n    return 0;\n}\n\n",
+          "predecessor": ""
+        },
+        {
+          "start": 2007,
+          "end": 2093,
+          "current": "    if(int status=provider_controls())return status;\n    unsigned provider_checked=0;\n",
+          "predecessor": ""
+        },
+        {
+          "start": 3124,
+          "end": 4144,
+          "current": "            ViLog2Audit audit;skimagexx::VariationInformation compatible;\n            if(test.supplied) {\n                const std::int64_t columns[]={1,0,1,2},rows[]={0,2,4};\n                accepted=skimagexx::variation_of_information_compatible({test.data.data(),columns,rows,2,3,4},compatible,{sdk_log2,&audit});\n            }else {\n                skimagexx::detail::LabelPairInput input;\n                input.truth=test.truth.data();input.test=test.test.data();input.count=test.truth.size();\n                input.ignored_truth_labels=test.ignored.data();input.ignored_count=test.ignored.size();\n                accepted=skimagexx::variation_of_information_compatible(input,compatible,{sdk_log2,&audit});\n            }\n            if(!accepted||audit.calls!=2||compatible.captured_workers!=budget)return 27;\n            if(std::memcmp(result.values.data(),compatible.values.data(),16)\n               ||compatible.normalization_fp_status!=result.normalization_fp_status)return 28;\n            ++provider_checked;\n",
+          "predecessor": ""
+        },
+        {
+          "start": 4589,
+          "end": 4682,
+          "current": "        <<\" host_scalar_log2_compatible=\"<<provider_checked<<\" provider_plumbing_controls=3\"\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "tests/test_rolling_ball_enabled_source.py": {
+      "current_raw_sha256": "3c60a7b3ae26ead06d3e58fab2db64f324b231838736151a402248234c785135",
+      "current_canonical_sha256": "3c60a7b3ae26ead06d3e58fab2db64f324b231838736151a402248234c785135",
+      "predecessor_raw_sha256": "51f9fdabd49090de09a316ab72a2738989eabd18025b76951d804849a456bb77",
+      "predecessor_canonical_sha256": "51f9fdabd49090de09a316ab72a2738989eabd18025b76951d804849a456bb77",
+      "inverse": [
+        {
+          "start": 7841,
+          "end": 7916,
+          "current": "def test_actual_active_shared_benchmark_literal_dependencies(monkeypatch):\n",
+          "predecessor": "def test_actual_active_shared_benchmark_literal_dependencies():\n"
+        },
+        {
+          "start": 9103,
+          "end": 10955,
+          "current": "    # The old reader keeps every immutable v6 assertion. Only its edited VI\n    # metadata-test input is first authenticated back to the exact32e bytes.\n    from variation_of_information_source_context import provider_predecessor_source\n    reader=adapter['historical_bytes'].__globals__;original=reader['source_bytes']\n    edited='tests/test_variation_of_information_benchmark_execution.py'\n    def source_bytes(source):\n        raw=original(source)\n        if Path(source)==ROOT/edited:\n            return provider_predecessor_source(ROOT,edited,raw,canonical=True)\n        return raw\n    with monkeypatch.context()as patch:\n        patch.setitem(reader,'source_bytes',source_bytes)\n        for name,row in current['historical_sources'].items():\n            assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']\n        def changed_source(source):\n            if Path(source)==ROOT/edited:\n                return provider_predecessor_source(ROOT,edited,original(source)+b' ',canonical=True)\n            return source_bytes(source)\n        with monkeypatch.context()as changed:\n            changed.setitem(reader,'source_bytes',changed_source)\n            with pytest.raises(AssertionError):adapter['historical_bytes'](ROOT,edited,context_path=path)\n        # The unchanged old reader must still check its frozen context row.\n        bad=json.loads((ROOT/path).read_bytes());bad['historical_sources'][edited]['predecessor_canonical_sha256']='0'*64\n        original_read=Path.read_bytes\n        with monkeypatch.context()as changed:\n            changed.setattr(Path,'read_bytes',lambda p:json.dumps(bad).encode()if p==ROOT/path else original_read(p))\n            with pytest.raises(AssertionError):adapter['historical_bytes'](ROOT,edited,context_path=path)\n    assert reader['source_bytes']is original\n",
+          "predecessor": "    for name,row in current['historical_sources'].items():\n        assert H(adapter['historical_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']\n"
+        }
+      ]
+    },
+    "tests/test_variation_of_information_benchmark_execution.py": {
+      "current_raw_sha256": "553e23a2f1d08c739f46c8955fbacf827a23965a29db438227a5c4e246409c77",
+      "current_canonical_sha256": "553e23a2f1d08c739f46c8955fbacf827a23965a29db438227a5c4e246409c77",
+      "predecessor_raw_sha256": "10135720ba229c275ef224a8c8495df1c0800cc2a31bced99665ee5886936a32",
+      "predecessor_canonical_sha256": "10135720ba229c275ef224a8c8495df1c0800cc2a31bced99665ee5886936a32",
+      "inverse": [
+        {
+          "start": 243,
+          "end": 323,
+          "current": "from variation_of_information_source_context import provider_predecessor_source\n",
+          "predecessor": ""
+        },
+        {
+          "start": 1902,
+          "end": 2274,
+          "current": "        choices=[ROOT/name,external/name]\n        payloads=[provider_predecessor_source(ROOT,name,p.read_bytes())if p==ROOT/name else p.read_bytes()for p in choices if p.is_file()]\n        raw=next(raw for raw in payloads if H(raw)==digest or hashlib.sha256(raw).hexdigest()==digest)\n        out=root/name;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(raw)\n",
+          "predecessor": "        choices=[ROOT/name,external/name];source=next(p for p in choices if p.is_file()and(H(p.read_bytes())==digest or hashlib.sha256(p.read_bytes()).hexdigest()==digest))\n        out=root/name;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(source.read_bytes())\n"
+        },
+        {
+          "start": 4428,
+          "end": 4513,
+          "current": "        assert H(provider_predecessor_source(ROOT,name,path.read_bytes()))==pin,name\n",
+          "predecessor": "        assert H(path.read_bytes())==pin,name\n"
+        },
+        {
+          "start": 15450,
+          "end": 15594,
+          "current": "        tree=ast.parse(provider_predecessor_source(ROOT,path));nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]\n",
+          "predecessor": "        tree=ast.parse((ROOT/path).read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]\n"
+        },
+        {
+          "start": 17147,
+          "end": 17293,
+          "current": "        raw=provider_predecessor_source(ROOT,name).replace(b'\\r\\n',b'\\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_sha256']\n",
+          "predecessor": "        raw=(ROOT/name).read_bytes().replace(b'\\r\\n',b'\\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_sha256']\n"
+        }
+      ]
+    },
+    "tests/test_variation_of_information_integration.py": {
+      "current_raw_sha256": "db31c0a19d67dd45924a3344dba541cfe54f73644ac05bb5d4e8dc4648a34950",
+      "current_canonical_sha256": "db31c0a19d67dd45924a3344dba541cfe54f73644ac05bb5d4e8dc4648a34950",
+      "predecessor_raw_sha256": "43f82f4f08852e315a9ef2ca7016abcb354fe15fccd90b9792faf5203d5d360a",
+      "predecessor_canonical_sha256": "43f82f4f08852e315a9ef2ca7016abcb354fe15fccd90b9792faf5203d5d360a",
+      "inverse": [
+        {
+          "start": 2370,
+          "end": 2446,
+          "current": "def test_vi_swappable_public_saved_perfect_and_strict_checker(monkeypatch):\n",
+          "predecessor": "def test_vi_swappable_public_saved_perfect_and_strict_checker():\n"
+        },
+        {
+          "start": 3200,
+          "end": 3546,
+          "current": "    original_log2=np.log2;provider_batches=[]\n    def public_log2(values):\n        provider_batches.append(values.shape)\n        return original_log2(values)\n    monkeypatch.setattr(np,'log2',public_log2)\n    actual=pipeline(xx);assert len(provider_batches)==2\n    expected_raw=zlib.decompress(base64.b64decode(row['result']['raw_zlib_base64']))\n",
+          "predecessor": "    actual=pipeline(xx);expected_raw=zlib.decompress(base64.b64decode(row['result']['raw_zlib_base64']))\n"
+        }
+      ]
+    },
+    "tests/test_variation_of_information_public.py": {
+      "current_raw_sha256": "8eccf64f79fd78c2cb7b0783c9a2c08512d8c9eed2ad85f7c50fe44fd1081595",
+      "current_canonical_sha256": "8eccf64f79fd78c2cb7b0783c9a2c08512d8c9eed2ad85f7c50fe44fd1081595",
+      "predecessor_raw_sha256": "e411cb0663dd801dfc9813776789f96e89aa6c39d86184625a061919817900a5",
+      "predecessor_canonical_sha256": "e411cb0663dd801dfc9813776789f96e89aa6c39d86184625a061919817900a5",
+      "inverse": [
+        {
+          "start": 4111,
+          "end": 4187,
+          "current": "def test_owned_entropy_uses_only_explicit_log2_batches(target,monkeypatch):\n",
+          "predecessor": "def test_owned_entropy_never_calls_sparse_or_numpy_log_provider(target,monkeypatch):\n"
+        },
+        {
+          "start": 4221,
+          "end": 4875,
+          "current": "    original=np.log2;batches=[]\n    def log2(values):\n        assert type(values)is np.ndarray and values.dtype==np.dtype('float64')\n        assert values.ndim==1 and values.flags.owndata and values.flags.c_contiguous\n        batches.append(values.shape)\n        return original(values)\n    def forbidden(*a,**k):raise AssertionError('Other entropy arithmetic provider forbidden')\n    monkeypatch.setattr(np,'log2',log2);monkeypatch.setattr(np,'log',forbidden)\n    monkeypatch.setattr(np,'sum',forbidden)\n    for cls in(sparse.csr_matrix,sparse.csr_array):\n        monkeypatch.setattr(cls,'__matmul__',forbidden);monkeypatch.setattr(cls,'sum',forbidden)\n",
+          "predecessor": "    def forbidden(*a,**k):raise AssertionError('Entropy arithmetic provider forbidden')\n    monkeypatch.setattr(np,'log2',forbidden);monkeypatch.setattr(np,'log',forbidden)\n    monkeypatch.setattr(sparse.csr_matrix,'__matmul__',forbidden)\n    monkeypatch.setattr(sparse.csr_array,'__matmul__',forbidden)\n"
+        },
+        {
+          "start": 5038,
+          "end": 5340,
+          "current": "    assert len(batches)==2 and batches[0]==batches[1]\n    primary=RuntimeError('VI_PROVIDER_PRIMARY')\n    def refused(values):raise primary\n    monkeypatch.setattr(np,'log2',refused)\n    with pytest.raises(RuntimeError)as error:target[0].variation_of_information(a,a)\n    assert error.value is primary\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "tests/test_variation_of_information_reduction_source.py": {
+      "current_raw_sha256": "679b462c08ff2a8e282bf705ab8af587321a562998f77b7cf8ffe799b079278f",
+      "current_canonical_sha256": "679b462c08ff2a8e282bf705ab8af587321a562998f77b7cf8ffe799b079278f",
+      "predecessor_raw_sha256": "5212fb7457b7b1be9f24c246056a1230cb47e4f7a5452fa03ce662f71f1ed31e",
+      "predecessor_canonical_sha256": "5212fb7457b7b1be9f24c246056a1230cb47e4f7a5452fa03ce662f71f1ed31e",
+      "inverse": [
+        {
+          "start": 202,
+          "end": 282,
+          "current": "from variation_of_information_source_context import provider_predecessor_source\n",
+          "predecessor": ""
+        },
+        {
+          "start": 431,
+          "end": 523,
+          "current": "        assert hashlib.sha256(provider_predecessor_source(ROOT,name)).hexdigest()==pin,name\n",
+          "predecessor": "        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name\n"
+        }
+      ]
+    },
+    "tests/test_variation_of_information_source.py": {
+      "current_raw_sha256": "ec97eb68102dd949255250948bb6fd521588721d51b570c152cf3888eb6be746",
+      "current_canonical_sha256": "ec97eb68102dd949255250948bb6fd521588721d51b570c152cf3888eb6be746",
+      "predecessor_raw_sha256": "72c5a7529c619683b9e5b408830d415ae8e4daf0ec526f80a3dd44393e19a301",
+      "predecessor_canonical_sha256": "72c5a7529c619683b9e5b408830d415ae8e4daf0ec526f80a3dd44393e19a301",
+      "inverse": [
+        {
+          "start": 256,
+          "end": 354,
+          "current": "from variation_of_information_source_context import historical_source,provider_predecessor_source\n",
+          "predecessor": "from variation_of_information_source_context import historical_source\n"
+        },
+        {
+          "start": 4432,
+          "end": 4532,
+          "current": "    text=provider_predecessor_source(ROOT,'python/skimagexx/_variation_of_information.py').decode()\n",
+          "predecessor": "    text=(ROOT/'python/skimagexx/_variation_of_information.py').read_text()\n"
+        }
+      ]
+    },
+    "tests/test_vi_controller.py": {
+      "current_raw_sha256": "51033a3c4d4035841cb1927b4aafb0d1674b7e1ab8a5aab71b5b6287baf4a0f0",
+      "current_canonical_sha256": "51033a3c4d4035841cb1927b4aafb0d1674b7e1ab8a5aab71b5b6287baf4a0f0",
+      "predecessor_raw_sha256": "2c773df396be254bcc73517851ab7707cc36c8405aabaf86a53da386a8220181",
+      "predecessor_canonical_sha256": "2c773df396be254bcc73517851ab7707cc36c8405aabaf86a53da386a8220181",
+      "inverse": [
+        {
+          "start": 284,
+          "end": 364,
+          "current": "from variation_of_information_source_context import provider_predecessor_source\n",
+          "predecessor": ""
+        },
+        {
+          "start": 1284,
+          "end": 1552,
+          "current": "  raw=provider_predecessor_source(ROOT,name);assert H(raw)==DATA['first_cohort']['source_files_raw_sha256'][name],name\n  p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw);b['prepared_source']['files_sha256'][name]=H(raw.replace(b'\\r\\n',b'\\n'))\n",
+          "predecessor": "  p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/name).read_bytes());b['prepared_source']['files_sha256'][name]=H(p.read_bytes().replace(b'\\r\\n',b'\\n'))\n"
+        },
+        {
+          "start": 30022,
+          "end": 30407,
+          "current": " path,binding,context=synthetic(tmp_path,monkeypatch);monkeypatch.syspath_prepend(str(ROOT/'benchmarks'));route=ROUTES['vi'];output=Path(binding['output_root'])/'never.json';source=Path(binding['source_root']);argv=PROBE.driver_argv(source,route,path,output);adapter=PROBE.driver_adapter(source);module=runpy.run_path(str(source/route['driver']));prior=builtins.__import__;requests=[]\n",
+          "predecessor": " path,binding,context=synthetic(tmp_path,monkeypatch);monkeypatch.syspath_prepend(str(ROOT/'benchmarks'));route=ROUTES['vi'];output=Path(binding['output_root'])/'never.json';argv=PROBE.driver_argv(ROOT,route,path,output);adapter=PROBE.driver_adapter(ROOT);module=runpy.run_path(str(ROOT/route['driver']));prior=builtins.__import__;requests=[]\n"
+        }
+      ]
+    },
+    "tests/test_vi_log2_provider_diagnostic.py": {
+      "current_raw_sha256": "8cd57afd79003090def2ae8ba672dc9fb3e487309e90016fbb689f8faab18d6e",
+      "current_canonical_sha256": "8cd57afd79003090def2ae8ba672dc9fb3e487309e90016fbb689f8faab18d6e",
+      "predecessor_raw_sha256": "39cf01e20f6c1f7b5832cfac19734d6055174027b2c0fd42e0a01be6c0f3356f",
+      "predecessor_canonical_sha256": "39cf01e20f6c1f7b5832cfac19734d6055174027b2c0fd42e0a01be6c0f3356f",
+      "inverse": [
+        {
+          "start": 242,
+          "end": 322,
+          "current": "from variation_of_information_source_context import provider_predecessor_source\n",
+          "predecessor": ""
+        },
+        {
+          "start": 16640,
+          "end": 16939,
+          "current": "    snapshot=tmp_path/'prepared16-source'\n    for name,pin in context['prepared_dependencies'].items():\n        raw=provider_predecessor_source(ROOT,name);assert hashlib.sha256(raw).hexdigest()==pin,name\n        path=snapshot/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)\n",
+          "predecessor": ""
+        },
+        {
+          "start": 19572,
+          "end": 19727,
+          "current": "        source_revision=D.SOURCE,source_root=str(snapshot),output_root=str(tmp_path/'outputs'),core_sha256=context['core_sha256'],interpreter=interpreter,\n",
+          "predecessor": "        source_revision=D.SOURCE,source_root=str(ROOT),output_root=str(tmp_path/'outputs'),core_sha256=context['core_sha256'],interpreter=interpreter,\n"
+        }
+      ]
+    },
+    "tests/test_vi_reduction_integration_source.py": {
+      "current_raw_sha256": "3c7e80bf9f6b5e2056658ec896c176f27904bf5a798bd3d7eec067673fea3d51",
+      "current_canonical_sha256": "3c7e80bf9f6b5e2056658ec896c176f27904bf5a798bd3d7eec067673fea3d51",
+      "predecessor_raw_sha256": "b42e16e2367bf912b8ac1fd01c839fbae79e210aaa85b6541ba8a67df4e252f3",
+      "predecessor_canonical_sha256": "b42e16e2367bf912b8ac1fd01c839fbae79e210aaa85b6541ba8a67df4e252f3",
+      "inverse": [
+        {
+          "start": 169,
+          "end": 249,
+          "current": "from variation_of_information_source_context import provider_predecessor_source\n",
+          "predecessor": ""
+        },
+        {
+          "start": 919,
+          "end": 991,
+          "current": "    raw=provider_predecessor_source(ROOT,data['native_source']['path'])\n",
+          "predecessor": "    raw=(ROOT/data['native_source']['path']).read_bytes()\n"
+        },
+        {
+          "start": 1071,
+          "end": 1194,
+          "current": "    old=correction_predecessor_bytes(ROOT,data['native_source']['path'],(ROOT/data['native_source']['path']).read_bytes())\n",
+          "predecessor": "    old=correction_predecessor_bytes(ROOT,data['native_source']['path'],raw)\n"
+        }
+      ]
+    },
+    "tests/variation_of_information_reduction_contract.py": {
+      "current_raw_sha256": "4201b21c1139ca0bc8c330e812b3fe47cf8f09721ba8bc798b81552aa6951233",
+      "current_canonical_sha256": "4201b21c1139ca0bc8c330e812b3fe47cf8f09721ba8bc798b81552aa6951233",
+      "predecessor_raw_sha256": "059fdbe2dc03a545ab61f70ac8ffa54b60a2c68293cff818affe4976216572fe",
+      "predecessor_canonical_sha256": "059fdbe2dc03a545ab61f70ac8ffa54b60a2c68293cff818affe4976216572fe",
+      "inverse": [
+        {
+          "start": 325,
+          "end": 721,
+          "current": "    # Existing join callers already supply this exact immutable reduction input.\n    # Direct current callers authenticate the new provider successor first.\n    if hashlib.sha256(raw).hexdigest()!=context['source_sha256']:\n        from variation_of_information_source_context import provider_predecessor_source\n        raw=provider_predecessor_source(ROOT,'src/variation_of_information.cpp',raw)\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "tests/variation_of_information_source_context.py": {
+      "current_raw_sha256": "3c24b19ff4c143b489b92ddfca2ffc1bbbb6497339b799e8a34da4081ebeddbc",
+      "current_canonical_sha256": "3c24b19ff4c143b489b92ddfca2ffc1bbbb6497339b799e8a34da4081ebeddbc",
+      "predecessor_raw_sha256": "a36c250fb4c029b9e92c6d010433e45163abeb8368d353e1efbe19ba441bb57a",
+      "predecessor_canonical_sha256": "a36c250fb4c029b9e92c6d010433e45163abeb8368d353e1efbe19ba441bb57a",
+      "inverse": [
+        {
+          "start": 472,
+          "end": 1010,
+          "current": "\n\ndef provider_predecessor_source(root,name,raw=None,canonical=False):\n    \"\"\"Exact32e source only, for immutable VI history; not current acceptance.\"\"\"\n    root=Path(root)\n    if raw is None:raw=(root/name).read_bytes()\n    if not(root/'coverage/contracts/vi-public-log2-provider-source-v1.json').is_file():return raw\n    from tools.mark_lbp_fp_context import VI_PUBLIC_LOG2_CONTEXT_SHA256\n    from tools.vi_public_log2_context import predecessor_bytes\n    return predecessor_bytes(root,name,raw,VI_PUBLIC_LOG2_CONTEXT_SHA256,canonical)\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "tools/mark_lbp_fp_context.py": {
+      "current_raw_sha256": "462658985aa44b91239e733b0c33b06c35e4a041abc7111d6b7b54218cf1ea62",
+      "current_canonical_sha256": "462658985aa44b91239e733b0c33b06c35e4a041abc7111d6b7b54218cf1ea62",
+      "predecessor_raw_sha256": "529cacce439ab3d185c6c8c5c896677d565161b8b460f0ccd46a50677f188830",
+      "predecessor_canonical_sha256": "529cacce439ab3d185c6c8c5c896677d565161b8b460f0ccd46a50677f188830",
+      "inverse": [
+        {
+          "start": 338,
+          "end": 531,
+          "current": "VI_PUBLIC_LOG2_CONTEXT_SHA256='0000000000000000000000000000000000000000000000000000000000000000'\nVI_PUBLIC_LOG2_HELPER_SHA256='83ad5f62c746b10fd29ab787fe2674710a16087265caa0a4bba059a7f769a352'\n",
+          "predecessor": ""
+        },
+        {
+          "start": 1364,
+          "end": 1775,
+          "current": " path=Path(root)/'coverage/contracts/vi-public-log2-provider-source-v1.json'\n if path.is_file():\n  helper=Path(root)/'tools/vi_public_log2_context.py'\n  assert hashlib.sha256(helper.read_bytes()).hexdigest()==VI_PUBLIC_LOG2_HELPER_SHA256\n  from tools.vi_public_log2_context import predecessor_bytes as vi_provider_predecessor\n  raw=vi_provider_predecessor(root,name,raw,VI_PUBLIC_LOG2_CONTEXT_SHA256,canonical)\n",
+          "predecessor": ""
+        }
+      ]
+    },
+    "tools/public_qualification.py": {
+      "current_raw_sha256": "29797a2d1471e289124529a8341de69572d5a5b26f14e29ec0e9fcc876e20994",
+      "current_canonical_sha256": "29797a2d1471e289124529a8341de69572d5a5b26f14e29ec0e9fcc876e20994",
+      "predecessor_raw_sha256": "c0d8455e9a51a033fe5e6eeb35711868a4409da0967e95784b3f6911865a1834",
+      "predecessor_canonical_sha256": "c0d8455e9a51a033fe5e6eeb35711868a4409da0967e95784b3f6911865a1834",
+      "inverse": [
+        {
+          "start": 83561,
+          "end": 84042,
+          "current": "\n\nDRAW_SOURCE_PATHS += ('benchmarks/vi_public_log2_provider_consumer.py', 'benchmarks/vi_public_log2_provider_execution.py', 'coverage/contracts/vi-public-log2-provider-v1.json', 'coverage/contracts/vi-public-log2-provider-benchmark-v1.json', 'coverage/contracts/vi-public-log2-provider-source-v1.json', 'tests/test_vi_public_log2_provider_source.py', 'tools/vi_public_log2_context.py', 'tests/test_vi_log2_provider_diagnostic.py', 'tests/test_vi_reduction_integration_source.py')\n",
+          "predecessor": ""
+        }
+      ]
+    }
+  },
+  "new_collector_inputs": [
+    "benchmarks/vi_public_log2_provider_consumer.py",
+    "benchmarks/vi_public_log2_provider_execution.py",
+    "coverage/contracts/vi-public-log2-provider-v1.json",
+    "coverage/contracts/vi-public-log2-provider-benchmark-v1.json",
+    "coverage/contracts/vi-public-log2-provider-source-v1.json",
+    "tests/test_vi_public_log2_provider_source.py",
+    "tools/vi_public_log2_context.py",
+    "tests/test_vi_log2_provider_diagnostic.py",
+    "tests/test_vi_reduction_integration_source.py"
+  ],
+  "source_selector_count": 170,
+  "prior_source_selectors": [
+    "tests/test_public_qualification.py",
+    "tests/test_level_set_reference_metadata.py",
+    "tests/test_rolling_ball_kernels_public.py::test_geometry_prospective_manifest",
+    "tests/test_rolling_ball_kernels_public.py::test_prospective_allocation_bounds_and_rank_frontier_are_explicit",
+    "tests/test_rolling_ball_kernels_public.py::test_geometry_saved_original_rows",
+    "tests/test_rolling_ball_kernels_benchmark.py",
+    "tests/test_approximate_polygon_public.py::test_approximate_polygon_prospective_manifest",
+    "tests/test_approximate_polygon_public.py::test_approximate_polygon_saved_original_rows",
+    "tests/test_approximate_polygon_benchmark.py",
+    "tests/test_approximate_polygon_runtime_reference.py",
+    "tests/test_subdivide_polygon_public.py::test_subdivide_polygon_prospective_manifest",
+    "tests/test_subdivide_polygon_public.py::test_subdivide_polygon_saved_original_rows",
+    "tests/test_subdivide_polygon_benchmark.py",
+    "tests/test_rank_bilateral_fixture_reuse_metadata.py",
+    "tests/test_build_identity_facts.py",
+    "tests/test_rank_statistics_products.py",
+    "tests/test_rank_corpus_sdk_scope.py",
+    "tests/test_reconstruction_trace_policy.py",
+    "tests/test_reconstruction_source_migration_metadata.py",
+    "tests/test_h_extrema_public_metadata.py",
+    "tests/test_h_extrema_source_provenance.py",
+    "tests/test_line_aa_benchmark.py",
+    "tests/test_regionprops_state_benchmark.py",
+    "tests/test_regionprops_state_reference.py::test_regionprops_state_frozen_partition",
+    "tests/test_regionprops_state_reference.py::test_regionprops_state_prospective_source_safety",
+    "tests/test_regionprops_state_reference.py::test_regionprops_state_saved_rows_without_replay",
+    "tests/test_regionprops_point_witness.py::test_regionprops_point_frozen_contract",
+    "tests/test_ci_measurement_isolation.py",
+    "tests/test_circle_perimeter_aa_benchmark.py",
+    "tests/test_circle_perimeter_aa_reference.py::test_circle_perimeter_aa_prospective_source_safety",
+    "tests/test_circle_perimeter_aa_reference.py::test_circle_perimeter_aa_saved_original_rows",
+    "tests/test_combine_stains_half_benchmark.py",
+    "tests/test_combine_stains_half_reference.py::test_combine_stains_half_prospective_source_safety",
+    "tests/test_combine_stains_half_reference.py::test_combine_stains_half_saved_original_rows",
+    "tests/test_regionprops_public_mutation_reference.py::test_regionprops_public_mutation_prospective_source_safety",
+    "tests/test_regionprops_public_mutation_reference.py::test_regionprops_public_mutation_saved_original_rows",
+    "tests/test_line_nd_reference.py::test_line_nd_prospective_matrix_and_source_safety",
+    "tests/test_line_nd_reference.py::test_line_nd_saved_original_rows_without_replay",
+    "tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_source_safety_without_science",
+    "tests/test_line_nd_rounding_promotion_reference.py::test_line_nd_rounding_promotion_saved_original_only",
+    "tests/test_line_nd_benchmark.py::test_line_nd_benchmark_source_and_independent_large_bounds",
+    "tests/test_line_nd_benchmark.py::test_line_nd_benchmark_import_refuses_scientific_modules",
+    "tests/test_line_nd_benchmark.py::test_line_nd_benchmark_storage_and_preflight_guard_source",
+    "tests/test_ellipsoid_reference.py::test_ellipsoid_prospective_matrix_and_source_safety",
+    "tests/test_ellipsoid_reference.py::test_ellipsoid_saved_observations_without_replay",
+    "tests/test_draw_ellipsoid_default.py::test_ellipsoid_saved_sdk_oracle_metadata_without_science",
+    "tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_source_method_and_larger_domain_bound",
+    "tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_import_refuses_science",
+    "tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_actual_factory_original_refused",
+    "tests/test_ellipsoid_benchmark.py::test_ellipsoid_source_safety_refuses_unaudited_cases",
+    "tests/test_ellipsoid_benchmark.py::test_ellipsoid_benchmark_actual_guard_order_and_metadata_source",
+    "tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_prospective_source_safety",
+    "tests/test_ellipse_perimeter_reference.py::test_ellipse_perimeter_saved_observations_without_replay",
+    "tests/test_draw_ellipse_perimeter_default.py::test_ellipse_perimeter_saved_sdk_oracle_metadata_without_science",
+    "tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_source_bounds_and_pins",
+    "tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_import_refuses_science",
+    "tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_factory_original_refused",
+    "tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_rejects_unsafe_specs",
+    "tests/test_ellipse_perimeter_benchmark.py::test_ellipse_perimeter_benchmark_guards_and_timed_boundary",
+    "tests/test_ellipse_perimeter_benchmark.py::test_ellipse_fallback_runtime_binding_preserves_historical_contract_and_body",
+    "tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_prospective_source_and_scope",
+    "tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_saved_rows_and_declared_pixel_mutation",
+    "tests/test_regionprops_bbox_extent_reference.py::test_bbox_extent_saved_scalar_types_errors_and_FP_phases",
+    "tests/test_regionprops_scalars_benchmark.py",
+    "tests/test_regionprops_performance_v2.py",
+    "tests/test_region_stain_compare.py::test_imports_refuse_scientific_algorithms",
+    "tests/test_region_stain_compare.py::test_fixed_contract_workflow_sources_and_pool_scope",
+    "tests/test_region_stain_compare.py::test_exact_baseline_selection",
+    "tests/test_region_stain_compare.py::test_artifact_authentication_negative",
+    "tests/test_region_stain_compare.py::test_prepare_only_actual_step_admission",
+    "tests/test_region_stain_compare.py::test_both_pairs_and_all40_fixed_gates",
+    "tests/test_region_stain_compare.py::test_every_cohort_each_pair_rejects_regression",
+    "tests/test_region_stain_compare.py::test_original_normalized_gate_cannot_be_hidden_by_direct_gain",
+    "tests/test_region_stain_compare.py::test_raw_journal_medians_warmup_sample_order",
+    "tests/test_region_stain_compare.py::test_raw_journal_negative",
+    "tests/test_region_stain_compare.py::test_controller_rejects_non_UTC_before_any_execution",
+    "tests/test_regionprops_strided_sdk_scope.py",
+    "tests/test_matrix_transform_numpy124_skylakex_certificate.py",
+    "tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_prospective_scope_and_source",
+    "tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_sequences_and_accounting",
+    "tests/test_regionprops_coords_scaled_reference.py::test_coords_scaled_saved_payload_words_and_declared_mutations",
+    "tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_sdk_default_and_focused_route",
+    "tests/test_regionprops_coords_scaled_sdk_scope.py::test_coords_scaled_reuses_installed_component_family",
+    "tests/test_regionprops_coords_scaled_benchmark.py",
+    "tests/test_draw_polygon_reference.py",
+    "tests/test_draw_polygon_benchmark.py",
+    "tests/test_draw_polygon_sdk_scope.py",
+    "tests/test_draw_polygon_default.py::test_polygon_defaults_source_and_saved_contract_without_science",
+    "tests/test_draw_polygon_dtype_tag_reference.py::test_draw_polygon_tagged_saved_reference_complete",
+    "tests/test_draw_polygon_dtype_tag_reference.py::test_draw_polygon_tagged_saved_payloads",
+    "tests/test_draw_bezier_reference.py::test_bezier_prospective_cases_and_source_safety",
+    "tests/test_draw_bezier_reference.py::test_bezier_saved_original_rows_without_replay",
+    "tests/test_bezier_curve_benchmark.py",
+    "tests/test_bezier_curve_default.py::test_bezier_default_saved_contract_without_science",
+    "tests/test_draw_set_color_reference.py",
+    "tests/test_draw_set_color_benchmark.py",
+    "tests/test_draw_set_color_default.py::test_set_color_default_saved_contract_without_science",
+    "tests/test_matrix_prescott_contract.py",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_manifest_and_source_order_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_header_scope_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_saved_rows_without_replay",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_per_function_saved_contract_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_profile_specific_supplied_table_mutation_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_label_pair_saved_FP_and_error_prefix_without_science",
+    "tests/test_label_pair_metrics_reference.py::test_contingency_context_rejects_tampered_source",
+    "tests/test_contingency_table_public.py::test_contingency_prospective_scope_without_science",
+    "tests/test_contingency_table_public.py::test_contingency_sdk_default_and_focused_source",
+    "tests/test_label_pair_metrics_default.py::test_label_pair_default_source_scope_without_science",
+    "tests/test_label_pair_metrics_default.py::test_ARE_metadata_context_rejects_tampered_source",
+    "tests/test_label_pair_metrics_benchmark.py",
+    "tests/test_find_boundaries_reference.py",
+    "tests/test_find_boundaries_frontend_contract.py",
+    "tests/test_find_boundaries_sdk_scope.py",
+    "tests/test_find_boundaries_layout_integration.py",
+    "tests/test_find_boundaries_benchmark.py",
+    "tests/test_find_boundaries_default.py::test_find_boundaries_shared_source_without_science",
+    "tests/test_join_integration_source.py",
+    "tests/test_join_segmentations_native_contract.py",
+    "tests/test_join_segmentations_benchmark.py",
+    "tests/test_util_metadata_source.py",
+    "tests/test_crop_benchmark.py",
+    "tests/test_regular_grid_native_contract.py",
+    "tests/test_regular_grid_benchmark.py",
+    "tests/test_join_util_views_density_source.py",
+    "tests/test_util_views_source.py",
+    "tests/test_next_util_benchmark_execution.py",
+    "tests/test_util_views_fenv.py",
+    "tests/test_join_windows_fenv.py",
+    "tests/test_mark_lbp_enabled_source.py",
+    "tests/test_draw_multiblock_lbp_native_source.py",
+    "tests/test_draw_multiblock_lbp_codec.py",
+    "tests/test_mark_boundaries_native_contract.py",
+    "tests/test_mark_boundaries_benchmark_execution.py",
+    "tests/test_draw_multiblock_lbp_benchmark_execution.py",
+    "tests/test_draw_multiblock_lbp_metadata_source.py",
+    "tests/test_util_view_boundary_source.py",
+    "tests/test_join_segmentations_fenv_input_source.py",
+    "tests/test_finite_radon_source.py",
+    "tests/test_finite_radon_native_source.py",
+    "tests/test_finite_radon_benchmark_execution.py",
+    "tests/test_finite_radon_numpy_abi_source.py",
+    "tests/test_variation_of_information_source.py",
+    "tests/test_variation_of_information_current_counts_source.py",
+    "tests/test_variation_of_information_benchmark_execution.py",
+    "tests/test_variation_of_information_integration.py::test_vi_shared_source",
+    "tests/test_abi_vi_integration_source.py",
+    "tests/test_flood_fill_native_source.py",
+    "tests/test_flood_fill_integration.py::test_flood_shared_source",
+    "tests/test_variation_of_information_reduction_source.py",
+    "tests/test_mark_lbp_controller.py",
+    "tests/test_finite_radon_controller.py",
+    "tests/test_join_util_current275_controller.py",
+    "tests/test_vi_reduction_integration_source.py",
+    "tests/test_rolling_ball_source.py",
+    "tests/test_rolling_ball_native_source.py",
+    "tests/test_rolling_ball_sdk_dtype_source.py",
+    "tests/test_rolling_ball_benchmark.py",
+    "tests/test_rolling_ball_controller.py",
+    "tests/test_rolling_ball_enabled_source.py",
+    "tests/test_rolling_ball_sentinel.py",
+    "tests/test_rolling_ball_integration.py::test_rolling_ball_shared_source",
+    "tests/test_current281_integration_fixes_source.py",
+    "tests/test_mark_wide_outer_source.py",
+    "tests/test_mark_wide_outer_capture.py",
+    "tests/test_mark_wide_outer_private_compare.py",
+    "tests/test_mark_wide_compatibility_source.py",
+    "tests/test_mark_wide_outer_sdk.py",
+    "tests/test_draw_multiblock_lbp_entry_fp.py",
+    "tests/test_mark_lbp_fp_integration_source.py"
+  ],
+  "unchanged_join_source_raw_sha256": "ff8ad07ebcba58b55cf8ccc254fc83b77f42955b9e5e2f062fbd27797f0964c5",
+  "predecessor_qualified_native_source": "16a5b50193125199ad26cf5a89acec5babf5290c; source views only, no new runtime admission",
+  "requirements": [
+    "Authenticate new current bytes before every old gate",
+    "Continue all old c60/AAA/MARK/rolling/VI/cumulative/sentinel/SDK checks",
+    "No arbitrary or double-projected raw entry accepted",
+    "Keep retained167edc MARK raw exception and all older gates unchanged",
+    "New helper/context/all executed inputs explicitly collected",
+    "Actual new native/provider parity remains separate pending evidence"
+  ]
+}

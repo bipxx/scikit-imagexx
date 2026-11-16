@@ -1,0 +1,70 @@
+{
+  "schema": "vi-public-log2-provider-v1",
+  "status": "SOURCE_ONLY_COMPILED_PARITY_SDK_RELEASE_PERFORMANCE_PENDING",
+  "execution_authority": null,
+  "API": "metrics.variation_of_information",
+  "public_signature": "(image0=None, image1=None, *, table=None, ignore_labels=())",
+  "compiled": false,
+  "public_parity": false,
+  "SDK_parity": false,
+  "release_qualified": false,
+  "performance": false,
+  "root_policy": "Repair demonstrated source contract mismatch; no same-host feature-causality/old9V45 cause credit. No forced CPU/reference policy or weakened accuracy.",
+  "provider": {
+    "name": "numpy.log2",
+    "entry": "opaque current callable passed by frontend; public PyObject_CallOneArg on calling thread with GIL/current error context",
+    "batches": 2,
+    "scope": "one whole nonzero batch for each source entropy direction, including empty; plain owning native-f64 contiguous buffers and fresh output",
+    "native_owned": [
+      "marginals",
+      "sparse scaling",
+      "duplicate coalescing",
+      "xlogx products",
+      "ordered sparse reductions",
+      "ordered dot graphs"
+    ],
+    "forbidden": [
+      "private NumPy layout/capsule/symbol",
+      "CPU forcing or per-call kernel discovery",
+      "cached old provider guard bypass",
+      "whole original algorithm forwarding",
+      "other NumPy entropy/reduction or SciPy arithmetic",
+      "FP seeding/normalization/restoration to force parity"
+    ],
+    "errors": "Python primary propagates; no None/refusal or original fallback for provider errors; native output published only after success."
+  },
+  "SDK_default": "platform-libm scalar; existing ABI",
+  "SDK_compatible": "Additive VariationLog2Batch host callback, abstract lifetime/error contract; no Python/NumPy dependency in pure SDK. Host scalar callback controls do not prove NumPy/SVML semantics.",
+  "workers": "Default1, existing public two snapshots explicit; scalar ordered entropy; host callback serial calling thread.",
+  "scope_limits": [
+    "Actual numerical values/FP/error delivery and qNaN/zero/empty/duplicate behavior are not proved by source controls.",
+    "Runtime-library SIMD-disabled does not disable NumPy ISA semantics.",
+    "Old16 genuine source/runtime authority remains immutable and does not authorize current provider source."
+  ],
+  "future_evidence": [
+    "strict public final words and intermediate/provider payload/FP evidence on real cohorts",
+    "calling-thread GIL/error-context/lifetime and exception behavior",
+    "hot-swap and native ownership/no algorithm forwarding",
+    "full owning installed SDK default+compatible callback scopes",
+    "complete actual updated source selector command both supported Pythons",
+    "exact-source four-profile release qualification",
+    "affected VI4 one-thread public performance, all losses retained"
+  ],
+  "future_minimum_budget": {
+    "new_provider_public_guard_per_worker": {
+      "successful_native_public": 1,
+      "failed_native_public": 1,
+      "original_public": 0,
+      "provider_calls_success": 2,
+      "provider_calls_failure": 1
+    },
+    "hot_swap_saved_case_native_public": 1,
+    "host_SDK_additions": {
+      "compatible_saved_whole_calls": 6,
+      "CSR_control_calls": 4,
+      "originals": 0
+    },
+    "sampler_method_changed": false,
+    "hosted_authority": null
+  }
+}

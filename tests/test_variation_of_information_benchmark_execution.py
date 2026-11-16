@@ -10,6 +10,7 @@ import runpy
 import sys
 import types
 import pytest
+from variation_of_information_source_context import provider_predecessor_source
 ROOT=Path(__file__).resolve().parents[1]
 CONTEXT='coverage/contracts/variation-of-information-benchmark-execution-v6.json'
 DATA=json.loads((ROOT/CONTEXT).read_bytes())
@@ -41,8 +42,10 @@ def source_overlay(tmp_path):
     root=tmp_path/'controller';root.mkdir();external=shared_root()
     pins={**DATA['source_files_canonical_sha256'],**DATA['FENV_dependency']['source_files_raw_sha256']}
     for name,digest in pins.items():
-        choices=[ROOT/name,external/name];source=next(p for p in choices if p.is_file()and(H(p.read_bytes())==digest or hashlib.sha256(p.read_bytes()).hexdigest()==digest))
-        out=root/name;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(source.read_bytes())
+        choices=[ROOT/name,external/name]
+        payloads=[provider_predecessor_source(ROOT,name,p.read_bytes())if p==ROOT/name else p.read_bytes()for p in choices if p.is_file()]
+        raw=next(raw for raw in payloads if H(raw)==digest or hashlib.sha256(raw).hexdigest()==digest)
+        out=root/name;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(raw)
     for name in(CONTEXT,'CMakeLists.txt'):
         source=ROOT/name if name==CONTEXT else external/name
         out=root/name;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(source.read_bytes())
@@ -78,7 +81,7 @@ def test_exact_cases_bounds_source_method_and_unbound(modules):
     for name,pin in DATA['source_files_canonical_sha256'].items():
         if name in('src/label_pair_metrics.cpp','src/execution.hpp','benchmarks/next_util_execution.py','benchmarks/mark_boundaries_execution.py'):path=shared_root()/name
         else:path=ROOT/name
-        assert H(path.read_bytes())==pin,name
+        assert H(provider_predecessor_source(ROOT,name,path.read_bytes()))==pin,name
     common=load(shared_root()/'benchmarks/next_util_execution.py')
     measure=runpy.run_path(str(ROOT/'tools/montage_sustained.py'))['measure']
     import inspect
@@ -237,7 +240,7 @@ def test_actual_frontend_CSR_identity_reaches_inert_native_suffix(modules,matrix
                              log=lambda*a:None,log2=lambda*a:None)
     scope=dict(np=np,sparse=sparse,_core=Core(),get_index_dtype=lambda *a,**kw:'index-dtype')
     def definitions(path,names):
-        tree=ast.parse((ROOT/path).read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]
+        tree=ast.parse(provider_predecessor_source(ROOT,path));nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]
         assert {n.name for n in nodes}==set(names)
         exec(compile(ast.Module(body=nodes,type_ignores=[]),path,'exec'),scope)
     definitions('python/skimagexx/_contingency_table.py',('_structural_csr',))
@@ -262,7 +265,7 @@ def test_provider_guard_successor_preserves_methods_and_authentication_history()
     assert hashlib.sha256(oldraw).hexdigest()==previous['raw_sha256'];old=json.loads(oldraw)
     assert DATA['cases']==old['cases']and DATA['method']==old['method']and DATA['strict_preflight']==old['strict_preflight']
     for name,row in DATA['provider_guard_predecessors'].items():
-        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_sha256']
+        raw=provider_predecessor_source(ROOT,name).replace(b'\r\n',b'\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_sha256']
         for fragment in row['inverse_fragments']:
             current=fragment['current'].encode();assert raw.count(current)==1;raw=raw.replace(current,fragment['predecessor'].encode(),1)
         assert hashlib.sha256(raw).hexdigest()==row['predecessor_canonical_sha256']

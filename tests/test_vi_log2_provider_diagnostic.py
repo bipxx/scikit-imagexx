@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 import pytest
+from variation_of_information_source_context import provider_predecessor_source
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('_inert_log2_provider', ROOT/'tools/vi_log2_provider_diagnostic.py')
@@ -297,6 +298,10 @@ def bound_go_fixture(tmp_path,monkeypatch,mode='hosted-feature'):
     """Inert trusted-metadata stand-ins; exercise the real check_go body."""
     from datetime import datetime,timedelta,timezone
     context=json.loads(D.CONTRACT.read_bytes())
+    snapshot=tmp_path/'prepared16-source'
+    for name,pin in context['prepared_dependencies'].items():
+        raw=provider_predecessor_source(ROOT,name);assert hashlib.sha256(raw).hexdigest()==pin,name
+        path=snapshot/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
     now=datetime(2026,11,15,19,40,tzinfo=timezone.utc)
     prefix=context['hosted_loader_environment']['base_prefix']
     interpreter='/home/runner/work/_temp/runtime/bin/python'
@@ -331,7 +336,7 @@ def bound_go_fixture(tmp_path,monkeypatch,mode='hosted-feature'):
         monkeypatch.setenv('UTIL_VIEWS_FENV_HELPER','/inert/helper.so')
         monkeypatch.delenv('LD_LIBRARY_PATH',raising=False)
     go=dict(status=D.AUTHORITY,limits=D.LIMITS,mode=mode,runner_sha256=D.sha(D.__file__),contract_sha256=D.sha(D.CONTRACT),input_sha256=D.sha(D.FIXTURE),
-        source_revision=D.SOURCE,source_root=str(ROOT),output_root=str(tmp_path/'outputs'),core_sha256=context['core_sha256'],interpreter=interpreter,
+        source_revision=D.SOURCE,source_root=str(snapshot),output_root=str(tmp_path/'outputs'),core_sha256=context['core_sha256'],interpreter=interpreter,
         created_utc=now.isoformat(),deadline_utc=(now+timedelta(hours=1)).isoformat(),
         runtime_path=str(runtime),runtime_sha256=context['genuine_runtime_sha256'],helper_binding_path=str(helper),helper_binding_sha256=D.sha(helper),
         interpreter_base_prefix=prefix,allowed_LD_LIBRARY_PATH=context['hosted_loader_environment']['LD_LIBRARY_PATH'],

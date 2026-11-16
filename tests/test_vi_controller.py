@@ -4,6 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 from tools.mark_lbp_fp_context import source_successor_predecessor_bytes
+from variation_of_information_source_context import provider_predecessor_source
 ROOT=Path(__file__).resolve().parents[1]
 CONTRACT=ROOT/'coverage/contracts/vi-measurement-v5.json'
 DATA=json.loads(CONTRACT.read_bytes());ROUTES=DATA['first_cohort']['routes']
@@ -18,7 +19,8 @@ def synthetic(tmp_path,monkeypatch):
  from test_variation_of_information_benchmark_execution import synthetic as source_synthetic
  root,path,b,c=source_synthetic(tmp_path,monkeypatch);root=Path(b['source_root'])
  for name in DATA['first_cohort']['source_files_raw_sha256']:
-  p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/name).read_bytes());b['prepared_source']['files_sha256'][name]=H(p.read_bytes().replace(b'\r\n',b'\n'))
+  raw=provider_predecessor_source(ROOT,name);assert H(raw)==DATA['first_cohort']['source_files_raw_sha256'][name],name
+  p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw);b['prepared_source']['files_sha256'][name]=H(raw.replace(b'\r\n',b'\n'))
  runtime=Path(b['runtime_path']);r=json.loads(runtime.read_bytes());r['source']=b['prepared_source'];runtime.write_text(json.dumps(r));b['runtime_sha256']=PROBE.sha(runtime);path.write_text(json.dumps(b))
  go_path=Path(b['root_go_path']);go=json.loads(go_path.read_bytes());go.update(binding_sha256=PROBE.sha(path),probe_sha256=PROBE.sha(PROBE.__file__));go_path.write_text(json.dumps(go))
  return path,b,c
@@ -339,7 +341,7 @@ def test_actual_source_tail_and_real_sampler_frames_with_inert_prepared_locals(t
 @pytest.mark.parametrize('cached',(False,True))
 def test_normalized_route_runs_actual_driver_parser_until_request_refusal(tmp_path,monkeypatch,cached):
  import builtins
- path,binding,context=synthetic(tmp_path,monkeypatch);monkeypatch.syspath_prepend(str(ROOT/'benchmarks'));route=ROUTES['vi'];output=Path(binding['output_root'])/'never.json';argv=PROBE.driver_argv(ROOT,route,path,output);adapter=PROBE.driver_adapter(ROOT);module=runpy.run_path(str(ROOT/route['driver']));prior=builtins.__import__;requests=[]
+ path,binding,context=synthetic(tmp_path,monkeypatch);monkeypatch.syspath_prepend(str(ROOT/'benchmarks'));route=ROUTES['vi'];output=Path(binding['output_root'])/'never.json';source=Path(binding['source_root']);argv=PROBE.driver_argv(source,route,path,output);adapter=PROBE.driver_adapter(source);module=runpy.run_path(str(source/route['driver']));prior=builtins.__import__;requests=[]
  class Refused(BaseException):pass
  def request(name,*a,**k):
   if name.split('.')[0]in('numpy','scipy','skimage','skimagexx'):requests.append(name);raise Refused()

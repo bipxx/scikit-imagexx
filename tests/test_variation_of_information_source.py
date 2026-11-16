@@ -11,7 +11,7 @@ from pathlib import Path
 import struct
 import zlib
 import pytest
-from variation_of_information_source_context import historical_source
+from variation_of_information_source_context import historical_source,provider_predecessor_source
 ROOT=Path(__file__).resolve().parents[1]
 CONTRACT=ROOT/'coverage/contracts/variation-of-information-native-v1.json'
 
@@ -76,7 +76,7 @@ def test_operation_reuses_count_types_and_keeps_ordered_core():
 def test_all_family_source_and_structural_providers_are_explicit():
     data=json.loads(CONTRACT.read_bytes())
     for name,pin in data['source_raw_sha256'].items():assert hashlib.sha256(historical_source(ROOT,name)).hexdigest()==pin,name
-    text=(ROOT/'python/skimagexx/_variation_of_information.py').read_text()
+    text=provider_predecessor_source(ROOT,'python/skimagexx/_variation_of_information.py').decode()
     assert 'contingency_table(image0,image1,ignore_labels=ignore_labels,normalize=True)'in text
     assert 'table.data' in text and 'table.indices'in text and 'table.indptr'in text
     assert 'np.log'not in text and '@'not in text and '.sum('not in text

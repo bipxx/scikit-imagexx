@@ -41,7 +41,7 @@ def test_vi_public_star_registry_and_single_core():
     assert xx.get_num_threads()==1
 
 
-def test_vi_swappable_public_saved_perfect_and_strict_checker():
+def test_vi_swappable_public_saved_perfect_and_strict_checker(monkeypatch):
     import numpy as np
     import skimagexx as xx
     from skimagexx.coverage import default_call,assert_default_parity,variation_of_information_default_error
@@ -52,7 +52,13 @@ def test_vi_swappable_public_saved_perfect_and_strict_checker():
     before=observation((args,options,buffers),np)
     policy=np.geterr(),np.geterrcall(),np.getbufsize()
     def pipeline(backend):return backend.metrics.variation_of_information(*args,**options)
-    actual=pipeline(xx);expected_raw=zlib.decompress(base64.b64decode(row['result']['raw_zlib_base64']))
+    original_log2=np.log2;provider_batches=[]
+    def public_log2(values):
+        provider_batches.append(values.shape)
+        return original_log2(values)
+    monkeypatch.setattr(np,'log2',public_log2)
+    actual=pipeline(xx);assert len(provider_batches)==2
+    expected_raw=zlib.decompress(base64.b64decode(row['result']['raw_zlib_base64']))
     assert hashlib.sha256(expected_raw).hexdigest()==row['result']['raw_sha256']and actual.tobytes()==expected_raw
     expected=np.frombuffer(expected_raw,np.float64).copy()
     assert variation_of_information_default_error(actual,expected)==0.
