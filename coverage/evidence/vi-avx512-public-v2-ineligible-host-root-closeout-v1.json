@@ -1,0 +1,87 @@
+{
+  "schema": "vi-avx512-public-v2-ineligible-host-root-closeout-v1",
+  "status": "ROOT_ADMITTED_INELIGIBLE_HOST_ZERO_TARGETS_NO_PARITY_CREDIT",
+  "owner": "/root",
+  "run": 43769652052,
+  "controller": "cb863019925919ffc1e47ad2c45a90e6b90beddc",
+  "workflow": 419507564,
+  "job": 132982493166,
+  "job_conclusion": "success_designed_earlystop_only",
+  "host": {
+    "vendor": "AuthenticAMD",
+    "model": "AMD EPYC 7763 64-Core Processor",
+    "family": "25",
+    "model_id": "1",
+    "stepping": "1"
+  },
+  "missing_required": [
+    "avx512f",
+    "avx512dq",
+    "avx512bw",
+    "avx512vl"
+  ],
+  "handoff": {
+    "path": "build/vi-avx512-public-witness-v2/run43769652052-results-v1/terminal-handoff-v1.json",
+    "sha256": "e8df867c917cb106e1e9428986240d447bb626c9127a97b890040bb065a9ba3f"
+  },
+  "proof_index": {
+    "path": "build/vi-avx512-public-witness-v2/run43769652052-results-v1/terminal-proof-index-v1.json",
+    "sha256": "1f25693a97e9aa46bc80314c57225bd40a784b07595faad6efe0caa6eda26622",
+    "root_verified_proofs": 29
+  },
+  "artifact": {
+    "id": 14184006358,
+    "bytes": 6627,
+    "sha256": "18fd28e905b254b57bf2760a6f5ea34c1776711a75c831e866899e0f98dc9c44",
+    "download_count": 1,
+    "ZIP_persisted": false,
+    "ZIP_available": false,
+    "retained_text_files": 8,
+    "retained_text_bytes": 24246
+  },
+  "actual_execution": {
+    "host_declared_original_native": [
+      0,
+      0
+    ],
+    "journal_totals": null,
+    "journals_present": false,
+    "actual_skipped_steps": [
+      "Run actions/checkout@v4",
+      "Install the authenticated product offline",
+      "Require compiled and enabled NumPy AVX512_SKX before helper preparation",
+      "Prepare the authenticated small F1 helper once on this measurement host",
+      "Run the authorized adaptive public VI witness without timing"
+    ],
+    "runtime_compiledfeatures_F1_FP_values_latepredicates_postidentity": null,
+    "disabled_control": 0,
+    "sampler_timing": 0
+  },
+  "gates": [
+    {
+      "gate": "Exactsource/run/GO+oneartifactintake+actualAPIearlystop",
+      "state": "passed"
+    },
+    {
+      "gate": "AVX512host",
+      "state": "ineligible"
+    },
+    {
+      "gate": "Late-state/publicdisabledcontrol/causalcomparability",
+      "state": "not_reached_pending"
+    },
+    {
+      "gate": "Productioncorrection/parity/SDK/VI4/finalsource/requalification/delivery",
+      "state": "pending"
+    }
+  ],
+  "no_retry_search_authority": true,
+  "old_actual_failure": "coverage/evidence/vi-avx512-default-public-word-root-failure-admission-v1.json remains valid1ULP/1+1. No old9V45cause or newpublicvalueclaim.",
+  "waste_review": {
+    "result": "One conditional22secondhostjob stoppedbefore product transport/installation/helper/targets.",
+    "reused": "Source97proofs/281both and existing memoryintake; no scientific/source replay.",
+    "avoidable": "Worker freeze initially counted6skiprows instead ofactual5; corrected metadata only, no data/GO effect.",
+    "next_owner": "/root",
+    "next_trigger": "Do not retryunchanged cb86 orsearchhosts. Independently choose concrete source repair for established reference-provider contract gap; newsource validation before any numerical/qualificationGO."
+  }
+}

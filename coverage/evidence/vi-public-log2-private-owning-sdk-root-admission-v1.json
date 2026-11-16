@@ -1,0 +1,170 @@
+{
+  "status": "ROOT_ADMITTED_PRIVATE_OWNING_SDK_NORMAL_AND_RUNTIME_DISABLED_PASS",
+  "owner": "/root",
+  "production_source": "114ed9b3e0662982bfd82d217b59ee11acba9e25",
+  "SDK_test_source": "1237655d691740d20b35fe28109b4dc08642896a (same4exactcompiledtestpins; privateproduction544unchanged)",
+  "scope": "Private Linuxx86_64 GNU13.3/glibc2.39/currentAVX2 OpenMP staticSDK; explicit scalarstdlog2 host callback, oldscalarSDKdefault and completeowningclient. No NumPy/SVML provider or publicoldhost credit.",
+  "source_compile_admission": "build/vi-public-log2-provider-v1/sdk-controls-source-v1/root-source-compile-admission-v1.json",
+  "GO": {
+    "path": "C:/Users/HEQ/Projects/scikit-imagexx/build/vi-public-log2-provider-v1/sdk-controls-source-v1/root-two-mode-runtime-GO-v1.json",
+    "bytes": 6772,
+    "sha256": "0c89694329d50af300712b3b3beac593cc0b40041d94bdec61f72ee224832c38"
+  },
+  "GO_consumed": true,
+  "handoff": {
+    "path": "build/vi-public-log2-provider-v1/sdk-controls-source-v1/runtime-v1/handoff-v1.json",
+    "sha256": "b7ebf6466395ec3fcec12ee70ca25a0c6df3f15a846a1b9bce416cee8d636448"
+  },
+  "proof_index": {
+    "path": "build/vi-public-log2-provider-v1/sdk-controls-source-v1/runtime-v1/proof-index-v1.json",
+    "sha256": "680e92f9b47c48b9b24e33749d108ee3addfac094d71c3bceafdbdf68cf30922",
+    "actual_files_hashed": 23
+  },
+  "source_pins": [
+    {
+      "path": "D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1/tests/cmake_consumer/variation_of_information_enabled_consumer.cpp",
+      "bytes": 6008,
+      "raw_sha256": "a3b39369cfeed7fdc4372b3aa7afa26e24cfa862396bb8541a7dbb4a6ee48ef1",
+      "canonical_LF_sha256": "a3b39369cfeed7fdc4372b3aa7afa26e24cfa862396bb8541a7dbb4a6ee48ef1"
+    },
+    {
+      "path": "D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1/tests/variation_of_information_provider_controls.hpp",
+      "bytes": 16300,
+      "raw_sha256": "3479d7490e2d85a8f70e721ecd8d204ccd1369b3949f733bd6d83cf49b566fd2",
+      "canonical_LF_sha256": "3479d7490e2d85a8f70e721ecd8d204ccd1369b3949f733bd6d83cf49b566fd2"
+    },
+    {
+      "path": "D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1/tests/cmake_consumer/CMakeLists.txt",
+      "bytes": 13548,
+      "raw_sha256": "b4e45d2516285e2b9ebbc30e46c9ca40bf133f40559f820f0abfd058a136e9ff",
+      "canonical_LF_sha256": "b4e45d2516285e2b9ebbc30e46c9ca40bf133f40559f820f0abfd058a136e9ff"
+    },
+    {
+      "path": "D:/Scratch/scikit-imagexx-active-worktrees/current281-main-integration-v1/tests/test_vi_owning_sdk_source.py",
+      "bytes": 6349,
+      "raw_sha256": "86bd4bfa8a267ac26f3151d49905b791e812ea1ad906895d0740f63b58b71f5a",
+      "canonical_LF_sha256": "86bd4bfa8a267ac26f3151d49905b791e812ea1ad906895d0740f63b58b71f5a"
+    }
+  ],
+  "binary": {
+    "path": "D:/Scratch/vi-owning-sdk-controls-v1/build/variation_of_information_consumer",
+    "bytes": 257032,
+    "sha256": "232b9442fd9ad53709abc851a7091c81fc9735fbd4242828d7fa7fd29a7531bc"
+  },
+  "installed_archive": {
+    "path": "D:/Scratch/vi-public-log2-provider-native-v1/private-install-minimum/lib/libskimagexx.a",
+    "bytes": 9411874,
+    "sha256": "23e0c6596b7653db99dc14134b2b47791eb7d26334f641e20e5d38cc8531942d"
+  },
+  "helper": {
+    "path": "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/reference-fenv-restore-v1/libreference_fenv_restore.so",
+    "mode": "private-fixed-v1",
+    "glibc": "2.39",
+    "ABI": [
+      32,
+      0,
+      4,
+      8,
+      12,
+      20,
+      28,
+      8
+    ],
+    "sha256": "0c40af724c3cbca34fc6c6c027e62ddb1635609b7575a09505d578db24466220",
+    "bytes": 15632
+  },
+  "modes": [
+    {
+      "mode": "normal",
+      "actual_exit": 0,
+      "XML_tests": 1,
+      "SIMD_available": 1,
+      "new_observed_counters": {
+        "compatible_calls": 142,
+        "default_refusals": 10,
+        "callbacks": 220,
+        "caller32_checks": 20,
+        "F1_restores": 20,
+        "fegetenv_reads": 65,
+        "default_workers": 1,
+        "originals": 0,
+        "timing": 0
+      },
+      "caller32_exact_rows": 20,
+      "refusal32_exact_rows": 20,
+      "refusal_matrix": "all5hardware contexts \u00d7default/compatible\u00d7table/image, raw32unchanged",
+      "client_output_sha256": "00196cb49db3423ceb1f3f626ea8616c5e12e02abe8f7793ae83d2b19ed8a49b",
+      "LastTest_sha256": "a95a6cf0ed948dc137bdec727cff6b8ca621a58f4552cf52ac155c208a158218",
+      "terminal_sha256": "df9a2e878ca90b27641af9c12eb2b9c0260d1f645b04185b490c26d6f2704f59",
+      "process_raw32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffff801f0000"
+    },
+    {
+      "mode": "runtime-disabled",
+      "actual_exit": 0,
+      "XML_tests": 1,
+      "SIMD_available": 0,
+      "new_observed_counters": {
+        "compatible_calls": 142,
+        "default_refusals": 10,
+        "callbacks": 220,
+        "caller32_checks": 20,
+        "F1_restores": 20,
+        "fegetenv_reads": 65,
+        "default_workers": 1,
+        "originals": 0,
+        "timing": 0
+      },
+      "caller32_exact_rows": 20,
+      "refusal32_exact_rows": 20,
+      "refusal_matrix": "all5hardware contexts \u00d7default/compatible\u00d7table/image, raw32unchanged",
+      "client_output_sha256": "a54467b10425e855c619cec260e30895bd33f62115adb07e9eca1697688d9e5e",
+      "LastTest_sha256": "2ccb96e14fd9ae0c5f597192ba6961e5561be6574e7d8a9e2fe062ece29936c9",
+      "terminal_sha256": "ddc211c4ae6006e7dcdf59380e6c6b242f569af5eab92dc7f255bc7e2d15f276",
+      "process_raw32": "7f03ffff0000ffffffffffff0000000000000000000000000000ffff801f0000"
+    }
+  ],
+  "source_derived_bounds_not_traced": {
+    "old_owning_topcalls_source_derived_each": 136,
+    "old_callbacks_source_derived_each": 18,
+    "complete_owning_topcall_source_bound_each": 288,
+    "complete_callback_source_bound_each": 238,
+    "complete_two_run_topcall_source_bound": 576,
+    "complete_two_run_callback_source_bound": 476,
+    "independently_traced_complete_call_counts": false,
+    "explanation": "Actual printed new counters142/220/10 each are retained separately. Old groups print checked18/small6/large12 and enforce pinned assertions; old full call totals are inferred from reached fixed source, not new per-call tracing."
+  },
+  "actual_zero_activity": {
+    "original_public": 0,
+    "Python_science": 0,
+    "NumPy_log2": 0,
+    "sampler": 0,
+    "warmup": 0,
+    "benchmark_timing": 0,
+    "build": 0,
+    "download": 0,
+    "retries": 0,
+    "cleanup": 0,
+    "source_edits": 0
+  },
+  "covered_controls": [
+    "Allold136owninggroups preserved/12large savedrecords/18counts combinations/6savedpairs",
+    "Compatibledense/fallback/logicalNNZ+large/explicitworker1overglobal4",
+    "Null/firstfalse/secondfalse/throwingcallback identity and no secondafterfirstfailure/fulloutputfields untouched",
+    "Callingthread/emptytwo batches/stored\u00b1zeros/duplicateorder",
+    "Nondefault rounding/FTZ/DAZ/SSE/x87unmasked refusal with full32unchanged and group/process restoration"
+  ],
+  "unmet": [
+    "True compiler-scalar and ASanUBSan owningclients (libraries compiled, bodygate pending)",
+    "Freshcurrentpublic original/runtime reference scope correction beforefinalsource",
+    "Complete final173source command bothretainedPythons",
+    "Exact-source four-profile release qualification",
+    "VI4public performance/alllosses andmain271->281delivery"
+  ],
+  "retention": "Both rawLastTest/client/XML modes outsideactiveSDKbuild beforeoverwrite; no archives or cleanup; old policyblockedpaths staymanual.",
+  "waste_reuse": {
+    "result": "Both intended private SDK modes passed without retries or fixes.",
+    "reuse": "Root-admitted67proof source/compile/header/ELF/helper chain and protected product; only one requested archive entry hash, no library rebuild or Python4case replay.",
+    "observed_cost": "Normal2.094s/runtime-disabled0.250s command duration (WSL/CTest overhead included); not benchmark timing or a speed comparison.",
+    "next_owner": "/root independently admits exact raw/counters/FP/identity and updates existing records; retains source-lineage/full172/profile/performance/main gates. Active SDKbuild remains protected for pending work."
+  }
+}
