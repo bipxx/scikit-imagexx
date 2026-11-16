@@ -21,7 +21,14 @@ def load(path):
     m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 
 
+def validation_bridge(root,name,raw,canonical=False):
+    from tools.mark_lbp_fp_context import CURRENT_VALIDATION_CONTEXT_SHA256
+    from tools.current_validation_context import predecessor_bytes
+    return predecessor_bytes(root,name,raw,CURRENT_VALIDATION_CONTEXT_SHA256,canonical)
+
+
 def capacity_bridge(root,name,raw,canonical=False):
+    raw=validation_bridge(root,name,raw,canonical)
     from tools.mark_lbp_fp_context import QUALIFICATION_CAPACITY_CONTEXT_SHA256
     from tools.qualification_capacity_context import predecessor_bytes
     return predecessor_bytes(root,name,raw,QUALIFICATION_CAPACITY_CONTEXT_SHA256,canonical)
@@ -190,7 +197,7 @@ def test_provider_guard_refuses_bypasses_and_preserves_primary(fault):
 def test_new_executor_is_isolated_strict_predecessor_and_unbound(monkeypatch):
     m=adapter();old=load(ROOT/'benchmarks/variation_of_information_execution.py');current=m.executor()
     assert old.CONTEXT=='coverage/contracts/variation-of-information-benchmark-execution-v6.json'
-    assert current.CONTEXT=='coverage/contracts/vi-public-log2-provider-benchmark-v1.json'
+    assert current.CONTEXT=='coverage/contracts/vi-public-log2-provider-benchmark-v2.json'
     assert current.candidate_providers is m.candidate_providers
     assert current.execute.__code__.co_code==old.execute.__code__.co_code
     monkeypatch.syspath_prepend(str(ROOT/'benchmarks'))
@@ -201,6 +208,82 @@ def test_new_executor_is_isolated_strict_predecessor_and_unbound(monkeypatch):
     assert old_context['cases']==new['cases'] and old_context['method']==new['method']
     assert new['route']['contract']==current.CONTEXT and new['route']['driver']=='benchmarks/vi_public_log2_provider_consumer.py'
     assert all(x is None for x in new['unbound'].values()) and new['execution_authority']is None
+
+
+def test_current_benchmark_v2_literal_source_closure_and_actual_boundary():
+    current=adapter().executor();data=json.loads((ROOT/current.CONTEXT).read_bytes())
+    prior='coverage/contracts/vi-public-log2-provider-benchmark-v1.json'
+    old=json.loads((ROOT/prior).read_bytes())
+    changed={'schema','route','source_files_canonical_sha256','common_boundary_canonical_sha256','metadata_fixture_canonical_sha256','source_binding'}
+    assert {k:v for k,v in data.items()if k not in changed}=={k:v for k,v in old.items()if k not in changed}
+    assert data['schema']=='vi-public-log2-provider-benchmark-v2'
+    assert data['route']==dict(old['route'],contract=current.CONTEXT)
+    assert data['source_binding']==dict(mode='literal-current-canonical-LF',predecessor_contract=dict(path=prior,raw_sha256=H((ROOT/prior).read_bytes())),historical_sources='Retained V1 source-history rows only; unused by actual current validate_binding and not current source acceptance.',execution_authority=None)
+    for name,pin in data['source_files_canonical_sha256'].items():
+        assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
+    assert data['common_boundary_canonical_sha256']==data['source_files_canonical_sha256']['benchmarks/mark_boundaries_execution.py']
+    assert data['metadata_fixture_canonical_sha256']==data['source_files_canonical_sha256']['tests/test_mark_boundaries_benchmark_execution.py']
+    assert all(value is None for value in data['unbound'].values())and data['execution_authority']is None
+    shared=current.boundary(ROOT)
+    assert Path(shared.__file__).resolve()==(ROOT/'benchmarks/mark_boundaries_execution.py').resolve()
+    assert shared.current_context(ROOT,current.CONTEXT)==data
+
+
+def refresh_inert_provider_binding(path,binding):
+    runtime=Path(binding['runtime_path']);record=json.loads(runtime.read_bytes())
+    record['source']=binding['prepared_source'];record['runtime']['sdk_sha256']=binding['SDK_members']
+    runtime.write_text(json.dumps(record),encoding='utf-8');binding['runtime_sha256']=H(runtime.read_bytes())
+    path.write_text(json.dumps(binding),encoding='utf-8')
+    go=Path(binding['root_go_path']);record=json.loads(go.read_bytes());record['binding_sha256']=H(path.read_bytes())
+    go.write_text(json.dumps(record),encoding='utf-8')
+
+
+def current_provider_binding(tmp_path,monkeypatch):
+    current=adapter().executor()
+    factory=load(ROOT/'tests/test_mark_boundaries_benchmark_execution.py')
+    # Current V2 copies literal source; this factory's old-family projection
+    # applies only to its historical contracts, not to current acceptance.
+    monkeypatch.setattr(factory,'source_fixture_bytes',lambda name,context_path:(ROOT/name).read_bytes())
+    path,binding,context=factory.synthetic(tmp_path,monkeypatch,context_path=ROOT/current.CONTEXT)
+    binding['SDK_members']['include/skimagexx/label_pair_metrics.hpp']='f'*64
+    refresh_inert_provider_binding(path,binding)
+    return current,path,binding,context
+
+
+@pytest.mark.parametrize('fault',(None,'current','snapshot','prepared','old-contract'))
+def test_current_provider_actual_binding_requires_literal_current_snapshot_and_prepared(tmp_path,monkeypatch,fault):
+    current,path,binding,context=current_provider_binding(tmp_path,monkeypatch)
+    shared=current.boundary(ROOT)
+    accepted=shared.validate_binding(path,root=ROOT,context_path=current.CONTEXT)
+    assert accepted[0]==binding and accepted[1]==context
+    current.require_sdk_dependencies(binding)
+    name='benchmarks/vi_public_log2_provider_consumer.py';snapshot=Path(binding['source_root'])
+    expected=context['source_files_canonical_sha256'][name]
+    assert H(shared.source_bytes(ROOT/name))==H(shared.source_bytes(snapshot/name))==binding['prepared_source']['files_sha256'][name]==expected
+    if fault is None:return
+    if fault=='current':
+        original=shared.source_bytes
+        monkeypatch.setattr(shared,'source_bytes',lambda p:original(p)+b'changed'if Path(p)==ROOT/name else original(p))
+    elif fault=='snapshot':
+        source=snapshot/name;source.write_bytes(source.read_bytes()+b'changed')
+    elif fault=='prepared':
+        binding['prepared_source']['files_sha256'][name]='0'*64
+        refresh_inert_provider_binding(path,binding)
+    else:
+        binding['base_contract_sha256']=H((ROOT/'coverage/contracts/vi-public-log2-provider-benchmark-v1.json').read_bytes())
+        refresh_inert_provider_binding(path,binding)
+    with pytest.raises(AssertionError)as error:shared.validate_binding(path,root=ROOT,context_path=current.CONTEXT)
+    if fault!='old-contract':assert name in str(error.value)
+
+
+def test_current_provider_boundary_refuses_old_common_pin_before_loading(tmp_path):
+    current=adapter().executor();data=json.loads((ROOT/current.CONTEXT).read_bytes())
+    prior=json.loads((ROOT/'coverage/contracts/vi-public-log2-provider-benchmark-v1.json').read_bytes())
+    assert data['common_boundary_canonical_sha256']!=prior['common_boundary_canonical_sha256']
+    data['common_boundary_canonical_sha256']=prior['common_boundary_canonical_sha256']
+    path=tmp_path/current.CONTEXT;path.parent.mkdir(parents=True);path.write_text(json.dumps(data),encoding='utf-8')
+    common=tmp_path/'benchmarks/mark_boundaries_execution.py';common.parent.mkdir();common.write_bytes((ROOT/'benchmarks/mark_boundaries_execution.py').read_bytes())
+    with pytest.raises(AssertionError):current.boundary(tmp_path)
 
 
 @pytest.mark.parametrize('field',('contract','driver'))
@@ -226,7 +309,8 @@ def test_source_bridge_refuses_changed_and_double_projected_inputs(canonical):
 
 
 def source_root(tmp_path):
-    names=['tools/qualification_capacity_context.py','coverage/contracts/qualification-capacity-source-v1.json',
+    names=['tools/current_validation_context.py','coverage/contracts/current281-validation-source-v1.json',
+        'tools/qualification_capacity_context.py','coverage/contracts/qualification-capacity-source-v1.json',
         'tools/vi_public_reference_context.py','coverage/contracts/vi-public-log2-reference-source-v1.json',
         'tools/vi_public_reference_context_v2.py','coverage/contracts/vi-public-log2-reference-source-v2.json','tools/vi_provider_sdk_context.py','coverage/contracts/vi-provider-sdk-source-v1.json',
         'tools/vi_public_log2_context.py','tools/mark_lbp_fp_context.py',CONTEXT,
@@ -425,6 +509,45 @@ def test_capacity_source_context_preserves_exact_a378_before_reference_history(c
         assert H(old)==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
         with pytest.raises(AssertionError):capacity_bridge(ROOT,name,transported+b' ',canonical)
         with pytest.raises(AssertionError):capacity_bridge(ROOT,name,old,canonical)
+
+
+@pytest.mark.parametrize('canonical',(False,True))
+def test_current_validation_source_preserves_exact_f10_and_all_older_entries(canonical):
+    data=json.loads((ROOT/'coverage/contracts/current281-validation-source-v1.json').read_bytes())
+    assert data['predecessor_source']=='f10e04ae14f27055f5a09d540cbd3b616073d7ad'
+    assert 'tests/cmake_consumer/CMakeLists.txt'not in data['sources']
+    for name,row in data['sources'].items():
+        raw=(ROOT/name).read_bytes();transported=raw.replace(b'\n',b'\r\n')if canonical else raw
+        old=validation_bridge(ROOT,name,transported,canonical)
+        assert H(old)==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
+        with pytest.raises(AssertionError):validation_bridge(ROOT,name,transported+b' ',canonical)
+        with pytest.raises(AssertionError):validation_bridge(ROOT,name,old,canonical)
+
+
+def test_current_validation_enters_the_join_history_once_and_retains_legacy_domain():
+    from tools.join_source_context import correction_predecessor_bytes
+    from tools.mark_lbp_fp_context import source_successor_predecessor_bytes
+    name='tests/test_abi_vi_integration_source.py';raw=(ROOT/name).read_bytes()
+    assert correction_predecessor_bytes(ROOT,name,raw)
+    once=validation_bridge(ROOT,name,raw,canonical=True)
+    with pytest.raises(AssertionError):correction_predecessor_bytes(ROOT,name,once)
+    name='tests/test_mark_lbp_controller.py'
+    data=json.loads((ROOT/'coverage/contracts/mark-lbp-measurement-v5.json').read_bytes())
+    raw=data['binding_successor']['controller_source_inverse'][name]['predecessor'].encode()
+    assert len(raw)==25301 and H(raw)=='167edc6fa02c7b48d2b9d5598d9107828e163d542406d3718ddbe6b7e98b9dbd'
+    assert validation_bridge(ROOT,name,raw)==raw
+    assert source_successor_predecessor_bytes(ROOT,name,raw)==raw
+    with pytest.raises(AssertionError):validation_bridge(ROOT,name,raw+b' ')
+
+
+def test_current_validation_collector_keeps_family_v8_and_prior_source_command():
+    q=load(ROOT/'tools/public_qualification.py');data=json.loads((ROOT/'coverage/contracts/current281-validation-source-v1.json').read_bytes())
+    assert data['execution_authority']is None
+    assert set(data['sources'])|set(data['new_collector_inputs'])<=set(q.DRAW_SOURCE_PATHS)
+    assert set(data['new_collector_inputs'])=={'tools/current_validation_context.py','coverage/contracts/current281-validation-source-v1.json','coverage/contracts/mark-boundaries-benchmark-execution-v8.json','coverage/contracts/draw-multiblock-lbp-benchmark-execution-v8.json','coverage/contracts/vi-public-log2-provider-benchmark-v2.json','coverage/contracts/vi4-failure-capture-v2.json'}
+    line=next(x.strip()for x in(ROOT/'.github/workflows/public-qualification.yml').read_text().splitlines()if x.strip().startswith('python -m pytest -q --capture=sys'))
+    args=shlex.split(line);selectors=[x for x in args[:args.index('|')]if x.startswith('tests/')]
+    assert selectors==data['prior_source_selectors']and len(selectors)==173 and data['added_source_selectors']==[]
 
 
 @pytest.mark.parametrize('fault',('missing-current','missing-legacy','wrong-map','wrong-policy'))

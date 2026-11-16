@@ -123,7 +123,7 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
             'public-radon-saved-linux':('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py'),
             'public-radon-ABI-policy-linux':('test_finite_radon_numpy_abi_public.py',),
             'public-VI-saved-linux':('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py'),
-            'public-VI-large-saved-linux':('test_variation_of_information_large_saved.py',),
+            'public-VI-large-saved-linux':('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py'),
             'public-flood-saved-linux':('test_flood_fill_public.py',),
             'public-rolling-ball-saved-linux':('test_rolling_ball_public.py',),
         }
@@ -131,6 +131,9 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
         assert groups==dict(original,**expected)
     plan=q.plan(ROOT,profile,281);assert not plan['blockers']
     assert plan['public_groups']==groups
+    scope=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())['VI_current_runtime_large_reference']
+    assert scope['legacy_nodes_per_mode']==scope['current_nodes_per_mode']==scope['current_records_per_mode']==8
+    assert (profile in scope['profiles'])==(profile!='windows')
     assert 'noWindows' in (ROOT/'tools/public_qualification.py').read_text()
     import argparse
     tree=ast.parse((ROOT/'tools/public_qualification.py').read_bytes())

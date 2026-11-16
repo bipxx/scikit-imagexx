@@ -31,8 +31,10 @@ def test_actual_qualification_source_census_and_large_group(profile):
     assert(value['registry']['image_count'],value['registry']['registered_count'],value['product_members'],value['SDK_members'],len(value['SDK_families']),value['SDK_checks'])==(281,284,228,108,38,76)
     group='public-VI-large-saved-linux'
     if profile=='windows':assert group not in value['public_groups']
-    else:assert value['public_groups'][group]==('test_variation_of_information_large_saved.py',)
-    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v6.json'
+    else:assert value['public_groups'][group]==('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v7.json'
+    large=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())['VI_current_runtime_large_reference']
+    assert(large['legacy_nodes_per_mode'],large['current_nodes_per_mode'])==(8,8)
     consumer=(ROOT/'tests/cmake_consumer/variation_of_information_enabled_consumer.cpp').read_text()
     assert 'vi_current_counts_controls()'in consumer and 'vi_large_saved_controls()'in consumer
     assert 'if(!accepted||result.captured_workers!=budget)'in consumer
@@ -40,6 +42,8 @@ def test_actual_qualification_source_census_and_large_group(profile):
 
 def test_saved_historical_contexts_remain_immutable():
     # Earlier reviews stay history; no current word parity is inferred from them.
+    legacy=(ROOT/'coverage/contracts/current-public-qualification-v6.json').read_bytes().replace(b'\r\n',b'\n')
+    assert hashlib.sha256(legacy).hexdigest()=='95f9dc56c2ad38e3c4dc3cafa10c14e23a4e3b38b370e2c4071f9c3342113cef'
     old=json.loads((ROOT/'coverage/contracts/abi-vi-cumulative-integration-v1.json').read_bytes())
     assert old['predecessor_source']=='8c4fb4307746a0eb5fac5d125b6384fa80e88621'
     current=json.loads((ROOT/'coverage/contracts/variation-of-information-benchmark-execution-v4.json').read_bytes())

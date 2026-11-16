@@ -11,7 +11,7 @@ from types import SimpleNamespace
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi4-failure-capture-v1.json'
+CONTEXT='coverage/contracts/vi4-failure-capture-v2.json'
 DATA=json.loads((ROOT/CONTEXT).read_bytes())
 
 
@@ -27,6 +27,30 @@ def test_unbound_and_exact_immutable_dependencies():
     assert DATA['capture']['failure_only_budget']['extra_fegetenv_max']==3
     assert DATA['capture']['failure_only_budget']['extra_restore_max']==2
     assert set(DATA['capture']['success_extra_budget'].values())=={0}
+
+
+def test_v2_current_source_binding_preserves_frozen_capture_scope():
+    module=load();capture=DATA['capture'];binding=capture['source_binding_successor']
+    previous=binding['predecessor_context'];raw=(ROOT/previous['path']).read_bytes()
+    assert previous==dict(path='coverage/contracts/vi4-failure-capture-v1.json',sha256='8dcde72d7f4f3b97782c31ca09690b5d2bd7963025069cc4735060519f64ed53')
+    assert hashlib.sha256(raw).hexdigest()==previous['sha256'];old=json.loads(raw)
+    assert binding['execution_authority']is None
+    for key in('controller_root_admission','created_utc','deadline_utc','cohort_GO','measurement_GO'):
+        assert DATA['execution_authority'][key]is None
+    for key in('cases','phase_lines','phase_rule','envelopes','failure_only_budget','success_extra_budget','campaign_budget','failure_outputs','unavailable','cold_source_projection'):
+        assert capture[key]==old['capture'][key],key
+    provider=json.loads((ROOT/module.PROVIDER).read_bytes())
+    assert module.PROVIDER=='coverage/contracts/vi-public-log2-provider-benchmark-v2.json'
+    assert DATA['benchmark_source_sha256']==provider['source_files_canonical_sha256']
+    for name,pin in DATA['benchmark_source_sha256'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    for name,pin in DATA['first_cohort']['source_files_raw_sha256'].items():
+        assert module.sha(ROOT/name)==pin,name
+    assert capture['provider_context']==DATA['families'][capture['report_family']]['contract']==module.PROVIDER
+    route=DATA['first_cohort']['routes']['vi']
+    assert route['contract']==route['driver_route']['contract']==module.PROVIDER
+    assert capture['isolated_probe_bindings']['CONTRACT']==CONTEXT
+    assert capture['isolated_probe_bindings']['DRIVER_CONTEXT']==module.PROVIDER
 
 
 def test_fresh_namespace_preserves_all_old_bodies_and_modules():

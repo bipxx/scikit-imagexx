@@ -13,7 +13,7 @@ def test_exact_admitted_components_without_family_rewrites():
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
     from tools.mark_lbp_fp_context import predecessor_bytes
     for name,pin in d['source_files_raw_sha256'].items():
-        c,path=(context,'coverage/contracts/mark-boundaries-benchmark-execution-v7.json')if name in context['integrated_source_predecessors']else(lbp,'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v7.json')
+        c,path=(context,'coverage/contracts/mark-boundaries-benchmark-execution-v8.json')if name in context['integrated_source_predecessors']else(lbp,'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v8.json')
         raw=adapter['historical_bytes'](ROOT,name,context_path=path,section='integrated_source_predecessors')if name in c['integrated_source_predecessors']else predecessor_bytes(ROOT,name,(ROOT/name).read_bytes())
         assert H(raw)==pin,name
 
@@ -111,16 +111,22 @@ def test_real_qualification_parser_and_exact_saved_group_count_guards(monkeypatc
     assert calls==['public-mark-saved-linux','public-lbp-saved-linux','public-radon-saved-linux','public-lbp-metadata-linux']
 
 
-def test_active_benchmark_context_successors_preserve_exact_old_authority_and_source_bodies():
+def test_active_benchmark_context_successors_preserve_exact_old_authority_and_source_bodies(tmp_path):
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
     for name in ('mark-boundaries-benchmark-execution-v7.json','draw-multiblock-lbp-benchmark-execution-v7.json'):
         current=json.loads((ROOT/'coverage/contracts'/name).read_bytes());p=current['predecessor_context'];raw=(ROOT/p['path']).read_bytes();assert H(raw)==p['raw_sha256'];old=json.loads(raw)
+        historical=tmp_path/name;historical.mkdir()
+        context_path='coverage/contracts/'+name;target=historical/context_path;target.parent.mkdir(parents=True);target.write_bytes((ROOT/context_path).read_bytes())
+        active='coverage/contracts/'+name.replace('-v7.json','-v8.json')
+        for source in current['successor_source_predecessors']:
+            target=historical/source;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(adapter['validation_predecessor_bytes'](ROOT,source,context_path=active))
         mutable={'schema','successor_source_predecessors','source_files_canonical_sha256','historical_sources','historical_446_sources','route','predecessor_context','integration_scope','integrated_source_predecessors','reused_executor_canonical_sha256','common_boundary_canonical_sha256','metadata_fixture_canonical_sha256'}
         for key in old:
             if key not in mutable:assert current[key]==old[key],key
         route=dict(current['route']);route['contract']=old['route']['contract'];assert route==old['route']
         for source in current['successor_source_predecessors']:
-            before=adapter['historical_bytes'](ROOT,source,context_path='coverage/contracts/'+name,section='successor_source_predecessors')
+            before=adapter['historical_bytes'](historical,source,context_path=context_path,section='successor_source_predecessors')
             assert H(before)==old['source_files_canonical_sha256'][source]
         for source,pin in old['source_files_canonical_sha256'].items():
             if source not in current['successor_source_predecessors']:assert current['source_files_canonical_sha256'][source]==pin

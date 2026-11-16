@@ -115,16 +115,15 @@ def test_actual_active_shared_benchmark_literal_dependencies(monkeypatch):
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
     path='coverage/contracts/variation-of-information-benchmark-execution-v6.json'
     current=json.loads((ROOT/path).read_bytes())
-    # The old reader keeps every immutable v6 assertion. Only its edited VI
-    # metadata-test input is first authenticated back to the exact32e bytes.
+    # The old reader keeps every immutable v6 assertion. Its current shared/VI
+    # inputs are first authenticated through the exact provider-source history.
     from variation_of_information_source_context import provider_predecessor_source
     reader=adapter['historical_bytes'].__globals__;original=reader['source_bytes']
     edited='tests/test_variation_of_information_benchmark_execution.py'
     def source_bytes(source):
         raw=original(source)
-        if Path(source)==ROOT/edited:
-            return provider_predecessor_source(ROOT,edited,raw,canonical=True)
-        return raw
+        name=Path(source).relative_to(ROOT).as_posix()
+        return provider_predecessor_source(ROOT,name,raw,canonical=True)
     with monkeypatch.context()as patch:
         patch.setitem(reader,'source_bytes',source_bytes)
         for name,row in current['historical_sources'].items():
@@ -180,6 +179,11 @@ def test_current_MARK_controller_inverse_and_historical_raw_caller(crlf):
 def test_MARK_controller_inverse_refuses_unreviewed_inputs(tmp_path,fault):
     from tools.join_source_context import rolling_predecessor_bytes
     name='tests/test_mark_lbp_controller.py';raw=(ROOT/name).read_bytes()
+    # Authenticate the current controller once before entering a synthetic root
+    # that intentionally contains only the unchanged historical lineage.
+    from tools.current_validation_context import predecessor_bytes as validation_predecessor
+    from tools.mark_lbp_fp_context import CURRENT_VALIDATION_CONTEXT_SHA256
+    raw=validation_predecessor(ROOT,name,raw,CURRENT_VALIDATION_CONTEXT_SHA256,canonical=True)
     directory=tmp_path/'coverage/contracts';directory.mkdir(parents=True)
     for filename in ('mark-lbp-controller-source-successor-v1.json','mark-lbp-fp-integration-v1.json','mark-lbp-fp-integration-v2.json'):
         (directory/filename).write_bytes((ROOT/'coverage/contracts'/filename).read_bytes())

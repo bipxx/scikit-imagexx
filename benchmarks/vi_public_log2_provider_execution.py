@@ -10,7 +10,7 @@ import importlib.util
 import json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi-public-log2-provider-benchmark-v1.json'
+CONTEXT='coverage/contracts/vi-public-log2-provider-benchmark-v2.json'
 
 
 @contextmanager

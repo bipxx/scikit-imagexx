@@ -10,18 +10,26 @@ import sys
 import types
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v7.json'
+CONTEXT=ROOT/'coverage/contracts/mark-boundaries-benchmark-execution-v8.json'
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 
 def adapter():return runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
 
 
+def source_fixture_bytes(name,context_path):
+    raw=(ROOT/name).read_bytes()
+    if not context_path.name.endswith('-v8.json'):
+        active='draw-multiblock-lbp'if context_path.name.startswith('draw-multiblock-lbp')else'mark-boundaries'
+        raw=adapter()['validation_predecessor_bytes'](ROOT,name,raw,'coverage/contracts/'+active+'-benchmark-execution-v8.json')
+    return raw
+
+
 def synthetic(tmp_path,monkeypatch,fault='none',context_path=CONTEXT):
     """Metadata stand-in accepted only until a refused import, never a product."""
     c=json.loads(context_path.read_bytes());source=tmp_path/'source';source.mkdir();pins={}
     for name in set(c['source_files_canonical_sha256'])|set(c['FENV_dependency']['source_files_raw_sha256'])|{'CMakeLists.txt',context_path.relative_to(ROOT).as_posix()}:
-        target=source/name;target.parent.mkdir(parents=True,exist_ok=True);raw=(ROOT/name).read_bytes()
+        target=source/name;target.parent.mkdir(parents=True,exist_ok=True);raw=source_fixture_bytes(name,context_path)
         # A historical controller must exercise its exact admitted source fixture,
         # not current driver bytes under an older contract. Current v6/v5 uses current bytes.
         if context_path.name in ('mark-boundaries-benchmark-execution-v5.json','draw-multiblock-lbp-benchmark-execution-v4.json'):
@@ -47,6 +55,7 @@ def synthetic(tmp_path,monkeypatch,fault='none',context_path=CONTEXT):
     elif fault=='core':b['core_sha256']='0'*64
     elif fault=='runtime':b['runtime_sha256']='0'*64
     elif fault=='source':(source/'python/skimagexx/_mark_boundaries.py').write_text('changed')
+    elif fault=='SDK-test-source':(source/'tests/cmake_consumer/CMakeLists.txt').write_text('changed')
     elif fault=='context':b['base_contract_sha256']='0'*64
     elif fault=='revision':b['source_revision']='0'*40
     elif fault=='producer':b['producer']={**producer,'artifact':789}
@@ -82,6 +91,51 @@ def test_exact_cases_method_source_and_historical_inverse():
     assert c['method']==dict(repeat=7,target_ms=100,warmup_min_ms=250,threads=1,retain_all_losses=True,method_sha256=c['method']['method_sha256'])
 
 
+@pytest.mark.parametrize('family',('mark-boundaries','draw-multiblock-lbp'))
+def test_sdk_test_successor_keeps_exact_v7_authority_and_refuses_old_context_on_current_source(family):
+    a=adapter();path='coverage/contracts/'+family+'-benchmark-execution-v8.json'
+    c=a['current_context'](ROOT,path);proof=c['validation_source_successor'];prior=proof['predecessor_context']
+    assert prior['path'].endswith('-v7.json')and H((ROOT/prior['path']).read_bytes())==prior['raw_sha256']
+    assert proof['execution_authority']is None and proof['measured_evidence_rebinding']is False
+    for name,row in proof['source_predecessors'].items():
+        assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==row['current_canonical_sha256']
+        assert H(a['validation_predecessor_bytes'](ROOT,name,context_path=path))==row['predecessor_canonical_sha256']
+    name='tests/cmake_consumer/CMakeLists.txt'
+    assert H(a['validation_predecessor_bytes'](ROOT,name,context_path=path))=='f6182e059eaf2b046133b29d0b57a8dab022569cdd387c86ac4d4e10fa8b13f0'
+    with pytest.raises(AssertionError):a['historical_bytes'](ROOT,name,context_path=prior['path'])
+
+
+@pytest.mark.parametrize('fault',('method','cases','old-context','SDK-pin','inverse','missing-proof'))
+def test_validation_successor_refuses_unreviewed_context_or_SDK_projection(tmp_path,fault):
+    a=adapter();c=json.loads(CONTEXT.read_bytes());prior=c['validation_source_successor']['predecessor_context'];name='tests/cmake_consumer/CMakeLists.txt'
+    target=tmp_path/prior['path'];target.parent.mkdir(parents=True);target.write_bytes((ROOT/prior['path']).read_bytes())
+    if fault=='method':c['method']['repeat']=1
+    elif fault=='cases':c['cases']=c['cases'][:-1]
+    elif fault=='old-context':target.write_bytes(target.read_bytes()+b' ')
+    elif fault=='SDK-pin':c['validation_source_successor']['source_predecessors'][name]['predecessor_canonical_sha256']='0'*64
+    elif fault=='inverse':c['validation_source_successor']['source_predecessors'][name]['inverse_fragments'][0]['predecessor']+=' '
+    else:c.pop('validation_source_successor')
+    path=tmp_path/CONTEXT.relative_to(ROOT);path.write_text(json.dumps(c),encoding='utf-8')
+    target=tmp_path/name;target.parent.mkdir(parents=True);target.write_bytes((ROOT/name).read_bytes())
+    with pytest.raises(AssertionError):a['validation_predecessor_bytes'](tmp_path,name,context_path=CONTEXT.relative_to(ROOT).as_posix())
+
+
+def test_successor_preserves_all_target_FP_and_sampler_bodies():
+    a=adapter();name='benchmarks/mark_boundaries_execution.py';before=a['validation_predecessor_bytes'](ROOT,name).decode();after=(ROOT/name).read_text()
+    def body(text,name):
+        node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name==name)
+        return ast.get_source_segment(text,node)
+    for name in ('support','fixture','native_requirements','sample_entry','validate_measurement'):
+        assert body(after,name)==body(before,name),name
+    assert body(after,'validate_binding').replace('c=current_context(root,context_path)','c=json.loads(context_raw)')==body(before,'validate_binding')
+    assert body(after,'execute').replace('context=current_context(ROOT,context_path)','context=json.loads((ROOT/context_path).read_bytes())')==body(before,'execute')
+
+
+def test_unmapped_historical_raw_bytes_keep_intentional_CRLF():
+    raw=b'unchanged historical input\r\nsecond line\r\n'
+    assert adapter()['validation_predecessor_bytes'](ROOT,'unmapped-input',raw)==raw
+
+
 @pytest.mark.parametrize('cached',(False,True))
 def test_cold_cached_real_UNBOUND_CLI_before_request(cached):
     driver=ROOT/'benchmarks/mark_boundaries_consumer.py'
@@ -97,7 +151,7 @@ builtins.__import__=refuse;sys.argv=[sys.argv[1]];runpy.run_path(sys.argv[0],run
     assert p.returncode!=0 and 'MARK_BENCHMARK_UNBOUND'in p.stderr and 'TARGET_IMPORT_REACHED'not in p.stderr and 'Traceback'not in p.stderr
 
 
-FAULTS=('none','none-cached','extra-cases','extra-method','core','runtime','source','context','revision','producer','git-root','git-dirty','root-admission','root-stager','SDK','route','interpreter','helper-digest','helper-receipt','helper-mode','helper-legacy','CMake','go','expired','go-budget')
+FAULTS=('none','none-cached','extra-cases','extra-method','core','runtime','source','SDK-test-source','context','revision','producer','git-root','git-dirty','root-admission','root-stager','SDK','route','interpreter','helper-digest','helper-receipt','helper-mode','helper-legacy','CMake','go','expired','go-budget')
 @pytest.mark.parametrize('fault',FAULTS)
 def test_bound_actual_CLI_refusal_has_zero_bodies(tmp_path,monkeypatch,fault):
     import builtins

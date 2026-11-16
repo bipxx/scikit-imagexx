@@ -10,8 +10,8 @@ import runpy
 import subprocess
 import sys
 
-CONTEXT='coverage/contracts/vi4-failure-capture-v1.json'
-PROVIDER='coverage/contracts/vi-public-log2-provider-benchmark-v1.json'
+CONTEXT='coverage/contracts/vi4-failure-capture-v2.json'
+PROVIDER='coverage/contracts/vi-public-log2-provider-benchmark-v2.json'
 PROBE='tools/vi_first_cohort_probe.py'
 CODEC='tools/vi_cohort_value_diagnostic.py'
 EXECUTE='benchmarks/variation_of_information_execution.py'
@@ -27,7 +27,7 @@ def write_json(path,value):
 
 def context(root):
     root=Path(root);data=json.loads((root/CONTEXT).read_bytes());capture=data['capture']
-    assert capture['schema']=='vi4-failure-capture-v1'
+    assert capture['schema']=='vi4-failure-capture-v2'
     assert sha(root/'tools/vi4_failure_capture.py')==capture['runner_sha256']
     for name,pin in capture['dependencies'].items():assert sha(root/name)==pin,name
     assert capture['provider_context']==PROVIDER

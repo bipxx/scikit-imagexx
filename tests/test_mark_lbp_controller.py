@@ -387,14 +387,14 @@ def test_controller_successor_changes_only_approved_metadata_expressions(name):
 
 def prepared_controller(tmp_path,monkeypatch):
     # Reuse the existing inert authority factory; no installed product is loaded.
-    from test_mark_boundaries_benchmark_execution import synthetic
-    _,binding,_=synthetic(tmp_path,monkeypatch)
+    from test_mark_boundaries_benchmark_execution import synthetic,source_fixture_bytes
+    _,binding,_=synthetic(tmp_path,monkeypatch,context_path=ROOT/ROUTES['mark']['contract'])
     snapshot=Path(binding['source_root']);prepared=binding['prepared_source']
     for route in ROUTES.values():
         context_path=route['contract'];context=json.loads((ROOT/context_path).read_bytes())
         names=set(context['source_files_canonical_sha256'])|set(context['FENV_dependency']['source_files_raw_sha256'])|{context_path}
         for name in names:
-            target=snapshot/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/name).read_bytes())
+            target=snapshot/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(source_fixture_bytes(name,ROOT/context_path))
             prepared['files_sha256'][name]=H(target.read_bytes().replace(b'\r\n',b'\n'))
     controller=tmp_path/'controller';manifest=copy.deepcopy(DATA);first=manifest['first_cohort']
     for name,source in ((first['probe_path'],PROBE.__file__),(first['root_admission_path'],binding['genuine_root_admission_path']),(first['root_stager_path'],binding['genuine_root_stager_path'])):

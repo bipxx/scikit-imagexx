@@ -108,7 +108,7 @@ def test_genuine_collector_transport_and_scope_are_fail_closed():
 
 
 
-@pytest.mark.parametrize('group,count', [('public-radon-ABI-policy-linux',18),('public-VI-saved-linux',40),('public-VI-large-saved-linux',8),('public-flood-saved-linux',100)])
+@pytest.mark.parametrize('group,count', [('public-radon-ABI-policy-linux',18),('public-VI-saved-linux',40),('public-VI-large-saved-linux',16),('public-flood-saved-linux',100)])
 def test_actual_new_group_parser_and_seal_count(group,count,monkeypatch):
     q=qualifier();calls=[]
     monkeypatch.setattr(q,'child',lambda out,name:calls.append(name)or 0)
@@ -122,5 +122,7 @@ def test_actual_new_group_parser_and_seal_count(group,count,monkeypatch):
     clause=ast.Module(body=[ast.If(test=node.test,body=node.body[:1],orelse=[])],type_ignores=[])
     code=compile(ast.fix_missing_locations(clause),'<actual group cardinality>','exec')
     exec(code,dict(group=group,row=dict(tests=count),require=q.require))
-    for wrong in(0,count-1,count+1):
+    wrong_counts=(0,count-1,count+1)
+    if group=='public-VI-large-saved-linux':wrong_counts+=(8,)
+    for wrong in wrong_counts:
         with pytest.raises(q.QualificationError):exec(code,dict(group=group,row=dict(tests=wrong),require=q.require))

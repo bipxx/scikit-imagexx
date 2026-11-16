@@ -26,9 +26,9 @@ def shared_root():
     # Final integration uses ROOT. This private source packet records missing
     # dependencies explicitly and tests their exact retained frozen sources.
     root=ROOT if(ROOT/'benchmarks/mark_boundaries_execution.py').is_file()else Path(os.environ['VI_BENCH_COMMON_ROOT'])
-    assert H((root/'benchmarks/mark_boundaries_execution.py').read_bytes())==DATA['common_boundary_canonical_sha256']
-    assert H((root/'benchmarks/next_util_execution.py').read_bytes())==DATA['reused_executor_canonical_sha256']
-    assert H((root/'tests/test_mark_boundaries_benchmark_execution.py').read_bytes())==DATA['metadata_fixture_canonical_sha256']
+    assert H(provider_predecessor_source(root,'benchmarks/mark_boundaries_execution.py'))==DATA['common_boundary_canonical_sha256']
+    assert H(provider_predecessor_source(root,'benchmarks/next_util_execution.py'))==DATA['reused_executor_canonical_sha256']
+    assert H(provider_predecessor_source(root,'tests/test_mark_boundaries_benchmark_execution.py'))==DATA['metadata_fixture_canonical_sha256']
     return root
 
 
@@ -40,7 +40,8 @@ def modules(monkeypatch):
 
 def source_overlay(tmp_path):
     root=tmp_path/'controller';root.mkdir();external=shared_root()
-    pins={**DATA['source_files_canonical_sha256'],**DATA['FENV_dependency']['source_files_raw_sha256']}
+    pins={**DATA['source_files_canonical_sha256'],**DATA['FENV_dependency']['source_files_raw_sha256'],
+          'tests/test_mark_boundaries_benchmark_execution.py':DATA['metadata_fixture_canonical_sha256']}
     for name,digest in pins.items():
         choices=[ROOT/name,external/name]
         payloads=[provider_predecessor_source(ROOT,name,p.read_bytes())if p==ROOT/name else p.read_bytes()for p in choices if p.is_file()]
@@ -55,7 +56,7 @@ def source_overlay(tmp_path):
 def synthetic(tmp_path,monkeypatch,fault='none'):
     root=source_overlay(tmp_path)
     # Reuse the admitted MARK metadata factory, not another binding framework.
-    fixtures=runpy.run_path(str(shared_root()/'tests/test_mark_boundaries_benchmark_execution.py'))
+    fixtures=runpy.run_path(str(root/'tests/test_mark_boundaries_benchmark_execution.py'))
     fn=fixtures['synthetic'];fn.__globals__['ROOT']=root
     path,b,c=fn(tmp_path,monkeypatch,fault,root/CONTEXT)
     # The inherited synthetic MARK factory has one named header. VI additionally

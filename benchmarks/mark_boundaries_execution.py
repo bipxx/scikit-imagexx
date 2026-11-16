@@ -17,16 +17,58 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v7.json'
+CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v8.json'
 API='segmentation.mark_boundaries'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 digest=lambda raw:hashlib.sha256(raw).hexdigest()
 source_bytes=lambda path:Path(path).read_bytes().replace(b'\r\n',b'\n')
 
 
+def current_context(root,context_path=CONTEXT):
+    c=json.loads((Path(root)/context_path).read_bytes())
+    successor=c.get('validation_source_successor')
+    if successor is None:
+        assert not str(context_path).endswith('-v8.json'),'Missing current validation envelope'
+        return c  # Frozen historical contexts keep their own gates.
+    assert successor['schema']=='mark-lbp-sdk-test-validation-v1'
+    prior=successor['predecessor_context'];encoded=(Path(root)/prior['path']).read_bytes()
+    assert digest(encoded)==prior['raw_sha256']
+    old=json.loads(encoded)
+    assert set(c)==set(old)|{'validation_source_successor'}
+    for key in old:
+        if key not in ('source_files_canonical_sha256','route'):assert c[key]==old[key],key
+    route=dict(c['route']);route['contract']=old['route']['contract'];assert route==old['route']
+    assert c['route']['contract']==context_path
+    projections=successor['source_predecessors']
+    assert set(c['source_files_canonical_sha256'])==set(old['source_files_canonical_sha256'])|set(projections)|{prior['path']}
+    for name,pin in old['source_files_canonical_sha256'].items():
+        if name in projections:assert projections[name]['predecessor_canonical_sha256']==pin,name
+        else:assert c['source_files_canonical_sha256'][name]==pin,name
+    for name,row in projections.items():assert c['source_files_canonical_sha256'][name]==row['current_canonical_sha256'],name
+    assert c['source_files_canonical_sha256'][prior['path']]==digest(source_bytes(Path(root)/prior['path']))
+    sdk=projections['tests/cmake_consumer/CMakeLists.txt']
+    assert sdk['current_canonical_sha256']=='b4e45d2516285e2b9ebbc30e46c9ca40bf133f40559f820f0abfd058a136e9ff'
+    assert sdk['predecessor_canonical_sha256']=='f6182e059eaf2b046133b29d0b57a8dab022569cdd387c86ac4d4e10fa8b13f0'
+    assert successor['execution_authority']is None
+    return c
+
+
+def validation_predecessor_bytes(root,name,raw=None,context_path=CONTEXT):
+    c=current_context(root,context_path);raw=source_bytes(Path(root)/name)if raw is None else raw
+    row=c.get('validation_source_successor',{}).get('source_predecessors',{}).get(name)
+    if row is None:return raw
+    raw=raw.replace(b'\r\n',b'\n')
+    assert digest(raw)==row['current_canonical_sha256'],name
+    for part in row['inverse_fragments']:
+        current,old=part['current'].encode(),part['predecessor'].encode()
+        assert current and raw.count(current)==1,name;raw=raw.replace(current,old,1)
+    assert digest(raw)==row['predecessor_canonical_sha256'],name
+    return raw
+
+
 def historical_bytes(root,name,context_path=CONTEXT,section='historical_sources'):
-    row=json.loads((Path(root)/context_path).read_bytes())[section][name]
-    raw=source_bytes(Path(root)/name);assert digest(raw)==row['current_canonical_sha256'],name
+    row=current_context(root,context_path)[section][name]
+    raw=validation_predecessor_bytes(root,name,context_path=context_path);assert digest(raw)==row['current_canonical_sha256'],name
     for fragment in row['inverse_fragments']:
         current,old=fragment['current'].encode(),fragment['predecessor'].encode()
         assert current and raw.count(current)==1,name;raw=raw.replace(current,old,1)
@@ -43,7 +85,7 @@ def support(root,context):
 
 
 def validate_binding(path,root=ROOT,context_path=CONTEXT):
-    context_raw=(Path(root)/context_path).read_bytes();c=json.loads(context_raw);route=c['route_id']
+    context_raw=(Path(root)/context_path).read_bytes();c=current_context(root,context_path);route=c['route_id']
     if path is None:raise SystemExit(c['unbound_message']+': genuine product/root binding required before imports or bodies')
     raw=Path(path).read_bytes();b=json.loads(raw)
     required={'status','product_kind','source_root','source_revision','git_argv','prepared_source','producer','interpreter','installed_site','numpy','core_path','core_sha256','SDK_members','runtime_path','runtime_sha256','genuine_root_admission_path','genuine_root_admission_sha256','genuine_root_stager_path','genuine_root_stager_sha256','helper_binding_path','helper_binding_sha256','base_contract_sha256','root_go_path','routes','output_root'}
@@ -146,7 +188,7 @@ def sample_entry(measure,reference,native,cli,index,spec,deadline,common):
 
 
 def execute(module,context_path=CONTEXT):
-    context=json.loads((ROOT/context_path).read_bytes());api=context['route']['api'];count=len(context['cases'])
+    context=current_context(ROOT,context_path);api=context['route']['api'];count=len(context['cases'])
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plan',action='store_true');parser.add_argument('--root-binding',type=Path);parser.add_argument('--measurement-go',type=Path);parser.add_argument('--first-cohort',action='store_true')
     parser.add_argument('--api',choices=[api],default=api);parser.add_argument('--case');parser.add_argument('--threads',type=int,choices=[1],default=1);parser.add_argument('--repeat',type=int,choices=[7],default=7);parser.add_argument('--output',type=Path,default=Path(context['default_output']));cli=parser.parse_args()
