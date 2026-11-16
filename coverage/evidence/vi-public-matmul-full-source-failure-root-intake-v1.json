@@ -1,0 +1,58 @@
+{
+  "status": "ROOT_FAILED_COMPLETE181_SOURCE311_AND_LAUNCHER_CLOSEOUT",
+  "actual_external": "5b7446 exit1/session14462",
+  "source": "ba17f859261fb60af7f1b2ca5814fcfbddc79039",
+  "xml": {
+    "tests": 4641,
+    "failures": 50,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ordinary_ids": 4633,
+  "passed_subtests": 8,
+  "pytest_seconds": 489.93,
+  "failures_by_module": {
+    "tests.test_public_qualification": 4,
+    "tests.test_util_metadata_source": 4,
+    "tests.test_join_util_views_density_source": 1,
+    "tests.test_mark_lbp_enabled_source": 1,
+    "tests.test_mark_boundaries_benchmark_execution": 5,
+    "tests.test_draw_multiblock_lbp_benchmark_execution": 3,
+    "tests.test_variation_of_information_integration": 1,
+    "tests.test_abi_vi_integration_source": 2,
+    "tests.test_mark_lbp_controller": 23,
+    "tests.test_vi_reduction_integration_source": 4,
+    "tests.test_draw_multiblock_lbp_entry_fp": 1,
+    "tests.test_vi_owning_sdk_source": 1
+  },
+  "actual_retained_plugins": 44,
+  "postinspection": {
+    "actual_clean_HEAD_and_index_unchanged": true,
+    "actual_entry4_rawpins_unchanged": true,
+    "actual_bounded77_rawpins_unchanged": true,
+    "source_changed_during_job": false
+  },
+  "terminal_receipt": "MISSING: launcher read relative cli.binding after os.chdir(WT), FileNotFoundError; no terminal PASS may be inferred. RawXML/log/plugins/IDs/index/command retained.",
+  "original_launcher_science_counters": "UNAVAILABLE because final result dict construction failed; no scientific/release credit claimed. Source-run command had import refusal; passing source checks do not establish numerical evidence.",
+  "scope": "50 actual failed source checks;4633 ordinary nodes plus8subtests suite4641, 4583ordinarypass. Bothfullsource gate pending/failed, SDK/runtime/hosted held. Fix actual semantic metadata readers and historical fixtures, fullcompletebarrier rerun on successor, no test suppression.",
+  "root_correction": "Future invocation uses absolute binding path; preserve80dd6e launcherbytes/oldGO/rawfailure. Root current shared fixture and A exactV8 source-assertion corrections next; production4 unchanged.",
+  "schema": "vi-public-matmul-complete-source-failure-root-intake-v1",
+  "receipt": "coverage\\evidence\\vi-public-matmul-full-source-failure-root-intake-v1.json",
+  "raw_failure_intake": "build\\current281-final-source-v6\\windows311\\root-failure-intake-v1.json",
+  "source_checks_scope": "Full exact181 workflow selectors before pipe, normal44plugins/conftest/no-failfast. This failed campaign is not replaced by bounded170passes or targeted50/52 checks.",
+  "next_gate": "Correct actualcurrent CLI/parser/currentmetadata assertions and scoped historical fixtures, then COMPLETE41 affectedsource modules plus existing mixedpure node BOTH; freeze successor and rerun COMPLETE actual181workflowBOTH, using absolute binding argument. SDK/runtime/hosted/VI4/main remainpending.",
+  "correction_status": "V5 source equations54/2051 passed; targeted50 improved44pass6fail; exacttwo CLIchoices and LBPborrowedfactory followup applied; targeted52 running. Full41BOTH/181BOTH unpassed.",
+  "cleanup": {
+    "target": "D:/Scratch/current281-final-source-controls-v6/windows311",
+    "logical_bytes": 7071043014,
+    "root_admission": "a9a05350proofbytes;0b2973actualgates/readers/Git/product/repro/exclusions;863c4bfreshnativechecks",
+    "outcome": "OneexactnativePS Remove-Item rejectedbeforeCreateProcess blockedbypolicy.0removed/no removalreceipt/noalternative/manualonly.",
+    "raw_reproducers": "29smallJSONs65327B+50tracebacks+epochreceipt outside; source/index/command/log/XML/plugins/IDs and Gitba17/2270 retained",
+    "physical_reclaim": "unmeasured;noneclaimed"
+  },
+  "waste_review": {
+    "avoidable": "Fullrun489.93s exposed omitted currentmetadata reader/CLI and historicalcachedPath fixture dependencies. Root relativebinding invocation prevented closingreceipt; actualfailures and rootpostinspection preserved.",
+    "correction": "Currentmetadata exactassertions andgroupCLIchoices; existing sourceview nowmovesmodulePathglobals/defaults and borrowedfactory scopes; absoluteGOinvocation. Complete41affectedchecks both reinstated before nextcomplete181 ratherthan bounded5proxy. No unchanged numerical science replay.",
+    "owner_trigger": "root checks actualcomplete41BOTH thenfreezes exactsuccessor and runscomplete181BOTH; all mandatorysource/runtime/release gates unchanged."
+  }
+}
