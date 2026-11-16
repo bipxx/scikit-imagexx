@@ -1,0 +1,84 @@
+{
+  "schema": "vi-public-matmul-private32-root-admission-v1",
+  "status": "ROOT_PRIVATE32_SCOPED_PASS_GENUINE_SDK_PERFORMANCE_MAIN_PENDING",
+  "owner": "root",
+  "source_base": "2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d",
+  "source_binding": "Dirtyprivate2270 with52exactrawsourcepins/107stagedfiles, not finalcleanrelease",
+  "production_source4": {
+    "include/skimagexx/variation_of_information.hpp": "c910703f0b5315dc4cb6751c7b6d7eb90c7a9442f81b440da55bbc10a8658bb4",
+    "src/variation_of_information.cpp": "e4131ef47cdb66af20f3a7adcc29d8f95eeacafeb1e89f652d21bb29a661b2e9",
+    "src/bind_variation_of_information.cpp": "8d3310debba4a10aa59f185fe938b2db48f79fb0ed5afafac081078578dc83a3",
+    "python/skimagexx/_variation_of_information.py": "8e25cd3f76ecc32e9441e42c0bff4c93817e5b02c1e46f147f04829113abcd0c"
+  },
+  "core_sha256": "83d19cd1ce09302e400134f82ea1c13c41a31d324ac6697d7b754096226890bf",
+  "SDK_static_sha256": "8aebb271d3e4b8f33450928792189c99459e91b3623e341f396fdf8bc5aa619f",
+  "runtime_scope": "PRIVATE Linux3.11.14/NumPy1.24.4/SciPy1.15.3/skimage0.26.0/i7-12700K AVX2/noAVX512; GNU13.3 core strictFP/staticnoLTO,ordinarybindingLTOauto; notcompiler-scalar/SAN or genuine975",
+  "GO": {
+    "path": "build/vi-public-matmul-private32-v1/root-private32-GO-v1.json",
+    "sha256": "9444608ebc0c1f96335234669b0b290bdae3134b6786a0a800f9776f92680f48",
+    "consumed": true,
+    "invocations": 1,
+    "retries": 0
+  },
+  "actual_handoff": {
+    "path": "build/vi-public-matmul-private32-v1/runtime-handoff-v1.json",
+    "sha256": "c3a35c697250c24017f005d6a8b8c78137d520a9013428f92da322eee8f04cc3"
+  },
+  "proof_index": {
+    "path": "build/vi-public-matmul-private32-v1/runtime-proof-index-v1.json",
+    "sha256": "6f762cc0c8ef82cb0bd95a7b29c9d2aae53967cf3f762074c7e72ccf3e0eaba6"
+  },
+  "root_raw_admission": {
+    "path": "build/vi-public-matmul-private32-v1/root-private32-raw-admission-v1.json",
+    "sha256": "d5bb8d92e88566bc12559c1ec48309bf896acc63066dc54ebbad077d101342e2"
+  },
+  "actual": {
+    "XML": {
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "normal_plugins": 43,
+    "ordered_unique_IDs": 32,
+    "normal_conftest": true,
+    "current_pairs": 24,
+    "successful_pairs": 22,
+    "float64_word_matches": 44,
+    "matching_AttributeErrors": 2,
+    "legacy_saved_nodes": 8,
+    "native_provider_callbacks": {
+      "numpy.log2": 44,
+      "numpy.matmul": 44
+    },
+    "current_C_returns": 218,
+    "default_workers": [
+      1,
+      1
+    ],
+    "primary": null,
+    "secondary": [],
+    "timing": false
+  },
+  "FP": {
+    "natural_target_snapshots": 96,
+    "exact_caller32_records": 24,
+    "semantic_reference_native_equal": true,
+    "full_caller32_equal": true,
+    "controlled_fegetenv": 312,
+    "F1_restores": 128,
+    "primitive_counts_scope": "Source-backedcompletedpath, not globalinstrumentedcounters"
+  },
+  "validation": "679ce5 rootdirect24rawrows/full32XML/collection/43normalplugins/input/output/FP/policy/ownership/default1/postidentity;cf1034 all90explicitproof bytes match. Expectedtable/no-image branches verifiedagainstsource80-89; rootfailedmetadata checks preservedwithnarrowcorrections, no science replay.",
+  "retention": "Raw24/source52/IDs/plugins/XML/argv/terminal outsidefixture. Installednewproduct+SDK108+oldbaseline/env protected; old5fullsourcefixturetargets28,185,637,848logicalBmanual-only/no bypass.",
+  "waste_reuse": "One8.22s pytestcampaign/external19.33s reusedactual16bootstrap/runtime/helper. No benchmark/retry/newenvironment. Rootmetadata calibrations caused no scientificrerun; sourcecheckfailed1017.469s remains historicalsetupcost, not numericalwaste.",
+  "remaining": [
+    "Actual currentSDK owningadditive+legacy/raw32/default/workers/scalar/SAN modes",
+    "Private phase/error/invalidscalar+currentcount/hotswap affectedruntime closure",
+    "Sharedqualifier4event/public16/SDKcollector/extractor/history/workflow/VI4 sourceintegration",
+    "Completefinalworkflow sourcechecks bothretainedPythons",
+    "Exactfinalsource fourprofile releasequalification andnewwholeproduct/SDK/stageradmission",
+    "Boundgenuine one-thread VI4 initialcomparison, allwins/losses retained",
+    "Independentroot main271-to281 shippingprojection/merge/push; old9V45/selectedpointercauseunproved"
+  ]
+}
