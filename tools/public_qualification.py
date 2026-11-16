@@ -837,6 +837,7 @@ DRAW_SOURCE_PATHS += (
     "coverage/contracts/vi-public-matmul-source-history-v4.json",
     "coverage/contracts/vi-public-matmul-source-history-v5.json",
     "coverage/contracts/vi-public-matmul-source-history-v6.json",
+    "coverage/contracts/vi-public-matmul-source-history-v7.json",
     "tests/vi_public_matmul_source_view.py",
     "tests/cmake_consumer/variation_of_information_matmul_consumer_v1.cpp",
     "tests/variation_of_information_matmul_controls_v1.hpp",

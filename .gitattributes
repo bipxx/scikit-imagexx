@@ -787,3 +787,7 @@ src/** -text
 tests/** -text
 third_party/** -text
 tools/** -text
+
+# Preserve raw historical source identities on Windows checkouts.
+/.gitignore -text
+/LICENSE -text

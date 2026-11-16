@@ -148,7 +148,7 @@
     "tools/vi4_public_matmul_capture.py": "47858f7623bafe7106a7d04cff8aec39c53bf14839d80ceb2656833e1b3fc8d6",
     "tests/test_vi4_public_matmul_capture.py": "bd8997b764d2a568b7c04a28da2e716a9838153b6819c536e6a04e75c6adf356",
     "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json": "98aa288de7a3bedb230f74e8629af20c86b9d90246cf98e0154c90980e1f4e1b",
-    "tools/public_qualification.py": "a87ecf485a3673bceaaaea03a418de7b24c95638d6e49687275e0c1bcc5b602c",
+    "tools/public_qualification.py": "ca138b572ec4a93568b9e9dbb2c84418f25dca80e38c83e7c54e51a81642f6a6",
     ".github/workflows/public-qualification.yml": "628deb4ab1c2b227f7845dd681418a702c1dc5ecb208cbbac5697efe404d0042",
     "CMakeLists.txt": "06ead19d2848e3d83fd3041a03cdb7ea6600abaf82faa8112497487ec3535fcc",
     "tests/cmake_consumer/CMakeLists.txt": "a8e73809365f5b2fab940d65a396de0a8dd1b3f2422163b085b78c8c8b1f8a0f",
