@@ -21,7 +21,14 @@ def load(path):
     m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 
 
+def sdk_bridge(root,name,raw,canonical=False):
+    from tools.mark_lbp_fp_context import VI_PROVIDER_SDK_CONTEXT_SHA256
+    from tools.vi_provider_sdk_context import predecessor_bytes
+    return predecessor_bytes(root,name,raw,VI_PROVIDER_SDK_CONTEXT_SHA256,canonical)
+
+
 def bridge(root,name,raw,canonical=False):
+    raw=sdk_bridge(root,name,raw,canonical)
     from tools.mark_lbp_fp_context import VI_PUBLIC_LOG2_CONTEXT_SHA256
     from tools.vi_public_log2_context import predecessor_bytes
     return predecessor_bytes(root,name,raw,VI_PUBLIC_LOG2_CONTEXT_SHA256,canonical)
@@ -205,7 +212,8 @@ def test_source_bridge_refuses_changed_and_double_projected_inputs(canonical):
 
 
 def source_root(tmp_path):
-    names=['tools/vi_public_log2_context.py','tools/mark_lbp_fp_context.py',CONTEXT,
+    names=['tools/vi_provider_sdk_context.py','coverage/contracts/vi-provider-sdk-source-v1.json',
+        'tools/vi_public_log2_context.py','tools/mark_lbp_fp_context.py',CONTEXT,
         'coverage/contracts/mark-lbp-controller-source-successor-v1.json',
         'coverage/contracts/mark-lbp-fp-integration-v2.json','coverage/contracts/mark-lbp-fp-integration-v1.json',
         'coverage/contracts/rolling-ball-sentinel-v1.json','coverage/contracts/current281-sdk-family-source-v2.json',
@@ -241,7 +249,8 @@ def test_retained_predecessor_bytes_are_bound_even_with_rehashed_context(tmp_pat
 def test_collector_and_real_workflow_include_complete_new_guard():
     q=load(ROOT/'tools/public_qualification.py');data=json.loads((ROOT/CONTEXT).read_bytes())
     assert set(data['sources'])|set(data['new_collector_inputs'])<=set(q.DRAW_SOURCE_PATHS)
-    line=next(x.strip()for x in(ROOT/'.github/workflows/public-qualification.yml').read_text().splitlines()if x.strip().startswith('python -m pytest -q --capture=sys'))
+    historical_workflow=sdk_bridge(ROOT,'.github/workflows/public-qualification.yml',(ROOT/'.github/workflows/public-qualification.yml').read_bytes())
+    line=next(x.strip()for x in historical_workflow.decode().splitlines()if x.strip().startswith('python -m pytest -q --capture=sys'))
     args=shlex.split(line);selectors=[a for a in args[:args.index('|')]if a.startswith('tests/')]
     assert len(selectors)==len(set(selectors))==data['source_selector_count']
     assert 'tests/test_vi_public_log2_provider_source.py'in selectors
@@ -259,3 +268,46 @@ def test_installed_SDK_controls_separate_scalar_default_host_callback_and_no_ori
     assert 'result.values[0]!=123.' in source and 'result.values[1]!=456.' in source
     assert 'not evidence of NumPy/SVML semantics' in source
     assert 'host_scalar_log2_compatible=' in source
+
+
+@pytest.mark.parametrize('canonical',(False,True))
+def test_SDK_successor_exact_current_and_predecessor_source_domains(canonical):
+    data=json.loads((ROOT/'coverage/contracts/vi-provider-sdk-source-v1.json').read_bytes())
+    for name,row in data['sources'].items():
+        raw=(ROOT/name).read_bytes()
+        transported=raw.replace(b'\n',b'\r\n')if canonical else raw
+        old=sdk_bridge(ROOT,name,transported,canonical)
+        assert H(old)==row['predecessor_canonical_sha256'if canonical else'predecessor_raw_sha256']
+        with pytest.raises(AssertionError):sdk_bridge(ROOT,name,transported+b' ',canonical)
+        with pytest.raises(AssertionError):sdk_bridge(ROOT,name,old,canonical)
+
+
+@pytest.mark.parametrize('fault',('context','helper'))
+def test_SDK_successor_rejects_changed_authentication_inputs(tmp_path,fault):
+    root=source_root(tmp_path)
+    name='tools/public_qualification.py';raw=(ROOT/name).read_bytes()
+    assert sdk_bridge(root,name,raw)==sdk_bridge(ROOT,name,raw)
+    path=root/('coverage/contracts/vi-provider-sdk-source-v1.json'if fault=='context'else'tools/vi_provider_sdk_context.py')
+    path.write_bytes(path.read_bytes()+b' ')
+    with pytest.raises(AssertionError):sdk_bridge(root,name,raw)
+
+
+def test_SDK_successor_bound_predecessor_cannot_be_rewritten(tmp_path):
+    root=source_root(tmp_path);path=root/'coverage/contracts/vi-provider-sdk-source-v1.json'
+    data=json.loads(path.read_bytes());name='tests/cmake_consumer/variation_of_information_enabled_consumer.cpp'
+    data['sources'][name]['inverse'][0]['predecessor']+=' '
+    encoded=(json.dumps(data,indent=2)+'\n').encode();path.write_bytes(encoded)
+    from tools.vi_provider_sdk_context import predecessor_bytes
+    with pytest.raises(AssertionError):predecessor_bytes(root,name,(ROOT/name).read_bytes(),H(encoded))
+
+
+def test_current_SDK_and_capture_guards_and_collector_are_complete():
+    data=json.loads((ROOT/'coverage/contracts/vi-provider-sdk-source-v1.json').read_bytes())
+    qualifier=load(ROOT/'tools/public_qualification.py')
+    assert set(data['sources'])|set(data['new_collector_inputs'])<=set(qualifier.DRAW_SOURCE_PATHS)
+    line=next(x.strip()for x in(ROOT/'.github/workflows/public-qualification.yml').read_text().splitlines()if x.strip().startswith('python -m pytest -q --capture=sys'))
+    args=shlex.split(line);selectors=[a for a in args[:args.index('|')]if a.startswith('tests/')]
+    assert len(selectors)==len(set(selectors))==data['source_selector_count']==172
+    assert selectors==data['prior_source_selectors']+data['added_source_selectors']
+    assert data['added_source_selectors']==['tests/test_vi_owning_sdk_source.py','tests/test_vi4_failure_capture.py']
+    assert data['execution_authority']is None

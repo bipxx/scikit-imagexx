@@ -7,6 +7,8 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
+// VI_SDK_EXTENSION_INCLUDE
+#include "../variation_of_information_provider_controls.hpp"
 
 // Explicit host callback plumbing. This provider is scalar std::log2 and is
 // not evidence of NumPy/SVML semantics; public Python provider evidence is separate.
@@ -36,7 +38,11 @@ int provider_controls() {
     return 0;
 }
 
-int main() {
+int vi_sdk_owning_main() {
+    // VI_SDK_EXTENSION_ENTRY_BEGIN
+    if(!vi_sdk_controls::layout())return 90;
+    vi_sdk_controls::Caller32 process("process");if(!process.good())return 91;
+    // VI_SDK_EXTENSION_ENTRY_END
     if(int status=vi_current_counts_controls())return status;
     if(int status=provider_controls())return status;
     unsigned provider_checked=0;
@@ -82,4 +88,23 @@ int main() {
     std::cout<<"SDK VI complete controls="<<checked<<" workers=1,4 restored="<<skimagexx::get_num_threads()
         <<" host_scalar_log2_compatible="<<provider_checked<<" provider_plumbing_controls=3"
         <<" available="<<skimagexx::has_avx2()<<" originals=0 timing=0\n";
+    // VI_SDK_EXTENSION_TAIL_BEGIN
+    if(int status=vi_sdk_controls::run())return status;
+    if(!process.finish())return 92;
+    std::cout<<"VI SDK extended compatiblecalls="<<vi_sdk_controls::counters.owning
+        <<" default_FENV_refusals="<<vi_sdk_controls::counters.default_refusals
+        <<" callbacks="<<vi_sdk_controls::counters.callbacks
+        <<" caller32checks="<<vi_sdk_controls::counters.checked32
+        <<" restores="<<vi_sdk_controls::counters.restores32<<" reads="<<vi_sdk_controls::counters.reads32
+        <<" defaultworkers="<<skimagexx::get_num_threads()<<" originals=0 timing=0\n";
+    return 0;
+    // VI_SDK_EXTENSION_TAIL_END
 }
+
+// VI_SDK_EXTENSION_MAIN_BEGIN
+int main() {
+    try{return vi_sdk_owning_main();}
+    catch(const std::exception& error){std::cerr<<"VI SDK primary: "<<error.what()<<'\n';return 1;}
+    catch(...){std::cerr<<"VI SDK primary: nonstandard exception\n";return 1;}
+}
+// VI_SDK_EXTENSION_MAIN_END

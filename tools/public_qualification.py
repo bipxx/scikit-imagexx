@@ -799,6 +799,9 @@ def runtime_pins(profile):
 
 DRAW_SOURCE_PATHS += ('benchmarks/vi_public_log2_provider_consumer.py', 'benchmarks/vi_public_log2_provider_execution.py', 'coverage/contracts/vi-public-log2-provider-v1.json', 'coverage/contracts/vi-public-log2-provider-benchmark-v1.json', 'coverage/contracts/vi-public-log2-provider-source-v1.json', 'tests/test_vi_public_log2_provider_source.py', 'tools/vi_public_log2_context.py', 'tests/test_vi_log2_provider_diagnostic.py', 'tests/test_vi_reduction_integration_source.py')
 
+# Current VI SDK/capture validation source closure, not historical qualification.
+DRAW_SOURCE_PATHS += ('tools/vi_provider_sdk_context.py', 'coverage/contracts/vi-provider-sdk-source-v1.json', 'tests/variation_of_information_provider_controls.hpp', 'tests/test_vi_owning_sdk_source.py', 'tools/vi4_failure_capture.py', 'coverage/contracts/vi4-failure-capture-v1.json', 'tests/test_vi4_failure_capture.py', '.github/workflows/vi-initial-failure-capture.yml')
+
 
 def environment(package=None, scalar=False):
     env = dict(os.environ)
