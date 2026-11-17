@@ -8,6 +8,41 @@ namespace {
 template<class T>skimagexx::FloodMask run(const py::array& a,const skimagexx::FloodGeometry& g,bool tol,py::object low,py::object high){
     return skimagexx::flood(static_cast<const T*>(a.data()),g,tol,tol?low.cast<T>():T{},tol?high.cast<T>():T{});
 }
+template<int Bytes>void assign_values(py::array& output,const py::array& mask,const py::array& values){
+    py::ssize_t selected=0;
+    const auto count=output.size();
+    if(count){
+      const auto rank=output.ndim();
+      const auto width=rank?output.shape(rank-1):1;
+      const auto lines=count/width;
+      const auto target_step=rank?output.strides(rank-1):0;
+      const auto flag_step=rank?mask.strides(rank-1):0;
+      const py::ssize_t bytes=Bytes?Bytes:output.itemsize();
+      auto* destination=static_cast<char*>(output.mutable_data());
+      const auto* flags=static_cast<const char*>(mask.data());
+      const auto* replacement=static_cast<const char*>(values.data());
+      std::vector<py::ssize_t> index(rank?rank-1:0,0);
+      py::ssize_t target_base=0,flag_base=0;
+      // Keep logical C order, including F/reversed/zero strides and live
+      // mask aliases. No buffered mask or parallel/SIMD store reordering:
+      // each selected value is read immediately before its ordered copy.
+      for(py::ssize_t line=0;line<lines;++line){
+        auto target=target_base,flag=flag_base;
+        for(py::ssize_t x=0;x<width;++x){
+          if(flags[flag]){if(selected>=values.size())throw py::value_error("flood assignment value count mismatch");
+            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}
+          if(x+1<width){target+=target_step;flag+=flag_step;}
+        }
+        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){
+          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}
+          index[a]=0;
+          target_base-=(output.shape(a)-1)*output.strides(a);
+          flag_base-=(mask.shape(a)-1)*mask.strides(a);
+        }
+      }
+    }
+    if(selected!=values.size())throw py::value_error("flood assignment value count mismatch");
+}
 }
 void bind_flood_fill(py::module_& m){
  m.def("flood_mask",[](py::array a,std::vector<std::ptrdiff_t> seed,py::array_t<std::uint8_t,py::array::c_style> footprint,bool fortran,bool tol,py::object low,py::object high){
@@ -31,11 +66,15 @@ void bind_flood_fill(py::module_& m){
     const auto kind=output.dtype().kind();
     if(output.dtype().has_fields()||!(kind=='b'||kind=='i'||kind=='u'||kind=='f'||kind=='c')||output.itemsize()>16)throw py::type_error("flood assignment requires numeric POD dtype");
     if(mask.itemsize()!=1||mask.dtype().kind()!='b'||!output.dtype().is(values.dtype()))throw py::type_error("flood assignment requires matching numeric dtype");
-    py::ssize_t selected=0;
-    for(py::ssize_t k=0;k<output.size();++k){auto i=k;py::ssize_t target=0,flag=0;
-      for(py::ssize_t a=output.ndim();a-->0;){auto c=i%output.shape(a);i/=output.shape(a);target+=c*output.strides(a);flag+=c*mask.strides(a);}
-      if(*(static_cast<const char*>(mask.data())+flag)){if(selected>=values.size())throw py::value_error("flood assignment value count mismatch");
-        std::memcpy(static_cast<char*>(output.mutable_data())+target,static_cast<const char*>(values.data())+selected*values.itemsize(),output.itemsize());++selected;}}
-    if(selected!=values.size())throw py::value_error("flood assignment value count mismatch");
+    // Dispatch once so ordinary POD copies are fixed-size inline moves.
+    // The generic path preserves any other descriptor admitted above.
+    switch(output.itemsize()){
+      case 1:return assign_values<1>(output,mask,values);
+      case 2:return assign_values<2>(output,mask,values);
+      case 4:return assign_values<4>(output,mask,values);
+      case 8:return assign_values<8>(output,mask,values);
+      case 16:return assign_values<16>(output,mask,values);
+      default:return assign_values<0>(output,mask,values);
+    }
  },py::arg("output").noconvert(),py::arg("mask").noconvert(),py::arg("values").noconvert());
 }
