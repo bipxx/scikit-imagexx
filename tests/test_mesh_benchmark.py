@@ -1,5 +1,6 @@
 """Mesh workload/CI metadata only; no scientific calls or timing."""
 import ast
+import shlex
 import builtins
 import importlib.util
 from pathlib import Path
@@ -80,5 +81,14 @@ def test_both_mesh_modes_and_phase3_counts_are_in_preparation():
         target='mesh-surface-area-'+mode+'.xml'
         assert producer.count(target)==1 and producer.index(target)<producer.index('ci_measurement_artifacts.py freeze')
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
-    assert phase3.count('tests/test_mesh_surface_area_public.py')==2
-    assert 'len(cases) == 2924'in phase3 and 'len(native) == 237'in phase3 and 'expected == 1409'in phase3
+    # Retained manual recipe only; current-product eligibility remains a separate gate.
+    public=[shlex.split(line.strip().split('2>&1',1)[0].split('|',1)[0])
+            for line in phase3.splitlines()if line.strip().startswith('python -m pytest -q ')
+            and '--junitxml build/phase3/preparation/public-'in line]
+    assert len(public)==2
+    for mode,command in zip(('normal','scalar'),public):
+        assert command[:4]==['python','-m','pytest','-q']
+        assert command.count('tests/test_mesh_surface_area_public.py')==1
+        assert command[command.index('--junitxml')+1]=='build/phase3/preparation/public-'+mode+'.xml'
+    assert 'len(cases) == 5472'in phase3
+    assert 'len(entries) == 477 and len(native) == 250'in phase3 and 'expected == 1447'in phase3

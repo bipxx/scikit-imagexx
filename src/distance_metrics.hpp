@@ -55,6 +55,15 @@ template<class T,bool Svml=false> struct ScalarDistanceMath {
     static R hue_squared(R a,R b,R x,R y){
         return round(2*(std::hypot(a,b)*std::hypot(x,y)-(a*x+b*y)));
     }
+    static R hue_squared_prepared(R a,R b,R x,R y,R second_chroma){
+        return round(2*(std::hypot(a,b)*second_chroma-(a*x+b*y)));
+    }
+};
+
+// The ordinary input-precision chroma and the cancellation-sensitive double
+// hue chroma are different operations, including for float32 inputs.
+template<class M> struct DistanceSecondChroma {
+    typename M::R ordinary,hue;
 };
 
 // M controls the lightness/accumulation dtype; C controls chroma/hue.
@@ -106,14 +115,17 @@ template<class M,class C,class W> typename M::R ciede2000_distance(
 }
 
 template<class M,class W> typename M::R weighted_distance(typename M::R (&a)[3],typename M::R (&b)[3],
-    DistanceMetric metric,const DistanceParameters& p,bool promoted_cmc,bool legacy_ciede2000) {
+    DistanceMetric metric,const DistanceParameters& p,bool promoted_cmc,bool legacy_ciede2000,
+    const DistanceSecondChroma<M>* second_chroma=nullptr) {
     using R=typename M::R;
     const auto one=M::c(1);
     const auto L1=a[0],L2=b[0];
-    auto C1=M::hypot(a[1],a[2]),C2=M::hypot(b[1],b[2]);
+    auto C1=M::hypot(a[1],a[2]);
+    auto C2=second_chroma ? second_chroma->ordinary : M::hypot(b[1],b[2]);
     if(metric==DistanceMetric::cie94 || metric==DistanceMetric::cmc) {
         const auto dL=M::sub(L1,L2),dC=M::sub(C1,C2);
-        const auto dH2=M::hue_squared(a[1],a[2],b[1],b[2]);
+        const auto dH2=second_chroma ? M::hue_squared_prepared(a[1],a[2],b[1],b[2],second_chroma->hue) :
+                                     M::hue_squared(a[1],a[2],b[1],b[2]);
         if(metric==DistanceMetric::cie94) {
             const auto SC=M::add(one,M::mul(M::c(p.k1),C1)),SH=M::add(one,M::mul(M::c(p.k2),C1));
             auto dE2=M::square(M::div(dL,M::c(p.kL)));
@@ -148,8 +160,9 @@ template<class M,class W> typename M::R weighted_distance(typename M::R (&a)[3],
     return ciede2000_distance<M,M,W>(a,b,p,C1,C2);
 }
 template<class M> typename M::R distance_metric(typename M::R (&a)[3],typename M::R (&b)[3],
-    DistanceMetric metric,const DistanceParameters& p,bool wide_trig,bool promoted_cmc,bool legacy_ciede2000=false) {
-    return wide_trig ? weighted_distance<M,typename M::Wide>(a,b,metric,p,promoted_cmc,legacy_ciede2000) :
-                       weighted_distance<M,M>(a,b,metric,p,promoted_cmc,legacy_ciede2000);
+    DistanceMetric metric,const DistanceParameters& p,bool wide_trig,bool promoted_cmc,bool legacy_ciede2000=false,
+    const DistanceSecondChroma<M>* second_chroma=nullptr) {
+    return wide_trig ? weighted_distance<M,typename M::Wide>(a,b,metric,p,promoted_cmc,legacy_ciede2000,second_chroma) :
+                       weighted_distance<M,M>(a,b,metric,p,promoted_cmc,legacy_ciede2000,second_chroma);
 }
 }

@@ -8,8 +8,8 @@ import sys
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-v3.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-v4.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-v6.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-v7.json'
 RUNNER='tools/vi4_public_matmul_capture.py'
 ADAPTER='benchmarks/vi_public_matmul_provider_execution_v2.py'
 CONSUMER='benchmarks/vi_public_matmul_provider_consumer_v2.py'
@@ -32,8 +32,20 @@ def function(text,name):
 
 def test_unbound_current_route_exact_dependencies_and_caps():
     module=load(RUNNER);current=data(CONTEXT);capture=current['capture'];provider=data(PROVIDER)
-    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v2.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v2.json').read_bytes()))
-    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v3.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v3.json').read_bytes()))
+    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v5.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v5.json').read_bytes()))
+    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v6.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v6.json').read_bytes()))
+    previous_capture=data('coverage/contracts/vi4-public-matmul-capture-v5.json')
+    previous_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-v6.json')
+    assert previous_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v4.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v4.json').read_bytes()))
+    assert previous_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v5.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v5.json').read_bytes()))
+    latest_capture=data('coverage/contracts/vi4-public-matmul-capture-v4.json')
+    latest_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-v5.json')
+    assert latest_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v3.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v3.json').read_bytes()))
+    assert latest_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v4.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v4.json').read_bytes()))
+    retained_capture=data('coverage/contracts/vi4-public-matmul-capture-v3.json')
+    retained_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-v4.json')
+    assert retained_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v2.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v2.json').read_bytes()))
+    assert retained_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v3.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v3.json').read_bytes()))
     prior_capture=data('coverage/contracts/vi4-public-matmul-capture-v2.json')
     prior_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-v3.json')
     assert prior_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v1.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v1.json').read_bytes()))
@@ -42,6 +54,9 @@ def test_unbound_current_route_exact_dependencies_and_caps():
     with pytest.raises(AssertionError,match='UNBOUND'):module.read_manifest(ROOT)
     assert module.CONTEXT==CONTEXT and module.PROVIDER==PROVIDER
     assert capture['provider_context']==PROVIDER
+    route=current['first_cohort']['routes']['vi']
+    assert route['contract']==PROVIDER and route['driver_route']==provider['route']
+    assert current['families'][provider['report_family']]['contract']==PROVIDER
     assert current['benchmark_source_sha256']==provider['source_files_canonical_sha256']
     for name,pin in current['benchmark_source_sha256'].items():
         assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name

@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v9.json'
+CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v12.json'
 SELF_PIN_PATH = 'tools/mark_lbp_fp_context.py'
 PREDECESSOR = '2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d'
 
@@ -24,6 +24,13 @@ def _context(root, context_sha256):
         'path': 'coverage/contracts/current281-validation-source-v1.json',
         'sha256': '30e078cce3e012ce4cd5dbe29b3ef727fcc4aaf59413b0b7e22996b2b13303a5',
     }
+    history_parent = data['predecessor_history_context']
+    assert history_parent == {
+        'path': 'coverage/contracts/vi-public-matmul-source-history-v11.json',
+        'sha256': '19646d87f5821d5a280e2a0e49cb5747bd7cb9774eea0d57eedf686d1873b231',
+        'source': '40e88939e6f045e4fa9c2a235554d4ae2b769722',
+    }
+    assert hashlib.sha256((root / history_parent['path']).read_bytes()).hexdigest() == history_parent['sha256']
     parent = data['predecessor_context']
     assert hashlib.sha256((root / parent['path']).read_bytes()).hexdigest() == parent['sha256']
     assert hashlib.sha256((root / 'tools/current_validation_context.py').read_bytes()).hexdigest() == '52d8eb80b2138d8d11fb8df7ef3b214c964faadc1bbf71419825d6ce0dc3d064'

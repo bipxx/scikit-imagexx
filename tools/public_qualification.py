@@ -888,6 +888,9 @@ DRAW_SOURCE_PATHS += (
 
 # Current fd9/find and 2655/FLOOD successor inputs; predecessors stay retained.
 DRAW_SOURCE_PATHS += ('coverage/contracts/current-public-qualification-v10.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v10.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v10.json', 'coverage/contracts/find-boundaries-benchmark-binding-v8.json', 'coverage/contracts/find-boundaries-frontend-v7.json', 'coverage/contracts/find-boundaries-sdk-v6.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v4.json', 'coverage/contracts/vi4-public-matmul-capture-v3.json', 'coverage/contracts/speed-parity-current-source-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v9.json', 'coverage/contracts/flood-speed-parity-v3.json', 'coverage/contracts/flood-fill-benchmark-v5.json', 'tests/test_flood_disjoint_assignment.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v10.json', 'coverage/contracts/speed-parity-current-source-v3.json', '.github/workflows/ci.yml', 'coverage/contracts/vi-public-matmul-provider-benchmark-v5.json', 'coverage/contracts/vi4-public-matmul-capture-v4.json')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v11.json', 'coverage/contracts/speed-parity-current-source-v4.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v6.json', 'coverage/contracts/vi4-public-matmul-capture-v5.json')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v12.json', 'coverage/contracts/speed-parity-current-source-v5.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v7.json', 'coverage/contracts/vi4-public-matmul-capture-v6.json', 'tests/test_distance_optimized_layouts.py')
 
 
 
