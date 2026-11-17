@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'build/weighted-validation'
 CMAKE_SHA = 'b90c19854f85101ea47560c5e5f8d3b232dc793adf0f4e3a02153b2c204ae849'
 MODULES = ('test_ciede2000_promotion.py', 'test_color_distance.py', 'test_weighted_distance.py',
-           'test_distance_math_provider.py', 'test_distance_scalar_promotion.py')
+           'test_distance_math_provider.py', 'test_distance_scalar_promotion.py', 'test_distance_optimized_layouts.py')
 METRICS = {'color.deltaE_cie76': 19, 'color.deltaE_ciede94': 29,
            'color.deltaE_ciede2000': 27, 'color.deltaE_cmc': 25}
 
@@ -154,10 +154,14 @@ def parity(temp, revision):
         run('sdk-configure', 'cmake', '-S', ROOT / 'tests/cmake_consumer/weighted_distance_diagnostic',
             '-B', consumer, '-G', 'Ninja', '-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_PREFIX_PATH=' + str(prefix),
             '-DSKIMAGEXX_EXPECT_PREFIX=' + str(prefix), '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON')
-        run('sdk-build', 'cmake', '--build', consumer, '--target', 'weighted_distance_consumer', '--parallel', '2', '--verbose')
+        run('sdk-build', 'cmake', '--build', consumer, '--target', 'weighted_distance_consumer',
+            'weighted_distance_load_paths', '--parallel', '2', '--verbose')
         shutil.copyfile(consumer / 'weighted-distance.map', OUT / 'weighted-distance.map')
-        run('sdk', 'ctest', '--test-dir', consumer, '-R', '^installed_weighted_distance$', '--output-on-failure',
+        run('sdk', 'ctest', '--test-dir', consumer, '-R', '^installed_(weighted_distance|distance_load_paths)$', '--output-on-failure',
             '--output-junit', OUT / 'sdk.xml')
+        sdk_nodes = list(ET.parse(OUT / 'sdk.xml').iter('testcase'))
+        require(len(sdk_nodes) == 2 and all(not any(t.tag in {'failure','error','skipped'} for t in n) for n in sdk_nodes),
+                'Both installed SDK consumers must execute')
     runtime_code = "import skimagexx as xx; print(xx._core.__file__); assert xx.get_num_threads()==1 and xx.has_avx2()"
     run('installed-ownership', sys.executable, '-c', runtime_code, env=env)
     helper_dir = OUT / 'fenv'
@@ -179,7 +183,7 @@ def parity(temp, revision):
     require(all(r['exit_code'] == 0 for r in results.values()), 'Installed public parity failed')
     for row in results.values():
         nodes = list(ET.parse(OUT / row['xml']).iter('testcase'))
-        require(len(nodes) == 3360 and not any(t.tag in {'failure','error','skipped'} for n in nodes for t in n),
+        require(len(nodes) == 3414 and not any(t.tag in {'failure','error','skipped'} for n in nodes for t in n),
                 'Installed suite did not complete all required nodes')
         row.update(cases=len(nodes), xml_sha256=sha(OUT / row['xml']))
     for mode in results:
