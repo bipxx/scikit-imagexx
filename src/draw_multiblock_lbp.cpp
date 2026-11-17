@@ -80,7 +80,8 @@ MultiblockLbpImage draw_multiblock_lbp(const MultiblockLbpInput& in,const Multib
     case PixelType::uint64:converted=normalized<std::uint64_t>(in);break;case PixelType::int64:converted=normalized<std::int64_t>(in);break;
     default:throw std::invalid_argument("LBP pixel type unsupported");}
     if(result.is_float32){if(gray){auto old=std::move(result.float32);result.float32.resize(total);for(std::size_t k=0;k<total;++k)result.float32[k]=old[k/3];}}
-    else{result.float64.resize(total);for(std::size_t k=0;k<total;++k)result.float64[k]=converted[gray?k/3:k];}
+    else if(gray){result.float64.resize(total);for(std::size_t k=0;k<n;++k){result.float64[3*k]=converted[k];result.float64[3*k+1]=converted[k];result.float64[3*k+2]=converted[k];}}
+    else result.float64=std::move(converted);
     result.is_half=in.half;
     if(p.prepare_only){if(result.is_half){result.float16.resize(total);for(std::size_t k=0;k<total;++k)result.float16[k]=detail::encode_half(result.float32[k]);}return result;}
     bool simd=p.simd&&std::getenv("SKIMAGEXX_DISABLE_SIMD")==nullptr;
@@ -153,6 +154,69 @@ unsigned multiblock_lbp_binary(const MultiblockLbpFloatView& a,const MultiblockL
     return unsigned(bool(f&FE_DIVBYZERO))|unsigned(bool(f&FE_OVERFLOW))*2|unsigned(bool(f&FE_UNDERFLOW))*4|unsigned(bool(f&FE_INVALID))*8;
 }
 void multiblock_lbp_assign(const MultiblockLbpFloatView& out,const MultiblockLbpFloatView& a){
-    const auto n=count(out.image.shape);for(std::size_t k=0;k<n;++k)write_word(out,byte_index(k,out.image.shape,out.image),read_word(a,byte_index(k,out.image.shape,a.image)));
+    const auto n=count(out.image.shape);
+    // A same-width native binary64 assignment is a representation copy. Keep
+    // the general conversion/broadcast path for every other storage domain.
+    auto packed=[](const CropView& v){std::ptrdiff_t stride=8;for(std::size_t d=v.shape.size();d-->0;){if(v.shape[d]>1&&v.strides[d]!=stride)return false;if(v.shape[d]&&stride>PTRDIFF_MAX/v.shape[d])return false;stride*=v.shape[d];}return true;};
+    if(out.image.itemsize==8&&a.image.itemsize==8&&!out.swapped&&!a.swapped&&out.image.shape==a.image.shape&&packed(out.image)&&packed(a.image)){
+        if(!n)return;
+        const auto source=reinterpret_cast<std::uintptr_t>(a.image.data),target=reinterpret_cast<std::uintptr_t>(out.image.data),bytes=n*8;
+        if(source==target)return;
+        if((source<target&&target-source>=bytes)||(target<source&&source-target>=bytes)){std::memcpy(const_cast<void*>(out.image.data),a.image.data,bytes);return;}
+    }
+    for(std::size_t k=0;k<n;++k)write_word(out,byte_index(k,out.image.shape,out.image),read_word(a,byte_index(k,out.image.shape,a.image)));
+}
+
+namespace {
+constexpr int phase_errors=FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID;
+void phase_begin(){if(std::fetestexcept(phase_errors))std::feclearexcept(phase_errors);}
+unsigned phase_status(){const auto f=std::fetestexcept(phase_errors);return unsigned(bool(f&FE_DIVBYZERO))|unsigned(bool(f&FE_OVERFLOW))*2|unsigned(bool(f&FE_UNDERFLOW))*4|unsigned(bool(f&FE_INVALID))*8;}
+template<class T> T load_rgb(const CropView& v,std::ptrdiff_t r,std::ptrdiff_t c,std::size_t channel){T value;const auto off=r*v.strides[0]+c*v.strides[1]+std::ptrdiff_t(channel)*v.strides[2];std::memcpy(&value,static_cast<const char*>(v.data)+off,sizeof(T));return value;}
+template<class T> void store_rgb(const CropView& v,std::ptrdiff_t r,std::ptrdiff_t c,std::size_t channel,T value){const auto off=r*v.strides[0]+c*v.strides[1]+std::ptrdiff_t(channel)*v.strides[2];std::memcpy(const_cast<char*>(static_cast<const char*>(v.data))+off,&value,sizeof(T));}
+template<class T> void apply_rgb(const CropView& image,const MultiblockLbpParameters& p,
+    const MultiblockLbpFloatView& greater,const MultiblockLbpFloatView& less,
+    double first_complement,bool first_float32,const std::function<void(unsigned,bool)>& deliver){
+    const int offsets[8][2]={{-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1}};
+    std::vector<float> first32;std::vector<double> first64,combined;
+    for(int block=0;block<8;++block){
+        const auto rr=add(add(p.r,p.height),offset(p.height,offsets[block][0]));
+        const auto cc=add(add(p.c,p.width),offset(p.width,offsets[block][1]));
+        const auto r0=clip(rr,image.shape[0]),r1=std::max(r0,clip(add(rr,p.height),image.shape[0]));
+        const auto c0=clip(cc,image.shape[1]),c1=std::max(c0,clip(add(cc,p.width),image.shape[1]));
+        const auto size=count({r1-r0,c1-c0,3});combined.resize(size);
+        if(first_float32)first32.resize(size);else first64.resize(size);
+        // All source pixels are consumed before the color phase or assignment.
+        // Separate first-product storage retains its actual promoted precision.
+        const double complement=block==0?first_complement:1.0-p.alpha;
+        phase_begin();std::size_t k=0;
+        if(first_float32){
+            if(size){const float factor=float(complement);
+                for(auto r=r0;r<r1;++r)for(auto c=c0;c<c1;++c)for(std::size_t ch=0;ch<3;++ch){volatile float product=float(load_rgb<T>(image,r,c,ch))*factor;first32[k++]=product;}}
+        }else for(auto r=r0;r<r1;++r)for(auto c=c0;c<c1;++c)for(std::size_t ch=0;ch<3;++ch){volatile double product=double(load_rgb<T>(image,r,c,ch))*complement;first64[k++]=product;}
+        auto flags=phase_status();if(flags)deliver(flags,false);
+        const auto& color=(std::uint8_t(p.code)&(1u<<(7-block)))?greater:less;
+        phase_begin();double colors[3];
+        for(std::size_t ch=0;ch<3;++ch){volatile double product=p.alpha*read_word(color,std::ptrdiff_t(ch)*color.image.strides[0]);colors[ch]=product;}
+        flags=phase_status();if(flags)deliver(flags,false);
+        phase_begin();
+        for(k=0;k<size;++k){volatile double sum=(first_float32?double(first32[k]):first64[k])+colors[k%3];combined[k]=sum;}
+        flags=phase_status();if(flags)deliver(flags,true);
+        // Cast/assignment is a distinct final phase: an error callback above
+        // can change rounding before this conversion, just as on the public path.
+        k=0;for(auto r=r0;r<r1;++r)for(auto c=c0;c<c1;++c)for(std::size_t ch=0;ch<3;++ch)store_rgb<T>(image,r,c,ch,T(combined[k++]));
+    }
+}
+}
+void multiblock_lbp_apply(const MultiblockLbpFloatView& image,const MultiblockLbpParameters& p,
+    const MultiblockLbpFloatView& greater,const MultiblockLbpFloatView& less,
+    double first_complement,bool first_float32,bool capture_workers,
+    const std::function<void(unsigned,bool)>& deliver){
+    if(!deliver)throw std::invalid_argument("LBP error delivery callback required");
+    if(capture_workers)(void)get_num_threads();
+    if(image.swapped||image.image.shape.size()!=3||image.image.shape[2]!=3||(image.image.itemsize!=4&&image.image.itemsize!=8))throw std::invalid_argument("LBP batched RGB storage");
+    for(const auto* color:{&greater,&less})if(color->swapped||color->image.itemsize!=8||color->image.shape!=std::vector<std::ptrdiff_t>({3}))throw std::invalid_argument("LBP batched color storage");
+    (void)count(image.image.shape);
+    if(image.image.itemsize==4)apply_rgb<float>(image.image,p,greater,less,first_complement,first_float32,deliver);
+    else apply_rgb<double>(image.image,p,greater,less,first_complement,first_float32,deliver);
 }
 }

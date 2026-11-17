@@ -16,7 +16,7 @@ import subprocess
 import sys
 import warnings
 
-CONTEXT='coverage/contracts/flood-fill-benchmark-v3.json'
+CONTEXT='coverage/contracts/flood-fill-benchmark-v5.json'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 
 

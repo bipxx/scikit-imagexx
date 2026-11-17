@@ -1,0 +1,250 @@
+{
+  "schema": "vi-public-matmul-provider-benchmark-v2",
+  "state": "SOURCE_ONLY_UNBOUND_EXPLICIT_LOG2_MATMUL_PARITY_AND_PERFORMANCE_PENDING",
+  "base_source": "77088f5387e0734584a4d1da91934312215b33c1",
+  "unbound": {
+    "source": null,
+    "producer": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "root_GO": null,
+    "measurement_GO": null,
+    "genuine_first_cohort": null
+  },
+  "unbound_message": "VI_UNBOUND",
+  "cases": [
+    {
+      "id": "metrics.variation_of_information/128x128/8/C",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        128,
+        128
+      ],
+      "labels": 8,
+      "dtype": "int64",
+      "layout": "C",
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "metrics.variation_of_information/128x128/64/F",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        128,
+        128
+      ],
+      "labels": 64,
+      "dtype": "int64",
+      "layout": "F",
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/8/F",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        256,
+        256
+      ],
+      "labels": 8,
+      "dtype": "int64",
+      "layout": "F",
+      "ignore": [
+        0
+      ]
+    },
+    {
+      "id": "metrics.variation_of_information/256x256/64/C",
+      "api": "metrics.variation_of_information",
+      "shape": [
+        256,
+        256
+      ],
+      "labels": 64,
+      "dtype": "int64",
+      "layout": "C",
+      "ignore": [
+        0
+      ]
+    }
+  ],
+  "case_count": 4,
+  "method": {
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "threads": 1,
+    "retain_all_losses": true,
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "allocation_inclusive": true,
+    "pass_index": 0
+  },
+  "raw_samples": 56,
+  "warm_groups": 8,
+  "route_id": "vi",
+  "route": {
+    "api": "metrics.variation_of_information",
+    "driver": "benchmarks/vi_public_matmul_provider_consumer_v2.py",
+    "owned_module": "skimagexx._variation_of_information",
+    "contract": "coverage/contracts/vi-public-matmul-provider-benchmark-v4.json"
+  },
+  "signature": "(image0=None, image1=None, *, table=None, ignore_labels=())",
+  "original_module": "skimage.metrics._variation_of_information",
+  "original_source_canonical_sha256": "29fd36256b803934fa37963dbe4b22507152b927b3ac7bfb2b05a973c6552da8",
+  "owned_source": "python/skimagexx/_variation_of_information.py",
+  "SDK_header": "include/skimagexx/variation_of_information.hpp",
+  "report_family": "variation_of_information_consumer",
+  "default_output": "build/vi-public-matmul-provider-first-cohort-v2",
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "source_files_canonical_sha256": {
+    "benchmarks/variation_of_information_cases_v1.py": "dc773437ab4c79a21f590e746553df848208939ab2fd694e8bb4b244b18c6046",
+    "benchmarks/variation_of_information_consumer.py": "1ca6c0cc3bc6c26cf8baae128d0dab96f33edb99e10290969706956f9bd34144",
+    "benchmarks/variation_of_information_execution.py": "93fe29097b3050947c45da2719dbb0f7f987efde72be259a2d43af93b89a8c4d",
+    "include/skimagexx/variation_of_information.hpp": "c910703f0b5315dc4cb6751c7b6d7eb90c7a9442f81b440da55bbc10a8658bb4",
+    "src/variation_of_information.cpp": "e4131ef47cdb66af20f3a7adcc29d8f95eeacafeb1e89f652d21bb29a661b2e9",
+    "src/bind_variation_of_information.cpp": "8d3310debba4a10aa59f185fe938b2db48f79fb0ed5afafac081078578dc83a3",
+    "python/skimagexx/_variation_of_information.py": "8e25cd3f76ecc32e9441e42c0bff4c93817e5b02c1e46f147f04829113abcd0c",
+    "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce",
+    "coverage/contracts/variation-of-information-benchmark-v1.json": "e0a101f4259c308f9a86466143b457daa7678a093c6bc1464f295d128a56d0a4",
+    "benchmarks/label_pair_metrics.py": "cfe54301a1eee157ae6549b32f28c999fa536419f965dec4c2804d734f063d4a",
+    "python/skimagexx/_contingency_table.py": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+    "src/bind_label_pair_metrics.cpp": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+    "include/skimagexx/label_pair_metrics.hpp": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "benchmarks/provenance.py": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+    "tests/test_variation_of_information_benchmark_execution.py": "43ff1e68c278d9453c7404db84bcdcd0a6cabbe919dc021a1ba53447698b4fa9",
+    "src/label_pair_metrics.cpp": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+    "benchmarks/mark_boundaries_execution.py": "78dc1ef4dd91b93839e3fe4825560367758a802b63f6dff7f0158ad9f04e7da1",
+    "benchmarks/vi_public_log2_provider_consumer.py": "4b968b0c13620a6106ea17841b59c36844327061ba70d99af2b18e5953233800",
+    "benchmarks/vi_public_log2_provider_execution.py": "f4a25f5613952d394c77ab12e21eaadc9b4bd0fca48faa9970f32c48caa13f1b",
+    "coverage/contracts/vi-public-log2-provider-v1.json": "4f30e29469dcaa72594c0482a6a04954f04582b2593a0521b0df2a9b71e46096",
+    "tests/test_mark_boundaries_benchmark_execution.py": "7e2e453c668fe2cb855a608bd9c131a01ec4e645cf78fa9d8e31b3746d682d24",
+    "coverage/contracts/vi-public-log2-provider-benchmark-v1.json": "223f5e24ef18abcfecba0081640470ef17d18f82e87f64933997df7bf9bb3ca6",
+    "benchmarks/vi_public_matmul_provider_execution.py": "7a6a84c4caba8acdbc2f04850205f283a80460bd484743142229c12aa32777fa",
+    "benchmarks/vi_public_matmul_provider_consumer.py": "2b2fdd6fd3a56c1dadf56fc5e4464672f75dd3fe019475f16858a479b9fd84ed",
+    "coverage/contracts/vi-public-matmul-provider-v1.json": "0369b39b6ccb67e2f89b0683415415d42250d50a356629496335bfb006c782d8",
+    "coverage/contracts/vi-public-log2-provider-benchmark-v2.json": "e67de2b48bf387819b099cd72faf9684269f8106c70cf76c221d5d512f68c46d",
+    "tests/test_vi_public_matmul_provider_source.py": "81f5ec261c0e24c05483202bc94494e1b368f84add222c195e806e29e2c61528",
+    "tests/test_vi_public_matmul_provider_public.py": "339c817a94eff3f0cf1d293cfb2c3da3190276770af76e0f19cacf848d7fd763",
+    "tests/test_variation_of_information_public.py": "2613e8cb7a24b84f9d1da45b8aed0a1a6e9b745336c79c2c042122585ec924e9",
+    "tests/test_variation_of_information_current_counts_public.py": "5c1307b7ab81361199e340540e70f3e8163a484baac6ad5251f2e2a0991acfc9",
+    "tests/test_variation_of_information_integration.py": "3893db24a485344653ce09df4ae7900e05001cde058d238a88a4167e48962f79",
+    "tests/test_vi_public_log2_provider_large.py": "61750a7b8a0bf0490e9f16bd8cd8c2a4c7aafac2e1503dcb9bffa447a2d624e3",
+    "tests/test_vi_public_log2_large_source.py": "2443975c8c744acf84af651e04a2ffa9c177d6d2ae78cc036e44574ba13928e6",
+    "tests/label_pair_metrics_observer.py": "476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc",
+    "tests/label_pair_metrics_contract.py": "41f5e003fc1e01e293e7e1d1027781738e318af806a52460779283352549ff27",
+    "benchmarks/vi_public_matmul_provider_execution_v2.py": "f598b98839b7984e69bd650745efef64d0ae0a362a42a3455fc22d75465a1f64",
+    "benchmarks/vi_public_matmul_provider_consumer_v2.py": "bc88bd28669e6ed9d038f13f777e128b303ffd2221efcbe575ee97dd404bcd9f",
+    "tools/vi4_public_matmul_capture.py": "d0ea024d326569278475335e40603a454187298f250e7f1cb1eb7a9ddf728c07",
+    "tests/test_vi4_public_matmul_capture.py": "1128221c8135badbfefecc1af116045db30844f6da05ea714c8f69d43e94a308",
+    "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json": "98aa288de7a3bedb230f74e8629af20c86b9d90246cf98e0154c90980e1f4e1b",
+    "tools/public_qualification.py": "f9bc28b00664c782bf1fceeaae910e15b32f3822482b160508928d715afec313",
+    ".github/workflows/public-qualification.yml": "2d38aaaf367a908ff64aa857c656a0e8079bf75e103027c126f7711d78a33967",
+    "CMakeLists.txt": "06ead19d2848e3d83fd3041a03cdb7ea6600abaf82faa8112497487ec3535fcc",
+    "tests/cmake_consumer/CMakeLists.txt": "a8e73809365f5b2fab940d65a396de0a8dd1b3f2422163b085b78c8c8b1f8a0f",
+    "tests/test_vi_owning_sdk_source.py": "30a8d847f1bce3d1e24bf1a7c281e031ca71127966f5f2dc493de6d12dc48070",
+    ".github/workflows/vi-initial-failure-capture.yml": "b3b512a8e853111633f21716428794475d1c4bb33e2d870a74eb57a65f564327",
+    "coverage/contracts/current-public-qualification-v8.json": "b6296cc0ab0e251784351ff139da2c35344713c6ff7ad33e0cd4d9635ea5ddbf",
+    "tests/test_vi_public_matmul_windows_public.py": "e0b234d470aac4d381d24162d34e717d82d9b15e2a01c2cfb2cfb07292d522e4",
+    "tests/test_vi_public_matmul_qualification_source.py": "b9451030546da5dee5f0ffa0c2b35712209db1b9fed2fbeb40e8a893530e23fc",
+    "tests/cmake_consumer/variation_of_information_matmul_consumer_v1.cpp": "4e637833781ebb5a8f9aaf6a45598048078101387d7e7cc8365b79f6cdaa8df5",
+    "tests/variation_of_information_matmul_controls_v1.hpp": "c99531f32f2e52dee3cc67d033d79b915a10fd6d1cedf08c1f458e458735cf89",
+    "tests/test_vi_public_matmul_sdk_source.py": "cbb43904bd379fa0a13b476091a9cb3f76bd9840d66db939d418d712fba06848",
+    "coverage/contracts/current-public-qualification-v9.json": "014fc8ec2ea3014e196ed9e306a9a14ce49895d2d2c172d6a86b445da3a9e8a7",
+    "coverage/contracts/current-public-qualification-v10.json": "9f96134f2d35ffcf12a127d879fd74403418210787f8e3730862e1bd538faeee"
+  },
+  "common_boundary_canonical_sha256": "78dc1ef4dd91b93839e3fe4825560367758a802b63f6dff7f0158ad9f04e7da1",
+  "reused_executor_canonical_sha256": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+  "FENV_dependency": {
+    "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+    "source_files_raw_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "module": "tests/util_views_fenv.py",
+    "backend": "backend",
+    "mode": "source-built-v1",
+    "receipt_environment": "UTIL_VIEWS_FENV_RECEIPT",
+    "external_digest_environment": "UTIL_VIEWS_FENV_RECEIPT_SHA256",
+    "legacy": "F1 private-fixed-v1 scope retained; forbidden by this benchmark genuine consumer",
+    "collector": "C prepares current-source helper and exports MODE/RECEIPT/RECEIPT_SHA256, no HELPER. Retain entire emitted helper bundle recursively and7F1sourcefiles/context. Receipt/toolchain/source/current-library/control validation precedes target calls.",
+    "scope": "Reviewed empty-x87/masked exceptions/Linux x86_64 glibc32/MXCSR28; no Windows/general machine-state claim."
+  },
+  "metadata_fixture_canonical_sha256": "7e2e453c668fe2cb855a608bd9c131a01ec4e645cf78fa9d8e31b3746d682d24",
+  "providers": {
+    "representation": "Existing explicit NumPy normalization/SciPy CSR representation",
+    "elementary_log": "Current true numpy.log2: two whole nonzero batches, including empty",
+    "dense_inner_product": "Current true numpy.matmul: two native-f64 vector inner products, exact scalarbuffer transport",
+    "native": "Marginals/inverses/scaling/coalescing/xlogx products/ordered sparse reductions",
+    "timing": "Exact public callbacks after guard restoration; unchanged method/cases; no source-plan authority"
+  },
+  "saved_reference_scope": "Immutable fixed words remain separately scoped to legacy SDK. Fresh current-original/current-public small8recipes and large4cases are required; no old or failed-source parity authority reused.",
+  "strict_preflight": {
+    "typed_native_C_returns": {
+      "get_num_threads": 2,
+      "label_pair_check_storage": 7,
+      "label_pair_counts_preweighted": 1,
+      "variation_of_information_csr": 1
+    },
+    "accepted": [
+      "contingency native_result is not None",
+      "VI public return is not None"
+    ],
+    "output": "Exact raw f64 words/type/shape/layout/owning/alias, no tolerance",
+    "workers": "Fixed1 before/after; two existing phase getter calls, not a whole-public immutable snapshot claim.",
+    "FP": "Same incoming and outgoing target control/status/MXCSR, caller32 exact finally. No output or FP normalization."
+  },
+  "timed_ownership": "Ownership instrumentation only at untimed preflight, not per timed call. Fixed plain inputs/options and source identity unchanged; postbatch input/policy/globalworker/source/authority checks, caller32 restoration. Direct whole-public callbacks allocate normally. No extra postbatch original/native call is inferred.",
+  "integration_dependencies": {
+    "readonly_source": null,
+    "readonly_source_revision": null,
+    "pending": "Fresh current source qualification, producer/runtime/core/SDK/helper admission and explicit root binding required. Private32 AVX2 results are not genuine/VI4/timing authority.",
+    "helper": "Actual host source-built F1 receipt/library/ABI/controls required; no old-host binary binding.",
+    "prospective_source_revision": null
+  },
+  "pending": [
+    "Root independent source admission and complete sourcebarriers",
+    "Actual current source/runtime/core/SDK/helper/root/cohort/measurement bindings",
+    "Fresh exact-source public/FP/SDK/four-profile qualification and VI4timings; all losses retained"
+  ],
+  "provider_guard_scope": "Preflight only: exactly current log2/matmul/log2/matmul. Whole owned f64 log batches including empty; two owned f64 vectors and plain np.float64 scalar for each matmul. Deny undeclared entropy/reduction/dot and SciPy arithmetic, preserve structuralCSR identity and restore namespace exactly. Sampler bodies unchanged and uninstrumented.",
+  "reduction_scope": {
+    "native": "Marginals, inverses, sparse scaling/coalescing, xlogx products and ordered row/column reductions",
+    "provider": "Current NumPy log2 and matmul; dot is not claimed native for this public path",
+    "legacy": "Scalar-libm and log2-only native-dot SDK bodies/golds unchanged",
+    "actual_current_parity": null
+  },
+  "execution_authority": null,
+  "reused_execution_canonical_sha256": "93fe29097b3050947c45da2719dbb0f7f987efde72be259a2d43af93b89a8c4d",
+  "provider_policy": "coverage/contracts/vi-public-matmul-provider-v1.json",
+  "source_binding": {
+    "mode": "literal-current-canonical-LF",
+    "predecessor_contract": {
+      "path": "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json",
+      "raw_sha256": "98aa288de7a3bedb230f74e8629af20c86b9d90246cf98e0154c90980e1f4e1b"
+    },
+    "historical_sources": "Immutable log2-only/older rows retained for history; never actual current source acceptance.",
+    "execution_authority": null,
+    "scope": "Literal actual current prepared/snapshot/controller sources. No historical inverse is current acceptance; frozen V1 remains immutable.",
+    "metadata_predecessor_contract": {
+      "path": "coverage/contracts/vi-public-matmul-provider-benchmark-v3.json",
+      "raw_sha256": "ffc493592e169bc3e855a26701344975fb9ea143913ffcfc5e83c0ab891b3633"
+    }
+  },
+  "historical_sources": {}
+}

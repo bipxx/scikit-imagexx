@@ -1,0 +1,181 @@
+{
+  "schema": "find-boundaries-sdk-v1",
+  "status": "ASSEMBLED_RELOCATED_COMPONENT_PASS_PENDING_PEER_AND_SHARED_DEFAULT_WIRING",
+  "source_canonical_pins": {
+    "tests/cmake_consumer/find_boundaries_consumer.hpp": "9b0f44fe9827c175db78f6c8f22d0cdfa393244682c74a105c238b02b9456048",
+    "tests/fixtures/find_boundaries_originals_v1.hpp": "55850b164720ff1ff6c984ddc9e1373cbde3a999e6319002e10d86cf2c583033",
+    "include/skimagexx/find_boundaries.hpp": "a7f991dd6916cb8166182e2cd5e2eb0ef6bf62ce98ced3b960ae75ec39a544eb",
+    "src/find_boundaries.cpp": "fd9bf4d06ca5a09bb4c5250c98a414b10815fc29c4bfca5bacab7215e69d7708"
+  },
+  "installed_target": "skimagexx::skimagexx",
+  "helper": "skimagexx_test::find_boundaries_consumer(workers)",
+  "required_sources": [
+    "tests/cmake_consumer/find_boundaries_consumer.hpp",
+    "tests/fixtures/find_boundaries_originals_v1.hpp"
+  ],
+  "required_existing_installed_headers": [
+    "skimagexx/components.hpp",
+    "skimagexx/convert.hpp",
+    "skimagexx/image.hpp"
+  ],
+  "new_installed_header": "skimagexx/find_boundaries.hpp",
+  "future_shared_route": "Existingcomponent_consumers segmentationfamily default includeshelper andcallsworkers1/4;rootintegration authorownsactualshareddefaultappend. No newfamily/count assumed.",
+  "actual_route": "Ignoredfocusedinstalledclient--find-boundaries-only, actualfind_package/exportedtarget, privateSDK94donor+header+memberoverlay =assembled95; notgenuine95.",
+  "proofs": {
+    "normal": 532320,
+    "runtime_disabled": 532320,
+    "compiler_scalar": 532320,
+    "sanitize": 532320,
+    "budget1": 266160,
+    "budget4": 266160,
+    "restored_global": 1,
+    "MSVC": "ActualclientcompileONLY"
+  },
+  "donor": "RetainedactualgenuineSDK94relocatedprefix fromdb4consumer, archiveunchangedexceptoneappendednewleafmember;176->177members; oldarchive/wheelsNOTrehashed.",
+  "required_source_guard": "tests/test_find_boundaries_sdk_scope.py",
+  "remaining": [
+    "IndependentSDKcomponentreview",
+    "Existingfamilyactualdefaultsharedwiring+extractionrequiredsources",
+    "ActualgenuinewholeSDK95/fullqualified31family campaign; no acceptancefromassembledcomponentsalone"
+  ],
+  "layout_successor": {
+    "contract": "coverage/contracts/find-boundaries-sdk-v1.json",
+    "sha256": "292ff68e95dac9fd94234215d2506dea0cb881887a8d421ba18659bc2e277864",
+    "context": "coverage/contracts/find-boundaries-layout-source-context-v1.json",
+    "context_sha256": "63b64b7ff3b802d0433abc08d03a1ea09bf0e50f6d1391a477b9510354fe454d"
+  },
+  "f_row_successor": {
+    "contract": "coverage/contracts/find-boundaries-sdk-v2.json",
+    "sha256": "ac221adc23847e869257c6fc6b2a06fafb69da7aed214ac104c3745f8378fb2d",
+    "context": "coverage/contracts/find-boundaries-f-row-source-context-v1.json",
+    "context_sha256": "f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29"
+  },
+  "speed_source_successor": {
+    "contract": "coverage/contracts/find-boundaries-sdk-v5.json",
+    "sha256": "3620c4b3c83cc73a8043c102f679ad058b9104be169608b89969b1e71a12457d",
+    "execution_authority": null,
+    "source_predecessors": {
+      "src/find_boundaries.cpp": {
+        "current_raw_sha256": "fd9bf4d06ca5a09bb4c5250c98a414b10815fc29c4bfca5bacab7215e69d7708",
+        "predecessor_raw_sha256": "eadb2ee233a634d8501fbea749924bbb8c4b8b21ba95485c5266675f93d2c134",
+        "inverse": {
+          "raw": [
+            {
+              "start": 4973,
+              "end": 8048,
+              "current": ",bool Minimum>std::vector<T> wide_source_extrema_rows(\n    const std::vector<T>& input,const Shape& shape,bool full,\n    std::vector<double>& converted) {\n    const auto height=shape[0],width=shape[1];\n    // input is an owned immutable outer-stage buffer. next owns separate\n    // storage; no pass overwrites its input, including a singleton axis.\n    std::vector<T> current,next(input.size());\n    const auto passes=full?std::size_t{2}:std::size_t{1};\n    auto select=[](double result,double value) {\n        if constexpr(Minimum)return value<result?value:result;\n        else return value>result?value:result;\n    };\n    for(std::size_t axis=0;axis<passes;++axis) {\n        if(axis)next.resize(input.size());\n        const auto& values=axis?current:input;\n        // The immutable typed pass includes every center in its footprint.\n        // Keep the C-order conversion pool and EVERY typed per-axis store.\n        // Only the allocation is reused between the four outer stages.\n        for(std::size_t i=0;i<values.size();++i)converted[i]=wide_source_load(values[i]);\n        if(!full) {\n            // Rank2/connectivity1: neighbors() visits left, up, center, down,\n            // right. Hoist row clamps; retain that exact comparison order.\n            for(std::size_t y=0;y<height;++y) {\n                const auto* row=converted.data()+y*width;\n                const auto* above=converted.data()+(y?y-1:0)*width;\n                const auto* below=converted.data()+(y+1<height?y+1:y)*width;\n                for(std::size_t x=0;x<width;++x) {\n                    double result=row[x?x-1:0];\n                    result=select(result,above[x]);\n                    result=select(result,row[x]);\n                    result=select(result,below[x]);\n                    result=select(result,row[x+1<width?x+1:x]);\n                    next[y*width+x]=wide_source_store<T>(result);\n                }\n            }\n        }else if(axis==0) {\n            // First full axis: up, center, down, then store to T.\n            for(std::size_t y=0;y<height;++y) {\n                const auto* row=converted.data()+y*width;\n                const auto* above=converted.data()+(y?y-1:0)*width;\n                const auto* below=converted.data()+(y+1<height?y+1:y)*width;\n                for(std::size_t x=0;x<width;++x) {\n                    auto result=select(above[x],row[x]);\n                    result=select(result,below[x]);\n                    next[y*width+x]=wide_source_store<T>(result);\n                }\n            }\n        }else {\n            // Second full axis reads the converted typed first-pass result.\n            for(std::size_t y=0;y<height;++y) {\n                const auto* row=converted.data()+y*width;\n                for(std::size_t x=0;x<width;++x) {\n                    auto result=select(row[x?x-1:0],row[x]);\n                    result=select(result,row[x+1<width?x+1:x]);\n                    next[y*width+x]=wide_source_store<T>(result);\n                }\n            }\n        }\n        current.swap(next);\n    }\n    return current;\n}\n\ntemplate<class T",
+              "predecessor": ""
+            },
+            {
+              "start": 8194,
+              "end": 8230,
+              "current": ",\n    std::vector<double>& converted",
+              "predecessor": ""
+            },
+            {
+              "start": 8233,
+              "end": 8431,
+              "current": "\n    if(shape.size()==2) {\n        if(minimum)return wide_source_extrema_rows<T,true>(input,shape,full,converted);\n        return wide_source_extrema_rows<T,false>(input,shape,full,converted);\n    }",
+              "predecessor": ""
+            },
+            {
+              "start": 8774,
+              "end": 8774,
+              "current": "",
+              "predecessor": "\n    if(shape.size()==2) {\n        const auto height=shape[0],width=shape[1];\n        std::vector<double> converted(input.size());\n        for(std::size_t axis=0;axis<passes;++axis) {\n            // The immutable typed pass includes every center in its footprint.\n            // Convert each word once; repeated neighbor conversions add no new\n            // sticky flags under the admitted nearest/masked control state.\n            // Keep every original typed store and axis interchange below.\n            for(std::size_t i=0;i<current.size();++i)converted[i]=wide_source_load(current[i]);\n            for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x) {\n                const auto index=y*width+x;\n                double result=0.;bool first=true;\n                auto visit=[&](std::size_t source) {\n                    const auto value=converted[source];\n                    if(first){result=value;first=false;}\n                    else if(minimum?value<result:value>result)result=value;\n                };\n                if(full) {\n                    // Keep source axis/neighbor order and the typed store per\n                    // pass; the immutable conversion pool is reused above.\n                    const auto coordinate=axis?x:y,extent=axis?width:height;\n                    const auto step=axis?std::size_t{1}:width;\n                    visit(index-(coordinate?step:0));\n                    visit(index);\n                    visit(index+(coordinate+1<extent?step:0));\n                }else for(const auto& delta:footprint) {\n                    const auto row=delta[0]<0?(y?y-1:0):delta[0]>0?std::min(y+1,height-1):y;\n                    const auto column=delta[1]<0?(x?x-1:0):delta[1]>0?std::min(x+1,width-1):x;\n                    visit(row*width+column);\n                }\n                next[index]=wide_source_store<T>(result);\n            }\n            current.swap(next);\n        }\n        return current;\n    }"
+            },
+            {
+              "start": 12029,
+              "end": 12080,
+              "current": "std::vector<double> converted(rank==2?size:0);\n    ",
+              "predecessor": ""
+            },
+            {
+              "start": 12174,
+              "end": 12184,
+              "current": ",converted",
+              "predecessor": ""
+            },
+            {
+              "start": 12287,
+              "end": 12297,
+              "current": ",converted",
+              "predecessor": ""
+            },
+            {
+              "start": 12380,
+              "end": 12390,
+              "current": ",converted",
+              "predecessor": ""
+            },
+            {
+              "start": 12744,
+              "end": 12754,
+              "current": ",converted",
+              "predecessor": ""
+            }
+          ],
+          "canonical": [
+            {
+              "start": 4973,
+              "end": 8048,
+              "current": ",bool Minimum>std::vector<T> wide_source_extrema_rows(\n    const std::vector<T>& input,const Shape& shape,bool full,\n    std::vector<double>& converted) {\n    const auto height=shape[0],width=shape[1];\n    // input is an owned immutable outer-stage buffer. next owns separate\n    // storage; no pass overwrites its input, including a singleton axis.\n    std::vector<T> current,next(input.size());\n    const auto passes=full?std::size_t{2}:std::size_t{1};\n    auto select=[](double result,double value) {\n        if constexpr(Minimum)return value<result?value:result;\n        else return value>result?value:result;\n    };\n    for(std::size_t axis=0;axis<passes;++axis) {\n        if(axis)next.resize(input.size());\n        const auto& values=axis?current:input;\n        // The immutable typed pass includes every center in its footprint.\n        // Keep the C-order conversion pool and EVERY typed per-axis store.\n        // Only the allocation is reused between the four outer stages.\n        for(std::size_t i=0;i<values.size();++i)converted[i]=wide_source_load(values[i]);\n        if(!full) {\n            // Rank2/connectivity1: neighbors() visits left, up, center, down,\n            // right. Hoist row clamps; retain that exact comparison order.\n            for(std::size_t y=0;y<height;++y) {\n                const auto* row=converted.data()+y*width;\n                const auto* above=converted.data()+(y?y-1:0)*width;\n                const auto* below=converted.data()+(y+1<height?y+1:y)*width;\n                for(std::size_t x=0;x<width;++x) {\n                    double result=row[x?x-1:0];\n                    result=select(result,above[x]);\n                    result=select(result,row[x]);\n                    result=select(result,below[x]);\n                    result=select(result,row[x+1<width?x+1:x]);\n                    next[y*width+x]=wide_source_store<T>(result);\n                }\n            }\n        }else if(axis==0) {\n            // First full axis: up, center, down, then store to T.\n            for(std::size_t y=0;y<height;++y) {\n                const auto* row=converted.data()+y*width;\n                const auto* above=converted.data()+(y?y-1:0)*width;\n                const auto* below=converted.data()+(y+1<height?y+1:y)*width;\n                for(std::size_t x=0;x<width;++x) {\n                    auto result=select(above[x],row[x]);\n                    result=select(result,below[x]);\n                    next[y*width+x]=wide_source_store<T>(result);\n                }\n            }\n        }else {\n            // Second full axis reads the converted typed first-pass result.\n            for(std::size_t y=0;y<height;++y) {\n                const auto* row=converted.data()+y*width;\n                for(std::size_t x=0;x<width;++x) {\n                    auto result=select(row[x?x-1:0],row[x]);\n                    result=select(result,row[x+1<width?x+1:x]);\n                    next[y*width+x]=wide_source_store<T>(result);\n                }\n            }\n        }\n        current.swap(next);\n    }\n    return current;\n}\n\ntemplate<class T",
+              "predecessor": ""
+            },
+            {
+              "start": 8194,
+              "end": 8230,
+              "current": ",\n    std::vector<double>& converted",
+              "predecessor": ""
+            },
+            {
+              "start": 8233,
+              "end": 8431,
+              "current": "\n    if(shape.size()==2) {\n        if(minimum)return wide_source_extrema_rows<T,true>(input,shape,full,converted);\n        return wide_source_extrema_rows<T,false>(input,shape,full,converted);\n    }",
+              "predecessor": ""
+            },
+            {
+              "start": 8774,
+              "end": 8774,
+              "current": "",
+              "predecessor": "\n    if(shape.size()==2) {\n        const auto height=shape[0],width=shape[1];\n        std::vector<double> converted(input.size());\n        for(std::size_t axis=0;axis<passes;++axis) {\n            // The immutable typed pass includes every center in its footprint.\n            // Convert each word once; repeated neighbor conversions add no new\n            // sticky flags under the admitted nearest/masked control state.\n            // Keep every original typed store and axis interchange below.\n            for(std::size_t i=0;i<current.size();++i)converted[i]=wide_source_load(current[i]);\n            for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x) {\n                const auto index=y*width+x;\n                double result=0.;bool first=true;\n                auto visit=[&](std::size_t source) {\n                    const auto value=converted[source];\n                    if(first){result=value;first=false;}\n                    else if(minimum?value<result:value>result)result=value;\n                };\n                if(full) {\n                    // Keep source axis/neighbor order and the typed store per\n                    // pass; the immutable conversion pool is reused above.\n                    const auto coordinate=axis?x:y,extent=axis?width:height;\n                    const auto step=axis?std::size_t{1}:width;\n                    visit(index-(coordinate?step:0));\n                    visit(index);\n                    visit(index+(coordinate+1<extent?step:0));\n                }else for(const auto& delta:footprint) {\n                    const auto row=delta[0]<0?(y?y-1:0):delta[0]>0?std::min(y+1,height-1):y;\n                    const auto column=delta[1]<0?(x?x-1:0):delta[1]>0?std::min(x+1,width-1):x;\n                    visit(row*width+column);\n                }\n                next[index]=wide_source_store<T>(result);\n            }\n            current.swap(next);\n        }\n        return current;\n    }"
+            },
+            {
+              "start": 12029,
+              "end": 12080,
+              "current": "std::vector<double> converted(rank==2?size:0);\n    ",
+              "predecessor": ""
+            },
+            {
+              "start": 12174,
+              "end": 12184,
+              "current": ",converted",
+              "predecessor": ""
+            },
+            {
+              "start": 12287,
+              "end": 12297,
+              "current": ",converted",
+              "predecessor": ""
+            },
+            {
+              "start": 12380,
+              "end": 12390,
+              "current": ",converted",
+              "predecessor": ""
+            },
+            {
+              "start": 12744,
+              "end": 12754,
+              "current": ",converted",
+              "predecessor": ""
+            }
+          ]
+        },
+        "current_canonical_sha256": "fd9bf4d06ca5a09bb4c5250c98a414b10815fc29c4bfca5bacab7215e69d7708",
+        "predecessor_canonical_sha256": "eadb2ee233a634d8501fbea749924bbb8c4b8b21ba95485c5266675f93d2c134"
+      }
+    },
+    "scope": "Literal current source; exact prior75b inverse and every frozen recipe/source assertion retained. No product/runtime/timing authority."
+  }
+}

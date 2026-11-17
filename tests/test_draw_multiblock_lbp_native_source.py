@@ -16,14 +16,16 @@ def test_native_source_and_historical_contract_closure():
         if name=='src/bind_draw_multiblock_lbp.cpp':
             from draw_multiblock_lbp_metadata_context import historical_bytes
             raw=historical_bytes(ROOT,name)
-        else:raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else(ROOT/name).read_bytes()
+        else:raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else adapter['boundary']().validation_predecessor_bytes(ROOT,name,context_path=adapter['CONTEXT'])
         assert hashlib.sha256(raw).hexdigest()==pin,name
     for name,pin in d['frozen_reference_raw_sha256'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
 
 
 def test_one_snapshot_complete_payload_and_ordered_stages():
     s=(ROOT/'src/draw_multiblock_lbp.cpp').read_text()
-    assert s.count('get_num_threads()')==1 and 'chunk=detail::parallel_min-1'in s
+    assert s.count('get_num_threads()')==2 and 'chunk=detail::parallel_min-1'in s
+    assert 'result.captured_workers=get_num_threads()'in s
+    assert 'if(capture_workers)(void)get_num_threads();'in s
     assert 'crop_copy_into('in s and 'convert_into('in s
     assert 'for(int block=0;block<8;++block)'in s and 'first_product_float32'in s
     assert s.index('const double complement')<s.index('std::vector<double> colors')<s.index('sum64(values.data()')

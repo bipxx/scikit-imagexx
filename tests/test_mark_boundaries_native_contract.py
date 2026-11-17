@@ -42,7 +42,7 @@ def test_native_successor_honest_scope_and_historical_failure_retained():
     adapter=runpy.run_path(str(ROOT/'benchmarks/mark_boundaries_execution.py'))
     context=json.loads((ROOT/adapter['CONTEXT']).read_bytes())
     for name,pin in d['source_files_canonical_LF_sha256'].items():
-        raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        raw=adapter['historical_bytes'](ROOT,name)if name in context['historical_sources']else adapter['validation_predecessor_bytes'](ROOT,name)
         assert hashlib.sha256(raw).hexdigest()==pin
     from tools.mark_lbp_fp_context import predecessor_bytes
     for name,pin in d['donor_header_canonical_sha256'].items():assert hashlib.sha256(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'),canonical=True)).hexdigest()==pin

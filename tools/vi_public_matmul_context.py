@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v7.json'
+CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v9.json'
 SELF_PIN_PATH = 'tools/mark_lbp_fp_context.py'
 PREDECESSOR = '2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d'
 
@@ -61,6 +61,14 @@ def predecessor_bytes(root, name, raw, context_sha256, canonical=False):
     return _project(data, name, raw, context_sha256, canonical)
 
 
+def speed_predecessor_bytes(root, name, raw, context_sha256, canonical=False):
+    """Authenticate current bytes before retained main1a23 metadata guards."""
+    data = _context(root, context_sha256)
+    assert data is not None and name in data['speed_predecessors']
+    return _project({'sources': data['speed_predecessors']}, name, raw,
+                    context_sha256, canonical)
+
+
 def historical_source_root(root, destination, context_sha256):
     """Materialize authenticated source inputs for historical source guards only."""
     root, destination = Path(root), Path(destination)
@@ -68,6 +76,8 @@ def historical_source_root(root, destination, context_sha256):
     assert data is not None
     snapshot = data['historical_source_inputs']
     assert snapshot['source'] == PREDECESSOR
+    frozen = data['frozen_operational_inputs']
+    assert set(frozen) == {'coverage/work_items.json'}
     receipt = destination.with_name(destination.name + '.receipt.json')
     if destination.exists():
         prior = json.loads(receipt.read_bytes())
@@ -78,7 +88,9 @@ def historical_source_root(root, destination, context_sha256):
     for name, row in snapshot['files'].items():
         source = root / name
         assert not source.is_symlink() and not (getattr(source.lstat(), 'st_file_attributes', 0) & 0x400)
-        raw = _project(data, name, source.read_bytes(), context_sha256, False)
+        # Operational state is mutable and has no current numerical authority.
+        # The historical fixture uses its exact authenticated2270 payload only.
+        raw = frozen[name].encode('utf-8') if name in frozen else _project(data, name, source.read_bytes(), context_sha256, False)
         blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
         assert len(raw) == row['bytes'] and blob == row['git_blob_sha1'], name
         target = destination / name

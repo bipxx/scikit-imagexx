@@ -86,7 +86,9 @@ def test_native_refusal_preserves_nonexact_thick_and_every_error_guard():
 
 
 def test_unchanged_kernel_refuses_other_platform_rounding_masks_background():
-    raw=(ROOT/'src/find_boundaries.cpp').read_bytes()
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    from tools.vi_public_matmul_context import speed_predecessor_bytes
+    raw=speed_predecessor_bytes(ROOT,'src/find_boundaries.cpp',(ROOT/'src/find_boundaries.cpp').read_bytes(),VI_PUBLIC_MATMUL_CONTEXT_SHA256)
     phase=json.loads((ROOT/'coverage/contracts/mark-wide-comparison-fp-v1.json').read_bytes())
     assert H(raw)==phase['kernel_current_raw_sha256']
     for f in phase['inverse_fragments']:
@@ -109,6 +111,9 @@ def test_unchanged_kernel_refuses_other_platform_rounding_masks_background():
 def test_frozen_native_headers_frontend_and_original_context_unchanged(name):
     raw=(ROOT/name).read_bytes()
     if name=='src/find_boundaries.cpp':
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        from tools.vi_public_matmul_context import speed_predecessor_bytes
+        raw=speed_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256)
         phase=json.loads((ROOT/'coverage/contracts/mark-wide-comparison-fp-v1.json').read_bytes())
         assert H(raw)==phase['kernel_current_raw_sha256']
         for f in phase['inverse_fragments']:

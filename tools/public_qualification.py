@@ -294,7 +294,7 @@ SDK_MEMBERS = 68
 CURRENT_PRODUCT_SCOPE = 'current281'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball')
 CURRENT_SDK_CLIENT_SCOPE = 'current38 required installed clients; complete rolling-ball floating/typed-storage owning operations plus admitted VI/flood families; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v8.json'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v10.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -746,6 +746,8 @@ def applicable_public_groups(groups,profile):
     """Keep all global gates; add full Linux captured-grid parity explicitly."""
     require(profile in PROFILES,'unknown public-group profile')
     selected=dict(groups)
+    if 'public-post203' in selected:
+        selected['public-mark-fast-paths']=('test_mark_boundaries_fast_paths.py',)
     if 'public-post203' in selected and profile!='windows':
         selected['public-regular-grid-saved-linux']=('test_regular_grid_public.py',)
         selected['public-util-views-saved-linux']=('test_util_views_public.py',)
@@ -753,12 +755,16 @@ def applicable_public_groups(groups,profile):
         selected['public-mark-wide-saved-linux']=('test_mark_wide_outer_public.py',)
         selected['public-lbp-saved-linux']=('test_draw_multiblock_lbp_public.py',)
         selected['public-lbp-metadata-linux']=('test_draw_multiblock_lbp_dtype_metadata.py',)
+        selected['public-lbp-batched-linux']=('test_draw_multiblock_lbp_batched.py',)
         selected['public-radon-saved-linux']=('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py')
         selected['public-radon-ABI-policy-linux']=('test_finite_radon_numpy_abi_public.py',)
         selected['public-VI-saved-linux']=('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py')
         selected['public-VI-large-saved-linux']=('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
         selected['public-VI-current-public-linux']=('test_vi_public_matmul_provider_public.py',)
         selected['public-flood-saved-linux'] = ('test_flood_fill_public.py',)
+        selected['public-flood-assignment-linux'] = ('test_flood_assignment_protocol.py',)
+        selected['public-flood-copy-linux'] = ('test_flood_copy_protocol.py',)
+        selected['public-flood-disjoint-linux'] = ('test_flood_disjoint_assignment.py',)
         selected['public-rolling-ball-saved-linux'] = ('test_rolling_ball_public.py',)
     if 'public-post203' in selected and profile=='windows':
         selected['public-VI-current-windows']=('test_vi_public_matmul_windows_public.py',)
@@ -853,6 +859,36 @@ DRAW_SOURCE_PATHS += (
     "coverage/contracts/current-public-qualification-v8.json",
     "tests/test_vi_value_diagnostic_workflow.py",
 )
+
+
+# Current speed-parity inputs supplement every frozen qualification/history gate.
+DRAW_SOURCE_PATHS += (
+    'tools/public_qualification.py',
+    '.github/workflows/public-qualification.yml',
+    'coverage/contracts/vi-public-matmul-source-history-v8.json',
+    'coverage/contracts/current-public-qualification-v9.json',
+    'coverage/contracts/mark-boundaries-benchmark-execution-v9.json',
+    'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v9.json',
+    'coverage/contracts/speed-parity-current-source-v1.json',
+    'coverage/contracts/vi-public-matmul-provider-benchmark-v3.json',
+    'coverage/contracts/vi4-public-matmul-capture-v2.json',
+    'coverage/contracts/flood-speed-parity-v1.json',
+    'coverage/contracts/flood-speed-parity-v2.json',
+    'coverage/contracts/flood-fill-benchmark-v4.json',
+    'coverage/contracts/find-boundaries-benchmark-binding-v7.json',
+    'coverage/contracts/find-boundaries-frontend-v6.json',
+    'coverage/contracts/find-boundaries-sdk-v5.json',
+    'tests/test_mark_boundaries_fast_paths.py',
+    'tests/test_draw_multiblock_lbp_batched.py',
+    'tests/test_flood_assignment_protocol.py',
+    'tests/test_flood_copy_protocol.py',
+    'tests/test_speed_parity_integration_source.py',
+    'tests/test_flood_speed_source.py',
+)
+
+# Current fd9/find and 2655/FLOOD successor inputs; predecessors stay retained.
+DRAW_SOURCE_PATHS += ('coverage/contracts/current-public-qualification-v10.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v10.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v10.json', 'coverage/contracts/find-boundaries-benchmark-binding-v8.json', 'coverage/contracts/find-boundaries-frontend-v7.json', 'coverage/contracts/find-boundaries-sdk-v6.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v4.json', 'coverage/contracts/vi4-public-matmul-capture-v3.json', 'coverage/contracts/speed-parity-current-source-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v9.json', 'coverage/contracts/flood-speed-parity-v3.json', 'coverage/contracts/flood-fill-benchmark-v5.json', 'tests/test_flood_disjoint_assignment.py')
+
 
 
 def environment(package=None, scalar=False):
@@ -1087,6 +1123,21 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
+    previous_path = 'coverage/contracts/current-public-qualification-v9.json'
+    previous_raw = read_bytes(previous_path)
+    previous = json.loads(previous_raw)
+    require(data.get('predecessor_contract') == dict(path=previous_path, sha256=hashlib.sha256(previous_raw).hexdigest()),
+            'optimized qualification predecessor differs')
+    require(data.get('execution_authority') is None, 'source contract is not execution authority')
+    for name, value in previous.items():
+        if name not in ('required_selectors', 'predecessor_contract', 'current_source_scope', 'speed_parity_runtime'):
+            require(data.get(name) == value, 'unchanged qualification contract differs: ' + name)
+    extra = ['tests/test_flood_disjoint_assignment.py']
+    expected_runtime = dict(previous['speed_parity_runtime'])
+    expected_runtime['public-flood-disjoint-linux'] = dict(modules=extra, profiles=['minimum','modern','debug'], nodes_per_mode=13, FENV='source-built-full32', caller_records_per_mode=13)
+    require(data.get('speed_parity_runtime') == expected_runtime, 'optimized runtime policy differs')
+    require(data.get('required_selectors') == previous['required_selectors'] + extra,
+            'optimized qualification selector contract differs; every prior selector required')
     require(data.get('schema') == 'current-public-qualification-v1'
             and data.get('scope') == CURRENT_PRODUCT_SCOPE
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
@@ -1106,8 +1157,9 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py'},
             'current qualification selector contract differs')
+    require(set(data['required_selectors']) >= {'tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py'}, 'current optimized runtime selector missing')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
     require(data.get('Linux_saved_mark_lbp_profiles')==['minimum','modern','debug'],'Linux saved MARK/LBP profile scope differs')
@@ -2165,7 +2217,7 @@ def child(out, group):
         os.environ['MATRIX_TRANSFORM_PROOF_OUTPUT']=str(out/(mode+'-matrix-routes.json'))
     if group=='public-util-views-saved-linux':
         os.environ.update(util_views_fenv_environment(out,state))
-    if group in ('public-mark-saved-linux','public-mark-wide-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux'):
+    if group in ('public-mark-saved-linux','public-mark-wide-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-lbp-batched-linux'):
         require(state['profile']!='windows','Linuxsavedfull32envelope forbidden onWindows')
         require(not os.environ.get('MARK_COMPONENT_DIR')and not os.environ.get('MARK_FENV_HELPER'),'GenuineMARKforbidsprivatebridge/helper')
         os.environ.update(util_views_fenv_environment(out,state))
@@ -2182,10 +2234,11 @@ def child(out, group):
     if group=='public-rolling-ball-saved-linux':
         require(state['profile']!='windows'and not os.environ.get('ROLLING_BALL_CORE_EXTENSION'),'GenuineRollingforbidsprivatebridgeorWindowsenvelope')
         os.environ.update(util_views_fenv_environment(out,state))
-    if group=='public-flood-saved-linux':
+    if group in ('public-flood-saved-linux','public-flood-assignment-linux','public-flood-copy-linux','public-flood-disjoint-linux'):
         require(state['profile']!='windows'and not os.environ.get('FLOOD_FILL_CORE_EXTENSION'),'GenuineFloodforbidsprivatebridgeorWindowsenvelope')
         os.environ.update(util_views_fenv_environment(out,state))
-        os.environ['FLOOD_FILL_CALLER_RECORD_DIR']=str(out/(mode+'-flood-caller-rows'))
+        folder=mode+'-flood-caller-rows'if group=='public-flood-saved-linux'else mode+'-'+group+'-caller-rows'
+        os.environ['FLOOD_FILL_CALLER_RECORD_DIR']=str(out/folder)
 
     if group=='public-VI-large-saved-linux':
         require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIlargeforbidsprivatecomponentorWindowsFPclaim')
@@ -2462,7 +2515,7 @@ def sdk(out, state, journal):
         code = journal.run('sdk-' + mode, [ctest, '--test-dir', build, '-C', config, '-R', pattern, '--output-on-failure'], environment(scalar=mode == 'scalar'))
         require(code == 0, 'installed SDK client failed')
     verify_tree(prefix, record['SDK_sha256'])
-    dump(out / 'sdk.json', dict(families=families, checks=2*len(families), SDK_sha256=record['SDK_sha256'], scope=f'Relocated complete SDK,{len(families)} independently linked installed clients normal/scalar; no source includes or Python dependency'))
+    dump(out / 'sdk.json', dict(families=families, checks=2*len(families), SDK_sha256=record['SDK_sha256'], scope=f'Relocated complete SDK,{len(families)} independently linked installed clients normal/runtime-disabled SIMD (legacy scalar label); no compiler-scalar or sanitizer credit, source includes or Python dependency'))
 
 
 def qualify(out):
@@ -2700,6 +2753,13 @@ def seal(out):
             if group=='public-mark-saved-linux':require(row['tests']==267,'Full267 MARK saved-domain nodes required; no partial selector')
             if group=='public-lbp-saved-linux':require(row['tests']==188,'Full188 LBP saved-domain nodes required; no partial selector')
             if group=='public-lbp-metadata-linux':require(row['tests']==24,'Full24 LBP metadata regression nodes required; no partial selector')
+            if group=='public-mark-fast-paths':require(row['tests']==107,'Full107 MARK fast-path nodes required; no partial selector')
+            if group=='public-lbp-batched-linux':require(row['tests']==35,'Full35 LBP batched phase nodes required; no partial selector')
+            if group in ('public-flood-assignment-linux','public-flood-copy-linux','public-flood-disjoint-linux'):
+                expected={'public-flood-assignment-linux':59,'public-flood-copy-linux':52,'public-flood-disjoint-linux':13}[group]
+                require(row['tests']==expected,'Full optimized flood protocol group required; no partial selector')
+                callers=[json.loads(p.read_text())for p in(out/(mode+'-'+group+'-caller-rows')).glob('*.json')]
+                require(len(callers)==expected and all(r['exact32']and r['saved']==r['actual']and r['workers']in(1,4)for r in callers),'Optimized flood caller32/global-worker records incomplete')
             if any(row[k] for k in ('failures','errors','skipped')):
                 failures.append(mode + '-' + group + '-assertions-or-skips')
             counts[mode + '-' + group] = row
@@ -2734,7 +2794,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-VI-current-public-linux','public-VI-current-windows','public-flood-saved-linux','public-rolling-ball-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-VI-current-public-linux','public-VI-current-windows','public-flood-saved-linux','public-rolling-ball-saved-linux','public-mark-fast-paths','public-lbp-batched-linux','public-flood-assignment-linux','public-flood-copy-linux','public-flood-disjoint-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

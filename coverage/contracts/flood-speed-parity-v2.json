@@ -1,0 +1,221 @@
+{
+  "schema": "flood-speed-parity-v2",
+  "status": "SOURCE_IMPLEMENTED_PRIVATE_GATES_PENDING",
+  "base": "1a23d1661edcc8e19ed586483834071cb5d097f2",
+  "changed_sources": {
+    "src/flood_fill.cpp": {
+      "current_raw_sha256": "87c3358e51c256cf892557d7bcbe2b9ecb636b9bd6d610b32731419c252bc8a3",
+      "current_canonical_LF_sha256": "87c3358e51c256cf892557d7bcbe2b9ecb636b9bd6d610b32731419c252bc8a3",
+      "predecessor_raw_sha256": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+      "predecessor_canonical_LF_sha256": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+      "inverse": [
+        {
+          "current": "    std::vector<T> working(static_cast<std::size_t>(count));\n    const auto axis=g.fortran?std::size_t(0):g.shape.size()-1;\n    if(g.strides[axis]==I(sizeof(T))&&out.strides[axis]==1){\n        // Only private byte-copy/flag initialization changes order. Copy each\n        // contiguous C/F line once; the ordered queue below is unchanged.\n        const auto width=g.shape[axis],lines=logical/width;\n        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n        for(I line=0;line<lines;++line){\n            std::fill_n(out.storage.data()+mask_offset,std::size_t(width),std::uint8_t(0));\n            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,\n                        std::size_t(width)*sizeof(T));\n            if(line+1<lines)for(std::size_t a=g.shape.size();a-->0;){\n                if(a==axis)continue;\n                if(++index[a]<g.shape[a]){input_offset+=g.strides[a];mask_offset+=out.strides[a];break;}\n                index[a]=0;\n                input_offset-=(g.shape[a]-1)*g.strides[a];\n                mask_offset-=(g.shape[a]-1)*out.strides[a];\n            }\n        }\n    }else{\n        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n        for(I k=0;k<logical;++k){\n            out.storage[mask_offset]=0;\n            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n            advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n        }\n    }\n",
+          "predecessor": "    std::vector<T> working(static_cast<std::size_t>(count));\n    std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n    for(I k=0;k<logical;++k){\n        out.storage[mask_offset]=0;\n        std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n        advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n    }\n"
+        }
+      ]
+    },
+    "src/bind_flood_fill.cpp": {
+      "current_raw_sha256": "9eb937374ed0f0b212581c664299e98a16510a5facac0865592e5739d8dc857f",
+      "current_canonical_LF_sha256": "9eb937374ed0f0b212581c664299e98a16510a5facac0865592e5739d8dc857f",
+      "predecessor_raw_sha256": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+      "predecessor_canonical_LF_sha256": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+      "inverse": [
+        {
+          "current": "template<int Bytes>void assign_values(py::array& output,const py::array& mask,const py::array& values){\n    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const py::ssize_t bytes=Bytes?Bytes:output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n}\n",
+          "predecessor": ""
+        },
+        {
+          "current": "    // Dispatch once so ordinary POD copies are fixed-size inline moves.\n    // The generic path preserves any other descriptor admitted above.\n    switch(output.itemsize()){\n      case 1:return assign_values<1>(output,mask,values);\n      case 2:return assign_values<2>(output,mask,values);\n      case 4:return assign_values<4>(output,mask,values);\n      case 8:return assign_values<8>(output,mask,values);\n      case 16:return assign_values<16>(output,mask,values);\n      default:return assign_values<0>(output,mask,values);\n    }\n",
+          "predecessor": "    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const auto bytes=output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n"
+        },
+        {
+          "current": "    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const auto bytes=output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n",
+          "predecessor": "    for(py::ssize_t k=0;k<output.size();++k){auto i=k;py::ssize_t target=0,flag=0;\n      for(py::ssize_t a=output.ndim();a-->0;){auto c=i%output.shape(a);i/=output.shape(a);target+=c*output.strides(a);flag+=c*mask.strides(a);}\n      if(*(static_cast<const char*>(mask.data())+flag)){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n        std::memcpy(static_cast<char*>(output.mutable_data())+target,static_cast<const char*>(values.data())+selected*values.itemsize(),output.itemsize());++selected;}}\n"
+        }
+      ]
+    }
+  },
+  "generic_initializer": "        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n        for(I k=0;k<logical;++k){\n            out.storage[mask_offset]=0;\n            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n            advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n        }\n",
+  "unchanged_raw_sha256": {
+    "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+    "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+    "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "tests/test_flood_fill_public.py": "db965954966c5e30f63fc3a5747221d5b68dbe2bdea2bb26aed7f22d2649b648",
+    "tests/test_flood_fill_sdk.cpp": "2b24930b91bffeab4f06582bb5d4b0417c319c15b81a9b649d11b31f6642ef92",
+    "tests/test_flood_fill_integration.py": "5b6509cd187e6c0262447041fd1efada5c498f6b1b3890bf8318d62138254d67",
+    "tests/fixtures/flood_fill_original_v1.json": "8898d8339f5d5b3a8485c3705e36eb1e4de5e9021c75345c11546f49bb3a0453",
+    "tests/fixtures/flood_fill_sdk_original_v1.inc": "3afb1a0e90a3e1b6eb74760a5296ff0ed74ee9e6f791ed90567357f10d6e3973",
+    "tests/conftest.py": "246199bcc92d248e07a388f58f3c86d142a95febda90121af7a37d167b48370a",
+    "tests/flood_fill_contract.py": "2349b80f280641a2e3269278665dea6285fd5d80f8b975d0071a453267516323",
+    "tests/flood_fill_observer.py": "191702f03768c32eeecea2c69658350062935ff12c4a90daa5a491047a21fd3a",
+    "benchmarks/flood_fill_native.py": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65",
+    "benchmarks/flood_fill_execution.py": "cab14c3845fb9b52f3c204a5cc6594e7b750fad7ebcf0a5b23d83a7bfddcaa32",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "retained_assignment": {
+    "commit": "e96c28bc31dbe382ba26dadf8e26fb62f0cbbace",
+    "binder_raw_sha256": "394713ddaf6f1920d21923ee6d61cd16d83ab008bd38b1e3e0e3f55667b23dce",
+    "protocol_raw_sha256": "8f21e4e02ae61d612b8ac2e1058fddddb76b1e9b9846e5a2eeb66a8ec5ba9669",
+    "old_private_receipt": "coverage/evidence/flood-assignment-lines-private-parity-root-closeout-v1.json",
+    "scope": "Reused exact source; old636 nodes do not qualify current linked core or performance."
+  },
+  "fixed_cases": [
+    {
+      "id": "flood-uint8-C",
+      "api": "morphology.flood",
+      "dtype": "uint8",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-uint8-F",
+      "api": "morphology.flood",
+      "dtype": "uint8",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-float32-C",
+      "api": "morphology.flood",
+      "dtype": "float32",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-float32-F",
+      "api": "morphology.flood",
+      "dtype": "float32",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-uint8-C",
+      "api": "morphology.flood_fill",
+      "dtype": "uint8",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-uint8-F",
+      "api": "morphology.flood_fill",
+      "dtype": "uint8",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-float32-C",
+      "api": "morphology.flood_fill",
+      "dtype": "float32",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-float32-F",
+      "api": "morphology.flood_fill",
+      "dtype": "float32",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    }
+  ],
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "retain_all_losses": true,
+    "allocation_inclusive": true
+  },
+  "hypothesis": "Retain iteration1 private contiguous-copy improvement; dispatch assignment element width once so 1/2/4/8/16-byte copies inline, with exact reviewed ordered behavior and generic fallback.",
+  "behavior": [
+    "Private padded byte-copy/flag initialization may visit F-contiguous lines in different order; input is read-only and private destination lines are disjoint.",
+    "BFS stable offset order, border guards, comparisons and queue order exactly base. Generic signed/gapped descriptor initializer retained.",
+    "Assignment retains reviewed logical-C live-mask/RHS/output alias and partial count-error order.",
+    "No worker calls, SIMD arithmetic, provider computation, fallback, new domain admission or ABI change.",
+    "Width dispatch changes only memcpy constant-size compilation; exact reviewed traversal body, per-value overflow checks, live aliases and final count assertion retained in shared local template. No restrict/alignment/no-alias assumption."
+  ],
+  "prepared_copy": {
+    "path": "tests/test_flood_copy_protocol.py",
+    "raw_sha256": "a9fea7839a2b0df2c5b3f64803ddde10574cc41106e5f66f89d9562a79fa5eec",
+    "nodes": 52,
+    "direct_native_calls": 48,
+    "public_empty_calls": 8,
+    "original_calls": 0,
+    "maximum_logical_elements": 24,
+    "maximum_padded_elements": 120,
+    "maximum_input_storage_bytes": 384,
+    "FP": "Natural current target semantic control/status/MXCSR unchanged, then full current caller32 restored; no retained FP seed."
+  },
+  "required_future": [
+    "Actual complete saved/public/integration/assignment/copy runtime under admitted current core and F1.",
+    "Normal/runtime-disabled/compiler-scalar/ASan+UBSan installed SDK and changed public paths.",
+    "All eight fixed allocation-inclusive public-call ratios>=1.0, no loss exclusion; source changes justify new scheduled measurement.",
+    "Root exact historical-source integration preserving old contexts and actual-current acceptance.",
+    "Affected complete source modules on both retained supported Windows Pythons, complete workflow barriers both, exact-source genuine4 and independent root admission before main."
+  ],
+  "authority": {
+    "source_only": true,
+    "compile": 0,
+    "native": 0,
+    "original": 0,
+    "NumPy": 0,
+    "helper": 0,
+    "timing": 0,
+    "hosted": 0
+  },
+  "predecessor_context": {
+    "path": "coverage/contracts/flood-speed-parity-v1.json",
+    "sha256": "d8f096d8e84d97a09efae7e8db6a3fb8315fbe2720e238a41ccdf4e51bd11fa4",
+    "scope": "Retained iteration1 code/metadata; source tests not executed. Its input backing ceiling336 was underestimated; v2 corrects to384 with inert AST guard. Actual runtime capacity2GiB unaffected."
+  },
+  "assignment_widths": {
+    "current_raw_sha256": "9eb937374ed0f0b212581c664299e98a16510a5facac0865592e5739d8dc857f",
+    "current_canonical_LF_sha256": "9eb937374ed0f0b212581c664299e98a16510a5facac0865592e5739d8dc857f",
+    "predecessor_raw_sha256": "394713ddaf6f1920d21923ee6d61cd16d83ab008bd38b1e3e0e3f55667b23dce",
+    "predecessor_canonical_LF_sha256": "394713ddaf6f1920d21923ee6d61cd16d83ab008bd38b1e3e0e3f55667b23dce",
+    "inverse": [
+      {
+        "current": "template<int Bytes>void assign_values(py::array& output,const py::array& mask,const py::array& values){\n    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const py::ssize_t bytes=Bytes?Bytes:output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n}\n",
+        "predecessor": ""
+      },
+      {
+        "current": "    // Dispatch once so ordinary POD copies are fixed-size inline moves.\n    // The generic path preserves any other descriptor admitted above.\n    switch(output.itemsize()){\n      case 1:return assign_values<1>(output,mask,values);\n      case 2:return assign_values<2>(output,mask,values);\n      case 4:return assign_values<4>(output,mask,values);\n      case 8:return assign_values<8>(output,mask,values);\n      case 16:return assign_values<16>(output,mask,values);\n      default:return assign_values<0>(output,mask,values);\n    }\n",
+        "predecessor": "    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const auto bytes=output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n"
+      }
+    ]
+  }
+}

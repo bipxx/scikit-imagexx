@@ -55,6 +55,6 @@ def qualified_diagnostic_source(root, name):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         raw = module.validation_predecessor_bytes(
-            root, name, context_path='coverage/contracts/mark-boundaries-benchmark-execution-v8.json')
+            root, name, context_path='coverage/contracts/mark-boundaries-benchmark-execution-v10.json')
     assert hashlib.sha256(raw).hexdigest() == pin, name
     return raw

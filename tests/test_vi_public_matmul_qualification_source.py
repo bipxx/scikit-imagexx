@@ -98,6 +98,13 @@ def large_rows():
     return rows
 
 
+def historical_workflow_source():
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    from tools.vi_public_matmul_context import speed_predecessor_bytes
+    return speed_predecessor_bytes(ROOT, '.github/workflows/public-qualification.yml',
+        (ROOT / '.github/workflows/public-qualification.yml').read_bytes(), VI_PUBLIC_MATMUL_CONTEXT_SHA256, True)
+
+
 def workflow_source_selectors(raw):
     """Read pytest argv only; paths after the pipe are tee output filenames."""
     addition = (' ' + ' '.join(ADDED_SELECTORS)).encode()
@@ -114,12 +121,12 @@ def workflow_source_selectors(raw):
 
 
 def test_workflow_preserves_exact173_then_complete8_new_source_modules():
-    raw = (ROOT / '.github/workflows/public-qualification.yml').read_bytes().replace(b'\r\n', b'\n')
+    raw = historical_workflow_source()
     assert len(workflow_source_selectors(raw)) == 181
 
 
 def test_workflow_rejects_new_paths_after_tee_instead_of_pytest():
-    raw = (ROOT / '.github/workflows/public-qualification.yml').read_bytes().replace(b'\r\n', b'\n')
+    raw = historical_workflow_source()
     addition = (' ' + ' '.join(ADDED_SELECTORS)).encode()
     before = raw.replace(addition, b'', 1)
     lines = before.splitlines(keepends=True)

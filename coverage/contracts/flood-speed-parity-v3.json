@@ -1,0 +1,304 @@
+{
+  "schema": "flood-speed-parity-v2",
+  "status": "SOURCE_IMPLEMENTED_PRIVATE_GATES_PENDING",
+  "base": "1a23d1661edcc8e19ed586483834071cb5d097f2",
+  "changed_sources": {
+    "src/flood_fill.cpp": {
+      "current_raw_sha256": "87c3358e51c256cf892557d7bcbe2b9ecb636b9bd6d610b32731419c252bc8a3",
+      "current_canonical_LF_sha256": "87c3358e51c256cf892557d7bcbe2b9ecb636b9bd6d610b32731419c252bc8a3",
+      "predecessor_raw_sha256": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+      "predecessor_canonical_LF_sha256": "0f2bfa18369f12ce9724510fde1b63d8265a5f58fd1efe4069eedfcfef4884ac",
+      "inverse": [
+        {
+          "current": "    std::vector<T> working(static_cast<std::size_t>(count));\n    const auto axis=g.fortran?std::size_t(0):g.shape.size()-1;\n    if(g.strides[axis]==I(sizeof(T))&&out.strides[axis]==1){\n        // Only private byte-copy/flag initialization changes order. Copy each\n        // contiguous C/F line once; the ordered queue below is unchanged.\n        const auto width=g.shape[axis],lines=logical/width;\n        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n        for(I line=0;line<lines;++line){\n            std::fill_n(out.storage.data()+mask_offset,std::size_t(width),std::uint8_t(0));\n            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,\n                        std::size_t(width)*sizeof(T));\n            if(line+1<lines)for(std::size_t a=g.shape.size();a-->0;){\n                if(a==axis)continue;\n                if(++index[a]<g.shape[a]){input_offset+=g.strides[a];mask_offset+=out.strides[a];break;}\n                index[a]=0;\n                input_offset-=(g.shape[a]-1)*g.strides[a];\n                mask_offset-=(g.shape[a]-1)*out.strides[a];\n            }\n        }\n    }else{\n        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n        for(I k=0;k<logical;++k){\n            out.storage[mask_offset]=0;\n            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n            advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n        }\n    }\n",
+          "predecessor": "    std::vector<T> working(static_cast<std::size_t>(count));\n    std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n    for(I k=0;k<logical;++k){\n        out.storage[mask_offset]=0;\n        std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n        advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n    }\n"
+        }
+      ]
+    },
+    "src/bind_flood_fill.cpp": {
+      "current_raw_sha256": "2655454b8e6b252108bc110991a8285d3f15e11e2c7bab337743b00c0729241b",
+      "current_canonical_LF_sha256": "2655454b8e6b252108bc110991a8285d3f15e11e2c7bab337743b00c0729241b",
+      "predecessor_raw_sha256": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+      "predecessor_canonical_LF_sha256": "09e9b97d7b31220ec258f79ba4c434782838f9f3a43ce38cc4693c728238733d",
+      "inverse": [
+        {
+          "current": "#include \"skimagexx/flood_fill.hpp\"\n#include <pybind11/pybind11.h>\n#include <pybind11/numpy.h>\n#include <pybind11/stl.h>\n#include <algorithm>\n#include <cstring>\n#include <limits>\nnamespace py=pybind11;\nnamespace {\ntemplate<class T>skimagexx::FloodMask run(const py::array& a,const skimagexx::FloodGeometry& g,bool tol,py::object low,py::object high){\n    return skimagexx::flood(static_cast<const T*>(a.data()),g,tol,tol?low.cast<T>():T{},tol?high.cast<T>():T{});\n}\n// Conservative positive byte intervals exclude live input/output aliases.\n// Unsupported descriptors retain the ordered element-by-element fallback.\nbool positive_interval(const py::array& a,std::uintptr_t& begin,std::uintptr_t& end){\n    const auto limit=std::uintptr_t(std::numeric_limits<py::ssize_t>::max());\n    auto span=std::uintptr_t(a.itemsize());\n    for(py::ssize_t axis=0;axis<a.ndim();++axis){\n        if(a.shape(axis)<=0||a.strides(axis)<0)return false;\n        const auto n=std::uintptr_t(a.shape(axis)-1),step=std::uintptr_t(a.strides(axis));\n        if(n&&step>(limit-span)/n)return false;\n        span+=n*step;\n    }\n    begin=reinterpret_cast<std::uintptr_t>(a.data());\n    if(span>std::numeric_limits<std::uintptr_t>::max()-begin)return false;\n    end=begin+span;return true;\n}\nvoid next_mask_line(const py::array& mask,py::ssize_t inner,\n                    std::vector<py::ssize_t>& index,py::ssize_t& base){\n    for(py::ssize_t axis=mask.ndim();axis-->0;){\n        if(axis==inner)continue;\n        if(++index[axis]<mask.shape(axis)){base+=mask.strides(axis);return;}\n        index[axis]=0;base-=(mask.shape(axis)-1)*mask.strides(axis);\n    }\n}\npy::ssize_t selected_count(const py::array& mask){\n    const auto* flags=static_cast<const char*>(mask.data());\n    if(!mask.ndim())return flags[0]!=0;\n    if(mask.flags()&(py::array::c_style|py::array::f_style))\n        return std::count_if(flags,flags+mask.size(),[](char value){return value!=0;});\n    auto inner=mask.ndim()-1;\n    if(mask.strides(inner)!=1){inner=0;if(mask.strides(inner)!=1)return -1;}\n    const auto width=mask.shape(inner),lines=mask.size()/width;\n    std::vector<py::ssize_t> index(mask.ndim(),0);\n    py::ssize_t base=0,selected=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        selected+=std::count_if(flags+base,flags+base+width,[](char value){return value!=0;});\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return selected;\n}\nbool assign_disjoint_runs(py::array& output,const py::array& mask,const py::array& values){\n    if(!output.size()||!(output.flags()&py::array::c_style))return false;\n    std::uintptr_t ob,oe,mb,me,vb,ve;\n    if(!positive_interval(output,ob,oe)||!positive_interval(mask,mb,me)||\n       !positive_interval(values,vb,ve)||!(oe<=mb||me<=ob)||!(oe<=vb||ve<=ob))return false;\n    // No store can change mask/RHS and this synchronous path has no callback.\n    // Admit the exact count first. A mismatch keeps the original partial writes\n    // before its error, rather than failing early or buffering aliased inputs.\n    const auto selected=selected_count(mask);\n    if(selected<0||selected!=values.size())return false;\n    auto* destination=static_cast<char*>(output.mutable_data());\n    const auto* replacement=static_cast<const char*>(values.data());\n    if(selected==output.size()){\n        std::memcpy(destination,replacement,std::size_t(oe-ob));return true;\n    }\n    const auto inner=output.ndim()-1,width=output.shape(inner);\n    const auto lines=output.size()/width,step=mask.strides(inner);\n    const auto bytes=std::size_t(output.itemsize()),row_bytes=std::size_t(width)*bytes;\n    const auto* flags=static_cast<const char*>(mask.data());\n    std::vector<py::ssize_t> index(mask.ndim(),0);py::ssize_t base=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        for(py::ssize_t x=0;x<width;){\n            while(x<width&&!flags[base+x*step])++x;\n            if(x==width)break;\n            const auto first=x;\n            if(step==1){\n                const auto* row=flags+base;\n                const auto* stop=static_cast<const char*>(std::memchr(row+x,0,std::size_t(width-x)));\n                x=stop?stop-row:width;\n            }else while(x<width&&flags[base+x*step])++x;\n            if(x>first){const auto length=std::size_t(x-first)*bytes;\n                std::memcpy(destination+std::size_t(line)*row_bytes+std::size_t(first)*bytes,\n                            replacement,length);replacement+=length;}\n        }\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return true;\n}\n\ntemplate<int Bytes>void assign_values(py::array& output,const py::array& mask,const py::array& values){\n    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const py::ssize_t bytes=Bytes?Bytes:output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n}\n}\nvoid bind_flood_fill(py::module_& m){\n m.def(\"flood_mask\",[](py::array a,std::vector<std::ptrdiff_t> seed,py::array_t<std::uint8_t,py::array::c_style> footprint,bool fortran,bool tol,py::object low,py::object high){\n    skimagexx::FloodGeometry g{{a.shape(),a.shape()+a.ndim()},{a.strides(),a.strides()+a.ndim()},std::move(seed),{footprint.shape(),footprint.shape()+footprint.ndim()},{footprint.data(),footprint.data()+footprint.size()},fortran};\n    skimagexx::FloodMask result;const char kind=a.dtype().kind();const auto bytes=a.itemsize();\n    if(!py::bool_(a.dtype().attr(\"isnative\")))throw py::value_error(\"Big-endian buffer not supported on little-endian compiler\");\n#define CASE(K,N,T) if(kind==K&&bytes==N)result=run<T>(a,g,tol,low,high);else\n    CASE('b',1,std::uint8_t) CASE('u',1,std::uint8_t) CASE('u',2,std::uint16_t) CASE('u',4,std::uint32_t)\n    CASE('u',8,std::uint64_t) CASE('i',1,std::int8_t) CASE('i',2,std::int16_t)\n    CASE('i',4,std::int32_t) CASE('i',8,std::int64_t) CASE('f',4,float) CASE('f',8,double)\n    {if(kind=='f'&&bytes==2)throw py::type_error(\"dtype of `image` is float16 which is not supported, try upcasting to float32\");throw py::type_error(\"No matching signature found\");}\n#undef CASE\n    auto shape=result.shape;for(std::size_t i=0;i<shape.size();++i)shape[i]+=2*result.padding[i];\n    py::array output(py::dtype::of<std::uint8_t>(),shape,result.strides);\n    std::memcpy(output.mutable_data(),result.storage.data(),result.storage.size());return output;\n },py::arg(\"image\").noconvert(),py::arg(\"seed\"),py::arg(\"footprint\").noconvert(),py::arg(\"fortran\"),py::arg(\"tolerance\"),py::arg(\"low\"),py::arg(\"high\"));\n m.def(\"flood_assign\",[](py::array output,py::array mask,py::array values){\n    if(!output.writeable())throw py::value_error(\"assignment destination is read-only\");\n    if(output.ndim()!=mask.ndim()||output.itemsize()!=values.itemsize()||!values.owndata()||!(values.flags()&py::array::c_style))throw py::value_error(\"flood assignment descriptor mismatch\");\n    for(py::ssize_t a=0;a<output.ndim();++a)if(output.shape(a)!=mask.shape(a))throw py::value_error(\"flood mask shape mismatch\");\n    const auto kind=output.dtype().kind();\n    if(output.dtype().has_fields()||!(kind=='b'||kind=='i'||kind=='u'||kind=='f'||kind=='c')||output.itemsize()>16)throw py::type_error(\"flood assignment requires numeric POD dtype\");\n    if(mask.itemsize()!=1||mask.dtype().kind()!='b'||!output.dtype().is(values.dtype()))throw py::type_error(\"flood assignment requires matching numeric dtype\");\n    if(assign_disjoint_runs(output,mask,values))return;\n    // Dispatch once so ordinary POD copies are fixed-size inline moves.\n    // The generic path preserves any other descriptor admitted above.\n    switch(output.itemsize()){\n      case 1:return assign_values<1>(output,mask,values);\n      case 2:return assign_values<2>(output,mask,values);\n      case 4:return assign_values<4>(output,mask,values);\n      case 8:return assign_values<8>(output,mask,values);\n      case 16:return assign_values<16>(output,mask,values);\n      default:return assign_values<0>(output,mask,values);\n    }\n },py::arg(\"output\").noconvert(),py::arg(\"mask\").noconvert(),py::arg(\"values\").noconvert());\n}\n",
+          "predecessor": "#include \"skimagexx/flood_fill.hpp\"\n#include <pybind11/pybind11.h>\n#include <pybind11/numpy.h>\n#include <pybind11/stl.h>\n#include <cstring>\nnamespace py=pybind11;\nnamespace {\ntemplate<class T>skimagexx::FloodMask run(const py::array& a,const skimagexx::FloodGeometry& g,bool tol,py::object low,py::object high){\n    return skimagexx::flood(static_cast<const T*>(a.data()),g,tol,tol?low.cast<T>():T{},tol?high.cast<T>():T{});\n}\n}\nvoid bind_flood_fill(py::module_& m){\n m.def(\"flood_mask\",[](py::array a,std::vector<std::ptrdiff_t> seed,py::array_t<std::uint8_t,py::array::c_style> footprint,bool fortran,bool tol,py::object low,py::object high){\n    skimagexx::FloodGeometry g{{a.shape(),a.shape()+a.ndim()},{a.strides(),a.strides()+a.ndim()},std::move(seed),{footprint.shape(),footprint.shape()+footprint.ndim()},{footprint.data(),footprint.data()+footprint.size()},fortran};\n    skimagexx::FloodMask result;const char kind=a.dtype().kind();const auto bytes=a.itemsize();\n    if(!py::bool_(a.dtype().attr(\"isnative\")))throw py::value_error(\"Big-endian buffer not supported on little-endian compiler\");\n#define CASE(K,N,T) if(kind==K&&bytes==N)result=run<T>(a,g,tol,low,high);else\n    CASE('b',1,std::uint8_t) CASE('u',1,std::uint8_t) CASE('u',2,std::uint16_t) CASE('u',4,std::uint32_t)\n    CASE('u',8,std::uint64_t) CASE('i',1,std::int8_t) CASE('i',2,std::int16_t)\n    CASE('i',4,std::int32_t) CASE('i',8,std::int64_t) CASE('f',4,float) CASE('f',8,double)\n    {if(kind=='f'&&bytes==2)throw py::type_error(\"dtype of `image` is float16 which is not supported, try upcasting to float32\");throw py::type_error(\"No matching signature found\");}\n#undef CASE\n    auto shape=result.shape;for(std::size_t i=0;i<shape.size();++i)shape[i]+=2*result.padding[i];\n    py::array output(py::dtype::of<std::uint8_t>(),shape,result.strides);\n    std::memcpy(output.mutable_data(),result.storage.data(),result.storage.size());return output;\n },py::arg(\"image\").noconvert(),py::arg(\"seed\"),py::arg(\"footprint\").noconvert(),py::arg(\"fortran\"),py::arg(\"tolerance\"),py::arg(\"low\"),py::arg(\"high\"));\n m.def(\"flood_assign\",[](py::array output,py::array mask,py::array values){\n    if(!output.writeable())throw py::value_error(\"assignment destination is read-only\");\n    if(output.ndim()!=mask.ndim()||output.itemsize()!=values.itemsize()||!values.owndata()||!(values.flags()&py::array::c_style))throw py::value_error(\"flood assignment descriptor mismatch\");\n    for(py::ssize_t a=0;a<output.ndim();++a)if(output.shape(a)!=mask.shape(a))throw py::value_error(\"flood mask shape mismatch\");\n    const auto kind=output.dtype().kind();\n    if(output.dtype().has_fields()||!(kind=='b'||kind=='i'||kind=='u'||kind=='f'||kind=='c')||output.itemsize()>16)throw py::type_error(\"flood assignment requires numeric POD dtype\");\n    if(mask.itemsize()!=1||mask.dtype().kind()!='b'||!output.dtype().is(values.dtype()))throw py::type_error(\"flood assignment requires matching numeric dtype\");\n    py::ssize_t selected=0;\n    for(py::ssize_t k=0;k<output.size();++k){auto i=k;py::ssize_t target=0,flag=0;\n      for(py::ssize_t a=output.ndim();a-->0;){auto c=i%output.shape(a);i/=output.shape(a);target+=c*output.strides(a);flag+=c*mask.strides(a);}\n      if(*(static_cast<const char*>(mask.data())+flag)){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n        std::memcpy(static_cast<char*>(output.mutable_data())+target,static_cast<const char*>(values.data())+selected*values.itemsize(),output.itemsize());++selected;}}\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n },py::arg(\"output\").noconvert(),py::arg(\"mask\").noconvert(),py::arg(\"values\").noconvert());\n}\n"
+        }
+      ]
+    }
+  },
+  "generic_initializer": "        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;\n        for(I k=0;k<logical;++k){\n            out.storage[mask_offset]=0;\n            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));\n            advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);\n        }\n",
+  "unchanged_raw_sha256": {
+    "include/skimagexx/flood_fill.hpp": "b023de21d811a49e9c094ac97b43b4970eeab393bc424db91ba859fc11651462",
+    "python/skimagexx/_flood_fill.py": "1121ffe8feedea387f790c9fad4daf6f912aa51b29a34481c2dbbf3e17c872e1",
+    "src/crop.cpp": "12d130a2dfd5f9bbb85816176e87c626ccb0ad00514730feb1b6d12a87521407",
+    "tests/test_flood_fill_public.py": "db965954966c5e30f63fc3a5747221d5b68dbe2bdea2bb26aed7f22d2649b648",
+    "tests/test_flood_fill_sdk.cpp": "2b24930b91bffeab4f06582bb5d4b0417c319c15b81a9b649d11b31f6642ef92",
+    "tests/test_flood_fill_integration.py": "5b6509cd187e6c0262447041fd1efada5c498f6b1b3890bf8318d62138254d67",
+    "tests/fixtures/flood_fill_original_v1.json": "8898d8339f5d5b3a8485c3705e36eb1e4de5e9021c75345c11546f49bb3a0453",
+    "tests/fixtures/flood_fill_sdk_original_v1.inc": "3afb1a0e90a3e1b6eb74760a5296ff0ed74ee9e6f791ed90567357f10d6e3973",
+    "tests/conftest.py": "246199bcc92d248e07a388f58f3c86d142a95febda90121af7a37d167b48370a",
+    "tests/flood_fill_contract.py": "2349b80f280641a2e3269278665dea6285fd5d80f8b975d0071a453267516323",
+    "tests/flood_fill_observer.py": "191702f03768c32eeecea2c69658350062935ff12c4a90daa5a491047a21fd3a",
+    "benchmarks/flood_fill_native.py": "279c6eb79267ddf44206d977c6641223378a6756ef8b5f50f0e81652172d2f65",
+    "benchmarks/flood_fill_execution.py": "cab14c3845fb9b52f3c204a5cc6594e7b750fad7ebcf0a5b23d83a7bfddcaa32",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "retained_assignment": {
+    "commit": "e96c28bc31dbe382ba26dadf8e26fb62f0cbbace",
+    "binder_raw_sha256": "394713ddaf6f1920d21923ee6d61cd16d83ab008bd38b1e3e0e3f55667b23dce",
+    "protocol_raw_sha256": "8f21e4e02ae61d612b8ac2e1058fddddb76b1e9b9846e5a2eeb66a8ec5ba9669",
+    "old_private_receipt": "coverage/evidence/flood-assignment-lines-private-parity-root-closeout-v1.json",
+    "scope": "Reused exact source; old636 nodes do not qualify current linked core or performance."
+  },
+  "fixed_cases": [
+    {
+      "id": "flood-uint8-C",
+      "api": "morphology.flood",
+      "dtype": "uint8",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-uint8-F",
+      "api": "morphology.flood",
+      "dtype": "uint8",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-float32-C",
+      "api": "morphology.flood",
+      "dtype": "float32",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood-float32-F",
+      "api": "morphology.flood",
+      "dtype": "float32",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-uint8-C",
+      "api": "morphology.flood_fill",
+      "dtype": "uint8",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-uint8-F",
+      "api": "morphology.flood_fill",
+      "dtype": "uint8",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-float32-C",
+      "api": "morphology.flood_fill",
+      "dtype": "float32",
+      "layout": "C",
+      "tolerance": null,
+      "shape": [
+        257,
+        257
+      ]
+    },
+    {
+      "id": "flood_fill-float32-F",
+      "api": "morphology.flood_fill",
+      "dtype": "float32",
+      "layout": "F",
+      "tolerance": 1,
+      "shape": [
+        257,
+        257
+      ]
+    }
+  ],
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "retain_all_losses": true,
+    "allocation_inclusive": true
+  },
+  "hypothesis": "Retain iteration1 private contiguous-copy improvement; dispatch assignment element width once so 1/2/4/8/16-byte copies inline, with exact reviewed ordered behavior and generic fallback.",
+  "behavior": [
+    "Private padded byte-copy/flag initialization may visit F-contiguous lines in different order; input is read-only and private destination lines are disjoint.",
+    "BFS stable offset order, border guards, comparisons and queue order exactly base. Generic signed/gapped descriptor initializer retained.",
+    "Assignment retains reviewed logical-C live-mask/RHS/output alias and partial count-error order.",
+    "No worker calls, SIMD arithmetic, provider computation, fallback, new domain admission or ABI change.",
+    "Width dispatch changes only memcpy constant-size compilation; exact reviewed traversal body, per-value overflow checks, live aliases and final count assertion retained in shared local template. No restrict/alignment/no-alias assumption."
+  ],
+  "prepared_copy": {
+    "path": "tests/test_flood_copy_protocol.py",
+    "raw_sha256": "a9fea7839a2b0df2c5b3f64803ddde10574cc41106e5f66f89d9562a79fa5eec",
+    "nodes": 52,
+    "direct_native_calls": 48,
+    "public_empty_calls": 8,
+    "original_calls": 0,
+    "maximum_logical_elements": 24,
+    "maximum_padded_elements": 120,
+    "maximum_input_storage_bytes": 384,
+    "FP": "Natural current target semantic control/status/MXCSR unchanged, then full current caller32 restored; no retained FP seed."
+  },
+  "required_future": [
+    "Actual complete saved/public/integration/assignment/copy runtime under admitted current core and F1.",
+    "Normal/runtime-disabled/compiler-scalar/ASan+UBSan installed SDK and changed public paths.",
+    "All eight fixed allocation-inclusive public-call ratios>=1.0, no loss exclusion; source changes justify new scheduled measurement.",
+    "Root exact historical-source integration preserving old contexts and actual-current acceptance.",
+    "Affected complete source modules on both retained supported Windows Pythons, complete workflow barriers both, exact-source genuine4 and independent root admission before main."
+  ],
+  "authority": {
+    "source_only": true,
+    "compile": 0,
+    "native": 0,
+    "original": 0,
+    "NumPy": 0,
+    "helper": 0,
+    "timing": 0,
+    "hosted": 0
+  },
+  "predecessor_context": {
+    "path": "coverage/contracts/flood-speed-parity-v2.json",
+    "sha256": "fe4ef3b74803cb8e209776d1ed86d22557cc4b1575852ce8c631ec700eecad1c",
+    "scope": "Frozen prior source/parity/performance remains scoped to75b; current source requires new actual runtime/genuine evidence."
+  },
+  "assignment_widths": {
+    "current_raw_sha256": "2655454b8e6b252108bc110991a8285d3f15e11e2c7bab337743b00c0729241b",
+    "current_canonical_LF_sha256": "2655454b8e6b252108bc110991a8285d3f15e11e2c7bab337743b00c0729241b",
+    "predecessor_raw_sha256": "394713ddaf6f1920d21923ee6d61cd16d83ab008bd38b1e3e0e3f55667b23dce",
+    "predecessor_canonical_LF_sha256": "394713ddaf6f1920d21923ee6d61cd16d83ab008bd38b1e3e0e3f55667b23dce",
+    "inverse": [
+      {
+        "current": "#include \"skimagexx/flood_fill.hpp\"\n#include <pybind11/pybind11.h>\n#include <pybind11/numpy.h>\n#include <pybind11/stl.h>\n#include <algorithm>\n#include <cstring>\n#include <limits>\nnamespace py=pybind11;\nnamespace {\ntemplate<class T>skimagexx::FloodMask run(const py::array& a,const skimagexx::FloodGeometry& g,bool tol,py::object low,py::object high){\n    return skimagexx::flood(static_cast<const T*>(a.data()),g,tol,tol?low.cast<T>():T{},tol?high.cast<T>():T{});\n}\n// Conservative positive byte intervals exclude live input/output aliases.\n// Unsupported descriptors retain the ordered element-by-element fallback.\nbool positive_interval(const py::array& a,std::uintptr_t& begin,std::uintptr_t& end){\n    const auto limit=std::uintptr_t(std::numeric_limits<py::ssize_t>::max());\n    auto span=std::uintptr_t(a.itemsize());\n    for(py::ssize_t axis=0;axis<a.ndim();++axis){\n        if(a.shape(axis)<=0||a.strides(axis)<0)return false;\n        const auto n=std::uintptr_t(a.shape(axis)-1),step=std::uintptr_t(a.strides(axis));\n        if(n&&step>(limit-span)/n)return false;\n        span+=n*step;\n    }\n    begin=reinterpret_cast<std::uintptr_t>(a.data());\n    if(span>std::numeric_limits<std::uintptr_t>::max()-begin)return false;\n    end=begin+span;return true;\n}\nvoid next_mask_line(const py::array& mask,py::ssize_t inner,\n                    std::vector<py::ssize_t>& index,py::ssize_t& base){\n    for(py::ssize_t axis=mask.ndim();axis-->0;){\n        if(axis==inner)continue;\n        if(++index[axis]<mask.shape(axis)){base+=mask.strides(axis);return;}\n        index[axis]=0;base-=(mask.shape(axis)-1)*mask.strides(axis);\n    }\n}\npy::ssize_t selected_count(const py::array& mask){\n    const auto* flags=static_cast<const char*>(mask.data());\n    if(!mask.ndim())return flags[0]!=0;\n    if(mask.flags()&(py::array::c_style|py::array::f_style))\n        return std::count_if(flags,flags+mask.size(),[](char value){return value!=0;});\n    auto inner=mask.ndim()-1;\n    if(mask.strides(inner)!=1){inner=0;if(mask.strides(inner)!=1)return -1;}\n    const auto width=mask.shape(inner),lines=mask.size()/width;\n    std::vector<py::ssize_t> index(mask.ndim(),0);\n    py::ssize_t base=0,selected=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        selected+=std::count_if(flags+base,flags+base+width,[](char value){return value!=0;});\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return selected;\n}\nbool assign_disjoint_runs(py::array& output,const py::array& mask,const py::array& values){\n    if(!output.size()||!(output.flags()&py::array::c_style))return false;\n    std::uintptr_t ob,oe,mb,me,vb,ve;\n    if(!positive_interval(output,ob,oe)||!positive_interval(mask,mb,me)||\n       !positive_interval(values,vb,ve)||!(oe<=mb||me<=ob)||!(oe<=vb||ve<=ob))return false;\n    // No store can change mask/RHS and this synchronous path has no callback.\n    // Admit the exact count first. A mismatch keeps the original partial writes\n    // before its error, rather than failing early or buffering aliased inputs.\n    const auto selected=selected_count(mask);\n    if(selected<0||selected!=values.size())return false;\n    auto* destination=static_cast<char*>(output.mutable_data());\n    const auto* replacement=static_cast<const char*>(values.data());\n    if(selected==output.size()){\n        std::memcpy(destination,replacement,std::size_t(oe-ob));return true;\n    }\n    const auto inner=output.ndim()-1,width=output.shape(inner);\n    const auto lines=output.size()/width,step=mask.strides(inner);\n    const auto bytes=std::size_t(output.itemsize()),row_bytes=std::size_t(width)*bytes;\n    const auto* flags=static_cast<const char*>(mask.data());\n    std::vector<py::ssize_t> index(mask.ndim(),0);py::ssize_t base=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        for(py::ssize_t x=0;x<width;){\n            while(x<width&&!flags[base+x*step])++x;\n            if(x==width)break;\n            const auto first=x;\n            if(step==1){\n                const auto* row=flags+base;\n                const auto* stop=static_cast<const char*>(std::memchr(row+x,0,std::size_t(width-x)));\n                x=stop?stop-row:width;\n            }else while(x<width&&flags[base+x*step])++x;\n            if(x>first){const auto length=std::size_t(x-first)*bytes;\n                std::memcpy(destination+std::size_t(line)*row_bytes+std::size_t(first)*bytes,\n                            replacement,length);replacement+=length;}\n        }\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return true;\n}\n\ntemplate<int Bytes>void assign_values(py::array& output,const py::array& mask,const py::array& values){\n    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const py::ssize_t bytes=Bytes?Bytes:output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n}\n}\nvoid bind_flood_fill(py::module_& m){\n m.def(\"flood_mask\",[](py::array a,std::vector<std::ptrdiff_t> seed,py::array_t<std::uint8_t,py::array::c_style> footprint,bool fortran,bool tol,py::object low,py::object high){\n    skimagexx::FloodGeometry g{{a.shape(),a.shape()+a.ndim()},{a.strides(),a.strides()+a.ndim()},std::move(seed),{footprint.shape(),footprint.shape()+footprint.ndim()},{footprint.data(),footprint.data()+footprint.size()},fortran};\n    skimagexx::FloodMask result;const char kind=a.dtype().kind();const auto bytes=a.itemsize();\n    if(!py::bool_(a.dtype().attr(\"isnative\")))throw py::value_error(\"Big-endian buffer not supported on little-endian compiler\");\n#define CASE(K,N,T) if(kind==K&&bytes==N)result=run<T>(a,g,tol,low,high);else\n    CASE('b',1,std::uint8_t) CASE('u',1,std::uint8_t) CASE('u',2,std::uint16_t) CASE('u',4,std::uint32_t)\n    CASE('u',8,std::uint64_t) CASE('i',1,std::int8_t) CASE('i',2,std::int16_t)\n    CASE('i',4,std::int32_t) CASE('i',8,std::int64_t) CASE('f',4,float) CASE('f',8,double)\n    {if(kind=='f'&&bytes==2)throw py::type_error(\"dtype of `image` is float16 which is not supported, try upcasting to float32\");throw py::type_error(\"No matching signature found\");}\n#undef CASE\n    auto shape=result.shape;for(std::size_t i=0;i<shape.size();++i)shape[i]+=2*result.padding[i];\n    py::array output(py::dtype::of<std::uint8_t>(),shape,result.strides);\n    std::memcpy(output.mutable_data(),result.storage.data(),result.storage.size());return output;\n },py::arg(\"image\").noconvert(),py::arg(\"seed\"),py::arg(\"footprint\").noconvert(),py::arg(\"fortran\"),py::arg(\"tolerance\"),py::arg(\"low\"),py::arg(\"high\"));\n m.def(\"flood_assign\",[](py::array output,py::array mask,py::array values){\n    if(!output.writeable())throw py::value_error(\"assignment destination is read-only\");\n    if(output.ndim()!=mask.ndim()||output.itemsize()!=values.itemsize()||!values.owndata()||!(values.flags()&py::array::c_style))throw py::value_error(\"flood assignment descriptor mismatch\");\n    for(py::ssize_t a=0;a<output.ndim();++a)if(output.shape(a)!=mask.shape(a))throw py::value_error(\"flood mask shape mismatch\");\n    const auto kind=output.dtype().kind();\n    if(output.dtype().has_fields()||!(kind=='b'||kind=='i'||kind=='u'||kind=='f'||kind=='c')||output.itemsize()>16)throw py::type_error(\"flood assignment requires numeric POD dtype\");\n    if(mask.itemsize()!=1||mask.dtype().kind()!='b'||!output.dtype().is(values.dtype()))throw py::type_error(\"flood assignment requires matching numeric dtype\");\n    if(assign_disjoint_runs(output,mask,values))return;\n    // Dispatch once so ordinary POD copies are fixed-size inline moves.\n    // The generic path preserves any other descriptor admitted above.\n    switch(output.itemsize()){\n      case 1:return assign_values<1>(output,mask,values);\n      case 2:return assign_values<2>(output,mask,values);\n      case 4:return assign_values<4>(output,mask,values);\n      case 8:return assign_values<8>(output,mask,values);\n      case 16:return assign_values<16>(output,mask,values);\n      default:return assign_values<0>(output,mask,values);\n    }\n },py::arg(\"output\").noconvert(),py::arg(\"mask\").noconvert(),py::arg(\"values\").noconvert());\n}\n",
+        "predecessor": "#include \"skimagexx/flood_fill.hpp\"\n#include <pybind11/pybind11.h>\n#include <pybind11/numpy.h>\n#include <pybind11/stl.h>\n#include <cstring>\nnamespace py=pybind11;\nnamespace {\ntemplate<class T>skimagexx::FloodMask run(const py::array& a,const skimagexx::FloodGeometry& g,bool tol,py::object low,py::object high){\n    return skimagexx::flood(static_cast<const T*>(a.data()),g,tol,tol?low.cast<T>():T{},tol?high.cast<T>():T{});\n}\n}\nvoid bind_flood_fill(py::module_& m){\n m.def(\"flood_mask\",[](py::array a,std::vector<std::ptrdiff_t> seed,py::array_t<std::uint8_t,py::array::c_style> footprint,bool fortran,bool tol,py::object low,py::object high){\n    skimagexx::FloodGeometry g{{a.shape(),a.shape()+a.ndim()},{a.strides(),a.strides()+a.ndim()},std::move(seed),{footprint.shape(),footprint.shape()+footprint.ndim()},{footprint.data(),footprint.data()+footprint.size()},fortran};\n    skimagexx::FloodMask result;const char kind=a.dtype().kind();const auto bytes=a.itemsize();\n    if(!py::bool_(a.dtype().attr(\"isnative\")))throw py::value_error(\"Big-endian buffer not supported on little-endian compiler\");\n#define CASE(K,N,T) if(kind==K&&bytes==N)result=run<T>(a,g,tol,low,high);else\n    CASE('b',1,std::uint8_t) CASE('u',1,std::uint8_t) CASE('u',2,std::uint16_t) CASE('u',4,std::uint32_t)\n    CASE('u',8,std::uint64_t) CASE('i',1,std::int8_t) CASE('i',2,std::int16_t)\n    CASE('i',4,std::int32_t) CASE('i',8,std::int64_t) CASE('f',4,float) CASE('f',8,double)\n    {if(kind=='f'&&bytes==2)throw py::type_error(\"dtype of `image` is float16 which is not supported, try upcasting to float32\");throw py::type_error(\"No matching signature found\");}\n#undef CASE\n    auto shape=result.shape;for(std::size_t i=0;i<shape.size();++i)shape[i]+=2*result.padding[i];\n    py::array output(py::dtype::of<std::uint8_t>(),shape,result.strides);\n    std::memcpy(output.mutable_data(),result.storage.data(),result.storage.size());return output;\n },py::arg(\"image\").noconvert(),py::arg(\"seed\"),py::arg(\"footprint\").noconvert(),py::arg(\"fortran\"),py::arg(\"tolerance\"),py::arg(\"low\"),py::arg(\"high\"));\n m.def(\"flood_assign\",[](py::array output,py::array mask,py::array values){\n    if(!output.writeable())throw py::value_error(\"assignment destination is read-only\");\n    if(output.ndim()!=mask.ndim()||output.itemsize()!=values.itemsize()||!values.owndata()||!(values.flags()&py::array::c_style))throw py::value_error(\"flood assignment descriptor mismatch\");\n    for(py::ssize_t a=0;a<output.ndim();++a)if(output.shape(a)!=mask.shape(a))throw py::value_error(\"flood mask shape mismatch\");\n    const auto kind=output.dtype().kind();\n    if(output.dtype().has_fields()||!(kind=='b'||kind=='i'||kind=='u'||kind=='f'||kind=='c')||output.itemsize()>16)throw py::type_error(\"flood assignment requires numeric POD dtype\");\n    if(mask.itemsize()!=1||mask.dtype().kind()!='b'||!output.dtype().is(values.dtype()))throw py::type_error(\"flood assignment requires matching numeric dtype\");\n    py::ssize_t selected=0;\n    const auto count=output.size();\n    if(count){\n      const auto rank=output.ndim();\n      const auto width=rank?output.shape(rank-1):1;\n      const auto lines=count/width;\n      const auto target_step=rank?output.strides(rank-1):0;\n      const auto flag_step=rank?mask.strides(rank-1):0;\n      const auto bytes=output.itemsize();\n      auto* destination=static_cast<char*>(output.mutable_data());\n      const auto* flags=static_cast<const char*>(mask.data());\n      const auto* replacement=static_cast<const char*>(values.data());\n      std::vector<py::ssize_t> index(rank?rank-1:0,0);\n      py::ssize_t target_base=0,flag_base=0;\n      // Keep logical C order, including F/reversed/zero strides and live\n      // mask aliases. No buffered mask or parallel/SIMD store reordering:\n      // each selected value is read immediately before its ordered copy.\n      for(py::ssize_t line=0;line<lines;++line){\n        auto target=target_base,flag=flag_base;\n        for(py::ssize_t x=0;x<width;++x){\n          if(flags[flag]){if(selected>=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n            std::memcpy(destination+target,replacement+selected*bytes,bytes);++selected;}\n          if(x+1<width){target+=target_step;flag+=flag_step;}\n        }\n        if(line+1<lines)for(py::ssize_t a=rank-1;a-->0;){\n          if(++index[a]<output.shape(a)){target_base+=output.strides(a);flag_base+=mask.strides(a);break;}\n          index[a]=0;\n          target_base-=(output.shape(a)-1)*output.strides(a);\n          flag_base-=(mask.shape(a)-1)*mask.strides(a);\n        }\n      }\n    }\n    if(selected!=values.size())throw py::value_error(\"flood assignment value count mismatch\");\n },py::arg(\"output\").noconvert(),py::arg(\"mask\").noconvert(),py::arg(\"values\").noconvert());\n}\n"
+      }
+    ]
+  },
+  "legacy_current_views": {
+    "src/bind_flood_fill.cpp": {
+      "current_raw_sha256": "2655454b8e6b252108bc110991a8285d3f15e11e2c7bab337743b00c0729241b",
+      "predecessor_raw_sha256": "9eb937374ed0f0b212581c664299e98a16510a5facac0865592e5739d8dc857f",
+      "inverse": {
+        "raw": [
+          {
+            "start": 131,
+            "end": 152,
+            "current": "algorithm>\n#include <",
+            "predecessor": ""
+          },
+          {
+            "start": 159,
+            "end": 177,
+            "current": ">\n#include <limits",
+            "predecessor": ""
+          },
+          {
+            "start": 465,
+            "end": 4539,
+            "current": "\n// Conservative positive byte intervals exclude live input/output aliases.\n// Unsupported descriptors retain the ordered element-by-element fallback.\nbool positive_interval(const py::array& a,std::uintptr_t& begin,std::uintptr_t& end){\n    const auto limit=std::uintptr_t(std::numeric_limits<py::ssize_t>::max());\n    auto span=std::uintptr_t(a.itemsize());\n    for(py::ssize_t axis=0;axis<a.ndim();++axis){\n        if(a.shape(axis)<=0||a.strides(axis)<0)return false;\n        const auto n=std::uintptr_t(a.shape(axis)-1),step=std::uintptr_t(a.strides(axis));\n        if(n&&step>(limit-span)/n)return false;\n        span+=n*step;\n    }\n    begin=reinterpret_cast<std::uintptr_t>(a.data());\n    if(span>std::numeric_limits<std::uintptr_t>::max()-begin)return false;\n    end=begin+span;return true;\n}\nvoid next_mask_line(const py::array& mask,py::ssize_t inner,\n                    std::vector<py::ssize_t>& index,py::ssize_t& base){\n    for(py::ssize_t axis=mask.ndim();axis-->0;){\n        if(axis==inner)continue;\n        if(++index[axis]<mask.shape(axis)){base+=mask.strides(axis);return;}\n        index[axis]=0;base-=(mask.shape(axis)-1)*mask.strides(axis);\n    }\n}\npy::ssize_t selected_count(const py::array& mask){\n    const auto* flags=static_cast<const char*>(mask.data());\n    if(!mask.ndim())return flags[0]!=0;\n    if(mask.flags()&(py::array::c_style|py::array::f_style))\n        return std::count_if(flags,flags+mask.size(),[](char value){return value!=0;});\n    auto inner=mask.ndim()-1;\n    if(mask.strides(inner)!=1){inner=0;if(mask.strides(inner)!=1)return -1;}\n    const auto width=mask.shape(inner),lines=mask.size()/width;\n    std::vector<py::ssize_t> index(mask.ndim(),0);\n    py::ssize_t base=0,selected=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        selected+=std::count_if(flags+base,flags+base+width,[](char value){return value!=0;});\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return selected;\n}\nbool assign_disjoint_runs(py::array& output,const py::array& mask,const py::array& values){\n    if(!output.size()||!(output.flags()&py::array::c_style))return false;\n    std::uintptr_t ob,oe,mb,me,vb,ve;\n    if(!positive_interval(output,ob,oe)||!positive_interval(mask,mb,me)||\n       !positive_interval(values,vb,ve)||!(oe<=mb||me<=ob)||!(oe<=vb||ve<=ob))return false;\n    // No store can change mask/RHS and this synchronous path has no callback.\n    // Admit the exact count first. A mismatch keeps the original partial writes\n    // before its error, rather than failing early or buffering aliased inputs.\n    const auto selected=selected_count(mask);\n    if(selected<0||selected!=values.size())return false;\n    auto* destination=static_cast<char*>(output.mutable_data());\n    const auto* replacement=static_cast<const char*>(values.data());\n    if(selected==output.size()){\n        std::memcpy(destination,replacement,std::size_t(oe-ob));return true;\n    }\n    const auto inner=output.ndim()-1,width=output.shape(inner);\n    const auto lines=output.size()/width,step=mask.strides(inner);\n    const auto bytes=std::size_t(output.itemsize()),row_bytes=std::size_t(width)*bytes;\n    const auto* flags=static_cast<const char*>(mask.data());\n    std::vector<py::ssize_t> index(mask.ndim(),0);py::ssize_t base=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        for(py::ssize_t x=0;x<width;){\n            while(x<width&&!flags[base+x*step])++x;\n            if(x==width)break;\n            const auto first=x;\n            if(step==1){\n                const auto* row=flags+base;\n                const auto* stop=static_cast<const char*>(std::memchr(row+x,0,std::size_t(width-x)));\n                x=stop?stop-row:width;\n            }else while(x<width&&flags[base+x*step])++x;\n            if(x>first){const auto length=std::size_t(x-first)*bytes;\n                std::memcpy(destination+std::size_t(line)*row_bytes+std::size_t(first)*bytes,\n                            replacement,length);replacement+=length;}\n        }\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return true;\n}\n",
+            "predecessor": ""
+          },
+          {
+            "start": 8921,
+            "end": 8977,
+            "current": "if(assign_disjoint_runs(output,mask,values))return;\n    ",
+            "predecessor": ""
+          }
+        ],
+        "canonical": [
+          {
+            "start": 131,
+            "end": 152,
+            "current": "algorithm>\n#include <",
+            "predecessor": ""
+          },
+          {
+            "start": 159,
+            "end": 177,
+            "current": ">\n#include <limits",
+            "predecessor": ""
+          },
+          {
+            "start": 465,
+            "end": 4539,
+            "current": "\n// Conservative positive byte intervals exclude live input/output aliases.\n// Unsupported descriptors retain the ordered element-by-element fallback.\nbool positive_interval(const py::array& a,std::uintptr_t& begin,std::uintptr_t& end){\n    const auto limit=std::uintptr_t(std::numeric_limits<py::ssize_t>::max());\n    auto span=std::uintptr_t(a.itemsize());\n    for(py::ssize_t axis=0;axis<a.ndim();++axis){\n        if(a.shape(axis)<=0||a.strides(axis)<0)return false;\n        const auto n=std::uintptr_t(a.shape(axis)-1),step=std::uintptr_t(a.strides(axis));\n        if(n&&step>(limit-span)/n)return false;\n        span+=n*step;\n    }\n    begin=reinterpret_cast<std::uintptr_t>(a.data());\n    if(span>std::numeric_limits<std::uintptr_t>::max()-begin)return false;\n    end=begin+span;return true;\n}\nvoid next_mask_line(const py::array& mask,py::ssize_t inner,\n                    std::vector<py::ssize_t>& index,py::ssize_t& base){\n    for(py::ssize_t axis=mask.ndim();axis-->0;){\n        if(axis==inner)continue;\n        if(++index[axis]<mask.shape(axis)){base+=mask.strides(axis);return;}\n        index[axis]=0;base-=(mask.shape(axis)-1)*mask.strides(axis);\n    }\n}\npy::ssize_t selected_count(const py::array& mask){\n    const auto* flags=static_cast<const char*>(mask.data());\n    if(!mask.ndim())return flags[0]!=0;\n    if(mask.flags()&(py::array::c_style|py::array::f_style))\n        return std::count_if(flags,flags+mask.size(),[](char value){return value!=0;});\n    auto inner=mask.ndim()-1;\n    if(mask.strides(inner)!=1){inner=0;if(mask.strides(inner)!=1)return -1;}\n    const auto width=mask.shape(inner),lines=mask.size()/width;\n    std::vector<py::ssize_t> index(mask.ndim(),0);\n    py::ssize_t base=0,selected=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        selected+=std::count_if(flags+base,flags+base+width,[](char value){return value!=0;});\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return selected;\n}\nbool assign_disjoint_runs(py::array& output,const py::array& mask,const py::array& values){\n    if(!output.size()||!(output.flags()&py::array::c_style))return false;\n    std::uintptr_t ob,oe,mb,me,vb,ve;\n    if(!positive_interval(output,ob,oe)||!positive_interval(mask,mb,me)||\n       !positive_interval(values,vb,ve)||!(oe<=mb||me<=ob)||!(oe<=vb||ve<=ob))return false;\n    // No store can change mask/RHS and this synchronous path has no callback.\n    // Admit the exact count first. A mismatch keeps the original partial writes\n    // before its error, rather than failing early or buffering aliased inputs.\n    const auto selected=selected_count(mask);\n    if(selected<0||selected!=values.size())return false;\n    auto* destination=static_cast<char*>(output.mutable_data());\n    const auto* replacement=static_cast<const char*>(values.data());\n    if(selected==output.size()){\n        std::memcpy(destination,replacement,std::size_t(oe-ob));return true;\n    }\n    const auto inner=output.ndim()-1,width=output.shape(inner);\n    const auto lines=output.size()/width,step=mask.strides(inner);\n    const auto bytes=std::size_t(output.itemsize()),row_bytes=std::size_t(width)*bytes;\n    const auto* flags=static_cast<const char*>(mask.data());\n    std::vector<py::ssize_t> index(mask.ndim(),0);py::ssize_t base=0;\n    for(py::ssize_t line=0;line<lines;++line){\n        for(py::ssize_t x=0;x<width;){\n            while(x<width&&!flags[base+x*step])++x;\n            if(x==width)break;\n            const auto first=x;\n            if(step==1){\n                const auto* row=flags+base;\n                const auto* stop=static_cast<const char*>(std::memchr(row+x,0,std::size_t(width-x)));\n                x=stop?stop-row:width;\n            }else while(x<width&&flags[base+x*step])++x;\n            if(x>first){const auto length=std::size_t(x-first)*bytes;\n                std::memcpy(destination+std::size_t(line)*row_bytes+std::size_t(first)*bytes,\n                            replacement,length);replacement+=length;}\n        }\n        if(line+1<lines)next_mask_line(mask,inner,index,base);\n    }\n    return true;\n}\n",
+            "predecessor": ""
+          },
+          {
+            "start": 8921,
+            "end": 8977,
+            "current": "if(assign_disjoint_runs(output,mask,values))return;\n    ",
+            "predecessor": ""
+          }
+        ]
+      },
+      "current_canonical_sha256": "2655454b8e6b252108bc110991a8285d3f15e11e2c7bab337743b00c0729241b",
+      "predecessor_canonical_sha256": "9eb937374ed0f0b212581c664299e98a16510a5facac0865592e5739d8dc857f"
+    },
+    "benchmarks/flood_fill_execution.py": {
+      "current_raw_sha256": "914eebb6fb586ad648542ac867b2066f363d6dde837942582b1805d9942e792e",
+      "predecessor_raw_sha256": "cf5a62b18fae586bdd1d9aa9e9e0d847f1e9bb2c0995200bf69c3ef7c5c64025",
+      "inverse": {
+        "raw": [
+          {
+            "start": 498,
+            "end": 499,
+            "current": "5",
+            "predecessor": "4"
+          }
+        ],
+        "canonical": [
+          {
+            "start": 498,
+            "end": 499,
+            "current": "5",
+            "predecessor": "4"
+          }
+        ]
+      },
+      "current_canonical_sha256": "914eebb6fb586ad648542ac867b2066f363d6dde837942582b1805d9942e792e",
+      "predecessor_canonical_sha256": "cf5a62b18fae586bdd1d9aa9e9e0d847f1e9bb2c0995200bf69c3ef7c5c64025"
+    }
+  },
+  "disjoint_runs": {
+    "runtime_test": "tests/test_flood_disjoint_assignment.py",
+    "runtime_test_raw_sha256": "7806737d133ca0b8cdaad9e4654b15664ebd1d64f6c02b182f997b110d95ae20",
+    "nodes": 13,
+    "new_runtime_group": "public-flood-disjoint-linux",
+    "caller_records_per_mode": 13,
+    "semantics": "Byte-only run copy for proved-disjoint buffers; live aliases and mismatched counts keep ordered fallback. Exact words/naturalFP/caller32 remain mandatory.",
+    "execution_authority": null
+  }
+}

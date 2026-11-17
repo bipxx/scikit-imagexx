@@ -3,7 +3,7 @@ import importlib.util
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/draw-multiblock-lbp-benchmark-execution-v8.json'
+CONTEXT='coverage/contracts/draw-multiblock-lbp-benchmark-execution-v10.json'
 
 
 def boundary():
@@ -24,10 +24,18 @@ def fixture(spec,np):
     return (image,spec['r'],spec['c'],spec['width'],spec['height']),dict(lbp_code=spec['code'],alpha=spec['alpha'])
 
 
-def native_requirements(spec):
+def legacy_native_requirements(spec):
     # The C++ preparation captures workers once internally. There is no Python
     # getter call inside this public function; pre/post global checks remain1.
     return dict(get_num_threads=0,_lbp_prepare=1,_lbp_binary=24,_lbp_assign=8 if len(spec['shape'])==2 else 9)
+
+
+def native_requirements(spec):
+    # Current four fixed fixtures use the owning batched phase entry. Retain
+    # the exact old phase recipe above for historical/protocol scope only.
+    # Zero counts also forbid silently falling back to the generic phase path.
+    return dict(get_num_threads=0,_lbp_prepare=int(len(spec['shape'])==2),
+                _lbp_binary=0,_lbp_assign=0,_lbp_apply=1)
 
 
 def execute(module):return boundary().execute(module,context_path=CONTEXT)

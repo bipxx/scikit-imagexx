@@ -215,30 +215,32 @@ def test_direct_current_counts_and_legacy_saved_scope_are_explicit():
 
 
 def test_current_benchmark_preserves_exact_method_cases_and_execution_body(monkeypatch):
-    adapter=load(ADAPTER);current=adapter.executor();prior=load('benchmarks/variation_of_information_execution.py')
-    assert current.CONTEXT==CONTEXT and current.candidate_providers is adapter.candidate_providers
+    context='coverage/contracts/vi-public-matmul-provider-benchmark-v4.json'
+    adapter=load(ADAPTER);current=load('benchmarks/vi_public_matmul_provider_execution_v2.py').executor();prior=load('benchmarks/variation_of_information_execution.py')
+    assert current.CONTEXT==context and inspect.getsource(current.candidate_providers)==inspect.getsource(adapter.candidate_providers)
     assert current.execute.__code__.co_code==prior.execute.__code__.co_code
-    data=json.loads((ROOT/CONTEXT).read_bytes());old=json.loads((ROOT/'coverage/contracts/vi-public-log2-provider-benchmark-v2.json').read_bytes())
+    data=json.loads((ROOT/context).read_bytes());old=json.loads((ROOT/'coverage/contracts/vi-public-log2-provider-benchmark-v2.json').read_bytes())
     for key in('cases','case_count','method','raw_samples','warm_groups','FENV_dependency','strict_preflight','timed_ownership','execution_authority','unbound'):
         assert data[key]==old[key],key
     assert data['raw_samples']==56 and data['method']['retain_all_losses']
-    assert data['route']['driver']=='benchmarks/vi_public_matmul_provider_consumer.py'
-    assert data['route']['contract']==CONTEXT and data['provider_policy']==POLICY
+    assert data['route']['driver']=='benchmarks/vi_public_matmul_provider_consumer_v2.py'
+    assert data['route']['contract']==context and data['provider_policy']==POLICY
     assert data['source_binding']['mode']=='literal-current-canonical-LF'
     for name,pin in data['source_files_canonical_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
     assert all(value is None for value in data['unbound'].values())and data['execution_authority']is None
-    assert current.boundary(ROOT).current_context(ROOT,CONTEXT)==data
+    assert current.boundary(ROOT).current_context(ROOT,context)==data
     monkeypatch.syspath_prepend(str(ROOT/'benchmarks'))
-    consumer=load('benchmarks/vi_public_matmul_provider_consumer.py')
+    consumer=load('benchmarks/vi_public_matmul_provider_consumer_v2.py')
     monkeypatch.setattr(sys,'argv',['current-matmul-consumer'])
     with pytest.raises(SystemExit,match='VI_UNBOUND'):current.execute(consumer.__dict__)
 
 
 @pytest.mark.parametrize('fault',(None,'current','snapshot','prepared','old-contract'))
 def test_current_binding_requires_literal_current_source_not_history(tmp_path,monkeypatch,fault):
-    current=load(ADAPTER).executor();factory=load('tests/test_mark_boundaries_benchmark_execution.py')
+    context_path='coverage/contracts/vi-public-matmul-provider-benchmark-v4.json';adapter='benchmarks/vi_public_matmul_provider_execution_v2.py'
+    current=load(adapter).executor();factory=load('tests/test_mark_boundaries_benchmark_execution.py')
     monkeypatch.setattr(factory,'source_fixture_bytes',lambda name,context_path:(ROOT/name).read_bytes())
-    path,binding,context=factory.synthetic(tmp_path,monkeypatch,context_path=ROOT/CONTEXT)
+    path,binding,context=factory.synthetic(tmp_path,monkeypatch,context_path=ROOT/context_path)
     binding['SDK_members']['include/skimagexx/label_pair_metrics.hpp']='f'*64
     runtime=Path(binding['runtime_path']);record=json.loads(runtime.read_bytes());record['runtime']['sdk_sha256']=binding['SDK_members']
     def refresh():
@@ -246,9 +248,9 @@ def test_current_binding_requires_literal_current_source_not_history(tmp_path,mo
         binding['runtime_sha256']=H(runtime.read_bytes());path.write_text(json.dumps(binding),encoding='utf-8')
         go=Path(binding['root_go_path']);value=json.loads(go.read_bytes());value['binding_sha256']=H(path.read_bytes());go.write_text(json.dumps(value),encoding='utf-8')
     refresh();shared=current.boundary(ROOT)
-    accepted=shared.validate_binding(path,root=ROOT,context_path=CONTEXT)
+    accepted=shared.validate_binding(path,root=ROOT,context_path=context_path)
     assert accepted[0]==binding and accepted[1]==context;current.require_sdk_dependencies(binding)
-    name=ADAPTER;expected=context['source_files_canonical_sha256'][name];snapshot=Path(binding['source_root'])
+    name=adapter;expected=context['source_files_canonical_sha256'][name];snapshot=Path(binding['source_root'])
     assert H(shared.source_bytes(ROOT/name))==H(shared.source_bytes(snapshot/name))==binding['prepared_source']['files_sha256'][name]==expected
     if fault is None:return
     if fault=='current':
@@ -257,7 +259,7 @@ def test_current_binding_requires_literal_current_source_not_history(tmp_path,mo
     elif fault=='snapshot':(snapshot/name).write_bytes((snapshot/name).read_bytes()+b'bad')
     elif fault=='prepared':binding['prepared_source']['files_sha256'][name]='0'*64;refresh()
     else:binding['base_contract_sha256']=H((ROOT/'coverage/contracts/vi-public-log2-provider-benchmark-v2.json').read_bytes());refresh()
-    with pytest.raises(AssertionError):shared.validate_binding(path,root=ROOT,context_path=CONTEXT)
+    with pytest.raises(AssertionError):shared.validate_binding(path,root=ROOT,context_path=context_path)
 
 
 def test_small_current_pairs_preserve_all_eight_domains_and_natural_FP():

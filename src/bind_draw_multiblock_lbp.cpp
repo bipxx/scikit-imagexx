@@ -1,6 +1,9 @@
 #include <skimagexx/draw_multiblock_lbp.hpp>
+#include <skimagexx/image.hpp>
+#include "execution.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+#include <algorithm>
 #include <cstring>
 namespace py=pybind11;
 namespace {
@@ -19,6 +22,22 @@ void bind_draw_multiblock_lbp(py::module_& m){
         else if(k=='u'){if(n==1)type=P::uint8;else if(n==2)type=P::uint16;else if(n==4)type=P::uint32;else type=P::uint64;}
         else if(k=='i'){if(n==1)type=P::int8;else if(n==2)type=P::int16;else if(n==4)type=P::int32;else type=P::int64;}
         else throw py::type_error("LBP conversion dtype");
+        if(type==P::uint8&&a.ndim()==2&&(a.flags()&py::array::c_style)){
+            const auto size=std::size_t(a.size());
+            if(size>std::size_t(PTRDIFF_MAX)/3)throw std::overflow_error("LBP shape overflow");
+            // The ordinary NumPy allocation owns its storage. Normalize into
+            // its first n slots, then replicate backwards without a second full
+            // RGB vector/allocation/copy. The existing converter and its strict
+            // arithmetic are unchanged; each chunk stays below a worker read.
+            (void)skimagexx::get_num_threads();
+            py::array result(py::dtype::of<double>(),std::vector<py::ssize_t>{a.shape(0),a.shape(1),3});
+            auto* target=static_cast<double*>(result.mutable_data());
+            const auto* source=static_cast<const std::uint8_t*>(a.data());
+            constexpr std::size_t chunk=skimagexx::detail::parallel_min-1;
+            for(std::size_t at=0;at<size;){const auto amount=std::min(chunk,size-at);skimagexx::convert_into(source+at,target+at,amount,P::uint8,P::float64);at+=amount;}
+            for(std::size_t at=size;at-->0;){std::uint64_t word;std::memcpy(&word,target+at,8);std::memcpy(target+3*at,&word,8);std::memcpy(target+3*at+1,&word,8);std::memcpy(target+3*at+2,&word,8);}
+            return result;
+        }
         skimagexx::CropView view;view.data=a.data();view.itemsize=std::size_t(n);for(py::ssize_t d=0;d<a.ndim();++d){view.shape.push_back(a.shape(d));view.strides.push_back(a.strides(d));}
         skimagexx::MultiblockLbpParameters p;p.prepare_only=true;
         auto out=skimagexx::draw_multiblock_lbp({view,type,!a.dtype().attr("isnative").cast<bool>(),half},p);
@@ -35,6 +54,13 @@ void bind_draw_multiblock_lbp(py::module_& m){
         const auto flags=skimagexx::multiblock_lbp_binary(floating(a),floating(b),floating(out),plus);return py::make_tuple(out,flags);
     });
     m.def("_lbp_assign",[](py::array destination,const py::array& source){if(!destination.writeable())throw py::value_error("assignment destination is read-only");skimagexx::multiblock_lbp_assign(floating(destination),floating(source));});
+    m.def("_lbp_apply",[](py::array image,std::ptrdiff_t r,std::ptrdiff_t c,std::ptrdiff_t width,std::ptrdiff_t height,std::uint8_t code,const py::array& greater,const py::array& less,double alpha,double complement,bool first_float32,bool capture_workers,const py::function& deliver){
+        if(!image.writeable())throw py::value_error("assignment destination is read-only");
+        skimagexx::MultiblockLbpParameters p;p.r=r;p.c=c;p.width=width;p.height=height;p.code=code;p.alpha=alpha;
+        // The GIL and owning Python arguments stay live for the complete call.
+        // The callback is used only for a real arithmetic exception, in order.
+        skimagexx::multiblock_lbp_apply(floating(image),p,floating(greater),floating(less),complement,first_float32,capture_workers,[&](unsigned flags,bool plus){deliver(flags,plus?"add":"multiply");});
+    });
     m.def("draw_multiblock_lbp",[](const py::array& a,std::ptrdiff_t r,std::ptrdiff_t c,std::ptrdiff_t width,std::ptrdiff_t height,std::int64_t code,const py::array_t<double,py::array::c_style>& greater,const py::array_t<double,py::array::c_style>& less,double alpha,bool first_f32){
         using P=skimagexx::PixelType;P type;const auto kind=a.dtype().kind();const auto bytes=a.itemsize();
         if(kind=='b')type=P::boolean;

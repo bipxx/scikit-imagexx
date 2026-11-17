@@ -76,8 +76,19 @@ def draw_multiblock_lbp(image,r,c,width,height,lbp_code=0,
         source=planes[0]
     else:source=copied
     if source.dtype.kind not in 'biuf':raise ValueError(f'Cannot convert from {source.dtype.name} to float64.')
-    output=_core._lbp_prepare(source)
-    if not gray:
+    # Plain native RGB buffers can keep NumPy's already-owned K-order copy.
+    # Tagged/swapped/half/subclass/protocol storage keeps the general path.
+    batched=(type(image)is np.ndarray and source.dtype.metadata is None
+             and source.dtype.isnative and source.dtype.kind in 'biuf'
+             and type(alpha)is float and type(lbp_code)is int
+             and type(color_greater_block)in(tuple,list)and type(color_less_block)in(tuple,list)
+             and all(type(v)is int and -(1<<60)<=v<(1<<60)for v in(r,c,width,height))
+             and len(source.shape)in(2,3)and (gray or source.shape[2]==3)
+             and (source.dtype.kind!='f'or source.dtype.itemsize!=4 or -1<=alpha<=2)
+             and greater.shape==less.shape==(3,))
+    copied_float=(batched and not gray and source.dtype.kind=='f'and source.dtype.itemsize in(4,8))
+    output=copied if copied_float else _core._lbp_prepare(source)
+    if not gray and not copied_float:
         stored=np.empty_like(copied,dtype=output.dtype,order='K',subok=False)
         _core._lbp_assign(stored,output);output=stored
     height=_offset_size(height);width=_offset_size(width)
@@ -87,6 +98,16 @@ def draw_multiblock_lbp(image,r,c,width,height,lbp_code=0,
         selected=greater if lbp_code&(1<<(7-element))else less
         complement=1-alpha
         patch=output[rr:rr+height,cc:cc+width]
+        if batched and output.dtype.isnative and output.dtype.itemsize in(4,8):
+            first_dtype=np.result_type(complement,patch)
+            # The native entry's first_float32 plan stays valid for all blocks:
+            # binary64 never demotes, and the bounded binary32 scalar domain
+            # stays representable even if live error delivery changes rounding.
+            # Tuple/list colors were privately materialized by the initial
+            # asarray calls; external ndarray/protocol descriptors stay general.
+            _core._lbp_apply(output,r,c,width,height,lbp_code&255,greater,less,
+                             alpha,complement,first_dtype.itemsize==4,copied_float,_deliver)
+            return output
         first=_binary(complement,patch)
         if type(alpha)not in(int,float,bool)and not isinstance(alpha,(np.generic,np.ndarray)):
             # This explicitly named argument provider owns its computation.
