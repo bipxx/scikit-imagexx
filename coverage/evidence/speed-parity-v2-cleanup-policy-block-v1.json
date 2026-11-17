@@ -1,0 +1,39 @@
+{
+  "schema": "speed-parity-v2-cleanup-policy-block-v1",
+  "status": "BLOCKED_AUTOMATIC_APPROVAL_MANUAL_ONLY",
+  "recorded_utc": "2026-11-17T16:02:55.344163+00:00",
+  "retention_owner": "root",
+  "release_owner": "user manual action",
+  "review_result": "CreateProcess rejected: blocked by policy",
+  "targets": [
+    {
+      "path": "D:/Scratch/speed-parity-integration-controls-v2/windows311-full-v1",
+      "last_inventory_logical_bytes": 7230564450
+    },
+    {
+      "path": "D:/Scratch/speed-parity-integration-controls-v3/windows311-focused-v1",
+      "last_inventory_logical_bytes": 17182632
+    },
+    {
+      "path": "D:/Scratch/speed-parity-integration-controls-v3/windows313-focused-v1",
+      "last_inventory_logical_bytes": 17182592
+    },
+    {
+      "path": "D:/Scratch/speed-parity-integration-controls-v3/windows311-full-v2",
+      "last_inventory_logical_bytes": 7230675523
+    },
+    {
+      "path": "D:/Scratch/speed-parity-integration-controls-v3/windows313-full-v2",
+      "last_inventory_logical_bytes": 7230662210
+    }
+  ],
+  "total_last_inventory_logical_bytes": 21726267407,
+  "processes_started": 0,
+  "files_removed": 0,
+  "reclaimed_bytes_attributable_to_actions": 0,
+  "physical_allocation": "Not measured; logical sizes are not physical allocation or observed volume free-space changes.",
+  "eligibility": "Native resolved exact paths, stopped source/intake/inventory readers,0links/protected environment/registered worktree overlaps; generated fixture payloads. Reusable source/commands/logs/XML/IDs/plugin inventories/raw failure data remain outside targets.",
+  "rule": "No agent retries or alternate command/shell/parent/child/file/UI removal. Exact obsolete fixtures remain for manual removal.",
+  "prior_policy_blocks": "Existing older blocked targets remain recorded in the operational ledger; excluded from these new five-target totals.",
+  "storage_exception": "Root owns unavoidable blocked scratch retention pending manual release; subsequent allocations require actual capacity. Active environments/baselines/current products stay protected."
+}

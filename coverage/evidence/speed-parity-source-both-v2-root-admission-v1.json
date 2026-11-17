@@ -1,0 +1,65 @@
+{
+  "schema": "speed-parity-source-both-root-admission-v2",
+  "status": "PASS_COMPLETE_ACTUAL_SOURCE_BARRIERS_BOTH",
+  "recorded_utc": "2026-11-17T16:02:55.344163+00:00",
+  "candidate_source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+  "candidate_tree": "65b70084e06dbf08b6e48004480a3c0d3ed0eace",
+  "tested_source_commit": "6ac027078da05670ee2a24044a2f822b31f21d1d",
+  "tested_dirty_HEAD": "75b219475ade7ad575f3ce82f569200d85329067",
+  "source_projection": "All75 Git blob raw bytes equal tested files; ancestry-only candidate tree unchanged.",
+  "source_selectors": 183,
+  "profiles": {
+    "windows311": {
+      "external_exit": 0,
+      "XML": {
+        "tests": 4699,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "ordinary_unique_IDs": 4691,
+      "passed_subtests": 8,
+      "normal_plugins": 44,
+      "seconds": 604.875,
+      "root_admission": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\metadata-correction-v2\\complete-sourcebarrier-entry-v2\\root-windows311-full-admission-v2.json",
+        "bytes": 3898,
+        "sha256": "e43ea8b705b57deb3c12d2bf1311db54b46bb6fc1f4ff3819a7e234703814419"
+      }
+    },
+    "windows313": {
+      "external_exit": 0,
+      "external_PID": 63160,
+      "internal_PID": 59348,
+      "XML": {
+        "tests": 4699,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "ordinary_unique_IDs": 4691,
+      "passed_subtests": 8,
+      "normal_plugins": 44,
+      "seconds": 601.1711792999413
+    }
+  },
+  "ordered_IDs_identical": true,
+  "source75_before_after_live_identical": true,
+  "normal_conftest_plugins_no_failfast": true,
+  "science_attempts_and_calls": 0,
+  "root_receipt": {
+    "path": "build/speed-parity-integration-v2/root-source-both-admission-v2.json",
+    "sha256": "2d3551795a9a70fbc51b700221f86315b3427f0d0af9ac9bade35705565bf425"
+  },
+  "failed_predecessor": "Full311 first run4697XML/2metadata failures remains failed and retained. Corrected8 metadata inputs; actual-only production checker preserved; new2currentV5negative cases.",
+  "private_speed": "24/24pass1.101389-9.402751x; coverage/evidence/speed-parity-private24-v2-root-admission-v1.json",
+  "genuine_qualification": {
+    "run": 44120190347,
+    "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44120190347",
+    "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+    "dispatch_attempts": 1,
+    "dispatch_actual_exit": 0,
+    "acceptance": "pending at receipt creation"
+  },
+  "remaining": "New exact-source4profiles/3stagers, actualcapacity/rawproducts/rootadmissions, genuine24percase>=1.0 and main delivery; broader477/class/domain/speed gaps stay open."
+}
