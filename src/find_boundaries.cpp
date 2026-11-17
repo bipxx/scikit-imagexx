@@ -122,6 +122,36 @@ template<class T>std::vector<T> wide_source_extrema(const std::vector<T>& input,
     }();
     auto current=input;std::vector<T> next(input.size());
     const auto passes=full?shape.size():std::size_t{1};
+    if(shape.size()==2) {
+        const auto height=shape[0],width=shape[1];
+        for(std::size_t axis=0;axis<passes;++axis) {
+            for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x) {
+                const auto index=y*width+x;
+                double result=0.;bool first=true;
+                auto visit=[&](std::size_t source) {
+                    const auto value=wide_source_load(current[source]);
+                    if(first){result=value;first=false;}
+                    else if(minimum?value<result:value>result)result=value;
+                };
+                if(full) {
+                    // Keep the source axis order, three conversions and typed
+                    // store per pass; only coordinate decoding is removed.
+                    const auto coordinate=axis?x:y,extent=axis?width:height;
+                    const auto step=axis?std::size_t{1}:width;
+                    visit(index-(coordinate?step:0));
+                    visit(index);
+                    visit(index+(coordinate+1<extent?step:0));
+                }else for(const auto& delta:footprint) {
+                    const auto row=delta[0]<0?(y?y-1:0):delta[0]>0?std::min(y+1,height-1):y;
+                    const auto column=delta[1]<0?(x?x-1:0):delta[1]>0?std::min(x+1,width-1):x;
+                    visit(row*width+column);
+                }
+                next[index]=wide_source_store<T>(result);
+            }
+            current.swap(next);
+        }
+        return current;
+    }
     for(std::size_t axis=0;axis<passes;++axis) {
         for(std::size_t i=0;i<input.size();++i) {
             Position center{},point{};position_of(i,shape,center);
@@ -174,7 +204,14 @@ template<class T>bool wide_source_outer(const ComponentsView& view,
     const auto visits=(parameters.connectivity==rank?6*rank:2*near.size())+6*rank;
     if(size>find_boundaries_max_neighbor_visits/visits)return false;
     std::vector<T> original(size);Position point{};
-    for(std::size_t i=0;i<size;++i){position_of(i,view.shape,point);original[i]=load<T>(view,point);}
+    if(rank==2) {
+        const auto width=view.shape[1];
+        for(std::size_t y=0;y<view.shape[0];++y) {
+            const auto* row=static_cast<const char*>(view.data)+std::ptrdiff_t(y)*view.strides[0];
+            for(std::size_t x=0;x<width;++x)
+                std::memcpy(&original[y*width+x],row+std::ptrdiff_t(x)*view.strides[1],sizeof(T));
+        }
+    }else for(std::size_t i=0;i<size;++i){position_of(i,view.shape,point);original[i]=load<T>(view,point);}
     // Source first computes ordinary dilation!=erosion, then the full
     // footprint foreground/background expression, with original typed labels.
     const auto low=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,true);
@@ -193,11 +230,19 @@ template<class T>bool wide_source_outer(const ComponentsView& view,
     // The dependent typed morphology stages stay serial to expose source FP
     // effects on the caller; the existing positive budget was captured once.
     // All writes follow complete input/geometry/capacity validation and stages.
-    for(std::size_t i=0;i<size;++i) {
-        position_of(i,view.shape,point);
+    auto boundary=[&](std::size_t i) {
         const bool bg=background(original[i]);
         const bool adjacent=(full_high[i]!=full_low[i])&&!bg;
-        output[offset_of(point,output_strides)]=std::uint8_t((high[i]!=low[i])&&(bg||adjacent));
+        return std::uint8_t((high[i]!=low[i])&&(bg||adjacent));
+    };
+    if(rank==2) {
+        const auto width=view.shape[1];
+        for(std::size_t y=0;y<view.shape[0];++y) {
+            auto* row=output+std::ptrdiff_t(y)*output_strides[0];
+            for(std::size_t x=0;x<width;++x)row[std::ptrdiff_t(x)*output_strides[1]]=boundary(y*width+x);
+        }
+    }else for(std::size_t i=0;i<size;++i) {
+        position_of(i,view.shape,point);output[offset_of(point,output_strides)]=boundary(i);
     }
     return true;
 #else
@@ -308,7 +353,7 @@ template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     // exchanged. Reuse the existing C-row kernel without moving any pixels.
     // Public intake already proved address arithmetic; the SDK caller retains
     // the existing disjoint-allocation/nonoverlapping-output obligation.
-    if constexpr(sizeof(T)<=4) {
+    if constexpr(sizeof(T)<=8) {
         if(rank==2 && (parameters.mode==FindBoundaryMode::thick || parameters.mode==FindBoundaryMode::inner) &&
            shape[0]>=3 && shape[1]>=3 &&
            view.strides[0]==std::ptrdiff_t(sizeof(T)) && view.strides[1]==std::ptrdiff_t(shape[0]*sizeof(T)) &&
@@ -345,7 +390,9 @@ template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     auto is_background=[&](T value) {return parameters.background_representable &&
         static_cast<std::uint64_t>(value)==parameters.background_bits;};
     const int team=output_count>=parallel_min?workers:1;
-    const bool interior=sizeof(T)<=4 && !subpixel && parameters.mode!=FindBoundaryMode::outer &&
+    // The wide-label scan above already proved exact integer promotion; the
+    // same integer-only interior kernel therefore also covers 64-bit labels.
+    const bool interior=!subpixel && parameters.mode!=FindBoundaryMode::outer &&
         rank==2 && shape[0]>=3 && shape[1]>=3 &&
         view.strides[1]==std::ptrdiff_t(sizeof(T)) && view.strides[0]==std::ptrdiff_t(shape[1]*sizeof(T)) &&
         strides[1]==1 && strides[0]==std::ptrdiff_t(shape[1]) &&
