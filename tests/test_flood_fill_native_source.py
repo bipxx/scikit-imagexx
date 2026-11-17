@@ -46,11 +46,16 @@ def test_exact_existing_executor_inverse_and_method():
     source=(ROOT/'tools/montage_sustained.py').read_text();method=''.join(source.splitlines(keepends=True)[node.lineno-1:node.end_lineno])
     assert hashlib.sha256(method.encode()).hexdigest()==context['method']['method_sha256']
     for name,pin in context['production_source_canonical_sha256'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+        assert hashlib.sha256(integration_bytes(ROOT,name).replace(b'\r\n',b'\n')).hexdigest()==pin,name
     for name,pin in context['FENV_dependency']['source_files_raw_sha256'].items():
         assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin,name
     for name,row in context['sources'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==row['current_canonical_sha256'],name
+        if name=='benchmarks/flood_fill_execution.py':
+            from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+            from tools.vi_public_matmul_context import speed_predecessor_bytes
+            raw=speed_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes(),VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+        else:raw=integration_bytes(ROOT,name).replace(b'\r\n',b'\n')
+        assert hashlib.sha256(raw).hexdigest()==row['current_canonical_sha256'],name
     assert len(context['routes']['flood-fill']['cases'])==8 and all(v is None for v in context['unbound'].values())
 
 @pytest.mark.parametrize('cached',[False,True])

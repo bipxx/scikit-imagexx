@@ -22,6 +22,10 @@ def test_exact_admitted_eight_rows_and_unchanged_whole_pipeline_sources():
             assert r['target_immediate']['after']['status']==(32 if profile=='minimum'else 0)
     for name,pin in(contract['source_pins']|contract['existing_source_reuse']).items():
         raw=(ROOT/name).read_bytes()
+        if name in ('src/find_boundaries.cpp','src/mark_boundaries.cpp','src/bind_mark_boundaries.cpp'):
+            from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+            from tools.vi_public_matmul_context import speed_predecessor_bytes
+            raw=speed_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256)
         if name=='src/find_boundaries.cpp':
             phase=json.loads((ROOT/'coverage/contracts/mark-wide-comparison-fp-v1.json').read_bytes())
             assert hashlib.sha256(raw).hexdigest()==phase['kernel_current_raw_sha256']

@@ -2310,7 +2310,7 @@ def current_metadata_artifact(tmp_path):
     """Inert independently enumerated package/install envelope; never imported."""
     import tomllib
     source = {name: (ROOT/name).read_bytes() for name in
-              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT)}
+              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json')}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
                  'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
@@ -2363,11 +2363,11 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['SDK_checks']==76 and 'current38 required' in result['SDK_client_scope']
     assert len(result['public_groups']['public-post203'])==145
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v8.json'
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v9.json'
     selectors=q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors']
-    previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v7.json').read_bytes())['required_selectors']
-    assert len(previous)==160 and len(selectors)==162
-    assert selectors==previous+['tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py']
+    previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v8.json').read_bytes())['required_selectors']
+    assert len(previous)==162 and len(selectors)==166
+    assert selectors==previous+['tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py']
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2398,7 +2398,7 @@ def test_current_contract_rejects_missing_api_or_selector(fault):
     elif fault=='missing-required-selector':data['required_selectors'].remove('tests/test_blur_effect_public.py')
     elif fault=='missing-cold-selector':data['required_selectors'].remove('tests/test_draw_polygon_benchmark_intake.py')
     else:data['scope']='h_extrema23'
-    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
+    with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('fault',('extra-package','changed-sdk-install','extra-install'))
@@ -2587,7 +2587,7 @@ def test_current253_drawing_contract_rejects_stale_or_incomplete_scope(fault):
     elif fault=='circle-selector':data['required_selectors'].remove('tests/test_circle_perimeter_public.py')
     elif fault=='circle-client':data['required_client_families'].remove('circle_perimeter')
     else:data['required_client_headers'].remove('include/skimagexx/circle_perimeter.hpp')
-    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
+    with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 def synthetic_draw_admission(monkeypatch):
@@ -2713,7 +2713,7 @@ def test_current253_contract_refuses_line_aa_gap(fault):
     else:
         selector={'public':'test_line_aa_public.py','reference':'test_line_aa_reference.py','default':'test_line_aa_default.py'}[fault]
         data['required_selectors'].remove('tests/'+selector)
-    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
+    with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('missing', ('include/skimagexx/regionprops_state.hpp', 'python/skimagexx/_regionprops_state.py'))
@@ -2735,7 +2735,7 @@ def test_current254_contract_refuses_regionprops_gap(fault):
     else:
         data['required_selectors'].remove('tests/test_regionprops_state_' + fault + '.py')
     with pytest.raises(q.QualificationError):
-        q.current_contract(lambda _: json.dumps(data).encode())
+        q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('missing', ('include/skimagexx/circle_perimeter_aa.hpp', 'python/skimagexx/_circle_perimeter_aa.py'))
@@ -2757,7 +2757,7 @@ def test_current255_contract_refuses_circle_aa_gap(fault):
     else:
         data['required_selectors'].remove('tests/test_circle_perimeter_aa_' + fault + '.py')
     with pytest.raises(q.QualificationError):
-        q.current_contract(lambda _: json.dumps(data).encode())
+        q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('partition', ('reference', 'public'))
@@ -2765,7 +2765,7 @@ def test_current255_contract_keeps_half_stain_partition(partition):
     data = json.loads((ROOT / q.CURRENT_SCOPE_CONTRACT).read_bytes())
     data['required_selectors'].remove('tests/test_combine_stains_half_' + partition + '.py')
     with pytest.raises(q.QualificationError):
-        q.current_contract(lambda _: json.dumps(data).encode())
+        q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('missing', ('include/skimagexx/line_nd.hpp', 'python/skimagexx/_line_nd.py'))
@@ -2783,7 +2783,7 @@ def test_current256_contract_refuses_line_nd_gap(fault):
     if fault == 'map':data['post203_contracts'].pop('draw.line_nd')
     elif fault == 'header':data['required_client_headers'].remove('include/skimagexx/line_nd.hpp')
     else:data['required_selectors'].remove('tests/test_line_nd_'+fault+'.py')
-    with pytest.raises(q.QualificationError):q.current_contract(lambda _:json.dumps(data).encode())
+    with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('fault', ('none','registry','entry','core','alias','forwarding','signature','policy'))
@@ -2881,7 +2881,7 @@ def test_current258_contract_requires_ellipse_perimeter(fault):
     else:
         selector={'reference':'tests/test_ellipse_perimeter_reference.py','public':'tests/test_draw_ellipse_perimeter_public.py','default':'tests/test_draw_ellipse_perimeter_default.py','benchmark':'tests/test_ellipse_perimeter_benchmark.py'}[fault]
         data['required_selectors'].remove(selector)
-    with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode())
+    with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 @pytest.mark.parametrize('missing',(
@@ -2918,14 +2918,14 @@ def test_coords_scaled_contract_requires_installed_selectors(selector):
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
     data['required_selectors'].remove(selector)
     with pytest.raises(q.QualificationError,match='selector contract differs'):
-        q.current_contract(lambda n:json.dumps(data).encode())
+        q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 def test_coords_scaled_contract_requires_benchmark_source_checks():
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())
     data['required_selectors'].remove('tests/test_regionprops_coords_scaled_benchmark.py')
     with pytest.raises(q.QualificationError,match='selector contract differs'):
-        q.current_contract(lambda n:json.dumps(data).encode())
+        q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
 
 def test_polygon_cold_intake_uses_direct_journal_process_and_keeps_admission(tmp_path,monkeypatch):

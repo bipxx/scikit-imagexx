@@ -17,7 +17,7 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v8.json'
+CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v9.json'
 API='segmentation.mark_boundaries'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 digest=lambda raw:hashlib.sha256(raw).hexdigest()
@@ -26,9 +26,29 @@ source_bytes=lambda path:Path(path).read_bytes().replace(b'\r\n',b'\n')
 
 def current_context(root,context_path=CONTEXT):
     c=json.loads((Path(root)/context_path).read_bytes())
+    speed=c.get('speed_source_successor')
+    if speed is not None:
+        assert speed['schema']=='mark-lbp-speed-source-validation-v1'
+        prior=speed['predecessor_context'];encoded=(Path(root)/prior['path']).read_bytes()
+        assert digest(encoded)==prior['raw_sha256']
+        old=current_context(root,prior['path'])
+        assert set(c)==set(old)|{'speed_source_successor'}
+        for key in old:
+            if key not in ('source_files_canonical_sha256','route'):assert c[key]==old[key],key
+        route=dict(c['route']);route['contract']=old['route']['contract'];assert route==old['route']
+        assert c['route']['contract']==context_path
+        rows=speed['source_predecessors']
+        assert set(c['source_files_canonical_sha256'])==set(old['source_files_canonical_sha256'])|set(rows)|{prior['path']}
+        for name,pin in old['source_files_canonical_sha256'].items():
+            if name in rows:assert rows[name]['predecessor_canonical_sha256']==pin,name
+            else:assert c['source_files_canonical_sha256'][name]==pin,name
+        for name,row in rows.items():assert c['source_files_canonical_sha256'][name]==row['current_canonical_sha256'],name
+        assert c['source_files_canonical_sha256'][prior['path']]==digest(encoded.replace(b'\r\n',b'\n'))
+        assert speed['execution_authority']is None
+        return c
     successor=c.get('validation_source_successor')
     if successor is None:
-        assert not str(context_path).endswith('-v8.json'),'Missing current validation envelope'
+        assert not str(context_path).endswith(('-v8.json','-v9.json')),'Missing current validation envelope'
         return c  # Frozen historical contexts keep their own gates.
     assert successor['schema']=='mark-lbp-sdk-test-validation-v1'
     prior=successor['predecessor_context'];encoded=(Path(root)/prior['path']).read_bytes()
@@ -55,6 +75,18 @@ def current_context(root,context_path=CONTEXT):
 
 def validation_predecessor_bytes(root,name,raw=None,context_path=CONTEXT):
     c=current_context(root,context_path);raw=source_bytes(Path(root)/name)if raw is None else raw
+    speed=c.get('speed_source_successor')
+    if speed is not None:
+        row=speed['source_predecessors'].get(name)
+        if row is not None:
+            raw=raw.replace(b'\r\n',b'\n');assert digest(raw)==row['current_canonical_sha256'],name
+            text=raw.decode('utf-8')
+            for part in reversed(row['inverse_fragments']):
+                assert text[part['start']:part['end']]==part['current'],name
+                text=text[:part['start']]+part['predecessor']+text[part['end']:]
+            raw=text.encode('utf-8')
+            assert digest(raw)==row['predecessor_canonical_sha256'],name
+        return validation_predecessor_bytes(root,name,raw,speed['predecessor_context']['path'])
     row=c.get('validation_source_successor',{}).get('source_predecessors',{}).get(name)
     if row is None:return raw
     raw=raw.replace(b'\r\n',b'\n')

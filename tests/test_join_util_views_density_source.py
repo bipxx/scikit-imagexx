@@ -71,7 +71,7 @@ def test_saved_view_profile_and_actual_helper_prepare_seal_transport(profile):
     base=q['groups_for_source'](ROOT);groups=q['applicable_public_groups'](base,profile)
     assert all(groups[n]==v for n,v in base.items())
     if profile=='windows':
-        assert groups==dict(base,**{'public-VI-current-windows':('test_vi_public_matmul_windows_public.py',)})
+        assert groups==dict(base,**{'public-VI-current-windows':('test_vi_public_matmul_windows_public.py',),'public-mark-fast-paths':('test_mark_boundaries_fast_paths.py',)})
     else:assert groups['public-util-views-saved-linux']==('test_util_views_public.py',)and groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)
     for name in ('tests/util_views_fenv_restore.c','tests/util_views_fenv_build.py','tests/util_views_fenv.py','tests/util_views_fenv_probe.py','coverage/contracts/util-views-fenv-v1.json'):
         assert q['DRAW_SOURCE_PATHS'].count(name)==1

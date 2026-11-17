@@ -12,6 +12,9 @@ H=lambda raw:hashlib.sha256(raw).hexdigest()
 def test_exact_new_and_frozen_predecessor_source(name):
     row=DATA['inverse'][name];current=(ROOT/name).read_bytes()
     if name=='src/find_boundaries.cpp':
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        from tools.vi_public_matmul_context import speed_predecessor_bytes
+        current=speed_predecessor_bytes(ROOT,name,current,VI_PUBLIC_MATMUL_CONTEXT_SHA256)
         phase=json.loads((ROOT/'coverage/contracts/mark-wide-comparison-fp-v1.json').read_bytes())
         assert H(current)==phase['kernel_current_raw_sha256']
         for fragment in phase['inverse_fragments']:
@@ -113,7 +116,9 @@ def test_new_wide_background_boundary_retains_unrepresented_metadata_frontier():
 
 def test_current_comparison_phase_matches_pinned_NumPy_conditional_clear():
     phase=json.loads((ROOT/'coverage/contracts/mark-wide-comparison-fp-v1.json').read_bytes())
-    raw=(ROOT/'src/find_boundaries.cpp').read_bytes();assert H(raw)==phase['kernel_current_raw_sha256']
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    from tools.vi_public_matmul_context import speed_predecessor_bytes
+    raw=speed_predecessor_bytes(ROOT,'src/find_boundaries.cpp',(ROOT/'src/find_boundaries.cpp').read_bytes(),VI_PUBLIC_MATMUL_CONTEXT_SHA256);assert H(raw)==phase['kernel_current_raw_sha256']
     source=raw.decode();start=source.index('template<class T>bool wide_source_outer(');stop=source.index('// Independent 2D interior pixels:',start)
     block=source[start:stop]
     after=block.index('const auto full_low=wide_source_extrema(')

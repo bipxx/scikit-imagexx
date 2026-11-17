@@ -112,21 +112,25 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
     original=q.groups_for_source(ROOT);groups=q.applicable_public_groups(original,profile)
     assert all(groups[name]==value for name,value in original.items())
     if profile=='windows':
-        assert groups==dict(original,**{'public-VI-current-windows':('test_vi_public_matmul_windows_public.py',)})
+        assert groups==dict(original,**{'public-VI-current-windows':('test_vi_public_matmul_windows_public.py',),'public-mark-fast-paths':('test_mark_boundaries_fast_paths.py',)})
     else:
         expected={
+            'public-mark-fast-paths':('test_mark_boundaries_fast_paths.py',),
             'public-regular-grid-saved-linux':('test_regular_grid_public.py',),
             'public-util-views-saved-linux':('test_util_views_public.py',),
             'public-mark-saved-linux':('test_mark_boundaries_public.py',),
             'public-mark-wide-saved-linux':('test_mark_wide_outer_public.py',),
             'public-lbp-saved-linux':('test_draw_multiblock_lbp_public.py',),
             'public-lbp-metadata-linux':('test_draw_multiblock_lbp_dtype_metadata.py',),
+            'public-lbp-batched-linux':('test_draw_multiblock_lbp_batched.py',),
             'public-radon-saved-linux':('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py'),
             'public-radon-ABI-policy-linux':('test_finite_radon_numpy_abi_public.py',),
             'public-VI-saved-linux':('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py'),
             'public-VI-large-saved-linux':('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py'),
             'public-VI-current-public-linux':('test_vi_public_matmul_provider_public.py',),
             'public-flood-saved-linux':('test_flood_fill_public.py',),
+            'public-flood-assignment-linux':('test_flood_assignment_protocol.py',),
+            'public-flood-copy-linux':('test_flood_copy_protocol.py',),
             'public-rolling-ball-saved-linux':('test_rolling_ball_public.py',),
         }
         assert set(expected).isdisjoint(original)
@@ -176,8 +180,13 @@ def test_regular_grid_seal_refuses_incomplete_or_extra_saved_nodes(tmp_path,monk
     for mode in ('normal','scalar'):
         labels.update(mode+'-'+name for name in ('admission',*q.applicable_public_groups(q.GROUPS,'minimum'),'returned-maps','metrics-corpus'))
         for group in q.applicable_public_groups(q.GROUPS,'minimum'):
-            tests=count if group=='public-regular-grid-saved-linux'else 1
+            unrelated={'public-mark-fast-paths':107,'public-lbp-batched-linux':35,'public-flood-assignment-linux':59,'public-flood-copy-linux':52}
+            tests=count if group=='public-regular-grid-saved-linux'else unrelated.get(group,1)
             (tmp_path/(mode+'-'+group+'.xml')).write_text('<testsuite tests="'+str(tests)+'" errors="0" failures="0" skipped="0"/>')
+            if group in ('public-flood-assignment-linux','public-flood-copy-linux'):
+                pool=tmp_path/(mode+'-'+group+'-caller-rows');pool.mkdir()
+                for index in range(tests):
+                    (pool/(str(index)+'.json')).write_text(json.dumps(dict(saved='00'*32,actual='00'*32,exact32=True,workers=1)))
     (tmp_path/'commands.json').write_text(json.dumps([dict(label=name,state='terminal',returncode=0)for name in labels]))
     (tmp_path/'product-wheels').mkdir();wheel=tmp_path/'product-wheels/inert.whl';wheel.write_bytes(b'INERT_UNIT_ONLY_NOT_A_WHEEL')
     (tmp_path/'package.json').write_text(json.dumps(dict(members_sha256={},wheel_sha256=hashlib.sha256(wheel.read_bytes()).hexdigest())))

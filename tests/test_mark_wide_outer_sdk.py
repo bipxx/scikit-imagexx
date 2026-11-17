@@ -38,6 +38,10 @@ def test_literal_payload_tamper_is_rejected(fault):
 def test_old_sdk_native_and_current_literal_sources_are_pinned(group):
     for name,pin in C[group].items():
         raw=(ROOT/name).read_bytes()
+        if name in ('src/find_boundaries.cpp','src/mark_boundaries.cpp'):
+            from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+            from tools.vi_public_matmul_context import speed_predecessor_bytes
+            raw=speed_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256)
         if name=='src/find_boundaries.cpp':
             phase=json.loads((ROOT/'coverage/contracts/mark-wide-comparison-fp-v1.json').read_bytes())
             assert H(raw)==phase['kernel_current_raw_sha256']

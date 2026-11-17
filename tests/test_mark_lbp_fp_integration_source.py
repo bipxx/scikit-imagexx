@@ -54,7 +54,13 @@ def test_new_current_metadata_preserves_every_old_recipe_and_checks_current_byte
  before=json.loads((ROOT/'coverage/contracts'/old).read_bytes());current=json.loads((ROOT/'coverage/contracts'/new).read_bytes())
  assert {k:v for k,v in current.items()if k!='source_canonical_pins'}=={k:v for k,v in before.items()if k!='source_canonical_pins'}
  assert set(current['source_canonical_pins'])==set(before['source_canonical_pins'])
- for name,pin in current['source_canonical_pins'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
+ for name,pin in current['source_canonical_pins'].items():
+  raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+  if name=='src/find_boundaries.cpp':
+   from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+   from tools.vi_public_matmul_context import speed_predecessor_bytes
+   raw=speed_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+  assert H(raw)==pin,name
 
 def test_actual_sdk_copy_keeps_new_named_client_and_raw_word_fixture(tmp_path,monkeypatch):
  import importlib.util,zipfile

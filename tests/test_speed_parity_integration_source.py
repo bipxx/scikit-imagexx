@@ -1,0 +1,227 @@
+"""Literal current speed-parity wiring; source-only, never an epoch ROOT."""
+import ast
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import shlex
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v1.json'
+CONTEXT_SHA256 = '77fa25fe0bac421ebdc44f85b83e3c187e3d9dae449f12f405b3d994a4b53f39'
+RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
+           'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py')
+SOURCE = ('tests/test_speed_parity_integration_source.py', 'tests/test_flood_speed_source.py')
+
+
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def data():
+    raw = (ROOT / CONTEXT).read_bytes()
+    assert digest(raw) == CONTEXT_SHA256
+    value = json.loads(raw)
+    assert value['execution_authority'] is None
+    return value
+
+
+def load(name):
+    spec = importlib.util.spec_from_file_location('_current_speed_' + Path(name).stem, ROOT / name)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def selectors(raw):
+    lines = [line.strip() for line in raw.decode().splitlines()
+             if line.strip().startswith('python -m pytest -q --capture=sys')]
+    assert len(lines) == 1 and lines[0].count(' 2>&1 | tee ') == 1
+    return [word for word in shlex.split(lines[0].split(' 2>&1 | tee ', 1)[0])
+            if word.startswith('tests/')]
+
+
+@pytest.mark.parametrize('canonical', (False, True))
+def test_current_production_and_early_history_are_exact_and_reject_tampering(canonical):
+    value = data()
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    helper = load('tools/vi_public_matmul_context.py')
+    context = helper._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+    assert context['historical_source_inputs']['count'] == 2064
+    assert context['predecessor_source'] == '2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d'
+    for name, pin in value['production_raw_sha256'].items():
+        raw = (ROOT / name).read_bytes()
+        assert digest(raw) == pin and name in context['sources'], name
+        old = helper.predecessor_bytes(ROOT, name, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
+        domain = 'canonical' if canonical else 'raw'
+        assert digest(old) == context['sources'][name]['predecessor_' + domain + '_sha256']
+        with pytest.raises(AssertionError):
+            helper.predecessor_bytes(ROOT, name, raw + b'\n// damaged', VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
+        with pytest.raises(AssertionError):
+            helper.predecessor_bytes(ROOT, name, old, VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
+
+
+def test_current_source_and_predecessor_contexts_are_bound_without_authority():
+    value = data()
+    for name, pin in value['source_raw_sha256'].items():
+        assert digest((ROOT / name).read_bytes()) == pin, name
+    for name, pin in value['immutable_predecessors'].items():
+        assert digest((ROOT / name).read_bytes()) == pin, name
+    assert ROOT == Path(__file__).resolve().parents[1]
+    assert not any(isinstance(node, ast.ImportFrom) and node.module == 'vi_public_matmul_source_view'
+                   for node in ast.walk(ast.parse(Path(__file__).read_bytes())))
+
+
+def test_actual_source_command_preserves181_and_adds_only_current_source_guards():
+    value = data()
+    raw = (ROOT / '.github/workflows/public-qualification.yml').read_bytes()
+    selected = selectors(raw)
+    assert len(selected) == len(set(selected)) == 183
+    assert selected == value['previous_source_selectors'] + list(SOURCE)
+    assert not set(RUNTIME) & set(selected)
+
+
+@pytest.mark.parametrize('profile', ('windows', 'minimum', 'modern', 'debug'))
+def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profile):
+    value = data()
+    q = load('tools/public_qualification.py')
+    contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v9.json'
+    prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
+    assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME)
+    groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
+    assert groups['public-post203'] == ('retained',)
+    assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)
+    linux = {'public-lbp-batched-linux': ('test_draw_multiblock_lbp_batched.py',),
+             'public-flood-assignment-linux': ('test_flood_assignment_protocol.py',),
+             'public-flood-copy-linux': ('test_flood_copy_protocol.py',)}
+    for name, modules in linux.items():
+        assert (name not in groups) if profile == 'windows' else groups[name] == modules
+    assert contract['speed_parity_runtime'] == value['runtime_policy']
+    assert contract['execution_authority'] is None
+
+
+def test_collector_covers_every_current_input_and_installed_LBP_header():
+    value = data()
+    q = load('tools/public_qualification.py')
+    required = set(value['source_raw_sha256']) | set(RUNTIME) | set(SOURCE) | {CONTEXT}
+    assert required <= set(q.DRAW_SOURCE_PATHS)
+    cmake = (ROOT / 'tests/cmake_consumer/CMakeLists.txt').read_text()
+    assert 'set(_boundary_source draw_multiblock_lbp_enabled_consumer.cpp)' in cmake
+    assert 'draw_multiblock_lbp_consumer.hpp' in (ROOT / 'tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp').read_text()
+
+
+@pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
+def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
+    value = data()
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v9.json'
+    boundary = load('benchmarks/mark_boundaries_execution.py')
+    current = boundary.current_context(ROOT, path)
+    predecessor = current['speed_source_successor']['predecessor_context']
+    old = json.loads((ROOT / predecessor['path']).read_bytes())
+    for key in ('cases', 'bounds', 'method', 'unbound', 'authority_scope', 'FENV_dependency'):
+        assert current[key] == old[key], key
+    assert all(item is None for item in current['unbound'].values())
+    for source, pin in current['source_files_canonical_sha256'].items():
+        assert digest((ROOT / source).read_bytes().replace(b'\r\n', b'\n')) == pin, source
+    for source, row in current['speed_source_successor']['source_predecessors'].items():
+        raw = (ROOT / source).read_bytes()
+        with pytest.raises(AssertionError):
+            boundary.validation_predecessor_bytes(ROOT, source, raw + b' ', path)
+        # Reconstruct the exact prior historical projection without binding it
+        # as a product, runtime, source revision or timing authority.
+        historical = boundary.validation_predecessor_bytes(ROOT, source, raw, path)
+        old_input = row['predecessor_source'].encode()
+        assert digest(old_input) == row['predecessor_canonical_sha256']
+        expected = boundary.validation_predecessor_bytes(ROOT, source, old_input, predecessor['path'])
+        assert historical == expected
+
+
+@pytest.mark.parametrize('family', ('mark-boundaries', 'draw-multiblock-lbp'))
+@pytest.mark.parametrize('fault', (None, 'current', 'snapshot', 'prepared', 'old-context'))
+def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
+    import test_mark_boundaries_benchmark_execution as factory
+    monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v9.json')
+    binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
+    boundary = load('benchmarks/mark_boundaries_execution.py')
+    relative = path.relative_to(ROOT).as_posix()
+    accepted = boundary.validate_binding(binding_path, root=ROOT, context_path=relative)
+    assert accepted[0] == binding and accepted[1] == contract
+    if fault is None:
+        return  # Inert metadata only; no imports of a scientific runtime.
+    name = 'src/mark_boundaries.cpp' if family == 'mark-boundaries' else 'src/draw_multiblock_lbp.cpp'
+    if fault == 'current':
+        read = boundary.source_bytes
+        monkeypatch.setattr(boundary, 'source_bytes', lambda p: read(p) + b'bad' if Path(p) == ROOT / name else read(p))
+    elif fault == 'snapshot':
+        target = Path(binding['source_root']) / name
+        target.write_bytes(target.read_bytes() + b'bad')
+    elif fault == 'prepared':
+        binding['prepared_source']['files_sha256'][name] = '0' * 64
+    else:
+        binding['base_contract_sha256'] = digest((ROOT / contract['speed_source_successor']['predecessor_context']['path']).read_bytes())
+    runtime_path = Path(binding['runtime_path'])
+    runtime = json.loads(runtime_path.read_bytes())
+    runtime['source'] = binding['prepared_source']
+    runtime_path.write_text(json.dumps(runtime), encoding='utf-8')
+    binding['runtime_sha256'] = digest(runtime_path.read_bytes())
+    binding_path.write_text(json.dumps(binding), encoding='utf-8')
+    go_path = Path(binding['root_go_path'])
+    go = json.loads(go_path.read_bytes()); go['binding_sha256'] = digest(binding_path.read_bytes())
+    go_path.write_text(json.dumps(go), encoding='utf-8')
+    with pytest.raises(AssertionError):
+        boundary.validate_binding(binding_path, root=ROOT, context_path=relative)
+
+
+def test_new_groups_use_sourcebuilt_F1_and_distinct_FLOOD_record_pools():
+    text = (ROOT / 'tools/public_qualification.py').read_text()
+    assert "'public-lbp-batched-linux'" in text
+    assert "mode+'-'+group+'-caller-rows'" in text
+    for count in (107, 35, 59, 52):
+        assert str(count) in text
+    q = load('tools/public_qualification.py')
+    normal, disabled = q.environment(), q.environment(scalar=True)
+    assert 'SKIMAGEXX_DISABLE_SIMD' not in normal and disabled['SKIMAGEXX_DISABLE_SIMD'] == '1'
+    cpp = (ROOT / 'src/draw_multiblock_lbp.cpp').read_text()
+    assert '!defined(SKIMAGEXX_LBP_SCALAR)' in cpp
+    assert data()['mode_scope'] == 'hosted scalar is runtime-disabled; true compiler scalar additionally requires SKIMAGEXX_LBP_SCALAR=1, no reused old VI-only credit'
+
+
+@pytest.mark.parametrize('previous,current,key', (
+    ('find-boundaries-benchmark-binding-v6.json', 'find-boundaries-benchmark-binding-v7.json', 'source_closure'),
+    ('find-boundaries-frontend-v5.json', 'find-boundaries-frontend-v6.json', 'source_canonical_pins'),
+    ('find-boundaries-sdk-v4.json', 'find-boundaries-sdk-v5.json', 'source_canonical_pins'),
+))
+def test_find_current_literals_preserve_all_old_recipes_and_refuse_tampering(previous, current, key):
+    prior_path = 'coverage/contracts/' + previous
+    value = json.loads((ROOT / ('coverage/contracts/' + current)).read_bytes())
+    prior = json.loads((ROOT / prior_path).read_bytes())
+    assert value['speed_source_successor']['contract'] == prior_path
+    assert value['speed_source_successor']['sha256'] == digest((ROOT / prior_path).read_bytes())
+    assert value['speed_source_successor']['execution_authority'] is None
+    assert {k: v for k, v in value.items() if k not in (key, 'speed_source_successor')} == {k: v for k, v in prior.items() if k != key}
+    assert set(value[key]) == set(prior[key])
+    for name, pin in value[key].items():
+        assert digest((ROOT / name).read_bytes().replace(b'\r\n', b'\n')) == pin, name
+    if key == 'source_closure':
+        driver = load('benchmarks/find_boundaries.py')
+        driver.validate_source_closure(value)
+        value[key]['src/find_boundaries.cpp'] = '0' * 64
+        with pytest.raises(AssertionError):
+            driver.validate_source_closure(value)
+
+
+def test_historical_operational_inputs_are_frozen_without_current_authority():
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    helper = load('tools/vi_public_matmul_context.py')
+    context = helper._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+    frozen = context['frozen_operational_inputs']
+    assert set(frozen) == {'coverage/work_items.json'}
+    for name, text in frozen.items():
+        assert name not in context['sources'] and name not in data()['source_raw_sha256']
+        raw = text.encode('utf-8'); row = context['historical_source_inputs']['files'][name]
+        assert len(raw) == row['bytes']
+        assert hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest() == row['git_blob_sha1']
