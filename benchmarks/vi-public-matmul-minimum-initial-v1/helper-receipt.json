@@ -1,0 +1,62 @@
+{
+  "schema": "util-views-fenv-build-v1",
+  "status": "PASS_SOURCE_BUILT_FENV32",
+  "ABI": [
+    32,
+    0,
+    4,
+    8,
+    12,
+    20,
+    28,
+    8
+  ],
+  "glibc": "2.39",
+  "source_context_sha256": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+  "source_pins": {
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b"
+  },
+  "compiler": {
+    "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+    "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+    "backend": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+    "backend_sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4",
+    "version": "x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "target": "x86_64-linux-gnu"
+  },
+  "headers": [
+    {
+      "original": "/usr/include/fenv.h",
+      "captured": "headers/0-fenv.h"
+    },
+    {
+      "original": "/usr/include/x86_64-linux-gnu/bits/fenv.h",
+      "captured": "headers/1-fenv.h"
+    }
+  ],
+  "controls": [
+    "controls-0.json"
+  ],
+  "files": {
+    "build-command.json": "df6a17b1119b71317754aed444d0234a2edca180568951eabd8cd28fbeea46d6",
+    "compile-terminal.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "compile.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compiler-dependencies.txt": "188705e43d2ca83fa20838792340b51cbb566c78645fe5872392b48a9287a95d",
+    "controls-0.json": "b25635918775a2eece7855907ac4444f4e84165f82b001f14157ce2371bcf39e",
+    "headers/0-fenv.h": "1e2ec7a36547cccb2b40829d62a2474dcafa220ab0ce0bbed8063cc3cb3615ba",
+    "headers/1-fenv.h": "a5fa0e5cd842e1e85a045dde3bb44a5508205527bc4f0ffe77c2875f18d404c6",
+    "libutil_views_fenv_restore.so": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+    "probe-0-command.json": "bff50671ef51a1c680c6096d9302b322b50f6a9efe3e655ac408c5c121d514a1",
+    "probe-0.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe-0.stdout": "d4fe19cded7a41dfa876ba477d952cd5c363147632e357d62098dfa1087154de",
+    "source/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "source/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "source/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "source/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "source/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+  }
+}

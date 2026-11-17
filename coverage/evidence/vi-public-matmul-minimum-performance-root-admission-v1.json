@@ -1,0 +1,277 @@
+{
+  "schema": "current-AA-VI4-minimum-performance-root-admission-v1",
+  "status": "PASS_SCOPED_CURRENT_AA_ONE_THREAD_PUBLIC_VI_COMPARISON",
+  "passed": true,
+  "root_accepted": true,
+  "qualified_source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "controller": "166ccd4801e618f9522832b0066bcc45e1649140",
+  "production_fingerprint": {
+    "source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+  },
+  "run": 43979924366,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/43979924366",
+  "job": 133693459867,
+  "producer": {
+    "run": "43949036485",
+    "revision": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+    "artifact": "14272412077",
+    "sha256": "0113d0ba35e81725d3862d38b06e585e566c76c924bb9c3f937405102d277921"
+  },
+  "result_artifact": {
+    "id": 14281349849,
+    "bytes": 3633678,
+    "sha256": "ada4d189a5065b0c98586e19efeabf23ff07672d825fe3b2ee93a53ea46433a3",
+    "archive_available": false
+  },
+  "genuine_root_admission": {
+    "path": "coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json",
+    "sha256": "257635900b3dfc09158c48a740a22331abae592f8195e00354abf47d3ef7eb38"
+  },
+  "independent_handoff": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\independent-review-v1\\handoff-v1.json",
+    "sha256": "242ccfd150ca3b9935cbe7688df8944ce53c78a106f88fd552ff60dccb9d1239"
+  },
+  "independent_proof_index": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\independent-review-v1\\proof-index-v1.json",
+    "sha256": "f2b35b497dbae780ad5a91fe067b0134f9a1db2dcc1734d988bf0e941f2c7182",
+    "proofs": 9
+  },
+  "independent_result": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\independent-review-v1\\review-result-v1.json",
+    "sha256": "37af006383bd9a922fac919ae13d50449dc7f07e2e5e2ebf4bb8f1f1da7a1106"
+  },
+  "actual_review_exit": 0,
+  "review_checks": 1242,
+  "exact_route_checks": 17,
+  "root_actual_verification": [
+    "8df4d9 all9 ownedproofbytes/actualPID30344terminal0/primary1242/route17 andsource/runtime/profile scope",
+    "3a5c4c rawsample statistics match all4 medians andspeedups; all14samples percase checked again here",
+    "0f6e0c actualrun/job/head/attempt/workflow/steporder/oneartifact API identity andwatch0",
+    "e5a9be onefunctional memorytransfer/APIsha/CRC/all133result records, no diskarchives"
+  ],
+  "performance": {
+    "basis": "One actual Intel Xeon6975P-C family6/model173 Linuxx86_64 genuine minimum runtime; Python3.11.17/GCC13.3.0, NumPy1.24.4/SciPy1.15.3/skimage0.26.0. Public allocation-inclusive calls, workers/threadpools1. Native owns CSR arithmetic while current NumPy log2 and matmul provider computation is explicitly disclosed.",
+    "case_results": [
+      {
+        "case_id": "metrics.variation_of_information/128x128/8/C",
+        "reference_ms": 1.0357857142857143,
+        "current_ms": 0.22074393282149712,
+        "speedup": 4.69224997963271,
+        "outcome": "win",
+        "raw_samples": 14,
+        "warmup_groups": 2,
+        "raw_batches": 22,
+        "source_backed_untimed_ownership_markers": 11,
+        "retained_native_FP": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "raw_derived_public_call_counts": {
+          "warmup": [
+            312,
+            1398
+          ],
+          "samples": [
+            782,
+            3649
+          ],
+          "underlength": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "case_id": "metrics.variation_of_information/128x128/64/F",
+        "reference_ms": 1.1514816237623762,
+        "current_ms": 0.2827112285012285,
+        "speedup": 4.072995720286266,
+        "outcome": "win",
+        "raw_samples": 14,
+        "warmup_groups": 2,
+        "raw_batches": 22,
+        "source_backed_untimed_ownership_markers": 11,
+        "retained_native_FP": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "raw_derived_public_call_counts": {
+          "warmup": [
+            294,
+            1116
+          ],
+          "samples": [
+            703,
+            2851
+          ],
+          "underlength": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "case_id": "metrics.variation_of_information/256x256/8/F",
+        "reference_ms": 2.7870855,
+        "current_ms": 0.9803934491525423,
+        "speedup": 2.8428234627732083,
+        "outcome": "win",
+        "raw_samples": 14,
+        "warmup_groups": 2,
+        "raw_batches": 22,
+        "source_backed_untimed_ownership_markers": 11,
+        "retained_native_FP": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "raw_derived_public_call_counts": {
+          "warmup": [
+            126,
+            340
+          ],
+          "samples": [
+            293,
+            825
+          ],
+          "underlength": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "case_id": "metrics.variation_of_information/256x256/64/C",
+        "reference_ms": 3.020109153846154,
+        "current_ms": 0.741864735483871,
+        "speedup": 4.070970096558546,
+        "outcome": "win",
+        "raw_samples": 14,
+        "warmup_groups": 2,
+        "raw_batches": 22,
+        "source_backed_untimed_ownership_markers": 11,
+        "retained_native_FP": {
+          "control": 895,
+          "status": 32,
+          "mxcsr": 8098
+        },
+        "raw_derived_public_call_counts": {
+          "warmup": [
+            117,
+            442
+          ],
+          "samples": [
+            272,
+            1088
+          ],
+          "underlength": [
+            0,
+            0
+          ]
+        }
+      }
+    ],
+    "raw_samples": 56,
+    "warmup_groups": 8,
+    "warmup_batch_records": 32,
+    "batch_before": 88,
+    "batch_after": 88,
+    "measure_returned": 4,
+    "wins": 4,
+    "losses": [],
+    "ties": [],
+    "strict_word_failure_rows": [],
+    "retained_report_member": "vi.json",
+    "retained_raw_journal_member": "vi.batches.jsonl"
+  },
+  "method": {
+    "cases": 4,
+    "raw_samples": 56,
+    "warmup_groups": 8,
+    "warmup_batch_records": 32,
+    "workers": 1,
+    "reference_threadpools": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "one_host_same_installed_runtime": true,
+    "all_losses_retained": true,
+    "no_automatic_retry": true
+  },
+  "runtime_host_scope": "One actual Intel Xeon6975P-C family6/model173 Linuxx86_64 genuine minimum runtime; Python3.11.17/GCC13.3.0, NumPy1.24.4/SciPy1.15.3/skimage0.26.0. Public allocation-inclusive calls, workers/threadpools1. Native owns CSR arithmetic while current NumPy log2 and matmul provider computation is explicitly disclosed.",
+  "source_scope": {
+    "qualified": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+    "controller": "166ccd4801e618f9522832b0066bcc45e1649140",
+    "production_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+    "benchmark_canonical_source_count": 55,
+    "capture_raw_source_count": 69,
+    "prepared_source_count": 3455
+  },
+  "F1": {
+    "mode": "source-built-v1",
+    "receipt": {
+      "path": "benchmarks/vi-public-matmul-minimum-initial-v1/helper-receipt.json",
+      "sha256": "d418addf123b6a71c00305138a227d5294f0ae6ed111841581b15cfe8c1bb541"
+    },
+    "status": "PASS_SOURCE_BUILT_FENV32",
+    "ABI": [
+      32,
+      0,
+      4,
+      8,
+      12,
+      20,
+      28,
+      8
+    ],
+    "library_sha256": "c18860b8843b612030717016965142c0e76c35ce01bd4f2853c6334c02229333",
+    "current_host_build_and_full32_controls": "PASS actual helper build/control outputs; no private0c40 helper reuse or new review execution"
+  },
+  "strict_runtime_evidence": "Source-bound successful assertions reached for exact output words/targetFP/caller32/default1/nativeownership and postidentity. Successful output/fulltargetFP/fullcaller32 byte buffers were not emitted; no invented raw witness or independent reconstruction is claimed. Actual F1 control raw32 buffers and full raw batch journals independently checked. GenuineAA public/large raw witnesses retain separate parity scope.",
+  "providers": {
+    "representation": "Existing explicit NumPy normalization/SciPy CSR representation",
+    "elementary_log": "Current true numpy.log2: two whole nonzero batches, including empty",
+    "dense_inner_product": "Current true numpy.matmul: two native-f64 vector inner products, exact scalarbuffer transport",
+    "native": "Marginals/inverses/scaling/coalescing/xlogx products/ordered sparse reductions",
+    "timing": "Exact public callbacks after guard restoration; unchanged method/cases; no source-plan authority"
+  },
+  "public_raw_files": {
+    "first-cohort-summary.json": "6b78ca90d978e938b82d86c3657365b65e10871b3ab497c6e34dcc633d97beb5",
+    "helper-receipt.json": "d418addf123b6a71c00305138a227d5294f0ae6ed111841581b15cfe8c1bb541",
+    "preparation-capacity.json": "70033b8f1cc568350a11ddf9bf83d9531789bfbe78a300cc2dc387ebd1d26f13",
+    "vi.batches.jsonl": "1b6c26448cc8e36a46fbb1129bdb480a155c78ba21a5dc7caf5154f9151c8bd1",
+    "vi.json": "267527206c0893b444a930883a7ecb136a4425dd6adb5906f4803066810cd43a"
+  },
+  "scope_limits": [
+    "Single actual Intel Xeon6975P-C family6/model173 Linuxx86_64 host, currentNumPy1.24.4/SciPy1.15.3/Python3.11.17 genuine minimum runtime only",
+    "Four fixed int64 label-image cases128/256,8/64labels,C/F,ignore0,workers1; original/current public allocation-inclusive calls; disclosed current NumPylog2/matmul provider computation",
+    "No whole-library speedup claim, priorC++speed claim, old9V45 causal closure, arbitrary supplied-table/error domain or other runtime/host performance credit",
+    "Successful strict output/targetFP/full32caller checks are reached runtime assertions, not newly reconstructed absent raw successful buffers; genuineAA retained large/public raw witnesses remain separate scoped evidence",
+    "The first-cohort and successful timing drivers did not emit successful output words/full targetFP and caller32 buffers. Their strict assertions are reached runtime evidence; no invented values are supplied. Independent F1control buffers and raw batch journals were fully checked.",
+    "Actual untimed native markers establish the directly owned public route. This campaign does not separately execute new HotSwap numerical calls; qualifiedAA integration/HotSwap evidence is reused only within its admitted scope.",
+    "Existing genuineAA current-large/current-public raw result/FP evidence remains separate, scoped parity evidence; it is not relabeled as raw VI4 successful buffers.",
+    "Four wins do not establish whole-library speed superiority, other-host/profile performance, arbitrary supplied-table/error-domain performance, private C++-only speed or old9V45 causal closure. Shipping/main promotion is owned by root."
+  ],
+  "retained_failures_and_losses": "Earlier9V45/438/source/setup failures remain unchanged; current publicoperator route is not a solecause/selectedNumPykernel claim. All historical64 and MARK/LBP losses remain in their original source/host/domain scope; no combined onehost or whole-library speed claim.",
+  "root_intake_correction": "3cffc9 root guessed proofs field; actual index uses owned_proofs. Inspected actualschema76a2b7 and verified all9 8df4d9 before admission; no scientific/validator rerun.",
+  "waste_review": {
+    "reused": "Same exactAA qualified product/source/runtime, current-hostF1, onecompleted sourcebound campaign, allretained rawsamples/journal and independent metadata review; no newscience or extra downloads.",
+    "observed_independent_review_seconds": 1.259,
+    "next_owner_trigger": "Root now merges exactqualifiedAA production/API/support projection into main, preserves currentmain-only policies/manualworkflows/userWIP and boundcontrollerbranch, verifiesactualshippingsource/docs, pushes and retires cleanancestorcheckout after readersstop."
+  },
+  "shipping": {
+    "main_before_delivery": "bdcd0df63bb6acc86f7183be47ac70279bde2a61",
+    "native_partial_image_paths": 271,
+    "candidate_native_partial_image_paths": 281,
+    "delivered": false
+  },
+  "remaining_gates": [
+    "Actualmainintegration/complete qualified executable+test+contract+workflow dependency projection and protectedWIP preservation",
+    "Relevant finaldocument/statechecks thenmaincommit/push/remotesourceidentity",
+    "Eligiblecleanancestorcheckout retirement; prior policyblockedcleanup staysmanualonly"
+  ]
+}

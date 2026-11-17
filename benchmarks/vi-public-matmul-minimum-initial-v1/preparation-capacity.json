@@ -1,0 +1,15 @@
+{
+  "schema": "vi-preparation-capacity-v1",
+  "estimated_peak_bytes": 4294967296,
+  "reserve_bytes": 21474836480,
+  "minimum_free_floor_bytes": 32212254720,
+  "required_free_bytes": 32212254720,
+  "concurrent_job_allocation_bytes": 0,
+  "observed_free_bytes": {
+    "workspace": 94965346304,
+    "runtime": 94965346304
+  },
+  "passed": true,
+  "original_calls": 0,
+  "native_calls": 0
+}

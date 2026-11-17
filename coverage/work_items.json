@@ -40142,7 +40142,7 @@
         },
         "gap_closure_goal": {
           "objective": "close the gap",
-          "current_main": "d2b9ba58eb1e1d04dd33f3872fe5c622abe0598b",
+          "current_main": "bdcd0df63bb6acc86f7183be47ac70279bde2a61",
           "owner": "/root",
           "previous_turn_classification": "PROGRESS: source/runtime evidence and exact private checkpoints were retained/published; actual full-source failures changed the correction path, not merely status restatement. Current acceptance remains delivery281 with exact source/runtime/SDK/release/performance evidence.",
           "acceptance": {
@@ -40152,11 +40152,10 @@
             "delivery": "Independent exactshipping projection281, finalsource/API/receipt check, validated increment merged/pushedmain with actualremoteverification.",
             "storage": "Small disposablefootprint; protectedsource/env/product/raw/dependencies retained; no archives beyond requiredtransientuse; allpreviouspolicyblocked targets manual-only."
           },
-          "current_gate": "CurrentVI4 hosted run43979924366 SUCCESS; one memoryartifact3633678B/API-digest exact,133files/15144735logicalB retained and no diskarchives. A independent rawperformance/cohort/ownership review thenrootadmission; root finalshippingprojection/delivery next.",
+          "current_gate": "All required exactAA source/privateSDK/genuine4+3 and currentVI4 performance gates PASS. Root exactAA threeway integration/sourceprojection andmain281 delivery now; no more science/review campaign.",
           "unmet": [
-            "Independent actualVI4 raw cohort/performance/ownership review and root admission for successfulrun43979924366; all losses and exactsource/runtime scope retained.",
-            "Independent final281 shipping projection and validated main merge/push/remote; main stillships271.",
-            "Previously policy-blocked cleanup remains manual-only, delegated to user; protected current dependencies/raw evidence remain."
+            "Final281 actualshippingprojection/protectedWIP/documentgates andmainmerge/push/remote; source271→281 partial native images, fullcontracts remainopen.",
+            "Previously policyblockedcleanup remains manualonly/user-owned; root retires only eligiblecleanancestorcurrentcheckout after alldependencies/readersstop."
           ],
           "retained_evidence": [
             "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
@@ -40258,7 +40257,7 @@
                 "src/variation_of_information.cpp"
               ],
               "other_production_unchanged": true,
-              "final_shipping_projection": "PENDING finalgenuine/VI4 and actualmainintegration; read-only finding is not shipping authority.",
+              "final_shipping_projection": "READY_FOR_ACTUAL_MAIN_INTEGRATION_AND_PROJECTION; all scientific gatesclosed",
               "protected_untracked_collision_check": "NativeGit exact5paths not tracked bycandidateAA; no incoming overwrite conflict. AGENTS remains protected unstaged and absentfromcandidate-vs-main production delta.",
               "API_delta": {
                 "actual_tool": "71174d",
@@ -40277,6 +40276,15 @@
                 "count": 10,
                 "classification": "native-partial",
                 "delivery": "Pending release/performance/finalshippingprojection; no fullcontractcheckboxclosure."
+              },
+              "current_main_only_support": {
+                "actual_tool": "14150c/3471c2",
+                "preserve_unrelated_manual_workflows": [
+                  ".github/workflows/vi-failed438-stage-diagnostic.yml",
+                  ".github/workflows/vi-retained-row-reduceat.yml"
+                ],
+                "current_VI_workflow": "QualifiedAA/current166f127 must match for shipping; normal3way reconcile againstmaincapacitychanges, no blanket source restore.",
+                "acceptance": "Exactqualifiedproduction/API/currentqualifier/test/contracts/selectedworkflows/source pins and actualfilesystem source projection; preserve main-only additions and protected userWIP. No controller166boundcontract merged into main."
               }
             }
           },
@@ -43343,7 +43351,7 @@
                 "gates": "No new runtime/build/hosted/timing by workers. Source-only edits/static metadata controls permitted. Root waits actual deltas before strict history successor; complete affected source checks both normal plugins before dependent SDK execution; final complete workflow both and exact-source four-profile/VI4 before main281. New environment/build/science unsupported by this source assignment.",
                 "reuse": "Private77088f53 source4/core83d19/private32/legacy evidence retained; metadata deltas invalidate affected source guards/literal pins, not unchanged numerical code. Source proofs and failed predecessors retained; blocked cleanup manual only.",
                 "live_workers": {
-                  "A": "LIVE resumed independent actualVI4 puremetadata review; confirmed message, exclusive independent-review-v1, no newscience",
+                  "A": "TERMINAL independentVI4 PASS/rootadmitted; no active agent/job/reader",
                   "B": "TERMINAL materialization PASS/rootadmitted; no live download",
                   "C": "TERMINAL full3 PASS/rootaggregate admitted; no live readers"
                 },
@@ -44536,7 +44544,7 @@
                     "GO_status": "CONSUMED_SUCCESS_3ONCE"
                   },
                   "VI4_current_binding": {
-                    "status": "ACTUAL_HOSTED_SUCCESS_RESULTS_MATERIALIZED_INDEPENDENT_REVIEW_NEXT",
+                    "status": "PASS_ROOT_SCOPED_ACTUAL_VI4_PERFORMANCE",
                     "owner": "/root",
                     "scope": "Reuse existing AA checkout after all readers stop; metadata-only controller branch with unchanged engine/workflow/production source, real prepared minimum runtime/root4+3/minimumstager refs. No target/helper/timing authority until actual bound guards both supported Pythons and fresh hosted dispatch.",
                     "acceptance": "Actual finalized root4+3 admission; exact metadata-only diff and frozen55canonical/69raw source pins; actual intrinsic bound read_manifest and metadata guards on both retained Pythons; current-host source-built F1; fresh root dispatch clock/actual workflow source/selector/artifact identity/capacity. Four fixed one-thread cases/56samples/8warmupgroups; every loss/failure retained. No retry unchanged science.",
@@ -44599,7 +44607,11 @@
                       "owner": "/root/mark_source_reviewer",
                       "scope": "Read-only puremetadata current43979924366 actual cohort/F1/4caseperformance/raw56samples/8warmups/source/runtime/ownership/postidentity/capacity; preserve every loss. Exclusive new ignored independent-review-v1 under rootVI4 current controller results. No source/main/shared edits, archive/body/SDK rehash or target/native/helper/FP/science/benchmark execution.",
                       "acceptance": "Complete independent actualevidence review, exactsource andruntime authority, rawsample-derived all4 medians/speedups/losses and strict FP/caller words/default1/ownership/F1/source proofs, final handoff/index/closeout. Root inspects actual proof and admits beforeshipping.",
-                      "status": "LIVE_RESUMED_HANDLE_CONFIRMED"
+                      "status": "PASS_ROOT_ACTUAL9_PROOFS_1242_AND17CHECKS"
+                    },
+                    "root_performance_admission": {
+                      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\coverage\\evidence\\vi-public-matmul-minimum-performance-root-admission-v1.json",
+                      "sha256": "73d09df085610ce97f200b51f9834279838bf86f7a049f8d163387b0f134527e"
                     }
                   },
                   "root_genuine_aggregate": {

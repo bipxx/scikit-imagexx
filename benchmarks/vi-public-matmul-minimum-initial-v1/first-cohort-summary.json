@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "original_public_topcalls": 1,
+  "native_public_topcalls": 1,
+  "timed_batches": 0,
+  "sampler_body_calls": 0,
+  "poststop_source_authority_unchanged": true,
+  "postbatch_offline_identity_verified": true,
+  "routes": [
+    {
+      "status": "PASS_REAL_CLI_STOP_BEFORE_BODY",
+      "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+      "route": "vi",
+      "api": "metrics.variation_of_information",
+      "counts": {
+        "original": 1,
+        "native": 1
+      },
+      "native_result_accepted": [
+        true
+      ],
+      "real_sampler": "/home/runner/work/scikit-imagexx/scikit-imagexx/snapshot/tools/montage_sustained.py",
+      "sampler_body_calls": 0,
+      "timed_batches": 0,
+      "public_driver_checks_completed": true,
+      "caller_full32_restored": true,
+      "native_returns": [
+        "label_pair_check_storage",
+        "label_pair_check_storage",
+        "label_pair_check_storage",
+        "label_pair_check_storage",
+        "get_num_threads",
+        "label_pair_counts_preweighted",
+        "label_pair_check_storage",
+        "label_pair_check_storage",
+        "label_pair_check_storage",
+        "get_num_threads",
+        "variation_of_information_csr"
+      ],
+      "native_requirements": {
+        "get_num_threads": 2,
+        "label_pair_check_storage": 7,
+        "label_pair_counts_preweighted": 1,
+        "variation_of_information_csr": 1
+      },
+      "marker_evidence": "Actual VI inner observer; both count and entropy native phases required. Two existing worker snapshots are explicit, not a single whole-call snapshot claim.",
+      "root_binding_sha256": "60334dae57302c89b99b554e0137c9e7b8e095b4a78e22fb930d46dd62eba456",
+      "outer_state_restored": true,
+      "poststop_source_authority_unchanged": true,
+      "core_runtime_SDK_scope": "Pending once-after-batch offline verifier before summaryPASS"
+    }
+  ]
+}
