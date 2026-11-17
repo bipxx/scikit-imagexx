@@ -131,6 +131,7 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
             'public-flood-saved-linux':('test_flood_fill_public.py',),
             'public-flood-assignment-linux':('test_flood_assignment_protocol.py',),
             'public-flood-copy-linux':('test_flood_copy_protocol.py',),
+            'public-flood-disjoint-linux':('test_flood_disjoint_assignment.py',),
             'public-rolling-ball-saved-linux':('test_rolling_ball_public.py',),
         }
         assert set(expected).isdisjoint(original)
@@ -180,10 +181,10 @@ def test_regular_grid_seal_refuses_incomplete_or_extra_saved_nodes(tmp_path,monk
     for mode in ('normal','scalar'):
         labels.update(mode+'-'+name for name in ('admission',*q.applicable_public_groups(q.GROUPS,'minimum'),'returned-maps','metrics-corpus'))
         for group in q.applicable_public_groups(q.GROUPS,'minimum'):
-            unrelated={'public-mark-fast-paths':107,'public-lbp-batched-linux':35,'public-flood-assignment-linux':59,'public-flood-copy-linux':52}
+            unrelated={'public-mark-fast-paths':107,'public-lbp-batched-linux':35,'public-flood-assignment-linux':59,'public-flood-copy-linux':52,'public-flood-disjoint-linux':13}
             tests=count if group=='public-regular-grid-saved-linux'else unrelated.get(group,1)
             (tmp_path/(mode+'-'+group+'.xml')).write_text('<testsuite tests="'+str(tests)+'" errors="0" failures="0" skipped="0"/>')
-            if group in ('public-flood-assignment-linux','public-flood-copy-linux'):
+            if group in ('public-flood-assignment-linux','public-flood-copy-linux','public-flood-disjoint-linux'):
                 pool=tmp_path/(mode+'-'+group+'-caller-rows');pool.mkdir()
                 for index in range(tests):
                     (pool/(str(index)+'.json')).write_text(json.dumps(dict(saved='00'*32,actual='00'*32,exact32=True,workers=1)))

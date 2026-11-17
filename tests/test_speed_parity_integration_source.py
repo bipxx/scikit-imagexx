@@ -9,10 +9,11 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v1.json'
-CONTEXT_SHA256 = '77fa25fe0bac421ebdc44f85b83e3c187e3d9dae449f12f405b3d994a4b53f39'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v2.json'
+CONTEXT_SHA256 = '5d7c06fe3986d199e61c8d1b8679d03d3fb0fdcc19195a6d9a762dd11c7e7973'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
-           'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py')
+           'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
+           'tests/test_flood_disjoint_assignment.py')
 SOURCE = ('tests/test_speed_parity_integration_source.py', 'tests/test_flood_speed_source.py')
 
 
@@ -88,7 +89,7 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v9.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v10.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME)
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
@@ -96,7 +97,8 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)
     linux = {'public-lbp-batched-linux': ('test_draw_multiblock_lbp_batched.py',),
              'public-flood-assignment-linux': ('test_flood_assignment_protocol.py',),
-             'public-flood-copy-linux': ('test_flood_copy_protocol.py',)}
+             'public-flood-copy-linux': ('test_flood_copy_protocol.py',),
+             'public-flood-disjoint-linux': ('test_flood_disjoint_assignment.py',)}
     for name, modules in linux.items():
         assert (name not in groups) if profile == 'windows' else groups[name] == modules
     assert contract['speed_parity_runtime'] == value['runtime_policy']
@@ -116,7 +118,7 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
 @pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
 def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
     value = data()
-    path = 'coverage/contracts/' + name + '-benchmark-execution-v9.json'
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v10.json'
     boundary = load('benchmarks/mark_boundaries_execution.py')
     current = boundary.current_context(ROOT, path)
     predecessor = current['speed_source_successor']['predecessor_context']
@@ -144,7 +146,7 @@ def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_read
 def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
     import test_mark_boundaries_benchmark_execution as factory
     monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
-    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v9.json')
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v10.json')
     binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
     boundary = load('benchmarks/mark_boundaries_execution.py')
     relative = path.relative_to(ROOT).as_posix()
@@ -180,7 +182,7 @@ def test_new_groups_use_sourcebuilt_F1_and_distinct_FLOOD_record_pools():
     text = (ROOT / 'tools/public_qualification.py').read_text()
     assert "'public-lbp-batched-linux'" in text
     assert "mode+'-'+group+'-caller-rows'" in text
-    for count in (107, 35, 59, 52):
+    for count in (107, 35, 59, 52, 13):
         assert str(count) in text
     q = load('tools/public_qualification.py')
     normal, disabled = q.environment(), q.environment(scalar=True)
@@ -191,9 +193,9 @@ def test_new_groups_use_sourcebuilt_F1_and_distinct_FLOOD_record_pools():
 
 
 @pytest.mark.parametrize('previous,current,key', (
-    ('find-boundaries-benchmark-binding-v6.json', 'find-boundaries-benchmark-binding-v7.json', 'source_closure'),
-    ('find-boundaries-frontend-v5.json', 'find-boundaries-frontend-v6.json', 'source_canonical_pins'),
-    ('find-boundaries-sdk-v4.json', 'find-boundaries-sdk-v5.json', 'source_canonical_pins'),
+    ('find-boundaries-benchmark-binding-v7.json', 'find-boundaries-benchmark-binding-v8.json', 'source_closure'),
+    ('find-boundaries-frontend-v6.json', 'find-boundaries-frontend-v7.json', 'source_canonical_pins'),
+    ('find-boundaries-sdk-v5.json', 'find-boundaries-sdk-v6.json', 'source_canonical_pins'),
 ))
 def test_find_current_literals_preserve_all_old_recipes_and_refuse_tampering(previous, current, key):
     prior_path = 'coverage/contracts/' + previous
@@ -202,7 +204,7 @@ def test_find_current_literals_preserve_all_old_recipes_and_refuse_tampering(pre
     assert value['speed_source_successor']['contract'] == prior_path
     assert value['speed_source_successor']['sha256'] == digest((ROOT / prior_path).read_bytes())
     assert value['speed_source_successor']['execution_authority'] is None
-    assert {k: v for k, v in value.items() if k not in (key, 'speed_source_successor')} == {k: v for k, v in prior.items() if k != key}
+    assert {k: v for k, v in value.items() if k not in (key, 'speed_source_successor')} == {k: v for k, v in prior.items() if k not in (key, 'speed_source_successor')}
     assert set(value[key]) == set(prior[key])
     for name, pin in value[key].items():
         assert digest((ROOT / name).read_bytes().replace(b'\r\n', b'\n')) == pin, name
@@ -225,3 +227,14 @@ def test_historical_operational_inputs_are_frozen_without_current_authority():
         raw = text.encode('utf-8'); row = context['historical_source_inputs']['files'][name]
         assert len(raw) == row['bytes']
         assert hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest() == row['git_blob_sha1']
+
+
+def test_new13_runtime_module_is_current_collected_and_not_a_source_science_selector():
+    value=data();name='tests/test_flood_disjoint_assignment.py'
+    assert digest((ROOT/name).read_bytes())==value['source_raw_sha256'][name]
+    q=load('tools/public_qualification.py')
+    assert name in q.DRAW_SOURCE_PATHS
+    assert name not in selectors((ROOT/'.github/workflows/public-qualification.yml').read_bytes())
+    assert value['runtime_policy']['public-flood-disjoint-linux']==dict(modules=[name],profiles=['minimum','modern','debug'],nodes_per_mode=13,FENV='source-built-full32',caller_records_per_mode=13)
+    previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v9.json').read_bytes())
+    for group,policy in previous['speed_parity_runtime'].items():assert value['runtime_policy'][group]==policy

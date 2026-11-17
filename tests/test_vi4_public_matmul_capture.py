@@ -8,8 +8,8 @@ import sys
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-v2.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-v3.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-v3.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-v4.json'
 RUNNER='tools/vi4_public_matmul_capture.py'
 ADAPTER='benchmarks/vi_public_matmul_provider_execution_v2.py'
 CONSUMER='benchmarks/vi_public_matmul_provider_consumer_v2.py'
@@ -32,8 +32,12 @@ def function(text,name):
 
 def test_unbound_current_route_exact_dependencies_and_caps():
     module=load(RUNNER);current=data(CONTEXT);capture=current['capture'];provider=data(PROVIDER)
-    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v1.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v1.json').read_bytes()))
-    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v2.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v2.json').read_bytes()))
+    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v2.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v2.json').read_bytes()))
+    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v3.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v3.json').read_bytes()))
+    prior_capture=data('coverage/contracts/vi4-public-matmul-capture-v2.json')
+    prior_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-v3.json')
+    assert prior_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-v1.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-v1.json').read_bytes()))
+    assert prior_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-v2.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-v2.json').read_bytes()))
     assert module.context(ROOT)==current
     with pytest.raises(AssertionError,match='UNBOUND'):module.read_manifest(ROOT)
     assert module.CONTEXT==CONTEXT and module.PROVIDER==PROVIDER

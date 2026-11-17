@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v7.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v8.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -177,15 +177,27 @@ def validate_source_closure(contract):
     tracked=json.loads(CONTRACT.read_bytes())
     provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
     assert {k:v for k,v in contract.items()if k not in provenance}=={k:v for k,v in tracked.items()if k not in provenance}
-    for name,pin in tracked['source_closure'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
-    row=tracked['speed_source_successor'];raw=(ROOT/row['contract']).read_bytes()
-    assert hashlib.sha256(raw).hexdigest()==row['sha256'] and row['execution_authority']is None
-    old=json.loads(raw)
-    assert {k:v for k,v in tracked.items()if k not in {'source_closure','speed_source_successor'}}=={k:v for k,v in old.items()if k!='source_closure'}
-    assert set(tracked['source_closure'])==set(old['source_closure'])
-    for name in provenance:old[name]=contract[name]
-    _validate_mark_wide_source_closure(old)
+    values={name:(ROOT/name).read_bytes().replace(b'\r\n',b'\n')for name in tracked['source_closure']}
+    while 'speed_source_successor' in tracked:
+        for name,pin in tracked['source_closure'].items():assert hashlib.sha256(values[name]).hexdigest()==pin,name
+        row=tracked['speed_source_successor'];encoded=(ROOT/row['contract']).read_bytes()
+        assert hashlib.sha256(encoded).hexdigest()==row['sha256']and row['execution_authority']is None
+        previous=json.loads(encoded)
+        excluded={'source_closure','speed_source_successor'}
+        assert {k:v for k,v in tracked.items()if k not in excluded}=={k:v for k,v in previous.items()if k not in excluded}
+        assert set(tracked['source_closure'])==set(previous['source_closure'])
+        from tools.vi_public_matmul_context import _project, speed_predecessor_bytes
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        rows=row.get('source_predecessors',{})
+        for name,pin in previous['source_closure'].items():
+            if name in rows:
+                values[name]=_project({'sources':rows},name,values[name],VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+            elif hashlib.sha256(values[name]).hexdigest()!=pin:
+                values[name]=speed_predecessor_bytes(ROOT,name,(ROOT/name).read_bytes(),VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+            assert hashlib.sha256(values[name]).hexdigest()==pin,name
+        tracked=previous
+    for name in provenance:tracked[name]=contract[name]
+    _validate_mark_wide_source_closure(tracked)
 
 
 def main():

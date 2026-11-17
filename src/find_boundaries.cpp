@@ -113,8 +113,76 @@ template<class T>T wide_source_store(double value) {
     }
 }
 
+template<class T,bool Minimum>std::vector<T> wide_source_extrema_rows(
+    const std::vector<T>& input,const Shape& shape,bool full,
+    std::vector<double>& converted) {
+    const auto height=shape[0],width=shape[1];
+    // input is an owned immutable outer-stage buffer. next owns separate
+    // storage; no pass overwrites its input, including a singleton axis.
+    std::vector<T> current,next(input.size());
+    const auto passes=full?std::size_t{2}:std::size_t{1};
+    auto select=[](double result,double value) {
+        if constexpr(Minimum)return value<result?value:result;
+        else return value>result?value:result;
+    };
+    for(std::size_t axis=0;axis<passes;++axis) {
+        if(axis)next.resize(input.size());
+        const auto& values=axis?current:input;
+        // The immutable typed pass includes every center in its footprint.
+        // Keep the C-order conversion pool and EVERY typed per-axis store.
+        // Only the allocation is reused between the four outer stages.
+        for(std::size_t i=0;i<values.size();++i)converted[i]=wide_source_load(values[i]);
+        if(!full) {
+            // Rank2/connectivity1: neighbors() visits left, up, center, down,
+            // right. Hoist row clamps; retain that exact comparison order.
+            for(std::size_t y=0;y<height;++y) {
+                const auto* row=converted.data()+y*width;
+                const auto* above=converted.data()+(y?y-1:0)*width;
+                const auto* below=converted.data()+(y+1<height?y+1:y)*width;
+                for(std::size_t x=0;x<width;++x) {
+                    double result=row[x?x-1:0];
+                    result=select(result,above[x]);
+                    result=select(result,row[x]);
+                    result=select(result,below[x]);
+                    result=select(result,row[x+1<width?x+1:x]);
+                    next[y*width+x]=wide_source_store<T>(result);
+                }
+            }
+        }else if(axis==0) {
+            // First full axis: up, center, down, then store to T.
+            for(std::size_t y=0;y<height;++y) {
+                const auto* row=converted.data()+y*width;
+                const auto* above=converted.data()+(y?y-1:0)*width;
+                const auto* below=converted.data()+(y+1<height?y+1:y)*width;
+                for(std::size_t x=0;x<width;++x) {
+                    auto result=select(above[x],row[x]);
+                    result=select(result,below[x]);
+                    next[y*width+x]=wide_source_store<T>(result);
+                }
+            }
+        }else {
+            // Second full axis reads the converted typed first-pass result.
+            for(std::size_t y=0;y<height;++y) {
+                const auto* row=converted.data()+y*width;
+                for(std::size_t x=0;x<width;++x) {
+                    auto result=select(row[x?x-1:0],row[x]);
+                    result=select(result,row[x+1<width?x+1:x]);
+                    next[y*width+x]=wide_source_store<T>(result);
+                }
+            }
+        }
+        current.swap(next);
+    }
+    return current;
+}
+
 template<class T>std::vector<T> wide_source_extrema(const std::vector<T>& input,
-    const Shape& shape,const std::vector<Delta>& footprint,bool full,bool minimum) {
+    const Shape& shape,const std::vector<Delta>& footprint,bool full,bool minimum,
+    std::vector<double>& converted) {
+    if(shape.size()==2) {
+        if(minimum)return wide_source_extrema_rows<T,true>(input,shape,full,converted);
+        return wide_source_extrema_rows<T,false>(input,shape,full,converted);
+    }
     const auto strides=[&] {
         std::vector<std::ptrdiff_t> result(shape.size());std::ptrdiff_t step=1;
         for(auto d=shape.size();d-->0;){result[d]=step;step*=std::ptrdiff_t(shape[d]);}
@@ -122,42 +190,6 @@ template<class T>std::vector<T> wide_source_extrema(const std::vector<T>& input,
     }();
     auto current=input;std::vector<T> next(input.size());
     const auto passes=full?shape.size():std::size_t{1};
-    if(shape.size()==2) {
-        const auto height=shape[0],width=shape[1];
-        std::vector<double> converted(input.size());
-        for(std::size_t axis=0;axis<passes;++axis) {
-            // The immutable typed pass includes every center in its footprint.
-            // Convert each word once; repeated neighbor conversions add no new
-            // sticky flags under the admitted nearest/masked control state.
-            // Keep every original typed store and axis interchange below.
-            for(std::size_t i=0;i<current.size();++i)converted[i]=wide_source_load(current[i]);
-            for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x) {
-                const auto index=y*width+x;
-                double result=0.;bool first=true;
-                auto visit=[&](std::size_t source) {
-                    const auto value=converted[source];
-                    if(first){result=value;first=false;}
-                    else if(minimum?value<result:value>result)result=value;
-                };
-                if(full) {
-                    // Keep source axis/neighbor order and the typed store per
-                    // pass; the immutable conversion pool is reused above.
-                    const auto coordinate=axis?x:y,extent=axis?width:height;
-                    const auto step=axis?std::size_t{1}:width;
-                    visit(index-(coordinate?step:0));
-                    visit(index);
-                    visit(index+(coordinate+1<extent?step:0));
-                }else for(const auto& delta:footprint) {
-                    const auto row=delta[0]<0?(y?y-1:0):delta[0]>0?std::min(y+1,height-1):y;
-                    const auto column=delta[1]<0?(x?x-1:0):delta[1]>0?std::min(x+1,width-1):x;
-                    visit(row*width+column);
-                }
-                next[index]=wide_source_store<T>(result);
-            }
-            current.swap(next);
-        }
-        return current;
-    }
     for(std::size_t axis=0;axis<passes;++axis) {
         for(std::size_t i=0;i<input.size();++i) {
             Position center{},point{};position_of(i,shape,center);
@@ -220,14 +252,15 @@ template<class T>bool wide_source_outer(const ComponentsView& view,
     }else for(std::size_t i=0;i<size;++i){position_of(i,view.shape,point);original[i]=load<T>(view,point);}
     // Source first computes ordinary dilation!=erosion, then the full
     // footprint foreground/background expression, with original typed labels.
-    const auto low=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,true);
-    const auto high=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,false);
-    const auto full_high=wide_source_extrema(original,view.shape,full,true,false);
+    std::vector<double> converted(rank==2?size:0);
+    const auto low=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,true,converted);
+    const auto high=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,false,converted);
+    const auto full_high=wide_source_extrema(original,view.shape,full,true,false,converted);
     auto inverted=original;
     const auto background=[&](T value){return parameters.background_representable &&
         static_cast<std::uint64_t>(value)==parameters.background_bits;};
     for(auto& value:inverted)if(background(value))value=std::numeric_limits<T>::max();
-    const auto full_low=wide_source_extrema(inverted,view.shape,full,true,true);
+    const auto full_low=wide_source_extrema(inverted,view.shape,full,true,true,converted);
     // Source final != and Boolean ufuncs clear prior arithmetic error status
     // before their integer loops. Preserve inexact and caller controls, and
     // avoid a libc clear when NumPy's error-status check would do nothing.

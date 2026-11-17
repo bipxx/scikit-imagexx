@@ -2310,7 +2310,7 @@ def current_metadata_artifact(tmp_path):
     """Inert independently enumerated package/install envelope; never imported."""
     import tomllib
     source = {name: (ROOT/name).read_bytes() for name in
-              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json')}
+              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json','coverage/contracts/current-public-qualification-v9.json')}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
                  'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball'):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
@@ -2363,11 +2363,11 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
     assert result['SDK_checks']==76 and 'current38 required' in result['SDK_client_scope']
     assert len(result['public_groups']['public-post203'])==145
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
-    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v9.json'
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v10.json'
     selectors=q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors']
     previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v8.json').read_bytes())['required_selectors']
-    assert len(previous)==162 and len(selectors)==166
-    assert selectors==previous+['tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py']
+    assert len(previous)==162 and len(selectors)==167
+    assert selectors==previous+['tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py']
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)

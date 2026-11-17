@@ -10,7 +10,7 @@ import pytest
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v7.json').read_bytes())
+def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v8.json').read_bytes())
 
 
 def test_find_boundaries_benchmark_source_pins_and_sampler():
@@ -105,7 +105,7 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
         assert {k:v for k,v in effective.items()if k not in changed}=={k:v for k,v in base.items()if k not in changed}
         assert raw_contract==driver.CONTRACT.read_bytes() and path.read_bytes()==raw_binding
         # Use real immutable closure bytes with the existing inert provenance envelope.
-        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract'],base['mark_wide_successor']['contract'],base['speed_source_successor']['contract']):
+        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract'],base['mark_wide_successor']['contract'],base['speed_source_successor']['contract'],'coverage/contracts/find-boundaries-benchmark-binding-v6.json','coverage/contracts/vi-public-matmul-source-history-v9.json'):
             target=tmp_path/name;target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes((ROOT/name).read_bytes())
         context_target=tmp_path/'coverage/contracts/mark-lbp-fp-integration-v1.json'
