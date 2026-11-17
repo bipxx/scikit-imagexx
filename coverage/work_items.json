@@ -44761,7 +44761,7 @@
         },
         "speed_parity": {
           "owner": "root",
-          "status": "running_exactsource_e8f_four_profile_qualification44120190347",
+          "status": "bounded_fixed24_increment_delivered_broader_CI_gaps_recorded",
           "authorization": "User 2026-11-16: we need at least pareity speed if not faster; resumes measured optimization after completed main281 delivery.",
           "base_main": "1a23d1661edcc8e19ed586483834071cb5d097f2",
           "metric": "For every retained relevant public-call case: original median / candidate median >= 1.0 on the same host/runtime, allocation inclusive, one process worker and one library/threadpool worker. No cross-case averaging or loss exclusion closes this gate.",
@@ -44772,75 +44772,117 @@
               "evidence": "latest user speed-parity requirement"
             },
             "capacity": {
-              "status": "passed_actual_windows313_entry",
-              "evidence": {
-                "observed_free_bytes": 146552770560,
-                "peak_bytes": 21474836480,
-                "concurrent_bytes": 17179869184,
-                "reserve_bytes": 21474836480,
-                "floor_bytes": 32212254720,
-                "required_free_bytes": 60129542144
-              }
+              "status": "passed_current_job_entries_and_final_footprint",
+              "evidence": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json; build/speed-parity-release-v2/measurement-entry-v1/isolation-v1.json",
+              "D_free_after_retirement": 141302190080,
+              "estimated_measurement_peak_bytes": 2147483648,
+              "reserve_bytes": 21474836480,
+              "floor_bytes": 32212254720
             },
             "implementation_parity": {
-              "status": "passed_private_v2_public_and_affected_SDK_genuine_v2_pending",
-              "evidence": "Private v2 public1416XML plus affectedSDK4 modes/4CTest/20direct/32 emitted after32; root receipts under build/speed-parity-flood-v2/runtime-validation-v1 and speed-parity-find-v2/controls-v2. Genuine75b profiles stay passed for old source; changed source requires fresh qualification."
+              "status": "passed_current_genuine4_profiles_plus_private_affectedSDK_modes",
+              "evidence": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json",
+              "scope": "965678XML0bad/304SDK/48corpora/3stagers on e8; completeprivatepublic1416XML and affected4SDKmodes/4CTest/20direct/32after32 retained under admittedfd9/2655 source. Full contracts/domains remain open."
             },
             "per_case_speed": {
-              "status": "private_v2_all24_pass_genuine_v1_four_losses_v2_pending",
-              "evidence": "coverage/evidence/speed-parity-private24-v2-root-admission-v1.json:336 accepted samples/48warmup groups/all24>=1.0,1.101389-9.402751x. coverage/evidence/speed-parity-genuine24-root-result-v1.json remains failed4/24 on predecessor75b. No unchanged retry or release speed credit from private results.",
-              "scope": "12700K/privateLinux3.11.14/NP1.24.4; othermodes/sourceboth/genuine/currenthostcontrolledrelease/mainpending",
-              "summary_receipt": "coverage/evidence/speed-parity-private24-root-admission-v1.json",
-              "summary_sha256": "e255e10f2bf3c97e1093ee0160f05115ca022a8b4fe644eb28f60e822e67bd4f"
+              "status": "passed_current_genuine24",
+              "evidence": "coverage/evidence/speed-parity-genuine24-v2-root-result-v1.json",
+              "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+              "cases": 24,
+              "minimum_ratio": 1.0128286654618355,
+              "maximum_ratio": 9.73447818433418,
+              "counts": {
+                "accepted_samples": 336,
+                "warmup_groups": 48,
+                "journal_batches": 539
+              },
+              "scope": "12700K/retainedLinux3.11.14/NumPy1.24.4/SciPy1.15.3/original0.26,allocationincluded/worker1; no other-host/profile or broader-domain timing claim.",
+              "historical_failure": "coverage/evidence/speed-parity-genuine24-root-result-v1.json"
             },
             "source_barrier_and_release": {
-              "status": "passed_root_actual_complete183_BOTH_v2_genuine_release_pending",
-              "evidence": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\root-source-both-admission-v2.json",
-              "root_receipt": "build/speed-parity-root-v1/source-both-root-admission-v1.json"
+              "status": "passed_complete183_source_BOTH_and_current_genuine4profiles3stagers",
+              "source_evidence": "coverage/evidence/speed-parity-source-both-v2-root-admission-v1.json",
+              "product_evidence": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json",
+              "shipping_projection": "build/speed-parity-release-v2/root-main-shipping-projection-v2.json"
             },
             "delivery_closeout": {
-              "status": "pending",
-              "evidence": "Root reviews source projection then merge/push validated increment, updates existing coverage checklist and task waste/cleanup; no claim full477 closure."
+              "status": "bounded24_source_and_checkout_delivery_closed_broader_CI_pending",
+              "source_commit": "a5f3aa9748b77540690189067fb1178385bb7500",
+              "remote_code_confirmed": true,
+              "evidence": "build/speed-parity-release-v2/root-main-source-delivery-v1.json",
+              "checkout_retirement": "coverage/evidence/speed-parity-merged-checkout-retirement-v1.json",
+              "manual_only_cleanup": "coverage/evidence/speed-parity-v2-cleanup-policy-block-v1.json",
+              "remaining": "Current24case delivery and7checkout retirement complete; finaldocument-only commit/push. AutomaticCI corrections and whole-library parity/performance remain pending, ownedroot."
             },
             "sdk_modes": {
-              "status": "passed_private_root_independent_actual_admission",
+              "status": "passed_private_current_affected4_modes_with_scoped_unchanged_reuse",
               "owner": "/root/mark_source_reviewer",
               "recipe": "build/speed-parity-sdk-modes-v1/proposed-entry-v2.json",
               "recipe_sha256": "86422e98fd8c4911559939f618645d8cf971f092d48771e2905f70a1f9ab90e0",
-              "root_inspection": "Exact four source bytes and nine successor proofs verified; current eadb runtime and all12 affected public speed cases independently passed. Profiles use three fresh SDK108-only copies, LBP header overlay, four source-matched normal objects or exact scalar/SAN recompiles. Runtime-disabled shares normal binaries; compiler-scalar requires explicit SKIMAGEXX_LBP_SCALAR=1. No old cache configure or numerical source changes.",
-              "required_evidence": "Actual stage exit0 and member/header/library/imported-prefix/ELF/F1/mode/source admission before dependent runtime; complete three installed consumers and three direct clients per four runtime modes, exact words/FP/caller32/default1/workers and sanitizer diagnostics; stopped failures retained. Root admission remains pending.",
+              "root_inspection": "Current fd9 native wide source: complete4modes/4CTest/20direct/32emitted after32 independently admitted; unchanged LBP/FLOOD nativeSDK reuse scoped separately. Python binder2655 checked through genuine4profiles.",
+              "required_evidence": "Passed in current linked root receipts; no pending SDK dispatch for this batch.",
               "capacity": "Root current D201214849024B/C458648440832B free, fresh D SDK root absent, conservative combined16GiB peak+20GiB reserve=36GiB, floor30GiB; modes serialized.",
-              "root_receipt": "build/speed-parity-root-v1/sdk-modes-root-admission-v1.json",
+              "root_receipt": "build/speed-parity-find-v2/controls-v2/SDK-runtime-v1/root-admission-v1.json",
               "actual_result": "353proofs/exact51actualcommands0; independently read3 SDK108/header94/current4-member static archives/object hashes; complete4modes/12XML/12direct/32rawFP rows pass. Runtime-disabled/true-scalar/SAN distinctions retained. Python/provider parity separate."
             },
             "public_runtime_disabled": {
-              "status": "passed_private_root_independent_actual_admission",
+              "status": "passed_genuine_current_all4_normal_and_runtime_disabled",
               "owner": "/root/mark_source_reviewer",
               "scope": "Complete affected source-bound Python public suites for final LBP/FLOOD/MARK+find normal products with SKIMAGEXX_DISABLE_SIMD=1, exact same test bodies/selector/config/helper/native/FP/caller32/default1 assertions. Necessary separate Python/provider parity gate; SDK disabled/scalar does not substitute.",
-              "evidence_required": "Versioned launcher profile delta + actual prerequisites/exits, complete XML/raw FP/caller32/native-owner/source postidentity and failure/cleanup receipts under build/speed-parity-sdk-modes-v1/public-runtime-disabled-v1. No timing/source edits.",
+              "evidence_required": "Passed actual current4profile data; true compiler-scalar/SAN remain separate private gates.",
               "capacity": "Extra conservative2GiB included within20GiB source+16GiB SDK concurrent+20GiB reserve; actual D189.3GB free.",
-              "worker_result": "MARK474+LBP275+FLOOD213=962XML0bad. FLOOD includes all52 copy-protocol nodes, no normal-profile reuse. LBP188target/caller rows pass;186full raw portable matches+2 outside-API observer diagnostics retained separately. No acceptance predicate changed; root actual admission pending.",
+              "worker_result": "Current genuine4profiles normal+runtime-disabled accepted; prior private962 proof remains historical and separate.",
               "root_receipt": "build/speed-parity-root-v1/public-disabled-root-admission-v1.json",
-              "actual_result": "453proofs/4exact launcher equations/35source files/3core hashes verified; complete MARK474/LBP275/FLOOD213=962XML0bad.399raw caller32 exact; LBP186full portable+2outside-APIobserver diagnostics retained, immediate targetFP/NumPy unchanged. FLOOD109worker1/102worker4 rows, one setting per row. MARK successful reached output/FP/caller assertions emit no raw buffers. Fixture0files/0logicalB."
+              "actual_result": "453proofs/4exact launcher equations/35source files/3core hashes verified; complete MARK474/LBP275/FLOOD213=962XML0bad.399raw caller32 exact; LBP186full portable+2outside-APIobserver diagnostics retained, immediate targetFP/NumPy unchanged. FLOOD109worker1/102worker4 rows, one setting per row. MARK successful reached output/FP/caller assertions emit no raw buffers. Fixture0files/0logicalB.",
+              "current_evidence": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json"
             },
             "collector_setup": {
-              "status": "passed_root_inert_v2_preparation_UNBOUND_actual_binding_pending",
+              "status": "passed_actual_current7_metadata_readers",
               "owners": [
                 "/root/tracking_repair",
                 "/root/mark_release_readiness"
               ],
-              "scope": "Minimal successors of acceptedAA readers: SOURCE75b; RUNNone until newactual campaign. Preserve oldproduct/SDK/corpus/stager predicates, add exact4groupXML counts and two complete flood caller pools. No artifact/oldarchive/science access in setup.",
+              "scope": "Current4profiles/3stagers source3511/package228/SDK108/header94; all older setup scope retained historically, no active dispatch.",
               "whole_receipt": "build/speed-parity-release-v1/whole-reader-entry-v1/entry-review-v1.json",
               "product_scope": "build/speed-parity-release-v1/product-reader-entry-v1",
               "root_remote_entry": "build/speed-parity-release-v1/dispatch-v1/actual-entry-reads-v1.json",
               "root_receipt": "build/speed-parity-release-v1/dispatch-v1/root-collector-source-admission-v1.json",
-              "evidence": "build/speed-parity-release-v1/dispatch-v1/root-whole-product-admission-v1.json; source/metadata controls reused,7 actualreaders exit0.",
-              "successor": "build/speed-parity-release-v2/product-reader-entry-v1 and whole-reader-entry-v1; preserve all prior predicates, add exactly13-disjoint Linux nodes/caller rows per mode; source/run remain UNBOUND until root actual candidate/campaign binding. Changed inert controls BOTH required, no artifact bodies or science.",
+              "evidence": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json",
+              "successor": "Terminal: exact source e8/run441 all4profile and3stager readers actualexit0; corrected directPopen captures integer exit, no scientific or payload-stream replay.",
               "successor_root_receipt": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\root-reader-preparation-admission-v1.json"
             },
             "genuine_current_product_speed": {
-              "status": "failed",
-              "evidence": "4/24 per-case ratios<1.0; coverage/evidence/speed-parity-genuine24-root-result-v1.json. Product qualification remainspass at75b; no main delivery."
+              "status": "passed_current_genuine24",
+              "evidence": "coverage/evidence/speed-parity-genuine24-v2-root-result-v1.json",
+              "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+              "cases": 24,
+              "minimum_ratio": 1.0128286654618355,
+              "maximum_ratio": 9.73447818433418,
+              "counts": {
+                "accepted_samples": 336,
+                "warmup_groups": 48,
+                "journal_batches": 539
+              },
+              "scope": "12700K/retainedLinux3.11.14/NumPy1.24.4/SciPy1.15.3/original0.26,allocationincluded/worker1; no other-host/profile or broader-domain timing claim.",
+              "historical_failure": "coverage/evidence/speed-parity-genuine24-root-result-v1.json"
+            },
+            "main_automatic_CI": {
+              "status": "failed_terminal_triaged_corrections_pending",
+              "run": 44147273549,
+              "source_commit": "a5f3aa9748b77540690189067fb1178385bb7500",
+              "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44147273549",
+              "raw_metadata": "build/speed-parity-release-v2/delivery-CI-v1",
+              "failed_jobs": {
+                "region_windows": 134265731463,
+                "region_linux": 134265731679,
+                "numpy_minimum_color": 134265731676
+              },
+              "running_job": null,
+              "owner": "root with3read-only evidence reviewers",
+              "next": "CI profile setup correction and weighted cause witness before changed-input validation; no unchanged retry or tolerance/oracle changes.",
+              "debug_job_conclusion": "success",
+              "triage_receipt": "coverage/evidence/speed-parity-delivery-CI-triage-v1.json",
+              "triage_current_result": "Current24release campaign passes; genericmainCI failed3jobs, debugpassed,2measurejobs skipped."
             }
           },
           "lanes": {
@@ -44994,34 +45036,36 @@
           },
           "shared_owner": "root: plan/ledger/checklist/registry/CMake/workflow, integration and independent admission; one cumulative candidate, earliest compatible bundle without waiting for unfinished lanes.",
           "scheduling": "Workers may inspect/edit independent source concurrently. Root schedules builds/tests and serial measurement windows; no timing overlaps builds/tests. Reuse protected installed environment/baselines and unchanged objects only within source-root validity.",
-          "next_gate": "Monitor onlyactual44120190347 attempt1/e8f; all4terminal then actualAPI7artifact metadata/source/job/capacity and once-memory materialization/root4profiles/3stagers admission. Source/run boundcollector templates prepare independently; realdataGO staysunbound. Genuine24/main mandatory, no redispatch.",
-          "storage": "One disposable fixture root per worker <=20GiB target; protected raw source/results/environments excluded. NativeGit clean/ancestry checks before worktree removal after consumers stop. Existing policy-blocked targets remain manual-only. Fresh windows311-affected-v2 fixture is manual-only after exact automatic policy block: 5,210,980,560 logical B, zero removed/reclaimed; D free190,322,651,136B afterward. Existing blocked targets remain untouched. Fresh v3 fixture likewise policyblocked: 5,643,969,454 logical B. Both fresh manual-only roots total10,854,950,014 logical B; zero removed, no retry. Retained blocked copies are user/manual-owned; release trigger is manual cleanup after evidence review. Actual D189884162048B clears next conservative20GiB source+16GiB concurrent+20GiB reserve; retain active sources/environments/products. Latest5 fresh manual-only roots total18,445,487,104logicalB; no removal/retry. Current full311v2 copy retains7,151,927,549B. Any over20GiB disposable retention is exclusively policy-blocked, user/manual-owned until manual cleanup; active future capacity remains independently gated. Final source task9 exactfresh paths were policyblocked beforeprocess,32,906,144,999logicalB,0removed/reclaimed; manual/user release only. ActualD167270912000B aftersource/freeze. Next once-extracted7artifact localpeak conservative8GiB+20reserve with30GiBfloor; no localCPUjobs active for future timing. New fresh311v1 fixture is manual-only after automatic policy rejection before any process: lastinventory7230564450logicalB,0removed/0reclaimed; root receipt C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\complete-sourcebarrier-entry-v1\\windows311-fixture-eligibility-v1\\root-cleanup-policy-block-v1.json. Root owns unavoidable retained scratch until user manual release; no repeated action. New active source fixture estimated10GiB from observed7.23GB and actual launch retains conservative56GiB free gate. Two focusedV3fixture retirements were also policy-blocked before process creation;1252files/34365224logicalB remain manual-only, source/logs outside. Receipt C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\metadata-correction-v2\\complete-sourcebarrier-entry-v2\\root-focused-fixtures-policy-block-v1.json. Correctedfull311fixture also policy-blocked before process;91555files/7230675523logicalB remain manual-only,0removed. Receipt C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\metadata-correction-v2\\complete-sourcebarrier-entry-v2\\windows311-full-v2-fixture-eligibility-v1\\root-cleanup-policy-block-v1.json. Root retained-scratch owner/manual-release trigger applies before fresh313 allocation. Finalfull313fixture cleanup waspolicyblocked before process:91555files/7230662210logicalB manual-only,0removed. Combined5newfixtures21726267407logicalB remain manual-only; physical allocation unmeasured. Root retention owner/manual-release trigger; no repeats or parent/child/UI alternatives. Final313 exactfixture cleanup also policyblocked before process;91555files/7230662210logicalB manual-only. New5fixturetotal21726267407logicalB,0removed/0reclaimed; all source/logs/XML outside; root retention owner/manual release trigger applies. Consolidated new5fixture policyblocks in coverage/evidence/speed-parity-v2-cleanup-policy-block-v1.json,21726267407logicalB/0processes/0removed; prior blocks excluded from that total.",
-          "waste_review": "Prior historical losses and passing science reused for targeting; no unchanged measurement rerun. Stale Git-status entries: 775 bytes identical toHEAD per retained final-closeout-remote-verification-v2; preserve userAGENTS and five untrackedfiles. Ellipse fallback c580 is already inmain; reconcile stale note during integration. Root storage-field type assumption failed before mutation; inspected actual string schema and corrected the record update, no source/science replay. Genuine-product fixed24 is a useful rejected experiment:20wins4losses/336samples/48warmupgroups. Compiler/build cause unverified; A inspects before successor compile. Root status update first failed on treating existing waste_review string as dict (af6cc1); no record/source/science mutation, corrected by retaining string schema. Next owner root+three assigned lanes on changed-source entry, no unchanged retime. V2privateall24 nowpasses once aftertwochangedTUs/13newtests,336samples/48warmups. Metadataauthor caught heterogeneous inverse-row KeyError beforetests, stopped redundant52-row SequenceMatcher after249.871s, reused unchangedrows/linearsplice completed3.948s; allfailures retained and no numericsinvalidated. Nextowner A fixesone demonstratedFINDfixtureV6 dependency before complete183BOTH; no smallerproxy gate. Transition review: reused admitted private/public/SDK evidence and both clean family commits; retired stale terminal dispatch roles. Root found the QV10 exact selector-list omission before full pytest, so corrected only affected source metadata; no scientific evidence invalidated or replayed. Reader successor preparation proceeds in the two independent ready lanes while A closes source entry. Root entry read correction: initial selector terminal filename assumption failed read-only and was replaced with actual listed external-terminal paths. Initial root static-result admission expected counts where source_selectors/function_AST_comparisons are lists; assertion stopped before receipt/GO/body. Actual schemas inspected, exact183/435 lengths now used. Prepared command script argument is argv4 after -X utf8 -B. No scientific or source evidence invalidated. Root second read-only admission stopped on slash-string comparison before GO/body; normalized actual Path comparison corrected. Final frozen57proofs and35 staged source bytes independently verified, no science replay. Root reader prep control iteration encountered scalar summary fields and stopped read-only before authority; corrected to actual explicit311/313 accessor/entry fields, all6 actual0 and81frozenproofs verified. No artifacts/science replay. Fullv2Windows311 actually failed2 metadata assertions/4697XML in678.234s; retain full failure. Missed immediate predecessor-context expectations and historicalV4 production/current binder mismatch invalidate only source guards. Correct only affected metadata inputs; keep actual-only production checker and validate currentV5 directly, then rerun complete affected barrier. Serializing313 avoided duplicating this failed setup; no numerical/SDK/timing replay. Transition correction: the failed complete311 result was recorded in the ledger before source-only fix authorization, but the execution-plan action still described the preceding fixture/selector correction. Updated the same plan paragraph to actual2failures/correction/focused-debug/full183BOTH sequence before any dependent rerun. Scientific evidence remains reusable and all full reruns are held for actual successor entry. Independently eligible fresh311v1 fixture retirement was blocked before process creation. An evidence-only shell record was also blocked; direct file edit records both without repeating retirement. Subsequent ledger edit stopped before mutation because storage is a string; inspected schema and appended existing field. No discarded evidence or science invalidated. Focused46 each bothPythons actualpass/science0 validates correction before full rerun; does not replace full183 gate. Root native process snapshot confirms stopped. Newfocusedfixture cleanup batch was blocked before execution;0removed/0reclaimed, no repeated action; root retains manual-release ownership. Complete311successor passed full183/4699XML and root source75/index/HEAD/plugin/ID admission.25finalhandoffproofs verified. New exactterminalfullfixture cleanup blocked before execution;0files/0reclaimed, no bypass/retry. Required313 is a fresh capacity-gated allocation. Correctedcomplete183 sourcebarriers actually pass BOTH4699XML each/4691sameorderedIDs+8subtests/44normalplugins/conftest/no-failfast/source75/index/HEADunchanged/science0. Root reused valid numerical/SDK/private speed evidence; fullfailed2campaign retained. Source gate now closed, actualnewgenuine qualification/speed/main remain mandatory. Final25proof313handoff checked against actual sourceBOTH receipt and35 stagedraw files; candidate precommit has clean index/conflict/whitespace/untracked gates. Last exact313fixture cleanup blocked before process; no retry, all raw outside. A root eligibility summary read first referenced a nonpresent generic PID key; actual external/internal schema then inspected before action, no dependent cleanup ran on that failed read. Candidate6ac02707 commits35exacttestedfiles; ancestry-only e8f459ed has identical tree65b70084 and preserves6737209f/7d917b14. Cleanprivatebranch push actual0. No source or passing checks replayed. Final313cleanup rejected before process; exact record preserved, no retry. Root reader schema summary initially guessed a generic PID key and stopped read-only, then actual external/internal fields inspected before removal attempt.",
+          "next_gate": "No active jobs or automatic rerun. Root next correctness increment: constrain uncaptured CI NumPy2.5.5 runtime resolution to retained2.5.4/1.18.1 tuple, preserve guards/gold, and obtain controlled weighted-distance contraction/codegen witness with actual compile identity before source/math correction. Broader CI remainsFAILED and full477/library speed open; JOIN/crop/slice baseline follows correctness gates.",
+          "storage": "One disposable fixture root per worker <=20GiB target; protected raw source/results/environments excluded. NativeGit clean/ancestry checks before worktree removal after consumers stop. Existing policy-blocked targets remain manual-only. Fresh windows311-affected-v2 fixture is manual-only after exact automatic policy block: 5,210,980,560 logical B, zero removed/reclaimed; D free190,322,651,136B afterward. Existing blocked targets remain untouched. Fresh v3 fixture likewise policyblocked: 5,643,969,454 logical B. Both fresh manual-only roots total10,854,950,014 logical B; zero removed, no retry. Retained blocked copies are user/manual-owned; release trigger is manual cleanup after evidence review. Actual D189884162048B clears next conservative20GiB source+16GiB concurrent+20GiB reserve; retain active sources/environments/products. Latest5 fresh manual-only roots total18,445,487,104logicalB; no removal/retry. Current full311v2 copy retains7,151,927,549B. Any over20GiB disposable retention is exclusively policy-blocked, user/manual-owned until manual cleanup; active future capacity remains independently gated. Final source task9 exactfresh paths were policyblocked beforeprocess,32,906,144,999logicalB,0removed/reclaimed; manual/user release only. ActualD167270912000B aftersource/freeze. Next once-extracted7artifact localpeak conservative8GiB+20reserve with30GiBfloor; no localCPUjobs active for future timing. New fresh311v1 fixture is manual-only after automatic policy rejection before any process: lastinventory7230564450logicalB,0removed/0reclaimed; root receipt C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\complete-sourcebarrier-entry-v1\\windows311-fixture-eligibility-v1\\root-cleanup-policy-block-v1.json. Root owns unavoidable retained scratch until user manual release; no repeated action. New active source fixture estimated10GiB from observed7.23GB and actual launch retains conservative56GiB free gate. Two focusedV3fixture retirements were also policy-blocked before process creation;1252files/34365224logicalB remain manual-only, source/logs outside. Receipt C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\metadata-correction-v2\\complete-sourcebarrier-entry-v2\\root-focused-fixtures-policy-block-v1.json. Correctedfull311fixture also policy-blocked before process;91555files/7230675523logicalB remain manual-only,0removed. Receipt C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\metadata-correction-v2\\complete-sourcebarrier-entry-v2\\windows311-full-v2-fixture-eligibility-v1\\root-cleanup-policy-block-v1.json. Root retained-scratch owner/manual-release trigger applies before fresh313 allocation. Finalfull313fixture cleanup waspolicyblocked before process:91555files/7230662210logicalB manual-only,0removed. Combined5newfixtures21726267407logicalB remain manual-only; physical allocation unmeasured. Root retention owner/manual-release trigger; no repeats or parent/child/UI alternatives. Final313 exactfixture cleanup also policyblocked before process;91555files/7230662210logicalB manual-only. New5fixturetotal21726267407logicalB,0removed/0reclaimed; all source/logs/XML outside; root retention owner/manual release trigger applies. Consolidated new5fixture policyblocks in coverage/evidence/speed-parity-v2-cleanup-policy-block-v1.json,21726267407logicalB/0processes/0removed; prior blocks excluded from that total. Closeout: seven exact clean merged speed-parity checkouts retired with native Windows Git after zero active consumers and unique dependency exclusion; branches/commits preserved. Removed5266179146tracked logicalB; observed Dfree+5324111872B to141302190080B, physical allocation not separately measured. Current3.171GB extracted candidate products/source,24shared dependencies,runtimes,raw evidence and reproduciblebaselines remain protected. Seven retired checkout paths are unavailable; source remains in Git and extracted snapshots. All earlier policy blocks untouched/manual-only. Receipt coverage/evidence/speed-parity-merged-checkout-retirement-v1.json.",
+          "waste_review": "Prior historical losses and passing science reused for targeting; no unchanged measurement rerun. Stale Git-status entries: 775 bytes identical toHEAD per retained final-closeout-remote-verification-v2; preserve userAGENTS and five untrackedfiles. Ellipse fallback c580 is already inmain; reconcile stale note during integration. Root storage-field type assumption failed before mutation; inspected actual string schema and corrected the record update, no source/science replay. Genuine-product fixed24 is a useful rejected experiment:20wins4losses/336samples/48warmupgroups. Compiler/build cause unverified; A inspects before successor compile. Root status update first failed on treating existing waste_review string as dict (af6cc1); no record/source/science mutation, corrected by retaining string schema. Next owner root+three assigned lanes on changed-source entry, no unchanged retime. V2privateall24 nowpasses once aftertwochangedTUs/13newtests,336samples/48warmups. Metadataauthor caught heterogeneous inverse-row KeyError beforetests, stopped redundant52-row SequenceMatcher after249.871s, reused unchangedrows/linearsplice completed3.948s; allfailures retained and no numericsinvalidated. Nextowner A fixesone demonstratedFINDfixtureV6 dependency before complete183BOTH; no smallerproxy gate. Transition review: reused admitted private/public/SDK evidence and both clean family commits; retired stale terminal dispatch roles. Root found the QV10 exact selector-list omission before full pytest, so corrected only affected source metadata; no scientific evidence invalidated or replayed. Reader successor preparation proceeds in the two independent ready lanes while A closes source entry. Root entry read correction: initial selector terminal filename assumption failed read-only and was replaced with actual listed external-terminal paths. Initial root static-result admission expected counts where source_selectors/function_AST_comparisons are lists; assertion stopped before receipt/GO/body. Actual schemas inspected, exact183/435 lengths now used. Prepared command script argument is argv4 after -X utf8 -B. No scientific or source evidence invalidated. Root second read-only admission stopped on slash-string comparison before GO/body; normalized actual Path comparison corrected. Final frozen57proofs and35 staged source bytes independently verified, no science replay. Root reader prep control iteration encountered scalar summary fields and stopped read-only before authority; corrected to actual explicit311/313 accessor/entry fields, all6 actual0 and81frozenproofs verified. No artifacts/science replay. Fullv2Windows311 actually failed2 metadata assertions/4697XML in678.234s; retain full failure. Missed immediate predecessor-context expectations and historicalV4 production/current binder mismatch invalidate only source guards. Correct only affected metadata inputs; keep actual-only production checker and validate currentV5 directly, then rerun complete affected barrier. Serializing313 avoided duplicating this failed setup; no numerical/SDK/timing replay. Transition correction: the failed complete311 result was recorded in the ledger before source-only fix authorization, but the execution-plan action still described the preceding fixture/selector correction. Updated the same plan paragraph to actual2failures/correction/focused-debug/full183BOTH sequence before any dependent rerun. Scientific evidence remains reusable and all full reruns are held for actual successor entry. Independently eligible fresh311v1 fixture retirement was blocked before process creation. An evidence-only shell record was also blocked; direct file edit records both without repeating retirement. Subsequent ledger edit stopped before mutation because storage is a string; inspected schema and appended existing field. No discarded evidence or science invalidated. Focused46 each bothPythons actualpass/science0 validates correction before full rerun; does not replace full183 gate. Root native process snapshot confirms stopped. Newfocusedfixture cleanup batch was blocked before execution;0removed/0reclaimed, no repeated action; root retains manual-release ownership. Complete311successor passed full183/4699XML and root source75/index/HEAD/plugin/ID admission.25finalhandoffproofs verified. New exactterminalfullfixture cleanup blocked before execution;0files/0reclaimed, no bypass/retry. Required313 is a fresh capacity-gated allocation. Correctedcomplete183 sourcebarriers actually pass BOTH4699XML each/4691sameorderedIDs+8subtests/44normalplugins/conftest/no-failfast/source75/index/HEADunchanged/science0. Root reused valid numerical/SDK/private speed evidence; fullfailed2campaign retained. Source gate now closed, actualnewgenuine qualification/speed/main remain mandatory. Final25proof313handoff checked against actual sourceBOTH receipt and35 stagedraw files; candidate precommit has clean index/conflict/whitespace/untracked gates. Last exact313fixture cleanup blocked before process; no retry, all raw outside. A root eligibility summary read first referenced a nonpresent generic PID key; actual external/internal schema then inspected before action, no dependent cleanup ran on that failed read. Candidate6ac02707 commits35exacttestedfiles; ancestry-only e8f459ed has identical tree65b70084 and preserves6737209f/7d917b14. Cleanprivatebranch push actual0. No source or passing checks replayed. Final313cleanup rejected before process; exact record preserved, no retry. Root reader schema summary initially guessed a generic PID key and stopped read-only, then actual external/internal fields inspected before removal attempt. Read-onlynext-family review reused admittedDDA data instead of stalea6losses. Root independently reconstructed32case medians:22loss/10win;all8blocks/windows+i32JOINwins protected. First root summary expectedall32injoin.json butits8rows isoneoffivestreams; corrected actualfive-report scope before integratingcounts. No experiments/filesoutsideexistingplan or science replay. Root preparation corrected two optional read-only filename misses from actual handoff fields before dependent admission; no science/body retry or affected evidence. Actual narrow external-terminal schema adaptation reused all numeric/member/API/time/order predicates unchanged. Actual minimum metadata reader completed output, but old PowerShell executor recorded null childexit; native PID was already unavailable. Root stopped all dependent profiles and preserved failure/4partial outputs. Narrow correction: directsubprocess actualexit capture, fresh outputscope/GO and only affected metadata reread; science/source/transport/capacity evidence remains valid. Failed stage14.943s; wrapper setup preventable, not a new speed experiment. Current genuine fixed24 ran once:4actual0,336accepted/48warmupgroups/539journalbatches,24wins/0losses,alltargetafter32equal. Earlier4loss experiment was useful and retained; no favorable unchanged retry. Preventable setup: PS missing childexit14.943s corrected with only minimum metadata reread; root reference-separator comparison and committed-index-vs-user-AGENTS scope fixed before dependent steps. No scientific gates invalidated. Reused all source/runtime/control/dependency/seal evidence within matching scope. Next correction ownerroot: use directwait actualexit and shipping-index scope for frozen source, preserve userWIP. No separate audit or scientific rerun. AutomaticmainCI44147273549 completedFAILED:88profile/lookup failures across2jobs,22weighted numerical failures on a newer Ubuntu/glibc environment, debugpassed. Read-only172proof review used once logs and unchanged22/20file source closures; no source/science/CI retry. Effectivecompiler/codegen and priorpremergeCI result unavailable; FMA/libm causal claim remains unproven. These are explicit next correctness gates, not masked by24passing speed cases.",
           "runtime_entry": {
             "status": "passed",
             "path": "build/speed-parity-root-v1/runtime-entry-v1.json",
-            "scope": "Private Linux3.11.14/NP1.24.4/SciPy1.15.3/original0.26/12700K AVX2; NativeWindowsGit exactthreeheads; retained267commands/79binderobjects; no retiredCMakeconfigure or protectedmutation"
+            "scope": "Private Linux3.11.14/NP1.24.4/SciPy1.15.3/original0.26/12700K AVX2; NativeWindowsGit exactthreeheads; retained267commands/79binderobjects; no retiredCMakeconfigure or protectedmutation",
+            "current_status": "passed_actual_current_genuine_entry",
+            "current_evidence": "build/speed-parity-release-v2/measurement-entry-v1/root-measurement-entry-admission-v1.json"
           },
           "live_handles": {
             "lbp": {
               "agent": "/root/mark_source_reviewer",
-              "state": "running_read_only_monitor_actual_run44120190347",
+              "state": "completed_readonly_CI_review",
               "entry": "2026-11-17 explicit followup_task and actual live acknowledgement observed; old dispatch retired",
-              "current_role": "A monitors sameactualrun/jobs/stages/failures/source only; noartifact bodies or dispatch.",
+              "current_role": "Terminal read-only evidence review; no source edits, scientific work or reruns dispatched. Root owns next gated correctness increment.",
               "historical_family_assignment": "terminal; frozen/imported; not a new implementation dispatch"
             },
             "mark": {
               "agent": "/root/mark_release_readiness",
-              "state": "running_final_source_whole_stager_binding_preparation",
+              "state": "completed_readonly_CI_review",
               "entry": "2026-11-17 explicit followup_task and actual live acknowledgement observed; old dispatch retired",
-              "current_role": "C sourcee8f whole/stager literal successors;RUN/GO None/authority0,noartifact body.",
+              "current_role": "Terminal read-only evidence review; no source edits, scientific work or reruns dispatched. Root owns next gated correctness increment.",
               "historical_family_assignment": "terminal; frozen/imported; not a new implementation dispatch"
             },
             "flood": {
               "agent": "/root/tracking_repair",
-              "state": "running_final_source_reader_binding_preparation",
+              "state": "completed_readonly_CI_review",
               "entry": "2026-11-17 explicit followup_task and actual live acknowledgement observed; old dispatch retired",
-              "current_role": "B sourcee8f profile/materializer/source-map literal successors;RUNNone/authority0,noartifact body.",
+              "current_role": "Terminal read-only evidence review; no source edits, scientific work or reruns dispatched. Root owns next gated correctness increment.",
               "historical_family_assignment": "terminal; frozen/imported; not a new implementation dispatch"
             }
           },
@@ -45125,7 +45169,7 @@
             "latest_affected_source": {
               "receipt": "build/speed-parity-integration-v1/windows311-corrected-v4/terminal.json",
               "worker_report": "Actual0/132XML0bad/44normalplugins/sourceunchanged/science0; root final admission pending. Targeted changed3-module closure only; full183BOTH must execute all17 affected modules and is not closed by a union.",
-              "next": "Corrected132BOTH reported passing; actual complete183 source command BOTH must include all16 changed modules before preparation/release. No union/proxy closure."
+              "next": "Historical progression retired. Current complete183 source BOTH passed4699each and all release/metric gates passed; source delivered a5f3aa97."
             },
             "blocked_fixtures": [
               {
@@ -45542,7 +45586,8 @@
               "find64_outer": "/root/mark_release_readiness",
               "compiler_runtime_entry_review": "/root/mark_source_reviewer",
               "integration_admission_delivery": "root"
-            }
+            },
+            "historical_operational_status": "Terminal75b predecessor: functional qualification passed, speed failed4/24. Retained unchanged, no dispatch; successor e8 delivered."
           },
           "successor_implementation": {
             "base": "75b219475ade7ad575f3ce82f569200d85329067",
@@ -45614,20 +45659,10 @@
             },
             "metadata": {
               "owner": "/root/mark_source_reviewer",
-              "status": "terminal_full183_BOTH_root_admitted_private_commit_ready",
+              "status": "passed_source_BOTH_and_delivered",
               "working_checkpoint": "build/speed-parity-integration-v2/metadata-entry-v1/working-checkpoint-v1.json",
-              "pending": "Commit only these35 staged files with skipci; preserve two already-copied family commit ancestries via tree-preserving merge, verify final source projection, push privatecandidate and dispatch exact-source four-profile qualification after actual remote/workflow entry. No numerical replay.",
-              "live_handle": {
-                "external_PID": 63160,
-                "internal_PID": 59348,
-                "profile": "windows313",
-                "phase": "full",
-                "label": "windows313-full-v2",
-                "GO_sha256": "d5116ddf4904bdb03516cae38296953f4972c20a8cfcbbd8560bffa79e9d4d04",
-                "command": "build/speed-parity-integration-v2/metadata-entry-v1/metadata-correction-v2/complete-sourcebarrier-entry-v2/windows313-full-v2/command.json",
-                "observed_live": false,
-                "actual_exit": 0
-              },
+              "pending": "None for this bounded source; historical failures preserved.",
+              "live_handle": "terminal",
               "fixture_closeout": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-integration-v2\\metadata-entry-v1\\complete-sourcebarrier-entry-v1\\windows311-fixture-eligibility-v1\\root-cleanup-policy-block-v1.json"
             },
             "reader_successors": {
@@ -45635,11 +45670,12 @@
               "whole_stager_owner": "/root/mark_release_readiness",
               "status": "root_actual81proofs_and_inert90checks_each_pass_UNBOUND",
               "scope": "Private new build/speed-parity-release-v2 reader entry roots only; no tracked source/old evidence edits or actual artifact access",
-              "next_gate": "Root exact candidate freeze plus complete source183 BOTH and actual workflow/run identity; versioned literal binding before API/artifact body transfer, then once materialization and independent4profile/3stager admission."
+              "next_gate": "Root exact candidate freeze plus complete source183 BOTH and actual workflow/run identity; versioned literal binding before API/artifact body transfer, then once materialization and independent4profile/3stager admission.",
+              "terminal_note": "All current7metadata readers completed and root-admitted; no active dispatch; old instructions are historical only."
             },
             "qualification": {
               "owner": "root",
-              "status": "running_actual_run44120190347_attempt1",
+              "status": "delivered_genuine4profile3stager_and_fixed24_pass",
               "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
               "tree": "65b70084e06dbf08b6e48004480a3c0d3ed0eace",
               "branch": "optimize/speed-parity-integration-v2",
@@ -45648,12 +45684,353 @@
               "collector_setup": "build/speed-parity-release-v2/root-reader-preparation-admission-v1.json",
               "dispatch_maximum": 1,
               "actual_run": 44120190347,
-              "main": "pending exactsource4profiles/genuine24",
+              "main": "a5f3aa9748b77540690189067fb1178385bb7500",
               "GO": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-GO-v1.json",
               "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44120190347",
               "dispatch_actual_exit": 0,
-              "tracked_source_receipt": "coverage/evidence/speed-parity-source-both-v2-root-admission-v1.json"
+              "tracked_source_receipt": "coverage/evidence/speed-parity-source-both-v2-root-admission-v1.json",
+              "terminal_API_admission": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-terminal-API-admission-v1.json",
+              "materialization": {
+                "owner": "/root/tracking_repair",
+                "status": "root_actual_materialization_retention_pass",
+                "gates": "Fresh24root/anchorstat+read/reparse matchingretainedscope; actualD/RAMcapacity/destinationabsent;7exactAPIrows;rootmaterializationproposalinspection andseparateGOdigest beforeoncebody. Profile/stager/qualificationauthority0.",
+                "entry_admission": "build/speed-parity-release-v2/dispatch-v1/root-materialization-entry-admission-v1.json",
+                "GO": "build/speed-parity-release-v2/product-reader-entry-v1/run44120190347-v1/materialization-bound-v1/root-materialization-GO-v1.json",
+                "GO_sha256": "815eca3592b28a2352ab2952a3acfc4ee54e3d847832b9fb6ec8e8cb7679f150",
+                "maximum_invocations": 1,
+                "retries": 0,
+                "actual_launcher_PID": 33968,
+                "actual_materializer_claim_PID": 55060,
+                "actual_exec_session": 29461,
+                "started_utc": "2026-11-17T17:25:31.892692+00:00",
+                "actual_exit": 0,
+                "elapsed_seconds": 501.498483399977,
+                "retention_admission": "build/speed-parity-release-v2/dispatch-v1/root-materialization-retention-admission-v1.json",
+                "source_files": 3511,
+                "reused_dependencies": 24,
+                "new_dependency_extractions": 0,
+                "archive_files_created": 0,
+                "materialized_logical_reservations": 3171047505,
+                "D_free_after": 135978393600
+              },
+              "capacity_entry": {
+                "owner": "/root/mark_release_readiness",
+                "status": "root_actual4_external_capacity_pass",
+                "source_admission": "build/speed-parity-release-v2/capacity-entry-v1/root-source-preparation-admission-v1.json",
+                "gates": "Actual root materialization-retention admission then fresh followup;4externally authenticated numeric capacity records and source/job/artifact/time/order; capacity outside profile seals.",
+                "actual_exit": 0,
+                "root_admission": "build/speed-parity-release-v2/dispatch-v1/root-capacity-admission-v1.json"
+              },
+              "profile_readers": {
+                "owner": "root",
+                "status": "root_all4_actual_profile_data_pass",
+                "entry_admission": "build/speed-parity-release-v2/dispatch-v1/root-profile-corrected-entry-admission-v3.json",
+                "GO_sha256": "b24baa7894de42ead8e2bea227fc4277ca16bdbd907cbefa8efa471e3d42316b",
+                "profiles": [
+                  "minimum",
+                  "modern",
+                  "debug",
+                  "windows"
+                ],
+                "maximum_invocations_each": 1,
+                "retries": 0,
+                "gates": "Actual profileexit/result admission before next profile; fourprofile aggregation before any stager.",
+                "failure": "build/speed-parity-release-v2/dispatch-v1/root-profile-exit-capture-failure-v1.json",
+                "required_child_exit": "unknown; shell0 does not pass",
+                "correction": "Fresh versioned directsubprocess wrapper+GO+readeroutputdir; byte-identical metadata reader; affected minimum metadata repeat only after rootentryadmission.",
+                "binding": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\product-reader-entry-v1\\run44120190347-v1\\profile-bound-v3\\root-profile-binding-v3.json",
+                "raw_output_root": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\product-reader-entry-v1\\run44120190347-v1\\profile-output-v3",
+                "result_helper": "build/speed-parity-release-v2/admit_profile_result_v5.py",
+                "four_profile_admission": "build/speed-parity-release-v2/dispatch-v1/root-four-profile-admission-v1.json",
+                "actual_reader_exits": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "xml": {
+                  "tests": 965678,
+                  "failures": 0,
+                  "errors": 0,
+                  "skipped": 0
+                },
+                "SDK_checks": 304,
+                "frozen_corpora": 48
+              },
+              "stagers": {
+                "owner": "root",
+                "status": "root_actual3_stagers_pass",
+                "failure": "build/speed-parity-release-v2/dispatch-v1/root-stager-entry-path-comparison-failure-v1.json",
+                "next": "Correct only root comparison to resolved path plus exactbytes/SHA, recheck entry then authorize3serialmetadata readers.",
+                "entry_admission": "build/speed-parity-release-v2/dispatch-v1/root-stager-entry-admission-v1.json",
+                "GO_sha256": "cff57d975518fb86bb986408003bc040c517a5e2859465cdd35d1daf82e80e5e",
+                "maximum_invocations_each": 1,
+                "retries": 0,
+                "gates": "Actual exit0/result before next3stager; then rootwhole admission before coldentry/fixed24.",
+                "actual_exits": [
+                  0,
+                  0,
+                  0
+                ],
+                "whole_admission": "build/speed-parity-release-v2/dispatch-v1/root-whole-product-admission-v1.json"
+              },
+              "whole_product_admission": "build/speed-parity-release-v2/dispatch-v1/root-whole-product-admission-v1.json",
+              "tracked_whole_product_admission": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json",
+              "genuine24_GO": {
+                "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\root-controlled24-GO-v1.json",
+                "sha256": "0dd0a4f3fd93d718142b4c69f5ff7fb9d632ec013cd823b17bd15e079c7272b7"
+              },
+              "measurement_entry": {
+                "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\measurement-entry-v1\\root-measurement-entry-admission-v1.json",
+                "sha256": "f0f30902e733ada5999ea38d76bc0b7f06199838d37fbd22e99e9f1450b9e8ba"
+              },
+              "isolation": {
+                "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\measurement-entry-v1\\isolation-v1.json",
+                "sha256": "9d845fbfcff8f616d4011d97e219594b47485c3938642ea2aaf827abecc41bf3"
+              },
+              "main_delivery": "build/speed-parity-release-v2/root-main-source-delivery-v1.json",
+              "genuine24_receipt": "coverage/evidence/speed-parity-genuine24-v2-root-result-v1.json",
+              "genuine24_minimum_ratio": 1.0128286654618355,
+              "genuine24_counts": {
+                "accepted_samples": 336,
+                "warmup_groups": 48,
+                "journal_batches": 539
+              },
+              "all_jobs_terminal": true,
+              "automatic_main_CI": {
+                "status": "failed_terminal_triaged_corrections_pending",
+                "run": 44147273549,
+                "source_commit": "a5f3aa9748b77540690189067fb1178385bb7500",
+                "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44147273549",
+                "raw_metadata": "build/speed-parity-release-v2/delivery-CI-v1",
+                "failed_jobs": {
+                  "region_windows": 134265731463,
+                  "region_linux": 134265731679,
+                  "numpy_minimum_color": 134265731676
+                },
+                "running_job": null,
+                "owner": "root with3read-only evidence reviewers",
+                "next": "CI profile setup correction and weighted cause witness before changed-input validation; no unchanged retry or tolerance/oracle changes.",
+                "debug_job_conclusion": "success",
+                "triage_receipt": "coverage/evidence/speed-parity-delivery-CI-triage-v1.json",
+                "triage_current_result": "Current24release campaign passes; genericmainCI failed3jobs, debugpassed,2measurejobs skipped."
+              }
+            },
+            "after_current_increment": {
+              "status": "held_behind_actual_CI_correctness_gates",
+              "owner": "root",
+              "trigger": "Before JOIN/crop/slice speed baseline, root closes demonstrated CI NumPy profile setup gap and weighted-distance codegen/cause gate. No new dispatch from this review.",
+              "basis_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+              "comparison_run": 42362296756,
+              "producer_run": 42347579925,
+              "scope": "Historical minimumLinux/Python3.11.17/NumPy1.24.4/original0.26.0/worker1,7samplesperarm,allocationincluded. CPUmodel absent; not currente8/currenthost timings.",
+              "raw_results": [
+                {
+                  "path": "benchmarks/current281-minimum-initial-v1/join-util-current275/join.json",
+                  "sha256": "af687dda7addc6e9de5acfcec5b6fe70237b65f94ffaf982d4d14f4d809faeac"
+                },
+                {
+                  "path": "benchmarks/current281-minimum-initial-v1/join-util-current275/crop.json",
+                  "sha256": "565aa159305f0e23a0cb9674d1e70f94cf35ec35bf333fd625629815a4684f91"
+                },
+                {
+                  "path": "benchmarks/current281-minimum-initial-v1/join-util-current275/slice.json",
+                  "sha256": "b24ab5510a52815b64feb242841dea8791930712ffbfa561d4ab3b47c148d5d6"
+                },
+                {
+                  "path": "benchmarks/current281-minimum-initial-v1/join-util-current275/blocks.json",
+                  "sha256": "b783f12399e9444cc71e6001b2538c51fa88f5aceca6bfcd86ff62d83a20144f"
+                },
+                {
+                  "path": "benchmarks/current281-minimum-initial-v1/join-util-current275/windows.json",
+                  "sha256": "2618af6c43bc96ac74fd796a465793239401c79d866b91bcd6e842aa6de2691d"
+                }
+              ],
+              "root_receipt": "coverage/evidence/current281-join-rolling-performance-root-admission-v1.json",
+              "cases": 32,
+              "wins": 10,
+              "losses": 22,
+              "by_api": {
+                "segmentation.join_segmentations": {
+                  "cases": 8,
+                  "wins": 2,
+                  "losses": 6,
+                  "worst": 0.5636200648429635
+                },
+                "util.crop": {
+                  "cases": 8,
+                  "wins": 0,
+                  "losses": 8,
+                  "worst": 0.5273126896916394
+                },
+                "util.slice_along_axes": {
+                  "cases": 8,
+                  "wins": 0,
+                  "losses": 8,
+                  "worst": 0.6291926410669071
+                },
+                "util.view_as_blocks": {
+                  "cases": 4,
+                  "wins": 4,
+                  "losses": 0,
+                  "worst": 1.093096621211291
+                },
+                "util.view_as_windows": {
+                  "cases": 4,
+                  "wins": 4,
+                  "losses": 0,
+                  "worst": 1.1686390914563034
+                }
+              },
+              "loss_rows": [
+                {
+                  "api": "segmentation.join_segmentations",
+                  "case_id": "u8-labels-C",
+                  "speedup": 0.5636200648429635
+                },
+                {
+                  "api": "segmentation.join_segmentations",
+                  "case_id": "u8-maps-reverse",
+                  "speedup": 0.782793245183444
+                },
+                {
+                  "api": "segmentation.join_segmentations",
+                  "case_id": "i16-labels-F",
+                  "speedup": 0.6470752017605904
+                },
+                {
+                  "api": "segmentation.join_segmentations",
+                  "case_id": "i16-maps-C",
+                  "speedup": 0.9895757650545887
+                },
+                {
+                  "api": "segmentation.join_segmentations",
+                  "case_id": "u16-labels-C",
+                  "speedup": 0.6868382363702645
+                },
+                {
+                  "api": "segmentation.join_segmentations",
+                  "case_id": "u16-maps-F",
+                  "speedup": 0.9450242984602197
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "view-C",
+                  "speedup": 0.7996787906919139
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "view-F",
+                  "speedup": 0.8029673433823005
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "view-reverse",
+                  "speedup": 0.8028782404750593
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "view-3D",
+                  "speedup": 0.7970490985722899
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "copy-C",
+                  "speedup": 0.9740233819267582
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "copy-F",
+                  "speedup": 0.920559923865483
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "copy-reverse-K",
+                  "speedup": 0.5273126896916394
+                },
+                {
+                  "api": "util.crop",
+                  "case_id": "copy-object-provider",
+                  "speedup": 0.8456120845552552
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "view-C",
+                  "speedup": 0.6580193845252115
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "copy-C",
+                  "speedup": 0.7085937046277841
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "view-F",
+                  "speedup": 0.6510669548954338
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "copy-F-C-order",
+                  "speedup": 0.9851233948252368
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "reverse-view",
+                  "speedup": 0.6614446288386538
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "reverse-copy",
+                  "speedup": 0.9170677486299142
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "permuted-axes",
+                  "speedup": 0.6291926410669071
+                },
+                {
+                  "api": "util.slice_along_axes",
+                  "case_id": "negative-bound-copy",
+                  "speedup": 0.8874476538488122
+                }
+              ],
+              "priorities": [
+                "JOIN8cases:rank/remap pipeline;6losses,protect2i32wins;ArrayMapfullclass parity open.",
+                "Crop8cases:copy/view paths;8losses. Own sharedcropcopykernel andcropbinder; coordinate sharedfrontend with root.",
+                "Slice8cases:metadata/view roundtrip andcopy paths;8losses. Ownutilviewbinder whileprotecting8blocks/windowswins; sharednativecopy/frontend hasone author atatime."
+              ],
+              "unchanged_source_review": "C inspected relevant DDA→e8 kernels/binders/frontends/headers/components/image/execution with emptyfamily diff. This supports priority only; no performancegate closed.",
+              "superseded_priority": "Olda6 34loss/34win report remains historical; its0.033/0.037reversecopy losses were improved by delivered code and do not describe currentfamily. DDA22losses is the later priority basis.",
+              "implementation_dispatch": null
+            },
+            "measurement_entry": {
+              "owner": "root",
+              "status": "root_actual_coldentry_and_fixed24_pass_delivered",
+              "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+              "run": 44120190347,
+              "minimum_artifact": 14348917061,
+              "scope": "Actual228members/9nativebuiltins/startupdefault1/ELF/DSO passed on retained measurement runtime; header/runtime distinction retained. No more body authority.",
+              "required_before_body": "Rootactual4profile3stager/materialization/dataadmissions plus actualnewprefix/core/SDK/header/source/runtime identity and freshGO; source/runtime/profile matching scope only. Producer3.11.17/NP2.4.6headers distinct from measurement3.11.14/NP1.24.4.",
+              "harness": "Unchanged43308f... and sourcebuiltF1f3050d/libraryc188; no control replay.",
+              "actual_core_sha256": "89edc603c4aa2a8021f3aebe8c67f938f3a1adbda31f1021df0491d346ff2c69",
+              "root_admission": "build/speed-parity-release-v2/measurement-entry-v1/root-measurement-entry-admission-v1.json"
             }
+          },
+          "current_source_delivery": {
+            "status": "PASS_ACTUAL_VALIDATED_SOURCE_MAIN_DELIVERY",
+            "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+            "main_code_commit": "a5f3aa9748b77540690189067fb1178385bb7500",
+            "remote_main_at_verification": "a5f3aa9748b77540690189067fb1178385bb7500",
+            "push_actual_exit": 0,
+            "push_tool_chunk": "672d14",
+            "remote_read_actual_exit": 0,
+            "observed_utc": "2026-11-17T18:24:46.194423+00:00",
+            "source_projection": "build/speed-parity-release-v2/root-main-shipping-projection-v2.json",
+            "whole_product": "coverage/evidence/speed-parity-whole-product-v2-root-admission-v1.json",
+            "genuine24": "build/speed-parity-release-v2/controlled24-v1/root-admission-v1.json",
+            "family_branches_and_commits_preserved": true,
+            "user_working_changes_preserved": true,
+            "remaining": "Final documentation/receipt-only closeout and eligible clean checkout retirement. No executable changes or scientific replay."
           }
         }
       },

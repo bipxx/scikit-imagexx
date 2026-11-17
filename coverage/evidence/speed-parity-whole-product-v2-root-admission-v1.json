@@ -1,0 +1,72 @@
+{
+  "status": "PASS_ROOT_EXACT_SOURCE_FOUR_GENUINE_PROFILES_AND_THREE_STAGERS",
+  "passed": true,
+  "root_accepted": true,
+  "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+  "tree": "65b70084e06dbf08b6e48004480a3c0d3ed0eace",
+  "run": 44120190347,
+  "workflow": 394745989,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44120190347",
+  "inspected_utc": "2026-11-17T18:04:25.074584+00:00",
+  "profiles": 4,
+  "stagers": 3,
+  "profile_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-four-profile-admission-v1.json",
+    "sha256": "919824db815f6775af2e5d9487e4e72c7c6f8ea68a155c1e99cb5e8f6c8577e9"
+  },
+  "stager_admissions": [
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\whole-reader-entry-v1\\run44120190347-v1\\actual-execution-v1\\minimum\\accepted-v1.json",
+      "sha256": "3386954602c8d2dab055e7abefb4809bdb0f4ca590818a2fe25e91dea14fe314"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\whole-reader-entry-v1\\run44120190347-v1\\actual-execution-v1\\modern\\accepted-v1.json",
+      "sha256": "688f816ef5ecbc4b885ef5ab5b2e5d28c108f597d6a3359e3476a062987820b6"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\whole-reader-entry-v1\\run44120190347-v1\\actual-execution-v1\\windows\\accepted-v1.json",
+      "sha256": "0e1b8d0bfe99c1190b9fe3e6ae08bee613b9395b07c6ce35a319ce2a82f5b285"
+    }
+  ],
+  "xml": {
+    "tests": 965678,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_checks": 304,
+  "frozen_corpora": 48,
+  "root_materialization": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-materialization-retention-admission-v1.json",
+    "sha256": "718c230c0c2da33dcd8050391d0b04df5eabd2472d3e7ab32aa4a89f2fb05c09"
+  },
+  "root_capacity": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-capacity-admission-v1.json",
+    "sha256": "f051887ddcddc391b677a7fc8934f3d40450904dbfbb0dc34540901d599d2ea1"
+  },
+  "transport_archives_retained": 0,
+  "payload_hash_replay": 0,
+  "scope": "Exact e8 candidate281partial images/284registrations, minimum/modern/debug/Windows, normal+runtime-disabled same product; source3511/package228/SDK108/header94 each. Private true compiler-scalar/SAN evidence remains separate. Full477/domain/class/library-wide speed gates remain open.",
+  "pending": [
+    "Actual current minimum core ELF/DSO/runtime/nativeowners/default1 entry",
+    "Controlled24 genuine minimum comparison, each original/current median>=1.0",
+    "Shipping source projection/main delivery"
+  ],
+  "closeout": {
+    "result": "All7metadata readers actualexit0, root per-result admission,965678XML0bad/304SDK/48corpora/3stagers.",
+    "reuse": "Once-only7API memorytransfers/fullstreamseals/source maps and24existingdependencies reused,0newscience/builds/transports/payload hash replay.",
+    "failure_correction": "Old minimum PS wrapper lost childexit; failed receipt preserved, corrected directPopen and fresh outputroot admitactual0. Only necessary minimum metadata reread. Root stager ref separator comparison failure corrected to same resolved file+bytes/SHA before dispatch, no reader replay.",
+    "failed_receipts": [
+      {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-profile-exit-capture-failure-v1.json",
+        "sha256": "f89bae61a1b0cab121cf248e706adb72bd974130175ab1c97a5015cb9cb5319b"
+      },
+      {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-stager-entry-path-comparison-failure-v1.json",
+        "sha256": "7227735a90db5719556240123532cf54996ee555bca7e5b5fab4973548b28327"
+      }
+    ],
+    "next_owner": "root",
+    "next_trigger": "Current core coldentry and fixed24 speed under fresh isolation/GO; source and extracted products/runtimes/raw evidence protected. Policy-blocked cleanup manual-only."
+  }
+}

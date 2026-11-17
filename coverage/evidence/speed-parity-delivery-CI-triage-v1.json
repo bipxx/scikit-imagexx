@@ -1,0 +1,79 @@
+{
+  "status": "PASS_ROOT_READ_ONLY_AUTOMATIC_CI_TRIAGE_CI_FAILURE_REMAINS_OPEN",
+  "observed_utc": "2026-11-17T18:57:51.727180+00:00",
+  "source": "a5f3aa9748b77540690189067fb1178385bb7500",
+  "run": 44147273549,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44147273549",
+  "actual_run_status": "completed",
+  "actual_run_conclusion": "failure",
+  "actual_debug_conclusion": "success",
+  "actual_proof_files_verified": 172,
+  "region_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\delivery-CI-v1\\region-failure-review-v1\\review-v1.json",
+    "bytes": 12643,
+    "sha256": "314c76c9105cb1e6dee8959b9e37365635ca422460e5d0270776b0ebe1f93140"
+  },
+  "color_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\delivery-CI-v1\\color-failure-review-v1\\findings-v1.json",
+    "bytes": 6562,
+    "sha256": "454ccec6993dcfe9106ba3859a8e23d4690bddf676737de7d8746566916b4b3a"
+  },
+  "debug_review": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\delivery-CI-v1\\debug-status-review-v1\\review-v1.json",
+    "bytes": 20914,
+    "sha256": "032f1a8d7ef20242cbcb1ec06513ca5828236d6ffbef04757fe246c0c6da9713"
+  },
+  "region": {
+    "jobs": [
+      134265731463,
+      134265731679
+    ],
+    "failures_each": 44,
+    "version_guard_assertions_each": 16,
+    "missing_gold_lookup_each": 28,
+    "actual_numpy": "2.5.5",
+    "captured_modern_numpy": "2.5.4",
+    "actual_scipy": "1.18.1",
+    "cause": "Broad existing CI dependency resolution selects an uncaptured NumPy profile; failed instances stop at profile assertions/gold-key lookups, not a demonstrated region output regression.",
+    "source_closure20_unchanged_across_premerge_qualified_delivered": true,
+    "pending_correction": "Constrain initial check runtime-wheel resolution and offline installation to captured NumPy2.5.4/SciPy1.18.1, preserving gold/assertions; validate affected setup guards before a changed-input CI campaign. No current code/config change performed.",
+    "later_steps_pass": "UNVERIFIED"
+  },
+  "weighted_distance": {
+    "job": 134265731676,
+    "failed": 22,
+    "passed": 3284,
+    "actual_affected_tests": "tests/test_weighted_distance.py; deltaE_ciede94/deltaE_cmc, workers1/4",
+    "observation": "Includes identical/scalar-broadcast expected0 vs native approximately3.9-4.2e-7. Actual failing node IDs/log retained.",
+    "runtime": "Ubuntu26.04.1/glibc2.43/CPython3.11.17/NumPy1.24.4/SciPy1.15.3/scikit-image0.26.0",
+    "source_test_build_closure22_unchanged": true,
+    "effective_compiler_commands": "UNAVAILABLE in retained log; no compiler-version/default contraction claim.",
+    "executed_FMA_or_libm_cause": "UNPROVEN",
+    "prior_premerge_runtime_result": "UNAVAILABLE; exact premergehead query returned0runs.",
+    "next_gate": "One controlled same-host contraction/codegen witness with fixed operands/runtime/natural FP/full32 and actual compile identity. Test the scalar separate-operation constraint hypothesis without changing oracle/tolerance or forcing ISA. Source/math correction and new parity/performance gates only after demonstrated cause."
+  },
+  "debug": {
+    "job": 134265731054,
+    "status": "success",
+    "GIL_assertion_normal_runtime_disabled": "All actualpassed",
+    "scope": "Different selectors/build/runtime from four-profile qualification; debugpass does not close weighted or region failures.",
+    "next": "Reviewed, no change or rerun."
+  },
+  "qualified_speed_increment": "All4genuineprofiles/3stagers and24case currentminimum speed remain PASS within their actual source/runtime/profile scope. This does not establish library-wide parity/speed or green automaticmainCI.",
+  "actions_in_this_triage": {
+    "production_or_workflow_edits": 0,
+    "new_tests_or_scientific_calls": 0,
+    "builds": 0,
+    "timing": 0,
+    "CI_reruns": 0,
+    "transport_archives_retained": 0,
+    "cleanup_attempts": 0
+  },
+  "closeout": {
+    "bounded_result": "Current fixed24 increment delivered; automaticCI diagnosed and failed campaign preserved. Overall broaderCI/full-library gates remain pending, not completed.",
+    "useful_extra_evidence": "MainpushCI exercised additional domains/runtimes and exposed concrete gaps beyond the bounded passing release campaign.",
+    "reuse": "Actualjoblogs once/unchangedGitblob closure/retained qualified profiles reused; no scientific rerun or claim missing evidence locallyverified.",
+    "next_owner": "root",
+    "next_trigger": "Before next numerical/build/CI dispatch, fix demonstrated CI profile setup and admit weighted contraction/codegen witness; prioritize these correctness gates before JOIN/crop/slice speed work."
+  }
+}

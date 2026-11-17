@@ -1,0 +1,81 @@
+{
+  "status": "PASS_SEVEN_CLEAN_MERGED_CHECKOUT_COPIES_RETIRED",
+  "started_utc": "2026-11-17T18:27:49.314855+00:00",
+  "owner": "root",
+  "D_free_before": 135978078208,
+  "removed": [
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-find-v2",
+      "HEAD": "6737209f801d90b7be4c7878786503be8efe2019",
+      "branch": "optimize/speed-parity-find-v2",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 754056547
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-flood-v1",
+      "HEAD": "6718fa4609bade2394f4a5ba25e073e36954c7a9",
+      "branch": "optimize/speed-parity-flood-v1",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 746810349
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-flood-v2",
+      "HEAD": "7d917b1419833ed3b934f0c05647f28c70642cd3",
+      "branch": "optimize/speed-parity-flood-v2",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 754064130
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-integration-v1",
+      "HEAD": "75b219475ade7ad575f3ce82f569200d85329067",
+      "branch": "optimize/speed-parity-integration-v1",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 754055098
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-integration-v2",
+      "HEAD": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+      "branch": "optimize/speed-parity-integration-v2",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 763781296
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-lbp-v1",
+      "HEAD": "36065c574d99ddb35fecb29384cbd052d785d6ef",
+      "branch": "optimize/speed-parity-lbp-v1",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 746710235
+    },
+    {
+      "path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\speed-parity-mark-v1",
+      "HEAD": "39f1c6ce6a62b090dcbdafd39e648bd050191ec8",
+      "branch": "optimize/speed-parity-mark-v1",
+      "actual_exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "logical_tracked_bytes": 746701491
+    }
+  ],
+  "failed": null,
+  "branches_deleted": 0,
+  "archives_or_protected_dependencies_removed": 0,
+  "finished_utc": "2026-11-17T18:27:57.155879+00:00",
+  "D_free_after": 141302190080,
+  "logical_tracked_bytes_removed": 5266179146,
+  "observed_D_free_change": 5324111872,
+  "physical_allocation": "Not measured separately; free-space observation may include unrelated disk activity. Logicaltrackedbytes exclude small ignored disposable caches.",
+  "protected_remaining": "All current/old extracted products, runtimes, raw logs/XML/reference/benchmark/F1 evidence remain protected; all previously policy-blocked targets left untouched. Branches/commits and current3511source snapshot retained.",
+  "source_copy_availability": "Seven retired checkout paths no longer available locally; source commits preserved in Git/main and extracted genuine source snapshots retained. Transport archives remain unavailable."
+}

@@ -1,0 +1,395 @@
+{
+  "schema": "speed-parity-genuine-fixed24-root-v2",
+  "status": "PASS_ALL24_PER_CASE_SPEED_GATE",
+  "owner": "root",
+  "source": "e8f459edd7d80aa42d63571f663e51b41708fa51",
+  "run": 44120190347,
+  "inspected_utc": "2026-11-17T18:13:06.763606+00:00",
+  "GO": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\root-controlled24-GO-v1.json",
+    "bytes": 8831,
+    "sha256": "0dd0a4f3fd93d718142b4c69f5ff7fb9d632ec013cd823b17bd15e079c7272b7"
+  },
+  "entry_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\measurement-entry-v1\\root-measurement-entry-admission-v1.json",
+    "sha256": "f0f30902e733ada5999ea38d76bc0b7f06199838d37fbd22e99e9f1450b9e8ba"
+  },
+  "product_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\dispatch-v1\\root-whole-product-admission-v1.json",
+    "sha256": "2e24d46b3fb148eb9fb63af1060b87da40237bf9bfd056dcc8e797b1e91936d6"
+  },
+  "actual_parent_exit": 0,
+  "protocol_passed": true,
+  "per_case_speed_gate_passed": true,
+  "counts": {
+    "accepted_samples": 336,
+    "warmup_groups": 48,
+    "journal_batches": 539
+  },
+  "cases": [
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "gray-u8-outer",
+      "original_ms": 12.9164762,
+      "current_ms": 8.657722571428572,
+      "speedup": 1.4919022980276337,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "RGB-f32-thick",
+      "original_ms": 6.819921117647059,
+      "current_ms": 3.562287242424242,
+      "speedup": 1.9144781578607066,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "gray-u16-F-inner",
+      "original_ms": 7.53368275,
+      "current_ms": 5.644998238095238,
+      "speedup": 1.334576634437011,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "RGB-f64-reverse-outline",
+      "original_ms": 17.520307428571428,
+      "current_ms": 9.944444666666666,
+      "speedup": 1.7618185847319072,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "gray-f64-subpixel",
+      "original_ms": 48.201458333333335,
+      "current_ms": 7.510082733333333,
+      "speedup": 6.418232667316999,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "RGB-f32-subpixel-outline",
+      "original_ms": 47.48327366666666,
+      "current_ms": 7.5972049375,
+      "speedup": 6.250097773759926,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "singleton-subpixel-version",
+      "original_ms": 0.08863639054726369,
+      "current_ms": 0.009105407487574154,
+      "speedup": 9.73447818433418,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "half-promotion-provider",
+      "original_ms": 12.337830555555556,
+      "current_ms": 6.43242895,
+      "speedup": 1.9180671331869985,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "gray-u8-C",
+      "original_ms": 0.18142520872274143,
+      "current_ms": 0.0795435139740968,
+      "speedup": 2.2808296950751035,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "RGB-f32-F",
+      "original_ms": 0.04370782831929402,
+      "current_ms": 0.013883813635200819,
+      "speedup": 3.148114017353116,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "RGB-f64-reverse-wrap",
+      "original_ms": 0.08879702872260015,
+      "current_ms": 0.0665021220518868,
+      "speedup": 1.3352510563996476,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "RGB-f64-C-large",
+      "original_ms": 0.7828690567375886,
+      "current_ms": 0.7729531,
+      "speedup": 1.0128286654618355,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-uint8-C",
+      "original_ms": 0.8115712516556292,
+      "current_ms": 0.5786552150537635,
+      "speedup": 1.4025126371326753,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-uint8-F",
+      "original_ms": 0.5470302990654206,
+      "current_ms": 0.47475943983402485,
+      "speedup": 1.1522262711756959,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-float32-C",
+      "original_ms": 0.5731192623762377,
+      "current_ms": 0.5027827873303168,
+      "speedup": 1.1398943576000176,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-float32-F",
+      "original_ms": 0.5479048388625593,
+      "current_ms": 0.5336800542986425,
+      "speedup": 1.0266541431506389,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-uint8-C",
+      "original_ms": 0.6307099677419356,
+      "current_ms": 0.5327458818181818,
+      "speedup": 1.1838852054368154,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-uint8-F",
+      "original_ms": 0.5761888877005348,
+      "current_ms": 0.5417960633484162,
+      "speedup": 1.06347928063479,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-float32-C",
+      "original_ms": 0.6090803199999999,
+      "current_ms": 0.5646648442211055,
+      "speedup": 1.0786581212438695,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-float32-F",
+      "original_ms": 0.633095320441989,
+      "current_ms": 0.589494958974359,
+      "speedup": 1.0739622295388052,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-C-thick",
+      "original_ms": 2.458868934782609,
+      "current_ms": 1.513555657894737,
+      "speedup": 1.6245645952675072,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-F-inner",
+      "original_ms": 6.565179,
+      "current_ms": 1.5527760135135136,
+      "speedup": 4.228027057904359,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-C-outer",
+      "original_ms": 7.9122022,
+      "current_ms": 4.261443655172414,
+      "speedup": 1.856695251712739,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "uint64-C-outer",
+      "original_ms": 8.152842,
+      "current_ms": 4.829017400000001,
+      "speedup": 1.6883024691524198,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    }
+  ],
+  "losses": [],
+  "raw_proofs": [
+    {
+      "lane": "mark",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\execution-v1\\mark\\terminal.json",
+        "bytes": 504,
+        "sha256": "321569d96b2da04b3b8ebc5fe9e9c9ed2025be0e2147fe5f37a1c094caf29599"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\mark\\result.json",
+        "bytes": 96199,
+        "sha256": "0c7e53dd7c7fd2099a17170747b9927b1c4795ff5de1b5a64d37b6ae83d3c876"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\mark\\batches.jsonl",
+        "bytes": 113541,
+        "sha256": "167d0683b003f80f93402752df8880ed9f595fff194397aeac0d0b79cc6f812e"
+      }
+    },
+    {
+      "lane": "lbp",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\execution-v1\\lbp\\terminal.json",
+        "bytes": 501,
+        "sha256": "52b608c80dbed9ad8ef1612f2ad924409c68e476810f64a2caa27385103b82da"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\lbp\\result.json",
+        "bytes": 54435,
+        "sha256": "95f90ff3fd8abb06961b587ba49436d3ad53e414e4002926b877a13bf7aea42d"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\lbp\\batches.jsonl",
+        "bytes": 59410,
+        "sha256": "76450fd5a8e8143cd31d98615258f6c31143cb07af6be79413f324558ba1cc7f"
+      }
+    },
+    {
+      "lane": "flood",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\execution-v1\\flood\\terminal.json",
+        "bytes": 507,
+        "sha256": "87046280a0a6f99f3aa7184153e1dc294a0b39003b4f32bd3f760d6b8cc43987"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\flood\\result.json",
+        "bytes": 96803,
+        "sha256": "e3e5945ae4ca7aca5ce178efd1e12760395a228a78cc3fd0f8779fc6590e3ba7"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\flood\\batches.jsonl",
+        "bytes": 117037,
+        "sha256": "597c93fcf43daba5314a9455ec3c07012a81ff047577e438ea1ecd1573e9cb38"
+      }
+    },
+    {
+      "lane": "find64",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\execution-v1\\find64\\terminal.json",
+        "bytes": 509,
+        "sha256": "a8b89d3d9224cc9ab5112e49cc3713ea239b002711b7ed033bd7d02cfd9c5ff0"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\find64\\result.json",
+        "bytes": 52776,
+        "sha256": "c896c1c38a44676946d339989e9b67b231552637491bcaf782369431c62af3a1"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\find64\\batches.jsonl",
+        "bytes": 57592,
+        "sha256": "c0e847f8c3b5150eba6bb03c56b74d91262085a5c118ee7e9a137eff3ccb45e5"
+      }
+    }
+  ],
+  "host": "12th Gen Intel(R) Core(TM) i7-12700K",
+  "runtime": {
+    "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "original": "0.26.0",
+    "CPU": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "platform": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "metric": "Every case median(original)/median(candidate)>=1.0; no average or omitted loss.",
+  "limits": [
+    "Genuine minimum product measured on retained3.11.14/NumPy1.24.4; producer3.11.17/NumPy2.4.6headers. No timing claim for other hosts/profiles.",
+    "Historical PRIVATE harness labels retained unchanged; actual genuine product identity is bound by root admissions and package/core maps.",
+    "Output, FP-word, caller restore, unchanged input/software-state assertions passed. Successful restored caller32 after every batch is assertion evidence; output hashes and actual target raw32 are retained.",
+    "All other APIs, wider domains, classes and library-wide speed remain open."
+  ],
+  "closeout": {
+    "result": "All24 genuine minimum cases pass the fixed per-case>=1.0 gate and protocol. Validated executable source delivered to main a5f3aa9748b77540690189067fb1178385bb7500.",
+    "reuse": "Same cases/sampler/harness/F1proof and measurement runtime; no control/helper replay.",
+    "next_owner": "root",
+    "next_trigger": "Before more speed work, root constrains the uncaptured CI NumPy profile setup and admits one controlled weighted-distance contraction/codegen witness; broader CI/full-library gates remain pending. JOIN/crop/slice baseline follows correctness gates.",
+    "retries": 0,
+    "source_projection": "build/speed-parity-release-v2/root-main-shipping-projection-v2.json",
+    "process_corrections": "Missing PowerShell childexit fixed via directPopen and freshoutputscope; firstmetadata attempt stays failed. Root separator-only reference comparison and shipping-index-vs-protected-user-AGENTS scope corrected before dependent actions. No science, archive, control or timing replay.",
+    "cleanup": "Seven clean merged checkouts retired with branches/commits preserved; current installed products/runtimes/raw evidence retained. Previously policy-blocked fixture/archive removals stay manual-only; no retries."
+  },
+  "derived_from": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\controlled24-v1\\root-admission-v1.json",
+    "sha256": "e172ef9570bc4f3bd9320a22149d421b03307791ce7cd2eac8e0ce36681ac547"
+  },
+  "qualified_tree": "65b70084e06dbf08b6e48004480a3c0d3ed0eace",
+  "main_code_commit": "a5f3aa9748b77540690189067fb1178385bb7500",
+  "source_delivery": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v2\\root-main-source-delivery-v1.json",
+    "sha256": "4cb50d5e127b074ca2fd9fa55991e2d51eb519a68d3bd4a98bfe8a258ee36193",
+    "actual_push_exit": 0,
+    "actual_remote_equal_at_verification": true
+  },
+  "native_owners": "Every case retains all native return labels from its accepted predecessor; actual9builtin startup owners/core89ed and same-package228 were checked separately.",
+  "historical_failed_genuine_result": "coverage/evidence/speed-parity-genuine24-root-result-v1.json",
+  "open_automatic_main_CI": {
+    "status": "failed_terminal",
+    "run": 44147273549,
+    "triage": "coverage/evidence/speed-parity-delivery-CI-triage-v1.json",
+    "region_profile_failures": 88,
+    "weighted_distance_test_failures": 22,
+    "debug": "passed",
+    "cause_limits": "Weighted compiler/codegen cause remains unproven; source/test/build closures unchanged does not prove premerge runtime failure."
+  }
+}
