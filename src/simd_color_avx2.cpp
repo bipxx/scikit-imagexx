@@ -4,6 +4,7 @@
 #include "distance_detail.hpp"
 #include "distance_metrics.hpp"
 #include "simd_math.hpp"
+#include <cfenv>
 #include <cstring>
 #include <climits>
 #ifdef _MSC_VER
@@ -66,6 +67,15 @@ void unpack(const double* p, __m256d& r, __m256d& g, __m256d& b) {
         _mm256_permute4x64_pd(v,_MM_SHUFFLE(0,3,0,0)),6),_mm256_permute4x64_pd(c,_MM_SHUFFLE(2,0,0,0)),8);
     b = _mm256_blend_pd(_mm256_blend_pd(_mm256_permute4x64_pd(a,_MM_SHUFFLE(0,0,0,2)),
         _mm256_permute4x64_pd(v,_MM_SHUFFLE(0,0,1,0)),2),_mm256_permute4x64_pd(c,_MM_SHUFFLE(3,0,0,0)),12);
+}
+void unpack_four_stride(const float* p,__m256& r,__m256& g,__m256& b) {
+    auto r0=_mm_loadu_ps(p),g0=_mm_loadu_ps(p+4),b0=_mm_loadu_ps(p+8),unused0=_mm_loadu_ps(p+12);
+    auto r1=_mm_loadu_ps(p+16),g1=_mm_loadu_ps(p+20),b1=_mm_loadu_ps(p+24),unused1=_mm_loadu_ps(p+28);
+    _MM_TRANSPOSE4_PS(r0,g0,b0,unused0);
+    _MM_TRANSPOSE4_PS(r1,g1,b1,unused1);
+    r=_mm256_insertf128_ps(_mm256_castps128_ps256(r0),r1,1);
+    g=_mm256_insertf128_ps(_mm256_castps128_ps256(g0),g1,1);
+    b=_mm256_insertf128_ps(_mm256_castps128_ps256(b0),b1,1);
 }
 void pack(float* p, __m256 r, __m256 g, __m256 b) {
     const auto i0 = _mm256_setr_epi32(0,0,0,1,1,1,2,2), i1 = _mm256_setr_epi32(2,3,3,3,4,4,4,5), i2 = _mm256_setr_epi32(5,5,6,6,6,7,7,7);
@@ -569,12 +579,27 @@ template<class T,class Input> void distance_load_other(const void* source,std::p
     }
 }
 template<class T> void distance_load(const void* source,PixelType type,std::ptrdiff_t pixels,std::ptrdiff_t channels,
-    typename Vector<T>::R (&values)[3]) {
+    typename Vector<T>::R (&values)[3],bool following_pixel=false) {
     using V=Vector<T>;
     const bool same=(std::is_same_v<T,float> && type==PixelType::float32) ||
                     (std::is_same_v<T,double> && type==PixelType::float64);
     if(same) {
         const auto* p=static_cast<const T*>(source);
+        if constexpr(std::is_same_v<T,float>) {
+            if(pixels==-3 && channels==1) {
+                unpack(p-21,values[0],values[1],values[2]);
+                const auto reverse=_mm256_setr_epi32(7,6,5,4,3,2,1,0);
+                for(auto& value:values)value=_mm256_permutevar8x32_ps(value,reverse);
+                return;
+            }
+            // A later logical pixel proves the fourth load lane lies inside
+            // the input span. The final packet keeps the exact three-channel
+            // gathers; SDK inputs need not contain a trailing fourth channel.
+            if(pixels==4 && channels==1 && following_pixel) {
+                unpack_four_stride(p,values[0],values[1],values[2]);
+                return;
+            }
+        }
         if(pixels==3 && channels==1) unpack(p,values[0],values[1],values[2]);
         else for(int c=0;c<3;++c) values[c]=pixels==0 ? V::set(p[c*channels]) :
             pixels==1 ? V::load(p+c*channels) : gather(p+c*channels,pixels);
@@ -605,8 +630,8 @@ template<class T> std::size_t distance_run(const void* a,const void* b,T* out,st
     std::size_t i=0;
     for(;i+V::lanes<=n;i+=V::lanes) {
         typename V::R av[3],bv[3];
-        distance_load<T>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av);
-        distance_load<T>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
+        distance_load<T>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av,i+V::lanes<n);
+        distance_load<T>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv,i+V::lanes<n);
         const auto x=V::sub(bv[0],av[0]),y=V::sub(bv[1],av[1]),z=V::sub(bv[2],av[2]);
         distance_store(out+i,distance_sqrt(V::add(V::add(V::mul(x,x),V::mul(y,y)),V::mul(z,z))));
     }
@@ -706,18 +731,54 @@ template<class T,bool Svml=false> struct VectorDistanceMath {
         return round(_mm256_mul_pd(_mm256_set1_pd(2),_mm256_sub_pd(_mm256_mul_pd(_mm256_loadu_pd(ca),_mm256_loadu_pd(cb)),
             _mm256_add_pd(_mm256_mul_pd(a,x),_mm256_mul_pd(b,y)))));
     }
+    static R hue_squared_prepared(R a,R b,R x,R y,R second_chroma){
+        double aa[4],bb[4],ca[4];
+        _mm256_storeu_pd(aa,a);_mm256_storeu_pd(bb,b);
+        for(int j=0;j<4;++j)ca[j]=std::hypot(aa[j],bb[j]);
+        return round(_mm256_mul_pd(_mm256_set1_pd(2),_mm256_sub_pd(_mm256_mul_pd(_mm256_loadu_pd(ca),second_chroma),
+            _mm256_add_pd(_mm256_mul_pd(a,x),_mm256_mul_pd(b,y)))));
+    }
 };
+bool reusable_float_color(const void* source,std::ptrdiff_t channels) {
+    const auto* bytes=static_cast<const unsigned char*>(source);
+    for(int c=0;c<3;++c) {
+        std::uint32_t bits;
+        std::memcpy(&bits,bytes+std::ptrdiff_t(c)*channels*std::ptrdiff_t(sizeof(float)),sizeof(bits));
+        const auto magnitude=bits&0x7fffffffu;
+        // Keep exceptional, subnormal and overflow-adjacent input graphs on
+        // the old path, without classifying a signaling NaN arithmetically.
+        if(magnitude && (magnitude<0x00800000u || magnitude>=0x7f000000u))return false;
+    }
+    return true;
+}
 template<class T,class Output,bool Svml=false> std::size_t metric_run(const void* a,const void* b,Output* out,std::size_t n,
     PixelType at,PixelType bt,DistanceMetric metric,const DistanceParameters& p,bool wide,bool scalar_cmc,
     std::ptrdiff_t ap,std::ptrdiff_t ac,std::ptrdiff_t bp,std::ptrdiff_t bc,bool legacy_ciede2000) {
     if(ap>INT_MAX/4 || ap< -INT_MAX/4 || bp>INT_MAX/4 || bp< -INT_MAX/4) return 0;
     const auto ab=std::ptrdiff_t(pixel_size(at)),bb=std::ptrdiff_t(pixel_size(bt));
+    using Math=VectorDistanceMath<T,Svml>;
+    detail::DistanceSecondChroma<Math> prepared{};
+    const detail::DistanceSecondChroma<Math>* second_chroma=nullptr;
+    __m256d constant[3];
+    if constexpr(std::is_same_v<T,float>) {
+        if(metric==DistanceMetric::cmc && bp==0 && n>=4 && at==PixelType::float32 && bt==at &&
+           !detail::distance_math_callbacks && reusable_float_color(b,bc)) {
+            const auto control=_mm_getcsr();
+            if((control&0x7f80u)==0x1f80u && std::fegetround()==FE_TONEAREST) {
+                distance_load<double>(b,bt,bp,bc,constant);
+                prepared.ordinary=Math::hypot(constant[1],constant[2]);
+                prepared.hue=_mm256_set1_pd(std::hypot(_mm256_cvtsd_f64(constant[1]),_mm256_cvtsd_f64(constant[2])));
+                second_chroma=&prepared;
+            }
+        }
+    }
     std::size_t i=0;
     for(;i+4<=n;i+=4) {
         __m256d av[3],bv[3];
         distance_load<double>(static_cast<const unsigned char*>(a)+std::ptrdiff_t(i)*ap*ab,at,ap,ac,av);
-        distance_load<double>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
-        const auto result=detail::distance_metric<VectorDistanceMath<T,Svml>>(av,bv,metric,p,wide,scalar_cmc,legacy_ciede2000);
+        if(second_chroma)for(int c=0;c<3;++c)bv[c]=constant[c];
+        else distance_load<double>(static_cast<const unsigned char*>(b)+std::ptrdiff_t(i)*bp*bb,bt,bp,bc,bv);
+        const auto result=detail::distance_metric<Math>(av,bv,metric,p,wide,scalar_cmc,legacy_ciede2000,second_chroma);
         if constexpr(std::is_same_v<Output,float>) _mm_storeu_ps(out+i,_mm256_cvtpd_ps(result));
         else _mm256_storeu_pd(out+i,result);
         if(metric==DistanceMetric::ciede2000) {

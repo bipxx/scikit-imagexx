@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v2.json'
-CONTEXT_SHA256 = '5d7c06fe3986d199e61c8d1b8679d03d3fb0fdcc19195a6d9a762dd11c7e7973'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v5.json'
+CONTEXT_SHA256 = '5b0398e7e0309fdf64c6750d4e0e4a85a586c4771dd3df45f7772e02d63fb846'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -238,3 +238,57 @@ def test_new13_runtime_module_is_current_collected_and_not_a_source_science_sele
     assert value['runtime_policy']['public-flood-disjoint-linux']==dict(modules=[name],profiles=['minimum','modern','debug'],nodes_per_mode=13,FENV='source-built-full32',caller_records_per_mode=13)
     previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v9.json').read_bytes())
     for group,policy in previous['speed_parity_runtime'].items():assert value['runtime_policy'][group]==policy
+
+
+@pytest.mark.parametrize('canonical', (False, True))
+def test_CI_runtime_successor_authenticates_exact_current_and_frozen_bytes(canonical):
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    helper = load('tools/vi_public_matmul_context.py')
+    context = helper._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+    assert context['predecessor_history_context'] == {
+        'path': 'coverage/contracts/vi-public-matmul-source-history-v11.json',
+        'sha256': '19646d87f5821d5a280e2a0e49cb5747bd7cb9774eea0d57eedf686d1873b231',
+        'source': '40e88939e6f045e4fa9c2a235554d4ae2b769722',
+    }
+    for name in ('.github/workflows/ci.yml', 'tests/test_ci_measurement_isolation.py'):
+        raw = (ROOT / name).read_bytes()
+        previous = helper.predecessor_bytes(ROOT, name, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
+        domain = 'canonical' if canonical else 'raw'
+        assert digest(previous) == context['sources'][name]['predecessor_' + domain + '_sha256']
+        if name.endswith('ci.yml'):
+            assert digest(previous) == '3b194f7e78c2906ef633d6991ba2f573818169eb6d93e81118860395968725f1'
+            assert previous.count(b'python -m pip wheel ".[test]" cmake --wheel-dir build/wheels') == 1
+            assert previous.count(b'python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" cmake') == 1
+        with pytest.raises(AssertionError):
+            helper.predecessor_bytes(ROOT, name, raw + b'\n# changed', VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
+        with pytest.raises(AssertionError):
+            helper.predecessor_bytes(ROOT, name, previous, VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
+
+
+def test_CI_runtime_successor_rejects_changed_predecessor_context(monkeypatch):
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    helper = load('tools/vi_public_matmul_context.py')
+    parent = ROOT / 'coverage/contracts/vi-public-matmul-source-history-v11.json'
+    original = Path.read_bytes
+    monkeypatch.setattr(Path, 'read_bytes', lambda self: original(self) + b' ' if self == parent else original(self))
+    with pytest.raises(AssertionError):
+        helper._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+
+
+def test_distance_sources_use_the_full_current_source_collector_without_scientific_selection(monkeypatch):
+    value = data()
+    names = ('src/distance_metrics.hpp', 'src/simd_color_avx2.cpp')
+    q = load('tools/public_qualification.py')
+    replies = {('status', '--porcelain'): '', ('rev-parse', 'HEAD'): 'a' * 40,
+               ('ls-files',): '\n'.join(names)}
+    monkeypatch.setattr(q.subprocess, 'check_output',
+                        lambda argv, **kwargs: replies[tuple(argv[3:])])
+    actual = q.source_state(ROOT)
+    assert actual == dict(revision='a' * 40, files_sha256={
+        name: digest((ROOT / name).read_bytes().replace(b'\r\n', b'\n')) for name in names})
+    for name in names:
+        assert digest((ROOT / name).read_bytes()) == value['production_raw_sha256'][name]
+    regression = 'tests/test_distance_optimized_layouts.py'
+    assert digest((ROOT / regression).read_bytes()) == value['source_raw_sha256'][regression]
+    assert regression in q.DRAW_SOURCE_PATHS
+    assert regression not in selectors((ROOT / '.github/workflows/public-qualification.yml').read_bytes())

@@ -15,6 +15,17 @@ def context():
     return json.loads(raw)
 
 
+
+def compatibility_source_bytes(name,supplied=None,canonical=False):
+    """Authenticate the independent scalar flag before the frozen MARK view."""
+    raw=(ROOT/name).read_bytes()if supplied is None else supplied
+    if name=='CMakeLists.txt':
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        from tools.vi_public_matmul_context import predecessor_bytes as current_predecessor
+        raw=current_predecessor(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,canonical)
+    return raw
+
+
 def predecessor(name,raw,canonical=False):
     row=context()['sources'][name]
     if canonical:raw=raw.replace(b'\r\n',b'\n')
@@ -30,7 +41,7 @@ def predecessor(name,raw,canonical=False):
 @pytest.mark.parametrize('name',tuple(context()['sources']))
 @pytest.mark.parametrize('canonical',(False,True))
 def test_exact_once_current_to_frozen_projection(name,canonical):
-    raw=(ROOT/name).read_bytes();old=predecessor(name,raw,canonical)
+    raw=compatibility_source_bytes(name);old=predecessor(name,raw,canonical)
     assert H(old)==context()['sources'][name]['predecessor_raw_sha256']
     with pytest.raises(AssertionError):predecessor(name,old,canonical)
     if canonical:assert predecessor(name,raw.replace(b'\n',b'\r\n'),True)==old
@@ -41,11 +52,11 @@ def test_exact_once_current_to_frozen_projection(name,canonical):
 @pytest.mark.parametrize('name',tuple(context()['sources']))
 @pytest.mark.parametrize('canonical',(False,True))
 def test_changed_input_is_not_accepted_as_current_or_historical(name,canonical):
-    with pytest.raises(AssertionError):predecessor(name,(ROOT/name).read_bytes()+b'\n# tamper',canonical)
+    with pytest.raises(AssertionError):predecessor(name,compatibility_source_bytes(name)+b'\n# tamper',canonical)
 
 
 def test_only_find_boundaries_per_source_flags_are_added():
-    raw=(ROOT/'CMakeLists.txt').read_bytes();old=predecessor('CMakeLists.txt',raw)
+    raw=compatibility_source_bytes('CMakeLists.txt');old=predecessor('CMakeLists.txt',raw)
     new_lines=[line for line in raw.decode().splitlines()if'set_source_files_properties(src/find_boundaries.cpp PROPERTIES'in line]
     assert new_lines==[
         '    set_source_files_properties(src/find_boundaries.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")',
@@ -120,3 +131,17 @@ def test_frozen_native_headers_frontend_and_original_context_unchanged(name):
             assert raw.count(f['current'].encode())==1;raw=raw.replace(f['current'].encode(),f['predecessor'].encode(),1)
     assert H(raw)==context()['dependencies'][name]
     assert context()['actual_execution']==dict(original=0,native=0,helper=0,FP=0,compile=0,timing=0)
+
+
+@pytest.mark.parametrize('canonical',(False,True))
+def test_scalar_distance_flag_is_authenticated_before_frozen_MARK_rules(canonical):
+    name='CMakeLists.txt';current=(ROOT/name).read_bytes()
+    view=compatibility_source_bytes(name,current,canonical)
+    domain='canonical_lf_sha256'if canonical else'raw_sha256'
+    assert H(view)==context()['sources'][name]['current_'+domain]
+    addition=(b'    # Preserve separately rounded hue products for CIE94 and CMC.\n'
+              b'    set_source_files_properties(src/distance.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off")\n')
+    compared=current.replace(b'\r\n',b'\n')if canonical else current
+    assert compared.count(addition)==1 and compared.replace(addition,b'',1)==view
+    for invalid in (current+b'\n# changed scalar flags',view):
+        with pytest.raises(AssertionError):compatibility_source_bytes(name,invalid,canonical)

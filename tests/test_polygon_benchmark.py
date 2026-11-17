@@ -1,5 +1,6 @@
 """Metadata-only guards for the fixed polygon comparison; no image calls."""
 import ast
+import shlex
 import importlib.util
 from pathlib import Path
 
@@ -38,9 +39,21 @@ def test_exact_raw_checker_precedes_unchanged_paired_timer():
 def test_both_public_modes_and_private_guards_precede_freeze():
     text = (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8')
     producer = text.split('  numpy-minimum:', 1)[1].split('  measure-minimum:', 1)[0]
-    for target in ('polygon-normal.xml', 'polygon-scalar.xml', 'polygon-intake.xml'):
-        assert producer.count(target) == 1
-        assert producer.index(target) < producer.index('ci_measurement_artifacts.py freeze')
+    commands = []
+    for line in producer.splitlines():
+        payload = line.strip().removeprefix('- ')
+        if payload.startswith('run: python -m pytest '):
+            argv = shlex.split(payload.removeprefix('run: ').split('2>&1', 1)[0].split('|', 1)[0])
+            commands.append((producer.index(line), argv))
+    for mode, module in (('normal', 'tests/test_polygon_public.py'),
+                         ('scalar', 'tests/test_polygon_public.py'),
+                         ('intake', 'tests/test_polygon_intake.py')):
+        option = '--junitxml=build/ci-artifacts/polygon-' + mode + '.xml'
+        selected = [(position, argv) for position, argv in commands if option in argv]
+        assert len(selected) == 1
+        position, argv = selected[0]
+        assert argv == ['python', '-m', 'pytest', '-q', module, option]
+        assert position < producer.index('ci_measurement_artifacts.py freeze')
 
 
 @pytest.mark.parametrize('api', ('measure.points_in_poly', 'measure.grid_points_in_poly'))

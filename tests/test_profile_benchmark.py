@@ -1,5 +1,6 @@
 """Profile workload metadata; never imports scientific packages or times code."""
 import ast
+import shlex
 import builtins
 import importlib.util
 from pathlib import Path
@@ -57,12 +58,30 @@ def test_new_profiles_keep_correctness_gates_and_skip_only_old_timings():
         assert producer.count(target)==1 and producer.index(target)<producer.index('ci_measurement_artifacts.py freeze')
     measure=workflow.split('  measure-minimum:',1)[1].split('  debug-gil:',1)[0]
     lines=measure.splitlines()
-    timings=[(line,lines[i+1])for i,line in enumerate(lines)if line.strip().startswith('- run: python benchmarks/')]
-    assert len(timings)==20
-    assert all('!inputs.latest_only'in guard for command,guard in timings if 'benchmarks/compare_images.py'not in command)
-    newest=[guard for command,guard in timings if 'benchmarks/compare_images.py'in command]
-    assert len(newest)==1 and '!inputs.prepare_only'in newest[0]and 'latest_only'not in newest[0]
+    # Reuse the central complete40/prepare_only/latest_only policy; this family is historical.
+    timings=[(shlex.split(line.strip().removeprefix('- run: ')),lines[i+1].strip())
+             for i,line in enumerate(lines)if line.strip().startswith('- run: python benchmarks/')]
+    assert len(timings)==len({tuple(command)for command,guard in timings})==40
+    prepare="(github.event_name != 'workflow_dispatch' || !inputs.prepare_only)"
+    skip="(github.event_name != 'workflow_dispatch' || !inputs.latest_only)"
+    older_guards={'if: '+prepare+' && '+skip, 'if: '+prepare[1:-1]+' && '+skip}
+    assert all(guard in older_guards for command,guard in timings[:-1])
+    assert timings[-1][1] in {'if: '+prepare, 'if: '+prepare[1:-1]}
+    assert timings[-1][0]==['python','benchmarks/label_pair_metrics.py','--threads','1','--repeat','7',
+                            '--output','build/ci-label-pair-metrics.json']
+    family=[command for command,guard in timings if command[1]=='benchmarks/profile_line.py']
+    assert family==[['python','benchmarks/profile_line.py','--threads','1','--repeat','7',
+                     '--output','build/ci-profile-line.json']]
     assert 'build/ci-profile-line.md'in measure
     phase3=(ROOT/'.github/workflows/phase3-public-benchmark.yml').read_text(encoding='utf-8')
-    assert phase3.count('tests/test_profile_line_public.py')==2
-    assert 'len(cases) == 3205'in phase3 and 'len(native) == 239'in phase3 and 'expected == 1417'in phase3
+    # Retained manual recipe only; current-product eligibility remains a separate gate.
+    public=[shlex.split(line.strip().split('2>&1',1)[0].split('|',1)[0])
+            for line in phase3.splitlines()if line.strip().startswith('python -m pytest -q ')
+            and '--junitxml build/phase3/preparation/public-'in line]
+    assert len(public)==2
+    for mode,command in zip(('normal','scalar'),public):
+        assert command[:4]==['python','-m','pytest','-q']
+        assert command.count('tests/test_profile_line_public.py')==1
+        assert command[command.index('--junitxml')+1]=='build/phase3/preparation/public-'+mode+'.xml'
+    assert 'len(cases) == 5472'in phase3
+    assert 'len(entries) == 477 and len(native) == 250'in phase3 and 'expected == 1447'in phase3

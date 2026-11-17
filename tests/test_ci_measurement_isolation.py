@@ -99,6 +99,45 @@ def test_runtime_python_pins_reject_floating_or_mismatched_interpreters(monkeypa
         test_minimum_only_and_debug_assertions_are_enforced()
 
 
+def test_modern_runtime_resolution_and_offline_install_keep_captured_tuple():
+    block = jobs((ROOT / '.github/workflows/ci.yml').read_text())['check']
+    commands = [line.strip() for line in block.splitlines()]
+    # Resolve and install the same witnessed tuple; the offline stage must not
+    # silently choose a newer wheel available beside the captured artifacts.
+    expected = (
+        'python -m pip wheel ".[test]" "numpy==2.5.4" "scipy==1.18.1" cmake --wheel-dir build/wheels',
+        'python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" "numpy==2.5.4" "scipy==1.18.1" cmake',
+    )
+    for prefix, command in zip(('python -m pip wheel ".[test]"',
+                                'python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]"'), expected):
+        assert [line for line in commands if line.startswith(prefix)] == [command]
+    assert commands.index(expected[0]) < commands.index(expected[1])
+
+
+@pytest.mark.parametrize('stage', ('wheel', 'install'))
+@pytest.mark.parametrize('package,version,other', (
+    ('numpy', '2.5.4', '2.5.5'), ('scipy', '1.18.1', '1.18.2')))
+@pytest.mark.parametrize('fault', ('missing', 'floating', 'different'))
+def test_modern_runtime_pins_reject_resolution_and_offline_drift(monkeypatch, stage, package, version, other, fault):
+    path = ROOT / '.github/workflows/ci.yml'
+    text = path.read_text()
+    block = jobs(text)['check']
+    lines = block.splitlines(keepends=True)
+    prefix = ('python -m pip wheel ".[test]"' if stage == 'wheel' else
+              'python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]"')
+    index, = [i for i, line in enumerate(lines) if line.strip().startswith(prefix)]
+    pin = '"' + package + '==' + version + '"'
+    replacement = {'missing': '', 'floating': '"' + package + '"',
+                   'different': '"' + package + '==' + other + '"'}[fault]
+    assert lines[index].count(pin) == 1
+    lines[index] = lines[index].replace(pin, replacement, 1)
+    mutated = text.replace(block, ''.join(lines), 1)
+    original = Path.read_text
+    monkeypatch.setattr(Path, 'read_text', lambda self, *a, **kw: mutated if self == path else original(self, *a, **kw))
+    with pytest.raises(AssertionError):
+        test_modern_runtime_resolution_and_offline_install_keep_captured_tuple()
+
+
 def test_debug_runtime_proof_rejects_release(monkeypatch):
     import sys
     from types import ModuleType
@@ -991,7 +1030,7 @@ def test_coords_scaled_cold_intake_runs_fresh_outside_broad_pytest():
     for name in ('check','numpy-minimum'):
         block=blocks[name]
         assert block.count(step)==1 and block.count(path)==(3 if name=='check'else 1)
-        install=('python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" cmake'
+        install=('python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" "numpy==2.5.4" "scipy==1.18.1" cmake'
                  if name=='check'else 'python -m pip install --no-deps build/wheels/*.whl')
         assert block.index(install)<block.index(step)<block.index('Region coords scaled saved public and installed SDK boundary normal')
         assert not block.split(step,1)[1].startswith('        env:')

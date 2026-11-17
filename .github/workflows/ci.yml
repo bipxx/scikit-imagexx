@@ -55,9 +55,9 @@ jobs:
         with:
           python-version: '3.13.16'
       - run: |
-          python -m pip wheel ".[test]" cmake --wheel-dir build/wheels
+          python -m pip wheel ".[test]" "numpy==2.5.4" "scipy==1.18.1" cmake --wheel-dir build/wheels
       - run: |
-          python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" cmake
+          python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" "numpy==2.5.4" "scipy==1.18.1" cmake
       - run: python tools/diagnose_color_precision.py
       - run: python tools/diagnose_distance_precision.py
       - run: python tools/ci_measurement_artifacts.py inventory
