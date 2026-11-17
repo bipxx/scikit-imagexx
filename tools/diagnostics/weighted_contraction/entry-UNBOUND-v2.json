@@ -1,0 +1,36 @@
+{
+  "status": "UNBOUND_ENTRY_NO_COMPILER_OR_BODY_AUTHORITY",
+  "source_revision": null,
+  "production_epoch": "a5f3aa9748b77540690189067fb1178385bb7500",
+  "runtime_versions": {
+    "python": "3.11.17",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "skimage": "0.26.0"
+  },
+  "os_version": "26.04",
+  "glibc": "2.43",
+  "cpp_sha256": "dd8dd59f31f0d9a51bcf6f95f735a4f3965010a0e6486320c9c5989781720fef",
+  "sole_change_is_contract_off": null,
+  "baseline_already_contract_off": null,
+  "baseline_has_contraction": null,
+  "strict_has_contraction": null,
+  "variants": {
+    "baseline": {
+      "path": null,
+      "sha256": null
+    },
+    "strict": {
+      "path": null,
+      "sha256": null
+    }
+  },
+  "required_evidence": [
+    "Actualcompiler file/backend/version/target/defaultopts/ordinaryReleasecompile_commands distance.cpp row",
+    "Source/output/link adaptation and strict-only appendedffp-contractoff",
+    "Rawobjdump/readelf/nm logs and new2librarystats/SHA; exported weighted_hue_graph_v1 symbol",
+    "Runtime DSOs/originalsource/NPsoftware/CPUfeature/maskabsence and samehostidentity",
+    "Fresh actualFENVsourcebuiltcontrolreceipt; preciseFPscopebefore/afterimports declared"
+  ],
+  "scope": "Root-owned entry producer fills actual fields; boolfalse nocontraction is valid metadata and does not cancel fixed3calls. baseline alreadyoff precludes bodycomparison."
+}

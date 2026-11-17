@@ -1,36 +1,62 @@
-name: distance-overlap-diagnostics
+name: weighted-contraction-diagnostic
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   diagnose:
-    strategy:
-      fail-fast: false
-      matrix:
-        replica: [1, 2]
-        numpy: ['1.24.4', '2.5.4']
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
-      CMAKE_BUILD_PARALLEL_LEVEL: '4'
       OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PIP_NO_CACHE_DIR: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
+      - name: Check actual host and scratch capacity before allocation
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import ctypes, json, os, pathlib, platform, shutil
+          libc = ctypes.CDLL(None)
+          libc.gnu_get_libc_version.restype = ctypes.c_char_p
+          host = platform.freedesktop_os_release()
+          capacity = {p: shutil.disk_usage(p).free for p in (os.environ['GITHUB_WORKSPACE'], os.environ['RUNNER_TEMP'])}
+          record = {'os': host, 'machine': platform.machine(), 'glibc': libc.gnu_get_libc_version().decode(),
+                    'free_bytes': capacity, 'estimated_peak_bytes': 4*1024**3, 'reserve_bytes': 20*1024**3,
+                    'floor_bytes': 30*1024**3, 'scientific_calls': 0, 'builds': 0}
+          record['passed'] = (host.get('ID') == 'ubuntu' and host.get('VERSION_ID') == '26.04'
+                              and record['machine'] == 'x86_64' and record['glibc'] == '2.43'
+                              and min(capacity.values()) >= 30*1024**3)
+          pathlib.Path(os.environ['RUNNER_TEMP'], 'weighted-host-entry-v1.json').write_text(json.dumps(record, indent=2)+'\n')
+          print(json.dumps(record))
+          if not record['passed']:
+              raise SystemExit('Host/capacity differs; stopped before checkout, runtime installation and numerical bodies')
+          PY
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.numpy == '1.24.4' && '3.11' || '3.13' }}
-      - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
-      - if: matrix.numpy == '1.24.4'
-        run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
-      - if: matrix.numpy != '1.24.4'
-        run: python -m pip install "numpy==2.5.4" "scikit-image==0.26.0" "pytest>=8"
-      - run: python -m pip install --no-deps build/wheels/*.whl
-      - run: python tools/diagnose_distance_precision.py > build/precision.json
-      - run: python tools/diagnose_distance_overlap.py > build/overlap.json
-      - run: python -m pytest -q tests/test_distance_math_provider.py
+          python-version: '3.11.17'
+      - name: Prepare exact runtime, compiler variants and fresh FP helper
+        run: python -B tools/diagnostics/prepare_weighted_contraction.py --source . --output build/weighted-contraction-v1 --expected-revision "${{ github.sha }}" --authority ROOT_AUTHORIZED_WEIGHTED_CONTRACTION_PREPARATION_V1
+      - name: Observe the fixed three-call comparison once
+        shell: bash
+        run: |
+          python -B - <<'PY'
+          import json, os, pathlib, subprocess, sys
+          command = json.loads(pathlib.Path('build/weighted-contraction-v1/body-command.json').read_text())
+          if command['argv'][0] != sys.executable:
+              raise SystemExit('Body interpreter differs from preparation')
+          result = subprocess.run(command['argv'], env=dict(os.environ, **command['env']))
+          pathlib.Path('build/weighted-contraction-v1/body-terminal.json').write_text(json.dumps({'exit_code': result.returncode})+'\n')
+          raise SystemExit(result.returncode)
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: distance-overlap-${{ matrix.numpy }}-${{ matrix.replica }}
+          name: weighted-contraction-${{ github.run_id }}
           path: |
-            build/precision.json
-            build/overlap.json
-            build/wheels/*.whl
+            ${{ runner.temp }}/weighted-host-entry-v1.json
+            build/weighted-contraction-v1/
+          if-no-files-found: error

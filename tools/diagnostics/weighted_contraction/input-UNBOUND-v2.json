@@ -1,0 +1,69 @@
+{
+  "status": "UNBOUND_NO_WEIGHTED_HUE_BODY_AUTHORITY",
+  "production_epoch": "a5f3aa9748b77540690189067fb1178385bb7500",
+  "source_revision": null,
+  "driver_sha256": "9ec911d0c04e88c9178e02a3d0b7fb4fa0fb9438777f86bf78c9e92fe6df8e94",
+  "cpp_source": {
+    "path": null,
+    "sha256": "dd8dd59f31f0d9a51bcf6f95f735a4f3965010a0e6486320c9c5989781720fef"
+  },
+  "maximum_invocations": 1,
+  "retries": 0,
+  "issued_utc": null,
+  "deadline_utc": null,
+  "caps": {
+    "original": 1,
+    "baseline": 1,
+    "strict": 1,
+    "backend": 1,
+    "fegetenv": 10,
+    "restore": 3,
+    "public_color": 0,
+    "timing": 0
+  },
+  "entry": {
+    "path": null,
+    "sha256": null
+  },
+  "source_root": null,
+  "canonical_source_pins": {
+    "src/distance_metrics.hpp": "63ae09db1a66f8493440cb2e11d6d6078462c000673b99ec3e6afa5f6a199293",
+    "tests/test_weighted_distance.py": "81433215024975b06e4dd2253bf18039d2ceb70a444ff70ce3d45b43a3eca118",
+    "CMakeLists.txt": "06ead19d2848e3d83fd3041a03cdb7ea6600abaf82faa8112497487ec3535fcc",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace"
+  },
+  "variants": {
+    "baseline": {
+      "path": null,
+      "sha256": null
+    },
+    "strict": {
+      "path": null,
+      "sha256": null
+    }
+  },
+  "original_source": {
+    "path": null,
+    "sha256": "da85c0746c1f49ccb60dbfd76556b1cc79d855026382cf1e2e0488b7f362b7b6"
+  },
+  "fenv_receipt": {
+    "path": null,
+    "sha256": null
+  },
+  "output": null,
+  "authority": {
+    "build": 0,
+    "helper": 0,
+    "scientific_import_or_setup": 0,
+    "original_get_dH2": 0,
+    "native_primitives": 0,
+    "public_color": 0,
+    "dispatch": 0,
+    "timing": 0
+  },
+  "note": "Root must produce actualentry/compile/runtime/helper evidence then issue distinctboundROOT_GO_WEIGHTED_HUE_CONTRACTION_V1; this template must failbefore imports/loads/output allocation."
+}
