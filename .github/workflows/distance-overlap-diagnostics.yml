@@ -1,36 +1,76 @@
-name: distance-overlap-diagnostics
+name: weighted-distance-correction
 on:
   workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  BLIS_NUM_THREADS: '1'
+  PIP_NO_CACHE_DIR: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+  CMAKE_BUILD_PARALLEL_LEVEL: '2'
 jobs:
-  diagnose:
-    strategy:
-      fail-fast: false
-      matrix:
-        replica: [1, 2]
-        numpy: ['1.24.4', '2.5.4']
+  parity:
     runs-on: ubuntu-latest
-    env:
-      CMAKE_BUILD_PARALLEL_LEVEL: '4'
-      OMP_NUM_THREADS: '1'
+    timeout-minutes: 50
     steps:
+      - name: Require the failed CI host profile and scratch capacity
+        run: |
+          python3 - <<'PY'
+          import os, platform, shutil
+          assert platform.freedesktop_os_release()['VERSION_ID'] == '26.04'
+          assert os.confstr('CS_GNU_LIBC_VERSION') == 'glibc 2.43'
+          sizes = {k: shutil.disk_usage(os.environ[k]).free for k in ('GITHUB_WORKSPACE', 'RUNNER_TEMP')}
+          print(sizes)
+          assert min(sizes.values()) >= 30*1024**3
+          PY
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.numpy == '1.24.4' && '3.11' || '3.13' }}
-      - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
-      - if: matrix.numpy == '1.24.4'
-        run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
-      - if: matrix.numpy != '1.24.4'
-        run: python -m pip install "numpy==2.5.4" "scikit-image==0.26.0" "pytest>=8"
-      - run: python -m pip install --no-deps build/wheels/*.whl
-      - run: python tools/diagnose_distance_precision.py > build/precision.json
-      - run: python tools/diagnose_distance_overlap.py > build/overlap.json
-      - run: python -m pytest -q tests/test_distance_math_provider.py
+          python-version: '3.11.17'
+      - name: Build once and check installed Python and SDK parity
+        run: python -B tools/diagnostics/validate_weighted_correction.py parity
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: distance-overlap-${{ matrix.numpy }}-${{ matrix.replica }}
+          name: weighted-correction-product-${{ github.run_id }}
+          path: build/weighted-validation/
+          if-no-files-found: warn
+  measure:
+    needs: parity
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Require the failed CI host profile and scratch capacity
+        run: |
+          python3 - <<'PY'
+          import os, platform, shutil
+          assert platform.freedesktop_os_release()['VERSION_ID'] == '26.04'
+          assert os.confstr('CS_GNU_LIBC_VERSION') == 'glibc 2.43'
+          sizes = {k: shutil.disk_usage(os.environ[k]).free for k in ('GITHUB_WORKSPACE', 'RUNNER_TEMP')}
+          print(sizes)
+          assert min(sizes.values()) >= 30*1024**3
+          PY
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: weighted-correction-product-${{ github.run_id }}
+          path: build/weighted-validation/
+      - name: Measure the admitted installed product on a fresh runner
+        run: python -B tools/diagnostics/validate_weighted_correction.py measure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weighted-correction-speed-${{ github.run_id }}
           path: |
-            build/precision.json
-            build/overlap.json
-            build/wheels/*.whl
+            build/weighted-validation/measure-entry.json
+            build/weighted-validation/benchmark-terminal.json
+            build/weighted-validation/speed-result.json
+            build/weighted-validation/distance.json
+            build/weighted-validation/distance.md
+          if-no-files-found: warn
