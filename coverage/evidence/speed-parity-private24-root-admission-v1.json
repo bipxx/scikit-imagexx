@@ -1,0 +1,274 @@
+{
+  "schema": "speed-parity-private24-root-admission-v1",
+  "status": "PASS_PRIVATE_SINGLE_HOST_ONLY_RELEASE_PENDING",
+  "owner": "root",
+  "authorization": "User requires at least original scikit-image speed if not faster.",
+  "base_main": "1a23d1661edcc8e19ed586483834071cb5d097f2",
+  "integration_head_with_current_math": "9fc98a4e4ee6f98c3f874cbb85294ca4f6fd7050",
+  "current_shared_find_sha256": "eadb2ee233a634d8501fbea749924bbb8c4b8b21ba95485c5266675f93d2c134",
+  "metric": "Original public-call median / current native public-call median >=1.0 separately for every assessed case; no averaged acceptance.",
+  "method": {
+    "host": "Intel Core i7-12700K",
+    "OS": "WSL Ubuntu Linux 6.18.58.1 / glibc2.39",
+    "python": "3.11.14",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "original_scikit_image": "0.26.0",
+    "sampler": "Unchanged tools/montage_sustained.py:measure",
+    "worker_budget": 1,
+    "OMP_OPENBLAS_MKL_BLIS_environment_threads": 1,
+    "runtime_threadpool_introspection": false,
+    "samples_per_arm": 7,
+    "target_ms_per_sample": 100,
+    "warmup_ms_per_arm_minimum": 250,
+    "allocation_included": true,
+    "benchmark_isolation": "No concurrent build/test allocation-heavy jobs during retained accepted timing batches.",
+    "accepted_samples": 336,
+    "warmup_groups": 48
+  },
+  "cases": [
+    {
+      "family": "LBP",
+      "case": "gray-u8-C",
+      "speedup": 2.119773679359399,
+      "original_ms": 0.19157630308219178,
+      "current_ms": 0.0903758287724785
+    },
+    {
+      "family": "LBP",
+      "case": "RGB-f32-F",
+      "speedup": 3.3727256329590256,
+      "original_ms": 0.050984295199641094,
+      "current_ms": 0.01511664474020988
+    },
+    {
+      "family": "LBP",
+      "case": "RGB-f64-reverse-wrap",
+      "speedup": 1.4193613027625198,
+      "original_ms": 0.10491743886861314,
+      "current_ms": 0.07391876801517068
+    },
+    {
+      "family": "LBP",
+      "case": "RGB-f64-C-large",
+      "speedup": 1.0678117373335094,
+      "original_ms": 0.8170829854014598,
+      "current_ms": 0.7651938603351955
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood-uint8-C",
+      "original_ms": 0.6076607025641027,
+      "current_ms": 0.4456901285140562,
+      "speedup": 1.3634152153875632
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood-uint8-F",
+      "original_ms": 0.5815298290155441,
+      "current_ms": 0.45133791187739464,
+      "speedup": 1.2884577468721836
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood-float32-C",
+      "original_ms": 0.5980865722543353,
+      "current_ms": 0.5301399720930232,
+      "speedup": 1.1281672836195598
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood-float32-F",
+      "original_ms": 0.5900398677248677,
+      "current_ms": 0.47487103361344535,
+      "speedup": 1.2425265513355614
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood_fill-uint8-C",
+      "original_ms": 0.6505290828402367,
+      "current_ms": 0.5559342551020409,
+      "speedup": 1.1701547024132073
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood_fill-uint8-F",
+      "original_ms": 0.6201325544554455,
+      "current_ms": 0.5876435284974093,
+      "speedup": 1.0552869628992765
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood_fill-float32-C",
+      "original_ms": 0.6297791005586592,
+      "current_ms": 0.6187441086956522,
+      "speedup": 1.0178345000912725
+    },
+    {
+      "family": "FLOOD",
+      "case": "flood_fill-float32-F",
+      "original_ms": 0.6623470121951219,
+      "current_ms": 0.5895833940886699,
+      "speedup": 1.1234153112791179
+    },
+    {
+      "family": "MARK",
+      "case": "gray-u8-outer",
+      "original_ms": 12.553279777777778,
+      "current_ms": 11.528036181818182,
+      "speedup": 1.0889348003241517
+    },
+    {
+      "family": "MARK",
+      "case": "RGB-f32-thick",
+      "original_ms": 6.378504666666667,
+      "current_ms": 3.420328388888889,
+      "speedup": 1.8648807779356988
+    },
+    {
+      "family": "MARK",
+      "case": "gray-u16-F-inner",
+      "original_ms": 7.295379933333334,
+      "current_ms": 5.8035438,
+      "speedup": 1.2570560651809561
+    },
+    {
+      "family": "MARK",
+      "case": "RGB-f64-reverse-outline",
+      "original_ms": 16.82029775,
+      "current_ms": 14.4606045,
+      "speedup": 1.1631808165419364
+    },
+    {
+      "family": "MARK",
+      "case": "gray-f64-subpixel",
+      "original_ms": 48.13231233333334,
+      "current_ms": 7.6903276875,
+      "speedup": 6.258811625357458
+    },
+    {
+      "family": "MARK",
+      "case": "RGB-f32-subpixel-outline",
+      "original_ms": 48.253807,
+      "current_ms": 7.5433208125,
+      "speedup": 6.3968917933383995
+    },
+    {
+      "family": "MARK",
+      "case": "singleton-subpixel-version",
+      "original_ms": 0.0986048536155203,
+      "current_ms": 0.010880412135190278,
+      "speedup": 9.062602812314873
+    },
+    {
+      "family": "MARK",
+      "case": "half-promotion-provider",
+      "original_ms": 10.110289909090909,
+      "current_ms": 9.081449384615384,
+      "speedup": 1.113290343964087
+    },
+    {
+      "family": "FIND64",
+      "case": "int64-C-thick",
+      "original_ms": 4.3527784,
+      "current_ms": 1.7658692083333332,
+      "speedup": 2.464949487458502
+    },
+    {
+      "family": "FIND64",
+      "case": "int64-F-inner",
+      "original_ms": 11.138939333333333,
+      "current_ms": 1.941646380952381,
+      "speedup": 5.736852725916891
+    },
+    {
+      "family": "FIND64",
+      "case": "int64-C-outer",
+      "original_ms": 13.727590333333334,
+      "current_ms": 12.7983185,
+      "speedup": 1.0726089004062005
+    },
+    {
+      "family": "FIND64",
+      "case": "uint64-C-outer",
+      "original_ms": 15.783960125,
+      "current_ms": 14.153685444444443,
+      "speedup": 1.1151837581070072
+    }
+  ],
+  "performance_proofs": [
+    {
+      "path": "build/speed-parity-lbp-v1/root-performance-admission-iteration-2.json",
+      "sha256": "4a45d8caa5119c0c436f96837ce23ba7930c207cb95203e0816c049d3c1e0e24",
+      "status": "ROOT_PASS_PRIVATE_LBP_FIXED4_PER_CASE_SPEED_PARITY_ITERATION2",
+      "source": "frozeniteration2 bytepins/compile-iteration-2 and root-runtime-admission-iteration-2",
+      "scope": "Same12700K Linux3.11.14/NP1.24.4/Scipy1.15.3/original0.26 allocation-inclusive publiccalls/worker1/envpool1; no librarywide/genuineprofile/otherplatform claim",
+      "raw_samples_verified": 56,
+      "result_sha256": "754be5d4a462344368baa24b09cafcd40fa18ecd5ffd20b2833c08f9c49e545d",
+      "journal_sha256": "1b8dd84671817c9cd3dc10f7f2989c0fc93f9a48d3f0e56cf2458564c5df6c99"
+    },
+    {
+      "path": "build/speed-parity-flood-v1/root-performance-admission-iteration-2.json",
+      "sha256": "365a80a7e10d1f120fa15e24fcd1a85e2a3f9a7dd9dcaec6adb4c18fab51c91a",
+      "status": "ROOT_PASS_PRIVATE_FLOOD_FIXED8_PER_CASE_SPEED_PARITY_ITERATION2",
+      "source": "compile-iteration-2 and root-runtime-admission-iteration-2 exact87c3/9eb/sourcepins; core2f1bd2",
+      "scope": "Same12700K Linux3.11.14/NP1.24.4/Scipy1.15.3/original0.26; no librarywide/allplatform/genuine-speed claim",
+      "raw_samples_verified": 112,
+      "result_sha256": "f569c51b8abb26d84bd1c53f741011f30fc4af850a6c0b75b80988b63a5c3b1a",
+      "journal_sha256": "a3e82e488d0025eb7dd5f8b3eaa4abfb98e80f3c8a66c440059d956657a18355"
+    },
+    {
+      "path": "build/speed-parity-root-v1/find64-pooled-v1/root-mark-performance-admission-v1.json",
+      "sha256": "5df60612963fcfda9c1f456f83cb2bee30b5262f505e0b5cabc42c635161e86a",
+      "status": "ROOT_PRIVATE_MARK8_ON_POOLED_FIND_ALL_SPEED_PARITY_PASS",
+      "source": "MARK93d2/7e2+sharedfindeadb/core5f80, private474/5SDK/review passed",
+      "scope": "Same12700K Linux3.11.14/NP1.24.4/Scipy1.15.3/original0.26 allocationinclusive publiccalls/worker1/envpool1",
+      "raw_samples_verified": 112,
+      "result_sha256": "90345a82b4fc7d558c757a886ea9341a9b4e8575765a5a647d922759ebfa89db",
+      "journal_sha256": "b67dd5c0497f2e726602b1b44101586acf93ba4b956395032a82721e363e5e8e"
+    },
+    {
+      "path": "build/speed-parity-root-v1/find64-pooled-v1/root-find64-performance-admission-v1.json",
+      "sha256": "f0a56b5515ec0c48b8d659a835f51b1f6d3908bb5da097eddfa169321325200d",
+      "status": "ROOT_PRIVATE_FIND64_FOUR_ALL_SPEED_PARITY_PASS",
+      "source": "eadb pooledsuccessor/core5f80, compilednormal/private474+5SDK+review passed",
+      "scope": "Same12700K Linux3.11.14/NP1.24.4/Scipy1.15.3/original0.26, allocationinclusive publiccalls/oneworker/envpool1; no crosshost absolute timegain claim",
+      "raw_samples_verified": 56,
+      "result_sha256": "97afcf5324a38ff5a617d4dca6ebb43edc141a7af9c28c68adadfa682de67554",
+      "journal_sha256": "1fe8ac869572582a387e3a788e2a621618cc5995b3aac222cc35a02f11cc86dd"
+    }
+  ],
+  "runtime_proofs": [
+    {
+      "path": "build/speed-parity-lbp-v1/root-runtime-admission-iteration-2.json",
+      "sha256": "55dddd1d06b601867dc14c9000c79ad4c16255bb5dc980a81d91a8dd33cb0cab"
+    },
+    {
+      "path": "build/speed-parity-flood-v1/root-runtime-admission-iteration-2.json",
+      "sha256": "a6b80520aa13eb3590fd95a440f2cb129ecab1402b0cc5de4972f97da6992f1b"
+    },
+    {
+      "path": "build/speed-parity-root-v1/find64-pooled-v1/root-runtime-admission-v1.json",
+      "sha256": "9f8b45661de98cb072bc9c44faac91fcc231ceee3869af54228d799dc576f106"
+    }
+  ],
+  "preserved_failures": {
+    "initial_fixed20": "16 slow cases (LBP4, MARK5, FLOOD7) retained in build/speed-parity-root-v1 private baseline; no current-source credit assigned to that baseline.",
+    "predecessor_shared_find": "build/speed-parity-root-v1/find64-public-comparison-v1 retains uint64-C-outer ratio0.837033 for predecessor76b5. New eadb pools typed conversions and passes the four unchanged supplemental cases. Absolute timings across separate campaigns are not compared.",
+    "source_barrier": "build/speed-parity-integration-v1/windows311-affected-v2 actualexit1; metadata/history corrections and BOTH source barriers remain pending."
+  },
+  "limits": [
+    "Private family-specific normal installed products and exact unchanged math/runtime scopes; not a current combined genuine release product.",
+    "Direct64-bit supplemental cases are separate from the historical12-case <=32-bit/bool find benchmark.",
+    "No library-wide, all-host, full477-contract, class/member or shipped-speed claim.",
+    "Default NumPy/scikit-image public providers and disclosed unsupported/slower historical domains remain as recorded; no upstream whole-function forwarding.",
+    "Successful benchmark full caller32 restoration is asserted by the source-bound harness; paired raw restored buffers were not emitted in every timing record."
+  ],
+  "pending": [
+    "Complete current source-only barriers BOTH supported Pythons with actual workflow selectors and normal conftest/plugins, no failfast.",
+    "Combined SDK normal/runtime-disabled/true compiler-scalar/ASanUBSan and actual source/mode/ownership/FP admission.",
+    "Exact-source four-profile qualification and independent product/collector/stager admission.",
+    "Current controlled public performance and exact shipping projection, merge/push and closeout."
+  ],
+  "reuse_and_waste": "Reused retained environments, canonical cases/sampler and unchanged compiled objects. Preserved losses and setup failures; changed-input experiments only. Existing task plan/ledger retains dispatch state and next owner/trigger."
+}

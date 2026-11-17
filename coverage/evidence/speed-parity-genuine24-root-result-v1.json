@@ -1,0 +1,396 @@
+{
+  "schema": "speed-parity-genuine-fixed24-root-v1",
+  "status": "FAIL_PER_CASE_SPEED_GATE_20_WINS_4_LOSSES",
+  "owner": "root",
+  "source": "75b219475ade7ad575f3ce82f569200d85329067",
+  "tree": "7d525a3e032591eaa551569bba2ca86ddbf99747",
+  "run": 44061505844,
+  "product_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\dispatch-v1\\root-whole-product-admission-v1.json",
+    "sha256": "2d24f732f7329d602c2b166d43d5557b73dc291c91de7459665ecc76d2135af6"
+  },
+  "entry_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\measurement-entry-v1\\root-measurement-entry-admission-v1.json",
+    "sha256": "bbcf54af1a577dbebee21a04645d47999757b13a4e3c9a8a3b41bee2ee6dc2ba"
+  },
+  "GO": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\root-controlled24-GO-v1.json",
+    "sha256": "7be17a099e2bb6a32a1e4866ad88fadfb2171bca66bb0b40d4d50936cefb4c0e"
+  },
+  "actual_parent_exit": 0,
+  "protocol_passed": true,
+  "per_case_speed_gate_passed": false,
+  "counts": {
+    "accepted_samples": 336,
+    "warmup_groups": 48,
+    "journal_batches": 530
+  },
+  "cases": [
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "gray-u8-outer",
+      "original_ms": 10.51391475,
+      "current_ms": 9.682290153846154,
+      "speedup": 1.0858913111402155,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "RGB-f32-thick",
+      "original_ms": 5.8353607,
+      "current_ms": 2.8204966000000002,
+      "speedup": 2.0689125099459433,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "gray-u16-F-inner",
+      "original_ms": 6.670367388888889,
+      "current_ms": 5.998180789473684,
+      "speedup": 1.112065078230859,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "RGB-f64-reverse-outline",
+      "original_ms": 14.776278125,
+      "current_ms": 11.827619363636364,
+      "speedup": 1.2493028115555689,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "gray-f64-subpixel",
+      "original_ms": 48.341070333333334,
+      "current_ms": 7.490862666666667,
+      "speedup": 6.453338218099313,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "RGB-f32-subpixel-outline",
+      "original_ms": 47.94998833333334,
+      "current_ms": 7.328853125,
+      "speedup": 6.542631911910957,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "singleton-subpixel-version",
+      "original_ms": 0.09125252066772656,
+      "current_ms": 0.009744765618377555,
+      "speedup": 9.364260182475231,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "MARK",
+      "api": "segmentation.mark_boundaries",
+      "case": "half-promotion-provider",
+      "original_ms": 10.112493,
+      "current_ms": 8.866675142857144,
+      "speedup": 1.1405056390440185,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "gray-u8-C",
+      "original_ms": 0.1794499708141321,
+      "current_ms": 0.08181464516129032,
+      "speedup": 2.193372231345163,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "RGB-f32-F",
+      "original_ms": 0.04166702243937749,
+      "current_ms": 0.01304842400719991,
+      "speedup": 3.1932609192026793,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "RGB-f64-reverse-wrap",
+      "original_ms": 0.09530045198170732,
+      "current_ms": 0.07040247025316455,
+      "speedup": 1.3536521039533214,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "LBP",
+      "api": "feature.draw_multiblock_lbp",
+      "case": "RGB-f64-C-large",
+      "original_ms": 0.5716355204081633,
+      "current_ms": 0.518157047826087,
+      "speedup": 1.1032090035375255,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-uint8-C",
+      "original_ms": 0.5844372272727273,
+      "current_ms": 0.431016734082397,
+      "speedup": 1.3559502011376687,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-uint8-F",
+      "original_ms": 0.5093765555555556,
+      "current_ms": 0.39204044406779665,
+      "speedup": 1.2992959355679836,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-float32-C",
+      "original_ms": 0.5525679346733668,
+      "current_ms": 0.5111912,
+      "speedup": 1.0809417976549027,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood",
+      "case": "flood-float32-F",
+      "original_ms": 0.5292541727272727,
+      "current_ms": 0.47640651666666667,
+      "speedup": 1.1109297505633884,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-uint8-C",
+      "original_ms": 0.6205460815217392,
+      "current_ms": 0.5206621244239631,
+      "speedup": 1.1918402595700295,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-uint8-F",
+      "original_ms": 0.5533702613065327,
+      "current_ms": 0.4983732675438597,
+      "speedup": 1.1103530171947533,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-float32-C",
+      "original_ms": 0.5880031052631579,
+      "current_ms": 0.6201029893617022,
+      "speedup": 0.9482345922383216,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-float32-F",
+      "original_ms": 0.5953631624365483,
+      "current_ms": 0.605758752631579,
+      "speedup": 0.9828387288671118,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-C-thick",
+      "original_ms": 2.2858703921568626,
+      "current_ms": 1.5570683974358974,
+      "speedup": 1.4680603600465594,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-F-inner",
+      "original_ms": 4.5176650370370375,
+      "current_ms": 1.5509033108108108,
+      "speedup": 2.9129250067015504,
+      "at_least_parity": true,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-C-outer",
+      "original_ms": 6.452886166666667,
+      "current_ms": 7.241068625,
+      "speedup": 0.891151085682007,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "uint64-C-outer",
+      "original_ms": 6.377814894736842,
+      "current_ms": 7.5426671333333335,
+      "speedup": 0.8455649416837373,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    }
+  ],
+  "losses": [
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-float32-C",
+      "original_ms": 0.5880031052631579,
+      "current_ms": 0.6201029893617022,
+      "speedup": 0.9482345922383216,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FLOOD",
+      "api": "morphology.flood_fill",
+      "case": "flood_fill-float32-F",
+      "original_ms": 0.5953631624365483,
+      "current_ms": 0.605758752631579,
+      "speedup": 0.9828387288671118,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "int64-C-outer",
+      "original_ms": 6.452886166666667,
+      "current_ms": 7.241068625,
+      "speedup": 0.891151085682007,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    },
+    {
+      "family": "FIND64",
+      "api": "segmentation.find_boundaries",
+      "case": "uint64-C-outer",
+      "original_ms": 6.377814894736842,
+      "current_ms": 7.5426671333333335,
+      "speedup": 0.8455649416837373,
+      "at_least_parity": false,
+      "observed_target_raw32_equal": true
+    }
+  ],
+  "raw_proofs": [
+    {
+      "lane": "mark",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\execution-v1\\mark\\terminal.json",
+        "sha256": "e959a35030c0983585ef0e03dffd198887714d1313cf8fb5be02afb9c5f61ef4"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\mark\\result.json",
+        "sha256": "92dc3b23decefad94412c662940209a3ed57acbc76c326475ba4a722ed8187f9"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\mark\\batches.jsonl",
+        "sha256": "a923411afee0fd85249e4d698b928ce6f3414ab636a5e11dc888cda6d6aae77c"
+      }
+    },
+    {
+      "lane": "lbp",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\execution-v1\\lbp\\terminal.json",
+        "sha256": "d679cea8f885e67ccbe2aa1c887dcba60e7d33580a753aa85a9db5dbae43e4fd"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\lbp\\result.json",
+        "sha256": "a65a3f5eafc682283f08fa45d1e4217fe78cc115b256f46a98b76569013f5a5e"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\lbp\\batches.jsonl",
+        "sha256": "0d086be132163e07d68a2c66983093492739907c8ec9449e6446932060c00a8f"
+      }
+    },
+    {
+      "lane": "flood",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\execution-v1\\flood\\terminal.json",
+        "sha256": "e8dae029456b0a5a08db03c0230fca143e9721060749281297c934d229f75627"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\flood\\result.json",
+        "sha256": "1e12d9aaa8d1036c09a6a1e073ee9ef19510d8f8ea9840ef8fc8fae1f4ee7a6a"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\flood\\batches.jsonl",
+        "sha256": "0eb2c04ddf10e7e64cc6c185c4ad5d9feee1341ea77504c5fad1c22df3a03dab"
+      }
+    },
+    {
+      "lane": "find64",
+      "terminal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\execution-v1\\find64\\terminal.json",
+        "sha256": "8fd71c8f0748636a82a99f37376e2138acd1e8cd92348168d688abf22ca9a2fc"
+      },
+      "result": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\find64\\result.json",
+        "sha256": "a4aa6b25fd4646462d9b025602e6d0a6815592339869af77b6f3817281d96963"
+      },
+      "journal": {
+        "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\controlled24-v1\\find64\\batches.jsonl",
+        "sha256": "e4c9c9e2dc5b5728c87c023b7d74b03d12f9747281b290cad7521b915e57a1d9"
+      }
+    }
+  ],
+  "host": "12th Gen Intel(R) Core(TM) i7-12700K",
+  "runtime": {
+    "python": "3.11.14 (main, Feb 12 2026, 00:42:50) [Clang 21.1.4 ]",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "original": "0.26.0"
+  },
+  "metric": "Every case original median/current median>=1.0;7samples perarm/100ms target/250ms warmup/oneworker+threadpools1/allocation-inclusive unchanged sampler.",
+  "limits": [
+    "Measured genuine minimum product on retained3.11.14; producer3.11.17. No performance claim for other release hosts/runtime profiles.",
+    "Harness historical PRIVATE labels retained unchanged; root binds actual genuine product and accepts protocol independently.",
+    "Exact output/target FP/software/caller32 restoration assertions passed; successful restored caller32 after every batch not serialized. Raw output hash present, separate expected output buffers not emitted.",
+    "Other APIs/domains/class/full477 and historical losses remain open."
+  ],
+  "closeout": {
+    "result": "All24 cases executed once; protocol passed, speed gate failed4. No main merge/push is authorized by this result.",
+    "useful_rejected_experiment": "Private merged-source wins did not establish genuine-product speed. Current genuine differences are measured; compiler/build codegen cause remains unverified.",
+    "next_plan": "Optimize demonstrated two flood_fill-float32 and two find64 outer losses on changed source, inspect actual producer/private compile recipe before compile; preserve20wins and allstrict correctness/SDK/qualification gates.",
+    "next_owner": "root with independent flood/find implementation lanes and runtime/compiler admission reviewer",
+    "retries": 0,
+    "cleanup": "Current product/source/runtime/raw evidence protected for successor; no archives retained; policy-blocked paths manual-only."
+  }
+}

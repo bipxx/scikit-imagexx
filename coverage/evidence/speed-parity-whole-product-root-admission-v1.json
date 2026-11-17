@@ -1,0 +1,61 @@
+{
+  "status": "PASS_ROOT_EXACT_SOURCE_FOUR_GENUINE_PROFILES_AND_THREE_STAGERS",
+  "passed": true,
+  "root_accepted": true,
+  "source": "75b219475ade7ad575f3ce82f569200d85329067",
+  "tree": "7d525a3e032591eaa551569bba2ca86ddbf99747",
+  "run": 44061505844,
+  "workflow": 394745989,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44061505844",
+  "profiles": 4,
+  "stagers": 3,
+  "profile_admission": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\dispatch-v1\\root-four-profile-admission-v1.json",
+    "sha256": "5fbf071c3de3dd4cd01f35b0746693b8de642adda16e9f83a0958046e960708c"
+  },
+  "stager_admissions": [
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\whole-reader-entry-v1\\run44061505844-v1\\actual-execution-v1\\minimum\\accepted-v1.json",
+      "sha256": "f38dfc426b0a3ff4076ffd8f93e446d0fbea0a77493f4c7cddf42d34ec04f9ae"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\whole-reader-entry-v1\\run44061505844-v1\\actual-execution-v1\\modern\\accepted-v1.json",
+      "sha256": "e8eb99646dada4a25734d4ee947b455fb3bc735bb284d276403f4b0526b9433f"
+    },
+    {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\whole-reader-entry-v1\\run44061505844-v1\\actual-execution-v1\\windows\\accepted-v1.json",
+      "sha256": "aea0d922025258d8cbd5378a96e083761491943ee9d71c0aceaaf44ed96091e3"
+    }
+  ],
+  "xml": {
+    "tests": 965600,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "SDK_checks": 304,
+  "frozen_corpora": 48,
+  "root_materialization": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\dispatch-v1\\root-materialization-retention-admission-v1.json",
+    "sha256": "84ae5895b882da0ceac0671a88cd129c9cebebf431c33f1f8e66daf613fa2c57"
+  },
+  "root_capacity": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\speed-parity-release-v1\\dispatch-v1\\root-capacity-admission-v1.json",
+    "sha256": "8ce098fae30b05a6b3bd722482a8536c3a97b38c8eab69e421a885dbf1bfef5f"
+  },
+  "transport_archives_retained": 0,
+  "payload_hash_replay": 0,
+  "scope": "Exact source candidate281partial images/284registrations onminimum/modern/debug/Windows, normal+runtime-disabled over same product. Source3498/package228/SDK108/header94 each. Private true compiler-scalar/SAN remain separate. Contract/domain/library-wide speed claims remain open.",
+  "pending": [
+    "controlled24 genuine minimum measurement and per-case >=1.0 admission",
+    "shipping source projection/main push"
+  ],
+  "closeout": {
+    "result": "Product-data gate passed using7 unchanged metadata readers actual0, root per-result inspection and retained raw receipts.",
+    "reuse": "Once-authenticated API memory extraction, source maps/seals and24 previously extracted dependencies reused. No scientific rerun, binary rebuild or archive retained.",
+    "waste": "One root patch-vs-full-binding metadata comparison failed before readers; narrowed to10existing-field equations,0changed. Failure receipt retained; no science invalidated.",
+    "next_owner": "root",
+    "next_trigger": "Authorize separate isolated fixed24 against actual admitted minimum prefix after ABI/runtime/entry identity.",
+    "cleanup": "Current extracted products/dependencies remain protected for measurement and shipping. No scratch allocation in metadata readers. Policy-blocked roots remain manual-only."
+  }
+}
