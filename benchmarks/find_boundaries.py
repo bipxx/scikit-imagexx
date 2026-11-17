@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v5.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v6.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -106,6 +106,8 @@ def f_row_predecessor(name, raw):
 
 
 def layout_predecessor(name, raw):
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    raw=predecessor_bytes(ROOT,name,raw,canonical=True)
     """Authenticate only the two independently admitted component changes."""
     raw=f_row_predecessor(name,raw)
     context_path=ROOT/'coverage/contracts/find-boundaries-layout-source-context-v1.json'
@@ -121,7 +123,7 @@ def layout_predecessor(name, raw):
     return raw
 
 
-def validate_source_closure(contract):
+def _validate_predecessor_source_closure(contract):
     successor=contract['f_row_successor'];raw=(ROOT/successor['contract']).read_bytes()
     assert set(successor)=={'contract','sha256','context','context_sha256','added_source_pins','driver_inverse','scope'}
     assert successor['context']=='coverage/contracts/find-boundaries-f-row-source-context-v1.json' and successor['context_sha256']=='f12070193ebf7ca993f4ca04fcb5f8563d7a297a8e029386770d7ea4a7d73b29'
@@ -134,6 +136,8 @@ def validate_source_closure(contract):
     assert set(contract['source_closure'])==set(previous['source_closure'])|set(successor['added_source_pins'])
     for name,pin in contract['source_closure'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        from tools.mark_lbp_fp_context import predecessor_bytes
+        raw=predecessor_bytes(ROOT,name,raw,canonical=True)
         assert hashlib.sha256(raw).hexdigest()==pin,name
         if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp','tests/test_find_boundaries_layout_contract.py'):
             raw=f_row_predecessor(name,raw)
@@ -145,6 +149,23 @@ def validate_source_closure(contract):
             assert pin==successor['added_source_pins'][name];continue
         else:assert pin==previous['source_closure'][name]
         assert hashlib.sha256(raw).hexdigest()==previous['source_closure'][name],name
+
+
+
+def validate_source_closure(contract):
+    # Five runtime provenance fields were authenticated by load_root_binding.
+    # Every immutable current recipe/method/source pin remains exactly tracked.
+    tracked=json.loads(CONTRACT.read_bytes())
+    provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
+    assert {k:v for k,v in contract.items()if k not in provenance}=={k:v for k,v in tracked.items()if k not in provenance}
+    for name,pin in tracked['source_closure'].items():
+        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+    row=tracked['mark_wide_successor'];raw=(ROOT/row['contract']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==row['sha256']
+    old=json.loads(raw)
+    assert {k:v for k,v in tracked.items()if k not in {'source_closure','mark_wide_successor'}}=={k:v for k,v in old.items()if k!='source_closure'}
+    for name in provenance:old[name]=contract[name]
+    _validate_predecessor_source_closure(old)
 
 
 def main():

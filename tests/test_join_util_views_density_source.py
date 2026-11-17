@@ -35,13 +35,13 @@ def test_compatible_shared_density_context_is_exact_and_tamper_refuses():
     context=json.loads((ROOT/'coverage/contracts/util-views-density-additive-context-v1.json').read_bytes())
     spec=importlib.util.spec_from_file_location('combined_current_source',ROOT/'tools/join_source_context.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
     for name,row in context['sources'].items():
-        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256']
+        actual=(ROOT/name).read_bytes().replace(b'\r\n',b'\n');raw=m.enabled_predecessor_bytes(ROOT,name,actual);assert hashlib.sha256(raw).hexdigest()==row['current_canonical_lf_sha256']
         projected=raw
         for f in row['inverse_fragments']:
             assert projected.count(f['current'].encode())==1;projected=projected.replace(f['current'].encode(),f['predecessor'].encode(),1)
         assert hashlib.sha256(projected).hexdigest()==row['predecessor_canonical_lf_sha256']
-        m.predecessor_bytes(ROOT,name,raw)
-        with pytest.raises(AssertionError):m.predecessor_bytes(ROOT,name,raw+b'\n// UNADMITTED_CHANGE\n')
+        m.predecessor_bytes(ROOT,name,actual)
+        with pytest.raises(AssertionError):m.predecessor_bytes(ROOT,name,actual+b'\n// UNADMITTED_CHANGE\n')
     metric=runpy.run_path(str(ROOT/'tools/label_pair_benchmark_context.py'))
     metric['validate_source_closure'](ROOT,json.loads((ROOT/'coverage/contracts/label-pair-metrics-benchmark-v1.json').read_bytes()))
 
@@ -70,7 +70,8 @@ def test_saved_view_profile_and_actual_helper_prepare_seal_transport(profile):
     q=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
     base=q['groups_for_source'](ROOT);groups=q['applicable_public_groups'](base,profile)
     assert all(groups[n]==v for n,v in base.items())
-    if profile=='windows':assert groups==base
+    if profile=='windows':
+        assert groups==dict(base,**{'public-VI-current-windows':('test_vi_public_matmul_windows_public.py',)})
     else:assert groups['public-util-views-saved-linux']==('test_util_views_public.py',)and groups['public-regular-grid-saved-linux']==('test_regular_grid_public.py',)
     for name in ('tests/util_views_fenv_restore.c','tests/util_views_fenv_build.py','tests/util_views_fenv.py','tests/util_views_fenv_probe.py','coverage/contracts/util-views-fenv-v1.json'):
         assert q['DRAW_SOURCE_PATHS'].count(name)==1

@@ -1,0 +1,60 @@
+"""Exact admitted VI component bytes through current shared fixture additions."""
+import importlib.util
+from pathlib import Path
+
+
+def historical_source(root,name):
+    root=Path(root);path=root/'tools/join_source_context.py'
+    spec=importlib.util.spec_from_file_location('_vi_shared_source_projection',path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module.enabled_predecessor_bytes(root,name,(root/name).read_bytes())
+
+
+def provider_predecessor_source(root,name,raw=None,canonical=False):
+    """Exact32e source only, for immutable VI history; not current acceptance."""
+    root=Path(root)
+    if raw is None:raw=(root/name).read_bytes()
+    if (root/'coverage/contracts/vi-public-matmul-source-history-v1.json').is_file():
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        from tools.vi_public_matmul_context import predecessor_bytes as matmul_predecessor
+        raw=matmul_predecessor(root,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,canonical)
+    if (root/'coverage/contracts/current281-validation-source-v1.json').is_file():
+        from tools.mark_lbp_fp_context import CURRENT_VALIDATION_CONTEXT_SHA256
+        from tools.current_validation_context import predecessor_bytes as current_validation_predecessor
+        raw=current_validation_predecessor(root,name,raw,CURRENT_VALIDATION_CONTEXT_SHA256,canonical)
+    if (root/'coverage/contracts/qualification-capacity-source-v1.json').is_file():
+        from tools.mark_lbp_fp_context import QUALIFICATION_CAPACITY_CONTEXT_SHA256
+        from tools.qualification_capacity_context import predecessor_bytes as capacity_predecessor
+        raw=capacity_predecessor(root,name,raw,QUALIFICATION_CAPACITY_CONTEXT_SHA256,canonical)
+    if (root/'coverage/contracts/vi-public-log2-reference-source-v2.json').is_file():
+        from tools.mark_lbp_fp_context import VI_PUBLIC_REFERENCE_CONTEXT_SHA256
+        from tools.vi_public_reference_context_v2 import predecessor_bytes as reference_predecessor
+        raw=reference_predecessor(root,name,raw,VI_PUBLIC_REFERENCE_CONTEXT_SHA256,canonical)
+    if (root/'coverage/contracts/vi-provider-sdk-source-v1.json').is_file():
+        from tools.mark_lbp_fp_context import VI_PROVIDER_SDK_CONTEXT_SHA256
+        from tools.vi_provider_sdk_context import predecessor_bytes as sdk_predecessor
+        raw=sdk_predecessor(root,name,raw,VI_PROVIDER_SDK_CONTEXT_SHA256,canonical)
+    if not(root/'coverage/contracts/vi-public-log2-provider-source-v1.json').is_file():return raw
+    from tools.mark_lbp_fp_context import VI_PUBLIC_LOG2_CONTEXT_SHA256
+    from tools.vi_public_log2_context import predecessor_bytes
+    return predecessor_bytes(root,name,raw,VI_PUBLIC_LOG2_CONTEXT_SHA256,canonical)
+
+
+def qualified_diagnostic_source(root, name):
+    """Exact prepared dependency of the frozen16a5 diagnostic, not current code."""
+    import hashlib
+    import json
+    root = Path(root)
+    context = json.loads((root / 'coverage/contracts/vi-cohort-value-diagnostic-v4.json').read_bytes())
+    pin = context['prepared_dependencies'][name]
+    raw = (root / name).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != pin:
+        assert name == 'benchmarks/mark_boundaries_execution.py'
+        path = root / name
+        spec = importlib.util.spec_from_file_location('_vi_frozen_prepared_mark_source', path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        raw = module.validation_predecessor_bytes(
+            root, name, context_path='coverage/contracts/mark-boundaries-benchmark-execution-v8.json')
+    assert hashlib.sha256(raw).hexdigest() == pin, name
+    return raw

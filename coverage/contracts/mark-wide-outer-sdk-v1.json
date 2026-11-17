@@ -1,0 +1,82 @@
+{
+  "schema": "mark-wide-outer-sdk-v1",
+  "status": "SOURCE_PREPARATION_UNCOMPILED_UNEXECUTED",
+  "base": "0df4c60cd0db45cbd4fdb88807a176d12a8a0eff",
+  "raw_admission": {
+    "path": "coverage\\evidence\\mark-wide-outer-eight-original-root-admission-v3.json",
+    "sha256": "8e72c560287fb2fab4acacd105f2be8222f04a5685ef58272824809ac7d613a1"
+  },
+  "dependencies_raw_sha256": {
+    "include/skimagexx/mark_boundaries.hpp": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+    "include/skimagexx/find_boundaries.hpp": "a7f991dd6916cb8166182e2cd5e2eb0ef6bf62ce98ced3b960ae75ec39a544eb",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "src/mark_boundaries.cpp": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+    "src/find_boundaries.cpp": "98ce6c997763b4f396c03c9664b76469cac18615122918a92b469c815d1f46de",
+    "tests/cmake_consumer/mark_boundaries_consumer.hpp": "5e0bab0019aa263cee2b0e19bb25224e56fe05a0bd5e46bf01848f7abc9e774b",
+    "tests/fixtures/mark_boundaries_native_saved_v1.hpp": "cfb4c0c2a6bfed6835ea8c2d12bc2cb13e969728ffa1a778e71bc70b31b34c50",
+    "tests/fixtures/mark_wide_outer_originals_v1.json": "26c49ccbb4992637a46f9d3950a0a084938f5c31ebcdd5bf02bcc4d70b79dd6e",
+    "tests/test_rolling_ball_sdk_dtype_fp.cpp": "948484026221b54259a40fa3fe2cc7f81f92ef65cb2900760eba589c03283d5f"
+  },
+  "source_raw_sha256": {
+    "tests/mark_wide_outer_sdk.py": "79c7bc303ff3454ab25edc6e71668dcdbb7d79a2282ed8f65333a4ded5911f35",
+    "tests/fixtures/mark_wide_outer_sdk_v1.hpp": "8a69c5c870a3ee5464d9f46b5d65b2e1d84248dbf866fe5f50bf0807acd1318a",
+    "tests/cmake_consumer/mark_wide_outer_consumer.cpp": "392e695bd29de51ad832ebd1e3f22ed7c25be29935bf5537c8dc269d65bd2d80"
+  },
+  "client": "tests/cmake_consumer/mark_wide_outer_consumer.cpp",
+  "raw_transport": "tests/fixtures/mark_wide_outer_originals_v1.json",
+  "generated_fixture": "tests/fixtures/mark_wide_outer_sdk_v1.hpp",
+  "operation": "TwoMARK witnesses/profile call namedcompleteowning skimagexx::mark_boundaries from image+labels; twofind witnesses/profile call completefind_boundaries_into with callerownedguardedboolcapacity. No overlay assembled fromsavedmasks or markprepare/mask/paint primitives.",
+  "platform": "NewwideGNUx86_64Linux/glibc32 only; nearestx87/SSE/allmasked/typedrepresentablebackground. Otherplatforms includingWindows remain explicitunsupported; oldSDKdomains untouched.",
+  "storage": "Eightadmittedrows,3x4labels96B;2MARKimages12or144B andowningoutputs288or144B;2findcallerbool12B+16canarybytes. Rawdescriptor/word transport only, not newgenerated numericaloracle.",
+  "named_storage_bound_bytes_per_case": 4096,
+  "FP": "OnlysemanticCW/SW/MXCSR fromcapturedtarget before seeded into CURRENTtrusted32template; rawIP/dataaddresses neverreplayed. Immediatepostcall semanticfields strictcomparedbefore anypayloadvalidation; caller/processfull32restored. SDK/publicsemanticFP equivalence is UNKNOWN untilexecution; no mask/tolerance/normalization.",
+  "complete_operation_gap": "Noneexpressibility for thesefourwitnesses within declaredGNUdomain. Rawpointerinputcapacity remains callerproved; cannotdetectunknownunderallocation. NewwideactualSDKFP/output/modes/genuineexportedtarget proof pending.",
+  "worker_policies": [
+    [
+      1,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      1,
+      4
+    ]
+  ],
+  "deferred_per_binary": {
+    "profile_rows": 8,
+    "successful_named_calls": 24,
+    "expected_frontier_refusals": 4,
+    "total_named_calls": 28,
+    "find_calls": 14,
+    "owning_mark_calls": 14,
+    "originals": 0,
+    "timing": 0
+  },
+  "deferred_modes": [
+    "normal",
+    "true_compiler_scalar",
+    "ASan_UBSan"
+  ],
+  "deferred_all_three_modes_named_calls": 84,
+  "actual_authority": {
+    "compile": 0,
+    "helper": 0,
+    "FP": 0,
+    "native": 0,
+    "original": 0,
+    "timing": 0,
+    "hosted": 0
+  },
+  "required_link_scope": "Laterrootconsumer mustuse actualrelocatedinstalled skimagexx::skimagexx exportedtarget andexisting authenticatedtestonlyreference_fenv_restore helper. No newwholeSDKbuild/libraryengine or primitive-only link credit. OptionalMARK_WRAP_GETTER usesadmittedGNUwrap recipe.",
+  "dependencies_before_execution": [
+    "Rootindependent source/storage admission",
+    "Root0df7privatecompile/FPverdict isSEPARATE andunknown",
+    "StrictFPfind_boundaries leaf options fromfrozen2e97 compatibility mustbe integrated/authenticated byrootsharedowner beforegenuineSDK",
+    "RootexplicitboundedSDKclientcompile/link/execution GO withactualdonorABI/source/modes/helper; no repeatedold125dataset",
+    "RootsharedSDKcopy/header/clientcollector/selector integration andcomplete sourcebarrier beforegenuine",
+    "ActualnewSDKoutputs/FP/default1+4/scalar/sanitizer +genuinepublicperformance/full-domain/platform gates"
+  ]
+}

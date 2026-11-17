@@ -39086,15 +39086,15 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 271,
+    "native_partial_image_names": 281,
     "metadata_names": 3,
-    "upstream_only_names": 197,
+    "upstream_only_names": 187,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Shipping API/source/accepted a6 qualification reconciled:271native-partial/197upstream-only/3metadata/5native-class-partial/1exception-provider,477total/29classes284members. Main deliveryef465; published68case34wins34losses. Failed8c275 andfrozen unqualified280candidate notshipping. Previous265snapshot wasstale despite latestqualificationalready271; correctedmetadata only, no evidencepromotion/science rerun.",
+    "note": "This validated main281 increment matchesAPI inventory477keys:281native-partial/187upstream-only/3metadata/5native-class-partial/1exception-provider,29classes284members. ExactAA43949036485 fourprofiles/304SDK/3stagers and currentVI4performance43979924366/rootadmission pass. Actualmergecommit/push/remotedelivery is the remaininggate; fullcontracts/libraryspeed remainopen. Earlier271/a6 main delivery and all slower datasets retain original historicalscope.",
     "native_class_names": 5,
     "exception_metadata_provider_names": 1,
-    "accepted_binary_image_names": 271
+    "accepted_binary_image_names": 281
   },
   "execution_policy": {
     "active_workers": [
@@ -40142,7 +40142,7 @@
         },
         "gap_closure_goal": {
           "objective": "close the gap",
-          "current_main": "bdcd0df63bb6acc86f7183be47ac70279bde2a61",
+          "current_main": "a12d784fab38af04f8a109d7be053db9a2a0f1ff",
           "owner": "/root",
           "previous_turn_classification": "PROGRESS: source/runtime evidence and exact private checkpoints were retained/published; actual full-source failures changed the correction path, not merely status restatement. Current acceptance remains delivery281 with exact source/runtime/SDK/release/performance evidence.",
           "acceptance": {
@@ -40152,10 +40152,10 @@
             "delivery": "Independent exactshipping projection281, finalsource/API/receipt check, validated increment merged/pushedmain with actualremoteverification.",
             "storage": "Small disposablefootprint; protectedsource/env/product/raw/dependencies retained; no archives beyond requiredtransientuse; allpreviouspolicyblocked targets manual-only."
           },
-          "current_gate": "All required exactAA source/privateSDK/genuine4+3 and currentVI4 performance gates PASS. Root exactAA threeway integration/sourceprojection andmain281 delivery now; no more science/review campaign.",
+          "current_gate": "READY_VALIDATED_MAIN281_MERGE_COMMIT_PUSH: completeAA Git/rawshippingprojection PASS, conflict+rawtransportcorrected withfailure receiptsretained; finaldocument/state/index checks next. AllsciencegatesPASS; no further scientificruns.",
           "unmet": [
-            "Final281 actualshippingprojection/protectedWIP/documentgates andmainmerge/push/remote; source271→281 partial native images, fullcontracts remainopen.",
-            "Previously policyblockedcleanup remains manualonly/user-owned; root retires only eligiblecleanancestorcurrentcheckout after alldependencies/readersstop."
+            "Finaldocument/API281state/index gates, actualmergecommit/push/remoteconfirmation, eligiblecleanancestorcheckout retirement/closeout.",
+            "Previouslypolicyblockedcleanup staysmanualonly/user-owned; currentrawbaseline/runtime/environments areprotected."
           ],
           "retained_evidence": [
             "coverage/evidence/mark-lbp16a5-whole-product-root-admission-v2.json",
@@ -40257,7 +40257,14 @@
                 "src/variation_of_information.cpp"
               ],
               "other_production_unchanged": true,
-              "final_shipping_projection": "READY_FOR_ACTUAL_MAIN_INTEGRATION_AND_PROJECTION; all scientific gatesclosed",
+              "final_shipping_projection": {
+                "status": "PASS_ACTUAL_MAIN_GIT_AND_RAW_BYTES_COMMIT_PUSH_PENDING",
+                "receipt": "coverage/evidence/current281-main-source-projection-v1.json",
+                "sha256": "66d0607694192501de9fcee6c030b8eb39263f0b47b517ae5479c8bd9f62b89d",
+                "raw_source_files": 3451,
+                "qualified_Git_objects": 3452,
+                "main_only_preserved": 22
+              },
               "protected_untracked_collision_check": "NativeGit exact5paths not tracked bycandidateAA; no incoming overwrite conflict. AGENTS remains protected unstaged and absentfromcandidate-vs-main production delta.",
               "API_delta": {
                 "actual_tool": "71174d",
@@ -40275,7 +40282,7 @@
                 ],
                 "count": 10,
                 "classification": "native-partial",
-                "delivery": "Pending release/performance/finalshippingprojection; no fullcontractcheckboxclosure."
+                "delivery": "Included in validatedmain281mergeprojection; actualcommit/push/remoteconfirmation pending, fullcontractboxes remainopen."
               },
               "current_main_only_support": {
                 "actual_tool": "14150c/3471c2",
@@ -40285,6 +40292,24 @@
                 ],
                 "current_VI_workflow": "QualifiedAA/current166f127 must match for shipping; normal3way reconcile againstmaincapacitychanges, no blanket source restore.",
                 "acceptance": "Exactqualifiedproduction/API/currentqualifier/test/contracts/selectedworkflows/source pins and actualfilesystem source projection; preserve main-only additions and protected userWIP. No controller166boundcontract merged into main."
+              },
+              "merge_failure": {
+                "actual_exit": 1,
+                "tool": "d21503",
+                "reason": "Soleadd/add .github/workflows/vi-initial-failure-capture.yml",
+                "analysis": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\workflow-merge-conflict-analysis-v1.json",
+                "material_effect": "Commit/push held; no scientific evidence invalidated because selectedresolution is exactalreadyqualified/executedAAworkflow.",
+                "narrow_correction": "ChooseAAstage3f127 afterrootexact4+4+1path-equation, thenactualsourceprojection anddocument/index checks."
+              },
+              "raw_transport_failure": {
+                "tool": "ca5464/762847",
+                "receipt": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\shipping-source-projection-v1.json",
+                "sha256": "290b1007e5558d8d065b0d767833f2e71de461ee28aea41f44d741e680a41019",
+                "mismatches": 775,
+                "canonical_equal_all": true,
+                "raw_pinned_affected": 2,
+                "correction": "Copy exact independentlyvalidatedAAworking bytes only for these mismatches after checking bothcurrent/expectedhashes. No blanketnewline normalization, intentionalCRLF followsvalidatedreference. Gitblobs/canonicalcode remainunchanged; protecteduserfiles andmain-only additions excluded.",
+                "material_effect": "Commit/push held for exactraw/literal sourceclosure; no changedGitcode/physics/provider/measurement inputs."
               }
             }
           },
@@ -45859,7 +45884,7 @@
   "planning_revision": {
     "review_model": "gpt-6-astra",
     "reasoning_effort": "max",
-    "scope": "Astra planning audit completed; implementation active under explicit resumed goal.",
+    "scope": "Historical Astra planning audit and route proposal; its265/source265 counters describe that retained planning snapshot. Currentaccepted/source shipping counts are ininventory_snapshot, nowvalidated281. This bounded281 implementation resume isclosing; no additionalfamily dispatch is inferred.",
     "per_api_roadmap": "coverage/API_IMPLEMENTATION_PATHS.json",
     "human_roadmap": "coverage/API_IMPLEMENTATION_PATHS.md",
     "audit": "coverage/PLAN_REVIEW_ASTRA.md",
@@ -45899,7 +45924,8 @@
       }
     },
     "source_image_paths": 265,
-    "source_upstream_only_paths": 203
+    "source_upstream_only_paths": 203,
+    "current_shipping_inventory_source": "inventory_snapshot and existinggap_closure_goal actualreceipts; historicalplanning counts are not currentcoverage."
   },
   "max_consumer_retirement": {
     "proof": {
@@ -45914,17 +45940,26 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
-    "run": 42262940227,
-    "image_paths": 271,
-    "receipt": {
-      "path": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
-      "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96"
-    },
-    "scope": "Exacta6 four-profile qualified271 partialimage contracts delivered main ef465027; current68public one-thread48fc admits34wins34losses with failedreportcampaign preserved and no timingrerun. Full477/class/domain/provider/libraryspeed closure remains open.",
-    "production_source_sha256": "ac593be6664b1d4202953d8ccf7f07fb983eb61dbd144b9792f5a44b58b7509f",
-    "main_delivery": "ef4650275c3a78759c771649373ca79767c7064b",
-    "delivery_receipt": "coverage/evidence/join-util-views-main-delivery-v1.json"
+    "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+    "run": 43949036485,
+    "image_paths": 281,
+    "receipt": "coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json",
+    "scope": "ExactAA fourprofiles/304SDK/48corpora/threeauthenticatedstagers;281partialimage contracts. CurrentVI4one-thread4cases4wins/56samples/8warmupgroups separatelyroot-admitted with raw-buffer limits. AllpreviousnonVIperformance/source-scopedlosses preserved. Finalmaincommit/push/remote gatepending.",
+    "production_source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+    "main_delivery": null,
+    "delivery_receipt": null,
+    "delivery_status": "VALIDATED_MAIN281_MERGE_COMMIT_PUSH_PENDING",
+    "previous": {
+      "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+      "run": 42262940227,
+      "image_paths": 271,
+      "receipt": {
+        "path": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
+        "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96"
+      },
+      "main_delivery": "ef4650275c3a78759c771649373ca79767c7064b",
+      "delivery_receipt": "coverage/evidence/join-util-views-main-delivery-v1.json"
+    }
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",

@@ -1,0 +1,86 @@
+{
+  "schema": "mark-boundaries-native-scoped-component-v1",
+  "status": "IMPLEMENTED_PARTIAL_COMPONENT_KNOWN_FP_GATE_FAILED_NOT_API_CLOSED",
+  "ready_for_shared_integration": false,
+  "base": "b557a42a13bcfa005d0bb5364e1c6744bd781d30",
+  "api": "segmentation.mark_boundaries",
+  "signature": "(image, label_img, color=(1, 1, 0), outline_color=None, mode='outer', background_label=0)",
+  "original_calls_authorized": 0,
+  "raw_admission_sha256": "f6e60c6089bc7f195fddb026c11612fd4f85250565bcc0bcf473f697ccad99b1",
+  "raw_rows": 249,
+  "missing_minimum_error_args_case": "mark_boundaries/background-none",
+  "known_FP_failure": {
+    "case": "mark_boundaries/color-tiny",
+    "source": "SavedsourceafterMXCSR8098minimum/8096modern; nativewrapperafter8114/8112: extra underflow16. Words/layout/warnings/errors/aliases/protocol identical.",
+    "scope": "Bothworker1/4; allother248savedrowhardwarecontrols/status/MXCSR match controlledcapturedincomingstate. Strictfailedbarriers retained, no masking/skip/xfail.",
+    "failed_minimum_nodes": 2,
+    "failed_modern_nodes": 2,
+    "gate": "Mustresolve legitimate palette assignment FPsemantic before completefunction/sharedintegration/readyclaim.",
+    "SDK_scope": "InstalledSDK tests establish words/layout/owning lifetime; f64palette narrowing underflow FP semantics are not closed by those tests."
+  },
+  "complete_SDK_operation": "skimagexx::mark_boundaries(ComponentsView,ComponentsView,MarkBoundariesParameters,workers=0)->owningMarkImage",
+  "typed_domain": "Realnumeric bool/int8..64/u8..64/half/f32/f64 native+swapped image bytes, gray/RGB/RGBA and existing signedlayouts; assessed201saved successful outputs exact. Finitefloatlabels thick and innerzero; exactintegerboundary frontier inherited, floatingouter/subpixel metadataerrors.",
+  "scope_limits": [
+    "Extendedprecision/structured orcomplexlabel/protocol/arbitraryconcurrentmutatingdescriptors, floatinnernonzero promotion, roundedwideordinary/64outer masks, nonfinitefloatlabels, rank>4 images/rank>3 floatlabels and allocation>16M remainexplicitunassessed.",
+    "FullWindows/nativeFP/layout/default-intp policy not closed by Linux reference; MSVCcompilationonly.",
+    "ExistingNumpy smallRHS conversion/broadcast metadata and allocation remain Python/CAPI; all imageconversion/cubic/mask/dilation/pixelstores are C++.",
+    "Cubic prefilter axes/line recurrence and64/256termcorneraccumulations remain orderedserial. Independent mask/copy spans and existingconversionSIMD reused; no newpool/FPmask/FMA/reassociation.",
+    "One processbudget snapshot percompleteSDKoperation provenvia linkerwrap; Pythonadapter snapshots once after arraycallback and passespositivebudget to ownedstages.",
+    "Publicsame249rows and softwarestate/output/error/protocol pass scope; tiny-colorhardwareunderflow is a true outputstate difference, not normalized. Missing105args never fabricated.",
+    "Uncaptured zero/overlapping-stride K-axis ambiguities, low-rank non-channel-bearing successful assignments and large/unsupported RHS conversion domains are not fullparity claims; caller-proved ordinary view domain only."
+  ],
+  "benchmark": {
+    "cases": 8,
+    "source": "benchmarks/mark_boundaries.py unchanged admittedprospectivecasepool",
+    "sampler": "tools/montage_sustained.py:measure",
+    "sampler_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "threads": 1,
+    "retain_all_losses": true,
+    "status": "UNBOUND_NO_TIMING; rootgenuineexecadapter/strict nativeowner firstcohort+measurementGO pending",
+    "execution_consumer": "benchmarks/mark_boundaries_consumer.py consumes frozen8cases/nativeacceptance metadata; executable genuine-rootbinding/timed adapter remains pending, no new engine."
+  },
+  "shared_integration_recipe": {
+    "CMake": [
+      "Add src/mark_boundaries.cpp to skimagexx",
+      "Add src/bind_mark_boundaries.cpp to _core"
+    ],
+    "binder": "Declare/call bind_mark_boundaries in src/bindings.cpp after admission",
+    "namespace": "Import._mark_boundaries.mark_boundaries and add segmentation.__all__; root registry/default/hotswap/provider inventory selectors updates only after FPgate+peer admission.",
+    "SDK": "Installedheader+one mark object in reusedexporttarget proof obtained locally; rootgenuinefinalsourcewholeSDK/exportinventory still pending.",
+    "dtype_smoke": "Binaryimage/labels genericb,u/i8..64,f16/32/64,swappedi16; unsupportedextended/rank5/swappedlabels/nonexactwide controls; rootsharedgenuine strict-provider dispatch stillpending."
+  },
+  "FENV_consumer": "Private0c40 admittedLinux helper OR strictlysource-built-v1 genuineF1 backend, authenticated once moduleentry. CapturedINPUT control/status/MXCSR seeded on currenttrustedempty-stacktemplate; noAFTERflags masked. Callerfull32restored. Futuregenuine collector needs existing util_views_fenv .py/.c/build/probe/context plus externalreceipt/env.",
+  "source_files_canonical_LF_sha256": {
+    "include/skimagexx/mark_boundaries.hpp": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+    "src/mark_boundaries.cpp": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+    "src/bind_mark_boundaries.cpp": "131be453d708637e5902c2650654b893b67070f2f66c7b8be70178ba2669cf23",
+    "python/skimagexx/_mark_boundaries.py": "06164d2a696ce47623f410fc2d2bc7117aa188e8beb730568a93e2d0990666f2",
+    "tests/test_mark_boundaries_public.py": "511a7c96219e35b4ba1a89bdfb66e76efa9f5222677b33d4341c99d5edfc5d64",
+    "tests/test_mark_boundaries_native.cpp": "b1ddf61592ad1d1568fd35b15c3c7a6875ca7ecc9c55c6b1627dc46e39a66db1",
+    "tests/test_mark_boundaries_workers.cpp": "4c5abfcd266c4550a237c0dd88abca537dad4055bedc55d9625af8759f71170e",
+    "tests/cmake_consumer/mark_boundaries_consumer.hpp": "5e0bab0019aa263cee2b0e19bb25224e56fe05a0bd5e46bf01848f7abc9e774b",
+    "tests/fixtures/mark_boundaries_native_saved_v1.hpp": "cfb4c0c2a6bfed6835ea8c2d12bc2cb13e969728ffa1a778e71bc70b31b34c50",
+    "tests/fixtures/mark_boundaries_originals_v1.json": "706c9f9a10b8020d4fb879bcc46baabaa631c4cd9f04b93bad3a761b84c981e9",
+    "benchmarks/mark_boundaries.py": "27f3b49387232008312b1976d0bdc16fd972f062c10f5f24ebf63c528bc3d4df",
+    "benchmarks/mark_boundaries_consumer.py": "d918b6ef41dbdadb2376fe123d754de870148a7b356c2c1f330b5dbd5a78fd8e",
+    "tests/test_mark_boundaries_native_contract.py": "f7b31c17c5f2d14500512bcfdc0b46e539a942f3780fca80299cd21334519149"
+  },
+  "donor_header_canonical_sha256": {
+    "include/skimagexx/find_boundaries.hpp": "b282adbc897a3a307bef8048fa6e0d3e9f1fa8ccfe9824b33c86753648b5b854",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016"
+  },
+  "primary_sources": [
+    "https://raw.githubusercontent.com/scipy/scipy/v1.15.3/scipy/ndimage/src/ni_interpolation.c",
+    "https://raw.githubusercontent.com/scipy/scipy/v1.18.1/scipy/ndimage/_interpolation.py",
+    "https://raw.githubusercontent.com/numpy/numpy/v1.24.4/numpy/core/src/multiarray/mapping.c",
+    "https://raw.githubusercontent.com/numpy/numpy/v2.5.4/numpy/_core/src/multiarray/mapping.c"
+  ],
+  "licenses": [
+    "third_party/scipy-ndimage-LICENSE.txt",
+    "third_party/scikit-image-LICENSE.txt"
+  ]
+}

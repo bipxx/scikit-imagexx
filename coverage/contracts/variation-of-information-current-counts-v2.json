@@ -1,0 +1,100 @@
+{
+  "schema": "variation-of-information-current-counts-v2",
+  "status": "PRIVATE_CURRENT_DEPENDENCY_OVERLAY_PENDING_INDEPENDENT_SHARED_GENUINE",
+  "predecessor_source": "b331a559af038ef2231f5327b864627513bdc2d8",
+  "predecessor_handoff_sha256": "6a95087ca81d955aade678b4f6c303c7a3fc2aa36ac9375588d188406b67aaa2",
+  "independent_review_sha256": "8186a89dbfbe3293a71067387a76e30d7d1aaec38525d547c2ac6b24688041de",
+  "owned_source_raw_sha256": {
+    "tests/variation_of_information_current_counts_controls.hpp": "6035836b02c90a611e76818f4dc195894ca3366e520659cd53d9aea30e8584eb",
+    "tests/test_variation_of_information_current_counts.cpp": "3d3fee592f7874dc5d65674ec7e3885902195ac6274302a08959b30e1d59f83d",
+    "tests/cmake_consumer/variation_of_information_current_counts_consumer.cpp": "3d3fee592f7874dc5d65674ec7e3885902195ac6274302a08959b30e1d59f83d",
+    "tests/test_variation_of_information_current_counts_public.py": "5933b6a94148ac90162d462aebb28a4b8e913889277832e1a0a49197d9511bb3"
+  },
+  "unchanged_VI_raw_sha256": {
+    "include/skimagexx/variation_of_information.hpp": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102",
+    "src/variation_of_information.cpp": "966f48ec3ce563548aaa23d4f3ede7ac69354d91bab3b2fd4ffef7d2c2e35955",
+    "src/bind_variation_of_information.cpp": "0fa7a58375b6ec6c544dc403bfd6fd9d8f8c503fd806075c1699f5e0c492d248",
+    "python/skimagexx/_variation_of_information.py": "f42ca166318d77900e4df9ee00a72a5ddec7309a3098fb83287a7ecf621ca5fa",
+    "tests/fixtures/variation_of_information_saved_v1.hpp": "dfd40555fa87a96e7b6d224553dabc5c2b7522ff295072b9c4975730bfd98ec0",
+    "tests/test_variation_of_information_public.py": "464d955a5fdd31ea6a73f8bdba44de021947f12abad3b32c23da935ff8213fd5",
+    "tests/cmake_consumer/variation_of_information_consumer.cpp": "9d013147c1327f69cb6234faa059896b243d2077df714ec8333e99a1bc08f3dd",
+    "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce"
+  },
+  "current_dependency_source": "b87a24e4b39578b26cf8a2f9d3324ca59b8be6b3",
+  "dependency_domains": {
+    "src/label_pair_metrics.cpp": {
+      "current_raw": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+      "admitted_raw": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079",
+      "canonical_LF": "e8bc05ba11b1892d9cc8885c9e8d1373f3cfa715b57fd560221565d5889cd079"
+    },
+    "include/skimagexx/label_pair_metrics.hpp": {
+      "current_raw": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+      "admitted_raw": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66",
+      "canonical_LF": "c1fc6050062c347bd79f03b02669761691dcfb43f177abec63bed8051c734c66"
+    },
+    "src/execution.hpp": {
+      "current_raw": "4bdc0ab65189420d7d50b8edd94810da31faf3cc19e5bb8ab966cd2d7c862e48",
+      "admitted_raw": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+      "canonical_LF": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d"
+    },
+    "python/skimagexx/_contingency_table.py": {
+      "current_raw": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+      "admitted_raw": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27",
+      "canonical_LF": "b6174d9ff772127b756c830871d6da989eb5a19a709cf6dae0f7da74cb384c27"
+    },
+    "src/bind_label_pair_metrics.cpp": {
+      "current_raw": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+      "admitted_raw": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5",
+      "canonical_LF": "7d7e852b56e0f4335a286694061538e96391b36376c2aede7563f728ee09f6f5"
+    }
+  },
+  "overlay": "Current density counts objects supplied explicitly at link from admitted b87. Private branch inherited old shared count source and does NOT modify/import shared files. Future sole shared integration must project these family files onto actual current e8 counts; private overlay is not final-source qualification.",
+  "candidate_equivalence": {
+    "samples": [
+      4096,
+      4099
+    ],
+    "dense_grid": [
+      4,
+      8
+    ],
+    "fallback_grid": [
+      68,
+      72
+    ],
+    "logical_NNZ": 32,
+    "physical_slots": "N",
+    "workers": [
+      0,
+      1,
+      4
+    ],
+    "ignored_modes": [
+      "none",
+      "truth0",
+      "alltruth"
+    ],
+    "controls_per_native_mode": 18,
+    "public_nodes_per_profile_mode": 12,
+    "accuracy_claim": "Candidate dense/fallback/relabel/CSR/storage equivalence only. No new original gold, broad0ULP or hardware FP parity."
+  },
+  "saved": {
+    "recipes_per_profile": 8,
+    "numeric_words_cases": 7,
+    "accuracy": "Unchanged strict0ULP raw saved words and full legacy typed rows; no expectation changes."
+  },
+  "SDK": "Installed assembled donor96 exported target plus exact current b87 count member and unchanged VI leaf/header. Whole current105 SDK has not been built/qualified; old SDK6 fixtures remain untouched historical evidence.",
+  "pending": [
+    "Independent successor admission",
+    "Selective shared current-count projection and actual genuine whole105 or source-derived SDK census",
+    "HardwareFP/fullAPI/provider/protocol/error/large-table0ULP/platform/log/backend frontiers unchanged",
+    "Executable benchmark consumer/cohorts/one-thread original performance and all losses pending"
+  ],
+  "authority": {
+    "original": 0,
+    "capture": 0,
+    "timing": 0,
+    "hosted": 0,
+    "genuine_binding": null
+  }
+}

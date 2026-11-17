@@ -1,0 +1,103 @@
+{
+  "schema": "mark-wide-outer-private-bridge-v1",
+  "status": "UNBOUND_SOURCE_PREPARATION_NO_BUILD_OR_NATIVE_AUTHORITY",
+  "kernel_source": "3106c063a0d34af0af48a2f2f3928fade46c322d",
+  "capture_source": "3fd05ef7d56fcf731b349943e503249014062618",
+  "raw_root_admission": "coverage/evidence/mark-wide-outer-eight-original-root-admission-v3.json",
+  "profiles": [
+    "minimum",
+    "modern"
+  ],
+  "case_ids": [
+    "wide-outer/find-int64-small-3x4",
+    "wide-outer/find-uint64-fullwidth-3x4",
+    "wide-outer/mark-gray-u8-int64-small-3x4",
+    "wide-outer/mark-RGB-f32-uint64-small-3x4"
+  ],
+  "calls_per_profile": 4,
+  "total_calls": 8,
+  "workers": 1,
+  "original_calls": 0,
+  "helper_calls": 0,
+  "compiler_calls": 0,
+  "timing_calls": 0,
+  "root_GO": null,
+  "component": null,
+  "method": "Existing unchanged whole find_boundaries/mark_boundaries Pythonfrontends on one private native module; no savedmask caller-overlay. Exact original typedraw row/returnclass/dtype/stride/alias/input/warning/error+NPstate and CW/SW/MXCSR before/after. No tolerance, result fitting, outputmask or aftercallstatusclear.",
+  "FP_scope": "Source-profile incoming semantics seeded on current trusted empty-stack32template, preserving current IP/data/reservedwords; rawcaller/process32 exactrestore aftertarget. Historicalraw32 addresses remain rawdiagnostics not replaytemplates. MinimumSW32/MXCSR8099\u21928098;modernSW0/MXCSR8097\u21928096; CW895 both.",
+  "bounds": {
+    "shape": [
+      3,
+      4
+    ],
+    "labels_per_case": 12,
+    "labels_bytes_each": 96,
+    "all_four_input_bytes": 540,
+    "largest_image_bytes": 144,
+    "result_elements_per_profile": 96,
+    "result_bytes_per_profile": 456,
+    "largest_result_bytes": 288,
+    "maximum_extrema_visits_each": 264,
+    "named_kernel_scratch_bytes_each": 684,
+    "private_native_pipeline_source_bound_per_profile": {
+      "find_into": 2,
+      "MARK_prepare": 2,
+      "MARK_mask": 2,
+      "MARK_color": 2,
+      "MARK_count": 2,
+      "MARK_paint": 2
+    },
+    "maximum_live_array_payload_per_case": "Explicit input/output totals and684B named kernel scratch are numerical-payload bounds only. Python object, typed-codec and JSON overhead is not bounded by that calculation; exact transported-file byte counts are retained. No unbounded geometry."
+  },
+  "existing_source_reuse": {
+    "src/mark_boundaries.cpp": "86325446e6bc3812ba4e5112a2ed0ed8069f4da206e397762b63db6cb5e9debb",
+    "src/bind_mark_boundaries.cpp": "131be453d708637e5902c2650654b893b67070f2f66c7b8be70178ba2669cf23",
+    "include/skimagexx/mark_boundaries.hpp": "f54fb9f366dd0d99e4a761041ed0f843ccc230e508db596c5c9c0d373176ec71",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "src/execution.hpp": "029b02e920c962a2679e58ade6e201d16188b42885170a5c9a012fffe6a7331d",
+    "src/spline_detail.hpp": "314d0c12e5b3b3fc3e45da4a5ea043293ef961a06a254af44f8e05c6feed67ce",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f"
+  },
+  "source_pins": {
+    "src/find_boundaries.cpp": "98ce6c997763b4f396c03c9664b76469cac18615122918a92b469c815d1f46de",
+    "src/bind_find_boundaries.cpp": "4ae111d261297cb68624c831922142a8036fca02c99d5466205d92f2921b3961",
+    "python/skimagexx/_find_boundaries.py": "9ec45da0da874e3bbc61dd0543e033588bc2eed51feeb447ffedff4ba30aefdc",
+    "python/skimagexx/_mark_boundaries.py": "5ae5bf730b4a3c6947f1045116f2491c4f79254c001ee4af3c960b44f487d6f4",
+    "include/skimagexx/find_boundaries.hpp": "a7f991dd6916cb8166182e2cd5e2eb0ef6bf62ce98ced3b960ae75ec39a544eb",
+    "tests/mark_wide_outer_capture.py": "7034f5690448f4bbf3cd9e014d2e3280084c53c4c5a878cf49c24a8d98b0869d",
+    "tests/fixtures/mark_wide_outer_originals_v1.json": "26c49ccbb4992637a46f9d3950a0a084938f5c31ebcdd5bf02bcc4d70b79dd6e"
+  },
+  "retained_mark_object": {
+    "path": "build/mark-boundaries-native-v1/leaf-v3.o",
+    "bytes": 70864,
+    "ELF": "ELF64little-endian x86_64",
+    "compiler_comment": [
+      "GCC: (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+    ],
+    "compile_receipt": "build/mark-boundaries-native-v1/component-minimum-v3/commands.json",
+    "flags": [
+      "-O3",
+      "-fPIC",
+      "-fopenmp",
+      "-fno-lto",
+      "-ffp-contract=off",
+      "-fno-fast-math",
+      "-frounding-math",
+      "-UNDEBUG"
+    ],
+    "archive_rehashed": false
+  },
+  "stage_object": "D:/Scratch/mark-wide-outer-stage-v1/stage-client.o has includedkernel+main; cannot directly linkcleanbridge. Preserve actualcodegen/map/17+16 receipts; rootagrees one actualstandaloneleafPIC compile is simpler than symbol/binary tricks. Changed compilation context, no algorithmfork.",
+  "genuine_installed_SDK": "PENDING. Private archive/donor linked actualowningstages are not genuine product/core or a qualified installed SDK. Header mark_boundaries completeowning function exists; its newwideFP semantics and named installedclient mustlater be exercised as completeSDK operation, not inferred from header/member presence. No future SDK member count is assumed.",
+  "source_FP_proposal": "NoCPPchange here. Existing3106 has no comparison-stage policy-status clear. Authentic NumPy outer uses dilation!=erosion,backgroundequality,fullmorphology!= comparison andbooleanufunc boundaries. Generic NumPy npy_clear_floatstatus_barrier behavior alreadyrootadmitted forIGGsource_clear (mask INVALID|DIVBYZERO|OVERFLOW|UNDERFLOW=0x1d, preservesinexact/denormal) is candidatephase primitive, not aftercallmask. Firstobserve exactnewnativeincoming/outgoing; any fixmust be independently scoped/source-backed at actual comparison phases, no normalization or casefittedclear.",
+  "source_only_compatibility_owner": "metrics_integrator2e97 owns CMake strictfindleaf flags+oldstale unconditionalouter64 refusals now backgroundrepresentableFalse +sourceinverses. Not imported withoutrootadmission; oldthick roundedwide refusal remainscorrect. Wholegenuine/readinesslater.",
+  "pending": [
+    "Rootreview exactcode/rawfixture/donor/commands then separatecompileGO, no sourceplanexecution",
+    "Actualnewstandaloneleaf and tinybinder/module links; verifymap newfindowner and retainedMARK/runtimeonecore, emittedstrictflags",
+    "Rootseparateprofile4nativeGO: all4rows collectedstrict/returnnonzeroonanysoftware/FPdifference; no automatic secondprofile/mode continuation",
+    "Actualcomparison-stage sourceFP diagnosis if needed, then owningSDK/privateworker/scalar/sanitizer/Windows/domainclosure underseparategates",
+    "RootCsharedintegration/completebarriers/genuine/originalpublic1T benchmark gates"
+  ],
+  "waste_scope": "Nooriginal/rawrecapture/no SDKoroldnumericsrerun; onlystdlib data projection and source/inert work."
+}

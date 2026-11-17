@@ -1,0 +1,783 @@
+{
+  "schema": "join-util-current275-controller-v1",
+  "source_template": "57072ba25f38785e79d930951a56ab4adfc0583f",
+  "report_reader_template": "c7cd06fc7bb7e6d05353b35463f020633c5589d4",
+  "prior_routes": {
+    "join": {
+      "kind": "util-executor",
+      "execution_route": "join",
+      "api": "segmentation.join_segmentations",
+      "driver": "benchmarks/join_segmentations.py",
+      "owned_module": "skimagexx._join_segmentations",
+      "acceptance_function": "join_segmentations",
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "first_case": {
+        "id": "u8-labels-C",
+        "dtype": "uint8",
+        "shape": [
+          129,
+          131
+        ],
+        "layout": "C",
+        "mapping": false,
+        "left_count": 8,
+        "right_count": 8,
+        "left_scale": 1,
+        "right_scale": 1
+      },
+      "native_entries": [
+        "join_encode"
+      ],
+      "native_return_counts": {
+        "join_encode": 1,
+        "join_divmod": 0
+      },
+      "native_worker_getters": 0,
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--first-cohort",
+        "--api",
+        "segmentation.join_segmentations",
+        "--case",
+        "u8-labels-C",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ],
+      "root_binding_flag": "--root-binding",
+      "cases": [
+        {
+          "id": "u8-labels-C",
+          "dtype": "uint8",
+          "shape": [
+            129,
+            131
+          ],
+          "layout": "C",
+          "mapping": false,
+          "left_count": 8,
+          "right_count": 8,
+          "left_scale": 1,
+          "right_scale": 1
+        },
+        {
+          "id": "u8-maps-reverse",
+          "dtype": "uint8",
+          "shape": [
+            129,
+            131
+          ],
+          "layout": "reverse",
+          "mapping": true,
+          "left_count": 8,
+          "right_count": 8,
+          "left_scale": 1,
+          "right_scale": 1
+        },
+        {
+          "id": "i16-labels-F",
+          "dtype": "int16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "F",
+          "mapping": false,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "i16-maps-C",
+          "dtype": "int16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "C",
+          "mapping": true,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "u16-labels-C",
+          "dtype": "uint16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "C",
+          "mapping": false,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "u16-maps-F",
+          "dtype": "uint16",
+          "shape": [
+            257,
+            257
+          ],
+          "layout": "F",
+          "mapping": true,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "i32-labels-reverse",
+          "dtype": "int32",
+          "shape": [
+            511,
+            513
+          ],
+          "layout": "reverse",
+          "mapping": false,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        },
+        {
+          "id": "i32-maps-C",
+          "dtype": "int32",
+          "shape": [
+            511,
+            513
+          ],
+          "layout": "C",
+          "mapping": true,
+          "left_count": 32,
+          "right_count": 8,
+          "left_scale": 7,
+          "right_scale": 7
+        }
+      ],
+      "ArrayMap_class_frontier": "OPEN_EXACT_CLASS_IDENTITY"
+    },
+    "crop": {
+      "kind": "util-executor",
+      "execution_route": "crop",
+      "api": "util.crop",
+      "driver": "benchmarks/crop.py",
+      "owned_module": "skimagexx._crop",
+      "acceptance_function": "crop",
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "first_case": {
+        "id": "view-C",
+        "shape": [
+          512,
+          513
+        ],
+        "dtype": "uint8",
+        "layout": "C",
+        "width": 1,
+        "copy": false,
+        "order": "K",
+        "payload_provider": false
+      },
+      "native_entries": [
+        "crop_view"
+      ],
+      "native_return_counts": {
+        "crop_view": 1,
+        "crop_copy_into": 0
+      },
+      "native_worker_getters": 0,
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--first-cohort",
+        "--api",
+        "util.crop",
+        "--case",
+        "view-C",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ],
+      "root_binding_flag": "--root-binding",
+      "cases": [
+        {
+          "id": "view-C",
+          "shape": [
+            512,
+            513
+          ],
+          "dtype": "uint8",
+          "layout": "C",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "view-F",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "int16",
+          "layout": "F",
+          "width": 2,
+          "copy": false,
+          "order": "ignored",
+          "payload_provider": false
+        },
+        {
+          "id": "view-reverse",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "float64",
+          "layout": "reverse",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "view-3D",
+          "shape": [
+            31,
+            37,
+            41
+          ],
+          "dtype": "float32",
+          "layout": "C",
+          "width": 1,
+          "copy": false,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-C",
+          "shape": [
+            512,
+            513
+          ],
+          "dtype": "float32",
+          "layout": "C",
+          "width": 1,
+          "copy": true,
+          "order": "C",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-F",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "float64",
+          "layout": "F",
+          "width": 2,
+          "copy": true,
+          "order": "F",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-reverse-K",
+          "shape": [
+            257,
+            263
+          ],
+          "dtype": "int16",
+          "layout": "reverse",
+          "width": 1,
+          "copy": true,
+          "order": "K",
+          "payload_provider": false
+        },
+        {
+          "id": "copy-object-provider",
+          "shape": [
+            16,
+            17
+          ],
+          "dtype": "object",
+          "layout": "C",
+          "width": 1,
+          "copy": true,
+          "order": "K",
+          "payload_provider": true
+        }
+      ],
+      "ArrayMap_class_frontier": null
+    },
+    "slice": {
+      "kind": "util-executor",
+      "execution_route": "slice",
+      "api": "util.slice_along_axes",
+      "driver": "benchmarks/slice_along_axes.py",
+      "owned_module": "skimagexx._slice_along_axes",
+      "acceptance_function": "slice_along_axes",
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "first_case": {
+        "id": "view-C",
+        "shape": [
+          512,
+          513
+        ],
+        "layout": "C",
+        "copy": false,
+        "dtype": "int16",
+        "slices": [
+          [
+            32,
+            480
+          ]
+        ],
+        "axes": null
+      },
+      "native_entries": [
+        "util_slice_view"
+      ],
+      "native_return_counts": {
+        "util_slice_view": 1,
+        "util_slice_copy_into": 0
+      },
+      "native_worker_getters": 0,
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--first-cohort",
+        "--api",
+        "util.slice_along_axes",
+        "--case",
+        "view-C",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ],
+      "root_binding_flag": "--root-binding",
+      "cases": [
+        {
+          "id": "view-C",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": false,
+          "dtype": "int16",
+          "slices": [
+            [
+              32,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "copy-C",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": true,
+          "dtype": "int16",
+          "slices": [
+            [
+              32,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "view-F",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "F",
+          "copy": false,
+          "dtype": "float64",
+          "slices": [
+            [
+              32,
+              480
+            ],
+            [
+              16,
+              496
+            ]
+          ],
+          "axes": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "copy-F-C-order",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "F",
+          "copy": true,
+          "dtype": "float64",
+          "slices": [
+            [
+              32,
+              480
+            ],
+            [
+              16,
+              496
+            ]
+          ],
+          "axes": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "reverse-view",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "reverse",
+          "copy": false,
+          "dtype": "uint8",
+          "slices": [
+            [
+              0,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "reverse-copy",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "reverse",
+          "copy": true,
+          "dtype": "uint8",
+          "slices": [
+            [
+              0,
+              480
+            ]
+          ],
+          "axes": null
+        },
+        {
+          "id": "permuted-axes",
+          "shape": [
+            64,
+            65,
+            66
+          ],
+          "layout": "C",
+          "copy": false,
+          "dtype": "int32",
+          "slices": [
+            [
+              1,
+              60
+            ],
+            [
+              2,
+              62
+            ]
+          ],
+          "axes": [
+            2,
+            0
+          ]
+        },
+        {
+          "id": "negative-bound-copy",
+          "shape": [
+            512,
+            513
+          ],
+          "layout": "C",
+          "copy": true,
+          "dtype": "int16",
+          "slices": [
+            [
+              -480,
+              -16
+            ]
+          ],
+          "axes": [
+            1
+          ]
+        }
+      ],
+      "ArrayMap_class_frontier": null
+    },
+    "blocks": {
+      "kind": "util-executor",
+      "execution_route": "views",
+      "api": "util.view_as_blocks",
+      "driver": "benchmarks/array_views.py",
+      "owned_module": "skimagexx._array_views",
+      "acceptance_function": "view_as_blocks",
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "first_case": {
+        "id": "view_as_blocks/C",
+        "api": "util.view_as_blocks",
+        "shape": [
+          512,
+          516
+        ],
+        "layout": "C",
+        "dtype": "int16",
+        "parameter": [
+          2,
+          3
+        ],
+        "step": 1,
+        "copy": false,
+        "payload_provider": false,
+        "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+      },
+      "native_entries": [
+        "util_view_as_blocks"
+      ],
+      "native_return_counts": {
+        "util_view_as_blocks": 1
+      },
+      "native_worker_getters": 0,
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--first-cohort",
+        "--api",
+        "util.view_as_blocks",
+        "--case",
+        "view_as_blocks/C",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ],
+      "root_binding_flag": "--root-binding",
+      "cases": [
+        {
+          "id": "view_as_blocks/C",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "C",
+          "dtype": "int16",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_blocks/F",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "F",
+          "dtype": "float64",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_blocks/reverse",
+          "api": "util.view_as_blocks",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "reverse",
+          "dtype": "uint8",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_blocks/readonly",
+          "api": "util.view_as_blocks",
+          "shape": [
+            16,
+            18
+          ],
+          "layout": "readonly",
+          "dtype": "object",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        }
+      ],
+      "ArrayMap_class_frontier": null
+    },
+    "windows": {
+      "kind": "util-executor",
+      "execution_route": "views",
+      "api": "util.view_as_windows",
+      "driver": "benchmarks/array_views.py",
+      "owned_module": "skimagexx._array_views",
+      "acceptance_function": "view_as_windows",
+      "contract": "coverage/contracts/next-util-benchmark-execution-v2.json",
+      "first_case": {
+        "id": "view_as_windows/C",
+        "api": "util.view_as_windows",
+        "shape": [
+          512,
+          516
+        ],
+        "layout": "C",
+        "dtype": "int16",
+        "parameter": [
+          2,
+          3
+        ],
+        "step": 1,
+        "copy": false,
+        "payload_provider": false,
+        "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+      },
+      "native_entries": [
+        "util_view_as_windows"
+      ],
+      "native_return_counts": {
+        "util_view_as_windows": 1
+      },
+      "native_worker_getters": 0,
+      "sampler": "tools/montage_sustained.py",
+      "argv": [
+        "--first-cohort",
+        "--api",
+        "util.view_as_windows",
+        "--case",
+        "view_as_windows/C",
+        "--threads",
+        "1",
+        "--repeat",
+        "7"
+      ],
+      "root_binding_flag": "--root-binding",
+      "cases": [
+        {
+          "id": "view_as_windows/C",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "C",
+          "dtype": "int16",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/F",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "F",
+          "dtype": "float64",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/reverse",
+          "api": "util.view_as_windows",
+          "shape": [
+            512,
+            516
+          ],
+          "layout": "reverse",
+          "dtype": "uint8",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        },
+        {
+          "id": "view_as_windows/readonly",
+          "api": "util.view_as_windows",
+          "shape": [
+            16,
+            18
+          ],
+          "layout": "readonly",
+          "dtype": "object",
+          "parameter": [
+            2,
+            3
+          ],
+          "step": 1,
+          "copy": false,
+          "payload_provider": false,
+          "metadata_representation_provider": "numpy.lib.stride_tricks.as_strided"
+        }
+      ],
+      "ArrayMap_class_frontier": null
+    }
+  },
+  "sources": {
+    "tools/join_util_current275_probe.py": {
+      "current_raw_sha256": "3bf9b446d2df80881d131895e0f7e8dbf62998fc116e8c181c279a334bcd1f6f"
+    },
+    ".github/workflows/join-util-current275-initial.yml": {
+      "current_raw_sha256": "d28415101f38a8c092d7f69c796e2289b70a25fbbaa7e718ebe3b47060b2e064"
+    },
+    "tests/test_join_util_current275_controller.py": {
+      "current_raw_sha256": "40417be9276f55c5383c91e610ab9a6772d1383952b496216f323a8e4f3c424d"
+    }
+  },
+  "scope": "Exact case/method subset and source fingerprints only, no old271 actualauthority transplanted"
+}

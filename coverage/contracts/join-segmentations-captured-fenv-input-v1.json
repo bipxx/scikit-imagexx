@@ -1,0 +1,86 @@
+{
+  "schema": "join-segmentations-captured-fenv-input-v1",
+  "status": "PROPOSED_SOURCE_ONLY_ROOT_REVIEW_REQUIRED",
+  "public_test": "tests/test_join_segmentations_public.py",
+  "predecessor_raw_sha256": "c3fbd2964118f35b09665cc727663432b5cd89970abb96835799e989ea1810a9",
+  "current_raw_sha256": "61e39857131ac15513cf628d51f96658871f8ec30da571902ab785cd874cc30e",
+  "inverse_replacements": [
+    [
+      "\n\n@pytest.mark.parametrize('spec',cases(),ids=lambda spec:spec['id'])\ndef test_saved_original(target,spec,windows_fenv_backend):\n    module,core=target\n    profile='minimum' if np.__version__.startswith('1.') else 'modern'\n    fixture=json.loads((ROOT/'tests/fixtures/join_segmentations_originals_v1.json').read_text())\n    expected=next(row for row in fixture['profiles'][profile]['rows'] if row['id']==spec['id'])\n    # The retained Linux capture pins glibc x86-64 fenv_t to32bytes; all100\n    # original rows preserved its complete bytes, including sticky flags.\n    linux=sys.platform=='linux'\n    libc=ctypes.CDLL(None)if linux else None\n    if linux:\n        before=(ctypes.c_ubyte*32)();after=(ctypes.c_ubyte*32)()\n        assert libc.fegetenv(ctypes.byref(before))==0\n    else:\n        saved_flags,before=windows_fenv_backend.capture()\n    try:\n        actual=observe(module.join_segmentations,spec,np)\n        if linux:assert libc.fegetenv(ctypes.byref(after))==0\n        else:after=windows_fenv_backend.state()\n    finally:\n        if linux:assert libc.fesetenv(ctypes.byref(before))==0\n        else:\n            windows_fenv_backend.restore(saved_flags,before)\n",
+      "\n\n@pytest.fixture(scope='module')\ndef linux_fenv_backend():\n    if sys.platform!='linux':return None\n    from util_views_fenv import backend\n    return backend()  # Existing authenticated source-built/private helper only.\n\n\n@pytest.mark.parametrize('spec',cases(),ids=lambda spec:spec['id'])\ndef test_saved_original(target,spec,windows_fenv_backend,linux_fenv_backend):\n    module,core=target\n    profile='minimum' if np.__version__.startswith('1.') else 'modern'\n    fixture=json.loads((ROOT/'tests/fixtures/join_segmentations_originals_v1.json').read_text())\n    expected=next(row for row in fixture['profiles'][profile]['rows'] if row['id']==spec['id'])\n    # Preserve each authentic captured numerical INPUT, not arbitrary ambient\n    # sticky flags. Keep current trusted opaque addresses/reserved diagnostics.\n    linux=sys.platform=='linux'\n    libc,helper=linux_fenv_backend if linux else (None,None)\n    if linux:\n        from join_segmentations_fenv_input import recorded_input\n        outer=(ctypes.c_ubyte*32)();assert libc.fegetenv(ctypes.byref(outer))==0\n        seed=(ctypes.c_ubyte*32).from_buffer_copy(recorded_input(bytes(outer),expected['controller_fenv']['before']))\n        before=(ctypes.c_ubyte*32)();after=(ctypes.c_ubyte*32)()\n    else:\n        saved_flags,before=windows_fenv_backend.capture()\n    try:\n        if linux:\n            assert helper.reference_fenv_restore(ctypes.byref(seed),32)==0\n            assert libc.fegetenv(ctypes.byref(before))==0 and bytes(before)==bytes(seed)\n        actual=observe(module.join_segmentations,spec,np)\n        if linux:assert libc.fegetenv(ctypes.byref(after))==0\n        else:after=windows_fenv_backend.state()\n    finally:\n        if linux:\n            assert helper.reference_fenv_restore(ctypes.byref(outer),32)==0\n            restored=(ctypes.c_ubyte*32)();assert libc.fegetenv(ctypes.byref(restored))==0 and bytes(restored)==bytes(outer)\n        else:\n            windows_fenv_backend.restore(saved_flags,before)\n"
+    ]
+  ],
+  "fixture": "tests/fixtures/join_segmentations_originals_v1.json",
+  "fixture_raw_sha256": "0cb7da5d981bf95eb8895278bf9acc638ba3acd236625c48a00aa632a1b0a340",
+  "numerical_fields": [
+    [
+      0,
+      2
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      28,
+      4
+    ]
+  ],
+  "opaque_current_template_bytes": "All other bytes, including instruction/data addresses, retained from current fegetenv; never replay captured process addresses",
+  "helper_source_raw_sha256": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+  "backend_raw_sha256": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+  "ABI": [
+    32,
+    0,
+    4,
+    8,
+    12,
+    20,
+    28,
+    8
+  ],
+  "scope": "Linux x86_64 little-endian glibc32, empty x87 tags, exceptions masked, reserved MXCSR zero; Windows UCRT unchanged",
+  "profiles": {
+    "minimum": {
+      "rows": 50,
+      "runtime": {
+        "api": "segmentation.join_segmentations",
+        "signature": "(s1, s2, return_mapping: bool = False)",
+        "numpy": "1.24.4",
+        "source_sha256": "8d1da1717bf35818f57156f88a94cd84a9527f48aff16d60e250b7d8045cd8be",
+        "root_GO_contract_sha256": "e13989e90b0b5ae29b21e7a769411af4e4bf8a21863d23713bfd594321ce08e5",
+        "native_calls": 0,
+        "timings": false,
+        "executable": "/home/heq/.cache/skimagexx-label-numpy124-venv/bin/python"
+      },
+      "recorded_inputs": [
+        "7f03ffff2204ffffffffffff52a0cbeb00000000000000000000ffffa21f0000"
+      ]
+    },
+    "modern": {
+      "rows": 50,
+      "runtime": {
+        "api": "segmentation.join_segmentations",
+        "signature": "(s1, s2, return_mapping: bool = False)",
+        "numpy": "2.5.4",
+        "source_sha256": "8d1da1717bf35818f57156f88a94cd84a9527f48aff16d60e250b7d8045cd8be",
+        "root_GO_contract_sha256": "e13989e90b0b5ae29b21e7a769411af4e4bf8a21863d23713bfd594321ce08e5",
+        "native_calls": 0,
+        "timings": false,
+        "executable": "/home/heq/.cache/skimagexx-frangi-py313-venv/bin/python"
+      },
+      "recorded_inputs": [
+        "7f03ffff0000ffffffffffff3cd883ae00000000000000000000ffffa01f0000"
+      ]
+    }
+  },
+  "original_calls": 0,
+  "strict_after_assertions": "Unchanged complete assertion tail after observe; before==after full32 remains mandatory; finally restores real outer caller only",
+  "failed_predecessor": "minimum-normal-parity-v1 43 failures remain failed; invalid-sticky FP input outside captured originals remains PENDING",
+  "pending": [
+    "Root independent source review before dependent native matrix",
+    "Actual captured-state parity both profiles/modes",
+    "Full incoming sticky-state original parity",
+    "Genuine single-core/profile/SDK and public performance"
+  ]
+}

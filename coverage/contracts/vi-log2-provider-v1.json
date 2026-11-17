@@ -1,0 +1,109 @@
+{
+  "schema": "vi-log2-provider-v1",
+  "status": "SOURCE_ONLY_NO_EXECUTION_AUTHORITY",
+  "actual_authority": null,
+  "qualified_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "runner": "tools/vi_log2_provider_diagnostic.py",
+  "runner_sha256": "36338689dd64c2d62f49197d76863acdfad117ac53e74ccbfdcf5a445e15800f",
+  "input": "coverage/contracts/vi-log2-input-words-v1.json",
+  "input_sha256": "144808de2c3dfb7c49eec0abcbed59a9783eeab20dfbfd359c0057a28e151bd6",
+  "input_scope": "Actual112 reference _xlogx coefficient words from PRIVATE3.11.14/12700K current16 witness; not native intermediates or historical9V45 words. Two contiguous little-endian f64 vectors56each, no recomputation/deduplication.",
+  "scalar_symbol": {
+    "library": "libm.so.6",
+    "symbol": "log2",
+    "version": "GLIBC_2.29",
+    "resolution": "dlvsym, then dladdr identity; do not substitute default log2 or math.log2",
+    "NumPy_binary_import": "log2@GLIBC_2.2.5",
+    "limit": "NumPy disabled scalar loop and core symbol are distinct ABI providers. No extra legacy scalar calls or assumed equality."
+  },
+  "core_sha256": "fea7635f5b1a5bc69f4ce864284e21bfc61e6844667e8fa29d0cc809a0a1cefd",
+  "core_loaded": false,
+  "prepared_dependencies": {
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "src/variation_of_information.cpp": "42b0eb6b12caba52793bcc3a92eb504b1169384d6037c071c7bedb877d394386",
+    "include/skimagexx/variation_of_information.hpp": "4b7b18d69caa72240a340df4de54d78e467e02919e01a8144047c7af828cd102"
+  },
+  "controller_dependencies": {
+    "tools/vi_first_cohort_probe.py": "4346f3663fceced18c90167f2a37f3fbb76998baf31179c58bd8edc22bae5948",
+    "coverage/contracts/vi-measurement-v5.json": "4e9e913b8bf8be41b6a394303ee7161e968df0625638655aa2063c078f497a9a"
+  },
+  "genuine_python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+  "genuine_runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+  "private_binding_sha256": "59ca9e56fff7e7a3587f70b5a9e7214f66b43ee19e93a2a1841efd8aabc7d42a",
+  "private_CPU_model": "12th Gen Intel(R) Core(TM) i7-12700K",
+  "incoming_FP_semantic": {
+    "control": 895,
+    "status": 32,
+    "mxcsr": 8098
+  },
+  "FP_scope": "Seed only CW/SW/MXCSR fields of a trusted current-host empty-x87 raw32snapshot to captured incoming semantics. Exact caller32 restored after each primitive, before codecs and after writer; after-states retained, not forced equal. No other FP mode credit.",
+  "limits": {
+    "numpy_log2_array_calls_max": 4,
+    "scalar_log2_values_max": 128,
+    "scalar_log2_values_expected": 112,
+    "VI_original_calls": 0,
+    "VI_native_calls": 0,
+    "timed_batches": 0,
+    "retries": 0,
+    "feature_children_max": 2,
+    "FP_save_max": 24,
+    "FP_restore_max": 16,
+    "F1_ABI_queries_max": 2,
+    "F1_glibc_queries_max": 2,
+    "dlvsym_queries_max": 1,
+    "dladdr_queries_max": 1
+  },
+  "expected": {
+    "private_baseline": {
+      "children": 1,
+      "numpy_arrays": 2,
+      "scalar_values": 112,
+      "FP_saves": 15,
+      "FP_restores": 10
+    },
+    "hosted_feature": {
+      "children": 2,
+      "numpy_arrays": 4,
+      "scalar_values": 112,
+      "FP_saves": 24,
+      "FP_restores": 16
+    }
+  },
+  "preparation_scope": "Reuse existing authenticated offline runtime975/F1 source-built preparation only on future actual-host GO; source packet creates no environment, helper, build or transport. Private mode uses protected existing local runtime/F1.",
+  "host_eligibility": {
+    "purpose": "LOG2_PROVIDER_FEATURE_INTERVENTION",
+    "required_host": {
+      "system": "Linux",
+      "machine": "x86_64"
+    },
+    "required_features": [
+      "avx512f",
+      "avx512dq",
+      "avx512bw",
+      "avx512vl"
+    ],
+    "NumPy_required_compiled_enabled_target": "AVX512_SKX",
+    "allocation": "ONE conditional manual ubuntu-24.04 allocation, not an already live or guaranteedAVX512host",
+    "automatic_host_search": false,
+    "retry": false,
+    "ineligible": "Terminal zero primitives; preserve CPU/compiled/enabled maps and stop"
+  },
+  "feature_intervention": "Fresh child receives only NPY_DISABLE_CPU_FEATURES=all base-enabled compiled AVX512 dispatch names, including SKX. All named targets must becomeFalse; other map keys remain identical. Hardware detected flags remain /proc metadata, not per-call selection.",
+  "interpretation": "Bitwise provider differential on fixed inputs. No chosen per-call NumPy kernel, old9V45 cause, VI contract/parity, speed, SDK acceptance or release credit. Baseline-only mode has no AVX512 intervention credit.",
+  "primary_sources": [
+    "https://github.com/numpy/numpy/blob/v1.24.4/numpy/core/src/umath/loops_umath_fp.dispatch.c.src#L196-L228",
+    "https://github.com/numpy/numpy/blob/v1.24.4/numpy/core/src/common/npy_cpu_features.c#L206-L289",
+    "https://github.com/numpy/numpy/blob/v1.24.4/numpy/distutils/ccompiler_opt.py#L260-L276"
+  ],
+  "remaining": [
+    "Independent root exact-source/inert admission",
+    "Private actual interpreter/F1/ABI/libm/NumPy binding and bounded GO",
+    "Hosted publication/manual dispatch GO and fresh capacity/producer/offline runtime975/F1/feature gates",
+    "Actual raw32/count/word/exit/identity results and independent root admission; no automatic follow-on VI calls"
+  ]
+}

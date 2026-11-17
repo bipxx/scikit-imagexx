@@ -1,0 +1,36 @@
+{
+  "schema": "lbp-entry-fp-v1",
+  "base_source": "dda9cc83d9434a10616f84cf1e1125d93f5f36fd",
+  "state": "SOURCE_ONLY_NATIVE_VALIDATION_PENDING",
+  "original_calls": 0,
+  "provider_calls": 8,
+  "libc_clear_calls": 2,
+  "cpp": {
+    "path": "src/draw_multiblock_lbp.cpp",
+    "current_sha256": "612bb40cf65b6a66f71b2257468531774e8674c8c85a4b725081996e6275f13e",
+    "predecessor_sha256": "870eb16d16cfa8cfc6ff6ad9106873a1f6299c64dc80d6c0a0958a4891326c3a",
+    "inverse": {
+      "current": "    // NumPy clears these arithmetic errors only when one is already pending.\n    // A no-error clear would destroy x87 condition/denormal sticky state.\n    // This is entry operation semantics, never an after-loop mask or restore.\n    constexpr int errors=FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID;\n    if(std::fetestexcept(errors))std::feclearexcept(errors);\n",
+      "predecessor": "    // NumPy ufuncs clear arithmetic status immediately before their loop and\n    // report the loop's actual status. This is operation semantics, not a\n    // comparison mask or caller-state restoration. Never restore flags here.\n    std::feclearexcept(FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID);\n"
+    }
+  },
+  "benchmark_context": "coverage/contracts/draw-multiblock-lbp-benchmark-execution-v6.json",
+  "pending": [
+    "changed leaf compilation",
+    "strict first public cohort FP including C2/denormal",
+    "94 saved rows/profile and relevant modes",
+    "whole owning SDK FP domains",
+    "genuine one-core qualification",
+    "original-public performance"
+  ],
+  "provider_noerror_semantics": {
+    "control": 895,
+    "status": 1058,
+    "mxcsr": 8098
+  },
+  "unconditional_libc_after": {
+    "control": 895,
+    "status": 32,
+    "mxcsr": 8098
+  }
+}

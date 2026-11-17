@@ -10,7 +10,7 @@ import pytest
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v5.json').read_bytes())
+def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v6.json').read_bytes())
 
 
 def test_find_boundaries_benchmark_source_pins_and_sampler():
@@ -61,7 +61,8 @@ def test_boundary_external_binding_preserves_original_driver_and_contract():
     v2=json.loads((ROOT/v3['runtime_successor']['contract']).read_bytes())
     old=json.loads((ROOT/v3['predecessor_binding']['contract']).read_bytes())
     chain=[c['f_row_successor']['driver_inverse'],v4['layout_successor']['driver_inverse'],v3['runtime_successor']['driver_inverse'],v2['runtime_successor']['driver_inverse'],v3['predecessor_binding']['driver_inverse']]
-    raw=(ROOT/'benchmarks/find_boundaries.py').read_bytes().replace(b'\r\n',b'\n')
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    raw=predecessor_bytes(ROOT,'benchmarks/find_boundaries.py',(ROOT/'benchmarks/find_boundaries.py').read_bytes(),canonical=True)
     for fragments in chain:
         for fragment in fragments:
             current,previous=fragment['current'].encode(),fragment['predecessor'].encode()
@@ -104,9 +105,11 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
         assert {k:v for k,v in effective.items()if k not in changed}=={k:v for k,v in base.items()if k not in changed}
         assert raw_contract==driver.CONTRACT.read_bytes() and path.read_bytes()==raw_binding
         # Use real immutable closure bytes with the existing inert provenance envelope.
-        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract']):
+        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract'],base['mark_wide_successor']['contract']):
             target=tmp_path/name;target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes((ROOT/name).read_bytes())
+        context_target=tmp_path/'coverage/contracts/mark-lbp-fp-integration-v1.json'
+        context_target.write_bytes((ROOT/'coverage/contracts/mark-lbp-fp-integration-v1.json').read_bytes())
         if fault=='bound-cases':effective['cases']=[]
         elif fault=='bound-method':effective['method_sha256']='0'*64
         if fault in ('bound-cases','bound-method'):
@@ -159,7 +162,7 @@ def test_boundary_successor_contracts_are_required_qualification_sources():
                  'coverage/contracts/find-boundaries-frontend-v3.json',
                  'coverage/contracts/find-boundaries-sdk-v2.json',
                  'coverage/contracts/find-boundaries-layout-source-context-v1.json',
-                 'coverage/contracts/find-boundaries-benchmark-binding-v5.json',
+                 'coverage/contracts/find-boundaries-benchmark-binding-v6.json',
                  'coverage/contracts/find-boundaries-frontend-v4.json',
                  'coverage/contracts/find-boundaries-sdk-v3.json',
                  'coverage/contracts/find-boundaries-f-row-source-context-v1.json'):

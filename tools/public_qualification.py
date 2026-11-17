@@ -291,12 +291,20 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current271'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics')
-CURRENT_SDK_CLIENT_SCOPE = 'current32 required installed clients; existing31 plus label-pair counts, adapted Rand and preweighted contingency; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification.json'
+CURRENT_PRODUCT_SCOPE = 'current281'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball')
+CURRENT_SDK_CLIENT_SCOPE = 'current38 required installed clients; complete rolling-ball floating/typed-storage owning operations plus admitted VI/flood families; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v8.json'
+VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
+VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
+VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
+VI_OBSERVER_CANONICAL_SHA256 = '476ea323f151724571dec48263260faa094db0277167390d8209e7213c84dafc'
+VI_CURRENT_LARGE_REFERENCE_POLICY = {"profiles": ["minimum", "modern", "debug"], "legacy_scalar_gateway": "tests/test_variation_of_information_large_saved.py", "current_public_pairs": "tests/test_vi_public_log2_provider_large.py", "source_guard": "tests/test_vi_public_log2_large_source.py", "legacy_nodes_per_mode": 8, "current_nodes_per_mode": 8, "current_records_per_mode": 8, "source_cases": 4, "workers": [1, 4], "provider": "current public numpy.log2 elementary batches and numpy.matmul inner products", "FP": "natural current caller for fresh original/native pairs; retained semantic FP only in explicitly legacy scalar SDK gateway", "historical_records": "Preserved unchanged; never relabeled current CPU/ufunc or new genuine qualification.", "provider_order": ["numpy.log2", "numpy.matmul", "numpy.log2", "numpy.matmul"], "provider_types": {"log2": "ufunc", "matmul": "ufunc"}}
+VI_CURRENT_PUBLIC_REFERENCE_POLICY = {"linux_profiles": ["minimum", "modern", "debug"], "linux_module": "tests/test_vi_public_matmul_provider_public.py", "linux_group": "public-VI-current-public-linux", "linux_nodes_per_mode": 16, "linux_records_per_mode": 16, "windows_profiles": ["windows"], "windows_module": "tests/test_vi_public_matmul_windows_public.py", "windows_group": "public-VI-current-windows", "windows_nodes_per_mode": 34, "windows_pair_records_per_mode": 16, "windows_worker_records_per_mode": 34, "windows_portable_control_nodes_per_mode": 18, "case_ids": ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"], "workers": [1, 4], "provider_order": ["numpy.log2", "numpy.matmul", "numpy.log2", "numpy.matmul"], "successful_pairs_per_mode": 14, "expected_None_errors_per_mode": 2, "Linux_FP": "Natural current target semantics and exact caller32; separate from retained-semantic legacy gateway", "Windows_FP": "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim", "historical_records": "Preserved unchanged; no historical/genuine or cross-platform scope promotion"}
+VI_CURRENT_PROVIDER_CONTROLS_POLICY = {"Linux_full_saved_group_nodes_per_mode": 56, "retained_saved_and_counts_subset": 40, "added_phase_and_scalar_transport_nodes": 16, "Windows_portable_controls": 18, "hotswap_module": "tests/test_variation_of_information_integration.py", "hotswap_profiles": ["minimum", "modern", "debug", "windows"], "Linux_saved_observation_records_per_mode": 16}
 DRAW_PATHS = ('draw.line', 'draw.rectangle', 'draw.disk', 'draw.ellipse')
-DRAW_SOURCE_PATHS = ('include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
+DRAW_SOURCE_PATHS = ('coverage/contracts/mark-lbp-controller-source-successor-v1.json','tests/test_mark_lbp_controller.py','tests/test_vi_controller.py',
+    'include/skimagexx/draw_coordinates.hpp', 'src/draw_coordinates.cpp',
     'src/simd_draw_coordinates_avx2.cpp', 'src/bind_draw_coordinates.cpp',
     'python/skimagexx/_draw_coordinates.py', 'python/skimagexx/draw.py',
     'tests/test_draw_coordinates_native.cpp', 'tests/test_draw_coordinates_public.py',
@@ -600,7 +608,7 @@ GROUPS = {
                'test_dtype_metadata.py', 'test_transform_classes_public.py', 'test_transform_exception_public.py'),
 }
 _BASE_GROUPS = GROUPS
-POST203_TESTS = ('test_find_boundaries_reference.py','test_find_boundaries_frontend_contract.py','test_find_boundaries_sdk_scope.py','test_find_boundaries_benchmark.py','test_find_boundaries_public.py','test_find_boundaries_intake.py','test_find_boundaries_benchmark_intake.py','test_find_boundaries_default.py','test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
+POST203_TESTS = ('test_rolling_ball_integration.py','test_variation_of_information_integration.py','test_flood_fill_integration.py','test_finite_radon_public.py','test_find_boundaries_reference.py','test_find_boundaries_frontend_contract.py','test_find_boundaries_sdk_scope.py','test_find_boundaries_benchmark.py','test_find_boundaries_public.py','test_find_boundaries_intake.py','test_find_boundaries_benchmark_intake.py','test_find_boundaries_default.py','test_footprint_shapes_public.py', 'test_colocalization_public.py', 'test_octahedron_integer.py', 'test_butterworth_public.py', 'test_lpi_filter_public.py', 'test_window_public.py', 'test_moments_public.py', 'test_moments_derived_public.py', 'test_normalized_layouts_public.py', 'test_inertia_tensor_public.py', 'test_inertia_eigvals_public.py', 'test_moments_coords_public.py', 'test_shannon_entropy_public.py', 'test_rgb2yuv_storage_public.py', 'test_block_reduce_public.py', 'test_perimeter_crofton_public.py', 'test_perimeter_public.py', 'test_euler_number_public.py', 'test_polygon_public.py', 'test_mesh_surface_area_public.py', 'test_profile_line_public.py', 'test_blur_effect_public.py', 'test_compare_images_public.py', 'test_level_set_public.py', 'test_level_set_pipeline.py', 'test_map_array_public.py', 'test_map_array_pipeline.py', 'test_label_points_public.py', 'test_label_points_pipeline.py', 'test_unique_rows_public.py', 'test_unique_rows_pipeline.py', 'test_regular_seeds_public.py', 'test_regular_seeds_pipeline.py', 'test_montage_public.py', 'test_montage_pipeline.py', 'test_montage_integration.py', 'test_rolling_ball_kernels_integration.py', 'test_rolling_ball_kernels_pipeline.py', 'test_approximate_polygon_integration.py', 'test_approximate_polygon_pipeline.py', 'test_subdivide_polygon_integration.py', 'test_subdivide_polygon_pipeline.py', 'test_immutable_buffer_roots_public.py', 'test_moments_normalized_batch_public.py', 'test_block_reduce_integer_width.py', 'test_euler_number_intake.py', 'test_polygon_intake.py', 'test_color_transforms.py', 'test_dtype_aliases.py', 'test_profile_coordinates_public.py', 'test_draw_coordinates_public.py', 'test_draw_coordinates_integration.py', 'test_circle_perimeter_contract.py', 'test_circle_perimeter_public.py', 'test_line_aa_reference.py', 'test_line_aa_public.py', 'test_line_aa_default.py', 'test_regionprops_state_reference.py', 'test_regionprops_state_public.py', 'test_regionprops_state_default.py', 'test_regionprops_point_witness.py', 'test_circle_perimeter_unsafe_boundary.py', 'test_circle_perimeter_aa_reference.py', 'test_circle_perimeter_aa_public.py', 'test_circle_perimeter_aa_default.py', 'test_combine_stains_half_reference.py', 'test_combine_stains_half_public.py', 'test_regionprops_public_mutation_reference.py', 'test_regionprops_public_mutation_public.py', 'test_line_nd_reference.py', 'test_line_nd_rounding_promotion_reference.py', 'test_line_nd_public.py', 'test_line_nd_default.py', 'test_line_nd_benchmark.py', 'test_ellipsoid_reference.py', 'test_draw_ellipsoid_public.py', 'test_draw_ellipsoid_default.py', 'test_ellipsoid_benchmark.py', 'test_ellipse_perimeter_reference.py', 'test_draw_ellipse_perimeter_public.py', 'test_draw_ellipse_perimeter_default.py', 'test_ellipse_perimeter_benchmark.py', 'test_regionprops_bbox_extent_reference.py', 'test_regionprops_bbox_extent_public.py', 'test_regionprops_scalars_benchmark.py', 'test_regionprops_scalar_boundary_v2.py', 'test_regionprops_coords_scaled_reference.py', 'test_regionprops_coords_scaled_public.py', 'test_regionprops_coords_scaled_sdk_scope.py', 'test_regionprops_coords_scaled_benchmark.py',
     'test_draw_polygon_reference.py',
     'test_draw_polygon_public.py',
     'test_draw_polygon_default.py',
@@ -649,6 +657,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/regular-grid-native-v2.json','coverage
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/label-pair-density-optimization-v1.json', 'tests/test_label_pair_density_contract.py', 'tests/test_label_pair_density_native.cpp', 'tests/test_label_pair_density_public.py', 'benchmarks/next-metrics-minimum-initial-v1/label_pair_metrics.json', 'coverage/contracts/find-boundaries-f-row-optimization-v1.json', 'tests/test_find_boundaries_f_rows.cpp', 'tests/test_find_boundaries_f_rows_public.py', 'benchmarks/next-metrics-minimum-initial-v1/find_boundaries.json', 'benchmarks/array_views.py', 'benchmarks/slice_along_axes.py', 'coverage/contracts/slice-along-axes-v1.json', 'coverage/contracts/slice-along-axes-v2.json', 'coverage/contracts/util-array-views-v1.json', 'coverage/contracts/util-view-operations-v1.json', 'include/skimagexx/array_views.hpp', 'include/skimagexx/slice_along_axes.hpp', 'python/skimagexx/_array_views.py', 'python/skimagexx/_slice_along_axes.py', 'src/bind_util_views.cpp', 'src/util_views.cpp', 'tests/array_views_contract.py', 'tests/array_views_observer.py', 'tests/cmake_consumer/util_views_consumer.cpp', 'tests/cmake_consumer/util_views_consumer.hpp', 'tests/fixtures/array_views_observer_captured_v1.py.txt', 'tests/fixtures/array_views_upstream_v026.py.txt', 'tests/fixtures/slice_along_axes_observer_captured_v1.py.txt', 'tests/fixtures/slice_along_axes_upstream_v026.py.txt', 'tests/fixtures/util_views_originals_v1.json', 'tests/slice_along_axes_contract.py', 'tests/slice_along_axes_observer.py', 'tests/test_array_views_intake.py', 'tests/test_array_views_reference.py', 'tests/test_slice_along_axes_intake.py', 'tests/test_slice_along_axes_reference.py', 'tests/test_util_views_native.cpp', 'tests/test_util_views_public.py', 'tests/test_util_views_source.py', 'tests/util_views_reference.py', 'tests/test_util_views_integration.py', 'tests/test_join_util_views_density_source.py')
 POST203_TESTS += ('test_label_pair_density_public.py','test_find_boundaries_f_rows_public.py','test_util_views_integration.py','test_join_util_views_density_source.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/variation-of-information-reduction-v2.json','tests/data/variation_of_information_large_saved_v1.json','tests/test_variation_of_information_large_saved.py','tests/variation_of_information_large_controls.hpp','tests/test_variation_of_information_large_native.cpp','tests/test_variation_of_information_reduction_native.cpp','tests/cmake_consumer/variation_of_information_reduction_consumer.cpp','tests/variation_of_information_reduction_contract.py','tests/test_variation_of_information_reduction_source.py')
 
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-density-additive-context-v1.json', 'coverage/contracts/find-boundaries-f-row-source-context-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v5.json', 'coverage/contracts/find-boundaries-frontend-v4.json', 'coverage/contracts/find-boundaries-sdk-v3.json')
@@ -659,7 +668,49 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-fenv-v1.json', 'tests/test_
 
 DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_execution.py', 'coverage/contracts/next-util-benchmark-execution-v1.json', 'tests/next_util_benchmark_support.py', 'tests/test_next_util_benchmark_execution.py', 'tests/test_next_util_benchmark_factories.py', 'coverage/contracts/next-util-benchmark-execution-v2.json')
 POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
+POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py')
+DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
+
+DRAW_SOURCE_PATHS += ('benchmarks/draw_multiblock_lbp.py', 'benchmarks/draw_multiblock_lbp_execution.py', 'benchmarks/draw_multiblock_lbp_native.py', 'benchmarks/mark_boundaries.py', 'benchmarks/mark_boundaries_consumer.py', 'benchmarks/mark_boundaries_execution.py', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v1.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v2.json', 'coverage/contracts/draw-multiblock-lbp-native-v1.json', 'coverage/contracts/draw-multiblock-lbp-native-v2.json', 'coverage/contracts/draw-multiblock-lbp-observer-phase-scope-v1.json', 'coverage/contracts/draw-multiblock-lbp-v1.json', 'coverage/contracts/draw-multiblock-lbp-v2.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v1.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v2.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v3.json', 'coverage/contracts/mark-boundaries-native-v1.json', 'coverage/contracts/mark-boundaries-native-v2.json', 'coverage/contracts/mark-boundaries-v1.json', 'coverage/contracts/mark-lbp-enabled-additive-context-v1.json', 'coverage/contracts/mark-lbp-enabled-components-v1.json', 'include/skimagexx/draw_multiblock_lbp.hpp', 'include/skimagexx/mark_boundaries.hpp', 'python/skimagexx/_draw_multiblock_lbp.py', 'python/skimagexx/_mark_boundaries.py', 'src/bind_draw_multiblock_lbp.cpp', 'src/bind_mark_boundaries.cpp', 'src/draw_multiblock_lbp.cpp', 'src/mark_boundaries.cpp', 'tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp', 'tests/cmake_consumer/draw_multiblock_lbp_consumer.hpp', 'tests/cmake_consumer/draw_multiblock_lbp_enabled_consumer.cpp', 'tests/cmake_consumer/mark_boundaries_consumer.cpp', 'tests/cmake_consumer/mark_boundaries_consumer.hpp', 'tests/draw_multiblock_lbp_contract.py', 'tests/draw_multiblock_lbp_overlap_contract.py', 'tests/draw_multiblock_lbp_saved_parity.py', 'tests/draw_multiblock_lbp_sdk_saved.py', 'tests/fixtures/mark_boundaries_native_saved_v1.hpp', 'tests/fixtures/mark_boundaries_originals_v1.json', 'tests/fixtures/mark_boundaries_originals_v2.json', 'tests/mark_boundaries_contract.py', 'tests/mark_boundaries_exception_codec.py', 'tests/mark_boundaries_observer.py', 'tests/mark_boundaries_observer_v2.py', 'tests/test_draw_multiblock_lbp_benchmark_execution.py', 'tests/test_draw_multiblock_lbp_intake.py', 'tests/test_draw_multiblock_lbp_native.cpp', 'tests/test_draw_multiblock_lbp_native_source.py', 'tests/test_draw_multiblock_lbp_overlap_intake.py', 'tests/test_draw_multiblock_lbp_overlap_reference.py', 'tests/test_draw_multiblock_lbp_reference.py', 'tests/test_mark_boundaries_benchmark_execution.py', 'tests/test_mark_boundaries_native.cpp', 'tests/test_mark_boundaries_native_contract.py', 'tests/test_mark_boundaries_public.py', 'tests/test_mark_boundaries_workers.cpp', 'tests/test_mark_lbp_enabled_public.py', 'tests/test_mark_lbp_enabled_source.py')
+
+DRAW_SOURCE_PATHS += ('benchmarks/finite_radon_cases_v1.py', 'benchmarks/finite_radon_execution_v1.py', 'benchmarks/finite_radon_frt2_v1.py', 'benchmarks/finite_radon_ifrt2_v1.py', 'benchmarks/finite_radon_native.py', 'benchmarks/finite_radon_native_v2.py', 'coverage/contracts/current-public-qualification-v2.json', 'coverage/contracts/finite-radon-benchmark-execution-v1.json', 'coverage/contracts/finite-radon-capture-v1.json', 'coverage/contracts/finite-radon-exceptional-v1.json', 'coverage/contracts/finite-radon-native-v1.json', 'coverage/contracts/finite-radon-native-v2.json', 'coverage/contracts/finite-radon-native-v3.json', 'coverage/contracts/finite-radon-observer-v2.json', 'coverage/contracts/finite-radon-v1.json', 'coverage/contracts/join-segmentations-captured-fenv-input-v1.json', 'coverage/contracts/join-segmentations-unique-reuse-v1.json', 'coverage/contracts/util-view-boundary-optimization-v1.json', 'include/skimagexx/finite_radon.hpp', 'python/skimagexx/_array_views.py', 'python/skimagexx/_finite_radon.py', 'python/skimagexx/_join_segmentations.py', 'src/bind_finite_radon.cpp', 'src/crop.cpp', 'src/finite_radon.cpp', 'tests/cmake_consumer/finite_radon_consumer.cpp', 'tests/cmake_consumer/finite_radon_consumer.hpp', 'tests/finite_radon_capture_controller.py', 'tests/finite_radon_contract.py', 'tests/finite_radon_exception_codec.py', 'tests/finite_radon_exceptional_contract.py', 'tests/finite_radon_exceptional_observer_v1.py', 'tests/finite_radon_observer.py', 'tests/finite_radon_observer_v2.py', 'tests/finite_radon_saved_parity.py', 'tests/fixtures/finite_radon_exceptional_originals_v1.json', 'tests/fixtures/finite_radon_exceptional_saved_v1.hpp', 'tests/fixtures/finite_radon_originals_v1.json', 'tests/fixtures/finite_radon_saved_v2.hpp', 'tests/join_segmentations_fenv_input.py', 'tests/test_crop_strided_copy.cpp', 'tests/test_finite_radon_benchmark_execution.py', 'tests/test_finite_radon_capture_authority.py', 'tests/test_finite_radon_capture_failure.py', 'tests/test_finite_radon_capture_source.py', 'tests/test_finite_radon_codec.py', 'tests/test_finite_radon_exceptional_saved_public.py', 'tests/test_finite_radon_intake.py', 'tests/test_finite_radon_native.cpp', 'tests/test_finite_radon_native_source.py', 'tests/test_finite_radon_public.py', 'tests/test_finite_radon_saved_public.py', 'tests/test_finite_radon_source.py', 'tests/test_join_segmentations_fenv_input_source.py', 'tests/test_join_segmentations_native_contract.py', 'tests/test_join_segmentations_public.py', 'tests/test_join_segmentations_unique_reuse_public.py', 'tests/test_util_view_boundary_source.py')
+
+DRAW_SOURCE_PATHS += ('.github/workflows/public-qualification.yml', 'benchmarks/draw_multiblock_lbp_execution.py', 'benchmarks/finite_radon_cases_v1.py', 'benchmarks/finite_radon_execution_v1.py', 'benchmarks/finite_radon_frt2_v1.py', 'benchmarks/finite_radon_ifrt2_v1.py', 'benchmarks/finite_radon_native.py', 'benchmarks/finite_radon_native_v2.py', 'benchmarks/frt2.py', 'benchmarks/ifrt2.py', 'benchmarks/mark_boundaries_consumer.py', 'benchmarks/mark_boundaries_execution.py', 'benchmarks/next_util_execution.py', 'coverage/api.json', 'coverage/contracts/current-public-qualification-v2.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v3.json', 'coverage/contracts/draw-multiblock-lbp-metadata-v1.json', 'coverage/contracts/finite-radon-benchmark-execution-v1.json', 'coverage/contracts/finite-radon-benchmark-execution-v2.json', 'coverage/contracts/finite-radon-capture-v1.json', 'coverage/contracts/finite-radon-exceptional-v1.json', 'coverage/contracts/finite-radon-native-v1.json', 'coverage/contracts/finite-radon-native-v2.json', 'coverage/contracts/finite-radon-native-v3.json', 'coverage/contracts/finite-radon-observer-v2.json', 'coverage/contracts/finite-radon-v1.json', 'coverage/contracts/join-segmentations-captured-fenv-input-v1.json', 'coverage/contracts/join-segmentations-unique-reuse-v1.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v4.json', 'coverage/contracts/mark-lbp-radon-util-additive-context-v1.json', 'coverage/contracts/next-util-benchmark-execution-v3.json', 'coverage/contracts/util-view-boundary-optimization-v1.json', 'include/skimagexx/finite_radon.hpp', 'python/skimagexx/_array_views.py', 'python/skimagexx/_finite_radon.py', 'python/skimagexx/_join_segmentations.py', 'python/skimagexx/coverage.py', 'python/skimagexx/transform.py', 'src/bind_draw_multiblock_lbp.cpp', 'src/bind_finite_radon.cpp', 'src/bindings.cpp', 'src/crop.cpp', 'src/finite_radon.cpp', 'tests/cmake_consumer/finite_radon_consumer.cpp', 'tests/cmake_consumer/finite_radon_consumer.hpp', 'tests/draw_multiblock_lbp_metadata_context.py', 'tests/finite_radon_capture_controller.py', 'tests/finite_radon_contract.py', 'tests/finite_radon_exception_codec.py', 'tests/finite_radon_exceptional_contract.py', 'tests/finite_radon_exceptional_observer_v1.py', 'tests/finite_radon_observer.py', 'tests/finite_radon_observer_v2.py', 'tests/finite_radon_saved_parity.py', 'tests/fixtures/finite_radon_exceptional_originals_v1.json', 'tests/fixtures/finite_radon_exceptional_saved_v1.hpp', 'tests/fixtures/finite_radon_originals_v1.json', 'tests/fixtures/finite_radon_saved_v2.hpp', 'tests/join_segmentations_fenv_input.py', 'tests/next_util_benchmark_support.py', 'tests/test_api.py', 'tests/test_ci_measurement_isolation.py', 'tests/test_crop_benchmark.py', 'tests/test_crop_strided_copy.cpp', 'tests/test_draw_multiblock_lbp_benchmark_execution.py', 'tests/test_draw_multiblock_lbp_dtype_metadata.py', 'tests/test_draw_multiblock_lbp_metadata_source.py', 'tests/test_draw_multiblock_lbp_native_source.py', 'tests/test_finite_radon_benchmark_execution.py', 'tests/test_finite_radon_capture_authority.py', 'tests/test_finite_radon_capture_failure.py', 'tests/test_finite_radon_capture_source.py', 'tests/test_finite_radon_codec.py', 'tests/test_finite_radon_exceptional_saved_public.py', 'tests/test_finite_radon_intake.py', 'tests/test_finite_radon_native.cpp', 'tests/test_finite_radon_native_source.py', 'tests/test_finite_radon_public.py', 'tests/test_finite_radon_saved_public.py', 'tests/test_finite_radon_source.py', 'tests/test_join_integration_source.py', 'tests/test_join_segmentations_fenv_input_source.py', 'tests/test_join_segmentations_native_contract.py', 'tests/test_join_segmentations_public.py', 'tests/test_join_segmentations_unique_reuse_public.py', 'tests/test_mark_boundaries_benchmark_execution.py', 'tests/test_mark_lbp_enabled_source.py', 'tests/test_public_qualification.py', 'tests/test_rank_corpus_sdk_scope.py', 'tests/test_rank_statistics_products.py', 'tests/test_regular_grid_native_contract.py', 'tests/test_util_metadata_source.py', 'tests/test_util_view_boundary_source.py', 'tests/test_util_views_source.py', 'tools/inventory.py', 'tools/join_source_context.py', 'tools/public_qualification.py')
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/finite-radon-public-exports-v1.json',)
+DRAW_SOURCE_PATHS += ('coverage/contracts/join-windows-fenv-fixture-v2.json',)
+
+DRAW_SOURCE_PATHS = tuple(dict.fromkeys(DRAW_SOURCE_PATHS))
+
+DRAW_SOURCE_PATHS += ('.github/workflows/public-qualification.yml', 'CMakeLists.txt', 'benchmarks/finite_radon_cases_v1.py', 'benchmarks/finite_radon_execution_v1.py', 'benchmarks/variation_of_information.py', 'benchmarks/variation_of_information_cases_v1.py', 'benchmarks/variation_of_information_consumer.py', 'benchmarks/variation_of_information_execution.py', 'coverage/api.json', 'coverage/contracts/abi-vi-cumulative-integration-v1.json', 'coverage/contracts/current-public-qualification-v3.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v4.json', 'coverage/contracts/finite-radon-benchmark-execution-v3.json', 'coverage/contracts/finite-radon-benchmark-execution-v4.json', 'coverage/contracts/finite-radon-native-v4.json', 'coverage/contracts/finite-radon-numpy-abi-v1.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v5.json', 'coverage/contracts/next-util-benchmark-execution-v4.json', 'coverage/contracts/variation-of-information-benchmark-execution-v1.json', 'coverage/contracts/variation-of-information-benchmark-execution-v2.json', 'coverage/contracts/variation-of-information-benchmark-v1.json', 'coverage/contracts/variation-of-information-current-counts-v2.json', 'coverage/contracts/variation-of-information-native-v1.json', 'include/skimagexx/variation_of_information.hpp', 'python/skimagexx/_variation_of_information.py', 'python/skimagexx/coverage.py', 'python/skimagexx/metrics.py', 'src/bind_finite_radon.cpp', 'src/bind_variation_of_information.cpp', 'src/bindings.cpp', 'src/variation_of_information.cpp', 'tests/cmake_consumer/CMakeLists.txt', 'tests/cmake_consumer/variation_of_information_consumer.cpp', 'tests/cmake_consumer/variation_of_information_current_counts_consumer.cpp', 'tests/cmake_consumer/variation_of_information_enabled_consumer.cpp', 'tests/fixtures/variation_of_information_saved_v1.hpp', 'tests/next_util_benchmark_support.py', 'tests/test_abi_vi_integration_source.py', 'tests/test_api.py', 'tests/test_finite_radon_benchmark_execution.py', 'tests/test_finite_radon_native_source.py', 'tests/test_finite_radon_numpy_abi_public.py', 'tests/test_finite_radon_numpy_abi_source.py', 'tests/test_variation_of_information_benchmark_execution.py', 'tests/test_variation_of_information_current_counts.cpp', 'tests/test_variation_of_information_current_counts_public.py', 'tests/test_variation_of_information_current_counts_source.py', 'tests/test_variation_of_information_integration.py', 'tests/test_variation_of_information_native.cpp', 'tests/test_variation_of_information_public.py', 'tests/test_variation_of_information_source.py', 'tests/variation_of_information_current_counts_controls.hpp', 'tests/variation_of_information_source_context.py', 'tools/inventory.py', 'tools/join_source_context.py')
+
+DRAW_SOURCE_PATHS += ('benchmarks/flood_fill.py', 'benchmarks/flood_fill_execution.py', 'benchmarks/flood_fill_native.py', 'coverage/contracts/current-public-qualification-v4.json', 'coverage/contracts/flood-fill-benchmark-v1.json', 'coverage/contracts/flood-fill-benchmark-v2.json', 'coverage/contracts/flood-fill-native-v1.json', 'coverage/contracts/flood-fill-readiness-v1.json', 'coverage/contracts/flood-fill-v1.json', 'include/skimagexx/flood_fill.hpp', 'python/skimagexx/_flood_fill.py', 'src/bind_flood_fill.cpp', 'src/flood_fill.cpp', 'tests/fixtures/flood_fill_original_v1.json', 'tests/fixtures/flood_fill_sdk_original_v1.inc', 'tests/fixtures/flood_fill_sources_v1.json', 'tests/flood_fill_capture_controller.py', 'tests/flood_fill_contract.py', 'tests/flood_fill_exception_codec.py', 'tests/flood_fill_observer.py', 'tests/flood_fill_readiness.py', 'tests/flood_fill_sdk_fixture.py', 'tests/flood_fill_source_context.py', 'tests/sdk/flood_fill/CMakeLists.txt', 'tests/test_flood_fill_capture_failure.py', 'tests/test_flood_fill_capture_source.py', 'tests/test_flood_fill_intake.py', 'tests/test_flood_fill_integration.py', 'tests/test_flood_fill_native_source.py', 'tests/test_flood_fill_public.py', 'tests/test_flood_fill_reference.py', 'tests/test_flood_fill_sdk.cpp', 'tests/test_flood_fill_source.py')
+
+DRAW_SOURCE_PATHS += ('tests/cmake_consumer/flood_fill_consumer.cpp',)
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/flood-fill-native-v2.json','coverage/contracts/flood-fill-benchmark-v3.json','tests/flood_fill_cost_context.py')
+
+DRAW_SOURCE_PATHS += ('.github/workflows/rolling-ball-initial.yml', 'benchmarks/rolling_ball.py', 'benchmarks/rolling_ball_execution.py', 'benchmarks/rolling_ball_native.py', 'coverage/contracts/rolling-ball-benchmark-execution-v1.json', 'coverage/contracts/rolling-ball-benchmark-execution-v2.json', 'coverage/contracts/rolling-ball-measurement-v1.json', 'coverage/contracts/rolling-ball-measurement-v2.json', 'coverage/contracts/rolling-ball-native-v1.json', 'coverage/contracts/rolling-ball-v1.json', 'include/skimagexx/rolling_ball.hpp', 'python/skimagexx/_rolling_ball.py', 'src/bind_rolling_ball.cpp', 'src/rolling_ball.cpp', 'tests/fixtures/rolling_ball_original_v1.json', 'tests/fixtures/rolling_ball_sdk_v1.bin', 'tests/fixtures/rolling_ball_sources_v1.json', 'tests/rolling_ball_contract.py', 'tests/rolling_ball_exception_codec.py', 'tests/rolling_ball_observer.py', 'tests/sdk/rolling_ball/CMakeLists.txt', 'tests/test_rolling_ball_benchmark.py', 'tests/test_rolling_ball_controller.py', 'tests/test_rolling_ball_native_source.py', 'tests/test_rolling_ball_public.py', 'tests/test_rolling_ball_sdk.cpp', 'tests/test_rolling_ball_source.py', 'tools/rolling_ball_first_cohort_probe.py', 'coverage/contracts/current-public-qualification-v6.json', 'coverage/contracts/rolling-ball-enabled-context-v1.json', 'tests/test_rolling_ball_integration.py', 'tests/test_rolling_ball_enabled_source.py', 'tests/cmake_consumer/rolling_ball_consumer.cpp')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/rolling-ball-sdk-dtypes-v1.json', 'include/skimagexx/rolling_ball.hpp', 'src/rolling_ball.cpp', 'tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc', 'tests/fixtures/rolling_ball_sdk_dtypes_v1.bin', 'tests/rolling_ball_sdk_dtype_context.py', 'tests/sdk/rolling_ball_dtypes/CMakeLists.txt', 'tests/test_rolling_ball_sdk_dtype_fp.cpp', 'tests/test_rolling_ball_sdk_dtype_source.py', 'tests/test_rolling_ball_sdk_dtypes.cpp', 'tests/cmake_consumer/rolling_ball_storage_consumer.cpp', 'coverage/contracts/rolling-ball-native-v2.json', 'src/half.hpp', 'include/skimagexx/convert.hpp')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/mark-boundaries-benchmark-execution-v6.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v5.json')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/variation-of-information-benchmark-execution-v5.json',)
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/current281-integration-fixes-v1.json','tests/test_current281_integration_fixes_source.py')
+# Exact R1 source-reader successor; no production or selector change.
+DRAW_SOURCE_PATHS += ('coverage/contracts/current281-projection-v2.json',)
+DRAW_SOURCE_PATHS += ('coverage/contracts/current281-sdk-family-source-v2.json',)
+
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/rolling-ball-sentinel-v1.json','coverage/contracts/rolling-ball-native-v3.json','coverage/contracts/rolling-ball-benchmark-execution-v3.json','coverage/contracts/rolling-ball-measurement-v3.json','tools/rolling_ball_sentinel_context.py','tests/test_rolling_ball_sentinel.py')
 
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
@@ -674,6 +725,23 @@ def groups_for_source(root):
     return groups
 
 
+DRAW_SOURCE_PATHS += (
+    'tools/mark_lbp_fp_context.py','coverage/contracts/mark-lbp-fp-integration-v1.json',
+    'coverage/contracts/mark-lbp-fp-integration-v2.json',
+    'coverage/contracts/mark-wide-outer-source-v1.json','coverage/contracts/mark-wide-comparison-fp-v1.json',
+    'coverage/contracts/mark-wide-compatibility-v1.json','coverage/contracts/mark-wide-outer-sdk-v1.json',
+    'coverage/contracts/mark-wide-outer-private-bridge-v1.json','coverage/contracts/mark-wide-outer-capture-v2.json',
+    'tests/fixtures/mark_wide_outer_originals_v1.json','tests/fixtures/mark_wide_outer_sdk_v1.hpp',
+    'tests/mark_wide_outer_capture.py','tests/mark_wide_outer_private_compare.py','tests/mark_wide_outer_sdk.py',
+    'tests/cmake_consumer/mark_wide_outer_consumer.cpp','tests/test_mark_wide_outer_public.py',
+    'tests/test_find_boundaries_wide_comparison_fp.cpp','tests/test_draw_multiblock_lbp_entry_fp.cpp',
+    'coverage/contracts/draw-multiblock-lbp-entry-fp-v1.json')
+
+
+# MARK_WIDE_INTEGRATION_SOURCE_CLOSURE
+DRAW_SOURCE_PATHS += ('benchmarks/draw_multiblock_lbp_execution.py', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v6.json', 'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v7.json', 'coverage/contracts/draw-multiblock-lbp-entry-fp-v1.json', 'coverage/contracts/find-boundaries-benchmark-binding-v6.json', 'coverage/contracts/find-boundaries-frontend-v5.json', 'coverage/contracts/find-boundaries-sdk-v4.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v7.json', 'coverage/contracts/mark-lbp-fp-integration-v1.json', 'coverage/contracts/mark-wide-comparison-fp-v1.json', 'coverage/contracts/mark-wide-compatibility-v1.json', 'coverage/contracts/mark-wide-outer-capture-v2.json', 'coverage/contracts/mark-wide-outer-private-bridge-v1.json', 'coverage/contracts/mark-wide-outer-sdk-v1.json', 'coverage/contracts/mark-wide-outer-source-v1.json', 'coverage/contracts/variation-of-information-benchmark-execution-v6.json', 'include/skimagexx/find_boundaries.hpp', 'python/skimagexx/_find_boundaries.py', 'python/skimagexx/_mark_boundaries.py', 'src/draw_multiblock_lbp.cpp', 'src/find_boundaries.cpp', 'tests/cmake_consumer/mark_wide_outer_consumer.cpp', 'tests/fixtures/mark_wide_outer_originals_v1.json', 'tests/fixtures/mark_wide_outer_sdk_v1.hpp', 'tests/mark_wide_outer_capture.py', 'tests/mark_wide_outer_private_compare.py', 'tests/mark_wide_outer_sdk.py', 'tests/test_draw_multiblock_lbp_benchmark_execution.py', 'tests/test_draw_multiblock_lbp_entry_fp.cpp', 'tests/test_draw_multiblock_lbp_entry_fp.py', 'tests/test_find_boundaries_native.cpp', 'tests/test_find_boundaries_public.py', 'tests/test_find_boundaries_wide_comparison_fp.cpp', 'tests/test_mark_lbp_fp_integration_source.py', 'tests/test_mark_wide_compatibility_source.py', 'tests/test_mark_wide_outer_capture.py', 'tests/test_mark_wide_outer_private_compare.py', 'tests/test_mark_wide_outer_public.py', 'tests/test_mark_wide_outer_sdk.py', 'tests/test_mark_wide_outer_source.py', 'tools/mark_lbp_fp_context.py')
+
+
 def applicable_public_groups(groups,profile):
     """Keep all global gates; add full Linux captured-grid parity explicitly."""
     require(profile in PROFILES,'unknown public-group profile')
@@ -681,6 +749,19 @@ def applicable_public_groups(groups,profile):
     if 'public-post203' in selected and profile!='windows':
         selected['public-regular-grid-saved-linux']=('test_regular_grid_public.py',)
         selected['public-util-views-saved-linux']=('test_util_views_public.py',)
+        selected['public-mark-saved-linux']=('test_mark_boundaries_public.py',)
+        selected['public-mark-wide-saved-linux']=('test_mark_wide_outer_public.py',)
+        selected['public-lbp-saved-linux']=('test_draw_multiblock_lbp_public.py',)
+        selected['public-lbp-metadata-linux']=('test_draw_multiblock_lbp_dtype_metadata.py',)
+        selected['public-radon-saved-linux']=('test_finite_radon_saved_public.py','test_finite_radon_exceptional_saved_public.py')
+        selected['public-radon-ABI-policy-linux']=('test_finite_radon_numpy_abi_public.py',)
+        selected['public-VI-saved-linux']=('test_variation_of_information_public.py','test_variation_of_information_current_counts_public.py')
+        selected['public-VI-large-saved-linux']=('test_variation_of_information_large_saved.py','test_vi_public_log2_provider_large.py')
+        selected['public-VI-current-public-linux']=('test_vi_public_matmul_provider_public.py',)
+        selected['public-flood-saved-linux'] = ('test_flood_fill_public.py',)
+        selected['public-rolling-ball-saved-linux'] = ('test_rolling_ball_public.py',)
+    if 'public-post203' in selected and profile=='windows':
+        selected['public-VI-current-windows']=('test_vi_public_matmul_windows_public.py',)
     return selected
 
 
@@ -724,6 +805,54 @@ def runtime_pins(profile):
     if profile == 'windows':
         pins['colorama'] = '0.4.6'
     return pins
+
+
+DRAW_SOURCE_PATHS += ('benchmarks/vi_public_log2_provider_consumer.py', 'benchmarks/vi_public_log2_provider_execution.py', 'coverage/contracts/vi-public-log2-provider-v1.json', 'coverage/contracts/vi-public-log2-provider-benchmark-v1.json', 'coverage/contracts/vi-public-log2-provider-source-v1.json', 'tests/test_vi_public_log2_provider_source.py', 'tools/vi_public_log2_context.py', 'tests/test_vi_log2_provider_diagnostic.py', 'tests/test_vi_reduction_integration_source.py')
+
+DRAW_SOURCE_PATHS += ('tools/current_validation_context.py','coverage/contracts/current281-validation-source-v1.json','coverage/contracts/mark-boundaries-benchmark-execution-v8.json','coverage/contracts/draw-multiblock-lbp-benchmark-execution-v8.json','coverage/contracts/vi-public-log2-provider-benchmark-v2.json','coverage/contracts/vi4-failure-capture-v2.json')
+
+DRAW_SOURCE_PATHS += ('tools/qualification_capacity_context.py','coverage/contracts/qualification-capacity-source-v1.json')
+
+DRAW_SOURCE_PATHS += ('tools/vi_public_reference_context_v2.py','coverage/contracts/vi-public-log2-reference-source-v2.json')
+
+# Current-runtime VI large-reference inputs retain legacy scalar checks separately.
+DRAW_SOURCE_PATHS += ('tools/vi_public_reference_context.py', 'coverage/contracts/vi-public-log2-reference-source-v1.json', 'coverage/contracts/current-public-qualification-v7.json', 'tests/test_vi_public_log2_provider_large.py', 'tests/test_vi_public_log2_large_source.py', 'tools/vi_cohort_value_diagnostic.py', 'tests/test_vi_cohort_value_diagnostic.py')
+
+# Current VI SDK/capture validation source closure, not historical qualification.
+DRAW_SOURCE_PATHS += ('tools/vi_provider_sdk_context.py', 'coverage/contracts/vi-provider-sdk-source-v1.json', 'tests/variation_of_information_provider_controls.hpp', 'tests/test_vi_owning_sdk_source.py', 'tools/vi4_failure_capture.py', 'coverage/contracts/vi4-failure-capture-v1.json', 'tests/test_vi4_failure_capture.py', '.github/workflows/vi-initial-failure-capture.yml')
+
+
+# Current public log2/matmul qualification; immutable predecessors stay collected.
+DRAW_SOURCE_PATHS += (
+    "benchmarks/vi_public_matmul_provider_consumer.py",
+    "benchmarks/vi_public_matmul_provider_execution.py",
+    "coverage/contracts/vi-public-matmul-provider-v1.json",
+    "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json",
+    "tests/test_vi_public_matmul_provider_source.py",
+    "tests/test_vi_public_matmul_provider_public.py",
+    "tools/vi_public_matmul_context.py",
+    "coverage/contracts/vi-public-matmul-source-history-v1.json",
+    "coverage/contracts/vi-public-matmul-source-history-v2.json",
+    "coverage/contracts/vi-public-matmul-source-history-v3.json",
+    "coverage/contracts/vi-public-matmul-source-history-v4.json",
+    "coverage/contracts/vi-public-matmul-source-history-v5.json",
+    "coverage/contracts/vi-public-matmul-source-history-v6.json",
+    "coverage/contracts/vi-public-matmul-source-history-v7.json",
+    "tests/vi_public_matmul_source_view.py",
+    "tests/cmake_consumer/variation_of_information_matmul_consumer_v1.cpp",
+    "tests/variation_of_information_matmul_controls_v1.hpp",
+    "tests/test_vi_public_matmul_sdk_source.py",
+    "tools/vi4_public_matmul_capture.py",
+    "coverage/contracts/vi4-public-matmul-capture-v1.json",
+    "coverage/contracts/vi-public-matmul-provider-benchmark-v2.json",
+    "benchmarks/vi_public_matmul_provider_execution_v2.py",
+    "benchmarks/vi_public_matmul_provider_consumer_v2.py",
+    "tests/test_vi4_public_matmul_capture.py",
+    "tests/test_vi_public_matmul_qualification_source.py",
+    "tests/test_vi_public_matmul_windows_public.py",
+    "coverage/contracts/current-public-qualification-v8.json",
+    "tests/test_vi_value_diagnostic_workflow.py",
+)
 
 
 def environment(package=None, scalar=False):
@@ -963,7 +1092,7 @@ def current_contract(read_bytes):
             and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
     require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
             and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp'],
+            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp','include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','include/skimagexx/finite_radon.hpp','include/skimagexx/variation_of_information.hpp','include/skimagexx/flood_fill.hpp','include/skimagexx/rolling_ball.hpp'],
             'current installed-client scope differs')
     for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
         values = data.get(key)
@@ -977,10 +1106,20 @@ def current_contract(read_bytes):
             'unmapped current image API contracts')
     require(all(isinstance(n, str) for n in contracts.values())
             and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py'},
             'current qualification selector contract differs')
     require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
     require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
+    require(data.get('Linux_saved_mark_lbp_profiles')==['minimum','modern','debug'],'Linux saved MARK/LBP profile scope differs')
+    require(data.get('Linux_saved_rolling_ball_profiles')==['minimum','modern','debug'] and data.get('rolling_ball_saved_nodes_per_mode')==81,'Linux rolling-ball saved scope differs')
+    require(data.get('VI_current_runtime_large_reference')==VI_CURRENT_LARGE_REFERENCE_POLICY,
+            'current VI large-reference domain/provider scope differs')
+    require(data.get('VI_current_runtime_public_reference')==VI_CURRENT_PUBLIC_REFERENCE_POLICY,
+            'current VI public Linux/Windows reference scope differs')
+    require(data.get('VI_current_provider_controls')==VI_CURRENT_PROVIDER_CONTROLS_POLICY,
+            'current VI saved/provider/hot-swap scope differs')
+    require(contracts.get('metrics.variation_of_information')=='tests/test_vi_public_log2_provider_large.py',
+            'current VI public original-pair contract missing')
     return data
 
 
@@ -1007,6 +1146,7 @@ def current_install_layout(read_bytes, names, profile):
     require(all(n in headers for n in ('include/skimagexx/crop.hpp','include/skimagexx/regular_grid.hpp')) and all(n in sources for n in ('skimagexx/_crop.py','skimagexx/_regular_grid.py')), 'current util metadata install closure absent')
     require('include/skimagexx/join_segmentations.hpp' in headers and 'skimagexx/_join_segmentations.py' in sources,
             'current JOIN install closure absent')
+    require(all('include/skimagexx/'+n+'.hpp'in headers and 'skimagexx/_'+n+'.py'in sources for n in ('mark_boundaries','draw_multiblock_lbp')),'current MARK/LBP install closure absent')
     require('include/skimagexx/draw_coordinates.hpp' in headers
             and 'skimagexx/_draw_coordinates.py' in sources and 'skimagexx/draw.py' in sources,
             'current drawing install closure absent')
@@ -1037,6 +1177,7 @@ def current_install_layout(read_bytes, names, profile):
     require('include/skimagexx/draw_set_color.hpp' in headers and 'skimagexx/_draw_set_color.py' in sources,
             'current set-color install closure absent')
     require('include/skimagexx/find_boundaries.hpp' in headers and 'skimagexx/_find_boundaries.py' in sources, 'current find_boundaries install closure absent')
+    require(all('include/skimagexx/'+n+'.hpp'in headers and 'skimagexx/_'+n+'.py'in sources for n in ('variation_of_information','flood_fill','rolling_ball')),'current VI/flood install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -1849,7 +1990,7 @@ def label_pair_admission(core, metrics, registered):
         require(callable(function)and function is vars(wrapper).get(name)and function.__module__=='skimagexx.'+module,'label-pair public forwarding/alias')
         require(str(inspect.signature(function))==signature,'label-pair public signature differs')
         require(metrics.__all__.count(name)==1 and tuple(registered).count('metrics.'+name)==1,'label-pair duplicate/missing registry/export')
-    for name in ('label_pair_counts','label_pair_counts_preweighted','label_pair_rand_terms','label_pair_rand_divide','label_pair_rand_fscore','label_pair_rand_error','label_pair_check_storage'):
+    for name in ('variation_of_information_csr','label_pair_counts','label_pair_counts_preweighted','label_pair_rand_terms','label_pair_rand_divide','label_pair_rand_fscore','label_pair_rand_error','label_pair_check_storage'):
         entry=getattr(core,name,None)
         require(inspect.isbuiltin(entry)and entry.__module__==core.__name__ and entry.__name__==name,'label-pair compiled entry missing/forwarded: '+name)
 
@@ -1869,8 +2010,21 @@ def admission(out, state):
     require(xx.set_num_threads is xx._core.set_num_threads and xx.get_num_threads is xx._core.get_num_threads, 'global worker setter not shared')
     for module in ('_rank', '_components', '_component_consumers', '_metrics', '_geometric', '_footprint_dense', '_footprint_decomposition', '_footprint_util', '_tv_chambolle', '_tv_bregman', '_max_tree', '_matrix_transform', '_reconstruction', '_normalized_mutual_information', '_h_extrema'):
         require(importlib.import_module('skimagexx.' + module)._core is xx._core, 'multiple core worker states: ' + module)
+    for module_name,namespace,name,entries in (
+        ('_mark_boundaries','segmentation','mark_boundaries',('mark_boundaries_prepare','mark_boundaries_mask','mark_boundaries_outline','mark_boundaries_paint')),
+        ('_draw_multiblock_lbp','feature','draw_multiblock_lbp',('_lbp_prepare','_lbp_binary','_lbp_assign')),
+        ('_finite_radon','transform','frt2',('frt2','ifrt2','_finite_radon_inverse_prefix')),
+        ('_finite_radon','transform','ifrt2',('frt2','ifrt2')),
+        ('_variation_of_information','metrics','variation_of_information',('variation_of_information_csr','label_pair_counts_preweighted'))):
+        module=importlib.import_module('skimagexx.'+module_name)
+        require(module._core is xx._core,'new frontend has alternate core')
+        require(getattr(getattr(xx,namespace),name)is getattr(module,name),'new public namespace route differs')
+        require(all(inspect.isbuiltin(getattr(xx._core,entry))and getattr(xx._core,entry).__module__=='skimagexx._core'for entry in entries),'new operation native entries are not installed builtin owners')
     coverage = importlib.import_module('skimagexx.coverage')
     label_pair_admission(xx._core,importlib.import_module('skimagexx.metrics'),coverage.native_functions())
+    flood=importlib.import_module('skimagexx._flood_fill')
+    require(flood._core is xx._core and xx.morphology.flood is xx.segmentation.flood is flood.flood and xx.morphology.flood_fill is xx.segmentation.flood_fill is flood.flood_fill,'Flood canonical/alias/singlecore mismatch')
+    require(all(inspect.isbuiltin(getattr(xx._core,n))and getattr(xx._core,n).__module__=='skimagexx._core'for n in ('flood_mask','flood_assign','crop_copy_into')),'Flood/currentcopy entry not installed native')
     require(sorted(coverage.native_functions()) == state['expected']['functions'], 'installed/source registry mismatch')
     require(sum(coverage.execution_kind(n) == 'native' for n in coverage.native_functions()) == state['expected']['image_count'], 'image/helper count mismatch')
     require(len(coverage.native_functions()) == state['expected']['registered_count']
@@ -2011,10 +2165,51 @@ def child(out, group):
         os.environ['MATRIX_TRANSFORM_PROOF_OUTPUT']=str(out/(mode+'-matrix-routes.json'))
     if group=='public-util-views-saved-linux':
         os.environ.update(util_views_fenv_environment(out,state))
+    if group in ('public-mark-saved-linux','public-mark-wide-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux'):
+        require(state['profile']!='windows','Linuxsavedfull32envelope forbidden onWindows')
+        require(not os.environ.get('MARK_COMPONENT_DIR')and not os.environ.get('MARK_FENV_HELPER'),'GenuineMARKforbidsprivatebridge/helper')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['LBP_RESULT_DIR']=str(out/(mode+'-lbp-saved-rows'))
+    if group=='public-radon-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('FINITE_RADON_COMPONENT_DIR'),'GenuineRadonforbidsprivatebridgeorWindowsenvelope')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['FINITE_RADON_RECORDS']=str(out/(mode+'-radon-saved-rows.json'))
+        os.environ['FINITE_RADON_EXCEPTIONAL_RECORDS']=str(out/(mode+'-radon-exceptional-rows.json'))
+    if group=='public-radon-ABI-policy-linux':
+        require(state['profile']!='windows'and not os.environ.get('FINITE_RADON_COMPONENT_DIR'),'GenuineRadonpolicyforbidsprivatebridgeorWindowsenvelope')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['FINITE_RADON_ABI_POLICY_RECORDS']=str(out/(mode+'-radon-ABI-policy-rows.jsonl'))
+    if group=='public-rolling-ball-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('ROLLING_BALL_CORE_EXTENSION'),'GenuineRollingforbidsprivatebridgeorWindowsenvelope')
+        os.environ.update(util_views_fenv_environment(out,state))
+    if group=='public-flood-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('FLOOD_FILL_CORE_EXTENSION'),'GenuineFloodforbidsprivatebridgeorWindowsenvelope')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['FLOOD_FILL_CALLER_RECORD_DIR']=str(out/(mode+'-flood-caller-rows'))
+
+    if group=='public-VI-large-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIlargeforbidsprivatecomponentorWindowsFPclaim')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['VI_PUBLIC_LOG2_LARGE_RECORD_DIR']=str(out/(mode+'-VI-current-large-rows'))
+    if group=='public-VI-current-public-linux':
+        require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIcurrentforbidsprivatecomponentorWindowsFPclaim')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['VI_PUBLIC_MATMUL_SMALL_RECORD_DIR']=str(out/(mode+'-VI-current-public-rows'))
+    if group=='public-VI-current-windows':
+        require(state['profile']=='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIWindowsforbidsprivatecomponentorLinuxFPclaim')
+        os.environ['VI_PUBLIC_MATMUL_WINDOWS_RECORD_DIR']=str(out/(mode+'-VI-current-windows-rows'))
+        os.environ['VI_PUBLIC_MATMUL_WINDOWS_WORKER_RECORD_DIR']=str(out/(mode+'-VI-current-windows-workers'))
+    if group=='public-VI-saved-linux':
+        require(state['profile']!='windows'and not os.environ.get('VI_COMPONENT_DIR'),'GenuineVIforbidsprivatecomponentorWindowsFPclaim')
+        os.environ.update(util_views_fenv_environment(out,state))
+        os.environ['VI_RESULT_DIR']=str(out/(mode+'-VI-saved-rows'))
+        os.environ['VI_CALLER_RECORD_DIR']=str(out/(mode+'-VI-caller-rows'))
     if group=='public-regular-grid-saved-linux':
         require(not os.environ.get('REGULAR_GRID_COMPONENT_DIR'),'Genuine grid group forbids private component override')
         os.environ['REGULAR_GRID_RESULT_DIR']=str(out/(mode+'-regular-grid-saved-rows'))
     if group == 'public-post203':
+        if state['profile']!='windows':
+            os.environ.update(util_views_fenv_environment(out,state))
         os.environ['SKIMAGEXX_REGIONPROPS_ROWS_DIR'] = str(out / (mode + '-regionprops-state-rows'))
         os.environ['SKIMAGEXX_POINT_ROWS_DIR'] = str(out / (mode + '-regionprops-point-rows'))
         os.environ['SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR'] = str(out / (mode + '-regionprops-public-mutation-rows'))
@@ -2222,16 +2417,20 @@ def sdk(out, state, journal):
     with zipfile.ZipFile(out / 'source.zip') as archive:
         for name in archive.namelist():
             if not name.endswith('/') and (name.startswith('tests/cmake_consumer/') or name.startswith('tests/') and name.endswith('.cpp')
+                    or name in ('tests/variation_of_information_large_controls.hpp','tests/variation_of_information_provider_controls.hpp','tests/variation_of_information_matmul_controls_v1.hpp')
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/fixtures/flood_fill_sdk_original_v1.inc','tests/fixtures/rolling_ball_sdk_v1.bin','tests/fixtures/rolling_ball_sdk_dtypes_v1.bin','tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc','tests/fixtures/mark_wide_outer_sdk_v1.hpp')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
     configure = [cmake, '-S', sdk_source / 'tests/cmake_consumer', '-B', build, '-DCMAKE_BUILD_TYPE=' + config,
                  '-DCMAKE_PREFIX_PATH=' + str(prefix), '-DSKIMAGEXX_EXPECT_PREFIX=' + str(prefix), '-DSKIMAGEXX_EXPECT_OPENMP=ON',
                  '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF', '-DCMAKE_DISABLE_FIND_PACKAGE_Python=ON', '-DCMAKE_DISABLE_FIND_PACKAGE_Python3=ON']
+    if state['profile']!='windows' and 'mark_boundaries' in families:
+        util_views_fenv_environment(out,state)
+        configure += ['-DSKIMAGEXX_FENV_HELPER='+str((out/'util-views-fenv/libutil_views_fenv_restore.so').resolve())]
     if os.name == 'nt':
         wheel_toolchain=read_windows_toolchain(out/'native-build',config)
         vswhere=shutil.which('vswhere')
@@ -2292,6 +2491,154 @@ def qualify(out):
     sdk(out, state, journal)
 
 
+def validate_VI_current_large_rows(directory):
+    """Authenticate the eight current-pair records retained by the pinned tests."""
+    paths=list(Path(directory).glob('*.json'))
+    require(len(paths)==8,'VI current-large exact8 records required')
+    rows=[json.loads(p.read_text(encoding='utf-8'))for p in paths]
+    require({(v.get('index'),v.get('workers'))for v in rows}=={(i,w)for i in range(4)for w in(1,4)},'VI current-large case/worker coverage differs')
+    for value in rows:
+        require(value.get('primary')is None and value.get('timing')is False and value.get('diagnostics')==[],'VI current-large primary/diagnostic/timing failure')
+        require(value.get('counts')==dict(original=1,native=1)and value.get('accepted')==value.get('suffix')==[True],'VI current-large public ownership failure')
+        requirements=value.get('requirements',{});returned=value.get('returned',[])
+        require(sum(requirements.values())==len(returned)==11 and {k:returned.count(k)for k in requirements}==requirements,'VI current-large native markers incomplete')
+        expected=value.get('expected',{});actual=value.get('actual',{})
+        require(expected==actual and expected.get('type')==['numpy','ndarray']and expected.get('dtype')=='<f8'and expected.get('shape')==[2]and expected.get('nbytes')==16,'VI current-large words/type/shape differ')
+        raw=expected.get('raw_hex','')
+        require(bool(re.fullmatch('[0-9a-f]{32}',raw))and hashlib.sha256(bytes.fromhex(raw)).hexdigest()==expected.get('payload_sha256'),'VI current-large raw output hash differs')
+        require(expected.get('flags',{}).get('owndata')is True and value.get('output_pair_alias')is False and value.get('output_input_aliases')is False,'VI current-large output ownership differs')
+        caller=value.get('caller32',{});natural=value.get('natural_caller_raw32','')
+        require(caller.get('exact')is True and caller.get('saved')==caller.get('actual')and bool(re.fullmatch('[0-9a-f]{64}',caller.get('saved',''))),'VI current-large caller32 differs')
+        reference=value.get('reference_FP',{});native=value.get('native_FP',{})
+        require(bool(re.fullmatch('[0-9a-f]{64}',natural))and reference.get('before_raw32')==native.get('before_raw32')==natural,'VI current-large natural FP entry differs')
+        require(set(reference.get('before',{}))=={'control','status','mxcsr'}and reference.get('before')==native.get('before')and reference.get('after')==native.get('after'),'VI current-large FP effects differ')
+        require(value.get('provider')=='current true numpy.log2 and numpy.matmul ufunc computation'and value.get('provider_types')==dict(log2='ufunc',matmul='ufunc')and len(value.get('provider_batches',[]))==4,'VI current-large current providers missing')
+        require(tuple(b.get('provider')for b in value['provider_batches'])==VI_CURRENT_PROVIDER_ORDER,'VI current-large provider batches differ')
+        require(value.get('input_before')==value.get('input_after')and value.get('pointers_before')==value.get('pointers_after')and value.get('pointers_stable')is True,'VI current-large input mutation')
+        require(value.get('software_context_unchanged')is True and value.get('namespace_identity_unchanged')is True,'VI current-large software/namespace restoration differs')
+    return rows
+
+
+def validate_VI_current_public_rows(directory, *, windows=False, installed_paths=None):
+    """Seal16 current pairs; expected input errors are distinct from14 f64 returns."""
+    paths = list(Path(directory).glob('*.json'))
+    require(len(paths) == 16, 'VI current-public exact16 records required')
+    rows = [json.loads(path.read_text(encoding='utf-8')) for path in paths]
+    require({(v.get('case', {}).get('id'), v.get('workers')) for v in rows} ==
+            {(case, worker) for case in VI_CURRENT_PUBLIC_CASE_IDS for worker in (1, 4)},
+            'VI current-public case/worker coverage differs')
+    if windows:
+        require(isinstance(installed_paths, dict) and set(installed_paths) == {'core', 'frontend'},
+                'Windows VI installed ownership paths required')
+    for value in rows:
+        require(value.get('primary') is None and value.get('diagnostics') == [] and value.get('timing') is False,
+                'VI current-public primary/diagnostic/timing failure')
+        require(value.get('counts') == dict(original=1, native=1), 'VI current-public exact1+1 calls required')
+        reference = value.get('reference_observation'); actual = value.get('native_observation')
+        require(isinstance(reference, dict) and reference == actual, 'VI current-public observations differ')
+        require(reference.get('id') == value['case']['id'] and reference.get('checks', {}).get('policy_restored') is True
+                and reference.get('checks', {}).get('input_buffer_addresses_stable') is True,
+                'VI current-public policy/input state differs')
+        events = value.get('provider_events')
+        require(isinstance(events, list) and len(events) == 1, 'VI current-public provider journal absent')
+        error_case = value['case']['id'] == 'variation_of_information/table-with-None-images'
+        if error_case:
+            require(value['case'].get('images_none') is True and reference.get('result') is None
+                    and reference.get('error') == dict(type='AttributeError', module='builtins', message="'NoneType' object has no attribute 'shape'")
+                    and value.get('accepted') == [False] and value.get('returned') == value.get('suffix') == []
+                    and events == [[]] and 'expected' not in value and 'actual' not in value,
+                    'VI expected None-image error/callback scope differs')
+        else:
+            require(not value['case'].get('images_none') and reference.get('error') is None,
+                    'VI successful public pair has an error')
+            require(tuple(event.get('provider') for event in events[0]) == VI_CURRENT_PROVIDER_ORDER
+                    and all(event.get('dtype') == '<f8' for event in events[0]),
+                    'VI current-public four providers differ')
+            requirements = (dict(get_num_threads=1, label_pair_check_storage=3, variation_of_information_csr=1)
+                if value['case']['id'] in ('variation_of_information/table-normalized', 'variation_of_information/table-raw-counts')
+                else dict(get_num_threads=2, label_pair_check_storage=7, label_pair_counts_preweighted=1, variation_of_information_csr=1))
+            returned = value.get('returned', [])
+            require(len(returned) == sum(requirements.values()) and
+                    {key: returned.count(key) for key in requirements} == requirements
+                    and value.get('accepted') == [True]
+                    and value.get('suffix') == ([] if len(returned) == 5 else [True]),
+                    'VI current-public native markers differ')
+            expected = value.get('expected', {}); result = value.get('actual', {})
+            require(expected == result and expected.get('type') == ['numpy', 'ndarray'] and expected.get('dtype') == '<f8'
+                    and expected.get('shape') == [2] and expected.get('strides') == [8] and expected.get('nbytes') == 16
+                    and expected.get('flags', {}).get('owndata') is True, 'VI current-public output ownership/type/words differ')
+            raw = expected.get('raw_hex', '')
+            require(bool(re.fullmatch('[0-9a-f]{32}', raw)) and
+                    hashlib.sha256(bytes.fromhex(raw)).hexdigest() == expected.get('payload_sha256'),
+                    'VI current-public raw output hash differs')
+            aliases = reference.get('output_input_aliases')
+            require(isinstance(aliases, dict) and set(aliases) == {'0'} and
+                    all(alias is False for alias in aliases['0'].values()), 'VI current-public output/input alias')
+        if windows:
+            require(value.get('FP_scope') == VI_WINDOWS_FP_SCOPE and
+                    not any(name in value for name in ('target_FP', 'caller32', 'natural_caller_raw32')),
+                    'Windows VI must not claim Linux hardware FP')
+            require(value.get('native_core_path') == installed_paths['core'] and
+                    value.get('native_frontend_path') == installed_paths['frontend'] and
+                    value.get('public_signature') == '(image0=None, image1=None, *, table=None, ignore_labels=())',
+                    'Windows VI installed owner/signature differs')
+            require(value.get('provider_types') == dict(log2='ufunc', matmul='ufunc') and
+                    value.get('software_context_unchanged') is True and value.get('namespace_identity_unchanged') is True
+                    and value.get('software_restored') is True, 'Windows VI provider/software/namespace differs')
+            states = value.get('target_software', {}); restored = value.get('restored_software', {})
+            require(set(states) == set(restored) == {'reference', 'native'}, 'Windows VI software states missing')
+            natural = value.get('natural_software')
+            require(isinstance(natural, dict) and restored['reference'] == restored['native'] == natural,
+                    'Windows VI natural software handler/policy/buffer not restored')
+            for role in ('reference', 'native'):
+                require(len(states[role]) == 2 and states[role][0] == states[role][1],
+                        'Windows VI per-target exact software identity changed')
+            for index in (0, 1):
+                left, right = states['reference'][index], states['native'][index]
+                require(left.get('policy') == right.get('policy') and left.get('buffer') == right.get('buffer')
+                        and left.get('handler_type') == right.get('handler_type') == 'function'
+                        and left.get('handler_module') == right.get('handler_module')
+                        and left.get('handler_name') == right.get('handler_name') == 'observe.<locals>.callback',
+                        'Windows VI paired software policy/callback/buffer differs')
+                code = left.get('handler_code')
+                require(isinstance(code, dict) and code == right.get('handler_code') and code.get('identity')
+                        and code.get('source_canonical_sha256') == VI_OBSERVER_CANONICAL_SHA256
+                        and code.get('first_line', 0) > 0 and code.get('source_path'),
+                        'Windows VI callback code/source witness differs')
+        else:
+            caller = value.get('caller32', {}); natural = value.get('natural_caller_raw32', '')
+            require(caller.get('exact') is True and caller.get('saved') == caller.get('actual')
+                    and bool(re.fullmatch('[0-9a-f]{64}', caller.get('saved', ''))), 'VI current-public caller32 differs')
+            states = value.get('target_FP', {})
+            require(set(states) == {'reference', 'native'} and all(len(states[role]) == 2 for role in states),
+                    'VI current-public target FP records absent')
+            require(bool(re.fullmatch('[0-9a-f]{64}', natural)) and
+                    states['reference'][0].get('raw32') == states['native'][0].get('raw32') == natural,
+                    'VI current-public natural target FP differs')
+            for index in (0, 1):
+                left, right = states['reference'][index], states['native'][index]
+                require(set(left.get('semantic', {})) == {'control', 'status', 'mxcsr'} and
+                        left.get('semantic') == right.get('semantic') and
+                        all(bool(re.fullmatch('[0-9a-f]{64}', state.get('raw32', ''))) for state in (left, right)),
+                        'VI current-public paired target FP effects differ')
+
+
+def validate_VI_windows_workers(directory):
+    rows = [json.loads(path.read_text(encoding='utf-8')) for path in Path(directory).glob('*.json')]
+    require(len(rows) == 34 and len({row.get('node') for row in rows}) == 34,
+            'Windows VI exact34 unique worker receipts required')
+    expected = dict(test_windows_current_public_original_pair=16,
+                    test_owned_entropy_uses_only_explicit_log2_and_matmul=2,
+                    test_current_provider_primary_stops_later_callbacks=8,
+                    test_current_matmul_rejects_nonplain_scalar_transport=8)
+    require(collections.Counter(row.get('test') for row in rows) == expected and
+            collections.Counter(row.get('selected') for row in rows) == {1: 17, 4: 17},
+            'Windows VI full pair/phase/refusal worker coverage differs')
+    require(all(row.get('before') == row.get('after') == 1 and row.get('exact_default1') is True
+                and row.get('FP_scope') == VI_WINDOWS_FP_SCOPE for row in rows),
+            'Windows VI default1 restoration differs')
+
+
 def seal(out):
     state = json.loads((out / 'state.json').read_text()); require(source_state(ROOT) == state['source'], 'source changed')
     commands = json.loads((out / 'commands.json').read_text())
@@ -2317,8 +2664,42 @@ def seal(out):
             xml = ET.parse(path).getroot(); suites = [xml] if xml.tag == 'testsuite' else list(xml)
             row = {k: sum(int(s.get(k,0)) for s in suites) for k in ('tests','failures','errors','skipped')}
             require(row['tests'] > 0, 'empty public selector: ' + group)
+            if group=='public-radon-saved-linux':require(row['tests']==224,'Full224 Radon saved-domain nodes required; no partial selector')
+            if group=='public-radon-ABI-policy-linux':require(row['tests']==18,'Full18 Radon runtime-ABI policy nodes required; saved224 remains separate')
+            if group=='public-rolling-ball-saved-linux':require(row['tests']==81,'Full81rolling saved/boundary nodes required; no partial selector')
+            if group=='public-flood-saved-linux':require(row['tests']==100,'Full100 flood saved-domain nodes required; no partial selector')
+            if group=='public-flood-saved-linux':
+                rows=[json.loads(p.read_text())for p in(out/(mode+'-flood-caller-rows')).glob('*.json')]
+                require(len(rows)==100 and all(r['exact32']and r['saved']==r['actual']and r['workers']in(1,4)for r in rows),'Floodcaller32/global-worker records incomplete')
+            if group=='public-VI-large-saved-linux':
+                require(row['tests']==16,'Full8 legacy scalar SDK plus8 fresh current-public VI pair nodes required')
+                validate_VI_current_large_rows(out/(mode+'-VI-current-large-rows'))
+            if group=='public-VI-current-public-linux':
+                require(row['tests']==16,'Full16 current-public Linux VI pairs required')
+                validate_VI_current_public_rows(out/(mode+'-VI-current-public-rows'))
+            if group=='public-VI-current-windows':
+                require(row['tests']==34,'Full16 Windows VI pairs plus18 portable provider controls required')
+                paths=dict(core=str((out/'package'/record['sole_core']).resolve()), frontend=str((out/'package'/'skimagexx/_variation_of_information.py').resolve()))
+                validate_VI_current_public_rows(out/(mode+'-VI-current-windows-rows'),windows=True,installed_paths=paths)
+                validate_VI_windows_workers(out/(mode+'-VI-current-windows-workers'))
+            if group=='public-VI-saved-linux':
+                require(row['tests']==56,'Full40 retained VI saved/count nodes plus16 current provider/refusal nodes required; no partial selector')
+                callers=list((out/(mode+'-VI-caller-rows')).glob('*.json'))
+                require(len(callers)==56,'VI caller record pool incomplete')
+                for item in callers:
+                    value=json.loads(item.read_text())
+                    require(value['exact32']is True and value['saved']==value['actual']and value['workers']in(1,4),'VI caller restoration failed')
+                require(len(list((out/(mode+'-VI-saved-rows')).glob('*.json')))==16,'VI complete saved observation pool missing')
+            if group=='public-radon-ABI-policy-linux':
+                path=out/(mode+'-radon-ABI-policy-rows.jsonl')
+                require(path.is_file(),'Radon ABI/policy caller records absent')
+                policy_rows=[json.loads(line)for line in path.read_text().splitlines()]
+                require(len(policy_rows)==18 and all(v['exact32']is True and v['caller_saved']==v['caller_actual']for v in policy_rows),'Radon ABI/policy18 caller restoration incomplete')
             if group=='public-regular-grid-saved-linux':require(row['tests']==49,'Full49 grid saved-domain nodes required; no partial selector')
             if group=='public-util-views-saved-linux':require(row['tests']==553,'Full553 util views saved-domain nodes required; no partial selector')
+            if group=='public-mark-saved-linux':require(row['tests']==267,'Full267 MARK saved-domain nodes required; no partial selector')
+            if group=='public-lbp-saved-linux':require(row['tests']==188,'Full188 LBP saved-domain nodes required; no partial selector')
+            if group=='public-lbp-metadata-linux':require(row['tests']==24,'Full24 LBP metadata regression nodes required; no partial selector')
             if any(row[k] for k in ('failures','errors','skipped')):
                 failures.append(mode + '-' + group + '-assertions-or-skips')
             counts[mode + '-' + group] = row
@@ -2353,7 +2734,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-regular-grid-saved-linux','public-util-views-saved-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-VI-current-public-linux','public-VI-current-windows','public-flood-saved-linux','public-rolling-ball-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

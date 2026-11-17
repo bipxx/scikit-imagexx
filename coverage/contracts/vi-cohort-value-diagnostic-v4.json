@@ -1,0 +1,132 @@
+{
+  "schema": "vi-cohort-value-diagnostic-v2",
+  "status": "SOURCE_INERT_ONLY_NO_EXECUTION_AUTHORITY",
+  "API": "metrics.variation_of_information",
+  "controller_predecessor": "373af1af261e5c6bc522f533f19036fc65603c81",
+  "qualified_source": "16a5b50193125199ad26cf5a89acec5babf5290c",
+  "probe": "tools/vi_first_cohort_probe.py",
+  "driver_context": "coverage/contracts/variation-of-information-benchmark-execution-v6.json",
+  "first_case": {
+    "id": "metrics.variation_of_information/128x128/8/C",
+    "api": "metrics.variation_of_information",
+    "shape": [
+      128,
+      128
+    ],
+    "labels": 8,
+    "dtype": "int64",
+    "layout": "C",
+    "ignore": [
+      0
+    ]
+  },
+  "controller_dependencies": {
+    "tools/vi_first_cohort_probe.py": "4346f3663fceced18c90167f2a37f3fbb76998baf31179c58bd8edc22bae5948",
+    "coverage/contracts/vi-measurement-v5.json": "4e9e913b8bf8be41b6a394303ee7161e968df0625638655aa2063c078f497a9a"
+  },
+  "prepared_dependencies": {
+    "benchmarks/mark_boundaries_execution.py": "91901f9aa275e136eee08fdbfbfbba6aa9d131733022eeba966a01257455d827",
+    "benchmarks/next_util_execution.py": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
+    "benchmarks/variation_of_information.py": "70cb54b7e9d6b975a591874a56cd08a2b0d7bb26a4696ab66fe31885719894ce",
+    "benchmarks/variation_of_information_cases_v1.py": "dc773437ab4c79a21f590e746553df848208939ab2fd694e8bb4b244b18c6046",
+    "benchmarks/variation_of_information_consumer.py": "1ca6c0cc3bc6c26cf8baae128d0dab96f33edb99e10290969706956f9bd34144",
+    "benchmarks/variation_of_information_execution.py": "93fe29097b3050947c45da2719dbb0f7f987efde72be259a2d43af93b89a8c4d",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "coverage/contracts/variation-of-information-benchmark-execution-v6.json": "ed687643bcae2217c74966047978e79b5f1bd31f9975ca8203292adefb351ad4",
+    "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+    "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+    "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+  },
+  "bounds": {
+    "output_shape": [
+      2
+    ],
+    "max_output_bytes_each": 32,
+    "input_arrays": 2,
+    "max_input_bytes_each": 131072,
+    "max_total_input_bytes": 262144
+  },
+  "scope": "Retain the unchanged one-original/one-native probe execute locals on validated success or traceback failure. Array codecs run only after old main restoration. No assertion/math/probe/workload changes or additional target/factory/sampler calls.",
+  "expected_outcome": "Both passing mandatory sampler stop and original failure retain available dtype/output raw words, input descriptors/hashes, FP/count/caller/identity and CPU/loaded-dispatch metadata. Preserve primary error and nonzero diagnostics errors; no invented missing frame fields.",
+  "actual_authority": null,
+  "original_budget_now": 0,
+  "prospective_only": {
+    "original_topcalls": 1,
+    "native_topcalls": 1,
+    "sampler_body_calls": 0,
+    "timed_batches": 0
+  },
+  "pending": [
+    "Root independent current-source/inert admission",
+    "Actual genuine311.17 runtime/product/core/SDK/F1/source/UTC and explicit one-pair GO",
+    "Exactly one unchanged original/native firstcase with value/FP witness and mandatory sampler0/C1",
+    "Existing once-postbatch verifier including failure, root raw admission; no cause claim for old9V45 and no automatic timing"
+  ],
+  "predecessor": {
+    "context": "coverage/contracts/vi-cohort-value-diagnostic-v2.json",
+    "context_sha256": "dfb02dd1825476bf2c1c90fa6e55ded1585771f448e5e4cab2cc0426bf550fc8",
+    "wrapper_source": "0a9e6102dc051c119f77c259a9d988733f23180d",
+    "wrapper_sha256": "ff7a2a9f99aa87c639e61a6be0558ecfc80668d819b0a2b2d6e564794eec6f3a",
+    "workflow_source": "fc9449afc0f7212d4fbbf94b6f17bb2053e8bd5e"
+  },
+  "capture": {
+    "success": "Observe existing validate_native_entry return exactly once; return the original locals unchanged and restore the validator before serialization.",
+    "failure": "Use existing traceback execute locals, or already retained validated locals for a later C1/identity failure.",
+    "timing": "Snapshot existing FP/counters before array codecs; run all array codecs after old probe finally, then preserve wrapper full32/writer/fallback behavior.",
+    "inputs": "Existing before witness plus after dtype/descriptor/strides/flags/base type/payload hashes; no factory repeat or inferred nonalias claim.",
+    "runtime": "Read bounded proc CPU metadata and already loaded NumPy CPU feature/baseline/dispatch metadata only. No scientific import, CPU/kernel invocation, or claimed selected per-call kernel."
+  },
+  "host_eligibility_proposal": {
+    "status": "SOURCE_ONLY_CURRENT_GENUINE_HOST_GO_PENDING",
+    "purpose": "CURRENT16_GENUINE_PRODUCT_VALUE_WITNESS",
+    "before_expensive_transport_and_targets": true,
+    "required_host": {
+      "system": "Linux",
+      "machine": "x86_64"
+    },
+    "required_features": [
+      "sse2"
+    ],
+    "historical_failed_CPU": {
+      "vendor": "AuthenticAMD",
+      "model": "AMD EPYC 9V45 96-Core Processor",
+      "family": 26,
+      "model_id": 2,
+      "stepping": 1
+    },
+    "prior_failed_host_causal_credit": false,
+    "ineligible": {
+      "original_calls": 0,
+      "native_calls": 0,
+      "sampler_body_calls": 0,
+      "timing": 0,
+      "receipt_required": true
+    },
+    "automatic_host_search": false,
+    "retry": false,
+    "limit": "Host support eligibility is for a new current16 witness. All exact product/runtime/F1/FP checks remain mandatory before targets. A pass does not explain or erase the original DDA9V45 failure; exact failed-host causal reproduction remains a separate unconsumed scientific question."
+  },
+  "diagnostic_purpose": "CURRENT16_GENUINE_PRODUCT_VALUE_WITNESS",
+  "genuine_runtime_scope": {
+    "status": "PROSPECTIVE_ACTUAL_HOST_AND_GO_PENDING",
+    "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+    "runtime_sha256": "975b98daab73327391766fb5f10d411c724d245701352f22147895f0e1e7770d",
+    "product_kind": "GENUINE_INSTALLED_WHOLE_PRODUCT",
+    "source_only_execution_authority": 0
+  },
+  "local_private_witness": {
+    "python": "3.11.14",
+    "host": "Intel i7-12700K WSL2 AVX2/noAVX512",
+    "genuine_runtime_credit": false,
+    "authority": null,
+    "scope": "Separate root-admitted actual local runtime/core/F1/source identity and separate bounded GO required. Never alter or relax genuine runtime equality."
+  },
+  "capacity_successor": {
+    "predecessor": "coverage/contracts/vi-cohort-value-diagnostic-v3.json",
+    "predecessor_sha256": "fff37df1acbc8b683f2ca0e6610942cdafe0166d962f6f0a61d435fbe765abd1",
+    "scope": "Capacity/sourcepins only; immutable capture-v2body/strictFP/onepaircounts/current16scope preserved"
+  }
+}

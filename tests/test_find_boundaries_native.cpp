@@ -72,7 +72,11 @@ void refusals(){
  std::array<std::uint64_t,2> a{{0,(std::uint64_t{1}<<53)+1}};std::array<std::uint8_t,8> out;out.fill(0xad);
  ComponentsView v{a.data(),PixelType::uint64,false,false,{2},{8}};FindBoundaryParameters p;
  auto refuse=[&]{require(!find_boundaries_into(v,p,out.data(),{1},1));require(std::all_of(out.begin(),out.end(),[](auto x){return x==0xad;}));};
- refuse();a[1]=1;p.mode=FindBoundaryMode::outer;refuse();
+ refuse();a[1]=1;p.mode=FindBoundaryMode::outer;
+ // Wide OUTER has a GNUx64 nearest/masked frontier; lost background metadata
+ // still refuses before writing on every platform. The new four-case/profile
+ // originals are admitted; separate native/FP bridge parity remains required.
+ p.background_representable=false;refuse();p.background_representable=true;
  p.mode=FindBoundaryMode::thick;v.swap=true;refuse();v.swap=false;v.half=true;refuse();v.half=false;
  v.type=PixelType::float64;refuse();v.type=PixelType::uint64;
  p.connectivity=0;refuse();p.connectivity=1;

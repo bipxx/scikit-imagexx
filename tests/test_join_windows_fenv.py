@@ -12,9 +12,27 @@ import sys
 import pytest
 ROOT=Path(__file__).resolve().parents[1]
 
+def captured_input_predecessor(raw):
+    link=json.loads((ROOT/'coverage/contracts/join-windows-fenv-fixture-v2.json').read_bytes())
+    contexts=[]
+    for key in ('captured_context','Windows_context'):
+        body=(ROOT/link[key]['path']).read_bytes()
+        assert hashlib.sha256(body).hexdigest()==link[key]['sha256']
+        contexts.append(json.loads(body))
+    phase,windows=contexts
+    assert phase['public_test']==windows['public_test_path']==link['public_test']
+    assert hashlib.sha256(raw).hexdigest()==phase['current_raw_sha256']==link['current_raw_sha256']
+    text=raw.decode()
+    for before,after in reversed(phase['inverse_replacements']):
+        assert text.count(after)==1
+        text=text.replace(after,before,1)
+    previous=text.encode()
+    assert hashlib.sha256(previous).hexdigest()==phase['predecessor_raw_sha256']==windows['current_raw_sha256']==link['Windows_fixture_raw_sha256']
+    return windows,previous
+
+
 def test_current_fixture_exact_predecessor_projection_and_adapter():
-    c=json.loads((ROOT/'coverage/contracts/join-windows-fenv-fixture-v1.json').read_bytes())
-    raw=(ROOT/c['public_test_path']).read_bytes()
+    c,raw=captured_input_predecessor((ROOT/'tests/test_join_segmentations_public.py').read_bytes())
     assert hashlib.sha256(raw).hexdigest()==c['current_raw_sha256']
     text=raw.decode()
     for before,after in reversed(c['inverse_replacements']):
@@ -23,6 +41,17 @@ def test_current_fixture_exact_predecessor_projection_and_adapter():
     assert hashlib.sha256(text.encode()).hexdigest()==c['predecessor_raw_sha256']=='c113a3dafb68a90bccc772d44af21fd0a4ed3f638dff534487d107cee854003c'
     assert hashlib.sha256((ROOT/'tests/join_windows_fenv.py').read_bytes()).hexdigest()==c['adapter_raw_sha256']
     assert 'libc.feraiseexcept'not in raw.decode()
+
+@pytest.mark.parametrize('tamper',('extra-byte','weakened-FENV-assertion'))
+def test_captured_input_projection_refuses_unadmitted_public_bytes(tamper):
+    raw=(ROOT/'tests/test_join_segmentations_public.py').read_bytes()
+    if tamper=='extra-byte':bad=raw+b'\n#unadmitted'
+    else:
+        assertion=b'assert (bytes(before)==bytes(after)if linux else before==after)'
+        assert raw.count(assertion)==1
+        bad=raw.replace(assertion,b'assert True',1)
+    with pytest.raises(AssertionError):captured_input_predecessor(bad)
+
 
 def test_real_source_command_selects_live_export_controls_before_preparation():
     workflow=(ROOT/'.github/workflows/public-qualification.yml').read_text()

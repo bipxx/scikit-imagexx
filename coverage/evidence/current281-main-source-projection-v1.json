@@ -1,0 +1,74 @@
+{
+  "schema": "current281-main-shipping-source-projection-v1",
+  "status": "PASS_EXACT_QUALIFIED_AA_MERGE_SOURCE_PROJECTION_COMMIT_PUSH_PENDING",
+  "passed": true,
+  "root_accepted": true,
+  "qualified_source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "main_parent": "a12d784fab38af04f8a109d7be053db9a2a0f1ff",
+  "production_fingerprint": {
+    "source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+    "source_hash_schema": "cpp-python-build-posix-lf-v2",
+    "source_hash_scope": "CMakeLists.txt, pyproject.toml, src/*, include/skimagexx/*, python/skimagexx/*.py"
+  },
+  "qualified_tree_files": 3455,
+  "qualified_Git_objects_matched": 3452,
+  "operational_exceptions": [
+    "coverage/COVERAGE_CHECKLIST.md",
+    "coverage/EXECUTION_PLAN.md",
+    "coverage/work_items.json"
+  ],
+  "raw_working_source_files_matched": 3451,
+  "protected_user_AGENTS_excluded_from_raw_source": true,
+  "main_only_additions_preserved": 22,
+  "main_only_manual_workflows": [
+    ".github/workflows/vi-failed438-stage-diagnostic.yml",
+    ".github/workflows/vi-retained-row-reduceat.yml"
+  ],
+  "raw_current_source_pins_pass": 69,
+  "canonical_current_source_pins_pass": 55,
+  "default_VI4_context": "ExactAA UNBOUND; private166ccd measurement authority stays on preservedbranch",
+  "API_classifications": {
+    "native-partial": 281,
+    "metadata": 3,
+    "upstream-only": 187,
+    "native-class-partial": 5,
+    "exception-metadata-provider": 1
+  },
+  "public_image_path_delta": [
+    "feature.draw_multiblock_lbp",
+    "metrics.variation_of_information",
+    "morphology.flood",
+    "morphology.flood_fill",
+    "restoration.rolling_ball",
+    "segmentation.flood",
+    "segmentation.flood_fill",
+    "segmentation.mark_boundaries",
+    "transform.frt2",
+    "transform.ifrt2"
+  ],
+  "alias_scope": "Four flood keys represent two canonical operations/aliases; ten public paths are not ten independent algorithms.",
+  "genuine_admission": {
+    "path": "coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json",
+    "sha256": "257635900b3dfc09158c48a740a22331abae592f8195e00354abf47d3ef7eb38"
+  },
+  "VI4_admission": {
+    "path": "coverage/evidence/vi-public-matmul-minimum-performance-root-admission-v1.json",
+    "sha256": "73d09df085610ce97f200b51f9834279838bf86f7a049f8d163387b0f134527e"
+  },
+  "source_projection": {
+    "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\shipping-source-projection-v2.json",
+    "sha256": "0b3ccf66d6e55df35993f4e40aaa44d11cf9b5c6ee428f82468cf5afb05ded24"
+  },
+  "full_source_barrier": {
+    "path": "build/current281-final-source-v7/root-both-admission-v1.json",
+    "sha256": "5c81441d3ee5c250fe06eba07b5b0f8a12f21a3231dd09c63efdf9a9d7f2ef20",
+    "scope": "Complete181 selectors bothretainedPythons/normalconftest44plugins/4635ordinary+8subtests each. Complete currentAA executable/test/contract/qualifier/source inputs andraw/canonicalpins matchedaftermerge; no sourceguard/science rerun for unchangedbytes. Main-onlymanualworkflows retaintheir previousscope anddefaultUNBOUND gates."
+  },
+  "failure_and_correction": {
+    "workflow_merge": "d21503 failedsoleadd/add;861b01 exact4context+4runner+1test substitution equation;fd2828 resolves exactqualifiedf127, allothercapacity/F1/enginebytesidentical",
+    "raw_transport": "First completeactualprojection retained775pureCRLF/LF mismatches,3452Gitobjects/22main-onlyalreadyPASS.22fc8e copiedexactvalidatedbytes68,074,423B andcheckedallchangedrawfiles/69raw+55canonical;2676unaffectedrawchecksreused. No blanketnormalization of frozen/intentionalCRLF, no changedGitcode orscientificrerun."
+  },
+  "retained_reference_scope": "Projection is a historical pairedworkingbyte receipt; temporarycontrollercheckout mayretire afterdelivery. AA/mainGitcommits and currentextractedbaseline/rawproducts stayretained; no archive availability inferred.",
+  "scope_limits": "281 native-partial image APIs,187 upstream-only public keys and retainedclass/metadata entries. Full477API/29class/284staticmember/domain/provider/platform boxes remainopen. Existingbenchmarklosses and theiroriginal identities remainretained.",
+  "remaining": "Finaldocument/index/sourcechecks, actualmergecommit/push/remotebytes, eligiblecleanancestorcheckout retirement andcloseout. Priorpolicyblockedcleanup staysmanualonly."
+}

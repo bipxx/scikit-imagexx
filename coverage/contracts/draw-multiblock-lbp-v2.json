@@ -1,0 +1,156 @@
+{
+  "schema": "draw-multiblock-lbp-overlap-source-v2",
+  "state": "SOURCE_ONLY_PENDING_INDEPENDENT_SAFETY_ROOT_GO",
+  "predecessor": {
+    "source": "1da19e3fd5a87cf30224c43f62c8edadc13074b2",
+    "contract": "coverage/contracts/draw-multiblock-lbp-v1.json",
+    "contract_sha256": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+    "raw_source_sha256": {
+      "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+      "coverage/contracts/draw-multiblock-lbp-v1.json": "a40df88a9cada0d8419cdb1e72a21e38cb4ddbb93a078427a8018797d7066bc2",
+      "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+      "tests/test_draw_multiblock_lbp_intake.py": "23d8e425eeadd7a0c75bc50bdc5391012caeab467572689d8386c2e0e94fa97a",
+      "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce"
+    }
+  },
+  "added_case": {
+    "id": "feature.draw_multiblock_lbp/v2-true-wrapped-overlap-f32",
+    "shape": [
+      3,
+      3,
+      3
+    ],
+    "dtype": "float32",
+    "layout": "C",
+    "pattern": "ramp",
+    "r": -3,
+    "c": -3,
+    "width": 2,
+    "height": 2,
+    "code": 170,
+    "alpha": 0.3,
+    "greater": [
+      1,
+      1,
+      1
+    ],
+    "less": [
+      0,
+      0.69,
+      0.96
+    ],
+    "carrier": "array",
+    "policy": {},
+    "quarantine": false
+  },
+  "case_count": 94,
+  "historical_count": 93,
+  "added_count": 1,
+  "bounds": {
+    "factory_seed_elements": 168,
+    "factory_elements": 27,
+    "max_output_elements": 27,
+    "max_broadcast_temporary_elements": 10000,
+    "source_neighbor_updates": 8,
+    "original_call_budget": 0
+  },
+  "indices": {
+    "patches": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [],
+      [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      [],
+      [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      [],
+      [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      []
+    ],
+    "normalized_source_center": []
+  },
+  "source_freeze": {
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54",
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/test_draw_multiblock_lbp_intake.py": "5b075562ee89e59e261a20c59eab34fab757dc48277f6088c851b63b5547f56e",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "tests/draw_multiblock_lbp_overlap_contract.py": "a4b277fd16239953e9f334299880803aef1adb8b20efc3f7f9faa6d1602ce2a5",
+    "tests/test_draw_multiblock_lbp_overlap_reference.py": "664beda7d7981c6effa08c4f78ca6214c4a351a3ad7e5906558ed242386dffc6",
+    "tests/test_draw_multiblock_lbp_overlap_intake.py": "0468bb6b4fbf0bb71d5c31b3fe4c6471ce9d936071c471fcf043b5950f67e91d"
+  },
+  "original_calls": 0,
+  "helper_calls": 0,
+  "native_calls": 0,
+  "timed_batches": 0,
+  "root_GO": null,
+  "scope": "Membership/source/storage witness only. Physical pixel(1,1) lies in four ordered source patches; normalized logical-center slice empty. No computed blend/parity oracle or original authorization.",
+  "benchmark": "Unchanged four v1 prospective public one-thread cases/method; overlap is a reference coverage addition only.",
+  "SDK": "Unchanged full owning operation requirement and v1 unsupported/provider/typed-FP partitions; no implementation.",
+  "next_gate": "Independent delta/source-storage admission, then separately frozen observer/capture/runtime/FP/journal/rootGO; no implicit188calls."
+}

@@ -7,20 +7,20 @@ MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.cent
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
-    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations'),
+    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
-    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table'),
-    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det'),
-    'transform': ('integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
+    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information'),
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
-                   'ellipse','octagon','octahedron','star','footprint_from_sequence'),
+                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -52,6 +52,17 @@ def label_pair_contract(api):
         gaps='Supplied ARE tables, VI/log2/DDOT, arbitrary nonuniform contingency weights, exceptional FENV/print-log and broad protocols remain open; full backing assessed only within admitted preweighted primitive scope',
         workers='One shared global snapshot, default1; integer packing parallel by threshold; duplicate coalescing ordered serial',
         performance='Prospective8case one-worker public comparison, no measurement or full qualification claimed')
+
+
+def variation_of_information_contract():
+    return dict(api='metrics.variation_of_information',implementation='native-partial',fully_native=False,
+        kernel='Owned typed CSR marginals/diagonal products/log2/reductions/ordered dots; image operation reuses current owned dense/sort counts',
+        providers='NumPy reshape/membership/weight normalization and callbacks; SciPy CSR class/index/structural representation; unassessed floating-label coordinates use named SciPy numeric suffix',
+        default_case='Six-label integer partition; integer carriers preserve dtype/metadata, noninteger nominal carriers select captured int16. No floating-label support credit; invalid floating labels remain separate provider/error domain',
+        accuracy='Seven retained numeric raw-word cases plus one exacterror/profile; larger candidate equivalence is not new original0ULP or backend proof',
+        workers='Shared default1. C++ imageSDK captures once; public count/entropy phases capture separately around provider boundaries. Ordered entropy remains serial.',
+        gaps='Broad log/reduction/BLAS/platform/error/protocol/hardwareFP and genuinewholeSDK/public-performance gates remain open',
+        performance='Four frozen one-thread allocation-inclusive executable workloads; no actual binding/cohort/timing result yet')
 
 
 def matrix_transform_contract():
@@ -330,14 +341,22 @@ def class_contract(api):
         parity_evidence=None,performance_evidence=None)
 
 
+FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill')
+
 def native_dtypes(api):
+    if api=='restoration.rolling_ball':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     """Dtypes covered by the default native per-function parity/benchmark case."""
+    if api=='transform.frt2':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
+    if api=='transform.ifrt2':return ('bool','uint8','uint16','uint32','uint64')
+    if api in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
+    if api=='metrics.variation_of_information':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
     if api=='util.crop':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
     if api=='util.regular_grid':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
     if api=='segmentation.join_segmentations':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api=='segmentation.find_boundaries':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     if api=='draw.set_color':return ('float32','float64')
     if api in ('draw.polygon','draw.polygon2mask'):return ('uint8','float32','float64')
     if api == 'draw.line_nd':
@@ -380,8 +399,16 @@ def needs_color_input(api):
     return api.startswith('color.') and api not in ('color.label2rgb','color.gray2rgb','color.gray2rgba','color.xyz_tristimulus_values')
 
 
+def flood_fill_contract():
+    return dict(canonical=('morphology.flood','morphology.flood_fill'),identity_aliases=('segmentation.flood','segmentation.flood_fill'),
+        kernel='Owned ordered serial BFS/mask, current native POD copy and final writes; shared worker setting unchanged, no artificial BFS parallelism',
+        providers='NumPy image.min full-image reduction, count_nonzero full-mask reduction, converted/broadcast selected RHS temporary, scalar tolerance/neighbor metadata and allocation; NOT provider-free',
+        gaps='Bool tolerance source-limit frontier, non-POD/protocol/extended types, Windows-original/fullFP/genuine/performance remain pending')
+
+
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api=='restoration.rolling_ball':return (image,),{'radius':1}
     if api=='segmentation.find_boundaries':
         import numpy as np
         return (np.array([[0,1,0],[1,1,0]],dtype=image.dtype),),{}
@@ -420,6 +447,9 @@ def default_call(api, image):
         else:
             raise ValueError('draw.line_nd: default coordinate dtype is outside the frozen partition')
         return (np.array(start,dtype=dtype),np.array(stop,dtype=dtype)), {'endpoint':False,'integer':integer}
+    if api in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):
+        seed=(0,)*image.ndim
+        return ((image,seed,1)if api.endswith('flood_fill')else(image,seed)),{}
     if api == 'measure.regionprops':
         import numpy as np
         # Frozen 2D constructor case; carrier dtype is used for actual labels.
@@ -562,6 +592,17 @@ def default_call(api, image):
     if api=='util.regular_grid':
         import numpy as np
         return (np.array([5,7],dtype=image.dtype),1 if image.dtype.kind=='b' else 6),{}
+    if api=='segmentation.mark_boundaries':
+        import numpy as np
+        labels=(np.arange(image.size,dtype=np.int64).reshape(image.shape)%3).astype(np.int16)
+        labels.flags.writeable=False
+        return (image,labels),{'mode':'thick'}
+    if api in ('transform.frt2','transform.ifrt2'):
+        import numpy as np
+        shape=(3,3)if api=='transform.frt2'else(4,3)
+        return (np.zeros(shape,dtype=image.dtype),),{}
+    if api=='feature.draw_multiblock_lbp':
+        return (image,3,3,2,2),{'lbp_code':170,'alpha':0.5}
     if api=='segmentation.join_segmentations':
         import numpy as np
         return (np.array([0,0,1,1,2,2,3,3],dtype=image.dtype).reshape(2,4),
@@ -573,6 +614,14 @@ def default_call(api, image):
         # separately tests default and wide channel depths.
         options={'n_bins':16} if api.rsplit('.',1)[1]=='windowed_histogram' else {}
         return (image,np.ones((3,)*image.ndim,np.uint8)),options
+    if api=='metrics.variation_of_information':
+        import numpy as np
+        # The nominal image is a dtype carrier, not a floating-label promise.
+        # Integer descriptors retain their width/metadata. Other carriers use
+        # the int16 partition already captured by the label-pair contract.
+        label_dtype=image.dtype if image.dtype.kind in 'iu' else np.dtype('int16')
+        labels=np.array([[0,1,1],[2,2,2]],dtype=label_dtype)
+        return (labels,labels.copy()),{}
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         import numpy as np
         # Frozen six-label value partition; image is the actual integer-dtype carrier.
@@ -1026,6 +1075,18 @@ def ellipsoid_default_error(image, actual, expected):
     return 0.
 
 
+def variation_of_information_default_error(actual, expected):
+    """Strict allocated two-word result; no tolerance or NaN normalization."""
+    import numpy as np
+    assert type(actual)is type(expected)is np.ndarray
+    assert actual.shape==expected.shape==(2,)and actual.dtype==expected.dtype==np.dtype('float64')
+    assert actual.strides==expected.strides and actual.flags.owndata and expected.flags.owndata
+    assert actual.flags.c_contiguous and expected.flags.c_contiguous
+    assert actual.flags.writeable==expected.flags.writeable and actual.flags.aligned==expected.flags.aligned
+    assert actual.base is expected.base is None and actual.tobytes()==expected.tobytes()
+    return 0.
+
+
 def label_pair_default_error(api, actual, expected):
     """Exact whole CSR/scalar tuple; never coerce a sparse result to object dtype."""
     import numpy as np
@@ -1118,10 +1179,27 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         util_views_default_error(actual,expected);return
     if api in ('util.crop','util.regular_grid'):
         util_metadata_default_error(api,actual,expected);return
+    if api in ('restoration.rolling_ball','segmentation.mark_boundaries','feature.draw_multiblock_lbp','transform.frt2','transform.ifrt2'):
+        import numpy as np
+        assert type(actual)is type(expected)is np.ndarray
+        assert actual.shape==expected.shape and actual.dtype==expected.dtype
+        assert actual.strides==expected.strides and type(actual.base)is type(expected.base)
+        assert actual.flags.owndata==expected.flags.owndata and actual.flags.writeable==expected.flags.writeable
+        if image is not None:assert not np.shares_memory(actual,image)
+        assert actual.tobytes(order='C')==expected.tobytes(order='C')
+        return
     if api=='segmentation.join_segmentations':
         join_segmentations_default_error(actual,expected);return
     if api=='segmentation.find_boundaries':
         find_boundaries_default_error(actual,expected,image=image);return
+    if api in FLOOD_FILL_FUNCTIONS:
+        import numpy as np
+        assert type(actual)is type(expected)is np.ndarray and actual.dtype==expected.dtype and actual.shape==expected.shape
+        assert actual.strides==expected.strides and actual.tobytes()==expected.tobytes()
+        assert not np.shares_memory(actual,image)and not np.shares_memory(expected,image)
+        return
+    if api=='metrics.variation_of_information':
+        variation_of_information_default_error(actual,expected);return
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         label_pair_default_error(api,actual,expected);return
     """Shared assertion; previous scalar budgets keep their existing checker."""
@@ -1305,7 +1383,7 @@ def parity_tolerance(api, dtype, image=None, expected=None):
                'morphology.star', 'morphology.footprint_from_sequence'):
         return (0., 0.)
     if api in ('morphology.h_maxima','morphology.h_minima'):return (0.,0.)
-    if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return (0.,0.)
+    if api in ('metrics.adapted_rand_error','metrics.contingency_table','metrics.variation_of_information'):return (0.,0.)
     if api=='metrics.normalized_mutual_information':
         # Prospective entropy/ratio policy; exact counts, metadata and events
         # have separate assertions in the frozen214-case public contract.
@@ -1331,3 +1409,12 @@ def parity_tolerance(api, dtype, image=None, expected=None):
         # Four epsilon units amplified by the 500*a scaling are about 2.4e-4.
         return (2e-6,2.5e-4) if single else (2e-13,2e-12)
     return (2e-6,2e-6) if single else (2e-13,2e-13)
+
+
+def rolling_ball_contract():
+    return dict(api='restoration.rolling_ball',fully_native=False,
+        kernel='Owned C++ padding/min-plus with source kernel-row and NaN-safe selection order; one process-global default1 snapshot across default kernel/traversal',
+        providers='NumPy image coercion/astype/output conversion, custom-kernel astype/subtraction/inf mask, allocation/reshape/base/metadata and user protocols; axis/power metadata for admitted owned ball kernel',
+        default_scope='Actual requested image/dtype with explicit radius1 in shared adapter; literal default radius100 separately saved in bounded1D row',
+        SDK_scope='Complete owning float32/64 and typed raw bool/integer/half/swapped storage operation; finite representable integer cast and half-nearest domains only; Python metadata/protocol policy remains provider scope',
+        gaps='Broader protocols/FP callbacks/rounding, Windows original-domain parity, genuine single-core/fullSDK and one-thread public original performance pending')

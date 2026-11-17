@@ -59,27 +59,41 @@ def windows_fenv_backend():
     return backend()
 
 
+@pytest.fixture(scope='module')
+def linux_fenv_backend():
+    if sys.platform!='linux':return None
+    from util_views_fenv import backend
+    return backend()  # Existing authenticated source-built/private helper only.
+
+
 @pytest.mark.parametrize('spec',cases(),ids=lambda spec:spec['id'])
-def test_saved_original(target,spec,windows_fenv_backend):
+def test_saved_original(target,spec,windows_fenv_backend,linux_fenv_backend):
     module,core=target
     profile='minimum' if np.__version__.startswith('1.') else 'modern'
     fixture=json.loads((ROOT/'tests/fixtures/join_segmentations_originals_v1.json').read_text())
     expected=next(row for row in fixture['profiles'][profile]['rows'] if row['id']==spec['id'])
-    # The retained Linux capture pins glibc x86-64 fenv_t to32bytes; all100
-    # original rows preserved its complete bytes, including sticky flags.
+    # Preserve each authentic captured numerical INPUT, not arbitrary ambient
+    # sticky flags. Keep current trusted opaque addresses/reserved diagnostics.
     linux=sys.platform=='linux'
-    libc=ctypes.CDLL(None)if linux else None
+    libc,helper=linux_fenv_backend if linux else (None,None)
     if linux:
+        from join_segmentations_fenv_input import recorded_input
+        outer=(ctypes.c_ubyte*32)();assert libc.fegetenv(ctypes.byref(outer))==0
+        seed=(ctypes.c_ubyte*32).from_buffer_copy(recorded_input(bytes(outer),expected['controller_fenv']['before']))
         before=(ctypes.c_ubyte*32)();after=(ctypes.c_ubyte*32)()
-        assert libc.fegetenv(ctypes.byref(before))==0
     else:
         saved_flags,before=windows_fenv_backend.capture()
     try:
+        if linux:
+            assert helper.reference_fenv_restore(ctypes.byref(seed),32)==0
+            assert libc.fegetenv(ctypes.byref(before))==0 and bytes(before)==bytes(seed)
         actual=observe(module.join_segmentations,spec,np)
         if linux:assert libc.fegetenv(ctypes.byref(after))==0
         else:after=windows_fenv_backend.state()
     finally:
-        if linux:assert libc.fesetenv(ctypes.byref(before))==0
+        if linux:
+            assert helper.reference_fenv_restore(ctypes.byref(outer),32)==0
+            restored=(ctypes.c_ubyte*32)();assert libc.fegetenv(ctypes.byref(restored))==0 and bytes(restored)==bytes(outer)
         else:
             windows_fenv_backend.restore(saved_flags,before)
     actual['controller_fenv']=dict(before=bytes(before).hex(),after=bytes(after).hex())if linux else dict(before=before,after=after,library='ucrtbase.dll',mask=0x1f)

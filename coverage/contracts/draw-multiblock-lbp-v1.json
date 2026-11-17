@@ -1,0 +1,4085 @@
+{
+  "schema": "draw-multiblock-lbp-source-contract-v1",
+  "state": "SOURCE_ONLY_PENDING_INDEPENDENT_SAFETY_AND_ROOT_GO",
+  "base_source": "9a303e65ccafa630151691953a5b0f186680aa24",
+  "api": "feature.draw_multiblock_lbp",
+  "signature": "(image, r, c, width, height, lbp_code=0, color_greater_block=(1, 1, 1), color_less_block=(0, 0.69, 0.96), alpha=0.5)",
+  "cases": [
+    {
+      "id": "feature.draw_multiblock_lbp/default-gray",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/RGB-uint8",
+      "shape": [
+        9,
+        10,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-bool",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-uint16",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-uint32",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-uint64",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-int8",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-int16",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-int32",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-int64",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-float16",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-float32",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype-float64",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype->u2",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": ">u2",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/dtype->f4",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": ">f4",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/signed-extrema",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "pattern": "extrema",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/unsigned-extrema",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "pattern": "extrema",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/float-unscaled-range",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "range",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-7",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 128,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-6",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 64,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-5",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 32,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-4",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 16,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-3",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 8,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-2",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 4,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-1",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 2,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bit-0",
+      "shape": [
+        6,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 1,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        0,
+        0
+      ],
+      "less": [
+        0,
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/all-one",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 255,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/negative-code",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": -1,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/high-bit-only",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 256,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/high-plus-low",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 513,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bool-code",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": true,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/np-int64-code",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 5,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "np-int64-code"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/np-uint8-code",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 129,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "np-uint8-code"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-zero",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.0,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-one",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-negative",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": -0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-over-one",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 1.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "python"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-np-f32",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.3,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "alpha-np-f32"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-np-f64",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.3,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "alpha-np-f64"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/FP-inf-warn",
+      "shape": [
+        5,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": "inf",
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {
+        "invalid": "warn",
+        "over": "warn"
+      },
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/FP-inf-raise",
+      "shape": [
+        5,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": "inf",
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {
+        "invalid": "raise",
+        "over": "raise"
+      },
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/FP-inf-call",
+      "shape": [
+        5,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "zeros",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": "inf",
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {
+        "invalid": "call",
+        "over": "call"
+      },
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/FP-nan",
+      "shape": [
+        5,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": "nan",
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/image-nan-alpha-one",
+      "shape": [
+        5,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "nan",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 1.0,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/color-nan-alpha-zero",
+      "shape": [
+        5,
+        6,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.0,
+      "greater": [
+        "nan",
+        1,
+        0
+      ],
+      "less": [
+        "nan",
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/top-left-clipping",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 0,
+      "c": 0,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bottom-right-clipping",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 7,
+      "c": 8,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/negative-wrapping",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": -2,
+      "c": -3,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/wrapped-overlap",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": -7,
+      "c": -8,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/outside-positive",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 32,
+      "c": 32,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/outside-negative",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": -32,
+      "c": -32,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/zero-width",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 0,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/zero-height",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 0,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/negative-width",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": -2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/negative-height",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": -2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bool-size",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": true,
+      "height": true,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/float-width",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2.0,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/float-height",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2.0,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/float-row",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1.5,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/np-coordinate",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "geometry_kind": "np-int32"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/np0d-width",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "geometry_kind": "np0d-width"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/channels-1",
+      "shape": [
+        5,
+        6,
+        1
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/channels-2",
+      "shape": [
+        5,
+        6,
+        2
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/channels-4",
+      "shape": [
+        5,
+        6,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/rank4",
+      "shape": [
+        5,
+        6,
+        2,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/rank1",
+      "shape": [
+        8
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/rank0",
+      "shape": [],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/empty-rows",
+      "shape": [
+        0,
+        6
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/empty-columns",
+      "shape": [
+        5,
+        0,
+        3
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/layout-F",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "F",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/layout-reverse",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "reverse",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/layout-readonly",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "readonly",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/layout-strided",
+      "shape": [
+        7,
+        8,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "strided",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/bad-greater",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        "bad",
+        0,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/unused-bad-less",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 255,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        "bad",
+        0,
+        1
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/scalar-color",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": 0.75,
+      "less": 0.25,
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/color-length-0",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [],
+      "less": [],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/color-length-1",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        0.5
+      ],
+      "less": [
+        0.25
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/color-length-2",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        0.5,
+        0.5
+      ],
+      "less": [
+        0.25,
+        0.25
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/color-length-4",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "less": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/matrix-color",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "less": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/float-code",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 1.5,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/array-code",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 3,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "code_kind": "array-two"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-vector",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "vector-two"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-none",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": null,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/image-list",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "list",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/image-protocol",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "protocol",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/color-protocol",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "color_kind": "protocol"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/alpha-protocol",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "alpha_kind": "protocol"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/object-image",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/complex-image",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/missing-height",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "arity": "missing-height"
+    },
+    {
+      "id": "feature.draw_multiblock_lbp/unknown-keyword",
+      "shape": [
+        9,
+        10
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "pattern": "ramp",
+      "r": 1,
+      "c": 1,
+      "width": 2,
+      "height": 2,
+      "code": 0,
+      "alpha": 0.5,
+      "greater": [
+        1,
+        1,
+        1
+      ],
+      "less": [
+        0,
+        0.69,
+        0.96
+      ],
+      "carrier": "array",
+      "policy": {},
+      "quarantine": false,
+      "extra_keyword": true
+    }
+  ],
+  "case_count": 93,
+  "bounds_by_case": {
+    "feature.draw_multiblock_lbp/default-gray": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/RGB-uint8": {
+      "factory_elements": 270,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-bool": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-uint16": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-uint32": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-uint64": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-int8": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-int16": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-int32": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-int64": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-float16": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-float32": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype-float64": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype->u2": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/dtype->f4": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/signed-extrema": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/unsigned-extrema": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/float-unscaled-range": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-7": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-6": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-5": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-4": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-3": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-2": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-1": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bit-0": {
+      "factory_elements": 108,
+      "max_output_elements": 108,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/all-one": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/negative-code": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/high-bit-only": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/high-plus-low": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bool-code": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/np-int64-code": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/np-uint8-code": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-zero": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-one": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-negative": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-over-one": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-np-f32": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-np-f64": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/FP-inf-warn": {
+      "factory_elements": 90,
+      "max_output_elements": 90,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/FP-inf-raise": {
+      "factory_elements": 90,
+      "max_output_elements": 90,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/FP-inf-call": {
+      "factory_elements": 90,
+      "max_output_elements": 90,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/FP-nan": {
+      "factory_elements": 90,
+      "max_output_elements": 90,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/image-nan-alpha-one": {
+      "factory_elements": 90,
+      "max_output_elements": 90,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/color-nan-alpha-zero": {
+      "factory_elements": 90,
+      "max_output_elements": 90,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/top-left-clipping": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bottom-right-clipping": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/negative-wrapping": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/wrapped-overlap": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/outside-positive": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/outside-negative": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/zero-width": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/zero-height": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/negative-width": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/negative-height": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bool-size": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/float-width": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/float-height": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/float-row": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/np-coordinate": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/np0d-width": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/channels-1": {
+      "factory_elements": 30,
+      "max_output_elements": 30,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/channels-2": {
+      "factory_elements": 60,
+      "max_output_elements": 60,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/channels-4": {
+      "factory_elements": 120,
+      "max_output_elements": 120,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/rank4": {
+      "factory_elements": 180,
+      "max_output_elements": 180,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/rank1": {
+      "factory_elements": 8,
+      "max_output_elements": 24,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/rank0": {
+      "factory_elements": 1,
+      "max_output_elements": 3,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/empty-rows": {
+      "factory_elements": 0,
+      "max_output_elements": 0,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/empty-columns": {
+      "factory_elements": 0,
+      "max_output_elements": 0,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/layout-F": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/layout-reverse": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/layout-readonly": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/layout-strided": {
+      "factory_elements": 168,
+      "max_output_elements": 168,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/bad-greater": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/unused-bad-less": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/scalar-color": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/color-length-0": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/color-length-1": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/color-length-2": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/color-length-4": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/matrix-color": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/float-code": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/array-code": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-vector": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-none": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/image-list": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/image-protocol": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/color-protocol": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/alpha-protocol": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/object-image": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/complex-image": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/missing-height": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    },
+    "feature.draw_multiblock_lbp/unknown-keyword": {
+      "factory_elements": 90,
+      "max_output_elements": 270,
+      "max_broadcast_temporary_elements": 10000,
+      "max_temporary_payload_bytes": 480000,
+      "source_neighbor_updates": 8,
+      "geometry_integer_abs_upper": 128,
+      "controlled_protocols": true,
+      "original_call_budget": 0,
+      "safety_basis": "Small allocated ordinary arrays or bounded controlled providers; fixed8 NumPy basic slices/ufuncs, no unchecked coordinate/Cython descriptor helper calls"
+    }
+  },
+  "source_freeze": {
+    "tests/draw_multiblock_lbp_contract.py": "b73c722c6aec07275d51b6fdc263727aeb2d684ef5ddb04f965b61f056d1da3b",
+    "tests/test_draw_multiblock_lbp_reference.py": "dbbcbcf32dbaff2dd283e86bfc271be0f4dfc7fdf6977b70c1fddfed2291bdce",
+    "tests/test_draw_multiblock_lbp_intake.py": "5b075562ee89e59e261a20c59eab34fab757dc48277f6088c851b63b5547f56e",
+    "benchmarks/draw_multiblock_lbp.py": "9a6c78f51359fe75f933a72f00bf21991a7b1c88750b31ccce2188f20385ab54"
+  },
+  "retained_profiles": {
+    "minimum": {
+      "site": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages",
+      "files": {
+        "feature/texture.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/feature/texture.py",
+          "raw_sha256": "a4eb75ac4ceccc64a5bd76c0e0bdf4360125eebf8f6b0f3a6634d557d699996a",
+          "bytes": 20544
+        },
+        "color/colorconv.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/color/colorconv.py",
+          "raw_sha256": "fc5f49ac194c229325f21ddbe4c49f7df4307b9627dfbb5fcd2825133144fdfe",
+          "bytes": 67508
+        },
+        "util/dtype.py": {
+          "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/skimage/util/dtype.py",
+          "raw_sha256": "d4f99f88966e4d0dbbe80a3c0b8acb3890644cc5fbfb707ba9b5a90e9119e627",
+          "bytes": 17701
+        }
+      },
+      "distributions": {
+        "numpy": [
+          {
+            "version": "1.24.4",
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/numpy-1.24.4.dist-info"
+          }
+        ],
+        "scipy": [
+          {
+            "version": "1.15.3",
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scipy-1.15.3.dist-info"
+          }
+        ],
+        "scikit-image": [
+          {
+            "version": "0.26.0",
+            "path": "/home/heq/.cache/skimagexx-label-numpy124-venv/lib/python3.11/site-packages/scikit_image-0.26.0.dist-info"
+          }
+        ]
+      },
+      "scope": "Source/metadata read only; no feature/color/conversion helper import or body executed."
+    },
+    "modern": {
+      "site": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages",
+      "files": {
+        "feature/texture.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/feature/texture.py",
+          "raw_sha256": "a4eb75ac4ceccc64a5bd76c0e0bdf4360125eebf8f6b0f3a6634d557d699996a",
+          "bytes": 20544
+        },
+        "color/colorconv.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/color/colorconv.py",
+          "raw_sha256": "fc5f49ac194c229325f21ddbe4c49f7df4307b9627dfbb5fcd2825133144fdfe",
+          "bytes": 67508
+        },
+        "util/dtype.py": {
+          "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/skimage/util/dtype.py",
+          "raw_sha256": "d4f99f88966e4d0dbbe80a3c0b8acb3890644cc5fbfb707ba9b5a90e9119e627",
+          "bytes": 17701
+        }
+      },
+      "distributions": {
+        "numpy": [
+          {
+            "version": "2.5.4",
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/numpy-2.5.4.dist-info"
+          }
+        ],
+        "scipy": [
+          {
+            "version": "1.18.1",
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scipy-1.18.1.dist-info"
+          }
+        ],
+        "scikit-image": [
+          {
+            "version": "0.26.0",
+            "path": "/home/heq/.cache/skimagexx-frangi-py313-venv/lib/python3.13/site-packages/scikit_image-0.26.0.dist-info"
+          }
+        ]
+      },
+      "scope": "Source/metadata read only; no feature/color/conversion helper import or body executed."
+    }
+  },
+  "source_fragments": {
+    "feature/texture.py:draw_multiblock_lbp": "def draw_multiblock_lbp(\n    image,\n    r,\n    c,\n    width,\n    height,\n    lbp_code=0,\n    color_greater_block=(1, 1, 1),\n    color_less_block=(0, 0.69, 0.96),\n    alpha=0.5,\n):\n    \"\"\"Multi-block local binary pattern visualization.\n\n    Blocks with higher sums are colored with alpha-blended white rectangles,\n    whereas blocks with lower sums are colored alpha-blended cyan. Colors\n    and the `alpha` parameter can be changed.\n\n    Parameters\n    ----------\n    image : ndarray of float or uint\n        Image on which to visualize the pattern.\n    r : int\n        Row-coordinate of top left corner of a rectangle containing feature.\n    c : int\n        Column-coordinate of top left corner of a rectangle containing feature.\n    width : int\n        Width of one of 9 equal rectangles that will be used to compute\n        a feature.\n    height : int\n        Height of one of 9 equal rectangles that will be used to compute\n        a feature.\n    lbp_code : int\n        The descriptor of feature to visualize. If not provided, the\n        descriptor with 0 value will be used.\n    color_greater_block : tuple of 3 floats\n        Floats specifying the color for the block that has greater\n        intensity value. They should be in the range [0, 1].\n        Corresponding values define (R, G, B) values. Default value\n        is white (1, 1, 1).\n    color_greater_block : tuple of 3 floats\n        Floats specifying the color for the block that has greater intensity\n        value. They should be in the range [0, 1]. Corresponding values define\n        (R, G, B) values. Default value is cyan (0, 0.69, 0.96).\n    alpha : float\n        Value in the range [0, 1] that specifies opacity of visualization.\n        1 - fully transparent, 0 - opaque.\n\n    Returns\n    -------\n    output : ndarray of float\n        Image with MB-LBP visualization.\n\n    References\n    ----------\n    .. [1] L. Zhang, R. Chu, S. Xiang, S. Liao, S.Z. Li. \"Face Detection Based\n           on Multi-Block LBP Representation\", In Proceedings: Advances in\n           Biometrics, International Conference, ICB 2007, Seoul, Korea.\n           http://www.cbsr.ia.ac.cn/users/scliao/papers/Zhang-ICB07-MBLBP.pdf\n           :DOI:`10.1007/978-3-540-74549-5_2`\n    \"\"\"\n\n    # Default colors for regions.\n    # White is for the blocks that are brighter.\n    # Cyan is for the blocks that has less intensity.\n    color_greater_block = np.asarray(color_greater_block, dtype=np.float64)\n    color_less_block = np.asarray(color_less_block, dtype=np.float64)\n\n    # Copy array to avoid the changes to the original one.\n    output = np.copy(image)\n\n    # As the visualization uses RGB color we need 3 bands.\n    if len(image.shape) < 3:\n        output = gray2rgb(image)\n\n    # Colors are specified in floats.\n    output = img_as_float(output)\n\n    # Offsets of neighbor rectangles relative to central one.\n    # It has order starting from top left and going clockwise.\n    neighbor_rect_offsets = (\n        (-1, -1),\n        (-1, 0),\n        (-1, 1),\n        (0, 1),\n        (1, 1),\n        (1, 0),\n        (1, -1),\n        (0, -1),\n    )\n\n    # Pre-multiply the offsets with width and height.\n    neighbor_rect_offsets = np.array(neighbor_rect_offsets)\n    neighbor_rect_offsets[:, 0] *= height\n    neighbor_rect_offsets[:, 1] *= width\n\n    # Top-left coordinates of central rectangle.\n    central_rect_r = r + height\n    central_rect_c = c + width\n\n    for element_num, offset in enumerate(neighbor_rect_offsets):\n        offset_r, offset_c = offset\n\n        curr_r = central_rect_r + offset_r\n        curr_c = central_rect_c + offset_c\n\n        has_greater_value = lbp_code & (1 << (7 - element_num))\n\n        # Mix-in the visualization colors.\n        if has_greater_value:\n            new_value = (1 - alpha) * output[\n                curr_r : curr_r + height, curr_c : curr_c + width\n            ] + alpha * color_greater_block\n            output[curr_r : curr_r + height, curr_c : curr_c + width] = new_value\n        else:\n            new_value = (1 - alpha) * output[\n                curr_r : curr_r + height, curr_c : curr_c + width\n            ] + alpha * color_less_block\n            output[curr_r : curr_r + height, curr_c : curr_c + width] = new_value\n\n    return output\n",
+    "color/colorconv.py:gray2rgb": "def gray2rgb(image, *, channel_axis=-1):\n    \"\"\"Create an RGB representation of a gray-level image.\n\n    Parameters\n    ----------\n    image : array_like\n        Input image.\n    channel_axis : int, optional\n        This parameter indicates which axis of the output array will correspond\n        to channels.\n\n    Returns\n    -------\n    rgb : (..., C=3, ...) ndarray\n        RGB image. A new dimension of length 3 is added to input image.\n\n    Notes\n    -----\n    If the input is a 1-dimensional image of shape ``(M,)``, the output\n    will be shape ``(M, C=3)``.\n    \"\"\"\n    return np.stack(3 * (image,), axis=channel_axis)\n",
+    "util/dtype.py:_dtype_itemsize": "def _dtype_itemsize(itemsize, *dtypes):\n    \"\"\"Return first of `dtypes` with itemsize greater than `itemsize`\n\n    Parameters\n    ----------\n    itemsize : int\n        The data type object element size.\n\n    Other Parameters\n    ----------------\n    *dtypes\n        Any Object accepted by `np.dtype` to be converted to a data\n        type object\n\n    Returns\n    -------\n    dtype: data type object\n        First of `dtypes` with itemsize greater than `itemsize`.\n\n    \"\"\"\n    return next(dt for dt in dtypes if np.dtype(dt).itemsize >= itemsize)\n",
+    "util/dtype.py:_dtype_bits": "def _dtype_bits(kind, bits, itemsize=1):\n    \"\"\"Return dtype of `kind` that can store a `bits` wide unsigned int\n\n    Parameters:\n    kind: str\n        Data type kind.\n    bits: int\n        Desired number of bits.\n    itemsize: int\n        The data type object element size.\n\n    Returns\n    -------\n    dtype: data type object\n        Data type of `kind` that can store a `bits` wide unsigned int\n\n    \"\"\"\n\n    s = next(\n        i\n        for i in (itemsize,) + (2, 4, 8)\n        if bits < (i * 8) or (bits == (i * 8) and kind == 'u')\n    )\n\n    return np.dtype(kind + str(s))\n",
+    "util/dtype.py:_scale": "def _scale(a, n, m, copy=True):\n    \"\"\"Scale an array of unsigned/positive integers from `n` to `m` bits.\n\n    Numbers can be represented exactly only if `m` is a multiple of `n`.\n\n    Parameters\n    ----------\n    a : ndarray\n        Input image array.\n    n : int\n        Number of bits currently used to encode the values in `a`.\n    m : int\n        Desired number of bits to encode the values in `out`.\n    copy : bool, optional\n        If True, allocates and returns new array. Otherwise, modifies\n        `a` in place.\n\n    Returns\n    -------\n    out : array\n        Output image array. Has the same kind as `a`.\n    \"\"\"\n    kind = a.dtype.kind\n    if n > m and a.max() < 2**m:\n        mnew = int(np.ceil(m / 2) * 2)\n        if mnew > m:\n            dtype = f'int{mnew}'\n        else:\n            dtype = f'uint{mnew}'\n        n = int(np.ceil(n / 2) * 2)\n        warn(\n            f'Downcasting {a.dtype} to {dtype} without scaling because max '\n            f'value {a.max()} fits in {dtype}',\n            stacklevel=3,\n        )\n        return a.astype(_dtype_bits(kind, m))\n    elif n == m:\n        return a.copy() if copy else a\n    elif n > m:\n        # downscale with precision loss\n        if copy:\n            b = np.empty(a.shape, _dtype_bits(kind, m))\n            np.floor_divide(a, 2 ** (n - m), out=b, dtype=a.dtype, casting='unsafe')\n            return b\n        else:\n            a //= 2 ** (n - m)\n            return a\n    elif m % n == 0:\n        # exact upscale to a multiple of `n` bits\n        if copy:\n            b = np.empty(a.shape, _dtype_bits(kind, m))\n            np.multiply(a, (2**m - 1) // (2**n - 1), out=b, dtype=b.dtype)\n            return b\n        else:\n            a = a.astype(_dtype_bits(kind, m, a.dtype.itemsize), copy=False)\n            a *= (2**m - 1) // (2**n - 1)\n            return a\n    else:\n        # upscale to a multiple of `n` bits,\n        # then downscale with precision loss\n        o = (m // n + 1) * n\n        if copy:\n            b = np.empty(a.shape, _dtype_bits(kind, o))\n            np.multiply(a, (2**o - 1) // (2**n - 1), out=b, dtype=b.dtype)\n            b //= 2 ** (o - m)\n            return b\n        else:\n            a = a.astype(_dtype_bits(kind, o, a.dtype.itemsize), copy=False)\n            a *= (2**o - 1) // (2**n - 1)\n            a //= 2 ** (o - m)\n            return a\n",
+    "util/dtype.py:_convert": "def _convert(image, dtype, force_copy=False, uniform=False):\n    \"\"\"\n    Convert an image to the requested data-type.\n\n    Warnings are issued in case of precision loss, or when negative values\n    are clipped during conversion to unsigned integer types (sign loss).\n\n    Floating point values are expected to be normalized and will be clipped\n    to the range [0.0, 1.0] or [-1.0, 1.0] when converting to unsigned or\n    signed integers respectively.\n\n    Numbers are not shifted to the negative side when converting from\n    unsigned to signed integer types. Negative values will be clipped when\n    converting to unsigned integers.\n\n    Parameters\n    ----------\n    image : ndarray\n        Input image.\n    dtype : dtype\n        Target data-type.\n    force_copy : bool, optional\n        Force a copy of the data, irrespective of its current dtype.\n    uniform : bool, optional\n        Uniformly quantize the floating point range to the integer range.\n        By default (uniform=False) floating point values are scaled and\n        rounded to the nearest integers, which minimizes back and forth\n        conversion errors.\n\n    Notes\n    -----\n    .. versionchanged:: 0.15\n        ``_convert`` no longer warns about possible precision or sign\n        information loss. See discussions on these warnings at:\n        https://github.com/scikit-image/scikit-image/issues/2602\n        https://github.com/scikit-image/scikit-image/issues/543#issuecomment-208202228\n        https://github.com/scikit-image/scikit-image/pull/3575\n\n    References\n    ----------\n    .. [1] DirectX data conversion rules.\n           https://msdn.microsoft.com/en-us/library/windows/desktop/dd607323%28v=vs.85%29.aspx\n    .. [2] Data Conversions. In \"OpenGL ES 2.0 Specification v2.0.25\",\n           pp 7-8. Khronos Group, 2010.\n    .. [3] Proper treatment of pixels as integers. A.W. Paeth.\n           In \"Graphics Gems I\", pp 249-256. Morgan Kaufmann, 1990.\n    .. [4] Dirty Pixels. J. Blinn. In \"Jim Blinn's corner: Dirty Pixels\",\n           pp 47-57. Morgan Kaufmann, 1998.\n\n    \"\"\"\n    image = np.asarray(image)\n    dtypeobj_in = image.dtype\n    if dtype is np.floating:\n        dtypeobj_out = np.dtype('float64')\n    else:\n        dtypeobj_out = np.dtype(dtype)\n    dtype_in = dtypeobj_in.type\n    dtype_out = dtypeobj_out.type\n    kind_in = dtypeobj_in.kind\n    kind_out = dtypeobj_out.kind\n    itemsize_in = dtypeobj_in.itemsize\n    itemsize_out = dtypeobj_out.itemsize\n\n    # Below, we do an `issubdtype` check.  Its purpose is to find out\n    # whether we can get away without doing any image conversion.  This happens\n    # when:\n    #\n    # - the output and input dtypes are the same or\n    # - when the output is specified as a type, and the input dtype\n    #   is a subclass of that type (e.g. `np.floating` will allow\n    #   `float32` and `float64` arrays through)\n\n    if np.issubdtype(dtype_in, dtype):\n        if force_copy:\n            image = image.copy()\n        return image\n\n    if not (dtype_in in _supported_types and dtype_out in _supported_types):\n        raise ValueError(f'Cannot convert from {dtypeobj_in} to ' f'{dtypeobj_out}.')\n\n    if kind_in in 'ui':\n        imin_in = np.iinfo(dtype_in).min\n        imax_in = np.iinfo(dtype_in).max\n    if kind_out in 'ui':\n        imin_out = np.iinfo(dtype_out).min\n        imax_out = np.iinfo(dtype_out).max\n\n    # any -> binary\n    if kind_out == 'b':\n        return image > dtype_in(dtype_range[dtype_in][1] / 2)\n\n    # binary -> any\n    if kind_in == 'b':\n        result = image.astype(dtype_out)\n        if kind_out != 'f':\n            result *= dtype_out(dtype_range[dtype_out][1])\n        return result\n\n    # float -> any\n    if kind_in == 'f':\n        if kind_out == 'f':\n            # float -> float\n            return image.astype(dtype_out)\n\n        if np.min(image) < -1.0 or np.max(image) > 1.0:\n            raise ValueError(\"Images of type float must be between -1 and 1.\")\n        # floating point -> integer\n        # use float type that can represent output integer type\n        computation_type = _dtype_itemsize(\n            itemsize_out, dtype_in, np.float32, np.float64\n        )\n\n        if not uniform:\n            if kind_out == 'u':\n                image_out = np.multiply(image, imax_out, dtype=computation_type)\n            else:\n                image_out = np.multiply(\n                    image, (imax_out - imin_out) / 2, dtype=computation_type\n                )\n                image_out -= 1.0 / 2.0\n            np.rint(image_out, out=image_out)\n            np.clip(image_out, imin_out, imax_out, out=image_out)\n        elif kind_out == 'u':\n            image_out = np.multiply(image, imax_out + 1, dtype=computation_type)\n            np.clip(image_out, 0, imax_out, out=image_out)\n        else:\n            image_out = np.multiply(\n                image, (imax_out - imin_out + 1.0) / 2.0, dtype=computation_type\n            )\n            np.floor(image_out, out=image_out)\n            np.clip(image_out, imin_out, imax_out, out=image_out)\n        return image_out.astype(dtype_out)\n\n    # signed/unsigned int -> float\n    if kind_out == 'f':\n        # use float type that can exactly represent input integers\n        computation_type = _dtype_itemsize(\n            itemsize_in, dtype_out, np.float32, np.float64\n        )\n\n        if kind_in == 'u':\n            # using np.divide or np.multiply doesn't copy the data\n            # until the computation time\n            image = np.multiply(image, 1.0 / imax_in, dtype=computation_type)\n            # DirectX uses this conversion also for signed ints\n            # if imin_in:\n            #     np.maximum(image, -1.0, out=image)\n        elif kind_in == 'i':\n            # From DirectX conversions:\n            # The most negative value maps to -1.0f\n            # Every other value is converted to a float (call it c)\n            # and then result = c * (1.0f / (2\u207d\u207f\u207b\u00b9\u207e-1)).\n\n            image = np.multiply(image, 1.0 / imax_in, dtype=computation_type)\n            np.maximum(image, -1.0, out=image)\n\n        else:\n            image = np.add(image, 0.5, dtype=computation_type)\n            image *= 2 / (imax_in - imin_in)\n\n        return np.asarray(image, dtype_out)\n\n    # unsigned int -> signed/unsigned int\n    if kind_in == 'u':\n        if kind_out == 'i':\n            # unsigned int -> signed int\n            image = _scale(image, 8 * itemsize_in, 8 * itemsize_out - 1)\n            return image.view(dtype_out)\n        else:\n            # unsigned int -> unsigned int\n            return _scale(image, 8 * itemsize_in, 8 * itemsize_out)\n\n    # signed int -> unsigned int\n    if kind_out == 'u':\n        image = _scale(image, 8 * itemsize_in - 1, 8 * itemsize_out)\n        result = np.empty(image.shape, dtype_out)\n        np.maximum(image, 0, out=result, dtype=image.dtype, casting='unsafe')\n        return result\n\n    # signed int -> signed int\n    if itemsize_in > itemsize_out:\n        return _scale(image, 8 * itemsize_in - 1, 8 * itemsize_out - 1)\n\n    image = image.astype(_dtype_bits('i', itemsize_out * 8))\n    image -= imin_in\n    image = _scale(image, 8 * itemsize_in, 8 * itemsize_out, copy=False)\n    image += imin_out\n    return image.astype(dtype_out)\n",
+    "util/dtype.py:img_as_float": "def img_as_float(image, force_copy=False):\n    \"\"\"Convert an image to floating point format.\n\n    This function is similar to `img_as_float64`, but will not convert\n    lower-precision floating point arrays to `float64`.\n\n    Parameters\n    ----------\n    image : ndarray\n        Input image.\n    force_copy : bool, optional\n        Force a copy of the data, irrespective of its current dtype.\n\n    Returns\n    -------\n    out : ndarray of float\n        Output image.\n\n    Notes\n    -----\n    The range of a floating point image is [0.0, 1.0] or [-1.0, 1.0] when\n    converting from unsigned or signed datatypes, respectively.\n    If the input image has a float type, intensity values are not modified\n    and can be outside the ranges [0.0, 1.0] or [-1.0, 1.0].\n\n    \"\"\"\n    return _convert(image, np.floating, force_copy)\n"
+  },
+  "source_fragment_sha256": {
+    "feature/texture.py:draw_multiblock_lbp": "f154784393c0e53ee76f20e0df525276bec5b914808b571758f5669bf44f649f",
+    "color/colorconv.py:gray2rgb": "c6aa331af5700038ee329e1e5454296a4d55e4bebb864aaf7de76c5f182aaf62",
+    "util/dtype.py:_dtype_itemsize": "c87cab4342452b8f92486bfb1e068fc7116e1e7dbaeb8430f22fd0e232f8ccfe",
+    "util/dtype.py:_dtype_bits": "261e6995134bf8dc115fa5576c384a66d03bea40cd40b13be5ab2e5163557376",
+    "util/dtype.py:_scale": "d4f3e7107248de9c0a4a71a962694f8674487b97695dbd591e5f7bf253709071",
+    "util/dtype.py:_convert": "13debe022cbca64c7cf4252817509651895553705bf66bcb8e391a75f0417171",
+    "util/dtype.py:img_as_float": "95a3e8915df6e316caabf38f75959ed68555d1a5abb17c2db145623093f518fe"
+  },
+  "bit_orientation": [
+    {
+      "bit": 7,
+      "row_offset": -1,
+      "column_offset": -1
+    },
+    {
+      "bit": 6,
+      "row_offset": -1,
+      "column_offset": 0
+    },
+    {
+      "bit": 5,
+      "row_offset": -1,
+      "column_offset": 1
+    },
+    {
+      "bit": 4,
+      "row_offset": 0,
+      "column_offset": 1
+    },
+    {
+      "bit": 3,
+      "row_offset": 1,
+      "column_offset": 1
+    },
+    {
+      "bit": 2,
+      "row_offset": 1,
+      "column_offset": 0
+    },
+    {
+      "bit": 1,
+      "row_offset": 1,
+      "column_offset": -1
+    },
+    {
+      "bit": 0,
+      "row_offset": 0,
+      "column_offset": -1
+    }
+  ],
+  "contract": {
+    "meaning": "Visualizer only; never calls _multiblock_lbp descriptor or rectangle helper. Exactly8neighbor updates, central(0,0)offset absent. Codebits7..0 run top-left,top,top-right,right,bottom-right,bottom,bottom-left,left. Bits above7 ignored, negative/bool/integer scalar behavior follows literal bitwise&/truth.",
+    "prefix_order": "Coerce BOTH colors tofloat64 arrays (greater thenless), unconditional np.copy(image), inspect ORIGINAL image.shape, ifndim<3 discard initial copy and gray2rgb(ORIGINALimage), img_as_float(output), thenint offsetarray/inplaceheight,width products, centralr=r+height/c=c+width, loop.",
+    "slicing": "Literal two-axis basic slices curr:curr+extent, stepNone. Python negative-index wrapping and clipping, not geometric rectangle clipping. Negative dimensions may yield nonempty slices after normalization. Empty slices still evaluate color product and broadcasting/errors. Extra axes retained. Wrapped neighbors can overlap and reach physical center pixels; only logicalcenter offset excluded.",
+    "alpha_colors": "No range/length/channel validation. alpha1 writescolor only for finite operands; alpha0 does not skip color multiplication. NaN/Inf operands may warn/raise/call even when alpha0/1 or emptyview. Docs opacity wording is reversed relative to expression. Scalar/1component/matrix colors use ordinary NumPy broadcasting; malformed unused color still fails prefix conversion.",
+    "arithmetic": "Perblock source order: (1-alpha), multiply with CURRENT output slice at live promoted dtype, alpha*selectedfloat64color, add, assign/cast tooutput storage, thennextblockreadsupdatedoutput. NoFMA, reassociation, hoisting, all-pixels snapshot, earlyempty/alpha shortcuts without actual parity proof. Float32first product canroundbeforef64sum; NumPy1.24/2.5 strong/weak scalar plans maydiffer.",
+    "dtype_range": "gray2rgb uses np.stack(3*(image,),axis=-1), preserving dtype/addingchannel. img_as_float _convert accepts existingfloating subtype without conversion/copy; float16/32/64 valuesincludingoutside[-1,1]unchanged. Bool->float64; integersnormalize via multiply by1/max with signedminclamped-1. Complex/object unsupported conversion errors. Endianness/default-int/scalarpromotion retained asliveNPauthorities untilcaptured.",
+    "shape_copy_alias": "Ordinary arrays produce freshoutput independentofinput; copyorder/stack/conversion determine exactstrides/own/base/writeability. Grayconversion usesoriginalimage, so initialcopyisobservablydiscarded.1D/0D andchannel1/2/4/rank4 behaviors source-driven, notprevalidatedRGB-only. Arbitrary__array_function__/protocolcopyreturns remain explicit unassessed boundary.",
+    "protocol_errors": "Python arity/unknownkw errors precede body. Both color__array__ requests precedeimagecopy; image.shape onoriginalaftercopy; graystack mayrequestoriginalagain. Offset inplace casting errors precedecentralgeometry/bitmask; codebitwise/iftruth precedeselectedslice; alpha__rsub__/multiply and colorbroadcast/assignment errors follow literal expression. Preserve full exceptionclass/message/callback/order and current inputstates; no guessed golden outcomes.",
+    "FP": "Capture NumPy geterr/geterrcall/bufsize, warningclasses/messages, policycallbacks and immediate flags/rounding plus controllerfullstate restoration. FP softwareevents mayoccuratdistinct expression stages and on emptyviews; no normalizing differences. Factorypolicy recordedbutnotactivatedhere. Actual observer/FPprefix source freeze and rootGO required before originals."
+  },
+  "reuse_source_sha256": {
+    "src/draw_coordinates.cpp": "ad884377213da609fcec34a699729b661e2b0122e0f4e90bd261f47fe5090de5",
+    "include/skimagexx/draw_coordinates.hpp": "9ce8a402b50cee888aab919ef175beb41b20232f16ad6e5af435f2ff248f7ae1",
+    "src/draw_set_color.cpp": "21ae7f9f1eb8474e34c497ecd41374d446a4886f0d888cd5aef147b22b09d3be",
+    "include/skimagexx/draw_set_color.hpp": "258b593beb4753aebe4480745deec5c1d5f85e3501c3087d14f2902d8af88f5c",
+    "src/convert.cpp": "5ac51da03a077a8ee6a2ef6547875f9286ec8561fd212eb64a2d0e41dd3d7fc4",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "third_party/scikit-image-LICENSE.txt": "611d3207504dcb4a808df209d2e7c9b4f2e89fe690f84735c0d548160966b527"
+  },
+  "reuse_limitations": {
+    "whole_set_color_is_equivalent": false,
+    "reason": "Existing set_color gathers all RHS beforeorderedscatter, stagescolorproduct first and promotesf32image tof64. Visualizer requires orderedblock-read/modify/write, sourceimage-product first and profile-dependent f32stage rounding. Whole reuse onlyafterbounded semantic proof; no claimnow.",
+    "rectangle": "Existing rectangle coordinatefill is usefulafter exact slice-normalized ROI, not a replacement for Python negative slicing/broadcasting. No Matplotlib/AGG dependency.",
+    "conversion": "convert_into numeric normalization/copy primitives are reusable after source comparison; float16/promotion/protocol/range/errorfrontiers remainexplicit, no generalNumPytypeengine."
+  },
+  "SDK_proposal": {
+    "named_complete_operation": "draw_multiblock_lbp",
+    "implemented": false,
+    "interface": "One public C++ operation accepts ordinary typed borrowed ImageView, r/c/width/height, code, f64colors, alpha scalar/stageplan; returns owning floating image+shape/strides/status. It must own copy/grayreplication/conversion and all8orderedblends. Stage-only coordinates/prepared-imagecomposition is not SDK parity.",
+    "smallest_path": "Reuse existing typed conversion/independent copy and signed-stride view primitives; small fixed8offset loop, exact source slice normalization and source-kind staged blend. Serial block order mandatory; no genericgraph/scatterengine or newworkerpool. Ordinary f64/defaultalpha route first, full assessed f32/half/promotions/errors remain required partitions rather than silently omitted.",
+    "dtype_policy": "Explicit input/conversion/storage/firstproduct/sum/assignment stage metadata; liveNumPy promotion authority in Python boundary when needed. Standalone boundary names source scalar-kind/stage plan, not fullNumPyengine.",
+    "workers_SIMD": "Existing optional process-global default1; conversion/copy spans mayreuse establishedSIMD/budget behavior afterproof. Eight ordered updates serial; disclosed per-stage snapshots unless actualwhole-call budgetproven. No artificial parallelism.",
+    "validation_gates": "Rootsource-safety+GO, once-only originalcapture, saveddata/independentadmission, then coherent native/public/actualinstalled completeSDK/scalarSIMD/workers1,4/default1, trueexport/defaultdispatch, genuinefourprofiles and fixedone-thread originalperformance."
+  },
+  "benchmark_cases": [
+    {
+      "id": "gray-u8-C",
+      "shape": [
+        256,
+        257
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "r": 32,
+      "c": 33,
+      "width": 16,
+      "height": 17,
+      "code": 0,
+      "alpha": 0.5
+    },
+    {
+      "id": "RGB-f32-F",
+      "shape": [
+        128,
+        129,
+        3
+      ],
+      "dtype": "float32",
+      "layout": "F",
+      "r": 3,
+      "c": 5,
+      "width": 16,
+      "height": 8,
+      "code": 170,
+      "alpha": 0.5
+    },
+    {
+      "id": "RGB-f64-reverse-wrap",
+      "shape": [
+        128,
+        129,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "reverse",
+      "r": -7,
+      "c": -8,
+      "width": 32,
+      "height": 16,
+      "code": 85,
+      "alpha": 0.5
+    },
+    {
+      "id": "RGB-f64-C-large",
+      "shape": [
+        512,
+        513,
+        3
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "r": 128,
+      "c": 129,
+      "width": 64,
+      "height": 65,
+      "code": 255,
+      "alpha": 0.5
+    }
+  ],
+  "benchmark_method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "allocation_inclusive": true,
+    "retain_all_losses": true,
+    "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT"
+  },
+  "unassessed": [
+    "unbounded allocations/forged storage/concurrent mutation/arbitrary protocol code",
+    "longdouble padding/platform rules and signaling-NaN/trapping/unmasked FP contexts",
+    "full dtype/scalar-promotion/eventful FP parity remains unmeasured until rootGO",
+    "Windows/default-int/intp and unsupported standalone SIMD/worker/fullSDK domains"
+  ],
+  "original_calls": 0,
+  "native_calls": 0,
+  "helper_calls": 0,
+  "timed_batches": 0,
+  "unbound": {
+    "source_capture_GO": null,
+    "original_admission": null,
+    "native_source": null,
+    "genuine_product": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "performance_GO": null
+  },
+  "next_gate": "Root independent source/safety review; freeze actual source/runtime/observer/fullFP/captureprefix and GO before any original. Source/protocol observations notgoldens and no API/native completion credit."
+}

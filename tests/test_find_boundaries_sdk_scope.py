@@ -20,10 +20,12 @@ def test_find_boundaries_sdk_source_closure():
     driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'))
     for name,pin in c['source_canonical_pins'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
-        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp'):raw=driver['layout_predecessor'](name,raw)
+        from tools.mark_lbp_fp_context import predecessor_bytes
+        raw=predecessor_bytes(ROOT,name,raw,canonical=True)
+        if name in ('src/find_boundaries.cpp','tests/cmake_consumer/find_boundaries_consumer.hpp'):raw=driver['layout_predecessor'](name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'))
         assert hashlib.sha256(raw).hexdigest()==previous['source_canonical_pins'][name]
 
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+        assert hashlib.sha256(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes(),canonical=True)).hexdigest()==pin,name
     assert c['installed_target']=='skimagexx::skimagexx'
     assert set(c['required_sources'])=={'tests/cmake_consumer/find_boundaries_consumer.hpp','tests/fixtures/find_boundaries_originals_v1.hpp'}
     assert c['proofs']['normal']==c['proofs']['runtime_disabled']==c['proofs']['compiler_scalar']==c['proofs']['sanitize']==532320

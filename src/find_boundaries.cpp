@@ -5,6 +5,10 @@
 #include <cstring>
 #include <limits>
 #include <type_traits>
+#include <cfenv>
+#if defined(__GNUC__) && defined(__x86_64__)
+#include <emmintrin.h>
+#endif
 
 namespace skimagexx::detail {
 namespace {
@@ -73,6 +77,135 @@ template<class T,bool Boolean=false>T load(const ComponentsView& view,const Posi
     if constexpr(Boolean)result=result!=0;
     return result;
 }
+// The source gray morphology stages typed data through binary64, then
+// stores back to the label dtype. Full rectangular footprints run one axis
+// at a time and store after EVERY axis. A generated dtype-max background can
+// therefore change at an intermediate store; integer-only extrema are not an
+// equivalent replacement for ordinary wide outer mode.
+#if defined(__GNUC__) && defined(__x86_64__)
+template<class T>double wide_source_load(T value) {
+    static_assert(sizeof(T)==8);
+    if constexpr(std::is_signed_v<T>)
+        return _mm_cvtsd_f64(_mm_cvtsi64_sd(_mm_setzero_pd(),value));
+    else {
+        if(value<=std::uint64_t(std::numeric_limits<std::int64_t>::max()))
+            return _mm_cvtsd_f64(_mm_cvtsi64_sd(_mm_setzero_pd(),std::int64_t(value)));
+        // GCC's ordinary uint64->double conversion: retain the discarded bit
+        // before scaling by two. This is a source conversion, not a narrowed
+        // label representation; original T words remain separately owned.
+        const auto half=std::int64_t((value>>1)|(value&1));
+        const auto converted=_mm_cvtsi64_sd(_mm_setzero_pd(),half);
+        return _mm_cvtsd_f64(_mm_add_sd(converted,converted));
+    }
+}
+template<class T>T wide_source_store(double value) {
+    static_assert(sizeof(T)==8);
+    const auto scalar=_mm_set_sd(value);
+    if constexpr(std::is_signed_v<T>)
+        return _mm_cvttsd_si64(scalar);
+    else {
+        // Spell the baseline x86_64 cast without an undefined C++ conversion.
+        // Out-of-range generated sentinels retain the conversion's invalid
+        // flag/result, rather than saturation, truncation to32bit or FP masks.
+        constexpr double high=0x1p63;
+        if(value<high)return std::uint64_t(_mm_cvttsd_si64(scalar));
+        return std::uint64_t(_mm_cvttsd_si64(_mm_sub_sd(scalar,_mm_set_sd(high))))^(std::uint64_t{1}<<63);
+    }
+}
+
+template<class T>std::vector<T> wide_source_extrema(const std::vector<T>& input,
+    const Shape& shape,const std::vector<Delta>& footprint,bool full,bool minimum) {
+    const auto strides=[&] {
+        std::vector<std::ptrdiff_t> result(shape.size());std::ptrdiff_t step=1;
+        for(auto d=shape.size();d-->0;){result[d]=step;step*=std::ptrdiff_t(shape[d]);}
+        return result;
+    }();
+    auto current=input;std::vector<T> next(input.size());
+    const auto passes=full?shape.size():std::size_t{1};
+    for(std::size_t axis=0;axis<passes;++axis) {
+        for(std::size_t i=0;i<input.size();++i) {
+            Position center{},point{};position_of(i,shape,center);
+            double result=0.;bool first=true;
+            auto visit=[&] {
+                const auto value=wide_source_load(current[std::size_t(offset_of(point,strides))]);
+                if(first){result=value;first=false;}
+                else if(minimum?value<result:value>result)result=value;
+            };
+            if(full) {
+                // Radius one, origin zero, reflect endpoint duplicates.
+                // Typed current/next interchange is the scipy per-axis store.
+                for(int delta=-1;delta<=1;++delta) {
+                    point=center;
+                    point[axis]=delta<0?(center[axis]?center[axis]-1:0):
+                        delta>0?std::min(center[axis]+1,shape[axis]-1):center[axis];
+                    visit();
+                }
+            }else for(const auto& delta:footprint) {
+                for(std::size_t d=0;d<shape.size();++d)
+                    point[d]=delta[d]<0?(center[d]?center[d]-1:0):
+                        delta[d]>0?std::min(center[d]+1,shape[d]-1):center[d];
+                visit();
+            }
+            next[i]=wide_source_store<T>(result);
+        }
+        current.swap(next);
+    }
+    return current;
+}
+#endif
+
+template<class T>bool wide_source_outer(const ComponentsView& view,
+    const FindBoundaryParameters& parameters,std::uint8_t* output,
+    const std::vector<std::ptrdiff_t>& output_strides,std::size_t size) {
+#if defined(__GNUC__) && defined(__x86_64__)
+    // The new rounding-sensitive route is source-only pending actual GNUx64
+    // cast-ABI/FP validation. Preserve unsupported round/platform refusal;
+    // do not modify caller controls or normalize output state.
+    // False carries no original scalar value/type. Full-width NumPy scalar
+    // comparison promotion cannot be reconstructed from that lost metadata.
+    if(!parameters.background_representable)return false;
+    const auto control=_mm_getcsr();
+    if(std::fegetround()!=FE_TONEAREST || (control&(3u<<13)) ||
+       (control&0x1f80u)!=0x1f80u)return false;
+    const auto rank=view.shape.size();
+    const auto near=neighbors(rank,parameters.connectivity);
+    const auto full=neighbors(rank,unsigned(rank));
+    // Charge actual source extrema work, including all separable typed axes.
+    const auto visits=(parameters.connectivity==rank?6*rank:2*near.size())+6*rank;
+    if(size>find_boundaries_max_neighbor_visits/visits)return false;
+    std::vector<T> original(size);Position point{};
+    for(std::size_t i=0;i<size;++i){position_of(i,view.shape,point);original[i]=load<T>(view,point);}
+    // Source first computes ordinary dilation!=erosion, then the full
+    // footprint foreground/background expression, with original typed labels.
+    const auto low=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,true);
+    const auto high=wide_source_extrema(original,view.shape,near,parameters.connectivity==rank,false);
+    const auto full_high=wide_source_extrema(original,view.shape,full,true,false);
+    auto inverted=original;
+    const auto background=[&](T value){return parameters.background_representable &&
+        static_cast<std::uint64_t>(value)==parameters.background_bits;};
+    for(auto& value:inverted)if(background(value))value=std::numeric_limits<T>::max();
+    const auto full_low=wide_source_extrema(inverted,view.shape,full,true,true);
+    // Source final != and Boolean ufuncs clear prior arithmetic error status
+    // before their integer loops. Preserve inexact and caller controls, and
+    // avoid a libc clear when NumPy's error-status check would do nothing.
+    constexpr int comparison_errors=FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW|FE_INVALID;
+    if(std::fetestexcept(comparison_errors))std::feclearexcept(comparison_errors);
+    // The dependent typed morphology stages stay serial to expose source FP
+    // effects on the caller; the existing positive budget was captured once.
+    // All writes follow complete input/geometry/capacity validation and stages.
+    for(std::size_t i=0;i<size;++i) {
+        position_of(i,view.shape,point);
+        const bool bg=background(original[i]);
+        const bool adjacent=(full_high[i]!=full_low[i])&&!bg;
+        output[offset_of(point,output_strides)]=std::uint8_t((high[i]!=low[i])&&(bg||adjacent));
+    }
+    return true;
+#else
+    (void)view;(void)parameters;(void)output;(void)output_strides;(void)size;
+    return false; // No unvalidated Windows/nonGNU cast substitution.
+#endif
+}
+
 // Independent 2D interior pixels: caller proved disjoint storage; typed
 // pointer loads are admitted only for aligned positive C-contiguous input.
 // Borders and arbitrary-stride domains stay in the original scalar walker.
@@ -190,7 +323,8 @@ template<class T,bool Boolean=false>bool run(const ComponentsView& view,
     }
     if constexpr(sizeof(T)==8) {
         if(parameters.mode!=FindBoundaryMode::subpixel) {
-            if(parameters.mode==FindBoundaryMode::outer)return false;
+            if(parameters.mode==FindBoundaryMode::outer)
+                return wide_source_outer<T>(view,parameters,output,strides,input_count);
             // New value boundary: reject the entire unsupported rounded domain
             // BEFORE writing any output, rather than rounding original labels.
             Position p{};

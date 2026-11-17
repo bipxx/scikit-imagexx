@@ -1,6 +1,6 @@
 # Current public-matmul VI initial comparison
 
-Status: [root scoped performance admission](../../coverage/evidence/vi-public-matmul-minimum-performance-root-admission-v1.json) passed; main delivery is pending.
+Status: [root scoped performance admission](../../coverage/evidence/vi-public-matmul-minimum-performance-root-admission-v1.json) passed and is included in the validated281-path main increment.
 
 [Run43979924366](https://github.com/bipxx/scikit-imagexx/actions/runs/43979924366) measured qualified source `aaea1b060e8acb4df08e855a6574e1449416ee42` using controller `166ccd4801e618f9522832b0066bcc45e1649140` and genuine minimum product14272412077 from producer43949036485. The [whole-product root admission](../../coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json) records exact four-profile/three-stager scope.
 
@@ -25,4 +25,4 @@ The mandatory first cohort and each measurement preflight execute strict output-
 - [Current-host F1 receipt](helper-receipt.json).
 - [Pre-preparation capacity receipt](preparation-capacity.json).
 
-The result artifact was authenticated and extracted once in memory. Its transport archive is unavailable locally; retained raw products and concise receipts carry the evidence. Root performance admission passed; final281 source projection and main delivery remain pending.
+The result artifact was authenticated and extracted once in memory. Its transport archive is unavailable locally; retained raw products and concise receipts carry the evidence. [Validated main source projection](../../coverage/evidence/current281-main-source-projection-v1.json) matches the qualified candidate. This281-path increment includes these results; commit/push/remote closeout is recorded separately.

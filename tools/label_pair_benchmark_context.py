@@ -30,5 +30,5 @@ def validate_source_closure(root, contract):
         predecessors[path]=raw
     for path,pin in contract['source_closure'].items():
         raw=predecessors[path]if path in predecessors else(root/path).read_bytes().replace(b'\r\n',b'\n')
-        if path=='src/label_pair_metrics.cpp':raw=helper.predecessor_bytes(root,path,raw)
+        if path in ('src/label_pair_metrics.cpp','python/skimagexx/metrics.py'):raw=helper.predecessor_bytes(root,path,raw)
         assert hashlib.sha256(raw).hexdigest()==pin,path

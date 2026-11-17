@@ -35,7 +35,8 @@ def test_find_boundaries_prospective_scope_and_bounds():
 def test_find_boundaries_source_freeze_and_pure_boundary():
     matrix=json.loads(CONTRACT.read_bytes())
     for path,pin in matrix['source_freeze'].items():
-        assert hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+        from tools.mark_lbp_fp_context import predecessor_bytes
+        assert hashlib.sha256(predecessor_bytes(ROOT,path,(ROOT/path).read_bytes().replace(b'\r\n',b'\n'),canonical=True)).hexdigest()==pin
     for path in ('tests/find_boundaries_contract.py','tests/find_boundaries_observer.py'):
         for node in ast.parse((ROOT/path).read_bytes()).body:
             if isinstance(node,(ast.Import,ast.ImportFrom)):

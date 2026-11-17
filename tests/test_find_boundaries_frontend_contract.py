@@ -26,16 +26,18 @@ def test_find_boundaries_frontend_source_closure():
     assert set(value['source_canonical_pins'])==set(previous['source_canonical_pins'])
     for name,pin in value['source_canonical_pins'].items():
         raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        from tools.mark_lbp_fp_context import predecessor_bytes
+        raw=predecessor_bytes(ROOT,name,raw,canonical=True)
         if name=='tests/test_find_boundaries_public.py':
             for fragment in binding['public_test_inverse']:
                 current,old=fragment['current'].encode(),fragment['predecessor'].encode()
                 assert current and raw.count(current)==1;raw=raw.replace(current,old,1)
             assert hashlib.sha256(raw).hexdigest()==previous['source_canonical_pins'][name]
         elif name=='src/find_boundaries.cpp':
-            assert hashlib.sha256(driver['layout_predecessor'](name,raw)).hexdigest()==previous['source_canonical_pins'][name]
+            assert hashlib.sha256(driver['layout_predecessor'](name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'))).hexdigest()==previous['source_canonical_pins'][name]
         else:assert pin==previous['source_canonical_pins'][name]
     for name,pin in value['source_canonical_pins'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin
+        assert hashlib.sha256(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes().replace(b'\r\n',b'\n'),canonical=True)).hexdigest()==pin
     assert value['reference_cases']==32 and value['admitted_returns_per_profile']==28
     assert value['source_error_rows_per_profile']==3 and value['rounded_control_only_per_profile']==1
 
