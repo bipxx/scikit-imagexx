@@ -62,7 +62,66 @@ std::vector<std::ptrdiff_t> ordinary_strides(const ComponentsView& input,bool gr
     std::vector<std::ptrdiff_t> out(input.shape.size()+gray);std::ptrdiff_t step=gray?3:1;if(gray)out.back()=1;
     for(auto axis:axes){out[axis]=step;step*=input.shape[axis];}return out;
 }
-template<class T>void layout(std::vector<T>& data,const std::vector<std::size_t>& shape,const std::vector<std::ptrdiff_t>& strides){if(strides==cstrides(shape))return;auto old=data;for(std::size_t i=0;i<data.size();++i)data[offset(i,shape,strides)]=old[i];}
+template<class T>void layout(std::vector<T>& data,const std::vector<std::size_t>& shape,const std::vector<std::ptrdiff_t>& strides){
+    if(data.empty()||strides==cstrides(shape))return;
+    auto old=data;
+    if(shape.size()==3&&strides[2]==1&&strides[0]==std::ptrdiff_t(shape[2])&&strides[1]==std::ptrdiff_t(shape[0]*shape[2])){
+        // Gray F-order replication stores adjacent channel triples. Reorder
+        // only the already-converted words, in small cache-resident tiles.
+        // Conversion order and all subsequent callback phases are unchanged.
+        constexpr std::size_t tile=32;
+        const auto height=shape[0],width=shape[1],channels=shape[2];
+        for(std::size_t row=0;row<height;row+=tile)for(std::size_t column=0;column<width;column+=tile)
+            for(std::size_t c=column;c<std::min(column+tile,width);++c)
+                for(std::size_t r=row;r<std::min(row+tile,height);++r){
+                    const auto source=(r*width+c)*channels,destination=(c*height+r)*channels;
+                    for(std::size_t channel=0;channel<channels;++channel)data[destination+channel]=old[source+channel];
+                }
+        return;
+    }
+    std::array<std::size_t,4> position{};std::ptrdiff_t destination=0;
+    for(std::size_t i=0;i<data.size();++i){
+        data[std::size_t(destination)]=old[i];
+        if(i+1==data.size())break;
+        for(auto d=shape.size();d-->0;){
+            if(++position[d]<shape[d]){destination+=strides[d];break;}
+            position[d]=0;destination-=std::ptrdiff_t(shape[d]-1)*strides[d];
+        }
+    }
+}
+// Preserve logical C-order conversion, including signed/swapped views, while
+// copying whole contiguous suffixes. The general walker advances byte strides
+// instead of dividing a flat index once per source word.
+void pack_image(const ComponentsView& input,unsigned char* raw,std::size_t n,std::size_t bytes){
+    std::size_t block=1,outer_rank=input.shape.size();
+    if(!input.swap)for(auto d=input.shape.size();d-->0;){
+        if(input.shape[d]>1&&input.strides[d]!=std::ptrdiff_t(block*bytes))break;
+        block*=input.shape[d];outer_rank=d;
+    }
+    if(block>1){
+        std::array<std::size_t,4> position{};std::ptrdiff_t source=0;
+        for(std::size_t i=0;i<n;i+=block){
+            std::memcpy(raw+i*bytes,static_cast<const unsigned char*>(input.data)+source,block*bytes);
+            if(i+block==n)break;
+            for(auto d=outer_rank;d-->0;){
+                if(++position[d]<input.shape[d]){source+=input.strides[d];break;}
+                position[d]=0;source-=std::ptrdiff_t(input.shape[d]-1)*input.strides[d];
+            }
+        }
+        return;
+    }
+    std::array<std::size_t,4> position{};std::ptrdiff_t source=0;
+    for(std::size_t i=0;i<n;++i){
+        const auto* pixel=static_cast<const unsigned char*>(input.data)+source;
+        if(input.swap)for(std::size_t b=0;b<bytes;++b)raw[i*bytes+b]=pixel[bytes-1-b];
+        else std::memcpy(raw+i*bytes,pixel,bytes);
+        if(i+1==n)break;
+        for(auto d=input.shape.size();d-->0;){
+            if(++position[d]<input.shape[d]){source+=input.strides[d];break;}
+            position[d]=0;source-=std::ptrdiff_t(input.shape[d]-1)*input.strides[d];
+        }
+    }
+}
 template<class T>std::vector<T> palette(const MarkColor& c,std::size_t pixels,std::size_t channels){
     const auto size=count(c.shape);if(c.values.size()!=size)throw std::invalid_argument("mark color storage/shape mismatch");
     if(c.shape.size()>2||(c.shape.size()&&c.shape.back()!=1&&c.shape.back()!=channels)||(c.shape.size()==2&&c.shape[0]!=1&&c.shape[0]!=pixels))throw std::invalid_argument("mark color cannot broadcast to selected pixels");
@@ -70,6 +129,37 @@ template<class T>std::vector<T> palette(const MarkColor& c,std::size_t pixels,st
 }
 template<class T>void paint(T* out,const MarkImage& image,const std::vector<std::uint8_t>& mask,const MarkColor& color){
     const auto channels=image.shape.back();const auto selected=std::size_t(std::count(mask.begin(),mask.end(),std::uint8_t(1)));const auto values=palette<T>(color,selected,channels);std::size_t pixel=0;
+    if(mask.empty())return; // Keep palette validation/conversion before return.
+    // Pixel order remains logical C-order: a two-dimensional palette advances
+    // only for selected pixels, even when the owned output has F-axis order.
+    const auto columns=color.shape.empty()?1:color.shape.back();
+    const bool rows=color.shape.size()==2&&color.shape[0]!=1;
+    auto store=[&](T* destination){
+        const auto* value=values.data()+(rows?pixel*columns:0);
+        for(std::size_t c=0;c<channels;++c)destination[c*image.strides.back()]=value[columns==1?0:c];
+        ++pixel;
+    };
+    if(image.strides==cstrides(image.shape)){
+        for(std::size_t i=0;i<mask.size();++i)if(mask[i])store(out+i*channels);
+        return;
+    }
+    if(!rows&&image.shape.size()==3&&image.strides[2]==1&&image.strides[0]==std::ptrdiff_t(channels)&&image.strides[1]==std::ptrdiff_t(image.shape[0]*channels)){
+        // A uniform palette has no selected-row ordering dependency. Walk the
+        // physical F-pixel order so output writes remain contiguous; a palette
+        // with one row per selected pixel retains the logical C-order below.
+        const auto height=image.shape[0],width=image.shape[1];
+        for(std::size_t c=0;c<width;++c)for(std::size_t r=0;r<height;++r)
+            if(mask[r*width+c])store(out+(c*height+r)*channels);
+        return;
+    }
+    if(image.shape.size()==3){
+        std::size_t i=0;
+        for(std::size_t r=0;r<image.shape[0];++r){
+            auto* row=out+r*image.strides[0];
+            for(std::size_t c=0;c<image.shape[1];++c,++i)if(mask[i])store(row+c*image.strides[1]);
+        }
+        return;
+    }
     for(std::size_t i=0;i<mask.size();++i)if(mask[i]){for(std::size_t c=0;c<channels;++c){const auto column=color.shape.empty()||color.shape.back()==1?0:c;const auto row=color.shape.size()==2&&color.shape[0]!=1?pixel:0;out[offset(i*channels+c,image.shape,image.strides)]=values[row*(color.shape.empty()?1:color.shape.back())+column];}++pixel;}
 }
 }
@@ -81,12 +171,19 @@ MarkImage mark_boundaries_prepare(const ComponentsView& input,bool subpixel,Mark
     const bool gray=input.shape.size()==2;MarkImage out;out.shape=input.shape;if(gray)out.shape.push_back(3);count(out.shape);
     out.type=input.half||input.type==PixelType::float32?PixelType::float32:PixelType::float64;
     const auto bytes=input.half?2:pixel_size(input.type);std::vector<std::uint64_t> packed((n*bytes+7)/8);auto* raw=reinterpret_cast<unsigned char*>(packed.data());
-    for(std::size_t i=0;i<n;++i){const auto* p=static_cast<const unsigned char*>(input.data)+source_offset(i,input);for(std::size_t b=0;b<bytes;++b)raw[i*bytes+b]=p[input.swap?bytes-1-b:b];}
-    if(out.type==PixelType::float32){out.f32.resize(gray?n*3:n);std::vector<float> scalar(n);
-        if(input.half)for(std::size_t i=0;i<n;++i){std::uint16_t bits;std::memcpy(&bits,raw+2*i,2);scalar[i]=detail::decode_half(bits);}
-        else if(n)std::memcpy(scalar.data(),raw,n*sizeof(float));
-        for(std::size_t i=0;i<out.f32.size();++i)out.f32[i]=scalar[gray?i/3:i];
-    }else{std::vector<double> scalar(n);for(std::size_t i=0;i<n;){const auto span=std::min(std::size_t(65536),n-i);convert_into(raw+i*bytes,scalar.data()+i,span,input.type,PixelType::float64);i+=span;}out.f64.resize(gray?n*3:n);for(std::size_t i=0;i<out.f64.size();++i)out.f64[i]=scalar[gray?i/3:i];}
+    pack_image(input,raw,n,bytes);
+    if(out.type==PixelType::float32){out.f32.resize(gray?n*3:n);
+        if(!gray&&!input.half){if(n)std::memcpy(out.f32.data(),raw,n*sizeof(float));}
+        else for(std::size_t i=0;i<n;++i){
+            float value;if(input.half){std::uint16_t bits;std::memcpy(&bits,raw+2*i,2);value=detail::decode_half(bits);}
+            else std::memcpy(&value,raw+i*sizeof(float),sizeof(float));
+            if(gray){out.f32[3*i]=value;out.f32[3*i+1]=value;out.f32[3*i+2]=value;}else out.f32[i]=value;
+        }
+    }else{
+        out.f64.resize(gray?n*3:n);std::vector<double> scalar(gray?n:0);auto* converted=gray?scalar.data():out.f64.data();
+        for(std::size_t i=0;i<n;){const auto span=std::min(std::size_t(65536),n-i);convert_into(raw+i*bytes,converted+i,span,input.type,PixelType::float64);i+=span;}
+        if(gray)for(std::size_t i=0;i<n;++i){out.f64[3*i]=scalar[i];out.f64[3*i+1]=scalar[i];out.f64[3*i+2]=scalar[i];}
+    }
     if(subpixel){if(!n)throw std::invalid_argument("mark subpixel requires nonempty spatial axes");auto target=out.shape;for(std::size_t d=0;d+1<target.size();++d)target[d]=2*target[d]-1;count(target);if(out.type==PixelType::float32)out.f32=zoom(out.f32,out.shape,target,profile);else out.f64=zoom(out.f64,out.shape,target,profile);out.shape=target;out.strides=cstrides(target);}
     else{out.strides=ordinary_strides(input,gray);if(out.type==PixelType::float32)layout(out.f32,out.shape,out.strides);else layout(out.f64,out.shape,out.strides);}
     return out;
@@ -104,7 +201,18 @@ MarkMask mark_boundaries_mask(const ComponentsView& labels,const detail::FindBou
 }
 MarkMask mark_boundaries_outline(const MarkMask& mask){
     if(mask.shape.size()!=2)throw std::invalid_argument("outline footprint rank requires2D labels");const auto h=mask.shape[0],w=mask.shape[1];MarkMask out{mask.shape,std::vector<std::uint8_t>(mask.values.size())};
-    for(std::size_t r=0;r<h;++r)for(std::size_t c=0;c<w;++c)for(int dr=-1;dr<=1;++dr)for(int dc=-1;dc<=1;++dc){const auto rr=std::clamp(std::ptrdiff_t(r)+dr,std::ptrdiff_t(0),std::ptrdiff_t(h-1)),cc=std::clamp(std::ptrdiff_t(c)+dc,std::ptrdiff_t(0),std::ptrdiff_t(w-1));out.values[r*w+c]|=mask.values[std::size_t(rr)*w+std::size_t(cc)];}return out;
+    // The square Boolean footprint is separable. No arithmetic or conversion
+    // is introduced; repeated border samples retain the same Boolean OR.
+    std::vector<std::uint8_t> horizontal(mask.values.size());
+    for(std::size_t r=0;r<h;++r)for(std::size_t c=0;c<w;++c){
+        const auto left=c?c-1:0,right=std::min(c+1,w-1),row=r*w;
+        horizontal[row+c]=mask.values[row+left]|mask.values[row+c]|mask.values[row+right];
+    }
+    for(std::size_t r=0;r<h;++r){
+        const auto above=(r?r-1:0)*w,below=std::min(r+1,h-1)*w,row=r*w;
+        for(std::size_t c=0;c<w;++c)out.values[row+c]=horizontal[above+c]|horizontal[row+c]|horizontal[below+c];
+    }
+    return out;
 }
 void mark_boundaries_paint_into(void* output,PixelType type,const std::vector<std::size_t>& shape,const std::vector<std::ptrdiff_t>& strides,std::size_t capacity,const MarkMask& mask,const MarkColor& color){
     if(capacity>limit||shape.empty()||shape.size()!=mask.shape.size()+1||!std::equal(mask.shape.begin(),mask.shape.end(),shape.begin())||strides.size()!=shape.size()||count(shape)>capacity)throw std::invalid_argument("mark image/label shapes differ");
