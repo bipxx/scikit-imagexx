@@ -58,11 +58,31 @@ template<class T>FloodMask flood(const T* image,const FloodGeometry& g,bool tole
     // One padded typed copy permits constant-address neighbor reads. Border
     // payload is never read: flags2 is checked before any working-image load.
     std::vector<T> working(static_cast<std::size_t>(count));
-    std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;
-    for(I k=0;k<logical;++k){
-        out.storage[mask_offset]=0;
-        std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));
-        advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);
+    const auto axis=g.fortran?std::size_t(0):g.shape.size()-1;
+    if(g.strides[axis]==I(sizeof(T))&&out.strides[axis]==1){
+        // Only private byte-copy/flag initialization changes order. Copy each
+        // contiguous C/F line once; the ordered queue below is unchanged.
+        const auto width=g.shape[axis],lines=logical/width;
+        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;
+        for(I line=0;line<lines;++line){
+            std::fill_n(out.storage.data()+mask_offset,std::size_t(width),std::uint8_t(0));
+            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,
+                        std::size_t(width)*sizeof(T));
+            if(line+1<lines)for(std::size_t a=g.shape.size();a-->0;){
+                if(a==axis)continue;
+                if(++index[a]<g.shape[a]){input_offset+=g.strides[a];mask_offset+=out.strides[a];break;}
+                index[a]=0;
+                input_offset-=(g.shape[a]-1)*g.strides[a];
+                mask_offset-=(g.shape[a]-1)*out.strides[a];
+            }
+        }
+    }else{
+        std::vector<I> index(g.shape.size(),0);I input_offset=0,mask_offset=out.origin;
+        for(I k=0;k<logical;++k){
+            out.storage[mask_offset]=0;
+            std::memcpy(working.data()+mask_offset,reinterpret_cast<const char*>(image)+input_offset,sizeof(T));
+            advance(index,g.shape,g.strides,out.strides,input_offset,mask_offset);
+        }
     }
     // Upstream stable squared-distance order, then unconditionally drops first
     // offset (also when an explicit footprint omits its logical center).
