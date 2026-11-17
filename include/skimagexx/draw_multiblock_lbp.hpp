@@ -2,6 +2,7 @@
 #include <skimagexx/crop.hpp>
 #include <skimagexx/convert.hpp>
 #include <cstdint>
+#include <functional>
 #include <vector>
 namespace skimagexx {
 // Numeric boundary: ordinary live POD allocation, byte strides, no forged spans.
@@ -47,4 +48,16 @@ struct MultiblockLbpFloatView { CropView image; bool swapped=false; };
 unsigned multiblock_lbp_binary(const MultiblockLbpFloatView&,const MultiblockLbpFloatView&,
     const MultiblockLbpFloatView& output,bool add);
 void multiblock_lbp_assign(const MultiblockLbpFloatView& destination,const MultiblockLbpFloatView& source);
+// Batched public phase path for native-endian RGB binary32/64 storage and
+// three-channel binary64 colors. Each image multiply, color multiply, add and
+// assignment finishes before the next phase/block. Error delivery is live on
+// the caller thread, and can throw before subsequent phases run. No FENV state
+// is seeded or restored here. first_complement is the already evaluated Python
+// first-block expression; later blocks evaluate the same scalar subtraction.
+// Views/colors must remain alive throughout the call. No retained pointers.
+void multiblock_lbp_apply(const MultiblockLbpFloatView& image,
+    const MultiblockLbpParameters&,const MultiblockLbpFloatView& greater,
+    const MultiblockLbpFloatView& less,double first_complement,
+    bool first_float32,bool capture_workers,
+    const std::function<void(unsigned,bool)>& deliver);
 }
