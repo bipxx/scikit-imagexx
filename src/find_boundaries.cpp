@@ -124,18 +124,24 @@ template<class T>std::vector<T> wide_source_extrema(const std::vector<T>& input,
     const auto passes=full?shape.size():std::size_t{1};
     if(shape.size()==2) {
         const auto height=shape[0],width=shape[1];
+        std::vector<double> converted(input.size());
         for(std::size_t axis=0;axis<passes;++axis) {
+            // The immutable typed pass includes every center in its footprint.
+            // Convert each word once; repeated neighbor conversions add no new
+            // sticky flags under the admitted nearest/masked control state.
+            // Keep every original typed store and axis interchange below.
+            for(std::size_t i=0;i<current.size();++i)converted[i]=wide_source_load(current[i]);
             for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x) {
                 const auto index=y*width+x;
                 double result=0.;bool first=true;
                 auto visit=[&](std::size_t source) {
-                    const auto value=wide_source_load(current[source]);
+                    const auto value=converted[source];
                     if(first){result=value;first=false;}
                     else if(minimum?value<result:value>result)result=value;
                 };
                 if(full) {
-                    // Keep the source axis order, three conversions and typed
-                    // store per pass; only coordinate decoding is removed.
+                    // Keep source axis/neighbor order and the typed store per
+                    // pass; the immutable conversion pool is reused above.
                     const auto coordinate=axis?x:y,extent=axis?width:height;
                     const auto step=axis?std::size_t{1}:width;
                     visit(index-(coordinate?step:0));
