@@ -34,5 +34,18 @@ inline void draw_multiblock_lbp_consumer(){
     assert(multiblock_lbp_binary({{&inf,{},{},8},false},{{&zero,{},{},8},false},{{&invalid_result,{},{},8},false},false)==8);assert(std::isnan(invalid_result));
     std::uint16_t half_input[2]={0x3c00,0x4000},half_factor=0x3800,half_output[2]={0,0};
     assert(multiblock_lbp_binary({{half_input,{2},{2},2},false},{{&half_factor,{},{},2},false},{{half_output,{2},{2},2},false},false)==0);assert(half_output[0]==0x3800&&half_output[1]==0x3c00);
+    // The additive batched entry keeps every phase and live overlapping block
+    // update, while accepting an actual destination and explicit scalar plan.
+    p=MultiblockLbpParameters{};p.r=-3;p.c=-3;p.width=p.height=2;p.code=170;p.less={{0,0,0},{3}};
+    double greater[3]={1,1,1},less[3]={0,0,0};
+    MultiblockLbpFloatView gv{{greater,{3},{8},8},false},lv{{less,{3},{8},8},false};
+    for(int workers:{1,4}){
+        set_num_threads(workers);auto expected=draw_multiblock_lbp(in,p);
+        std::vector<float> actual(27,0);
+        MultiblockLbpFloatView target{{actual.data(),{3,3,3},{36,12,4},4},false};
+        unsigned callbacks=0;
+        multiblock_lbp_apply(target,p,gv,lv,.5,true,true,[&](unsigned,bool){++callbacks;});
+        assert(callbacks==0&&actual==expected.float32&&get_num_threads()==workers);
+    }
     set_num_threads(1);std::cout<<"PASS owning-copy/gray/normalization/ordered-physical-overlap/scalar-SSE2/budgets/byteswap/stride/broadcast/overflow invariants; NOT original parity\n";
 }
