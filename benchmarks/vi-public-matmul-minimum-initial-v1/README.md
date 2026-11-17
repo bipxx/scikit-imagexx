@@ -25,4 +25,4 @@ The mandatory first cohort and each measurement preflight execute strict output-
 - [Current-host F1 receipt](helper-receipt.json).
 - [Pre-preparation capacity receipt](preparation-capacity.json).
 
-The result artifact was authenticated and extracted once in memory. Its transport archive is unavailable locally; retained raw products and concise receipts carry the evidence. [Validated main source projection](../../coverage/evidence/current281-main-source-projection-v1.json) matches the qualified candidate. This281-path increment includes these results; commit/push/remote closeout is recorded separately.
+The result artifact was authenticated and extracted once in memory. Its transport archive is unavailable locally; retained raw products and concise receipts carry the evidence. [Validated main source projection](../../coverage/evidence/current281-main-source-projection-v1.json) matches the qualified candidate. These results are delivered in [mainf62c97dc](https://github.com/bipxx/scikit-imagexx/commit/f62c97dc653e95ce88de83a764afbcf9a3377106); [delivery and cleanup closeout](../../coverage/evidence/current281-main-delivery-v1.json) is verified.

@@ -1,0 +1,84 @@
+{
+  "schema": "current281-main-delivery-and-checkout-closeout-v1",
+  "status": "PASS_MAIN281_DELIVERED_AND_COMPLETED_CHECKOUT_RETIRED",
+  "passed": true,
+  "root_accepted": true,
+  "source_commit": "f62c97dc653e95ce88de83a764afbcf9a3377106",
+  "remote_main_observed": "f62c97dc653e95ce88de83a764afbcf9a3377106",
+  "source_commit_url": "https://github.com/bipxx/scikit-imagexx/commit/f62c97dc653e95ce88de83a764afbcf9a3377106",
+  "qualified_source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+  "controller_branch_preserved": "measure/vi-public-matmul-AA-initial-v1",
+  "controller_commit": "166ccd4801e618f9522832b0066bcc45e1649140",
+  "controller_not_shipped": "Completed boundmeasurementmetadata preserved onbranch; mainretains exactAA UNBOUND defaultcontext.",
+  "API_counts": {
+    "native-partial": 281,
+    "metadata": 3,
+    "upstream-only": 187,
+    "native-class-partial": 5,
+    "exception-metadata-provider": 1
+  },
+  "production_source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+  "gates": {
+    "complete181_source_both": "PASS exactAA4635ordinary+8subtests perretainedPython,normalconftest/44plugins/sourceclosure; reusedonlyafterliteral/raw/index projectionmatched",
+    "private60_and_owningSDK4modes": "PASS retainedsource/runtime scope; privateFP/rawcaller controlsstayseparate frompublicNumPyparity",
+    "genuine4profile_304SDK_3stager": "PASS963868publicXML/304SDK/48corpora/4products+3stagers; exactAA run43949036485",
+    "current_VI4_public_performance": "PASS run43979924366,oneIntel6975P-C minimumhost,fourcases4wins/56samples/8warmupgroups,2.8428–4.6922x; allprovider/successassertion/rawbuffer scope limits retained",
+    "actual_shipping_source": "PASS3452qualifiedGitobjects/3451workingbytefiles/69raw+55canonicalpins; main-only22additions preserved. Failedmerge/rawtransport checks andnarrowcorrections retained",
+    "documents_index_protectedWIP": "PASS current477/29classes/284members,281partialnative/187upstream; allfullcontractboxes unchangedopen; completeCRLF-awarecachedcheck0; userAGENTS/fouruntrackedJSONs/cleanupscript unchanged",
+    "commit_push_remote_and_ancestry": "PASS f62c97dc mergeparentsa12d784f+AA,remoteexact,AAancestor,defaultcontextUNBOUND",
+    "completed_checkout_retirement": "PASS oneNativeGitremove,actual0/path+registrationabsent/811branchheadsunmodified/installedenv+rawproducts retained",
+    "previous_policyblocked_cleanup": "PENDING_MANUAL_USER_ACTION_OUTSIDE_COMPLETED_BOUNDED_FEATURE_GOAL;neverretried"
+  },
+  "receipts": {
+    "genuine": {
+      "path": "coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json",
+      "sha256": "257635900b3dfc09158c48a740a22331abae592f8195e00354abf47d3ef7eb38"
+    },
+    "performance": {
+      "path": "coverage/evidence/vi-public-matmul-minimum-performance-root-admission-v1.json",
+      "sha256": "73d09df085610ce97f200b51f9834279838bf86f7a049f8d163387b0f134527e"
+    },
+    "source_projection": {
+      "path": "coverage/evidence/current281-main-source-projection-v1.json",
+      "sha256": "66d0607694192501de9fcee6c030b8eb39263f0b47b517ae5479c8bd9f62b89d"
+    },
+    "commit_push_remote": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\main281-commit-push-remote-v1.json",
+      "sha256": "2a0514e7c65910cb0fd5d5fd56920ecc3a71c268b17b210b91a75c89b234f4d6"
+    },
+    "checkout_retirement": {
+      "path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\vi-public-matmul-provider-v1\\VI4-current-controller-v1\\checkout-retirement-closeout-v1.json",
+      "sha256": "a5c21ce074596c8af33f4201f39f9bdb3b7c2ea600d1ac4402e282f002b896cd"
+    }
+  },
+  "cleanup": {
+    "removed_path": "D:\\Scratch\\scikit-imagexx-active-worktrees\\current281-main-integration-v1",
+    "tracked_source_files": 3455,
+    "generated_cache_files": 30,
+    "known_logical_bytes_removed": 746965855,
+    "observed_D_free_change_bytes": 754855936,
+    "observed_C_free_change_bytes": -34918400,
+    "physical_allocation_measured": false,
+    "attribution": "Observedglobalvolume changes,notexclusivefileallocation; logicalsizes exclude tinyGitadminmetadata.",
+    "source_reference_worktree_available": false,
+    "branches_commits_retained": 811,
+    "original_prepared154plan": "153retiredpreviously; oldactive9e15baselinecopy remainsprotected. NewlycompletedAA checkout is a separateadditionalretirement.",
+    "retained_baselines": "CurrentgenuineAA extractedsource/product/rawqualification/SDK/core/runtimepool,24existingdependencies,F1/currentbenchmark rawjournals,oldscopedfailure diagnostics,environments andallbranchcommits. No newtransportarchive retained.",
+    "retention_owner_trigger": "Root retains currentbaseline/rawproducts forfutureexactsource consumers untila validatedsuccessor supersedes them andconsumer mapping releases them. Previouslyblockedtargetsremainuser/manualonly."
+  },
+  "scope_limits": [
+    "This closes theaccepted271-to281partialnative-image increment, notfull477API/29class/284member orall-domain/platform/provider coverage.",
+    "FourVIwins areonehost/runtime/four-case allocation-inclusive publiccalls withNumPylog2/matmul computation disclosed; olderhistorical64/MARK/LBP losses retainoriginalsource/host scopes.",
+    "SuccessfulVI4output/fullFP/fullcaller32buffers wereunemitted; reached-runtime strictassertions arecredited withoutinventedrawreconstruction. ActualF1rawcontrols/journals andseparate genuineAA currentrawparity evidenceare retained.",
+    "Old9V45/438 cause/selectedNumPykernel isnotclaimedclosed bythecurrentoperator correction ornewcampaign.",
+    "Oldpolicyblockedarchives/fixtures/dirtysource/baselinecopies stayprotected; no globaldiskcleanup orarchiveavailability claim."
+  ],
+  "terminal_review": {
+    "result": "Validated281image-path source delivered onmain; allmandatorysource/runtime/release/performance/delivery/eligiblecleanup gatesclosed. Onlyfinalmetadata commit/push remainsforthiscloseoutfile.",
+    "avoidable_work": "Originalimport512MiBbound/workercollection mismatch, readerNone-returnreporting bug andinertmetadata schema/spacing assumptions werecorrected narrowly; failedreceipts remainfailed. Actualmergeadd/addworkflow9routepaths andWindowsrawtransport differences werepreservedandresolved toexactqualifiedbytes.",
+    "reuse": "KeptsamefrozenAA/source181both/private60/4SDK andsamegenuine4campaign; reused24deppayloads andallstreamedseals; benchmarkranonce, no favorable retime ornewscience forreporting/merge/closeout.",
+    "observed_costs": "Recovery533.698s; failedfirstimport88.891s; failedreader4.361s; successorreaders40.388schildwall; C3readers0.629s; independentperformancevalidator1.259s; fullphysicalsourceprojection45.946s; othercoordination/metadata costsunknown. No experiments rerun to measurewaste.",
+    "next_owner_trigger": "Boundedgoalcomplete; userhandlesexistingmanualcleanup ifdesired andsetsanyfurtherAPI/domain/optimization scope. No activeagent/job/reader orfreshdispatch remains. Reviewed; no newscientific/processframework requested."
+  },
+  "closeout_metadata_scope": "Thisreceipt records the actualf62c97dc source delivery. The followingdocs-onlycloseout commit mayadvance remoteHEAD withoutchangingthevalidated executable/SDK/qualification/benchmark source projection."
+}
