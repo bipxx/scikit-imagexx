@@ -1,4 +1,4 @@
-name: Packed float64 Lab direct parity
+name: Packed float32 Lab direct parity
 on:
   workflow_dispatch:
     inputs:
@@ -34,5 +34,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: packed-f64-wide-direct-proof
+          name: packed-f32-wide-direct-proof
           path: proof/

@@ -10,10 +10,10 @@ ROOT = Path.cwd()
 SOURCE = ROOT / 'source'
 PROOF = ROOT / 'proof'
 PROOF.mkdir(exist_ok=False)
-BASELINE = 'fc7d10f17382bc56c8b33c2fe5c418fa58f69921'
+BASELINE = 'eb1f37e441b7d1262cb43f2205f39d3fec6c598c'
 NATIVE = 'src/simd_color_avx2.cpp'
-PREVIOUS = '2f845d95a0cfb514469818b27936c06bbcf4680447c14fdb591bc2070b52a8a7'
-CANDIDATE = '1e9c8396f7bbf7c5ad7643ecfd23f3c066fa5724220cc640b64806f159d1c09f'
+PREVIOUS = '1e9c8396f7bbf7c5ad7643ecfd23f3c066fa5724220cc640b64806f159d1c09f'
+CANDIDATE = 'b98b89d70b057a43549f5e4fa075fb38c58cf91780d26df52f7e6d7a90e5153d'
 ORACLE = 'b03ceda43574e3aeee174decd69eb3109f4bd53295cfd2e7854d310024811f9f'
 ROWS = 1539
 EXPECTED_BYTES = 280221993
@@ -106,10 +106,10 @@ int main() {
         assert phase('link-'+name,[CXX,'-fopenmp','-Wl,--gc-sections',oracle,*objs,obj,'-o',p/name])==0
     assert phase('wide-assembly',['objdump','-drwC',p/'candidate.o'])==0
     pinned = ROOT/'diagnostic-cie-wide-local-oracle.cpp'
-    assert sha(pinned.read_bytes()) == 'd713100d5ac99486bd392f76a625438c0b48504df08591a21afe68da753fd1b8'
+    assert sha(pinned.read_bytes()) == 'dd05c8b12136f9a6f1d51380f9baae05ff776b89706f5575c52706293d0ededf'
     assert phase('local-oracle-compile',[CXX,*COMMON,'-mavx2',pinned,*objs,'-Wl,--gc-sections','-o',p/'local'])==0
     assert phase('local-oracle',[p/'local'])==0
-    assert (PROOF/'local-oracle.stdout').read_text(encoding='utf-8').strip() == 'v4 profile, two direct ZMM helper calls, two invalid-unmasked fallback comparisons: pass'
+    assert (PROOF/'local-oracle.stdout').read_text(encoding='utf-8').strip() == 'f32 v4 direct power raw, neutral FE_INEXACT, both transforms directed and invalid-unmasked: pass'
     results={}
     for mode in ('normal','disabled'):
         env=dict(os.environ)
