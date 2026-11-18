@@ -817,7 +817,9 @@ def test_historical_subdivision_harness_is_available_for_actual_inverse_guard_jo
         assert block.count(probe)==1 and block.count(fetch)==1
         assert block.index(probe)<block.index(fetch)<block.index('python -m pytest')
         assert "git cat-file -e '"+target+"'\n" in block
-    assert '- run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py --ignore=tests/test_draw_polygon_benchmark_intake.py\n' in blocks['check']
+    assert_check_broad_modes(blocks['check'])
+    assert installed_pytest_intakes() == ('test_regionprops_coords_scaled_benchmark_intake.py',
+                                          'test_draw_polygon_benchmark_intake.py')
     assert 'tests/test_subdivide_polygon_benchmark.py' in blocks['numpy-minimum']
     # These jobs use selected numerical files or artifact-only measurements,
     # and never collect the historical benchmark inverse guard.
@@ -1024,12 +1026,13 @@ def test_coords_scaled_cold_intake_runs_fresh_outside_broad_pytest():
     path='tests/test_regionprops_coords_scaled_benchmark_intake.py'
     step=('      - name: Region coords scaled fresh NumPy-only benchmark intake\n'
           '        run: python -m pytest -q '+path+' --junitxml=build/ci-artifacts/regionprops-coords-scaled-numpy-intake.xml\n')
-    broad='      - run: python -m pytest -q --ignore='+path
-    assert workflow.count(step)==2 and blocks['check'].count(broad)==2
+    assert workflow.count(step)==2
+    assert_check_broad_modes(blocks['check'])
+    assert Path(path).name in installed_pytest_intakes()
     assert '\n      - run: python -m pytest -q\n' not in workflow
     for name in ('check','numpy-minimum'):
         block=blocks[name]
-        assert block.count(step)==1 and block.count(path)==(3 if name=='check'else 1)
+        assert block.count(step)==1 and block.count(path)==1
         install=('python -m pip install --no-index --find-links build/wheels "scikit-imagexx[test]" "numpy==2.5.4" "scipy==1.18.1" cmake'
                  if name=='check'else 'python -m pip install --no-deps build/wheels/*.whl')
         assert block.index(install)<block.index(step)<block.index('Region coords scaled saved public and installed SDK boundary normal')
@@ -1037,3 +1040,119 @@ def test_coords_scaled_cold_intake_runs_fresh_outside_broad_pytest():
         if name=='numpy-minimum':assert block.index(step)<block.index('ci_measurement_artifacts.py freeze')
     q=(ROOT/'.github/workflows/public-qualification.yml').read_text()
     assert path not in q
+
+
+def installed_pytest_intakes():
+    driver = (ROOT / 'tools/check_installed_pytest.py').read_text(encoding='utf-8')
+    tree = ast.parse(driver)
+    values, = [node.value for node in tree.body if isinstance(node, ast.Assign)
+               and any(isinstance(target, ast.Name) and target.id == 'BENCHMARK_INTAKES'
+                       for target in node.targets)]
+    assert "switches = [f'--ignore=tests/{name}' for name in BENCHMARK_INTAKES]" in driver
+    return ast.literal_eval(values)
+
+
+def assert_check_broad_modes(block):
+    prefix = 'run: python tools/check_installed_pytest.py --mode '
+    assert [line.strip() for line in block.splitlines() if line.strip().startswith(prefix)] == [
+        prefix + 'normal', prefix + 'disabled',
+    ]
+
+
+def assert_check_linux_fenv_setup(workflow, sdk_source):
+    blocks = jobs(workflow)
+    block = blocks['check']
+    marker = '      - name: Prepare the Linux floating-point test helper\n'
+    assert workflow.count(marker) == 1 and marker in block
+    before, rest = block.split(marker)
+    helper, _, after = rest.partition('\n      - ')
+    assert 'actions/setup-python@v5' in before
+    assert helper.startswith("        if: runner.os == 'Linux'\n        shell: bash\n")
+    assert 'set -euo pipefail' in helper
+    build = 'python tests/util_views_fenv_build.py --output "$bundle" --control-python "$(command -v python)"'
+    assert 'bundle="$PWD/build/ci-artifacts/util-views-fenv"' in helper
+    assert helper.index(build) < helper.index('PASS_SOURCE_BUILT_FENV32') < helper.index('GITHUB_ENV')
+    assert 'assert hashlib.sha256(helper.read_bytes()).hexdigest() == record[\'files\'][helper.name]' in helper
+    for line in (
+        "'UTIL_VIEWS_FENV_MODE': 'source-built-v1'",
+        "'UTIL_VIEWS_FENV_RECEIPT': receipt",
+        "'UTIL_VIEWS_FENV_RECEIPT_SHA256': hashlib.sha256(raw).hexdigest()",
+        "'SKIMAGEXX_FENV_HELPER': helper",
+    ):
+        assert helper.count(line) == 1
+    assert 'UTIL_VIEWS_FENV_HELPER' not in helper
+    assert 'test_join_segmentations_public.py' not in before and after.count('test_join_segmentations_public.py') == 2
+    assert 'tools/check_installed_pytest.py' not in before
+    assert_check_broad_modes(after)
+    assert 'tools/check_cmake_install.py' not in before and after.count('tools/check_cmake_install.py') == 2
+    assert 'build/ci-artifacts/' in after[after.index('name: parity-package-'):]
+    for name, body in blocks.items():
+        if name != 'check':
+            assert 'tests/util_views_fenv_build.py' not in body and 'UTIL_VIEWS_FENV_MODE' not in body
+    assert "fenv_helper=os.environ.get('SKIMAGEXX_FENV_HELPER')" in sdk_source
+    assert "if fenv_helper:common.append(f'-DSKIMAGEXX_FENV_HELPER={fenv_helper}')" in sdk_source
+    assert "run('configure',['-S',root/'tests/cmake_consumer','-B',consumer,*common])" in sdk_source
+
+
+def test_check_linux_fenv_setup_precedes_join_broad_and_sdk_consumers():
+    assert_check_linux_fenv_setup(
+        (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8'),
+        (ROOT / 'tools/check_cmake_install.py').read_text(encoding='utf-8'),
+    )
+
+
+def test_broad_driver_keeps_platform_selector_and_record_boundaries():
+    driver = (ROOT / 'tools/check_installed_pytest.py').read_text(encoding='utf-8')
+    tree = ast.parse(driver)
+    selectors = {target.id: ast.literal_eval(node.value) for node in tree.body
+                 if isinstance(node, ast.Assign) for target in node.targets
+                 if isinstance(target, ast.Name) and target.id in ('LINUX_FENV_MODULES', 'LINUX_FENV_CASES')}
+    assert len(selectors['LINUX_FENV_MODULES']) == len(set(selectors['LINUX_FENV_MODULES'])) == 16
+    assert selectors['LINUX_FENV_CASES'] == (
+        'test_regular_grid_public.py::test_saved_rows',
+        'test_util_views_public.py::test_slice_saved_public',
+        'test_mark_boundaries_public.py::test_saved_mark_public',
+        'test_rolling_ball_public.py::test_saved_original',
+    )
+    for token in (
+        "if sys.platform == 'linux':",
+        "switches.append('--ignore=tests/test_vi_public_matmul_windows_public.py')",
+        "switches.extend(f'--ignore=tests/{name}' for name in LINUX_FENV_MODULES)",
+        "switches.extend(f'--deselect=tests/{node}' for node in LINUX_FENV_CASES)",
+        "f'installed-pytest-{args.mode}'",
+        "output.mkdir(parents=True, exist_ok=False)",
+        "env['SKIMAGEXX_DISABLE_SIMD'] = '1'",
+        "env.pop('SKIMAGEXX_DISABLE_SIMD', None)",
+        "subprocess.run(command, cwd=ROOT, env=env, check=False).returncode",
+    ):
+        assert token in driver
+
+
+def test_minimum_measurement_namespace_bindings_are_step_local():
+    workflow = (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8')
+    block = jobs(workflow)['measure-minimum']
+    commands = (
+        'python benchmarks/draw_polygon.py --threads 1 --repeat 7 --output build/ci-draw-polygon.json',
+        'python benchmarks/label_pair_metrics.py --threads 1 --repeat 7 --output build/ci-label-pair-metrics.json',
+    )
+    binding = '          PYTHONPATH: ${{ github.workspace }}'
+    for command in commands:
+        _, rest = block.split('      - run: ' + command + '\n')
+        step, _, _ = rest.partition('\n      - ')
+        assert step.count(binding) == 1
+    assert workflow.count(binding) == len(commands)
+
+
+@pytest.mark.parametrize('old,new', (
+    ('      - name: Prepare the Linux floating-point test helper', '      - name: Missing setup'),
+    ("      - name: Prepare the Linux floating-point test helper\n        if: runner.os == 'Linux'",
+     "      - name: Prepare the Linux floating-point test helper\n        if: runner.os == 'Windows'"),
+    ("'UTIL_VIEWS_FENV_RECEIPT_SHA256': hashlib.sha256(raw).hexdigest()", "'UTIL_VIEWS_FENV_RECEIPT_SHA256': 'stale'"),
+))
+def test_check_linux_fenv_setup_rejects_missing_or_unbound_helper(old, new):
+    source = (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8')
+    block = jobs(source)['check']
+    assert old in block
+    changed = source.replace(block, block.replace(old, new, 1), 1)
+    with pytest.raises(AssertionError):
+        assert_check_linux_fenv_setup(changed, (ROOT / 'tools/check_cmake_install.py').read_text(encoding='utf-8'))
