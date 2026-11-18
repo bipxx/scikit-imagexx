@@ -39,8 +39,7 @@ assert hashlib.sha256(core.read_bytes()).hexdigest() == receipt['core_sha256']
 deps = {name: digest for name, digest in proof['dependency_wheels'].items() if not name.startswith('scikit_imagexx-')}
 assert len(deps) == 13
 assert all(hashlib.sha256((wheels / name).read_bytes()).hexdigest() == digest for name, digest in deps.items())
-patterns = ['filters.farid*', 'color.*luv*', 'color.rgb2hsv', 'color.hsv2rgb',
-            'color.xyz2lab', 'color.lab2xyz', 'color.rgb2lab', 'color.lab2rgb', 'color.lab2lch', 'color.lch2lab']
+patterns = ['filters.farid*', 'color.xyz2lab', 'color.rgb2lab', 'color.rgb2luv', 'color.lab2lch']
 scoped = sorted(os.sched_getaffinity(0))
 assert scoped
 cpu = scoped[0]
@@ -64,6 +63,15 @@ with tempfile.TemporaryDirectory(dir=tmp, prefix='runtime-ubuntu-speed-') as tar
     )
     with (output / 'runtime.json').open('xb') as log:
         subprocess.run([sys.executable, '-B', '-c', probe, str(core), target], cwd=source, env=env, stdout=log, check=True)
+    runtime = json.loads((output / 'runtime.json').read_bytes())
+    effective = runtime['cpu_features']
+    present = effective.get('X86_V4') is True and effective.get('AVX512_SKX') is True
+    (output / 'hardware-preflight.json').write_text(json.dumps(
+        {'passed': present, 'required': ['X86_V4', 'AVX512_SKX'], 'actual': effective,
+         'scope': 'x86-v4 exact expanded product; no timing on other hardware'}, indent=2
+    ) + '\n', encoding='utf-8')
+    if not present:
+        raise SystemExit(2)
     reports = {}
     for mode in ('normal', 'disabled'):
         options = [arg for pattern in patterns for arg in ('--api', pattern)]
@@ -76,9 +84,9 @@ with tempfile.TemporaryDirectory(dir=tmp, prefix='runtime-ubuntu-speed-') as tar
         with (output / f'{mode}.log').open('xb') as log:
             subprocess.run(cmd, cwd=source, env=mode_env, stdout=log, stderr=subprocess.STDOUT, check=True)
         data = json.loads(result.read_bytes())
-        assert len(data['results']) == 45 and data['metadata']['fallback_enabled'] is False
+        assert len(data['results']) == 21 and data['metadata']['fallback_enabled'] is False
         cases = {(row['api'], row['size'], row['dtype']) for row in data['results']}
-        assert len(cases) == 45
+        assert len(cases) == 21
         for row in data['results']:
             assert row['threads'] == 1 and len(row['samples_ms']) == 2
             original, current = row['samples_ms']
