@@ -643,7 +643,7 @@ bool ordinary_lab_wide_available() {
 }
 
 // Pointer ABI leaves all ZMM values inside the target function. This is the
-// prescaled positive-normal polynomial above, with each half in the same order.
+// positive-normal polynomial above, with each half in the same order.
 __attribute__((target("avx512f"), noinline))
 void ordinary_lab_power_wide(void* values, double scale) {
     __m512d input;
@@ -677,34 +677,46 @@ void ordinary_lab_power_wide(void* values, double scale) {
     const auto result = _mm512_mul_pd(polynomial,_mm512_castsi512_pd(power));
     std::memcpy(values,&result,sizeof(result));
 }
+
+// Keep the f32 exponent multiply live, including its FE_INEXACT on neutral
+// lanes. Callers supply constant exponents, but the original path scales them
+// at runtime. The f64 path still calls the prescaled helper directly.
+__attribute__((noipa))
+void ordinary_lab_power_wide_from_exponent(void* values, double exponent) {
+    ordinary_lab_power_wide(values,exponent*0.69314718055994530942);
+}
 #endif
 
-__m256 ordinary_lab_power(__m256 input, double exponent) {
+template<bool wide_power=false> __m256 ordinary_lab_power(__m256 input, double exponent) {
     LabPair x = {_mm256_cvtps_pd(_mm256_castps256_ps128(input)),
                  _mm256_cvtps_pd(_mm256_extractf128_ps(input,1))};
-    ordinary_lab_power<false>(x,exponent);
+#ifdef SKIMAGEXX_LINUX_WIDE_LAB_POWER
+    if constexpr (wide_power) ordinary_lab_power_wide_from_exponent(x,exponent);
+    else
+#endif
+        ordinary_lab_power<false>(x,exponent);
     return _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(x[0])),_mm256_cvtpd_ps(x[1]),1);
 }
 
-__m256 ordinary_rgb_decode(__m256 input) {
+template<bool wide_power> __m256 ordinary_rgb_decode(__m256 input) {
     using V = Vector<float>;
     const auto mask=V::gt(input,V::set(0.04045f));
     const auto linear=V::div(input,V::set(12.92f));
     if (!V::bits(mask)) return linear;
     const auto adjusted=V::div(V::add(input,V::set(0.055f)),V::set(1.055f));
-    return V::choose(linear,ordinary_lab_power(V::choose(V::set(1),adjusted,mask),double(2.4f)),mask);
+    return V::choose(linear,ordinary_lab_power<wide_power>(V::choose(V::set(1),adjusted,mask),double(2.4f)),mask);
 }
 
-__m256 ordinary_lab_curve(__m256 input, __m256 white) {
+template<bool wide_power> __m256 ordinary_lab_curve(__m256 input, __m256 white) {
     using V = Vector<float>;
     const auto scaled=V::div(input,white);
     const auto mask=V::gt(scaled,V::set(0.008856f));
     const auto linear=V::add(V::mul(V::set(7.787f),scaled),V::set(float(16.0/116.0)));
     if (!V::bits(mask)) return linear;
-    return V::choose(linear,ordinary_lab_power(V::choose(V::set(1),scaled,mask),1.0/3.0),mask);
+    return V::choose(linear,ordinary_lab_power<wide_power>(V::choose(V::set(1),scaled,mask),1.0/3.0),mask);
 }
 
-template<bool rgb> std::size_t ordinary_lab_transform(const float* input, float* output, std::size_t n,
+template<bool rgb,bool wide_power=false> std::size_t ordinary_lab_transform(const float* input, float* output, std::size_t n,
     const std::array<double,3>& white) {
     using V = Vector<float>;
     __m256 weights[9];
@@ -718,12 +730,12 @@ template<bool rgb> std::size_t ordinary_lab_transform(const float* input, float*
         __m256 x,y,z;
         unpack(input+3*i,x,y,z);
         if constexpr (rgb) {
-            const auto a=ordinary_rgb_decode(x), b=ordinary_rgb_decode(y), c=ordinary_rgb_decode(z);
+            const auto a=ordinary_rgb_decode<wide_power>(x), b=ordinary_rgb_decode<wide_power>(y), c=ordinary_rgb_decode<wide_power>(z);
             x=V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2]));
             y=V::add(V::add(V::mul(a,weights[3]),V::mul(b,weights[4])),V::mul(c,weights[5]));
             z=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
         }
-        const auto a=ordinary_lab_curve(x,wx), b=ordinary_lab_curve(y,wy), c=ordinary_lab_curve(z,wz);
+        const auto a=ordinary_lab_curve<wide_power>(x,wx), b=ordinary_lab_curve<wide_power>(y,wy), c=ordinary_lab_curve<wide_power>(z,wz);
         pack(output+3*i,V::sub(V::mul(V::set(116),b),V::set(16)),
             V::mul(V::set(500),V::sub(a,b)),V::mul(V::set(200),V::sub(b,c)));
     }
@@ -805,6 +817,9 @@ template<class T> std::size_t packed_lab_or_legacy(const T* input, T* output, st
                 if (op==Op::xyz2lab) return ordinary_lab_transform<false,true>(input,output,n,spec.white);
                 return ordinary_lab_transform<true,true>(input,output,n,spec.white);
             }
+        } else if (_MM_GET_ROUNDING_MODE()==_MM_ROUND_NEAREST && ordinary_lab_wide_available()) {
+            if (op==Op::xyz2lab) return ordinary_lab_transform<false,true>(input,output,n,spec.white);
+            return ordinary_lab_transform<true,true>(input,output,n,spec.white);
         }
 #endif
         if (op==Op::xyz2lab) return ordinary_lab_transform<false>(input,output,n,spec.white);
