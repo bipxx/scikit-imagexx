@@ -51,6 +51,9 @@ def _frozen_vi_shared_source_epoch(request, tmp_path_factory):
             historical_dependencies = observers
     elif module == 'test_rolling_ball_sdk_dtype_source' and node == 'test_exact_source_dependency_and_historical_projection':
         historical_dependencies = ('src/execution.hpp',)
+    elif (module == 'test_join_segmentations_reference'
+          and node == 'test_join_reused_source_dependency_pins_and_Cython_constraints'):
+        historical_dependencies = ('src/execution.hpp',)
     if historical_dependencies:
         from pathlib import Path
         from vi_public_matmul_source_view import _historical_source_epoch
