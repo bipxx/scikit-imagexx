@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v4.json'
+CONTEXT='coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v5.json'
 ADAPTER='benchmarks/vi_public_matmul_provider_execution.py'
 ADAPTER_CANONICAL_SHA256='7a6a84c4caba8acdbc2f04850205f283a80460bd484743142229c12aa32777fa'
 

@@ -1,6 +1,7 @@
 """Collector metadata fixtures only; synthetic files never qualify a product."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shlex
 import subprocess
@@ -286,7 +287,13 @@ def test_unknown_nls_outside_systemroot_is_not_a_header_root(tmp_path,monkeypatc
     with pytest.raises(f.FactsError,match='unclassified actual dependency'):f.header_roots(deps,source,native,{},windows=True)
 
 
-def test_complete_synthetic_msvc_tracking_keeps_reads_writes_tools_and_crt(tmp_path,monkeypatch):
+@pytest.mark.parametrize('cl_write', [
+    'sparse', 'mapped', 'unmapped', 'missing',
+    pytest.param('extended', marks=pytest.mark.skipif(os.name != 'nt', reason='Win32 drive alias')),
+    pytest.param('extended-unmapped', marks=pytest.mark.skipif(os.name != 'nt', reason='Win32 drive alias')),
+    pytest.param('extended-different-file', marks=pytest.mark.skipif(os.name != 'nt', reason='Win32 drive alias')),
+])
+def test_complete_synthetic_msvc_tracking_keeps_reads_writes_tools_and_crt(tmp_path,monkeypatch,cl_write):
     source=tmp_path/'source';build=tmp_path/'out';native=build/'native-build';native.mkdir(parents=True)
     tools={name:put(tmp_path/'VC/Tools/MSVC/14.44/bin/Hostx64/x64'/name) for name in ('cl.exe','c1xx.dll','c2.dll','link.exe','lib.exe')}
     headers=[put(source/'include/skimagexx/rank.hpp'),put(tmp_path/'python/Python.h'),put(build/'build-env/numpy/_core/include/numpy/arrayobject.h'),put(build/'build-env/pybind11/include/pybind11/pybind11.h'),put(tmp_path/'VC/Tools/MSVC/14.44/include/vcruntime.h')]
@@ -305,7 +312,16 @@ def test_complete_synthetic_msvc_tracking_keeps_reads_writes_tools_and_crt(tmp_p
         tracking('CL.command.1.tlog',['/c /MD /GL /Fo'+subprocess.list2cmdline([str(obj)])+' '+subprocess.list2cmdline([str(cpp)])])
         # Actual CL.write may be sparse even though every object exists and
         # every source has a command/read record. /Fo/project mapping is used.
-        tracking('CL.read.1.tlog',[cpp,*headers]);tracking('CL.write.1.tlog',[])
+        tracking('CL.read.1.tlog',[cpp,*headers])
+        writes=[] if cl_write=='sparse' else [obj]
+        if target=='skimagexx':
+            if cl_write in ('unmapped','extended-unmapped'):
+                writes.append(put(obj.parent/'stale.obj'))
+            if cl_write=='missing':
+                writes.append(obj.parent/'missing.obj')
+            if cl_write.startswith('extended'):
+                writes=['\\\\?\\'+str(p) for p in writes]
+        tracking('CL.write.1.tlog',writes)
         role='Lib' if target=='skimagexx' else 'link';output=archive if target=='skimagexx' else core
         tracking(role+'.command.1.tlog',['/OUT:'+subprocess.list2cmdline([str(output)])+' '+subprocess.list2cmdline([str(obj)])])
         tracked='Lib-link' if role=='Lib' else role
@@ -317,6 +333,16 @@ def test_complete_synthetic_msvc_tracking_keeps_reads_writes_tools_and_crt(tmp_p
         item=ET.SubElement(ET.SubElement(project,'ItemGroup'),'ClCompile',Include=str(cpp));ET.SubElement(item,'ObjectFileName').text=str(obj)
         put(native/(target+'.vcxproj'),ET.tostring(project,encoding='unicode'))
     monkeypatch.setattr(f,'windows_model',lambda *_:dict(compiler=str(tools['cl.exe']),architecture='x64',toolset_version='14.44'))
+    if cl_write=='missing':
+        with pytest.raises(FileNotFoundError):
+            f.collect(source,build,'a'*40,'windows',build/'facts.json')
+        return
+    if cl_write=='extended-different-file':
+        monkeypatch.setattr(Path,'samefile',lambda *_:False)
+    if cl_write in ('unmapped','extended-unmapped','extended-different-file'):
+        with pytest.raises(f.FactsError,match='stale/unmapped CL object writes: skimagexx'):
+            f.collect(source,build,'a'*40,'windows',build/'facts.json')
+        return
     data=f.collect(source,build,'a'*40,'windows',build/'facts.json')
     assert data['configuration']['crt']=='/MD' and data['configuration']['lto'] is True
     assert data['configuration']['generator_version']=='17.14.23+b001'

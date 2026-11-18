@@ -437,8 +437,18 @@ def msvc(native, config, cache, info, capture):
                 require(any(v.upper() in ('/MD','/MDD','/MT','/MTD') for v in argv),'actual MSVC CRT flag absent')
                 crt_flags.update(v.upper() for v in argv if v.upper() in ('/MD','/MDD','/MT','/MTD'))
                 used.update(headers);units.append(dict(source=str(source),target=target+':'+source.name,argv=[str(compiler),*argv],dependencies=list(map(str,sorted(headers,key=str))),outputs=[str(obj)]))
-        recorded_objects={actual(v) for values in writes.values() for v in values if v.lower().endswith('.obj')}
-        require(recorded_objects<=set(expected.values()),'stale/unmapped CL object writes')
+        expected_objects={p:p for p in expected.values()}
+        for values in writes.values():
+            for value in values:
+                if not value.lower().endswith('.obj'):
+                    continue
+                recorded=actual(value)
+                if recorded not in expected_objects and re.match(r'^\\\\\?\\[A-Za-z]:\\',value):
+                    # Tracker may spell a mapped output with the extended DOS drive prefix.
+                    alias=expected_objects.get(Path(value[4:]))
+                    if alias is not None and recorded.samefile(alias):
+                        recorded=alias
+                require(recorded in expected_objects,f'stale/unmapped CL object writes: {target}: {recorded}')
         family='Lib' if target=='skimagexx' else 'link';role='archiver' if target=='skimagexx' else 'linker'
         commands=tracking(family+'.command.1.tlog')
         tracked_family='Lib-link' if family=='Lib' else family
