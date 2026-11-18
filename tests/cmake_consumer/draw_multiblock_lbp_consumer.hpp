@@ -10,9 +10,14 @@
 #include <vector>
 inline void draw_multiblock_lbp_consumer(){
     using namespace skimagexx;assert(get_num_threads()==1);
+#ifdef _OPENMP
+    constexpr int worker_counts[]={1,4};
+#else
+    constexpr int worker_counts[]={1};
+#endif
     std::vector<float> zeros(27,0);MultiblockLbpInput in{{zeros.data(),{3,3,3},{36,12,4},4},PixelType::float32,false};
     MultiblockLbpParameters p;p.r=-3;p.c=-3;p.width=p.height=2;p.code=170;p.alpha=.5;p.less={{0,0,0},{3}};
-    for(int workers:{1,4}){set_num_threads(workers);auto a=draw_multiblock_lbp(in,p);assert(a.captured_workers==workers&&a.shape==std::vector<std::ptrdiff_t>({3,3,3})&&a.is_float32);for(int k=0;k<3;++k)assert(a.float32[12+k]==.9375f);assert(zeros==std::vector<float>(27,0));
+    for(int workers:worker_counts){set_num_threads(workers);auto a=draw_multiblock_lbp(in,p);assert(a.captured_workers==workers&&a.shape==std::vector<std::ptrdiff_t>({3,3,3})&&a.is_float32);for(int k=0;k<3;++k)assert(a.float32[12+k]==.9375f);assert(zeros==std::vector<float>(27,0));
         p.simd=false;auto b=draw_multiblock_lbp(in,p);assert(a.float32==b.float32);p.simd=true;}
     std::vector<std::uint8_t> white(12,255);MultiblockLbpInput gray{{white.data(),{3,4},{4,1},1},PixelType::uint8,false};p.r=p.c=0;p.height=p.width=0;auto copy=draw_multiblock_lbp(gray,p);assert(copy.shape==std::vector<std::ptrdiff_t>({3,4,3}));for(double x:copy.float64)assert(x==1.);
     // Signed-stride input and swapped integer transport: owning copy, not alias.
@@ -39,7 +44,7 @@ inline void draw_multiblock_lbp_consumer(){
     p=MultiblockLbpParameters{};p.r=-3;p.c=-3;p.width=p.height=2;p.code=170;p.less={{0,0,0},{3}};
     double greater[3]={1,1,1},less[3]={0,0,0};
     MultiblockLbpFloatView gv{{greater,{3},{8},8},false},lv{{less,{3},{8},8},false};
-    for(int workers:{1,4}){
+    for(int workers:worker_counts){
         set_num_threads(workers);auto expected=draw_multiblock_lbp(in,p);
         std::vector<float> actual(27,0);
         MultiblockLbpFloatView target{{actual.data(),{3,3,3},{36,12,4},4},false};

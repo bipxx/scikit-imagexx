@@ -4,7 +4,6 @@
 #include <cassert>
 #include <cfenv>
 #include <cstdint>
-#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <iterator>
@@ -149,11 +148,12 @@ void parallel_seed(int workers) {
 }
 int main() {
     check(get_num_threads()==1);
-    const bool portable=std::getenv("SKIMAGEXX_EXPECT_OPENMP_OFF")!=nullptr;
     const ReconstructionType types[]={ReconstructionType::uint8,ReconstructionType::int8,ReconstructionType::uint16,ReconstructionType::int16,
         ReconstructionType::uint32,ReconstructionType::int32,ReconstructionType::uint64,ReconstructionType::int64};
     for(int workers:{1,4}) {
-        if(portable && workers==4){rejected([]{set_num_threads(4);});check(get_num_threads()==1);continue;}
+#ifndef _OPENMP
+        if(workers==4){rejected([]{set_num_threads(4);});check(get_num_threads()==1);continue;}
+#endif
         set_num_threads(workers);
         for(std::size_t i=0;i<8;++i)for(bool swapped:{false,true})for(bool reverse:{false,true})
             boundary(types[i],std::size_t(1)<<(i/2),bool(i%2),swapped,reverse);

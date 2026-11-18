@@ -56,6 +56,8 @@ def test_new_current_metadata_preserves_every_old_recipe_and_checks_current_byte
  assert set(current['source_canonical_pins'])==set(before['source_canonical_pins'])
  for name,pin in current['source_canonical_pins'].items():
   raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+  if name=='src/execution.hpp':
+   raw=predecessor_bytes(ROOT,name,raw,canonical=True)
   if name=='src/find_boundaries.cpp':
    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
    from tools.vi_public_matmul_context import speed_predecessor_bytes

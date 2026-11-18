@@ -100,7 +100,11 @@ def synthetic(tmp_path, monkeypatch, request):
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
         expected_checks=2*len(families)
         for name in {**p.RECONSTRUCTION_RUNTIME_SOURCE_PINS,**p.RECONSTRUCTION_TRACE_POLICY_PINS}:
-            source[name]=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+            raw = (ROOT/name).read_bytes()
+            if name == 'tests/test_reconstruction_native.cpp':
+                from tools.mark_lbp_fp_context import predecessor_bytes
+                raw = predecessor_bytes(ROOT, name, raw, canonical=True)
+            source[name] = raw.replace(b'\r\n', b'\n')
         source[p.RECONSTRUCTION_ORACLE_PATH]=(ROOT/p.RECONSTRUCTION_ORACLE_PATH).read_bytes()
         source['tools/public_qualification.py']+=('RECONSTRUCTION_RUNTIME_SOURCE_PINS='+repr(p.RECONSTRUCTION_RUNTIME_SOURCE_PINS)+'\nRECONSTRUCTION_TRACE_POLICY_PINS='+repr(p.RECONSTRUCTION_TRACE_POLICY_PINS)+'\nRECONSTRUCTION_ORACLE_PATH='+repr(p.RECONSTRUCTION_ORACLE_PATH)+'\nRECONSTRUCTION_ORACLE_SHA256='+repr(p.RECONSTRUCTION_ORACLE_SHA256)+'\n').encode()
     if scope in ('nmi22','h_extrema23'):
@@ -115,7 +119,11 @@ def synthetic(tmp_path, monkeypatch, request):
         source['tools/public_qualification.py']=source['tools/public_qualification.py'].replace(('FAMILIES = '+repr(tuple(families[:-1]))).encode(),('FAMILIES = '+repr(tuple(families))).encode())
         expected_checks=2*len(families)
         for name in (*p.H_EXTREMA_RUNTIME_SOURCE_PINS,*p.H_EXTREMA_FROZEN_RAW_PINS):
-            source[name]=(ROOT/name).read_bytes()
+            raw = (ROOT/name).read_bytes()
+            if name in ('tests/test_h_extrema_native.cpp', 'tests/test_h_extrema_floating_native.cpp'):
+                from tools.mark_lbp_fp_context import predecessor_bytes
+                raw = predecessor_bytes(ROOT, name, raw)
+            source[name] = raw
         for key in ('H_EXTREMA_RUNTIME_SOURCE_PINS','H_EXTREMA_FROZEN_RAW_PINS','H_EXTREMA_HISTORICAL_RAW_PINS','H_EXTREMA_ORACLE_PATH','H_EXTREMA_ORACLE_SHA256'):
             source['tools/public_qualification.py']+=(key+'='+repr(getattr(p,key))+'\n').encode()
     for name, data in source.items():

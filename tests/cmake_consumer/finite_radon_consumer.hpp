@@ -8,9 +8,16 @@
 #include <stdexcept>
 #include "../fixtures/finite_radon_saved_v2.hpp"
 #include "../fixtures/finite_radon_exceptional_saved_v1.hpp"
+namespace finite_radon_sdk {
+#ifdef _OPENMP
+inline constexpr int worker_counts[]={1,4};
+#else
+inline constexpr int worker_counts[]={1};
+#endif
+}
 inline void finite_radon_saved_consumer(){
     using namespace skimagexx;unsigned count=0;
-    for(bool modern:{false,true})for(auto row:finite_radon_saved(modern))for(int workers:{1,4}){
+    for(bool modern:{false,true})for(auto row:finite_radon_saved(modern))for(int workers:finite_radon_sdk::worker_counts){
         set_num_threads(workers);std::vector<std::ptrdiff_t> strides;
         std::size_t width=row.half?2:pixel_size(row.type)*(row.complex?2:1);strides={row.shape[1]*std::ptrdiff_t(width),std::ptrdiff_t(width)};
         FiniteRadonInput in{{row.input.data(),row.shape,strides,width},row.type,row.swapped,row.half,row.complex};auto before=row.input;
@@ -18,11 +25,16 @@ inline void finite_radon_saved_consumer(){
         else{auto out=frt2(in);assert(out.captured_workers==workers&&out.values.size()*4==row.gold.size());if(!row.gold.empty())assert(std::memcmp(out.values.data(),row.gold.data(),row.gold.size())==0);}
         assert(row.input==before);++count;
     }
-    assert(count==244);set_num_threads(1);std::cout<<"PASS admitted61returns/profile completeSDK logical words x workers1/4=244\n";
+    set_num_threads(1);
+#ifdef _OPENMP
+    assert(count==244);std::cout<<"PASS admitted61returns/profile completeSDK logical words x workers1/4=244\n";
+#else
+    assert(count==122);std::cout<<"PASS admitted61returns/profile completeSDK logical words x workers1=122\n";
+#endif
 }
 inline void finite_radon_exceptional_consumer(){
     using namespace skimagexx;unsigned returns=0,errors=0;
-    for(bool modern:{false,true})for(auto row:finite_radon_exceptional_saved(modern))for(int workers:{1,4}){
+    for(bool modern:{false,true})for(auto row:finite_radon_exceptional_saved(modern))for(int workers:finite_radon_sdk::worker_counts){
         const std::ptrdiff_t n=5,rows=n+(row.inverse?1:0);
         FiniteRadonInput input{{row.input.data(),{rows,n},{n*8,8},8},PixelType::float64,false};
         const auto before=row.input;std::vector<unsigned> notices;
@@ -38,7 +50,12 @@ inline void finite_radon_exceptional_consumer(){
     auto check=[](void* p,unsigned e){static_cast<std::vector<unsigned>*>(p)->push_back(e);};
     (void)frt2({{edge,{4,4},{32,8},8},PixelType::float64,false},1,check,&policy);
     assert(policy.empty());
-    assert(returns==8&&errors==8);set_num_threads(1);std::cout<<"PASS exceptional4returns xworkers1/4=8 plus8 complete inverse typederrors/notices\n";
+    set_num_threads(1);
+#ifdef _OPENMP
+    assert(returns==8&&errors==8);std::cout<<"PASS exceptional4returns xworkers1/4=8 plus8 complete inverse typederrors/notices\n";
+#else
+    assert(returns==4&&errors==4);std::cout<<"PASS exceptional4returns xworkers1=4 plus4 complete inverse typederrors/notices\n";
+#endif
 }
 inline void finite_radon_consumer(){
     using namespace skimagexx;
@@ -50,7 +67,7 @@ inline void finite_radon_consumer(){
     for(std::size_t n:{0,1,2,3,4,5,17,65}){
         std::vector<std::uint32_t> image(n*n);for(std::size_t k=0;k<image.size();++k)image[k]=k%3?std::uint32_t(k*12345):0xffffffffu;
         auto before=image;FiniteRadonInput in{{image.data(),{std::ptrdiff_t(n),std::ptrdiff_t(n)},{std::ptrdiff_t(n*4),4},4},PixelType::uint32,false};
-        for(int workers:{1,4}){set_num_threads(workers);auto result=frt2(in);assert(result.captured_workers==workers&&result.rows==n+1&&result.columns==n);
+        for(int workers:finite_radon_sdk::worker_counts){set_num_threads(workers);auto result=frt2(in);assert(result.captured_workers==workers&&result.rows==n+1&&result.columns==n);
             for(std::size_t m=0;m<n;++m)for(std::size_t c=0;c<n;++c){std::uint32_t value=0;for(std::size_t r=0;r<n;++r)value+=image[r*n+(c+m*r)%n];assert(result.values[m*n+c]==value);}
             for(std::size_t r=0;r<n;++r){std::uint32_t sum=0;for(std::size_t c=0;c<n;++c)sum+=image[r*n+c];assert(result.values[n*n+r]==sum);}
             assert(image==before);

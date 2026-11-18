@@ -7,7 +7,7 @@ ROOT = Path(__file__).parents[1]
 
 
 def test_half_stain_selector_preserves_legacy_module_and_history():
-    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark-v2.json').read_bytes())
     archived = (ROOT/'coverage/contracts/combine-stains-legacy-benchmark-source-v1.json').read_bytes()
     assert hashlib.sha256(archived).hexdigest() == '03c0890c5064660c0ddcb0d8a4b0990a5586ebbf2c66a6361faf48dbd38972aa'
     baseline = json.loads(archived)
@@ -43,7 +43,7 @@ def test_half_stain_selector_preserves_legacy_module_and_history():
 
 
 def test_half_stain_frozen_cases_policy_and_bounds():
-    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark-v2.json').read_bytes())
     assert hashlib.sha256((ROOT/'coverage/contracts/combine-stains-half.json').read_bytes()).hexdigest() == contract['reference_contract_sha256']
     assert contract['size'] == 512 and contract['threads'] == 1 and contract['repeat'] == 7
     assert contract['raw_samples'] == 56 and contract['warmup_groups'] == 8
@@ -60,12 +60,23 @@ def test_half_stain_frozen_cases_policy_and_bounds():
         assert sum(map(len,matrix)) <= contract['max_matrix_elements'] == 21
         assert 512*512*len(matrix[0]) <= contract['max_output_elements'] == 2000000
     assert 3 * contract['dataset']['max_abs_input'] * 14 == contract['dataset']['max_abs_exponent'] == 31.5
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    predecessor = contract['source_predecessor']
+    raw = (ROOT / predecessor['path']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == predecessor['sha256']
+    old = json.loads(raw)
+    name = 'src/execution.hpp'
+    raw = (ROOT / name).read_bytes()
+    assert hashlib.sha256(predecessor_bytes(ROOT, name, raw, canonical=True)).hexdigest() == old['source_closure'][name]
+    assert {k:v for k,v in contract.items() if k not in ('source_closure','source_predecessor')} == {
+        k:v for k,v in old.items() if k != 'source_closure'
+    }
     for name,pin in contract['source_closure'].items():
         assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest() == pin
 
 
 def test_half_stain_sampler_witness_state_and_hardware_source():
-    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark.json').read_bytes())
+    contract = json.loads((ROOT/'coverage/contracts/combine-stains-half-benchmark-v2.json').read_bytes())
     for filename,key in (('tools/montage_sustained.py','method_sha256'),('benchmarks/run.py','legacy_method_sha256')):
         source = (ROOT/filename).read_text(encoding='utf-8')
         method = next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name == 'measure')

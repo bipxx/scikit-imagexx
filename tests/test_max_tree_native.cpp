@@ -1,5 +1,6 @@
 #include "skimagexx/max_tree.hpp"
 #include "skimagexx/image.hpp"
+#include "native_worker_team.hpp"
 #include <algorithm>
 #include <cfenv>
 #include <cmath>
@@ -283,7 +284,7 @@ void large_team(int workers) {
     const std::size_t rows=513,cols=519,n=rows*cols;
     Arena<std::uint8_t> a(std::vector<std::uint8_t>(n,0),MaxTreeType::u8,MaxTreeOperation::area_closing,2,{{rows,cols,1}},1,1);
     auto result=max_tree_into(a.input,a.params,a.workspace(),a.output());
-    require(result.preparation_workers==workers,"actual independent team");
+    require(native_test::matches_worker_team(result.preparation_workers,workers),"actual independent team");
     for(std::size_t i=0;i<n;++i)require(a.out[i]==0 && a.parent[i]==0 && a.traverser[i]==std::int64_t(i),"large flat identity/tail");
 }
 template<class T> struct Canary {
@@ -326,7 +327,8 @@ template<class T> void integer_sort_controls(MaxTreeType type,int workers) {
                 const auto result=max_tree_into(a.input,a.params,w,out);
                 require(std::equal(expected.begin(),expected.end(),order.data()),"count/radix permutation differs from independent std::stable_sort");
                 require(a.image==values && get_num_threads()==workers,"integer sorting changed source/global worker state");
-                require(result.preparation_workers==(n>=std::size_t(1<<18)?workers:1),"integer control preparation worker team");
+                const int requested=n>=std::size_t(1<<18)?workers:1;
+                require(native_test::matches_worker_team(result.preparation_workers,requested),"integer control preparation worker team");
                 parent.check();order.check();roots.check();scratch.check();minimum.check();maximum.check();
                 inverted.check();output.check();attribute.check();labels.check();
                 // Reusing the actual tree with no sort storage proves supplied

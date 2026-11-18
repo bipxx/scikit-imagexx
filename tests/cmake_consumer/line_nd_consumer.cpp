@@ -140,9 +140,17 @@ int main() {
     const auto flags=std::fetestexcept(FE_ALL_EXCEPT),rounding=std::fegetround();
     check(rounding==FE_TONEAREST);
     std::feraiseexcept(FE_DIVBYZERO);
-    for(int workers:{1,4}) {set_num_threads(workers);controls(get_num_threads());}
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {set_num_threads(workers);controls(get_num_threads());}
     set_num_threads(1);check(get_num_threads()==1);
     std::feclearexcept(FE_ALL_EXCEPT);std::feraiseexcept(flags);
     check(std::fetestexcept(FE_ALL_EXCEPT)==flags && std::fegetround()==rounding);
-    std::cout<<"installed line_nd SDK component controls="<<checks<<"; workers=1,4; default=1; avx2="<<has_avx2()<<"; large_elements=262148\n";
+    std::cout<<"installed line_nd SDK component controls="<<checks<<"; workers=1"
+#ifdef _OPENMP
+        ",4"
+#endif
+        "; default=1; avx2="<<has_avx2()<<"; large_elements=262148\n";
 }

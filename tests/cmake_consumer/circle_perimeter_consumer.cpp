@@ -55,7 +55,15 @@ void stages(int workers) {
 }
 int main(){
     check(get_num_threads()==1);
-    for(int workers:{1,4}){set_num_threads(workers);stages(workers);}
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }){set_num_threads(workers);stages(workers);}
     set_num_threads(1);check(get_num_threads()==1);
-    std::cout<<"installed circle SDK controls="<<checks<<"; workers=1,4; default=1; frozen Bresenham/Andres order\n";
+    std::cout<<"installed circle SDK controls="<<checks<<"; workers=1"
+#ifdef _OPENMP
+        ",4"
+#endif
+        "; default=1; frozen Bresenham/Andres order\n";
 }

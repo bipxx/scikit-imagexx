@@ -135,9 +135,19 @@ def test_raw_canonical_and_common_entries_project_once(transport):
 def test_current_native_driver_and_measurement_source_pins_are_exact():
     native=json.loads((ROOT/'coverage/contracts/rolling-ball-native-v3.json').read_bytes())
     for group in ('source_files_raw_sha256','frozen_source_files_raw_sha256'):
-        for name,pin in native[group].items():assert H((ROOT/name).read_bytes())==pin,name
+        for name,pin in native[group].items():
+            raw = (ROOT/name).read_bytes()
+            if name in ('src/execution.hpp', 'tests/test_rolling_ball_native_source.py'):
+                from tools.mark_lbp_fp_context import predecessor_bytes as execution_predecessor
+                raw = execution_predecessor(ROOT, name, raw)
+            assert H(raw) == pin, name
     driver=json.loads((ROOT/'coverage/contracts/rolling-ball-benchmark-execution-v3.json').read_bytes())
-    for name,pin in driver['source_files_canonical_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
+    for name,pin in driver['source_files_canonical_sha256'].items():
+        raw = (ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name in ('src/execution.hpp', 'tests/test_rolling_ball_native_source.py', 'tests/test_rolling_ball_benchmark.py'):
+            from tools.mark_lbp_fp_context import predecessor_bytes as execution_predecessor
+            raw = execution_predecessor(ROOT, name, raw, canonical=True)
+        assert H(raw) == pin, name
     assert all(v is None for v in driver['unbound'].values())
     outer=json.loads((ROOT/'coverage/contracts/rolling-ball-measurement-v3.json').read_bytes())
     from tools.mark_lbp_fp_context import predecessor_bytes

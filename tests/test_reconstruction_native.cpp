@@ -1,5 +1,6 @@
 #include "skimagexx/reconstruction.hpp"
 #include "skimagexx/image.hpp"
+#include "native_worker_team.hpp"
 #include <algorithm>
 #include <cfenv>
 #include <cstdint>
@@ -130,7 +131,7 @@ void large_and_guards(int workers) {
     auto fp=ReconstructionFootprint{c.fp.view(),{c.offset.data(),2}};auto r=reconstruction_requirements(c.seed.view(),c.mask.view(),fp);Buffers<double>b(r);auto info=reconstruction_into(c.seed.view(),c.mask.view(),fp,c.method,b.get());
     for(std::size_t i=0;i<c.seed.count();++i)check(b.out[b.to[i+1]+1]==9,"large front failed");
 #ifdef _OPENMP
-    check(info.preprocessing_workers==workers,"actual preparation team mismatch");
+    check(native_test::matches_worker_team(info.preprocessing_workers,workers),"actual preparation team mismatch");
 #else
     (void)workers;check(info.preprocessing_workers==1,"portable preprocessing team mismatch");
 #endif

@@ -13,7 +13,7 @@ import sys
 import subprocess
 import warnings
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v8.json'
+CONTRACT=ROOT/'coverage/contracts/find-boundaries-benchmark-binding-v9.json'
 
 
 def case_specs():return json.loads(CONTRACT.read_bytes())['cases']
@@ -164,6 +164,9 @@ def _validate_mark_wide_source_closure(contract):
             from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
             from tools.vi_public_matmul_context import speed_predecessor_bytes
             raw=speed_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+        elif name == 'src/execution.hpp':
+            from tools.mark_lbp_fp_context import predecessor_bytes
+            raw = predecessor_bytes(ROOT, name, raw, canonical=True)
         elif name == 'tests/test_find_boundaries_layout_contract.py':
             raw=binding_source_bytes(name)
         assert hashlib.sha256(raw).hexdigest()==pin,name
@@ -176,9 +179,9 @@ def _validate_mark_wide_source_closure(contract):
 
 
 def binding_source_bytes(name):
-    """Authenticate the two current source-only rows against frozen v8."""
+    """Read current sources; the saved layout observer retains its exact inverse."""
     raw=(ROOT/name).read_bytes()
-    if name in ('benchmarks/find_boundaries.py', 'tests/test_find_boundaries_layout_contract.py'):
+    if name == 'tests/test_find_boundaries_layout_contract.py':
         from tools.vi_public_matmul_context import immediate_predecessor_bytes
         from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
         return immediate_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)

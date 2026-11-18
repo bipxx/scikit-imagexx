@@ -13,7 +13,7 @@ DATA=json.loads((ROOT/'coverage/contracts/label-pair-density-optimization-v1.jso
 def test_density_source_closure_and_exact_shipping_inverse():
     for name, pin in DATA['source_files_raw_sha256'].items():
         raw = (ROOT / name).read_bytes()
-        if name == 'tests/test_label_pair_density_contract.py':
+        if name in ('tests/test_label_pair_density_contract.py', 'src/execution.hpp', 'tests/cmake_consumer/label_pair_metrics_consumer.cpp', 'tests/contingency_preweighted_controls.hpp', 'tests/label_pair_metrics_native_controls.hpp', 'tests/test_label_pair_metrics_native.cpp', 'tests/test_label_pair_preweighted_native.cpp', 'tests/test_label_pair_rand_native.cpp'):
             raw = predecessor_bytes(ROOT, name, raw)
         assert hashlib.sha256(raw).hexdigest() == pin, name
     raw=(ROOT/'src/label_pair_metrics.cpp').read_bytes().replace(b'\r\n',b'\n')

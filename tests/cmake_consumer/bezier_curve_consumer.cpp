@@ -29,7 +29,11 @@ int bezier_curve_consumer_controls(int argc,char** argv) {
         f.read(reinterpret_cast<char*>(r.data()),n*sizeof(std::intptr_t));f.read(reinterpret_cast<char*>(c.data()),n*sizeof(std::intptr_t));if(!f)throw std::runtime_error("Bezier SDK original words");
         BezierCurve prepared;const auto flags=std::fetestexcept(FE_ALL_EXCEPT);
         if(!prepare_bezier_curve(saved,prepared)||prepared.rows!=r||prepared.columns!=c||std::fetestexcept(FE_ALL_EXCEPT)!=flags)throw std::runtime_error("Bezier SDK saved prepare");
-        for(int workers:{1,4}) {
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        }) {
             skimagexx::set_num_threads(workers);const auto snapshot=skimagexx::get_num_threads();
             std::vector<std::intptr_t> rr(n),cc(n);
             bezier_curve_fill(prepared,{rr.data(),cc.data(),1,1},snapshot);
@@ -40,7 +44,11 @@ int bezier_curve_consumer_controls(int argc,char** argv) {
     if(f.peek()!=std::ifstream::traits_type::eof())throw std::runtime_error("Bezier SDK fixture tail");
     BezierCurve p;BezierCurveRequest q{0,0,65536,65536,131072,131072,1.};
     if(!prepare_bezier_curve(q,p)||bezier_curve_count(p)!=131073)throw std::runtime_error("analytic line");
-    for(int workers:{1,4}) {
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         skimagexx::set_num_threads(workers);const auto snapshot=skimagexx::get_num_threads();
         std::vector<std::intptr_t> rows(p.rows.size()),columns(p.rows.size());
         const auto flags=std::fetestexcept(FE_ALL_EXCEPT);

@@ -10,6 +10,11 @@ inline int vi_current_counts_controls() {
     using namespace skimagexx;
     using namespace skimagexx::detail;
     if(get_num_threads()!=1)return 1;
+#ifdef _OPENMP
+    constexpr int extra_budget=4;
+#else
+    constexpr int extra_budget=1;
+#endif
     unsigned checked=0;
     auto equal=[](double a,double b){return std::memcmp(&a,&b,8)==0;};
     for(const std::size_t n:{4096u,4099u})for(int ignored_mode:{0,1,2}) {
@@ -20,7 +25,11 @@ inline int vi_current_counts_controls() {
         const std::int64_t labels[]={0,1,2,3},wide_labels[]={64,65,66,67};
         const auto ignored=ignored_mode==2?4u:ignored_mode==1?1u:0u;
         for(int workers:{1,4,0}) {
-            set_num_threads(workers==0?4:workers);
+#ifdef _OPENMP
+            set_num_threads(workers==0?extra_budget:workers);
+#else
+            set_num_threads(1);
+#endif
             LabelPairInput in{a.data(),b.data(),n,labels,ignored,true};
             LabelPairInput wide{wide_a.data(),wide_b.data(),n,wide_labels,ignored,true};
             LabelPairCsr dense,sparse;
@@ -36,12 +45,12 @@ inline int vi_current_counts_controls() {
             VariationInformation x,y,z;
             if(!variation_of_information(in,x,workers)||!variation_of_information(wide,y,workers)
                ||!variation_of_information({dense.data.data(),dense.indices.data(),dense.indptr.data(),4,8,32},z,workers))return 8;
-            const int captured=workers==0?4:workers;
+            const int captured=workers==0?extra_budget:workers;
             if(x.captured_workers!=captured||y.captured_workers!=captured||z.captured_workers!=captured)return 9;
             for(unsigned j=0;j<2;++j)if(!equal(x.values[j],y.values[j])||!equal(x.values[j],z.values[j]))return 10;
             // Positive explicit budget must override the global value, not resnapshot it.
-            set_num_threads(4);VariationInformation explicit_one;
-            if(!variation_of_information(in,explicit_one,1)||explicit_one.captured_workers!=1||get_num_threads()!=4)return 11;
+            set_num_threads(extra_budget);VariationInformation explicit_one;
+            if(!variation_of_information(in,explicit_one,1)||explicit_one.captured_workers!=1||get_num_threads()!=extra_budget)return 11;
             std::size_t kept=0;for(auto v:a)if(ignored_mode==0||(ignored_mode==1&&v!=0))++kept;
             std::vector<double> weights(n);
             // Test setup uses the count primitive's already-owned row coefficient,
@@ -65,6 +74,10 @@ inline int vi_current_counts_controls() {
     }
     set_num_threads(1);
     std::cout<<"VI current counts candidate-equivalence controls="<<checked
-             <<" logicalNNZ32 physicalN4096or4099 workers0,1,4 restored="<<get_num_threads()<<" originals=0 timing=0\n";
+             <<" logicalNNZ32 physicalN4096or4099 workers0,1,4"
+#ifndef _OPENMP
+             <<" serial"
+#endif
+             <<" restored="<<get_num_threads()<<" originals=0 timing=0\n";
     return 0;
 }

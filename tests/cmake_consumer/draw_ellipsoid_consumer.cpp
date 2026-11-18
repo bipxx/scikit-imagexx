@@ -39,7 +39,11 @@ int main(int argc,char** argv) {
         const auto bytes=read<std::uint64_t>(f);
         std::vector<char> expected(bytes);f.read(expected.data(),bytes);require(bool(f));
         DrawEllipsoidPlan p; require(draw_ellipsoid_prepare(axes,spacing,p));require(p.shape==shape);
-        for(int workers:{1,4}) {
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        }) {
             skimagexx::set_num_threads(workers);
             const int snapshot=skimagexx::get_num_threads();
             std::feclearexcept(FE_ALL_EXCEPT);
@@ -60,7 +64,11 @@ int main(int argc,char** argv) {
     DrawEllipsoidPlan large;
     require(draw_ellipsoid_prepare({32,32,32},{1,1,1},large));
     require(large.shape==std::array<std::size_t,3>{67,67,67});require(large.count==300763);
-    for(int workers:{1,4}) {
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         skimagexx::set_num_threads(workers);const int snapshot=skimagexx::get_num_threads();
         std::vector<double> level(large.count);std::vector<std::uint8_t> mask(large.count);
         draw_ellipsoid_bool_into(large,mask.data(),snapshot);

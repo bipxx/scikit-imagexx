@@ -8,6 +8,11 @@
 #include <iostream>
 using namespace skimagexx;
 inline void lbp_saved_modern(){assert(get_num_threads()==1);int count=0;
+#ifdef _OPENMP
+constexpr int worker_counts[]={1,4};
+#else
+constexpr int worker_counts[]={1};
+#endif
 { // feature.draw_multiblock_lbp/default-gray
 std::vector<unsigned char> input={0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5,6,0,1,2,3,4,5};
 std::vector<unsigned char> expected={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,128,63,148,46,200,97,251,148,214,63,56,159,5,108,210,56,223,63,20,20,20,20,20,20,132,63,181,78,232,129,27,181,214,63,89,191,37,140,242,88,223,63,24,24,24,24,24,24,136,63,213,110,8,162,59,213,214,63,121,223,69,172,18,121,223,63,0,0,0,0,0,0,0,0,20,174,71,225,122,20,214,63,184,30,133,235,81,184,222,63,16,16,16,16,16,16,96,63,52,206,103,1,155,52,214,63,216,62,165,11,114,216,222,63,16,16,16,16,16,16,112,63,84,238,135,33,187,84,214,63,248,94,197,43,146,248,222,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,20,174,71,225,122,20,214,63,184,30,133,235,81,184,222,63,16,16,16,16,16,16,96,63,52,206,103,1,155,52,214,63,216,62,165,11,114,216,222,63,16,16,16,16,16,16,112,63,84,238,135,33,187,84,214,63,248,94,197,43,146,248,222,63,24,24,24,24,24,24,120,63,116,14,168,65,219,116,214,63,24,127,229,75,178,24,223,63,16,16,16,16,16,16,128,63,148,46,200,97,251,148,214,63,56,159,5,108,210,56,223,63,20,20,20,20,20,20,132,63,181,78,232,129,27,181,214,63,89,191,37,140,242,88,223,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,120,63,116,14,168,65,219,116,214,63,24,127,229,75,178,24,223,63,16,16,16,16,16,16,128,63,148,46,200,97,251,148,214,63,56,159,5,108,210,56,223,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,20,174,71,225,122,20,214,63,184,30,133,235,81,184,222,63,16,16,16,16,16,16,96,63,52,206,103,1,155,52,214,63,216,62,165,11,114,216,222,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,136,63,213,110,8,162,59,213,214,63,121,223,69,172,18,121,223,63,0,0,0,0,0,0,0,0,20,174,71,225,122,20,214,63,184,30,133,235,81,184,222,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,120,63,116,14,168,65,219,116,214,63,24,127,229,75,178,24,223,63,16,16,16,16,16,16,128,63,148,46,200,97,251,148,214,63,56,159,5,108,210,56,223,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,84,238,135,33,187,84,214,63,248,94,197,43,146,248,222,63,24,24,24,24,24,24,120,63,116,14,168,65,219,116,214,63,24,127,229,75,178,24,223,63,16,16,16,16,16,16,128,63,148,46,200,97,251,148,214,63,56,159,5,108,210,56,223,63,20,20,20,20,20,20,132,63,181,78,232,129,27,181,214,63,89,191,37,140,242,88,223,63,24,24,24,24,24,24,136,63,213,110,8,162,59,213,214,63,121,223,69,172,18,121,223,63,0,0,0,0,0,0,0,0,20,174,71,225,122,20,214,63,184,30,133,235,81,184,222,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,132,63,181,78,232,129,27,181,214,63,89,191,37,140,242,88,223,63,24,24,24,24,24,24,136,63,213,110,8,162,59,213,214,63,121,223,69,172,18,121,223,63,0,0,0,0,0,0,0,0,20,174,71,225,122,20,214,63,184,30,133,235,81,184,222,63,16,16,16,16,16,16,96,63,52,206,103,1,155,52,214,63,216,62,165,11,114,216,222,63,16,16,16,16,16,16,112,63,84,238,135,33,187,84,214,63,248,94,197,43,146,248,222,63,24,24,24,24,24,24,120,63,116,14,168,65,219,116,214,63,24,127,229,75,178,24,223,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,24,24,24,24,24,24,152,63,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,112,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,16,16,16,16,16,16,128,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,24,24,24,24,24,24,136,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,16,16,16,16,16,16,144,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63,20,20,20,20,20,20,148,63};
@@ -21,7 +26,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -38,7 +43,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10,3},{30,3,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -55,7 +60,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{24,3,1},1},PixelType::boolean,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -72,7 +77,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{48,6,2},2},PixelType::uint16,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -89,7 +94,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::uint32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -106,7 +111,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{192,24,8},8},PixelType::uint64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -123,7 +128,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{24,3,1},1},PixelType::int8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -140,7 +145,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{48,6,2},2},PixelType::int16,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -157,7 +162,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::int32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -174,7 +179,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{192,24,8},8},PixelType::int64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -191,7 +196,7 @@ p.first_product_float32=false;p.first_product_half=true;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{48,6,2},2},PixelType::uint16,false,true};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -208,7 +213,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -225,7 +230,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{192,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -242,7 +247,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{48,6,2},2},PixelType::uint16,true,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -259,7 +264,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,true,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -276,7 +281,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{192,24,8},8},PixelType::int64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -293,7 +298,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{192,24,8},8},PixelType::uint64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -310,7 +315,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{192,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -327,7 +332,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -344,7 +349,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -361,7 +366,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -378,7 +383,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -395,7 +400,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -412,7 +417,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -429,7 +434,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -446,7 +451,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0},{3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{6,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{6,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -463,7 +468,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -480,7 +485,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -497,7 +502,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -514,7 +519,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -531,7 +536,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -548,7 +553,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -565,7 +570,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -582,7 +587,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -599,7 +604,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -616,7 +621,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -633,7 +638,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -650,7 +655,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -667,7 +672,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -684,7 +689,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{5,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -701,7 +706,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{5,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -718,7 +723,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{5,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -735,7 +740,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{5,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -752,7 +757,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{std::numeric_limits<double>::quiet_NaN(),0x1.0000000000000p+0,0x0.0p+0},{3}};
 p.less={{std::numeric_limits<double>::quiet_NaN(),0x0.0p+0,0x1.0000000000000p+0},{3}};
 MultiblockLbpInput in{{input.data(),{5,6,3},{144,24,8},8},PixelType::float64,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -769,7 +774,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -786,7 +791,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -803,7 +808,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -820,7 +825,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -837,7 +842,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -854,7 +859,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -871,7 +876,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -888,7 +893,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -905,7 +910,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -922,7 +927,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -939,7 +944,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -956,7 +961,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -973,7 +978,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -990,7 +995,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{5,6,2,3},{36,6,3,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,2,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,6,2,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1007,7 +1012,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{0,6},{6,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{0,6,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{0,6,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1024,7 +1029,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{5,0,3},{0,3,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,0,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{5,0,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1041,7 +1046,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1058,7 +1063,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1075,7 +1080,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1092,7 +1097,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{7,8,3},{96,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{7,8,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1109,7 +1114,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.8000000000000p-1},{}};
 p.less={{0x1.0000000000000p-2},{}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1126,7 +1131,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p-1},{1}};
 p.less={{0x1.0000000000000p-2},{1}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1143,7 +1148,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x0.0p+0,0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0,0x0.0p+0},{2,3}};
 p.less={{0x0.0p+0,0x0.0p+0,0x1.0000000000000p+0,0x1.0000000000000p+0,0x0.0p+0,0x1.0000000000000p+0},{2,3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1160,7 +1165,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1177,7 +1182,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1194,7 +1199,7 @@ p.first_product_float32=false;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{9,10},{10,1},1},PixelType::uint8,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{9,10,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }
@@ -1211,7 +1216,7 @@ p.first_product_float32=true;p.first_product_half=false;
 p.greater={{0x1.0000000000000p+0,0x1.0000000000000p+0,0x1.0000000000000p+0},{3}};
 p.less={{0x0.0p+0,0x1.6147ae147ae14p-1,0x1.eb851eb851eb8p-1},{3}};
 MultiblockLbpInput in{{input.data(),{3,3,3},{36,12,4},4},PixelType::float32,false,false};
-for(int workers:{1,4})for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{3,3,3}));
+for(int workers:worker_counts)for(bool simd:{false,true}){set_num_threads(workers);p.simd=simd;auto out=draw_multiblock_lbp(in,p);assert(out.captured_workers==workers);assert((out.shape==std::vector<std::ptrdiff_t>{3,3,3}));
 const void* data=out.is_half?static_cast<const void*>(out.float16.data()):out.is_float32?static_cast<const void*>(out.float32.data()):static_cast<const void*>(out.float64.data());
 if(expected.size())assert(std::memcmp(data,expected.data(),expected.size())==0);++count;}
 }

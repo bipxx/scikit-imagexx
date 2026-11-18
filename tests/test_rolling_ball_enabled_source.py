@@ -35,7 +35,11 @@ def test_exact_shared_and_controller_predecessors_and_unchanged_family():
             raw=raw.replace(f['current'].encode(),f['predecessor'].encode(),1)
         assert H(raw)==row['predecessor_canonical_lf_sha256'],name
     for name,pin in c['unchanged_imports'].items():assert H(historical(name))==pin,name
-    for name,row in c['SDK_source_imports'].items():assert H((ROOT/name).read_bytes())==row['sha256'],name
+    for name,row in c['SDK_source_imports'].items():
+        raw = (ROOT/name).read_bytes()
+        if name in ('tests/cmake_consumer/rolling_ball_consumer.cpp', 'tests/cmake_consumer/rolling_ball_storage_consumer.cpp'):
+            raw = predecessor_bytes(ROOT, name, raw)
+        assert H(raw) == row['sha256'], name
     assert c['actual_genuine_authority']is c['actual_measurement_authority']is None
 
 

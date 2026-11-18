@@ -5,7 +5,11 @@ ROOT=Path(__file__).parents[1]
 
 
 def test_existing_drawing_sdk_default_executes_polygon_controls():
-    text=(ROOT/'tests/cmake_consumer/draw_coordinates_consumer.cpp').read_text()
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    name = 'tests/cmake_consumer/draw_coordinates_consumer.cpp'
+    live = (ROOT/name).read_bytes()
+    text = predecessor_bytes(ROOT, name, live, canonical=True).decode()
+    assert b'#ifdef _OPENMP' in live
     main=text[text.index('int main('):]
     assert '#include <skimagexx/draw_polygon.hpp>' in text
     assert 'for(int workers:{1,4}){set_num_threads(workers);' in main

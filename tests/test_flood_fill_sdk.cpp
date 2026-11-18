@@ -32,9 +32,13 @@ int main(){
  skimagexx::FloodGeometry g{{2,2},{2,1},{0,0},{3,3},std::vector<std::uint8_t>(9,1),false};
  std::uint8_t input[4]={1,1,2,2};
  auto serial=skimagexx::flood_fill(input,g,std::uint8_t(9));
+#ifdef _OPENMP
  skimagexx::set_num_threads(4);auto optional=skimagexx::flood_fill(input,g,std::uint8_t(9));
  if(serial!=optional||skimagexx::get_num_threads()!=4)throw std::runtime_error("ordered serial worker policy");
  skimagexx::set_num_threads(1);
+#else
+ if(serial!=std::vector<std::uint8_t>{9,9,2,2})throw std::runtime_error("ordered serial fill policy");
+#endif
  auto invalid=g;invalid.seed[0]=2;
  try{skimagexx::flood(input,invalid);throw std::runtime_error("invalid seed accepted");}catch(const std::out_of_range&){}
  invalid=g;invalid.footprint.clear();

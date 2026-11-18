@@ -4,12 +4,22 @@
 #include <iostream>
 #include <string>
 
+namespace {
+#ifdef _OPENMP
+constexpr int worker_counts[]={1,4};
+constexpr const char* worker_summary="1,4";
+#else
+constexpr int worker_counts[]={1};
+constexpr const char* worker_summary="1";
+#endif
+}
+
 std::size_t rand_controls() {
     using namespace skimagexx;using namespace skimagexx::detail;
     std::size_t checks=0;
     const auto check=[&](bool value){++checks;if(!value)throw std::runtime_error("installed Rand control "+std::to_string(checks));};
     const auto initial=get_num_threads();check(initial==1);
-    for(int workers:{1,4}) {
+    for(int workers:worker_counts) {
         set_num_threads(workers);
         for(const auto& row:label_pair_rand_originals::rows) {
             LabelPairRandTerms terms;
@@ -33,8 +43,8 @@ int main(int argc,char** argv) {
     if(argc!=1&&!rand_only&&!preweighted_only)return 2;
     if(argc==1)std::cout<<"installed density controls="<<label_pair_controls::density()<<'\n';
     if(!rand_only&&!preweighted_only)std::cout << "installed label-pair controls=" << label_pair_controls::run()
-              << "; originals=5; workers=1,4; restored=1; available="
+              << "; originals=5; workers="<<worker_summary<<"; restored=1; available="
               << skimagexx::has_avx2() << '\n';
-    if(!preweighted_only)std::cout<<"installed Rand controls="<<rand_controls()<<"; originals=5; workers=1,4; restored=1; available="<<skimagexx::has_avx2()<<'\n';
-    if(!rand_only)std::cout<<"installed preweighted controls="<<contingency_preweighted_controls::run()<<"; originals=5; workers=1,4; restored=1; available="<<skimagexx::has_avx2()<<'\n';
+    if(!preweighted_only)std::cout<<"installed Rand controls="<<rand_controls()<<"; originals=5; workers="<<worker_summary<<"; restored=1; available="<<skimagexx::has_avx2()<<'\n';
+    if(!rand_only)std::cout<<"installed preweighted controls="<<contingency_preweighted_controls::run()<<"; originals=5; workers="<<worker_summary<<"; restored=1; available="<<skimagexx::has_avx2()<<'\n';
 }

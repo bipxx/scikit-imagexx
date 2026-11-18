@@ -12,7 +12,11 @@
 inline void util_views_consumer() {
     using namespace skimagexx;using I=std::ptrdiff_t;
     const auto saved=get_num_threads();assert(saved==1);std::size_t checked=0;
-    for(auto workers:{1,4}) {
+    for(auto workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         set_num_threads(workers);
         for(I rows=1;rows<=6;++rows)for(I cols=1;cols<=8;++cols)for(I word:{1,2,3,8,16}) {
             std::vector<unsigned char> input(std::size_t(rows*cols*word));
@@ -72,5 +76,9 @@ inline void util_views_consumer() {
         assert(std::fegetround()==rounding&&std::fetestexcept(FE_ALL_EXCEPT)==flags);++checked;
     }
     assert(std::fesetenv(&environment)==0);set_num_threads(saved);assert(get_num_threads()==saved);
-    std::cout<<"PASS util_views complete_operations controls="<<checked<<" workers1_4_restored=1 serial_metadata=1\n";
+    std::cout<<"PASS util_views complete_operations controls="<<checked<<" workers1"
+#ifdef _OPENMP
+        "_4"
+#endif
+        "_restored=1 serial_metadata=1\n";
 }

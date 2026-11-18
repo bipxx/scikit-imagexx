@@ -25,7 +25,11 @@ inline std::size_t run() {
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
     const auto original_csr=_mm_getcsr();
 #endif
-    for(int workers:{1,4}) {
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         set_num_threads(workers);
         for(const auto& f:label_pair_fixture::originals) {
             std::size_t kept=0;

@@ -8,7 +8,12 @@ def test_native_source_pins_and_historical_packet():
     d=json.loads((c.ROOT/'coverage/contracts/finite-radon-native-v4.json').read_bytes())
     assert not d['API_completion']and not d['ready_for_integration']and d['original_calls']==0
     assert hashlib.sha256(c.CONTRACT.read_bytes()).hexdigest()==d['source_contract_sha256']
-    for n,p in d['source_files'].items():assert hashlib.sha256((c.ROOT/n).read_bytes()).hexdigest()==p,n
+    for name,pin in d['source_files'].items():
+        raw = (c.ROOT/name).read_bytes()
+        if name in ('tests/cmake_consumer/finite_radon_consumer.hpp', 'tests/test_finite_radon_native_source.py'):
+            from tools.mark_lbp_fp_context import predecessor_bytes
+            raw = predecessor_bytes(c.ROOT, name, raw)
+        assert hashlib.sha256(raw).hexdigest()==pin,name
 
 def test_native_modular_spans_and_budget_not_floating_claim():
     s=(c.ROOT/'src/finite_radon.cpp').read_text();assert s.count('get_num_threads()')==1

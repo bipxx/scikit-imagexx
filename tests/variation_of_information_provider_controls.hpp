@@ -142,6 +142,11 @@ template<class Input>bool success(Input input,VariationInformation& out,Audit& a
 
 inline int compatible_counts() {
     Caller32 caller("compatible-counts");if(!caller.good())return 100;
+#ifdef _OPENMP
+    constexpr int extra_budget=4;
+#else
+    constexpr int extra_budget=1;
+#endif
     unsigned checked=0;
     // Same immutable fixture recipes as current_counts_controls.hpp. This
     // group calls the compatible operation; it does not rerun default VI.
@@ -165,7 +170,12 @@ inline int compatible_counts() {
         if(!skimagexx::detail::label_pair_counts_preweighted({a.data(),b.data(),weights.data(),n},storage,1)
            ||storage.indptr.back()!=32||storage.data.size()!=n)return 102;
         for(int workers:{1,4,0}) {
-            skimagexx::set_num_threads(workers==0?4:workers);const int captured=workers==0?4:workers;
+#ifdef _OPENMP
+            skimagexx::set_num_threads(workers==0?extra_budget:workers);
+#else
+            skimagexx::set_num_threads(1);
+#endif
+            const int captured=workers==0?extra_budget:workers;
             Audit audit;VariationInformation x,y,z,logical,explicit_one;
             if(!success(in,x,audit,workers)||!success(wide,y,audit,workers)
                ||!success(VariationTableView{dense.data.data(),dense.indices.data(),dense.indptr.data(),4,8,32},z,audit,workers)
@@ -173,10 +183,10 @@ inline int compatible_counts() {
             if(!same(x,y)||!same(z,logical)||std::memcmp(x.values.data(),z.values.data(),16)
                ||x.normalization_fp_status!=dense.normalization_fp_status||z.normalization_fp_status!=0
                ||x.captured_workers!=captured||z.captured_workers!=captured)return 104;
-            skimagexx::set_num_threads(4);
+            skimagexx::set_num_threads(extra_budget);
             if(!success(in,explicit_one,audit,1)||explicit_one.captured_workers!=1
                ||std::memcmp(x.values.data(),explicit_one.values.data(),16)
-               ||x.normalization_fp_status!=explicit_one.normalization_fp_status||skimagexx::get_num_threads()!=4)return 105;
+               ||x.normalization_fp_status!=explicit_one.normalization_fp_status||skimagexx::get_num_threads()!=extra_budget)return 105;
             auto untouched=sentinel();const auto expected=untouched;const auto calls=audit.calls;
             if(invoke(VariationTableView{storage.data.data(),storage.indices.data(),storage.indptr.data(),4,8,n},untouched,{log2_batch,&audit},workers)
                ||!same(untouched,expected)||audit.calls!=calls)return 106;
@@ -186,7 +196,12 @@ inline int compatible_counts() {
     }
     skimagexx::set_num_threads(1);
     if(!caller.finish()||checked!=18)return 108;
-    std::cout<<"VI SDK compatible counts="<<checked<<" logicalNNZ32 physicalN4096or4099 workers0,1,4 explicit1overglobal4\n";
+    std::cout<<"VI SDK compatible counts="<<checked<<" logicalNNZ32 physicalN4096or4099 workers0,1,4"
+#ifdef _OPENMP
+             <<" explicit1overglobal4\n";
+#else
+             <<" serial global1\n";
+#endif
     return 0;
 }
 

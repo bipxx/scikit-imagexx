@@ -156,7 +156,11 @@ void interior_worker_controls(){
  const std::size_t height=513,width=517;std::vector<std::uint8_t> input(height*width),output(input.size());
  for(std::size_t y=0;y<height;++y)for(std::size_t x=0;x<width;++x)input[y*width+x]=((x+y)&1)?255:0;
  ComponentsView view{input.data(),PixelType::boolean,false,false,{height,width},{std::ptrdiff_t(width),1}};
- for(int budget:{4,1})for(unsigned connectivity:{1u,2u})for(bool inner:{false,true}) {
+ for(int budget:{
+#ifdef _OPENMP
+  4,
+#endif
+  1})for(unsigned connectivity:{1u,2u})for(bool inner:{false,true}) {
   set_num_threads(budget);FindBoundaryParameters p{inner?FindBoundaryMode::inner:FindBoundaryMode::thick,connectivity,0,true};
   require(find_boundaries_into(view,p,output.data(),{std::ptrdiff_t(width),1},0));
   for(std::size_t i=0;i<output.size();++i)require(output[i]==(!inner||input[i]!=0));
@@ -190,7 +194,11 @@ int main(int argc,char** argv){
  // Cross the existing dispatcher threshold; current global budget is sampled per call.
  const std::size_t n=300001;std::vector<std::uint8_t> a(n),out(n);for(std::size_t i=0;i<n;++i)a[i]=i&1;
  ComponentsView v{a.data(),PixelType::uint8,false,false,{n},{1}};FindBoundaryParameters p;
- for(int budget:{4,1}){set_num_threads(budget);require(find_boundaries_into(v,p,out.data(),{1},0));for(auto x:out)require(x==1);require(get_num_threads()==budget);}
+ for(int budget:{
+#ifdef _OPENMP
+  4,
+#endif
+  1}){set_num_threads(budget);require(find_boundaries_into(v,p,out.data(),{1},0));for(auto x:out)require(x==1);require(get_num_threads()==budget);}
  set_num_threads(1);require(get_num_threads()==1);
  std::cout<<"PASS analytic controls="<<controls<<" global_restored="<<get_num_threads()<<"\n";
 }

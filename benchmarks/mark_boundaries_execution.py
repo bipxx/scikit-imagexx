@@ -17,7 +17,7 @@ import sys
 import warnings
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v11.json'
+CONTEXT='coverage/contracts/mark-boundaries-benchmark-execution-v12.json'
 API='segmentation.mark_boundaries'
 LIMITS=('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','BLIS_NUM_THREADS')
 digest=lambda raw:hashlib.sha256(raw).hexdigest()
@@ -48,7 +48,7 @@ def current_context(root,context_path=CONTEXT):
         return c
     successor=c.get('validation_source_successor')
     if successor is None:
-        assert not str(context_path).endswith(('-v8.json','-v9.json','-v10.json','-v11.json')),'Missing current validation envelope'
+        assert not str(context_path).endswith(('-v8.json','-v9.json','-v10.json','-v11.json','-v12.json')),'Missing current validation envelope'
         return c  # Frozen historical contexts keep their own gates.
     assert successor['schema']=='mark-lbp-sdk-test-validation-v1'
     prior=successor['predecessor_context'];encoded=(Path(root)/prior['path']).read_bytes()

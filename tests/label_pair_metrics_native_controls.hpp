@@ -23,7 +23,11 @@ inline std::size_t run() {
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
     const auto original_csr=_mm_getcsr();
 #endif
-    for(int workers:{1,4}) {
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         set_num_threads(workers);
         for(const auto& f:label_pair_fixture::originals) {
             const LabelPairInput input{f.truth.data(),f.test.data(),f.truth.size(),f.ignored.data(),f.ignored.size(),f.normalize};
@@ -110,7 +114,11 @@ inline std::size_t density() {
     const auto initial=get_num_threads();check(initial==1);std::fenv_t caller;check(std::fegetenv(&caller)==0);
     for(auto n:{std::size_t{4},std::size_t{31},std::size_t{262151}}){
         std::vector<std::int64_t> truth(n,1),test(n,2);
-        for(int workers:{1,4}){set_num_threads(workers);
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        }){set_num_threads(workers);
             for(bool normalize:{false,true}){
                 const double weight=normalize?1./double(n):1.;double expected=weight;
                 for(std::size_t i=1;i<n;++i)expected+=weight;

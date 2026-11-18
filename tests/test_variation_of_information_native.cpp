@@ -38,10 +38,15 @@ int main() {
     const double coefficients[]={1.,1.,1.,1.};
     skimagexx::VariationTableView view{coefficients,indices,indptr,2,2,4};
     skimagexx::VariationInformation out;
-    skimagexx::set_num_threads(4);
-    const bool parallel=skimagexx::variation_of_information(view,out);
+#ifdef _OPENMP
+    constexpr int global_workers=4;
+#else
+    constexpr int global_workers=1;
+#endif
+    skimagexx::set_num_threads(global_workers);
+    const bool global_dispatch=skimagexx::variation_of_information(view,out);
     skimagexx::set_num_threads(1);
-    failures+=!(parallel&&out.captured_workers==4&&out.values[0]==4.&&out.values[1]==4.);++controls;
+    failures+=!(global_dispatch&&out.captured_workers==global_workers&&out.values[0]==4.&&out.values[1]==4.);++controls;
     for(int fault=0;fault<7;++fault) {
         auto bad=view;double value;std::uint64_t word=0;
         if(fault==0)bad.rows=0;

@@ -96,10 +96,18 @@ def _half_main(args):
     utils = importlib.import_module('skimage._shared.utils')
     dtype_module = importlib.import_module('skimage.util.dtype')
     owned = importlib.import_module('skimagexx.color')
-    contract_path = root/'coverage/contracts/combine-stains-half-benchmark.json'
+    contract_path = root/'coverage/contracts/combine-stains-half-benchmark-v2.json'
     reference_path = root/'coverage/contracts/combine-stains-half.json'
     contract_raw, reference_raw = contract_path.read_bytes(), reference_path.read_bytes()
     contract, saved = json.loads(contract_raw), json.loads(reference_raw)
+    predecessor = contract['source_predecessor']
+    predecessor_raw = (root/predecessor['path']).read_bytes()
+    assert hashlib.sha256(predecessor_raw).hexdigest() == predecessor['sha256']
+    predecessor_contract = json.loads(predecessor_raw)
+    assert {key: value for key, value in contract.items() if key not in ('source_closure', 'source_predecessor')} == {
+        key: value for key, value in predecessor_contract.items() if key != 'source_closure'
+    }
+    assert set(contract['source_closure']) == set(predecessor_contract['source_closure'])
     assert skimage.__version__ == '0.26.0' and np.__version__ in saved['original_provenance']
     assert hashlib.sha256(reference_raw).hexdigest() == contract['reference_contract_sha256']
     assert hashlib.sha256(inspect.getsource(sustained_measure).encode()).hexdigest() == contract['method_sha256']

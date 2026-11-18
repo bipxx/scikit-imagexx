@@ -20,7 +20,12 @@ from finite_radon_cases_v1 import case_specs,case_bounds
 def test_source_pins_method_and_frozen_history():
     common=driver.common_adapter()
     for name,row in DATA['sources'].items():assert common.digest(common.source_bytes(ROOT/name))==row['current_canonical_sha256'],name
-    for name,pin in DATA['production_source_canonical_sha256'].items():assert common.digest(common.source_bytes(ROOT/name))==pin,name
+    for name,pin in DATA['production_source_canonical_sha256'].items():
+        raw = common.source_bytes(ROOT/name)
+        if name == 'src/execution.hpp':
+            from tools.mark_lbp_fp_context import predecessor_bytes
+            raw = predecessor_bytes(ROOT, name, raw, canonical=True)
+        assert common.digest(raw) == pin, name
     for name,pin in DATA['historical_raw_sha256'].items():assert common.digest((ROOT/name).read_bytes())==pin,name
     source=(ROOT/'tools/montage_sustained.py').read_text();tree=ast.parse(source);fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name=='measure')
     assert common.digest((ast.get_source_segment(source,fn)+'\n').encode())==DATA['method']['method_sha256']
@@ -70,7 +75,14 @@ def synthetic(tmp_path,monkeypatch,api,fault=None):
     # its receipts are explicit inert test inputs, never a ready product.
     import next_util_benchmark_support as support
     monkeypatch.setattr(support,'CONTEXT',CONTEXT)
-    return support.synthetic_binding(tmp_path,api,monkeypatch,fault)
+    from tools.mark_lbp_fp_context import predecessor_bytes
+    header = ROOT / 'src/execution.hpp'
+    read = Path.read_bytes
+    previous = predecessor_bytes(ROOT, 'src/execution.hpp', read(header))
+    with monkeypatch.context() as source_fixture:
+        # Project this input only when creating the historical synthetic root.
+        source_fixture.setattr(Path, 'read_bytes', lambda path: previous if path == header else read(path))
+        return support.synthetic_binding(tmp_path,api,monkeypatch,fault)
 
 
 @pytest.mark.parametrize('fault',('cases','core','revision','runtime','root','stager','git-root','context','route','expired','go'))

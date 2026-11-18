@@ -12,9 +12,16 @@
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
 #include <xmmintrin.h>
 #endif
+namespace {
+#ifdef _OPENMP
+constexpr int worker_counts[]={1,4};
+#else
+constexpr int worker_counts[]={1};
+#endif
+}
 std::size_t integer_stage_controls(){
  using namespace skimagexx;using namespace skimagexx::detail;const auto previous=get_num_threads();std::size_t checks=0;
- for(int workers:{1,4}){
+ for(int workers:worker_counts){
   set_num_threads(workers);double image=-0.,color=0.,alpha=-1.;std::intptr_t zero=0;
   SetColorView v{&image,{1,1,1},{8,8,0},&zero,&zero,1,&color,&alpha};v.integer_product=true;
   assert(draw_set_color(v,workers)&&image==0&&!std::signbit(image));++checks;
@@ -32,7 +39,7 @@ std::size_t integer_stage_controls(){
 }
 std::size_t float32_controls(){
  using namespace skimagexx;using namespace skimagexx::detail;const auto previous=get_num_threads();std::size_t checks=0;
- for(int workers:{1,4}){
+ for(int workers:worker_counts){
   set_num_threads(workers);float pixel=.5f;double color=.25,alpha=.5;std::intptr_t zero=0;
   SetColorView v{&pixel,{1,1,1},{4,4,0},&zero,&zero,1,&color,&alpha};v.image_float32=true;
   assert(draw_set_color(v,workers)&&pixel==.375f);++checks;
@@ -58,7 +65,7 @@ int main(int argc,char**argv){
 
  using namespace skimagexx;using namespace skimagexx::detail;
  const auto old=get_num_threads();std::size_t checks=integer_checks+f32_checks;
- for(int workers:{1,4}){
+ for(int workers:worker_counts){
   set_num_threads(workers);
   double image[4]={.5,.75,.25,1.};std::intptr_t rr[3]={0,0,1},cc[3]={0,0,1};double color=.25,alpha[3]={.25,.5,1.};
   SetColorView v{image,{2,2,1},{16,8,0},rr,cc,3,&color,alpha};

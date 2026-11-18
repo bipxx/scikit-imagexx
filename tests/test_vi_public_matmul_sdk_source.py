@@ -63,7 +63,12 @@ def missing(text):
 class SourceControls(unittest.TestCase):
     def test_01_exact_draft_and_frozen_source(self):
         for name, pin in {**FROZEN, **CURRENT_PRODUCTION, **ADDITIVE_SDK}.items():
-            self.assertEqual(sha(ROOT / name), pin, name)
+            raw = (ROOT / name).read_bytes()
+            if name in ('tests/cmake_consumer/variation_of_information_enabled_consumer.cpp', 'tests/variation_of_information_current_counts_controls.hpp', 'tests/variation_of_information_matmul_controls_v1.hpp', 'tests/variation_of_information_provider_controls.hpp'):
+                from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+                from tools.vi_public_matmul_context import immediate_predecessor_bytes
+                raw = immediate_predecessor_bytes(ROOT, name, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), pin, name)
     def test_02_old_whole_native_and_header_prefixes(self):
         for name, (length, pin) in OLD_API_PREFIXES.items():
             self.assertEqual(hashlib.sha256((ROOT / name).read_bytes()[:length]).hexdigest(), pin)
@@ -96,11 +101,18 @@ class SourceControls(unittest.TestCase):
         self.assertIn('a.captured_workers==b.captured_workers', text)
         self.assertIn('out.normalization_fp_status=0x1234u;out.captured_workers=91;', text)
     def test_08_worker_capture_and_host_effect(self):
-        self.assertIn('for(int workers:{1,4,0})', H)
-        self.assertIn('skimagexx::set_num_threads(4);Audit a;a.change_global=true', H)
-        self.assertIn('if(next==1&&audit.change_global)skimagexx::set_num_threads(2)', H)
-        self.assertIn('skimagexx::get_num_threads()!=2', H)
-        self.assertIn('out.captured_workers!=captured', H)
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        from tools.vi_public_matmul_context import immediate_predecessor_bytes
+        raw = (ROOT / ADDITIVE_HEADER).read_bytes()
+        historical = immediate_predecessor_bytes(ROOT, ADDITIVE_HEADER, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256, True).decode()
+        self.assertIn('for(int workers:{1,4,0})', historical)
+        self.assertIn('skimagexx::set_num_threads(4);Audit a;a.change_global=true', historical)
+        self.assertIn('if(next==1&&audit.change_global)skimagexx::set_num_threads(2)', historical)
+        self.assertIn('skimagexx::get_num_threads()!=2', historical)
+        self.assertIn('out.captured_workers!=captured', historical)
+        for control in ('extra_budget=4', 'extra_budget=1', 'after_callback=2', 'after_callback=1',
+                        'out.captured_workers!=captured', 'get_num_threads()!=after_callback'):
+            self.assertIn(control, H)
 
     def test_09_both_entry_failure_groups(self):
         self.assertIn('failures(table)', H)

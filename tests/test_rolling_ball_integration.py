@@ -27,7 +27,11 @@ def test_rolling_ball_shared_source():
     assert 'installed_rolling_ball_consumer'in(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
     for source,dest,name in (('tests/test_rolling_ball_sdk.cpp','tests/cmake_consumer/rolling_ball_consumer.cpp','rolling_ball_float_client'),('tests/test_rolling_ball_sdk_dtypes.cpp','tests/cmake_consumer/rolling_ball_storage_consumer.cpp','rolling_ball_storage_client')):
         expected=(ROOT/source).read_text().replace('int main(int argc,char** argv)','int '+name+'(int argc,char** argv)').replace('}catch(const std::exception& e){std::cerr','return 0;}catch(const std::exception& e){std::cerr')
-        current=(ROOT/dest).read_text();assert current.startswith(expected)
+        live=(ROOT/dest).read_bytes()
+        if dest in ('tests/cmake_consumer/rolling_ball_consumer.cpp', 'tests/cmake_consumer/rolling_ball_storage_consumer.cpp'):
+            from tools.mark_lbp_fp_context import predecessor_bytes
+            live = predecessor_bytes(ROOT, dest, live, canonical=True)
+        current = live.decode();assert current.startswith(expected)
         if name.endswith('storage_client'):assert current==expected
     assert 'rolling_ball_storage_client(2,storage_args)'in(ROOT/'tests/cmake_consumer/rolling_ball_consumer.cpp').read_text()
 

@@ -10,7 +10,11 @@ namespace { void check(bool ok){if(!ok)throw std::runtime_error("installed footp
 int main(){
     try{
         check(get_num_threads()==1);
-        for(int workers:{1,4}){
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        }){
             set_num_threads(workers);check(get_num_threads()==workers);
             check(footprint_shapes_octahedron_axis(1)==3);
             std::array<unsigned char,27> octahedron{};

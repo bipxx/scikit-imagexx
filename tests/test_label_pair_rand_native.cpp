@@ -18,7 +18,11 @@ int main() {
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
     const auto initial_csr=_mm_getcsr();
 #endif
-    for(int workers:{1,4}) {
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }) {
         set_num_threads(workers);
         for(const auto& row:label_pair_rand_originals::rows) {
             const auto before_true=row.truth,before_test=row.test;
@@ -69,5 +73,9 @@ int main() {
     check(_mm_getcsr()==changed);_mm_setcsr(initial_csr);
 #endif
     set_num_threads(initial);check(get_num_threads()==1);std::fesetenv(&original);
-    std::cout<<"Rand controls="<<checks<<"; originals=5; workers=1,4; restored=1\n";
+    std::cout<<"Rand controls="<<checks<<"; originals=5; workers=1"
+#ifdef _OPENMP
+        ",4"
+#endif
+        "; restored=1\n";
 }

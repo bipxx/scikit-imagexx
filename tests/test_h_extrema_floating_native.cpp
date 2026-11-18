@@ -6,7 +6,6 @@
 #include <cfenv>
 #include <cmath>
 #include <cstdint>
-#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <limits>
@@ -182,7 +181,6 @@ void refusal_and_metadata() {
 }
 int main() {
     check(get_num_threads()==1);
-    const bool portable=std::getenv("SKIMAGEXX_EXPECT_OPENMP_OFF")!=nullptr;
     struct Item {ReconstructionType type;std::size_t bytes;std::uint64_t six;bool single;};
     const Item items[]={
         {ReconstructionType::boolean,1,1,false},
@@ -193,7 +191,9 @@ int main() {
         {ReconstructionType::float16,2,0x4600,true},{ReconstructionType::float32,4,0x40c00000,true},
         {ReconstructionType::float64,8,0x4018000000000000ULL,false}};
     for(int workers:{1,4}) {
-        if(portable && workers==4){rejected([]{set_num_threads(4);});check(get_num_threads()==1);continue;}
+#ifndef _OPENMP
+        if(workers==4){rejected([]{set_num_threads(4);});check(get_num_threads()==1);continue;}
+#endif
         set_num_threads(workers);check(get_num_threads()==workers);
         for(const auto& item:items)for(bool swap:{false,true})for(bool reverse:{false,true})
             for(std::size_t n=1;n<=33;++n)layouts(item.type,item.bytes,item.six,item.single,swap,reverse,n);

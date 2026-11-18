@@ -65,9 +65,14 @@ int rolling_ball_float_client(int argc,char** argv) {
         check(argc==2);
         check(skimagexx::get_num_threads()==1);
         saved(argv[1]);independent_controls();
+#ifdef _OPENMP
         skimagexx::set_num_threads(4);saved(argv[1]);independent_controls();
         skimagexx::set_num_threads(1);
         std::cout<<"52 saved completeoperations x workers1/4 + large parallel/default/native controls PASS\n";
+#else
+        check(skimagexx::get_num_threads()==1);
+        std::cout<<"52 saved completeoperations x workers1 + large serial/default/native controls PASS\n";
+#endif
     return 0;}catch(const std::exception& e){std::cerr<<e.what()<<"\n";return 1;}
 }
 

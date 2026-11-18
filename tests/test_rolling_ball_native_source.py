@@ -15,7 +15,12 @@ H=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 def test_current_native_closure_and_frozen_source_are_exact():
     context=json.loads(CONTEXT.read_bytes())
     for group in('source_files_raw_sha256','frozen_source_files_raw_sha256'):
-        for name,pin in context[group].items():assert H(ROOT/name)==pin,name
+        for name,pin in context[group].items():
+            raw = (ROOT/name).read_bytes()
+            if name in ('src/execution.hpp', 'tests/test_rolling_ball_native_source.py'):
+                from tools.mark_lbp_fp_context import predecessor_bytes
+                raw = predecessor_bytes(ROOT, name, raw)
+            assert hashlib.sha256(raw).hexdigest() == pin, name
     assert context['reference_calls_remaining']==0 and context['actual_original_authority']is context['actual_performance_authority']is None
     assert context['state']=='PRIVATE_UNREADY_NO_PUBLIC_REGISTRATION'
 

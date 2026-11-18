@@ -16,7 +16,11 @@ int main(){
         const ColocView second{b,b,sizeof(b),{shape,1},{strides,1},ColocType::uint8,false};
         const ColocView mask{b,b,sizeof(b),{shape,1},{strides,1},ColocType::boolean,false};
         auto binary_first=first;binary_first.type=ColocType::boolean;
-        for(int workers:{1,4}){
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        }){
             set_num_threads(workers);check(get_num_threads()==workers);
             check(coloc_validate(first)==6&&coloc_all_finite(first)&&coloc_binary_valid(first).value);
             check(coloc_count_nonzero(binary_first)==3&&coloc_joint_count(binary_first,mask)==2);

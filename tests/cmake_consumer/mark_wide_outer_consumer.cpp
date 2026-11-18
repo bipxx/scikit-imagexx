@@ -109,7 +109,11 @@ int main(){
     try{
         std::uint16_t endian=1;check(*reinterpret_cast<unsigned char*>(&endian)==1,"little endian literal words required");
         check(skimagexx::get_num_threads()==1,"initial SDK defaultworkers1");const auto rows=skimagexx_test::mark_wide_saved_cases();check(rows.size()==8,"eight saved rows");
-        const int all_budgets[3][2]={{1,0},{4,0},{1,4}};
+#ifdef _OPENMP
+        const int all_budgets[][2]={{1,0},{4,0},{1,4}};
+#else
+        const int all_budgets[][2]={{1,0},{1,4}};
+#endif
         for(const auto& budgets:all_budgets){
             skimagexx::set_num_threads(budgets[0]);
             for(const auto& row:rows){run_case(row,budgets[1]);check(skimagexx::get_num_threads()==budgets[0],"SDK globalworker changed");++checked;}
@@ -118,8 +122,14 @@ int main(){
     }catch(...){primary=std::current_exception();}
     skimagexx::set_num_threads(1);const bool restored=restore_exact(process);
     if(primary){try{std::rethrow_exception(primary);}catch(const std::exception& error){std::cerr<<error.what()<<'\n';}if(!restored)std::cerr<<"secondary process32 restore failure\n";return 1;}
+#ifdef _OPENMP
     if(!restored||checked!=24)return 1;
-    std::cout<<"PASS new wide saved SDK records=8 completecalls=24 frontier_refusals=4 profiles=2 default1/global4/explicit4 caller32exact; no originals or timing\n";return 0;
+    std::cout<<"PASS new wide saved SDK records=8 completecalls=24 frontier_refusals=4 profiles=2 default1/global4/explicit4 caller32exact; no originals or timing\n";
+#else
+    if(!restored||checked!=16)return 1;
+    std::cout<<"PASS new wide saved SDK records=8 completecalls=16 frontier_refusals=4 profiles=2 default1/explicit4 serial caller32exact; no originals or timing\n";
+#endif
+    return 0;
 }
 #else
 int main(){std::cerr<<"New wide OUTER SDK domain requires GNUx64 Linux/glibc32; Windows/other platforms remain unsupported, not a parity PASS\n";return 2;}

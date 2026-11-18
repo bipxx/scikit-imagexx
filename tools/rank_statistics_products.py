@@ -35,6 +35,7 @@ MAX_TREE_RUNTIME_SOURCE_PINS = {'src/max_tree.cpp': '1808c8581b465a96a5d5ee9cccd
 MAX_TREE_ORACLE_PATH = 'tests/cmake_consumer/max_tree_source_oracle.bin'
 MAX_TREE_ORACLE_SHA256 = 'e7162c6aa8a43434e0c6db0f835912dfc48b64eedca7e79192cab61bc39d93b5'
 RECONSTRUCTION_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': 'eecb84170c45f15c563d380a58a447e35a82038b5d1bfad0337d8fbd89692b16'}
+RECONSTRUCTION_CURRENT_RUNTIME_SOURCE_PINS = {'include/skimagexx/reconstruction.hpp': '334aae965c0bff534146e7a7cc18a18c180beb3d0d47cba5dc83c9c30de234a8', 'src/reconstruction.cpp': 'a81b1e7acb903e6ecc1fa900c736521bc8b917282467e9b9e3a087ddf4317e2b', 'src/simd_reconstruction_avx2.cpp': '133c63473a284d163c6ba689b030266861a2b653ff5628b28f926bb82366d5fb', 'src/bind_reconstruction.cpp': '8d609e6ed59969ee6f48e5f32f2726cef2f21fed3ab940d91941b3a56ff32c94', 'python/skimagexx/_reconstruction.py': 'c190d7e8c879da82facdd4bbfd9d751535eed4a3f08870b7088d14b4372d4fd0', 'tests/test_reconstruction_native.cpp': '3c4d46476a8763862524d40859b68c2eec2db093aeac099d9c7dbe91bf57f164', 'src/execution.hpp': 'd1ee8be746e64b7c68c472f56da6e0e7357a57a6222392f2c00bb387ef8f7d8d', 'tests/native_worker_team.hpp': '375985a80079a20d15741e19bd9827f7cc0493b28a3862b3a9c8e26f2f3f7eec'}
 RECONSTRUCTION_ORACLE_PATH = 'tests/cmake_consumer/reconstruction_source_oracle.bin'
 RECONSTRUCTION_ORACLE_SHA256 = 'b3c8f265e92a431ba282ad715856d9c7f4d24834b878876c63a90dcf703e860e'
 RECONSTRUCTION_TRACE_POLICY_PINS = {'tests/reconstruction_trace_policy.py': '946ad095e76630438440209eb065c7482543ff1e57d2dce7a3c499f768e364d6', 'tests/test_reconstruction_contracts.py': '38b12d918c120e86d09fa1b0be246bb82e25b483184da650fbbae695e2d11bcf', 'tests/test_reconstruction_trace_policy.py': '722a000c7d0087a5883362d030eb4a48ddef6527a6d96f99be0ca2aa8fe4d592', 'coverage/evidence/reconstruction-trace-policy-migration.json': 'ebc9b988148d0d87e49d5a93eb69a1f74a71688cd5cc6c6dea85b3137ccef978', 'coverage/evidence/reconstruction-trace-policy-observations.json': '39b8a1b0e07018198550e624abd3955cf49928e87521b91a0936ca859312ed2e'}
@@ -244,8 +245,11 @@ def validate_reconstruction_source(archive,snapshot,scope):
                 if isinstance(target,ast.Name) and target.id in ('RECONSTRUCTION_RUNTIME_SOURCE_PINS','RECONSTRUCTION_TRACE_POLICY_PINS','RECONSTRUCTION_ORACLE_PATH','RECONSTRUCTION_ORACLE_SHA256'):
                     require(target.id not in declared,'duplicate reconstruction source pin declaration')
                     declared[target.id]=ast.literal_eval(node.value)
-    require(declared==dict(RECONSTRUCTION_RUNTIME_SOURCE_PINS=RECONSTRUCTION_RUNTIME_SOURCE_PINS,RECONSTRUCTION_TRACE_POLICY_PINS=RECONSTRUCTION_TRACE_POLICY_PINS,RECONSTRUCTION_ORACLE_PATH=RECONSTRUCTION_ORACLE_PATH,RECONSTRUCTION_ORACLE_SHA256=RECONSTRUCTION_ORACLE_SHA256),'reconstruction source pins absent or changed')
-    for name,want in {**RECONSTRUCTION_RUNTIME_SOURCE_PINS,**RECONSTRUCTION_TRACE_POLICY_PINS,RECONSTRUCTION_ORACLE_PATH:RECONSTRUCTION_ORACLE_SHA256}.items():
+    runtime_pins = RECONSTRUCTION_RUNTIME_SOURCE_PINS
+    if scope['name'] == CURRENT_PRODUCT_SCOPE and 'tests/native_worker_team.hpp' in archive.namelist():
+        runtime_pins = RECONSTRUCTION_CURRENT_RUNTIME_SOURCE_PINS
+    require(declared==dict(RECONSTRUCTION_RUNTIME_SOURCE_PINS=runtime_pins,RECONSTRUCTION_TRACE_POLICY_PINS=RECONSTRUCTION_TRACE_POLICY_PINS,RECONSTRUCTION_ORACLE_PATH=RECONSTRUCTION_ORACLE_PATH,RECONSTRUCTION_ORACLE_SHA256=RECONSTRUCTION_ORACLE_SHA256),'reconstruction source pins absent or changed')
+    for name,want in {**runtime_pins,**RECONSTRUCTION_TRACE_POLICY_PINS,RECONSTRUCTION_ORACLE_PATH:RECONSTRUCTION_ORACLE_SHA256}.items():
         require(name in archive.namelist(),'reconstruction source absent: '+name)
         raw=archive.read(name);canonical=raw if name==RECONSTRUCTION_ORACLE_PATH else raw.replace(b'\r\n',b'\n')
         require(hashlib.sha256(canonical).hexdigest()==want and snapshot['files_sha256'].get(name)==want,'reconstruction source bytes differ: '+name)
@@ -298,14 +302,15 @@ def validate_h_extrema_source(archive,snapshot,scope):
         require(archive.namelist().count(name)==1,'H source absent or duplicate: '+name)
         raw=archive.read(name);canonical=raw.replace(b'\r\n',b'\n')
         checked=canonical if name in runtime else raw
-        if name==reader and not legacy:
+        if name in (reader, 'tests/test_h_extrema_native.cpp', 'tests/test_h_extrema_floating_native.cpp') and not legacy:
             if hashlib.sha256(raw).hexdigest()!=want:
                 spec = importlib.util.spec_from_file_location(
                     '_stager_h_closed_source', Path(__file__).with_name('public_qualification.py'))
                 tool = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(tool)
-                checked=tool.h_extrema_frozen_reader(raw)
-            raw_reader=checked
+                checked=tool.h_extrema_frozen_source(name, raw)
+            if name == reader:
+                raw_reader = checked
         require(hashlib.sha256(checked).hexdigest()==want and snapshot['files_sha256'].get(name)==hashlib.sha256(canonical).hexdigest(),
                 'H source bytes differ: '+name)
     if not legacy:

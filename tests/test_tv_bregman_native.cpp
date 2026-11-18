@@ -1,5 +1,6 @@
 #include "skimagexx/tv_bregman.hpp"
 #include "skimagexx/image.hpp"
+#include "native_worker_team.hpp"
 #include <algorithm>
 #include <array>
 #include <cfenv>
@@ -81,7 +82,8 @@ template<class T> void controls(){
         for(auto i:{std::size_t{0},(a.c+1)*a.d,(a.r+1)*(a.c+2)*a.d,((a.r+2)*(a.c+2)-1)*a.d})for(std::size_t k=0;k<a.d;++k)require(std::memcmp(&a.out[i+k],&initial[i+k],sizeof(T))==0,"corners unchanged");
         require(result.initialization_workers>=1 && result.initialization_workers<=get_num_threads(),"actual copy team reported");
 #ifdef _OPENMP
-        if(a.padded>=256*1024 && get_num_threads()==4)require(result.initialization_workers==4,"large initialization actual parallel copy team");
+        if(a.padded>=256*1024 && get_num_threads()==4)
+            require(native_test::matches_worker_team(result.initialization_workers,4),"large initialization actual parallel copy team");
 #endif
     }
     State<T> reused(4,5,1),fresh(4,5,1);for(std::size_t i=0;i<reused.n;++i)reused.input[i]=T(int(i%13)-6)/T(8);

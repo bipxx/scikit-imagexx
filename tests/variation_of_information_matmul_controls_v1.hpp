@@ -62,7 +62,9 @@ inline bool enter(Context& context,char kind,const double* a,const double* b,std
     Record record;record.kind=kind;
     if(n){record.left.assign(a,a+n);if(kind=='D')record.right.assign(b,b+n);}
     audit.records.push_back(std::move(record));
+#ifdef _OPENMP
     if(next==1&&audit.change_global)skimagexx::set_num_threads(2);
+#endif
     if(next==audit.fail_on||next==audit.throw_on) {
 #if defined(SKIMAGEXX_VI_FENV32)
         if(std::fesetround(FE_DOWNWARD)!=0)throw std::runtime_error("matmul callback effect setup failed");
@@ -114,8 +116,13 @@ inline bool uniform_vectors(const Audit& a,std::size_t extent,std::size_t offset
 }
 inline int successes(VariationTableView table,LabelPairInput image,LabelPairInput wide) {
     Caller32 caller("matmul-successes");if(!caller.good())return 201;
+#ifdef _OPENMP
+    constexpr int extra_budget=4;
+#else
+    constexpr int extra_budget=1;
+#endif
     for(int workers:{1,4,0}) {
-        const int global=workers==0?4:1,captured=workers?workers:global;
+        const int global=workers==0?extra_budget:1,captured=workers?workers:global;
         skimagexx::set_num_threads(global);
         for(unsigned which=0;which<3;++which) {
             Audit a;VariationInformation out;
@@ -126,10 +133,18 @@ inline int successes(VariationTableView table,LabelPairInput image,LabelPairInpu
                ||out.captured_workers!=captured||skimagexx::get_num_threads()!=global)return 202;
         }
     }
-    skimagexx::set_num_threads(4);Audit a;a.change_global=true;VariationInformation out;
-    const bool ok=invoke(image,out,a,1);emit(a,"explicit1-global4-callback2");
+    skimagexx::set_num_threads(extra_budget);Audit a;VariationInformation out;
+#ifdef _OPENMP
+    a.change_global=true;
+    constexpr int after_callback=2;
+    constexpr const char* trace="explicit1-global4-callback2";
+#else
+    constexpr int after_callback=1;
+    constexpr const char* trace="explicit1-global1-callback";
+#endif
+    const bool ok=invoke(image,out,a,1);emit(a,trace);
     if(!ok||!published(a,out)||!uniform_vectors(a,2,0)||out.captured_workers!=1
-       ||skimagexx::get_num_threads()!=2)return 203;
+       ||skimagexx::get_num_threads()!=after_callback)return 203;
     return caller.finish()?0:204;
 }
 inline int boundaries() {

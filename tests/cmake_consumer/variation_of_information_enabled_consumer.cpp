@@ -48,7 +48,14 @@ int vi_sdk_owning_main() {
     unsigned provider_checked=0;
     if(skimagexx::get_num_threads()!=1)return 2;
     unsigned checked=0;
-    for(int budget:{1,4}) {
+#ifdef _OPENMP
+    constexpr int global_budgets[]={1,4};
+    constexpr const char* worker_summary="1,4";
+#else
+    constexpr int global_budgets[]={1};
+    constexpr const char* worker_summary="1";
+#endif
+    for(int budget:global_budgets) {
         skimagexx::set_num_threads(budget);
         // End-to-end image counts+entropy, all-ignored status, and supplied CSR.
         for(auto index:{3u,4u,6u}) {
@@ -85,7 +92,7 @@ int vi_sdk_owning_main() {
     }
     skimagexx::set_num_threads(1);
     if(int status=vi_large_saved_controls())return status;
-    std::cout<<"SDK VI complete controls="<<checked<<" workers=1,4 restored="<<skimagexx::get_num_threads()
+    std::cout<<"SDK VI complete controls="<<checked<<" workers="<<worker_summary<<" restored="<<skimagexx::get_num_threads()
         <<" host_scalar_log2_compatible="<<provider_checked<<" provider_plumbing_controls=3"
         <<" available="<<skimagexx::has_avx2()<<" originals=0 timing=0\n";
     // VI_SDK_EXTENSION_TAIL_BEGIN

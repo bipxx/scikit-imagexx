@@ -3,7 +3,7 @@ import importlib.util
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/draw-multiblock-lbp-benchmark-execution-v11.json'
+CONTEXT='coverage/contracts/draw-multiblock-lbp-benchmark-execution-v12.json'
 
 
 def boundary():

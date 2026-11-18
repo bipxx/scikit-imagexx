@@ -14,13 +14,18 @@
 #endif
 using namespace skimagexx::detail;
 using Int=std::intptr_t;
+#ifdef _OPENMP
+static constexpr int worker_counts[]={1,4};
+#else
+static constexpr int worker_counts[]={1};
+#endif
 static std::size_t controls=0;
 static void check(bool value){++controls;if(!value)throw std::runtime_error("Bezier control "+std::to_string(controls));}
 template<class T>static T read(std::ifstream& f){T value{};f.read(reinterpret_cast<char*>(&value),sizeof(value));if(!f)throw std::runtime_error("Bezier fixture truncated");return value;}
 static void outputs(const BezierCurve& p,const std::vector<Int>& expected_r,const std::vector<Int>& expected_c) {
     const auto n=bezier_curve_count(p);
     check(n==expected_r.size()&&n==expected_c.size());
-    for(int workers:{1,4}) {
+    for(int workers:worker_counts) {
         skimagexx::set_num_threads(workers);const int snapshot=skimagexx::get_num_threads();
         std::vector<Int> rows(3*n+2,777),columns(3*n+2,777);
         const auto offset=n?1+3*(n-1):1;
@@ -72,5 +77,9 @@ int main(int argc,char** argv) {
     }
 #endif
     skimagexx::set_num_threads(old);check(skimagexx::get_num_threads()==old);
-    std::cout<<"Bezier native controls="<<controls<<" saved_records="<<records<<" workers=1,4 default="<<old<<'\n';
+    std::cout<<"Bezier native controls="<<controls<<" saved_records="<<records<<" workers=1"
+#ifdef _OPENMP
+             <<",4"
+#endif
+             <<" default="<<old<<'\n';
 }

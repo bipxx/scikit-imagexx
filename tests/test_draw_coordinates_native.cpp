@@ -137,14 +137,14 @@ void strided_emit_and_ftz(int workers){
 int main(int argc,char** argv){
     static_assert(sizeof(std::intptr_t)==8,"frozen coordinate words are intp64");require(get_num_threads()==1);
     for(int workers:{1,4}){
-#ifdef SKIMAGEXX_DRAW_PORTABLE
-        if(workers==4){bool rejected=false;try{set_num_threads(4);}catch(const std::invalid_argument&){rejected=true;}require(rejected);continue;}
+#ifndef _OPENMP
+        if(workers==4){bool rejected=false;try{set_num_threads(4);}catch(const std::invalid_argument&){rejected=true;}require(rejected&&get_num_threads()==1);continue;}
 #endif
         set_num_threads(workers);for(int i=1;i<argc;++i)saved(argv[i],workers);
     }
     std::cout<<"draw frozen records="<<fixture_count<<"; coordinate word hash="<<words_hash<<'\n';
     for(int workers:{1,4}){
-#ifdef SKIMAGEXX_DRAW_PORTABLE
+#ifndef _OPENMP
         if(workers==4)continue;
 #endif
         set_num_threads(workers);lines(workers);rectangles(workers);ellipses(workers);strided_emit_and_ftz(workers);

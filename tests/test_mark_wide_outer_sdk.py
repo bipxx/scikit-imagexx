@@ -38,6 +38,9 @@ def test_literal_payload_tamper_is_rejected(fault):
 def test_old_sdk_native_and_current_literal_sources_are_pinned(group):
     for name,pin in C[group].items():
         raw=(ROOT/name).read_bytes()
+        if name in ('tests/cmake_consumer/mark_wide_outer_consumer.cpp',):
+            from tools.mark_lbp_fp_context import predecessor_bytes
+            raw = predecessor_bytes(ROOT, name, raw)
         if name in ('src/find_boundaries.cpp','src/mark_boundaries.cpp'):
             from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
             from tools.vi_public_matmul_context import speed_predecessor_bytes
@@ -91,7 +94,10 @@ def test_admitted_FP_transport_pattern_is_reused_without_after_normalization():
 
 def test_worker_frontier_and_platform_controls_are_explicit_deferred():
     text=CPP.read_text()
-    assert 'all_budgets[3][2]={{1,0},{4,0},{1,4}}'in text
+    assert 'all_budgets[][2]={{1,0},{4,0},{1,4}}' in text
+    assert 'all_budgets[][2]={{1,0},{1,4}}' in text
+    assert 'checked!=24' in text and 'checked!=16' in text
+    assert '#ifdef _OPENMP' in text
     assert 'check(snapshots==std::size_t(workers==0)'in text
     assert 'get_num_threads()==budgets[0]'in text
     assert 'parameters.boundary.background_representable=false'in text

@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v20.json'
-CONTEXT_SHA256 = '9eda40ad3fb2c331cd064c31a79bfd1df960a7493610017dc9db8b363fd0457f'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v21.json'
+CONTEXT_SHA256 = '857140e1d06a62dc54b2a3e2e584196b0433efe8d55ca32fe412c3afeddd68fe'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -118,7 +118,7 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
 @pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
 def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
     value = data()
-    path = 'coverage/contracts/' + name + '-benchmark-execution-v11.json'
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v12.json'
     boundary = load('benchmarks/mark_boundaries_execution.py')
     current = boundary.current_context(ROOT, path)
     predecessor = current['speed_source_successor']['predecessor_context']
@@ -146,7 +146,7 @@ def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_read
 def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
     import test_mark_boundaries_benchmark_execution as factory
     monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
-    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v11.json')
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v12.json')
     binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
     boundary = load('benchmarks/mark_boundaries_execution.py')
     relative = path.relative_to(ROOT).as_posix()
@@ -193,8 +193,8 @@ def test_new_groups_use_sourcebuilt_F1_and_distinct_FLOOD_record_pools():
 
 
 @pytest.mark.parametrize('previous,current,key', (
-    ('find-boundaries-benchmark-binding-v7.json', 'find-boundaries-benchmark-binding-v8.json', 'source_closure'),
-    ('find-boundaries-frontend-v6.json', 'find-boundaries-frontend-v7.json', 'source_canonical_pins'),
+    ('find-boundaries-benchmark-binding-v8.json', 'find-boundaries-benchmark-binding-v9.json', 'source_closure'),
+    ('find-boundaries-frontend-v7.json', 'find-boundaries-frontend-v8.json', 'source_canonical_pins'),
     ('find-boundaries-sdk-v5.json', 'find-boundaries-sdk-v6.json', 'source_canonical_pins'),
 ))
 def test_find_current_literals_preserve_all_old_recipes_and_refuse_tampering(previous, current, key):

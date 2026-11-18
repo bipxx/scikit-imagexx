@@ -35,7 +35,11 @@ int main(int argc,char** argv){
         EllipsePerimeter p;std::feclearexcept(FE_ALL_EXCEPT);
         check(prepare_ellipse_perimeter(q,p));check(ellipse_perimeter_count(p)==count&&p.scalar_result==scalar);
         check(p.rows==rows&&p.columns==columns);check(!(std::fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW)));
-        for(int workers:{1,4}){
+        for(int workers:{1
+#ifdef _OPENMP
+            ,4
+#endif
+        }){
             skimagexx::set_num_threads(workers);const int snapshot=skimagexx::get_num_threads();
             std::vector<Int> r(count+2,9999),c(count+2,9999);
             std::feraiseexcept(FE_DIVBYZERO);const int flags=std::fetestexcept(FE_ALL_EXCEPT);
@@ -60,7 +64,11 @@ int main(int argc,char** argv){
         const auto square=large.rows[i]*large.rows[i]+large.columns[i]*large.columns[i];
         check(std::abs(square-Int(32768)*32768)<=3*32768+2);
     }
-    for(int workers:{1,4}){
+    for(int workers:{1
+#ifdef _OPENMP
+        ,4
+#endif
+    }){
         skimagexx::set_num_threads(workers);const int snapshot=skimagexx::get_num_threads();
         std::vector<Int> rows(n),columns(n);ellipse_perimeter_fill(large,{rows.data(),columns.data(),1,1},snapshot);
         check(rows==large.rows&&columns==large.columns);

@@ -61,8 +61,16 @@ void independent_controls() {
 int rolling_ball_storage_client(int argc,char** argv) {
  try{
   check(argc==2&&skimagexx::get_num_threads()==1);
+#ifdef _OPENMP
   for(int budget:{1,4}){skimagexx::set_num_threads(budget);for(int workers:{0,1,4})saved(argv[1],workers);}
+#else
+  for(int workers:{0,1})saved(argv[1],workers);
+#endif
   skimagexx::set_num_threads(1);independent_controls();check(skimagexx::get_num_threads()==1);
+#ifdef _OPENMP
   std::cout<<"new11saved xglobal1/4 xworkers0/1/4=66 complete owning operations +8dtype/layout/refusal controls PASS originals=0 timing=0\n";
+#else
+  std::cout<<"new11saved xglobal1 xworkers0/1=22 complete owning operations +8dtype/layout/refusal controls PASS originals=0 timing=0\n";
+#endif
  return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
 }

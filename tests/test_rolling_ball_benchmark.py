@@ -14,14 +14,34 @@ CONTEXT=ROOT/'coverage/contracts/rolling-ball-benchmark-execution-v3.json'
 H=lambda b:hashlib.sha256(b).hexdigest()
 
 
-def adapter():return runpy.run_path(str(ROOT/'benchmarks/rolling_ball_execution.py'))
+def adapter():
+    module = runpy.run_path(str(ROOT/'benchmarks/rolling_ball_execution.py'))
+    source_bytes = module['source_bytes']
+
+    def historical_controller_bytes(path):
+        path = Path(path)
+        if path.is_relative_to(ROOT):
+            return historical_execution_source(path.relative_to(ROOT).as_posix()).replace(b'\r\n', b'\n')
+        return source_bytes(path)
+
+    # Replay this frozen CLI against its historical controller and prepared inputs.
+    module['execute'].__globals__['source_bytes'] = historical_controller_bytes
+    return module
+
+
+def historical_execution_source(name):
+    raw = (ROOT/name).read_bytes()
+    if name in ('src/execution.hpp', 'tests/test_rolling_ball_native_source.py', 'tests/test_rolling_ball_benchmark.py'):
+        from tools.mark_lbp_fp_context import predecessor_bytes
+        return predecessor_bytes(ROOT, name, raw)
+    return raw
 
 
 def synthetic(tmp_path,monkeypatch,fault='none'):
     """Metadata stand-in accepted only until a refused import, never a product."""
     c=json.loads(CONTEXT.read_bytes());source=tmp_path/'source';source.mkdir();pins={}
     for name in set(c['source_files_canonical_sha256'])|set(c['FENV_dependency']['source_files_raw_sha256'])|{'CMakeLists.txt',CONTEXT.relative_to(ROOT).as_posix()}:
-        target=source/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/name).read_bytes());pins[name]=H(target.read_bytes().replace(b'\r\n',b'\n'))
+        target=source/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(historical_execution_source(name));pins[name]=H(target.read_bytes().replace(b'\r\n',b'\n'))
     def receipt(name,value):
         p=tmp_path/(name+'.json');p.write_text(json.dumps(value));return str(p),H(p.read_bytes())
     prepared=dict(revision='a'*40,files_sha256=pins);producer=dict(run=123,revision='a'*40,artifact=456,sha256='b'*64)
@@ -70,7 +90,7 @@ def test_exact_cases_method_source_and_historical_inverse():
     assert c['cases']==old['case_specs']()and len(c['cases'])==8 and all(old['case_bounds'](s)for s in c['cases'])
     assert all(v is None for v in c['unbound'].values())
     for name,row in c['historical_sources'].items():assert H(a['historical_bytes'](ROOT,name))==row['predecessor_canonical_sha256']
-    for name,pin in c['source_files_canonical_sha256'].items():assert H((ROOT/name).read_bytes().replace(b'\r\n',b'\n'))==pin,name
+    for name,pin in c['source_files_canonical_sha256'].items():assert H(historical_execution_source(name).replace(b'\r\n',b'\n'))==pin,name
     text=(ROOT/'tools/montage_sustained.py').read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')
     assert H((ast.get_source_segment(text,node)+'\n').encode())==c['method']['method_sha256']
     assert c['method']==json.loads((ROOT/'coverage/contracts/rolling-ball-v1.json').read_bytes())['benchmark_method']

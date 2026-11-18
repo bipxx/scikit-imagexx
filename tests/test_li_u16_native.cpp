@@ -51,7 +51,12 @@ int main() {
         const std::uint16_t mixed[]={0,1,std::uint16_t(value),255};
         assert(LiImage(mixed,4,PixelType::uint16).kind()==LiKind::unsupported);
     }
-    for(const int workers:{1,4}) {
+#ifdef _OPENMP
+    constexpr int worker_counts[]={1,4};
+#else
+    constexpr int worker_counts[]={1};
+#endif
+    for(const int workers:worker_counts) {
         set_num_threads(workers);
         for(unsigned value=0;value<256;++value)compare(std::vector<std::uint8_t>(9,std::uint8_t(value)));
         compare({0,0,1,2,3,4,4,5,7,9,11,12});
@@ -63,5 +68,9 @@ int main() {
         compare(large);
     }
     set_num_threads(1);
-    std::cout<<"Li uint16 bounded range, size-before-read, constants, unaligned storage, exact byte-solver reuse and workers1/4 passed; AVX2="<<has_avx2()<<'\n';
+    std::cout<<"Li uint16 bounded range, size-before-read, constants, unaligned storage, exact byte-solver reuse and workers1"
+#ifdef _OPENMP
+             <<"/4"
+#endif
+             <<" passed; AVX2="<<has_avx2()<<'\n';
 }

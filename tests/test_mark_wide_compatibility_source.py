@@ -19,7 +19,7 @@ def context():
 def compatibility_source_bytes(name,supplied=None,canonical=False):
     """Authenticate the independent scalar flag before the frozen MARK view."""
     raw=(ROOT/name).read_bytes()if supplied is None else supplied
-    if name=='CMakeLists.txt':
+    if name in ('CMakeLists.txt', 'tests/test_find_boundaries_native.cpp'):
         from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
         from tools.vi_public_matmul_context import predecessor_bytes as current_predecessor
         raw=current_predecessor(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,canonical)
@@ -85,7 +85,7 @@ def test_public_refusal_keeps_eight_variants_and_explicit_unsupported_background
 
 
 def test_native_refusal_preserves_nonexact_thick_and_every_error_guard():
-    raw=(ROOT/'tests/test_find_boundaries_native.cpp').read_bytes();old=predecessor('tests/test_find_boundaries_native.cpp',raw)
+    raw=(ROOT/'tests/test_find_boundaries_native.cpp').read_bytes();old=predecessor('tests/test_find_boundaries_native.cpp',compatibility_source_bytes('tests/test_find_boundaries_native.cpp',raw))
     text=raw.decode()
     assert 'refuse();a[1]=1;p.mode=FindBoundaryMode::outer;'in text
     assert 'p.background_representable=false;refuse();p.background_representable=true;'in text

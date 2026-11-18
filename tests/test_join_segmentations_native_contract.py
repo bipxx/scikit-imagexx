@@ -15,6 +15,9 @@ def test_exact_source_dependency_closure():
         for name,pin in contract[group].items():
             # Exact admitted inverse authenticates current bytes before restoring historical benchmark bytes.
             raw=projection(ROOT,name)if name in context['sources']and name!='python/skimagexx/_join_segmentations.py'else(ROOT/name).read_bytes()
+            if name == 'src/execution.hpp':
+                from tools.mark_lbp_fp_context import predecessor_bytes
+                raw = predecessor_bytes(ROOT, name, raw)
             if name=='python/skimagexx/_join_segmentations.py':
                 body=(ROOT/'coverage/contracts/join-segmentations-unique-reuse-v1.json').read_bytes()
                 assert hashlib.sha256(body).hexdigest()=='137cfcd9341a809cafa216701fa020f871fe8f4bb03dbf54f2241db2e2ba3df2'

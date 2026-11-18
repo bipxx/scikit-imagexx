@@ -4,7 +4,11 @@
 #include <iostream>
 #include <cmath>
 int set_color_consumer_controls(){using namespace skimagexx;using namespace skimagexx::detail;auto old=get_num_threads();int checks=0;
-for(int workers:{1,4}){set_num_threads(workers);
+for(int workers:{1
+#ifdef _OPENMP
+    ,4
+#endif
+}){set_num_threads(workers);
 float f32=.5f;double f32color=.25,f32alpha=.5;std::intptr_t f32zero=0;SetColorView f32view{&f32,{1,1,1},{4,4,0},&f32zero,&f32zero,1,&f32color,&f32alpha};f32view.image_float32=true;assert(draw_set_color(f32view,get_num_threads())&&f32==.375f);++checks;
 
 double pixel=-0.,coefficient=0.,opacity=-1.;std::intptr_t zero=0;SetColorView stage{&pixel,{1,1,1},{8,8,0},&zero,&zero,1,&coefficient,&opacity};stage.integer_product=true;assert(draw_set_color(stage,get_num_threads())&&!std::signbit(pixel));++checks;
