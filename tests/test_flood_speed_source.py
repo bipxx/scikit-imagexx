@@ -25,6 +25,10 @@ def active_context():
 
 def legacy_source_bytes(name, supplied=None):
     raw=(ROOT/name).read_bytes()if supplied is None else supplied
+    if name == 'tests/conftest.py':
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        from tools.vi_public_matmul_context import immediate_predecessor_bytes
+        return immediate_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256)
     current=active_context()
     if name in current['legacy_current_views']:
         from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
@@ -196,6 +200,12 @@ def test_fixed_cases_sampler_frontend_contract_and_prepared_tests():
             assert raw.count(fragment['current'].encode()) == 1
             raw = raw.replace(fragment['current'].encode(), fragment['predecessor'].encode(), 1)
         assert digest(raw) == pin, name
+        if name == 'tests/conftest.py':
+            live = (ROOT/name).read_bytes()
+            assert digest(live) != pin
+            for invalid in (raw, live + b'\n# unreviewed fixture source'):
+                with pytest.raises(AssertionError):
+                    legacy_source_bytes(name, invalid)
     for name in ('tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py'):
         tree = ast.parse(legacy_source_bytes(name))
         compile(tree, str(ROOT / name), 'exec')

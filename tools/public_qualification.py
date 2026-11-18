@@ -896,6 +896,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v14.js
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v16.json', 'coverage/contracts/speed-parity-current-source-v9.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v2.json', 'coverage/contracts/vi4-public-matmul-capture-ci-broad-v2.json', 'coverage/contracts/slice-along-axes-v3.json', 'tools/rank_statistics_products.py')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v17.json', 'coverage/contracts/speed-parity-current-source-v10.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v3.json', 'coverage/contracts/vi4-public-matmul-capture-ci-broad-v3.json', 'CMakeLists.txt')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v19.json', 'coverage/contracts/speed-parity-current-source-v12.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v5.json', 'coverage/contracts/vi4-public-matmul-capture-ci-broad-v5.json', 'tests/conftest.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v21.json', 'coverage/contracts/speed-parity-current-source-v14.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v7.json', 'coverage/contracts/vi4-public-matmul-capture-ci-broad-v7.json')
 
 
 
