@@ -52,15 +52,15 @@ with tempfile.TemporaryDirectory(dir=temp_root, prefix='strict-ubuntu-wheel-') a
     wheel, = wheels.glob('scikit_imagexx-*.whl')
     wheel_sha = sha(wheel)
     proof_package = output / 'package'
-    with zipfile.ZipFile(wheel) as archive:
-        for entry in archive.infolist():
+    with zipfile.ZipFile(wheel) as wheel_archive:
+        for entry in wheel_archive.infolist():
             if entry.is_dir() or not entry.filename.startswith('skimagexx/'):
                 continue
             target = proof_package / entry.filename
             assert target.resolve().is_relative_to(proof_package.resolve())
             target.parent.mkdir(parents=True, exist_ok=True)
             with target.open('xb') as stream:
-                stream.write(archive.read(entry))
+                stream.write(wheel_archive.read(entry))
     proof_core, = (proof_package / 'skimagexx').glob('_core*.so')
     (output / 'wheel-evidence.json').write_text(json.dumps(
         {'source': os.environ['PRODUCT_SOURCE'], 'wheel_sha256': wheel_sha, 'core_sha256': sha(proof_core)},

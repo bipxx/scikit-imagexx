@@ -9,6 +9,7 @@ import statistics
 import subprocess
 import sys
 import tempfile
+import xml.etree.ElementTree as ET
 
 source = Path.cwd() / 'source'
 output = Path.cwd() / 'speed-proof'
@@ -19,16 +20,23 @@ assert subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], 
 assert sys.version_info[:3] == (3, 13, 16) and os.confstr('CS_GNU_LIBC_VERSION') == 'glibc 2.43'
 strict = tmp / 'scikit-imagexx-strict-proof'
 wheels = tmp / 'scikit-imagexx-failed-wheel/wheels'
-raw = (strict / 'receipt.json').read_bytes()
-assert hashlib.sha256(raw).hexdigest() == os.environ['EXPECTED_STRICT_RECEIPT_SHA256']
+proof = json.loads((Path.cwd() / 'diagnostic-farid-color-parity-lock.json').read_bytes())
+assert int(os.environ['PARITY_RUN']) == proof['run']
+raw = (strict / 'wheel-evidence.json').read_bytes()
+assert hashlib.sha256(raw).hexdigest() == proof['wheel_evidence_sha256'] == os.environ['EXPECTED_STRICT_RECEIPT_SHA256']
 receipt = json.loads(raw)
-assert receipt['product_source'] == os.environ['PRODUCT_SOURCE']
-assert receipt['timing_batches'] == receipt['transport_wheels_left'] == 0
-assert all(value['actual_exit'] == 0 and value['formerly_failed_passed'] == 34 for value in receipt['comparison'].values())
+assert receipt['source'] == proof['source'] == os.environ['PRODUCT_SOURCE']
+assert receipt['core_sha256'] == proof['core_sha256']
+for mode, expected in proof['tests'].items():
+    xml = (strict / f'{mode}.xml').read_bytes()
+    assert len(xml) == expected['bytes'] and hashlib.sha256(xml).hexdigest() == expected['sha256']
+    suite = ET.fromstring(xml).find('testsuite')
+    assert len(suite.findall('testcase')) == int(suite.get('tests')) == expected['count'] == 6966
+    assert not any(int(suite.get(key)) for key in ('failures','errors','skipped'))
 product = strict / 'package'
 core, = (product / 'skimagexx').glob('_core*.so')
 assert hashlib.sha256(core.read_bytes()).hexdigest() == receipt['core_sha256']
-deps = receipt['stock_dependencies_sha256']
+deps = {name: digest for name, digest in proof['dependency_wheels'].items() if not name.startswith('scikit_imagexx-')}
 assert len(deps) == 13
 assert all(hashlib.sha256((wheels / name).read_bytes()).hexdigest() == digest for name, digest in deps.items())
 patterns = ['filters.farid*', 'color.*luv*', 'color.rgb2hsv', 'color.hsv2rgb',

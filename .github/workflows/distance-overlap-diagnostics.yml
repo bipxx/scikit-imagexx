@@ -11,7 +11,7 @@ on:
         required: true
         type: string
       receipt_sha256:
-        description: SHA256 of the exact successful parity receipt
+        description: SHA256 of the exact expanded wheel evidence
         required: true
         type: string
 permissions:
@@ -23,6 +23,7 @@ jobs:
     timeout-minutes: 14
     env:
       PRODUCT_SOURCE: ${{ inputs.source_revision }}
+      PARITY_RUN: ${{ inputs.parity_run }}
       EXPECTED_STRICT_RECEIPT_SHA256: ${{ inputs.receipt_sha256 }}
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
