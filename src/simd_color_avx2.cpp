@@ -10,6 +10,9 @@
 #ifdef _MSC_VER
 #include <intrin.h>
 #endif
+#if defined(__linux__) && defined(__x86_64__) && defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 13
+#define SKIMAGEXX_LINUX_WIDE_LAB_POWER 1
+#endif
 
 namespace skimagexx::simd {
 namespace {
@@ -585,6 +588,9 @@ template<class T> bool ordinary_lab_span(const T* input, std::size_t elements) {
 }
 
 using LabPair = __m256d[2];
+constexpr double lab_log_coeff[] = {1,1.0/3,1.0/5,1.0/7,1.0/9,1.0/11,1.0/13,1.0/15,1.0/17,1.0/19};
+constexpr double lab_exp_coeff[] = {1,1,1.0/2,1.0/6,1.0/24,1.0/120,1.0/720,1.0/5040,
+    1.0/40320,1.0/362880,1.0/3628800,1.0/39916800,1.0/479001600,1.0/6227020800};
 
 // The same reduced log2 and exp polynomials as math::log2_4 and math::exp4.
 // This caller only supplies bounded positive normal inputs or the neutral 1,
@@ -592,9 +598,6 @@ using LabPair = __m256d[2];
 template<bool prescaled> void ordinary_lab_power(LabPair& x, double exponent) {
     __m256d e[2], t[2], square[2], polynomial[2], k[2];
     const auto one = _mm256_set1_pd(1);
-    constexpr double log_coeff[] = {1,1.0/3,1.0/5,1.0/7,1.0/9,1.0/11,1.0/13,1.0/15,1.0/17,1.0/19};
-    constexpr double exp_coeff[] = {1,1,1.0/2,1.0/6,1.0/24,1.0/120,1.0/720,1.0/5040,
-        1.0/40320,1.0/362880,1.0/3628800,1.0/39916800,1.0/479001600,1.0/6227020800};
     for (int i=0;i<2;++i) {
         const auto bits = _mm256_castpd_si256(x[i]);
         const auto exponents = _mm256_srli_epi64(bits,52);
@@ -607,11 +610,11 @@ template<bool prescaled> void ordinary_lab_power(LabPair& x, double exponent) {
         e[i] = _mm256_add_pd(e[i],_mm256_and_pd(upper,one));
         t[i] = _mm256_div_pd(_mm256_sub_pd(m,one),_mm256_add_pd(m,one));
         square[i] = _mm256_mul_pd(t[i],t[i]);
-        polynomial[i] = _mm256_set1_pd(log_coeff[9]);
+        polynomial[i] = _mm256_set1_pd(lab_log_coeff[9]);
     }
     for (int degree=8;degree>=0;--degree)
         for (int i=0;i<2;++i)
-            polynomial[i] = _mm256_add_pd(_mm256_set1_pd(log_coeff[degree]),_mm256_mul_pd(square[i],polynomial[i]));
+            polynomial[i] = _mm256_add_pd(_mm256_set1_pd(lab_log_coeff[degree]),_mm256_mul_pd(square[i],polynomial[i]));
     const auto scale = _mm256_set1_pd(prescaled ? exponent : exponent*0.69314718055994530942);
     for (int i=0;i<2;++i) {
         const auto log = _mm256_add_pd(e[i],_mm256_mul_pd(_mm256_mul_pd(t[i],polynomial[i]),_mm256_set1_pd(2.8853900817779268147)));
@@ -620,17 +623,61 @@ template<bool prescaled> void ordinary_lab_power(LabPair& x, double exponent) {
             _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
         const auto r = _mm256_sub_pd(y,_mm256_mul_pd(k[i],_mm256_set1_pd(0.69314718055994528623)));
         x[i] = _mm256_sub_pd(r,_mm256_mul_pd(k[i],_mm256_set1_pd(2.3190468138462995584e-17)));
-        polynomial[i] = _mm256_set1_pd(exp_coeff[13]);
+        polynomial[i] = _mm256_set1_pd(lab_exp_coeff[13]);
     }
     for (int degree=12;degree>=0;--degree)
         for (int i=0;i<2;++i)
-            polynomial[i] = _mm256_add_pd(_mm256_set1_pd(exp_coeff[degree]),_mm256_mul_pd(x[i],polynomial[i]));
+            polynomial[i] = _mm256_add_pd(_mm256_set1_pd(lab_exp_coeff[degree]),_mm256_mul_pd(x[i],polynomial[i]));
     for (int i=0;i<2;++i) {
         const auto integers = _mm256_cvtepi32_epi64(_mm256_cvtpd_epi32(k[i]));
         const auto bits = _mm256_slli_epi64(_mm256_add_epi64(integers,_mm256_set1_epi64x(1023)),52);
         x[i] = _mm256_mul_pd(polynomial[i],_mm256_castsi256_pd(bits));
     }
 }
+
+#ifdef SKIMAGEXX_LINUX_WIDE_LAB_POWER
+bool ordinary_lab_wide_available() {
+    // GCC reports AVX-512 CPU bits only when the OS has enabled ZMM state.
+    // The two halves must not reorder delivery of an unmasked SIMD exception.
+    return (_mm_getcsr() & _MM_MASK_MASK) == _MM_MASK_MASK && __builtin_cpu_supports("x86-64-v4");
+}
+
+// Pointer ABI leaves all ZMM values inside the target function. This is the
+// prescaled positive-normal polynomial above, with each half in the same order.
+__attribute__((target("avx512f"), noinline))
+void ordinary_lab_power_wide(void* values, double scale) {
+    __m512d input;
+    std::memcpy(&input,values,sizeof(input));
+    const auto one = _mm512_set1_pd(1);
+    const auto bits = _mm512_castpd_si512(input);
+    const auto exponents = _mm512_srli_epi64(bits,52);
+    auto e = _mm512_sub_pd(_mm512_castsi512_pd(_mm512_or_si512(exponents,_mm512_set1_epi64(0x4330000000000000LL))),
+        _mm512_set1_pd(4503599627371519.0));
+    auto m = _mm512_castsi512_pd(_mm512_or_si512(_mm512_and_si512(bits,_mm512_set1_epi64(0x000fffffffffffffLL)),
+        _mm512_set1_epi64(0x3ff0000000000000LL)));
+    const auto upper = _mm512_cmp_pd_mask(m,_mm512_set1_pd(1.4142135623730951),_CMP_GT_OQ);
+    m = _mm512_mask_blend_pd(upper,m,_mm512_mul_pd(m,_mm512_set1_pd(0.5)));
+    e = _mm512_add_pd(e,_mm512_maskz_mov_pd(upper,one));
+    const auto t = _mm512_div_pd(_mm512_sub_pd(m,one),_mm512_add_pd(m,one));
+    const auto square = _mm512_mul_pd(t,t);
+    auto polynomial = _mm512_set1_pd(lab_log_coeff[9]);
+    for (int degree=8;degree>=0;--degree)
+        polynomial = _mm512_add_pd(_mm512_set1_pd(lab_log_coeff[degree]),_mm512_mul_pd(square,polynomial));
+    const auto log = _mm512_add_pd(e,_mm512_mul_pd(_mm512_mul_pd(t,polynomial),_mm512_set1_pd(2.8853900817779268147)));
+    const auto y = _mm512_mul_pd(log,_mm512_set1_pd(scale));
+    const auto k = _mm512_roundscale_pd(_mm512_mul_pd(y,_mm512_set1_pd(1.4426950408889634074)),
+        _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
+    const auto r = _mm512_sub_pd(y,_mm512_mul_pd(k,_mm512_set1_pd(0.69314718055994528623)));
+    const auto x = _mm512_sub_pd(r,_mm512_mul_pd(k,_mm512_set1_pd(2.3190468138462995584e-17)));
+    polynomial = _mm512_set1_pd(lab_exp_coeff[13]);
+    for (int degree=12;degree>=0;--degree)
+        polynomial = _mm512_add_pd(_mm512_set1_pd(lab_exp_coeff[degree]),_mm512_mul_pd(x,polynomial));
+    const auto integers = _mm512_cvtepi32_epi64(_mm512_cvtpd_epi32(k));
+    const auto power = _mm512_slli_epi64(_mm512_add_epi64(integers,_mm512_set1_epi64(1023)),52);
+    const auto result = _mm512_mul_pd(polynomial,_mm512_castsi512_pd(power));
+    std::memcpy(values,&result,sizeof(result));
+}
+#endif
 
 __m256 ordinary_lab_power(__m256 input, double exponent) {
     LabPair x = {_mm256_cvtps_pd(_mm256_castps256_ps128(input)),
@@ -682,7 +729,7 @@ template<bool rgb> std::size_t ordinary_lab_transform(const float* input, float*
     }
     return i;
 }
-template<bool decode> void ordinary_lab_curve(LabPair& values, __m256d white) {
+template<bool decode,bool wide_power=false> void ordinary_lab_curve(LabPair& values, __m256d white) {
     using V = Vector<double>;
     LabPair linear, mask, nonlinear;
     bool active=false;
@@ -702,11 +749,17 @@ template<bool decode> void ordinary_lab_curve(LabPair& values, __m256d white) {
     // for packets such as XYZ=(1,1,1) with unity white.
     constexpr double exponent = decode ? 2.4 : 1.0/3.0;
     constexpr double scale = exponent*0.69314718055994530942;
-    if (active) ordinary_lab_power<true>(nonlinear,scale);
+    if (active) {
+#ifdef SKIMAGEXX_LINUX_WIDE_LAB_POWER
+        if constexpr (wide_power) ordinary_lab_power_wide(nonlinear,scale);
+        else
+#endif
+            ordinary_lab_power<true>(nonlinear,scale);
+    }
     for (int lane=0;lane<2;++lane) values[lane]=V::choose(linear[lane],nonlinear[lane],mask[lane]);
 }
 
-template<bool rgb> std::size_t ordinary_lab_transform(const double* input, double* output, std::size_t n,
+template<bool rgb,bool wide_power=false> std::size_t ordinary_lab_transform(const double* input, double* output, std::size_t n,
     const std::array<double,3>& white) {
     using V = Vector<double>;
     constexpr auto block = 2*V::lanes;
@@ -720,7 +773,7 @@ template<bool rgb> std::size_t ordinary_lab_transform(const double* input, doubl
         LabPair x,y,z;
         for (std::size_t lane=0;lane<2;++lane) unpack(input+3*(i+lane*V::lanes),x[lane],y[lane],z[lane]);
         if constexpr (rgb) {
-            ordinary_lab_curve<true>(x,wx); ordinary_lab_curve<true>(y,wy); ordinary_lab_curve<true>(z,wz);
+            ordinary_lab_curve<true,wide_power>(x,wx); ordinary_lab_curve<true,wide_power>(y,wy); ordinary_lab_curve<true,wide_power>(z,wz);
             for (std::size_t lane=0;lane<2;++lane) {
                 const auto a=x[lane], b=y[lane], c=z[lane];
                 x[lane]=V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2]));
@@ -728,7 +781,7 @@ template<bool rgb> std::size_t ordinary_lab_transform(const double* input, doubl
                 z[lane]=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
             }
         }
-        ordinary_lab_curve<false>(x,wx); ordinary_lab_curve<false>(y,wy); ordinary_lab_curve<false>(z,wz);
+        ordinary_lab_curve<false,wide_power>(x,wx); ordinary_lab_curve<false,wide_power>(y,wy); ordinary_lab_curve<false,wide_power>(z,wz);
         for (std::size_t lane=0;lane<2;++lane)
             pack(output+3*(i+lane*V::lanes),V::sub(V::mul(V::set(116),y[lane]),V::set(16)),
                 V::mul(V::set(500),V::sub(x[lane],y[lane])),V::mul(V::set(200),V::sub(y[lane],z[lane])));
@@ -746,6 +799,14 @@ template<class T> std::size_t packed_lab_or_legacy(const T* input, T* output, st
         (std::is_same_v<T,float> || (n%8==0 && _MM_GET_ROUNDING_MODE()==_MM_ROUND_NEAREST)) &&
         std::all_of(spec.white.begin(),spec.white.end(),[](double v) { return v>=0.25 && v<=2; }) &&
         ordinary_lab_span(input,3*n)) {
+#ifdef SKIMAGEXX_LINUX_WIDE_LAB_POWER
+        if constexpr (std::is_same_v<T,double>) {
+            if (ordinary_lab_wide_available()) {
+                if (op==Op::xyz2lab) return ordinary_lab_transform<false,true>(input,output,n,spec.white);
+                return ordinary_lab_transform<true,true>(input,output,n,spec.white);
+            }
+        }
+#endif
         if (op==Op::xyz2lab) return ordinary_lab_transform<false>(input,output,n,spec.white);
         return ordinary_lab_transform<true>(input,output,n,spec.white);
     }
