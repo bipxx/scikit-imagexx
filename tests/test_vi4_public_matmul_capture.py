@@ -8,8 +8,8 @@ import sys
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-ci-broad-v7.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v7.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-ci-h-extrema-v1.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-ci-h-extrema-v1.json'
 RUNNER='tools/vi4_public_matmul_capture.py'
 ADAPTER='benchmarks/vi_public_matmul_provider_execution_v2.py'
 CONSUMER='benchmarks/vi_public_matmul_provider_consumer_v2.py'
@@ -37,8 +37,11 @@ def test_unbound_current_route_exact_dependencies_and_caps():
     accepted_capture=data('coverage/contracts/vi4-public-matmul-capture-ci-broad-v2.json');accepted_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v2.json')
     scalar_capture=data('coverage/contracts/vi4-public-matmul-capture-ci-broad-v3.json');scalar_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v3.json')
     flood_parent_capture=data('coverage/contracts/vi4-public-matmul-capture-ci-broad-v5.json');flood_parent_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v5.json')
-    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-ci-broad-v5.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-ci-broad-v5.json').read_bytes()))
-    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v5.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v5.json').read_bytes()))
+    h_parent_capture=data('coverage/contracts/vi4-public-matmul-capture-ci-broad-v7.json');h_parent_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v7.json')
+    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-ci-broad-v7.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-ci-broad-v7.json').read_bytes()))
+    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v7.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v7.json').read_bytes()))
+    assert h_parent_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-ci-broad-v5.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-ci-broad-v5.json').read_bytes()))
+    assert h_parent_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v5.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v5.json').read_bytes()))
     assert flood_parent_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-ci-broad-v3.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-ci-broad-v3.json').read_bytes()))
     assert flood_parent_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v3.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v3.json').read_bytes()))
     assert scalar_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-ci-broad-v2.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-ci-broad-v2.json').read_bytes()))

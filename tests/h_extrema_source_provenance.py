@@ -9,6 +9,7 @@ import copy
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 RECORD = 'coverage/evidence/h-extrema-reference-assertion-migration.json'
 SCHEMA = 'h-extrema-reference-assertion-migration-v1'
@@ -53,9 +54,19 @@ def verify_record(record, current, reader_raw):
     assert set(record) == {'schema', 'historical_test_lineage', 'files', 'reader_sha256', 'scope'}
     assert record['schema'] == SCHEMA
     if record['reader_sha256'] != sha(reader_raw):
-        from tools.mark_lbp_fp_context import predecessor_bytes
-        reader_raw = predecessor_bytes(Path(__file__).resolve().parents[1],
-                                       'tests/h_extrema_source_provenance.py', reader_raw)
+        root = Path(__file__).resolve().parents[1]
+        saved_paths = sys.path[:]
+        try:
+            # The audit child starts from tests/ with only the installed package
+            # on PYTHONPATH. Keep its precedence and expose only checkout tools.
+            sys.path.append(str(root))
+            from tools import mark_lbp_fp_context, vi_public_matmul_context
+            assert Path(mark_lbp_fp_context.__file__).resolve() == root / 'tools/mark_lbp_fp_context.py'
+            assert Path(vi_public_matmul_context.__file__).resolve() == root / 'tools/vi_public_matmul_context.py'
+            reader_raw = mark_lbp_fp_context.predecessor_bytes(
+                root, 'tests/h_extrema_source_provenance.py', reader_raw)
+        finally:
+            sys.path[:] = saved_paths
     assert record['reader_sha256'] == sha(reader_raw)
     expected_lineage = [dict(revision=n, bytes=10299,
                             raw_sha256=ALLOWED['tests/test_h_extrema_contracts.py'][0],
