@@ -323,6 +323,17 @@ template<class T> std::pair<double,double> intensity_bounds(const T* p, std::siz
 #else
         (void)vectorized;
 #endif
+        if constexpr (std::is_same_v<T,std::uint8_t>) {
+            if (begin == end) return;
+            std::uint8_t byte_low = std::numeric_limits<std::uint8_t>::max(), byte_high = 0;
+            for (auto i = begin; i < end; ++i) {
+                const auto value = p[i];
+                byte_low = std::min(byte_low,value);
+                byte_high = std::max(byte_high,value);
+            }
+            partials[id] = {double(byte_low),double(byte_high)};
+            return;
+        }
         if constexpr (std::is_same_v<T,float>) {
             // Two consecutive runs allow independent comparisons. Merge the
             // earlier run first so equal extrema retain the first zero's sign.

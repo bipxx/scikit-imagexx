@@ -907,6 +907,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v23.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v24.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v4.json', 'coverage/contracts/vi-public-matmul-source-history-v32.json', 'coverage/contracts/vi4-public-matmul-capture-ci-native-team-v4.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v25.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v5.json', 'coverage/contracts/vi-public-matmul-source-history-v33.json', 'coverage/contracts/vi4-public-matmul-capture-ci-native-team-v5.json', 'tests/test_build_identity_facts.py', 'tools/build_identity_facts.py')
 DRAW_SOURCE_PATHS += ('benchmarks/coverage.py', 'coverage/contracts/speed-parity-current-source-v26.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v6.json', 'coverage/contracts/vi-public-matmul-source-history-v34.json', 'coverage/contracts/vi4-public-matmul-capture-ci-native-team-v6.json')
+DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v27.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v7.json', 'coverage/contracts/vi-public-matmul-source-history-v35.json', 'coverage/contracts/vi4-public-matmul-capture-ci-native-team-v7.json')
 
 
 
