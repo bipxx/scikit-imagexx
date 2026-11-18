@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v10.json'
-CONTEXT_SHA256 = '4ef30229e002e36a1bb66cf23f5effd0661e7f59e306311bf0b0c341acc17d58'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v12.json'
+CONTEXT_SHA256 = 'd3ef3b49bd8d2106b184ed6db0bf9694d783567db6dad3feb24678d3b2775816'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -295,3 +295,21 @@ def test_distance_sources_use_the_full_current_source_collector_without_scientif
     assert digest((ROOT / regression).read_bytes()) == value['source_raw_sha256'][regression]
     assert regression in q.DRAW_SOURCE_PATHS
     assert regression not in selectors((ROOT / '.github/workflows/public-qualification.yml').read_bytes())
+
+
+@pytest.mark.parametrize('name,current_sha256', (
+    ('tests/array_views_observer.py', 'f963f030efdcfebade82a1af25eab770a3156a3ccaef15416c7861d6df6485e2'),
+    ('tests/slice_along_axes_observer.py', '70a6abfd834cc78ea887527ff16f8f74a545957e1578279f74697ce85a310f7d'),
+))
+def test_current_util_observer_is_exact_and_projects_frozen_reference(name, current_sha256):
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    helper = load('tools/vi_public_matmul_context.py')
+    contract = json.loads((ROOT / 'coverage/contracts/util-view-operations-v1.json').read_bytes())
+    raw = (ROOT / name).read_bytes()
+    assert digest(raw) == current_sha256
+    historical = helper.predecessor_bytes(ROOT, name, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+    assert digest(historical) == contract['source_pins_raw_sha256'][name]
+    assert historical != raw
+    for invalid in (historical, raw + b'\n# changed observer source'):
+        with pytest.raises(AssertionError):
+            helper.predecessor_bytes(ROOT, name, invalid, VI_PUBLIC_MATMUL_CONTEXT_SHA256)

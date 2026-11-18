@@ -75,11 +75,15 @@ template<class Input,class Output> void run(const Input* input,Output* output,co
     const auto width=shape[pivot];const bool square=axes.size()>1;
 #ifdef SKIMAGEXX_AVX2
     const bool vectorized=has_avx2();
+#else
+    constexpr bool vectorized=false;
 #endif
+    const bool scalar_interior=!vectorized && width>4 && border!=FaridBorder::constant;
     for(auto axis:axes) {
         const auto plan=kernel(shape.size(),axis,pivot);const auto taps=plan.weights.size();
         detail::partition(count,workers,[&](auto begin,auto end,auto) {
             std::vector<const void*> rows(taps);
+            std::vector<std::ptrdiff_t> offsets(scalar_interior ? taps : 0);
             std::vector<std::size_t> coordinates(shape.size());
             while(begin<end) {
                 const auto start=begin%width,base=begin-start,stop=std::min(width,start+end-begin);
@@ -93,6 +97,10 @@ template<class Input,class Output> void run(const Input* input,Output* output,co
                     }
                     rows[tap]=constant ? nullptr : static_cast<const void*>(input+offset);
                 }
+                auto store=[&](std::size_t x,double sum) {
+                    Output value=Output(sum);if(square)value=Output(value*value);
+                    output[base+x]=directional ? value : Output(output[base+x]+value);
+                };
                 auto scalar=[&](std::size_t x) {
                     double sum=0;
                     for(std::size_t tap=0;tap<taps;++tap) {
@@ -101,8 +109,7 @@ template<class Input,class Output> void run(const Input* input,Output* output,co
                         const double value=row && column>=0 ? normalized(row[column]) : cval;
                         sum+=value*plan.weights[tap];
                     }
-                    Output value=Output(sum);if(square)value=Output(value*value);
-                    output[base+x]=directional ? value : Output(output[base+x]+value);
+                    store(x,sum);
                 };
                 auto x=start;for(;x<stop && x<2;++x)scalar(x);
 #ifdef SKIMAGEXX_AVX2
@@ -110,6 +117,20 @@ template<class Input,class Output> void run(const Input* input,Output* output,co
                     std::is_same_v<Input,float> ? PixelType::float32 : std::is_same_v<Input,double> ? PixelType::float64 : PixelType::uint8,
                     width,x,stop,cval,directional,square);
 #endif
+                if(scalar_interior && x<stop && x+2<width) {
+                    // Non-constant borders provide a source row for every tap.
+                    // Within the pivot interior their displacements stay fixed.
+                    const auto* row_input=input+base;
+                    for(std::size_t tap=0;tap<taps;++tap)
+                        offsets[tap]=static_cast<const Input*>(rows[tap])-row_input+plan.shifts[tap];
+                    for(const auto limit=std::min(stop,width-2);x<limit;++x) {
+                        const auto* pixel=row_input+x;
+                        double sum=0;
+                        for(std::size_t tap=0;tap<taps;++tap)
+                            sum+=normalized(pixel[offsets[tap]])*plan.weights[tap];
+                        store(x,sum);
+                    }
+                }
                 for(;x<stop;++x)scalar(x);
                 begin+=stop-start;
             }

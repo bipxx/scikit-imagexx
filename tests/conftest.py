@@ -40,8 +40,29 @@ def _frozen_mark_lbp_source_epoch(request, tmp_path_factory):
 
 @pytest.fixture(autouse=True)
 def _frozen_vi_shared_source_epoch(request, tmp_path_factory):
-    if (request.module.__name__.rsplit('.', 1)[-1] != 'test_variation_of_information_integration'
-            or request.node.name != 'test_vi_shared_source'):
+    module = request.module.__name__.rsplit('.', 1)[-1]
+    node = request.node.name
+    if module == 'test_util_views_source' and node in {
+        'test_current_native_closure_and_historical_pins',
+        'test_observers_body_unchanged_from_captured_dependency',
+    }:
+        from pathlib import Path
+        from vi_public_matmul_source_view import _historical_source_epoch
+        root, epoch = _historical_source_epoch(tmp_path_factory)
+        if epoch is not None:
+            # The old observer pins and function bodies are compared in their
+            # authenticated epoch. All other source/artifact reads stay live.
+            observers = ('tests/array_views_observer.py', 'tests/slice_along_axes_observer.py')
+            historical = {root / path: epoch / path for path in observers}
+            read_bytes = Path.read_bytes
+
+            def observer_bytes(path):
+                return read_bytes(historical.get(path, path))
+
+            request.getfixturevalue('monkeypatch').setattr(Path, 'read_bytes', observer_bytes)
+        yield
+        return
+    if module != 'test_variation_of_information_integration' or node != 'test_vi_shared_source':
         yield
         return
     from vi_public_matmul_source_view import _historical_source_epoch, _module_source_epoch
