@@ -378,6 +378,25 @@ def validate_frozen_controller(name, canonical, expected, scope):
             require(canonical.count(projection) == 1,
                     'current bilateral fixture metadata projection differs: ' + name)
             canonical = canonical.replace(projection, original_fixture, 1)
+    elif (scope == CURRENT_PRODUCT_SCOPE and name == 'tests/test_rank_statistics_compare.py'
+          and hashlib.sha256(canonical).hexdigest() != expected):
+        # Reuse the reviewed test self-pin inverse from the trusted stager checkout.
+        # The staged snapshot contributes the bytes under test, never executable code.
+        context = ROOT / 'coverage/contracts/vi-public-matmul-source-history-v23.json'
+        raw_context = context.read_bytes()
+        context_sha = '7ce2e5925d616ea19f3183650aa924008720d8a2650ebcaa6e40f29ff1a7040b'
+        require(hashlib.sha256(raw_context).hexdigest() == context_sha,
+                'frozen R4 source history pin differs')
+        history = json.loads(raw_context)
+        row = history['sources'][name]
+        require(hashlib.sha256(canonical).hexdigest() == row['current_canonical_sha256']
+                and expected == row['predecessor_canonical_sha256'],
+                'frozen R4 controller pin differs: ' + name)
+        spec = importlib.util.spec_from_file_location(
+            '_stager_frozen_r4_context', Path(__file__).with_name('vi_public_matmul_context.py'))
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        canonical = tool._project(history, name, canonical, context_sha, canonical=True)
     require(hashlib.sha256(canonical).hexdigest() == expected,
             'frozen R4 controller pin differs: ' + name)
 

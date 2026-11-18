@@ -996,6 +996,25 @@ def test_current_controller_exact_inverse_sdk_metadata_matches_historical_pin(na
         assert contract['source_text_sha256'][name]==expected
 
 
+def test_all_actual_frozen_r4_controller_pins_match_current_snapshot():
+    contract = json.loads((ROOT / 'coverage/contracts/rank-statistics-comparison.json').read_bytes())
+    for name, expected in contract['source_text_sha256'].items():
+        canonical = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+        p.validate_frozen_controller(name, canonical, expected, p.CURRENT_PRODUCT_SCOPE)
+
+
+def test_rank_source_guard_projection_rejects_tampering_and_historical_rebinding():
+    contract = json.loads((ROOT / 'coverage/contracts/rank-statistics-comparison.json').read_bytes())
+    name = 'tests/test_rank_statistics_compare.py'
+    expected = contract['source_text_sha256'][name]
+    current = (ROOT / name).read_bytes().replace(b'\r\n', b'\n')
+    assert hashlib.sha256(current).hexdigest() != expected
+    with pytest.raises(RuntimeError, match='frozen R4 controller pin differs'):
+        p.validate_frozen_controller(name, current + b'\n# unrelated edit\n', expected, p.CURRENT_PRODUCT_SCOPE)
+    with pytest.raises(RuntimeError, match='frozen R4 controller pin differs'):
+        p.validate_frozen_controller(name, current, expected, 'rank14')
+
+
 @pytest.mark.parametrize('name,expected',CURRENT_CORPUS_PRE_METADATA_PINS.items())
 @pytest.mark.parametrize('fault',('extra-edit','missing-import','duplicate-import','missing-call','duplicate-call','changed-call'))
 def test_current_controller_inverse_rejects_any_unreviewed_edit(name,expected,fault):
