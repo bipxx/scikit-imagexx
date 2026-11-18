@@ -42,18 +42,23 @@ def _frozen_mark_lbp_source_epoch(request, tmp_path_factory):
 def _frozen_vi_shared_source_epoch(request, tmp_path_factory):
     module = request.module.__name__.rsplit('.', 1)[-1]
     node = request.node.name
-    if module == 'test_util_views_source' and node in {
-        'test_current_native_closure_and_historical_pins',
-        'test_observers_body_unchanged_from_captured_dependency',
-    }:
+    observers = ('tests/array_views_observer.py', 'tests/slice_along_axes_observer.py')
+    historical_dependencies = ()
+    if module == 'test_util_views_source':
+        if node == 'test_current_native_closure_and_historical_pins':
+            historical_dependencies = (*observers, 'src/execution.hpp', 'tests/cmake_consumer/util_views_consumer.hpp')
+        elif node == 'test_observers_body_unchanged_from_captured_dependency':
+            historical_dependencies = observers
+    elif module == 'test_rolling_ball_sdk_dtype_source' and node == 'test_exact_source_dependency_and_historical_projection':
+        historical_dependencies = ('src/execution.hpp',)
+    if historical_dependencies:
         from pathlib import Path
         from vi_public_matmul_source_view import _historical_source_epoch
         root, epoch = _historical_source_epoch(tmp_path_factory)
         if epoch is not None:
-            # The old observer pins and function bodies are compared in their
-            # authenticated epoch. All other source/artifact reads stay live.
-            observers = ('tests/array_views_observer.py', 'tests/slice_along_axes_observer.py')
-            historical = {root / path: epoch / path for path in observers}
+            # Each named historical assertion reads only its exact predecessor
+            # inputs. All other source and artifact reads use the live checkout.
+            historical = {root / path: epoch / path for path in historical_dependencies}
             read_bytes = Path.read_bytes
 
             def observer_bytes(path):

@@ -58,9 +58,10 @@ def test_actual_unbound_probe_before_science(route,cached,monkeypatch,tmp_path):
 
 
 def synthetic(tmp_path,monkeypatch,route):
-    import next_util_benchmark_support as support
-    monkeypatch.setattr(support,'CONTEXT',ROOT/DATA['driver_context'])
-    path=support.synthetic_binding(tmp_path,route,monkeypatch);b=json.loads(path.read_bytes())
+    from test_finite_radon_benchmark_execution import CONTEXT, synthetic as historical_binding
+    assert CONTEXT == ROOT / DATA['driver_context']
+    path = historical_binding(tmp_path, monkeypatch, route)
+    b = json.loads(path.read_bytes())
     runtime=Path(b['runtime_path']);v=json.loads(runtime.read_bytes());v['runtime']['sdk_sha256']={'inert.hpp':'a'*64};runtime.write_text(json.dumps(v));b['runtime_sha256']=PROBE.sha(runtime)
     b['routes']={route:ROUTES[route]};b['output_root']=str(tmp_path/'first-cohort');path.write_text(json.dumps(b))
     receipt=tmp_path/'receipt.json';receipt.write_text('{"inert":true}')

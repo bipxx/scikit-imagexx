@@ -101,25 +101,52 @@ void large(int workers){
  const std::size_t n=131073;std::vector<std::uint8_t> mask(n,1);std::vector<std::intptr_t> index(n*2);std::vector<double> output(n*2);
  require(regionprops_coords_scaled_local_into(mask.data(),2,{1,n,1},{std::ptrdiff_t(n),1,0},n,index.data(),workers));
  require(regionprops_coords_scaled_origin_into(index.data(),n,2,{1,n,1},{1,-3,0},workers));
- #ifdef _OPENMP
+ #if defined(_OPENMP) && (defined(__SSE__) || defined(_M_X64) || defined(_M_IX86))
+ const bool stable_team = !omp_get_dynamic();
  std::vector<unsigned> worker_before(std::size_t(workers),0);
- #pragma omp parallel num_threads(workers)
- {
-  #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
-  const auto id=std::size_t(omp_get_thread_num());if(id){_mm_setcsr((_mm_getcsr()&~0x6000u)|0x2000u);worker_before[id]=_mm_getcsr();}
-  #endif
+ if(stable_team){
+  #pragma omp parallel num_threads(workers)
+  {
+   const auto id=std::size_t(omp_get_thread_num());
+   if(id){
+    _mm_setcsr((_mm_getcsr()&~0x6000u)|0x2000u);
+    worker_before[id]=_mm_getcsr();
+   }
+  }
  }
  #endif
  require(regionprops_coords_scaled_multiply_f64_into(index.data(),n,2,{.3,.5,0},output.data(),workers));require(regionprops_coords_scaled_add_f64_into(output.data(),n,2,{.125,-.25,0},workers));
- #ifdef _OPENMP
- #pragma omp parallel num_threads(workers)
- {
-  #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
-  const auto id=std::size_t(omp_get_thread_num());if(id){if(_mm_getcsr()!=worker_before[id])std::abort();_mm_setcsr(_mm_getcsr()&~0x6000u);}
-  #endif
+ #if defined(_OPENMP) && (defined(__SSE__) || defined(_M_X64) || defined(_M_IX86))
+ if(stable_team){
+  #pragma omp parallel num_threads(workers)
+  {
+   const auto id=std::size_t(omp_get_thread_num());
+   if(id){
+    if(_mm_getcsr()!=worker_before[id])std::abort();
+    _mm_setcsr(_mm_getcsr()&~0x6000u);
+   }
+  }
  }
  #endif
  for(std::size_t p=0;p<n;++p){require(index[p]==1&&index[n+p]==std::intptr_t(p)-3);volatile double x=double(index[p])*.3;volatile double y=double(index[n+p])*.5;require(bits(output[p])==bits(x+.125));require(bits(output[n+p])==bits(y-.25));}
+}
+void large_four(){
+ #if defined(_OPENMP) && (defined(__SSE__) || defined(_M_X64) || defined(_M_IX86))
+ const int dynamic=omp_get_dynamic();
+ if(dynamic){
+  // Exercise dynamic partitioning, then use a stable team for the per-thread
+  // MXCSR check across parallel regions.
+  large(4);
+  struct RestoreDynamic {
+   int previous;
+   ~RestoreDynamic(){omp_set_dynamic(previous);}
+  } restore{dynamic};
+  omp_set_dynamic(0);
+  large(4);
+  return;
+ }
+ #endif
+ large(4);
 }
 void old_coords(){
  // Saved regionprops-state/2d-cache-True: canonical C logical points below.
@@ -130,4 +157,4 @@ void old_coords(){
  for(std::size_t p=0;p<3;++p)for(std::size_t a=0;a<2;++a){std::intptr_t got;std::memcpy(&got,reinterpret_cast<char*>(start)+std::ptrdiff_t(p)*step+std::ptrdiff_t(a)*dim,sizeof(got));require(got==expected[p*2+a]);}require(output[0]==-87&&output[7]==-87);}
 }
 }
-int main(int argc,char** argv){try{if(argc==2 && std::string(argv[1])=="--old-coords-only"){old_coords();std::cout<<"saved_old_coords_checks="<<checks<<"\n";return 0;}const auto original=get_num_threads();set_num_threads(1);saved(1);large(1);bool four=true;try{set_num_threads(4);}catch(const std::invalid_argument&){four=false;require(get_num_threads()==1);}if(four){saved(4);large(4);}set_num_threads(1);require(get_num_threads()==1);saved(1);refusal();environment();old_coords();set_num_threads(original);require(get_num_threads()==original);std::cout<<"records="<<records<<" checks="<<checks<<" workers4="<<four<<" default_restore=1\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(int argc,char** argv){try{if(argc==2 && std::string(argv[1])=="--old-coords-only"){old_coords();std::cout<<"saved_old_coords_checks="<<checks<<"\n";return 0;}const auto original=get_num_threads();set_num_threads(1);saved(1);large(1);bool four=true;try{set_num_threads(4);}catch(const std::invalid_argument&){four=false;require(get_num_threads()==1);}if(four){saved(4);large_four();}set_num_threads(1);require(get_num_threads()==1);saved(1);refusal();environment();old_coords();set_num_threads(original);require(get_num_threads()==original);std::cout<<"records="<<records<<" checks="<<checks<<" workers4="<<four<<" default_restore=1\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

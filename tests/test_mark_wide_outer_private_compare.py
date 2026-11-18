@@ -22,6 +22,9 @@ def test_exact_admitted_eight_rows_and_unchanged_whole_pipeline_sources():
             assert r['target_immediate']['after']['status']==(32 if profile=='minimum'else 0)
     for name,pin in(contract['source_pins']|contract['existing_source_reuse']).items():
         raw=(ROOT/name).read_bytes()
+        if name == 'src/execution.hpp':
+            from tools.mark_lbp_fp_context import predecessor_bytes
+            raw = predecessor_bytes(ROOT, name, raw)
         if name in ('src/find_boundaries.cpp','src/mark_boundaries.cpp','src/bind_mark_boundaries.cpp'):
             from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
             from tools.vi_public_matmul_context import speed_predecessor_bytes

@@ -353,7 +353,7 @@ def test_actual_source_tail_and_real_sampler_frames_with_inert_prepared_locals(t
 @pytest.mark.parametrize('cached',(False,True))
 def test_normalized_route_runs_actual_driver_parser_until_request_refusal(tmp_path,monkeypatch,cached):
     import builtins
-    from test_rolling_ball_benchmark import synthetic
+    from test_rolling_ball_benchmark import adapter as historical_adapter, synthetic
     path,binding,context=synthetic(tmp_path,monkeypatch)
     route=ROUTES['rolling-ball'];output=Path(binding['output_root'])/'never.json'
     argv=PROBE.driver_argv(ROOT,route,path,output)
@@ -368,6 +368,8 @@ def test_normalized_route_runs_actual_driver_parser_until_request_refusal(tmp_pa
         if cached:patch.setitem(sys.modules,'numpy',SimpleNamespace(inert_cached=True))
         patch.setattr(sys,'argv',argv);patch.setattr(sys,'path',list(sys.path))
         patch.setattr(builtins,'__import__',request)
+        reader = historical_adapter()['execute'].__globals__['source_bytes']
+        patch.setattr(adapter, 'source_bytes', reader)
         with pytest.raises(Refused):adapter.execute(module)
     assert requests==['numpy']and builtins.__import__ is prior
     assert not output.exists()and not output.with_suffix('.batches.jsonl').exists()

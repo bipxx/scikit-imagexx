@@ -12,7 +12,7 @@ OLD = b'"""Bound upstream reference pools; native workers are set explicitly per
 APPEND = b'\n# Original-only observer, no pytest tests; loaded explicitly by the fresh Li child.\ncollect_ignore = ["test_li_u16_bounded.py"]\n'
 CURRENT = (ROOT / "tests/conftest.py").read_bytes().replace(b"\r\n", b"\n")
 # The source-only conftest changes through 6457fdc1 preserve the Li prefix.
-SOURCE_EPOCH_SUFFIX = 'f20ffbf74319a2a818b1662f97e8cb8bdd8d30ae017160dc0e1eeab27db4e994'
+SOURCE_EPOCH_SUFFIX = 'f1e344129049654181b1f2784fbed8161a6b1f999ccac495f2aa4f535bb9d6c8'
 
 def no_tests(raw):
     tree=ast.parse(raw)

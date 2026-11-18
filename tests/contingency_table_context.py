@@ -12,7 +12,8 @@ PATHS = (
 
 def predecessor_bytes(root, path, *, source=None):
     raw = (Path(root)/path).read_bytes().replace(b'\r\n', b'\n') if source is None else source
-    if path in ('src/label_pair_metrics.cpp','tests/cmake_consumer/label_pair_metrics_consumer.cpp'):
+    if path in ('src/label_pair_metrics.cpp','tests/cmake_consumer/label_pair_metrics_consumer.cpp',
+                'tests/test_label_pair_rand_native.cpp'):
         import importlib.util
         spec=importlib.util.spec_from_file_location('density_join_source_context',Path(root)/'tools/join_source_context.py')
         helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)

@@ -14,28 +14,14 @@ CONTRACT=ROOT/'coverage/contracts/util-view-operations-v1.json'
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_current_native_closure_and_historical_pins(tmp_path):
+def test_current_native_closure_and_historical_pins():
     data=json.loads(CONTRACT.read_bytes())
     assert data['original_budget']==data['timed_batches']==0
     assert data['raw_admission_sha256']=='63bb915f2a1e5b395594347560a2e2177470a6d5ce783b3e7e3d2e140d590678'
     context=json.loads((ROOT/'coverage/contracts/next-util-benchmark-execution-v3.json').read_bytes())
-    driver = runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))
-    projection = driver['historical_bytes']
+    projection=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['historical_bytes']
     for name,pin in data['source_pins_raw_sha256'].items():
-        if name == 'tests/test_util_views_source.py':
-            from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
-            from tools.vi_public_matmul_context import immediate_predecessor_bytes
-            raw = immediate_predecessor_bytes(ROOT, name, (ROOT/name).read_bytes(), VI_PUBLIC_MATMUL_CONTEXT_SHA256)
-            for path, payload in ((name, raw), (driver['CONTEXT'], (ROOT/driver['CONTEXT']).read_bytes())):
-                target = tmp_path / path
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(payload)
-            raw = projection(tmp_path, name)
-        else:
-            raw = projection(ROOT, name) if name in context['sources'] else (ROOT/name).read_bytes()
-        if name in ('src/execution.hpp', 'tests/cmake_consumer/util_views_consumer.hpp'):
-            from tools.mark_lbp_fp_context import predecessor_bytes
-            raw = predecessor_bytes(ROOT, name, raw)
+        raw=projection(ROOT,name)if name in context['sources']else(ROOT/name).read_bytes()
         if name=='tests/test_util_views_public.py'and hashlib.sha256(raw).hexdigest()!=pin:
             # Exact admitted F1 FP inverse; an arbitrary changed test cannot pass.
             fenv=runpy.run_path(str(ROOT/'benchmarks/next_util_execution.py'))['fenv_source'](ROOT,context)

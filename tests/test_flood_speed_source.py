@@ -29,6 +29,9 @@ def legacy_source_bytes(name, supplied=None):
         from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
         from tools.vi_public_matmul_context import immediate_predecessor_bytes
         return immediate_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+    if name == 'tests/test_flood_fill_sdk.cpp':
+        from tools.mark_lbp_fp_context import predecessor_bytes
+        return predecessor_bytes(ROOT, name, raw)
     current=active_context()
     if name in current['legacy_current_views']:
         from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256

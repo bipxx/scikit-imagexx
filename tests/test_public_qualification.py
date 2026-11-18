@@ -2462,6 +2462,16 @@ def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_
     assert 'tests/test_profile_coordinates_public.py' in contract['required_selectors']
 
 
+def assert_sdk_worker_budget_modes(source):
+    lines = source.splitlines()
+    for index, line in enumerate(lines):
+        if line.rstrip().endswith('for(int workers:{1'):
+            directives = tuple(part.strip() for part in lines[index+1:index+5])
+            if len(directives) == 4 and directives[:3] == ('#ifdef _OPENMP', ',4', '#endif') and directives[3].startswith('})'):
+                return
+    raise AssertionError('Expected one worker with an OpenMP-only four-worker alternative')
+
+
 def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
     cmake=(ROOT/'tests/cmake_consumer/CMakeLists.txt').read_text()
     assert 'foreach(_current IN ITEMS colocalization footprint_shapes recent_primitives draw_coordinates circle_perimeter line_nd)' in cmake
@@ -2470,7 +2480,8 @@ def test_installed_new_clients_use_only_sdk_headers_and_active_checks():
         source=(ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')).read_text()
         assert '#include <skimagexx/'+family+'.hpp>' in source and '#include <skimagexx/image.hpp>' in source
         assert '../src/' not in source and 'Python.h' not in source
-        assert 'get_num_threads()==1' in source and 'for(int workers:{1,4})' in source
+        assert 'get_num_threads()==1' in source
+        assert_sdk_worker_budget_modes(source)
     source=(ROOT/'tests/cmake_consumer/recent_primitives_consumer.cpp').read_text()
     for header in ('skimagexx/regular_seeds.hpp', 'skimagexx/unique_rows.hpp', 'skimagexx/label_points.hpp', 'skimagexx/map_array.hpp', 'skimagexx/level_set.hpp', 'skimagexx/compare_images.hpp', 'skimagexx/uniform_filter.hpp', 'skimagexx/profile_line.hpp', 'skimagexx/montage.hpp', 'skimagexx/rolling_ball_kernels.hpp', 'skimagexx/approximate_polygon.hpp', 'skimagexx/subdivide_polygon.hpp'):
         assert '#include <'+header+'>' in source
@@ -2675,7 +2686,8 @@ def test_current253_installed_drawing_client_is_public_header_only():
     assert '../src/' not in source and 'Python.h' not in source
     for name in ('draw_line_into','draw_rectangle_into','draw_ellipse_mask_into','draw_ellipse_emit_into'):
         assert name in source
-    assert 'for(int workers:{1,4})' in source and 'set_num_threads(1)' in source
+    assert 'set_num_threads(1)' in source
+    assert_sdk_worker_budget_modes(source)
 
 
 @pytest.mark.parametrize('missing',('include/skimagexx/circle_perimeter.hpp','python/skimagexx/_circle_perimeter.py'))
@@ -2693,7 +2705,8 @@ def test_current253_circle_installed_client_is_public_header_only():
     assert '../src/'not in source and 'Python.h'not in source
     for name in ('prepare_circle_perimeter','circle_perimeter_count','circle_perimeter_fill'):
         assert name in source
-    assert 'for(int workers:{1,4})'in source and 'set_num_threads(1)'in source
+    assert 'set_num_threads(1)' in source
+    assert_sdk_worker_budget_modes(source)
 
 
 @pytest.mark.parametrize('missing',('include/skimagexx/line_aa.hpp','python/skimagexx/_line_aa.py'))

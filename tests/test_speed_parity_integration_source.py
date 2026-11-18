@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v21.json'
-CONTEXT_SHA256 = '857140e1d06a62dc54b2a3e2e584196b0433efe8d55ca32fe412c3afeddd68fe'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v23.json'
+CONTEXT_SHA256 = '420829f74f21a4e0e1d49494cf6fac1bfcfc2e879f6d572ca541dd8bfe49806a'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
