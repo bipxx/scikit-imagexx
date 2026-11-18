@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v7.json'
-CONTEXT_SHA256 = '433eb995fe2f2839b65ccef1b25112fb232612b49b928bc399df626fb877d989'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v10.json'
+CONTEXT_SHA256 = '4ef30229e002e36a1bb66cf23f5effd0661e7f59e306311bf0b0c341acc17d58'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -206,14 +206,17 @@ def test_find_current_literals_preserve_all_old_recipes_and_refuse_tampering(pre
     assert value['speed_source_successor']['execution_authority'] is None
     assert {k: v for k, v in value.items() if k not in (key, 'speed_source_successor')} == {k: v for k, v in prior.items() if k not in (key, 'speed_source_successor')}
     assert set(value[key]) == set(prior[key])
-    for name, pin in value[key].items():
-        assert digest((ROOT / name).read_bytes().replace(b'\r\n', b'\n')) == pin, name
     if key == 'source_closure':
         driver = load('benchmarks/find_boundaries.py')
+        for name, pin in value[key].items():
+            assert digest(driver.binding_source_bytes(name)) == pin, name
         driver.validate_source_closure(value)
         value[key]['src/find_boundaries.cpp'] = '0' * 64
         with pytest.raises(AssertionError):
             driver.validate_source_closure(value)
+    else:
+        for name, pin in value[key].items():
+            assert digest((ROOT / name).read_bytes().replace(b'\r\n', b'\n')) == pin, name
 
 
 def test_historical_operational_inputs_are_frozen_without_current_authority():
@@ -246,9 +249,9 @@ def test_CI_runtime_successor_authenticates_exact_current_and_frozen_bytes(canon
     helper = load('tools/vi_public_matmul_context.py')
     context = helper._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
     assert context['predecessor_history_context'] == {
-        'path': 'coverage/contracts/vi-public-matmul-source-history-v12.json',
-        'sha256': '259ab1e61b27b93cbcad82f46ad9924b9e4983837a02f14a660486d14516eb18',
-        'source': '14c95b05d3e7e21144570ff029862307cf03466a',
+        'path': 'coverage/contracts/vi-public-matmul-source-history-v14.json',
+        'sha256': '16e3ab9c003881f18c072f88f4b2fd940d8915b74e11b59b87b5a80ee31e9715',
+        'source': 'e27633bf9186bb7cab5c1d0b9fbf1584c94c6b81',
     }
     for name in ('.github/workflows/ci.yml', 'tests/test_ci_measurement_isolation.py', 'tools/check_cmake_install.py'):
         raw = (ROOT / name).read_bytes()
@@ -268,7 +271,7 @@ def test_CI_runtime_successor_authenticates_exact_current_and_frozen_bytes(canon
 def test_CI_runtime_successor_rejects_changed_predecessor_context(monkeypatch):
     from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
     helper = load('tools/vi_public_matmul_context.py')
-    parent = ROOT / 'coverage/contracts/vi-public-matmul-source-history-v12.json'
+    parent = ROOT / 'coverage/contracts/vi-public-matmul-source-history-v14.json'
     original = Path.read_bytes
     monkeypatch.setattr(Path, 'read_bytes', lambda self: original(self) + b' ' if self == parent else original(self))
     with pytest.raises(AssertionError):

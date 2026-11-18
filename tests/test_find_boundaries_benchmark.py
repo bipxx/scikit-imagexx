@@ -15,8 +15,9 @@ def contract():return json.loads((ROOT/'coverage/contracts/find-boundaries-bench
 
 def test_find_boundaries_benchmark_source_pins_and_sampler():
     c=contract()
+    driver=runpy.run_path(str(ROOT/'benchmarks/find_boundaries.py'))
     for name,pin in c['source_closure'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==pin,name
+        assert hashlib.sha256(driver['binding_source_bytes'](name)).hexdigest()==pin,name
     text=(ROOT/'tools/montage_sustained.py').read_text()
     node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name=='measure')
     method=''.join(text.splitlines(keepends=True)[node.lineno-1:node.end_lineno])
@@ -105,7 +106,7 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
         assert {k:v for k,v in effective.items()if k not in changed}=={k:v for k,v in base.items()if k not in changed}
         assert raw_contract==driver.CONTRACT.read_bytes() and path.read_bytes()==raw_binding
         # Use real immutable closure bytes with the existing inert provenance envelope.
-        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract'],base['mark_wide_successor']['contract'],base['speed_source_successor']['contract'],'coverage/contracts/find-boundaries-benchmark-binding-v6.json','coverage/contracts/vi-public-matmul-source-history-v14.json'):
+        for name in (*base['source_closure'],base['runtime_successor']['contract'],base['layout_successor']['contract'],base['f_row_successor']['contract'],base['mark_wide_successor']['contract'],base['speed_source_successor']['contract'],'coverage/contracts/find-boundaries-benchmark-binding-v6.json','coverage/contracts/vi-public-matmul-source-history-v17.json'):
             target=tmp_path/name;target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes((ROOT/name).read_bytes())
         context_target=tmp_path/'coverage/contracts/mark-lbp-fp-integration-v1.json'
@@ -118,6 +119,8 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
             'tools/vi_public_reference_context_v2.py','tools/vi_public_reference_context.py',
             'tools/vi_provider_sdk_context.py','tools/vi_public_log2_context.py',
             'tests/vi_public_matmul_source_view.py',
+            'coverage/contracts/vi-public-matmul-source-history-v16.json',
+            'coverage/contracts/vi-public-matmul-source-history-v14.json',
             'coverage/contracts/vi-public-matmul-source-history-v12.json',
             'coverage/contracts/vi-public-matmul-source-history-v11.json',
             'coverage/contracts/vi-public-matmul-source-history-v10.json',

@@ -11,6 +11,8 @@ EXPECTED = '2057a6a3aad4679c84c339f2012d06d019ebe01e3173b3503c9a4754e95ca5f0'
 OLD = b'"""Bound upstream reference pools; native workers are set explicitly per test."""\nimport os\nfor variable in (\'OPENBLAS_NUM_THREADS\',\'MKL_NUM_THREADS\',\'OMP_NUM_THREADS\',\'BLIS_NUM_THREADS\'):\n    os.environ.setdefault(variable,\'1\')\n'
 APPEND = b'\n# Original-only observer, no pytest tests; loaded explicitly by the fresh Li child.\ncollect_ignore = ["test_li_u16_bounded.py"]\n'
 CURRENT = (ROOT / "tests/conftest.py").read_bytes().replace(b"\r\n", b"\n")
+# Source-only fixture additions from 6c027543 preserve the original Li policy.
+SOURCE_EPOCH_SUFFIX = '4e2c76302c64eec156dbff9073cc6121f9cfc5662c1f0322e0eb48173cee4e9e'
 
 def no_tests(raw):
     tree=ast.parse(raw)
@@ -30,7 +32,10 @@ def exact_policy(raw):
     tree=ast.parse(raw);matches=[n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='collect_ignore' for t in n.targets)]
     assert len(matches)==1 and ast.literal_eval(matches[0].value)==[NAME]
     assert not any(isinstance(n,ast.Name) and n.id=='collect_ignore_glob' for n in ast.walk(tree))
-    assert raw.replace(b'\r\n', b'\n')==OLD+APPEND
+    prefix=OLD+APPEND
+    raw=raw.replace(b'\r\n', b'\n')
+    assert raw.startswith(prefix)
+    assert hashlib.sha256(raw[len(prefix):]).hexdigest()==SOURCE_EPOCH_SUFFIX
     return True
 
 class LiObserverCollectionTests(unittest.TestCase):
@@ -38,8 +43,9 @@ class LiObserverCollectionTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(RAW).hexdigest(),EXPECTED);self.assertTrue(no_tests(RAW))
     def test_exact_single_relative_observer_policy(self):self.assertTrue(exact_policy(CURRENT))
     def test_preserve_original_thread_pool_setup(self):
-        compile(ast.parse(CURRENT),'<conftest-noexec>','exec');self.assertEqual(CURRENT[:-len(APPEND)],OLD)
-        self.assertEqual(ast.dump(ast.Module(body=ast.parse(CURRENT).body[:-1],type_ignores=[]),include_attributes=False),ast.dump(ast.parse(OLD),include_attributes=False))
+        compile(ast.parse(CURRENT),'<conftest-noexec>','exec')
+        self.assertTrue(exact_policy(CURRENT))
+        self.assertEqual(CURRENT[:len(OLD)],OLD)
     def test_new_test_function_rejected(self):
         with self.assertRaises(AssertionError):no_tests(RAW+b'\ndef test_added(): pass\n')
     def test_new_test_class_rejected(self):
@@ -47,7 +53,7 @@ class LiObserverCollectionTests(unittest.TestCase):
     def test_imported_test_alias_rejected(self):
         with self.assertRaises(AssertionError):no_tests(RAW+b'\nfrom elsewhere import helper as test_added\n')
     def test_extra_or_pattern_ignore_rejected(self):
-        for text in (CURRENT.replace(b'"test_li_u16_bounded.py"',b'"test_li_u16_bounded.py", "test_api.py"'),CURRENT.replace(b'collect_ignore =',b'collect_ignore_glob ='),CURRENT.replace(b'test_li_u16_bounded.py',b'test_li_*.py')):
+        for text in (CURRENT.replace(b'"test_li_u16_bounded.py"',b'"test_li_u16_bounded.py", "test_api.py"'),CURRENT.replace(b'collect_ignore =',b'collect_ignore_glob ='),CURRENT.replace(b'test_li_u16_bounded.py',b'test_li_*.py'), CURRENT+b'\ncollect_ignore.append("test_api.py")\n'):
             with self.assertRaises(AssertionError):exact_policy(text)
     def test_fresh_child_gate_path_and_source_unchanged(self):
         raw=(ROOT/'tests/test_li_u16_pipeline.py').read_bytes();self.assertEqual(hashlib.sha256(raw).hexdigest(),'91587055f960211a2cf7d86e04d644dd13308acc7805316f55724e57de97eaf0')

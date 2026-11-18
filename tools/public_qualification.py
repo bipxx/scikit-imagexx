@@ -10,6 +10,7 @@ Portable/no-OpenMP/sanitizer/private-adapter evidence is not inherited implicitl
 from __future__ import annotations
 
 import argparse
+import ast
 import base64
 import collections
 import csv
@@ -892,6 +893,8 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v10.js
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v11.json', 'coverage/contracts/speed-parity-current-source-v4.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v6.json', 'coverage/contracts/vi4-public-matmul-capture-v5.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v12.json', 'coverage/contracts/speed-parity-current-source-v5.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v7.json', 'coverage/contracts/vi4-public-matmul-capture-v6.json', 'tests/test_distance_optimized_layouts.py')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v14.json', 'coverage/contracts/speed-parity-current-source-v7.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-fenv-v1.json', 'coverage/contracts/vi4-public-matmul-capture-ci-fenv-v1.json', 'tools/check_cmake_install.py', 'tools/check_installed_pytest.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v16.json', 'coverage/contracts/speed-parity-current-source-v9.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v2.json', 'coverage/contracts/vi4-public-matmul-capture-ci-broad-v2.json', 'coverage/contracts/slice-along-axes-v3.json', 'tools/rank_statistics_products.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v17.json', 'coverage/contracts/speed-parity-current-source-v10.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v3.json', 'coverage/contracts/vi4-public-matmul-capture-ci-broad-v3.json', 'CMakeLists.txt')
 
 
 
@@ -1785,16 +1788,39 @@ def reconstruction_admission(core,morphology,wrapper,registered):
     require(tuple(morphology.__all__).count('reconstruction')==1,'reconstruction canonical export missing/duplicate')
 
 
+def h_extrema_frozen_reader(raw):
+    """Restore the exact closed H reader for historical source verification."""
+    name = 'tests/h_extrema_source_provenance.py'
+    expected = H_EXTREMA_FROZEN_RAW_PINS[name]
+    if hashlib.sha256(raw).hexdigest() == expected:
+        return raw
+    hook = ROOT / 'tools/mark_lbp_fp_context.py'
+    pin, = [ast.literal_eval(node.value) for node in ast.parse(hook.read_bytes()).body
+            if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                and target.id == 'VI_PUBLIC_MATMUL_CONTEXT_SHA256' for target in node.targets)]
+    spec = importlib.util.spec_from_file_location(
+        '_qualification_h_source_history', ROOT/'tools/vi_public_matmul_context.py')
+    history = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(history)
+    try:
+        previous = history.immediate_predecessor_bytes(ROOT, name, raw, pin)
+    except AssertionError as exc:
+        raise QualificationError('H exact source/reference bytes differ: '+name) from exc
+    require(hashlib.sha256(previous).hexdigest() == expected, 'H frozen reader projection differs')
+    return previous
+
+
 def h_extrema_source_metadata(read_bytes):
     """Closed metadata-only inverse; historical scientific hashes stay distinct."""
     for name, expected in H_EXTREMA_RUNTIME_SOURCE_PINS.items():
         require(hashlib.sha256(read_bytes(name).replace(b'\r\n',b'\n')).hexdigest()==expected,
                 'H runtime source differs: '+name)
+    reader='tests/h_extrema_source_provenance.py'
+    raw=h_extrema_frozen_reader(read_bytes(reader))
     for name, expected in H_EXTREMA_FROZEN_RAW_PINS.items():
-        require(hashlib.sha256(read_bytes(name)).hexdigest()==expected,
+        require(hashlib.sha256(raw if name==reader else read_bytes(name)).hexdigest()==expected,
                 'H exact source/reference bytes differ: '+name)
-    name='tests/h_extrema_source_provenance.py'
-    raw=read_bytes(name)  # Exact trusted closed-reader bytes were checked above.
+    name=reader
     namespace={'__name__':'_h_closed_source_verifier', '__file__':str(ROOT/name)}
     exec(compile(raw,str(ROOT/name),'exec'),namespace)
     record=json.loads(read_bytes('coverage/evidence/h-extrema-reference-assertion-migration.json'))

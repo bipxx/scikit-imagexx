@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v14.json'
+CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v17.json'
 SELF_PIN_PATH = 'tools/mark_lbp_fp_context.py'
 PREDECESSOR = '2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d'
 
@@ -26,11 +26,14 @@ def _context(root, context_sha256):
     }
     history_parent = data['predecessor_history_context']
     assert history_parent == {
-        'path': 'coverage/contracts/vi-public-matmul-source-history-v12.json',
-        'sha256': '259ab1e61b27b93cbcad82f46ad9924b9e4983837a02f14a660486d14516eb18',
-        'source': '14c95b05d3e7e21144570ff029862307cf03466a',
+        'path': 'coverage/contracts/vi-public-matmul-source-history-v14.json',
+        'sha256': '16e3ab9c003881f18c072f88f4b2fd940d8915b74e11b59b87b5a80ee31e9715',
+        'source': 'e27633bf9186bb7cab5c1d0b9fbf1584c94c6b81',
     }
     assert hashlib.sha256((root / history_parent['path']).read_bytes()).hexdigest() == history_parent['sha256']
+    accepted = data['previous_candidate_history']
+    assert accepted == {'path': 'coverage/contracts/vi-public-matmul-source-history-v16.json', 'sha256': 'f201c256803ca8d01fe64d2f5bf0eac6b19aa802230c93296f9c4d5871398a70'}
+    assert hashlib.sha256((root / accepted['path']).read_bytes()).hexdigest() == accepted['sha256']
     parent = data['predecessor_context']
     assert hashlib.sha256((root / parent['path']).read_bytes()).hexdigest() == parent['sha256']
     assert hashlib.sha256((root / 'tools/current_validation_context.py').read_bytes()).hexdigest() == '52d8eb80b2138d8d11fb8df7ef3b214c964faadc1bbf71419825d6ce0dc3d064'
@@ -66,6 +69,14 @@ def predecessor_bytes(root, name, raw, context_sha256, canonical=False):
     if data is None:
         return raw
     return _project(data, name, raw, context_sha256, canonical)
+
+
+def immediate_predecessor_bytes(root, name, raw, context_sha256, canonical=False):
+    """Authenticate current source bytes before the exact e276 source guards."""
+    data = _context(root, context_sha256)
+    assert data is not None and name in data['immediate_predecessors']
+    return _project({'sources': data['immediate_predecessors']}, name, raw,
+                    context_sha256, canonical)
 
 
 def speed_predecessor_bytes(root, name, raw, context_sha256, canonical=False):

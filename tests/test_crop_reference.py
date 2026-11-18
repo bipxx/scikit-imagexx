@@ -120,7 +120,10 @@ def test_crop_requires_public_performance_and_preserves_477_scope():
     assert DATA['route']['inventory_entries']==477 and DATA['route']['current_implementation']=='upstream-only'
     assert DATA['route']['prerequisites']==['array']
     entries=json.loads((ROOT/'coverage/api.json').read_bytes())['entries']
-    assert len(entries)==477 and next(r for r in entries if r['api']==API)['implementation']=='upstream-only'
+    current=next(r for r in entries if r['api']==API)
+    assert len(entries)==477 and current['implementation']=='native-partial'
+    assert current['benchmark']=='benchmarks/crop.py'
+    assert current['parity_test']=='tests/test_util_metadata_integration.py'
     assert DATA['gates']['implementation'].startswith('NOT_AUTHORIZED')
     assert DATA['unassessed']and DATA['reuse_and_implementation_direction']['SIMD'].startswith('No SIMD')
 

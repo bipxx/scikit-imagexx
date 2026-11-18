@@ -292,14 +292,24 @@ def validate_h_extrema_source(archive,snapshot,scope):
                     require(target.id not in declared,'duplicate H source declaration')
                     declared[target.id]=ast.literal_eval(node.value)
     require(declared==expected,'H source pin declarations absent or changed')
+    reader='tests/h_extrema_source_provenance.py'
+    raw_reader=None
     for name,want in {**runtime,**frozen,H_EXTREMA_ORACLE_PATH:H_EXTREMA_ORACLE_SHA256}.items():
         require(archive.namelist().count(name)==1,'H source absent or duplicate: '+name)
         raw=archive.read(name);canonical=raw.replace(b'\r\n',b'\n')
         checked=canonical if name in runtime else raw
+        if name==reader and not legacy:
+            if hashlib.sha256(raw).hexdigest()!=want:
+                spec = importlib.util.spec_from_file_location(
+                    '_stager_h_closed_source', Path(__file__).with_name('public_qualification.py'))
+                tool = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(tool)
+                checked=tool.h_extrema_frozen_reader(raw)
+            raw_reader=checked
         require(hashlib.sha256(checked).hexdigest()==want and snapshot['files_sha256'].get(name)==hashlib.sha256(canonical).hexdigest(),
                 'H source bytes differ: '+name)
     if not legacy:
-        name='tests/h_extrema_source_provenance.py';raw=archive.read(name)
+        name=reader;raw=raw_reader
         namespace={'__name__':'_h_stager_closed_metadata','__file__':name}
         exec(compile(raw,name,'exec'),namespace)  # Exact fixed stdlib reader authenticated above.
         record=json.loads(archive.read('coverage/evidence/h-extrema-reference-assertion-migration.json'))

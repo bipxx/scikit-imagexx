@@ -11,13 +11,19 @@ import warnings
 from slice_along_axes_contract import API,SIGNATURE,SOURCE_SHA256,SequenceProbe,BoundProbe,AxisProbe,CopyProbe,ImageProbe,fixture
 from crop_observer import encode as crop_encode,retain_object_payloads,object_payload_relations
 ROOT=Path(__file__).resolve().parents[1]
-CONTRACT=ROOT/'coverage/contracts/slice-along-axes-v2.json'
+CONTRACT=ROOT/'coverage/contracts/slice-along-axes-v3.json'
 
 
 def reference_runtime(root_go):
     """Future source-pinned import only; this function never calls the target."""
     assert root_go and root_go.get('status')=='ROOT_AUTHORIZED_SLICE_ALONG_AXES_REFERENCE_ONCE','NO_ROOT_GO: no scientific/target imports or calls'
     raw=CONTRACT.read_bytes();contract=json.loads(raw)
+    previous = contract['source_dependency_successor']['predecessor']
+    assert previous == {
+        'path': 'coverage/contracts/slice-along-axes-v2.json',
+        'sha256': 'a0aaee15ab99e682e3e455e7701a88a3c4be336b005f9b06877eb7757161ff8f',
+    }
+    assert hashlib.sha256((ROOT / previous['path']).read_bytes()).hexdigest() == previous['sha256']
     assert root_go['api']==API and root_go['contract_sha256']==hashlib.sha256(raw).hexdigest()
     assert root_go['upstream_canonical_lf_sha256']==SOURCE_SHA256
     assert root_go['maximum_public_topcalls_per_profile']==len(contract['cases'])
