@@ -12,8 +12,23 @@ from crop_contract import cases
 ROOT=Path(__file__).parents[1]
 FIXTURE=ROOT/'tests/fixtures/crop_originals_v1.json'
 FIXTURE_SHA256='cad3b7f4b5bd21573c30af67758912aecf379c710136f1baec5118dc2552b8f3'
+CROP_REFERENCE_SOURCE = 'tests/test_crop_reference.py'
+CROP_REFERENCE_HISTORY_SHA256 = 'a9676dd40b893a6fc345f4715033782eb67f07056d5872a0be4204a4573aca7b'
 DATA=json.loads(FIXTURE.read_bytes())
 ROWS=[(profile,row)for profile,saved in DATA['profiles'].items()for row in saved['rows']]
+
+
+def historical_crop_reference_bytes(raw, expected):
+    if hashlib.sha256(raw).hexdigest() == expected:
+        return raw
+
+    from tools.vi_public_matmul_context import _project
+
+    encoded = (ROOT / 'coverage/contracts/vi-public-matmul-source-history-v24.json').read_bytes()
+    assert hashlib.sha256(encoded).hexdigest() == CROP_REFERENCE_HISTORY_SHA256
+    # Reverse only the reviewed registry assertion update to recover the capture bytes.
+    return _project(json.loads(encoded), CROP_REFERENCE_SOURCE, raw,
+                    CROP_REFERENCE_HISTORY_SHA256, canonical=False)
 
 
 def check_encoded(value):
@@ -51,7 +66,10 @@ def test_crop_saved_provenance_and_immutable_sources():
     assert DATA['original_replays']==DATA['native_calls']==DATA['builds']==DATA['timed_batches']==0
     assert set(DATA['profiles'])=={'minimum','modern'}
     for name,pin in DATA['source_files_sha256'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==pin
+        raw = (ROOT / name).read_bytes()
+        if name == CROP_REFERENCE_SOURCE:
+            raw = historical_crop_reference_bytes(raw, pin)
+        assert hashlib.sha256(raw).hexdigest() == pin, name
     for profile,np_version,scipy_version in (('minimum','1.24.4','1.15.3'),('modern','2.5.4','1.18.1')):
         saved=DATA['profiles'][profile]
         assert saved['runtime']['numpy']==np_version and saved['runtime']['scipy']==scipy_version
@@ -61,6 +79,13 @@ def test_crop_saved_provenance_and_immutable_sources():
         assert saved['terminal']['counts']==dict(top=108,refused=0)
         for name in ('journal_raw_sha256','observations_raw_sha256','precall_freeze_raw_sha256'):
             assert len(bytes.fromhex(saved[name]))==32
+
+
+def test_crop_saved_reference_rejects_unreviewed_source_edit():
+    raw = (ROOT / CROP_REFERENCE_SOURCE).read_bytes()
+    expected = DATA['source_files_sha256'][CROP_REFERENCE_SOURCE]
+    with pytest.raises(AssertionError, match=CROP_REFERENCE_SOURCE):
+        historical_crop_reference_bytes(raw + b'\n# unreviewed edit\n', expected)
 
 
 @pytest.mark.parametrize('profile,row',ROWS,ids=[profile+'/'+row['id']for profile,row in ROWS])

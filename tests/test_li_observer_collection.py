@@ -11,8 +11,8 @@ EXPECTED = '2057a6a3aad4679c84c339f2012d06d019ebe01e3173b3503c9a4754e95ca5f0'
 OLD = b'"""Bound upstream reference pools; native workers are set explicitly per test."""\nimport os\nfor variable in (\'OPENBLAS_NUM_THREADS\',\'MKL_NUM_THREADS\',\'OMP_NUM_THREADS\',\'BLIS_NUM_THREADS\'):\n    os.environ.setdefault(variable,\'1\')\n'
 APPEND = b'\n# Original-only observer, no pytest tests; loaded explicitly by the fresh Li child.\ncollect_ignore = ["test_li_u16_bounded.py"]\n'
 CURRENT = (ROOT / "tests/conftest.py").read_bytes().replace(b"\r\n", b"\n")
-# Source-only fixture additions from 6c027543 preserve the original Li policy.
-SOURCE_EPOCH_SUFFIX = '4e2c76302c64eec156dbff9073cc6121f9cfc5662c1f0322e0eb48173cee4e9e'
+# The source-only conftest changes through 6457fdc1 preserve the Li prefix.
+SOURCE_EPOCH_SUFFIX = 'f20ffbf74319a2a818b1662f97e8cb8bdd8d30ae017160dc0e1eeab27db4e994'
 
 def no_tests(raw):
     tree=ast.parse(raw)
@@ -55,6 +55,9 @@ class LiObserverCollectionTests(unittest.TestCase):
     def test_extra_or_pattern_ignore_rejected(self):
         for text in (CURRENT.replace(b'"test_li_u16_bounded.py"',b'"test_li_u16_bounded.py", "test_api.py"'),CURRENT.replace(b'collect_ignore =',b'collect_ignore_glob ='),CURRENT.replace(b'test_li_u16_bounded.py',b'test_li_*.py'), CURRENT+b'\ncollect_ignore.append("test_api.py")\n'):
             with self.assertRaises(AssertionError):exact_policy(text)
+    def test_unreviewed_fixture_suffix_rejected(self):
+        with self.assertRaises(AssertionError):
+            exact_policy(CURRENT + b'\n# Unreviewed change outside the Li prefix.\n')
     def test_fresh_child_gate_path_and_source_unchanged(self):
         raw=(ROOT/'tests/test_li_u16_pipeline.py').read_bytes();self.assertEqual(hashlib.sha256(raw).hexdigest(),'91587055f960211a2cf7d86e04d644dd13308acc7805316f55724e57de97eaf0')
         tree=ast.parse(raw);fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='audit_installed_product');body=ast.unparse(fn)
