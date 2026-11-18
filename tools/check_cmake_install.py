@@ -1,6 +1,7 @@
 """Install and relocate a C++ build, then compile an independent consumer."""
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -22,6 +23,10 @@ def main():
     home=[line.split('=',1)[1] for line in (build/'CMakeCache.txt').read_text(encoding='utf-8').splitlines()
           if line.startswith('CMAKE_HOME_DIRECTORY:INTERNAL=')]
     if len(home)!=1 or Path(home[0]).resolve()!=root:parser.error('build directory belongs to another source checkout')
+    fenv_helper=os.environ.get('SKIMAGEXX_FENV_HELPER')
+    if fenv_helper:
+        fenv_helper=Path(fenv_helper).resolve()
+        if not fenv_helper.is_file():parser.error('SKIMAGEXX_FENV_HELPER is not a file')
     work.mkdir(parents=True)
     commands=[]
     def run(name,arguments,expect_success=True):
@@ -42,6 +47,7 @@ def main():
         '-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF','-DCMAKE_DISABLE_FIND_PACKAGE_Python=ON',
         '-DCMAKE_DISABLE_FIND_PACKAGE_Python3=ON']
     if args.openmp=='OFF':common+=['-DCMAKE_DISABLE_FIND_PACKAGE_OpenMP=ON']
+    if fenv_helper:common.append(f'-DSKIMAGEXX_FENV_HELPER={fenv_helper}')
     consumer=work/'consumer-build'
     run('configure',['-S',root/'tests/cmake_consumer','-B',consumer,*common])
     run('build',['--build',consumer,'--config',args.config])

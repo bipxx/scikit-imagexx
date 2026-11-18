@@ -215,7 +215,7 @@ def test_direct_current_counts_and_legacy_saved_scope_are_explicit():
 
 
 def test_current_benchmark_preserves_exact_method_cases_and_execution_body(monkeypatch):
-    context='coverage/contracts/vi-public-matmul-provider-benchmark-v7.json'
+    context='coverage/contracts/vi-public-matmul-provider-benchmark-ci-fenv-v1.json'
     adapter=load(ADAPTER);current=load('benchmarks/vi_public_matmul_provider_execution_v2.py').executor();prior=load('benchmarks/variation_of_information_execution.py')
     assert current.CONTEXT==context and inspect.getsource(current.candidate_providers)==inspect.getsource(adapter.candidate_providers)
     assert current.execute.__code__.co_code==prior.execute.__code__.co_code
@@ -237,7 +237,7 @@ def test_current_benchmark_preserves_exact_method_cases_and_execution_body(monke
 
 @pytest.mark.parametrize('fault',(None,'current','snapshot','prepared','old-contract'))
 def test_current_binding_requires_literal_current_source_not_history(tmp_path,monkeypatch,fault):
-    context_path='coverage/contracts/vi-public-matmul-provider-benchmark-v7.json';adapter='benchmarks/vi_public_matmul_provider_execution_v2.py'
+    context_path='coverage/contracts/vi-public-matmul-provider-benchmark-ci-fenv-v1.json';adapter='benchmarks/vi_public_matmul_provider_execution_v2.py'
     current=load(adapter).executor();factory=load('tests/test_mark_boundaries_benchmark_execution.py')
     monkeypatch.setattr(factory,'source_fixture_bytes',lambda name,context_path:(ROOT/name).read_bytes())
     path,binding,context=factory.synthetic(tmp_path,monkeypatch,context_path=ROOT/context_path)

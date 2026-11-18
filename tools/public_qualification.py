@@ -891,6 +891,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/current-public-qualification-v10.json'
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v10.json', 'coverage/contracts/speed-parity-current-source-v3.json', '.github/workflows/ci.yml', 'coverage/contracts/vi-public-matmul-provider-benchmark-v5.json', 'coverage/contracts/vi4-public-matmul-capture-v4.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v11.json', 'coverage/contracts/speed-parity-current-source-v4.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v6.json', 'coverage/contracts/vi4-public-matmul-capture-v5.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v12.json', 'coverage/contracts/speed-parity-current-source-v5.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-v7.json', 'coverage/contracts/vi4-public-matmul-capture-v6.json', 'tests/test_distance_optimized_layouts.py')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v14.json', 'coverage/contracts/speed-parity-current-source-v7.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-fenv-v1.json', 'coverage/contracts/vi4-public-matmul-capture-ci-fenv-v1.json', 'tools/check_cmake_install.py', 'tools/check_installed_pytest.py')
 
 
 

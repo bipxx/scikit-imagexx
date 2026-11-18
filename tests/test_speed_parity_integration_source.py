@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v5.json'
-CONTEXT_SHA256 = '5b0398e7e0309fdf64c6750d4e0e4a85a586c4771dd3df45f7772e02d63fb846'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v7.json'
+CONTEXT_SHA256 = '433eb995fe2f2839b65ccef1b25112fb232612b49b928bc399df626fb877d989'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -246,11 +246,11 @@ def test_CI_runtime_successor_authenticates_exact_current_and_frozen_bytes(canon
     helper = load('tools/vi_public_matmul_context.py')
     context = helper._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
     assert context['predecessor_history_context'] == {
-        'path': 'coverage/contracts/vi-public-matmul-source-history-v11.json',
-        'sha256': '19646d87f5821d5a280e2a0e49cb5747bd7cb9774eea0d57eedf686d1873b231',
-        'source': '40e88939e6f045e4fa9c2a235554d4ae2b769722',
+        'path': 'coverage/contracts/vi-public-matmul-source-history-v12.json',
+        'sha256': '259ab1e61b27b93cbcad82f46ad9924b9e4983837a02f14a660486d14516eb18',
+        'source': '14c95b05d3e7e21144570ff029862307cf03466a',
     }
-    for name in ('.github/workflows/ci.yml', 'tests/test_ci_measurement_isolation.py'):
+    for name in ('.github/workflows/ci.yml', 'tests/test_ci_measurement_isolation.py', 'tools/check_cmake_install.py'):
         raw = (ROOT / name).read_bytes()
         previous = helper.predecessor_bytes(ROOT, name, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256, canonical)
         domain = 'canonical' if canonical else 'raw'
@@ -268,7 +268,7 @@ def test_CI_runtime_successor_authenticates_exact_current_and_frozen_bytes(canon
 def test_CI_runtime_successor_rejects_changed_predecessor_context(monkeypatch):
     from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
     helper = load('tools/vi_public_matmul_context.py')
-    parent = ROOT / 'coverage/contracts/vi-public-matmul-source-history-v11.json'
+    parent = ROOT / 'coverage/contracts/vi-public-matmul-source-history-v12.json'
     original = Path.read_bytes
     monkeypatch.setattr(Path, 'read_bytes', lambda self: original(self) + b' ' if self == parent else original(self))
     with pytest.raises(AssertionError):

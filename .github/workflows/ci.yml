@@ -54,6 +54,37 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13.16'
+      - name: Prepare the Linux floating-point test helper
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="$PWD/build/ci-artifacts/util-views-fenv"
+          python tests/util_views_fenv_build.py --output "$bundle" --control-python "$(command -v python)"
+          python - "$bundle/receipt.json" <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import sys
+
+          receipt = Path(sys.argv[1]).resolve(strict=True)
+          raw = receipt.read_bytes()
+          record = json.loads(raw)
+          assert record['schema'] == 'util-views-fenv-build-v1'
+          assert record['status'] == 'PASS_SOURCE_BUILT_FENV32' and record['controls']
+          helper = receipt.with_name('libutil_views_fenv_restore.so')
+          assert hashlib.sha256(helper.read_bytes()).hexdigest() == record['files'][helper.name]
+          env = {
+              'UTIL_VIEWS_FENV_MODE': 'source-built-v1',
+              'UTIL_VIEWS_FENV_RECEIPT': receipt,
+              'UTIL_VIEWS_FENV_RECEIPT_SHA256': hashlib.sha256(raw).hexdigest(),
+              'SKIMAGEXX_FENV_HELPER': helper,
+          }
+          with Path(os.environ['GITHUB_ENV']).open('a', encoding='utf-8') as stream:
+              for name, value in env.items():
+                  stream.write(f'{name}={value}\n')
+          PY
       - run: |
           python -m pip wheel ".[test]" "numpy==2.5.4" "scipy==1.18.1" cmake --wheel-dir build/wheels
       - run: |
@@ -149,11 +180,11 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as stream:
               stream.write('SKIMAGEXX_RECONSTRUCTION_PRIMARY_SOURCE=' + source.as_posix() + '\n')
           PY
-      - run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py --ignore=tests/test_draw_polygon_benchmark_intake.py
+      - name: Installed pytest suite with normal dispatch
+        run: python tools/check_installed_pytest.py --mode normal
       - run: python tools/check_frangi_numpy_dispatch.py --work-dir build/frangi-generic-cpu
-      - run: python -m pytest -q --ignore=tests/test_regionprops_coords_scaled_benchmark_intake.py --ignore=tests/test_draw_polygon_benchmark_intake.py
-        env:
-          SKIMAGEXX_DISABLE_SIMD: '1'
+      - name: Installed pytest suite with SIMD disabled
+        run: python tools/check_installed_pytest.py --mode disabled
       - run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build build/native --config Release
       - run: ctest --test-dir build/native -C Release --output-on-failure
@@ -810,8 +841,12 @@ jobs:
         if: (github.event_name != 'workflow_dispatch' || !inputs.prepare_only) && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
       - run: python benchmarks/draw_polygon.py --threads 1 --repeat 7 --output build/ci-draw-polygon.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only && (github.event_name != 'workflow_dispatch' || !inputs.latest_only)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - run: python benchmarks/label_pair_metrics.py --threads 1 --repeat 7 --output build/ci-label-pair-metrics.json
         if: github.event_name != 'workflow_dispatch' || !inputs.prepare_only
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - name: Verify measurement inputs remained immutable
         if: always()
         run: python tools/ci_measurement_artifacts.py verify --wheel-dir build/prepared/wheels --artifact build/prepared/ci-artifacts/measurement.json
