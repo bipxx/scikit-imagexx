@@ -1,25 +1,20 @@
-name: Installed Ubuntu affected one-thread performance
+name: Installed Ubuntu Farid and CIE parity
 on:
   workflow_dispatch:
     inputs:
       source_revision:
-        description: Frozen candidate source from strict parity receipt
-        required: true
-        type: string
-      receipt_sha256:
-        description: SHA256 of the exact successful strict parity receipt
+        description: Frozen candidate source
         required: true
         type: string
 permissions:
   contents: read
   actions: read
 jobs:
-  measure:
+  diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 14
+    timeout-minutes: 25
     env:
       PRODUCT_SOURCE: ${{ inputs.source_revision }}
-      EXPECTED_STRICT_RECEIPT_SHA256: ${{ inputs.receipt_sha256 }}
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
@@ -45,16 +40,10 @@ jobs:
           path: ${{ runner.temp }}/scikit-imagexx-failed-wheel
           run-id: '44207792316'
           github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        with:
-          name: installed-ubuntu-strict-diagnostic
-          path: ${{ runner.temp }}/scikit-imagexx-strict-proof
-          run-id: '44217081215'
-          github-token: ${{ github.token }}
-      - name: Measure the exact installed product at one thread
-        run: python -B diagnostic-strict-speed.py
+      - name: Verify optimized Farid and CIE parity
+        run: python -B diagnostic-farid-color-ubuntu.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: installed-ubuntu-strict-speed
-          path: speed-proof/
+          name: installed-ubuntu-farid-color-diagnostic
+          path: proof/
