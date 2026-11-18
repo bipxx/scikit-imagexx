@@ -553,6 +553,120 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
     }
     return i;
 }
+bool ordinary_lab_span(const float* input, std::size_t elements) {
+    // Float32 bits allow a quiet check before any arithmetic or output. Negative
+    // zero, subnormals, non-finite values and values outside [0, 1] use the legacy route.
+    constexpr std::int32_t one = 0x3f800000, minimum = 0x00800000;
+    const auto zero = _mm256_setzero_si256();
+    std::size_t i=0;
+    for (;i+8<=elements;i+=8) {
+        const auto bits = _mm256_castps_si256(_mm256_loadu_ps(input+i));
+        const auto outside = _mm256_or_si256(_mm256_cmpgt_epi32(zero,bits),_mm256_cmpgt_epi32(bits,_mm256_set1_epi32(one)));
+        const auto tiny = _mm256_and_si256(_mm256_cmpgt_epi32(_mm256_set1_epi32(minimum),bits),_mm256_cmpgt_epi32(bits,zero));
+        const auto invalid = _mm256_or_si256(outside,tiny);
+        if (!_mm256_testz_si256(invalid,invalid)) return false;
+    }
+    for (;i<elements;++i) {
+        std::uint32_t bits;
+        std::memcpy(&bits,input+i,sizeof(bits));
+        if (bits>one || (bits && bits<minimum)) return false;
+    }
+    return true;
+}
+
+// The same reduced log2 and exp polynomials as math::log2_4 and math::exp4.
+// This caller only supplies bounded positive normal inputs or the neutral 1,
+// so neither libm fallback is reachable. Evaluate both halves at each degree.
+__m256 ordinary_lab_power(__m256 input, double exponent) {
+    __m256d x[2] = {_mm256_cvtps_pd(_mm256_castps256_ps128(input)),
+                    _mm256_cvtps_pd(_mm256_extractf128_ps(input,1))};
+    __m256d e[2], t[2], square[2], polynomial[2], k[2];
+    const auto one = _mm256_set1_pd(1);
+    constexpr double log_coeff[] = {1,1.0/3,1.0/5,1.0/7,1.0/9,1.0/11,1.0/13,1.0/15,1.0/17,1.0/19};
+    constexpr double exp_coeff[] = {1,1,1.0/2,1.0/6,1.0/24,1.0/120,1.0/720,1.0/5040,
+        1.0/40320,1.0/362880,1.0/3628800,1.0/39916800,1.0/479001600,1.0/6227020800};
+    for (int i=0;i<2;++i) {
+        const auto bits = _mm256_castpd_si256(x[i]);
+        const auto exponents = _mm256_srli_epi64(bits,52);
+        e[i] = _mm256_sub_pd(_mm256_castsi256_pd(_mm256_or_si256(exponents,_mm256_set1_epi64x(0x4330000000000000LL))),
+            _mm256_set1_pd(4503599627371519.0));
+        auto m = _mm256_castsi256_pd(_mm256_or_si256(_mm256_and_si256(bits,_mm256_set1_epi64x(0x000fffffffffffffLL)),
+            _mm256_set1_epi64x(0x3ff0000000000000LL)));
+        const auto upper = _mm256_cmp_pd(m,_mm256_set1_pd(1.4142135623730951),_CMP_GT_OQ);
+        m = _mm256_blendv_pd(m,_mm256_mul_pd(m,_mm256_set1_pd(0.5)),upper);
+        e[i] = _mm256_add_pd(e[i],_mm256_and_pd(upper,one));
+        t[i] = _mm256_div_pd(_mm256_sub_pd(m,one),_mm256_add_pd(m,one));
+        square[i] = _mm256_mul_pd(t[i],t[i]);
+        polynomial[i] = _mm256_set1_pd(log_coeff[9]);
+    }
+    for (int degree=8;degree>=0;--degree)
+        for (int i=0;i<2;++i)
+            polynomial[i] = _mm256_add_pd(_mm256_set1_pd(log_coeff[degree]),_mm256_mul_pd(square[i],polynomial[i]));
+    const auto scale = _mm256_set1_pd(exponent*0.69314718055994530942);
+    for (int i=0;i<2;++i) {
+        const auto log = _mm256_add_pd(e[i],_mm256_mul_pd(_mm256_mul_pd(t[i],polynomial[i]),_mm256_set1_pd(2.8853900817779268147)));
+        const auto y = _mm256_mul_pd(log,scale);
+        k[i] = _mm256_round_pd(_mm256_mul_pd(y,_mm256_set1_pd(1.4426950408889634074)),
+            _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
+        const auto r = _mm256_sub_pd(y,_mm256_mul_pd(k[i],_mm256_set1_pd(0.69314718055994528623)));
+        x[i] = _mm256_sub_pd(r,_mm256_mul_pd(k[i],_mm256_set1_pd(2.3190468138462995584e-17)));
+        polynomial[i] = _mm256_set1_pd(exp_coeff[13]);
+    }
+    for (int degree=12;degree>=0;--degree)
+        for (int i=0;i<2;++i)
+            polynomial[i] = _mm256_add_pd(_mm256_set1_pd(exp_coeff[degree]),_mm256_mul_pd(x[i],polynomial[i]));
+    __m128 output[2];
+    for (int i=0;i<2;++i) {
+        const auto integers = _mm256_cvtepi32_epi64(_mm256_cvtpd_epi32(k[i]));
+        const auto bits = _mm256_slli_epi64(_mm256_add_epi64(integers,_mm256_set1_epi64x(1023)),52);
+        output[i] = _mm256_cvtpd_ps(_mm256_mul_pd(polynomial[i],_mm256_castsi256_pd(bits)));
+    }
+    return _mm256_insertf128_ps(_mm256_castps128_ps256(output[0]),output[1],1);
+}
+
+__m256 ordinary_rgb_decode(__m256 input) {
+    using V = Vector<float>;
+    const auto mask=V::gt(input,V::set(0.04045f));
+    const auto linear=V::div(input,V::set(12.92f));
+    if (!V::bits(mask)) return linear;
+    const auto adjusted=V::div(V::add(input,V::set(0.055f)),V::set(1.055f));
+    return V::choose(linear,ordinary_lab_power(V::choose(V::set(1),adjusted,mask),double(2.4f)),mask);
+}
+
+__m256 ordinary_lab_curve(__m256 input, __m256 white) {
+    using V = Vector<float>;
+    const auto scaled=V::div(input,white);
+    const auto mask=V::gt(scaled,V::set(0.008856f));
+    const auto linear=V::add(V::mul(V::set(7.787f),scaled),V::set(float(16.0/116.0)));
+    if (!V::bits(mask)) return linear;
+    return V::choose(linear,ordinary_lab_power(V::choose(V::set(1),scaled,mask),1.0/3.0),mask);
+}
+
+template<bool rgb> std::size_t ordinary_lab_transform(const float* input, float* output, std::size_t n,
+    const std::array<double,3>& white) {
+    using V = Vector<float>;
+    __m256 weights[9];
+    if constexpr (rgb) {
+        const auto& matrix=detail::color_spec(ColorTransform::rgb2xyz).matrix;
+        for (int j=0;j<9;++j) weights[j]=V::set(float(matrix[j]));
+    }
+    const auto wx=V::set(float(white[0])), wy=V::set(float(white[1])), wz=V::set(float(white[2]));
+    std::size_t i=0;
+    for (;i+V::lanes<=n;i+=V::lanes) {
+        __m256 x,y,z;
+        unpack(input+3*i,x,y,z);
+        if constexpr (rgb) {
+            const auto a=ordinary_rgb_decode(x), b=ordinary_rgb_decode(y), c=ordinary_rgb_decode(z);
+            x=V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2]));
+            y=V::add(V::add(V::mul(a,weights[3]),V::mul(b,weights[4])),V::mul(c,weights[5]));
+            z=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
+        }
+        const auto a=ordinary_lab_curve(x,wx), b=ordinary_lab_curve(y,wy), c=ordinary_lab_curve(z,wz);
+        pack(output+3*i,V::sub(V::mul(V::set(116),b),V::set(16)),
+            V::mul(V::set(500),V::sub(a,b)),V::mul(V::set(200),V::sub(b,c)));
+    }
+    return i;
+}
 }
 std::size_t perceptual_transform(const void* source, void* out, std::size_t n, PixelType type,
     const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
@@ -573,7 +687,20 @@ std::size_t perceptual_transform(const void* source, void* out, std::size_t n, P
         PERCEPTUAL_CASE(uint16,std::uint16_t,double); PERCEPTUAL_CASE(int16,std::int16_t,double);
         PERCEPTUAL_CASE(uint32,std::uint32_t,double); PERCEPTUAL_CASE(int32,std::int32_t,double);
         PERCEPTUAL_CASE(uint64,std::uint64_t,double); PERCEPTUAL_CASE(int64,std::int64_t,double);
-        PERCEPTUAL_CASE(float32,float,float); PERCEPTUAL_CASE(float64,double,double);
+        case PixelType::float32: {
+            const auto* p=static_cast<const float*>(source);
+            auto* dst=static_cast<float*>(out);
+            const auto op=spec.transform;
+            using Op = PerceptualTransform;
+            if (n>=64 && pixels==3 && channels==1 && spec.channels==3 && (op==Op::xyz2lab || op==Op::rgb2lab) &&
+                std::all_of(spec.white.begin(),spec.white.end(),[](double v) { return v>=0.25 && v<=2; }) &&
+                ordinary_lab_span(p,3*n)) {
+                if (op==Op::xyz2lab) return ordinary_lab_transform<false>(p,dst,n,spec.white);
+                return ordinary_lab_transform<true>(p,dst,n,spec.white);
+            }
+            return run_perceptual(p,dst,n,spec,pixels,channels,info);
+        }
+        PERCEPTUAL_CASE(float64,double,double);
         default: return 0;
     }
 #undef PERCEPTUAL_CASE

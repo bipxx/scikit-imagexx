@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from variation_of_information_cases_v1 import case_specs,case_bounds,fixture,native_requirements
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi-public-matmul-provider-benchmark-ci-broad-v7.json'
+CONTEXT='coverage/contracts/vi-public-matmul-provider-benchmark-ci-packed-v1.json'
 
 
 def plan():
