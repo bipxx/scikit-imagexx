@@ -176,7 +176,7 @@
     "coverage/contracts/vi-public-matmul-provider-benchmark-ci-crop-li-v1.json": "fac4738182932250a1d45efb8a59f692e6798a6e357515258140c26cd2d8f32f",
     "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v1.json": "a4a0cbaad868c9347dcc39da19b5e7e4e814aa6743d9aacc7f216dc9fcb42bc3"
   },
-  "common_boundary_canonical_sha256": "78dc1ef4dd91b93839e3fe4825560367758a802b63f6dff7f0158ad9f04e7da1",
+  "common_boundary_canonical_sha256": "1b7c230b3166f846f3ba686def42bdd9c43a29ec7b1b8634ff86665496f1f32b",
   "reused_executor_canonical_sha256": "251eacfb86ece3f9396fee70077d35698d6265e84a65e758a3f378a1468370a6",
   "FENV_dependency": {
     "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",

@@ -200,7 +200,7 @@
       "coverage/contracts/vi4-public-matmul-capture-ci-r4-stager-v1.json": "807748597178700c8da3f6f3a9221236623a74cd38ba8bc5b07158ea17d08577",
       "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v1.json": "a4a0cbaad868c9347dcc39da19b5e7e4e814aa6743d9aacc7f216dc9fcb42bc3",
       "coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json": "7ea00826bc5c7d450d473f7e3f137d1f4d23138f9bd23f3deea7a3e28d1c33c8",
-      "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v2.json": "08d922ba9f3ecf4ddbe635e63a4de5609de143f36b7eeb6087c76fa228c2d454",
+      "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v2.json": "617efad03fe32cf8d6395eb96d2852f26c7a6825507b8ead893721cf869a59ef",
       "coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json": "59fc0120b31732c0431e695ef15d932a27bca6deb5fb5fce14ad279724dca3ba"
     },
     "routes": {
@@ -455,7 +455,7 @@
       "coverage/contracts/vi4-public-matmul-capture-ci-r4-stager-v1.json": "807748597178700c8da3f6f3a9221236623a74cd38ba8bc5b07158ea17d08577",
       "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v1.json": "a4a0cbaad868c9347dcc39da19b5e7e4e814aa6743d9aacc7f216dc9fcb42bc3",
       "coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json": "7ea00826bc5c7d450d473f7e3f137d1f4d23138f9bd23f3deea7a3e28d1c33c8",
-      "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v2.json": "08d922ba9f3ecf4ddbe635e63a4de5609de143f36b7eeb6087c76fa228c2d454",
+      "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v2.json": "617efad03fe32cf8d6395eb96d2852f26c7a6825507b8ead893721cf869a59ef",
       "coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json": "59fc0120b31732c0431e695ef15d932a27bca6deb5fb5fce14ad279724dca3ba"
     },
     "cases": [
@@ -674,7 +674,7 @@
       },
       "provider_context": {
         "path": "coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v2.json",
-        "sha256": "08d922ba9f3ecf4ddbe635e63a4de5609de143f36b7eeb6087c76fa228c2d454"
+        "sha256": "617efad03fe32cf8d6395eb96d2852f26c7a6825507b8ead893721cf869a59ef"
       },
       "provider_predecessor_context": {
         "path": "coverage/contracts/vi-public-matmul-provider-benchmark-v1.json",
