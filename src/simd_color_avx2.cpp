@@ -553,33 +553,43 @@ template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOu
     }
     return i;
 }
-bool ordinary_lab_span(const float* input, std::size_t elements) {
-    // Float32 bits allow a quiet check before any arithmetic or output. Negative
-    // zero, subnormals, non-finite values and values outside [0, 1] use the legacy route.
-    constexpr std::int32_t one = 0x3f800000, minimum = 0x00800000;
-    const auto zero = _mm256_setzero_si256();
+template<class T> bool ordinary_lab_span(const T* input, std::size_t elements) {
+    // Integer comparisons preserve all floating flags and reject negative zero.
+    constexpr bool single = std::is_same_v<T,float>;
+    using Bits = std::conditional_t<single,std::uint32_t,std::uint64_t>;
+    constexpr Bits one = single ? 0x3f800000ULL : 0x3ff0000000000000ULL;
+    constexpr Bits minimum = single ? 0x00800000ULL : 0x0010000000000000ULL;
+    constexpr auto lanes = Vector<T>::lanes;
+    const auto set = [](Bits v) {
+        if constexpr (single) return _mm256_set1_epi32(static_cast<std::int32_t>(v));
+        else return _mm256_set1_epi64x(static_cast<std::int64_t>(v));
+    };
+    const auto gt = [](__m256i a,__m256i b) {
+        if constexpr (single) return _mm256_cmpgt_epi32(a,b);
+        else return _mm256_cmpgt_epi64(a,b);
+    };
+    const auto zero = set(0), below_normal = set(minimum-1), upper = set(one);
     std::size_t i=0;
-    for (;i+8<=elements;i+=8) {
-        const auto bits = _mm256_castps_si256(_mm256_loadu_ps(input+i));
-        const auto outside = _mm256_or_si256(_mm256_cmpgt_epi32(zero,bits),_mm256_cmpgt_epi32(bits,_mm256_set1_epi32(one)));
-        const auto tiny = _mm256_and_si256(_mm256_cmpgt_epi32(_mm256_set1_epi32(minimum),bits),_mm256_cmpgt_epi32(bits,zero));
-        const auto invalid = _mm256_or_si256(outside,tiny);
-        if (!_mm256_testz_si256(invalid,invalid)) return false;
+    for (;i+lanes<=elements;i+=lanes) {
+        const auto bits = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i));
+        const auto is_zero = single ? _mm256_cmpeq_epi32(bits,zero) : _mm256_cmpeq_epi64(bits,zero);
+        const auto valid = _mm256_andnot_si256(gt(bits,upper),_mm256_or_si256(gt(bits,below_normal),is_zero));
+        if (_mm256_movemask_epi8(valid)!=-1) return false;
     }
     for (;i<elements;++i) {
-        std::uint32_t bits;
+        Bits bits;
         std::memcpy(&bits,input+i,sizeof(bits));
         if (bits>one || (bits && bits<minimum)) return false;
     }
     return true;
 }
 
+using LabPair = __m256d[2];
+
 // The same reduced log2 and exp polynomials as math::log2_4 and math::exp4.
 // This caller only supplies bounded positive normal inputs or the neutral 1,
 // so neither libm fallback is reachable. Evaluate both halves at each degree.
-__m256 ordinary_lab_power(__m256 input, double exponent) {
-    __m256d x[2] = {_mm256_cvtps_pd(_mm256_castps256_ps128(input)),
-                    _mm256_cvtps_pd(_mm256_extractf128_ps(input,1))};
+template<bool prescaled> void ordinary_lab_power(LabPair& x, double exponent) {
     __m256d e[2], t[2], square[2], polynomial[2], k[2];
     const auto one = _mm256_set1_pd(1);
     constexpr double log_coeff[] = {1,1.0/3,1.0/5,1.0/7,1.0/9,1.0/11,1.0/13,1.0/15,1.0/17,1.0/19};
@@ -602,7 +612,7 @@ __m256 ordinary_lab_power(__m256 input, double exponent) {
     for (int degree=8;degree>=0;--degree)
         for (int i=0;i<2;++i)
             polynomial[i] = _mm256_add_pd(_mm256_set1_pd(log_coeff[degree]),_mm256_mul_pd(square[i],polynomial[i]));
-    const auto scale = _mm256_set1_pd(exponent*0.69314718055994530942);
+    const auto scale = _mm256_set1_pd(prescaled ? exponent : exponent*0.69314718055994530942);
     for (int i=0;i<2;++i) {
         const auto log = _mm256_add_pd(e[i],_mm256_mul_pd(_mm256_mul_pd(t[i],polynomial[i]),_mm256_set1_pd(2.8853900817779268147)));
         const auto y = _mm256_mul_pd(log,scale);
@@ -615,13 +625,18 @@ __m256 ordinary_lab_power(__m256 input, double exponent) {
     for (int degree=12;degree>=0;--degree)
         for (int i=0;i<2;++i)
             polynomial[i] = _mm256_add_pd(_mm256_set1_pd(exp_coeff[degree]),_mm256_mul_pd(x[i],polynomial[i]));
-    __m128 output[2];
     for (int i=0;i<2;++i) {
         const auto integers = _mm256_cvtepi32_epi64(_mm256_cvtpd_epi32(k[i]));
         const auto bits = _mm256_slli_epi64(_mm256_add_epi64(integers,_mm256_set1_epi64x(1023)),52);
-        output[i] = _mm256_cvtpd_ps(_mm256_mul_pd(polynomial[i],_mm256_castsi256_pd(bits)));
+        x[i] = _mm256_mul_pd(polynomial[i],_mm256_castsi256_pd(bits));
     }
-    return _mm256_insertf128_ps(_mm256_castps128_ps256(output[0]),output[1],1);
+}
+
+__m256 ordinary_lab_power(__m256 input, double exponent) {
+    LabPair x = {_mm256_cvtps_pd(_mm256_castps256_ps128(input)),
+                 _mm256_cvtps_pd(_mm256_extractf128_ps(input,1))};
+    ordinary_lab_power<false>(x,exponent);
+    return _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(x[0])),_mm256_cvtpd_ps(x[1]),1);
 }
 
 __m256 ordinary_rgb_decode(__m256 input) {
@@ -667,6 +682,75 @@ template<bool rgb> std::size_t ordinary_lab_transform(const float* input, float*
     }
     return i;
 }
+template<bool decode> void ordinary_lab_curve(LabPair& values, __m256d white) {
+    using V = Vector<double>;
+    LabPair linear, mask, nonlinear;
+    bool active=false;
+    for (int lane=0;lane<2;++lane) {
+        const auto scaled = decode ? values[lane] : V::div(values[lane],white);
+        mask[lane]=V::gt(scaled,V::set(decode ? 0.04045 : 0.008856));
+        if constexpr (decode) linear[lane]=V::div(scaled,V::set(12.92));
+        else linear[lane]=V::add(V::mul(V::set(7.787),scaled),V::set(16.0/116.0));
+        nonlinear[lane]=V::set(1);
+        if (V::bits(mask[lane])) {
+            const auto adjusted = decode ? V::div(V::add(scaled,V::set(0.055)),V::set(1.055)) : scaled;
+            nonlinear[lane]=V::choose(nonlinear[lane],adjusted,mask[lane]);
+            active=true;
+        }
+    }
+    // Match the constant-folded double scale without adding FE_INEXACT
+    // for packets such as XYZ=(1,1,1) with unity white.
+    constexpr double exponent = decode ? 2.4 : 1.0/3.0;
+    constexpr double scale = exponent*0.69314718055994530942;
+    if (active) ordinary_lab_power<true>(nonlinear,scale);
+    for (int lane=0;lane<2;++lane) values[lane]=V::choose(linear[lane],nonlinear[lane],mask[lane]);
+}
+
+template<bool rgb> std::size_t ordinary_lab_transform(const double* input, double* output, std::size_t n,
+    const std::array<double,3>& white) {
+    using V = Vector<double>;
+    constexpr auto block = 2*V::lanes;
+    __m256d weights[9];
+    if constexpr (rgb) {
+        const auto& matrix=detail::color_spec(ColorTransform::rgb2xyz).matrix;
+        for (int j=0;j<9;++j) weights[j]=V::set(matrix[j]);
+    }
+    const auto wx=V::set(white[0]), wy=V::set(white[1]), wz=V::set(white[2]);
+    for (std::size_t i=0;i<n;i+=block) {
+        LabPair x,y,z;
+        for (std::size_t lane=0;lane<2;++lane) unpack(input+3*(i+lane*V::lanes),x[lane],y[lane],z[lane]);
+        if constexpr (rgb) {
+            ordinary_lab_curve<true>(x,wx); ordinary_lab_curve<true>(y,wy); ordinary_lab_curve<true>(z,wz);
+            for (std::size_t lane=0;lane<2;++lane) {
+                const auto a=x[lane], b=y[lane], c=z[lane];
+                x[lane]=V::add(V::add(V::mul(a,weights[0]),V::mul(b,weights[1])),V::mul(c,weights[2]));
+                y[lane]=V::add(V::add(V::mul(a,weights[3]),V::mul(b,weights[4])),V::mul(c,weights[5]));
+                z[lane]=V::add(V::add(V::mul(a,weights[6]),V::mul(b,weights[7])),V::mul(c,weights[8]));
+            }
+        }
+        ordinary_lab_curve<false>(x,wx); ordinary_lab_curve<false>(y,wy); ordinary_lab_curve<false>(z,wz);
+        for (std::size_t lane=0;lane<2;++lane)
+            pack(output+3*(i+lane*V::lanes),V::sub(V::mul(V::set(116),y[lane]),V::set(16)),
+                V::mul(V::set(500),V::sub(x[lane],y[lane])),V::mul(V::set(200),V::sub(y[lane],z[lane])));
+    }
+    return n;
+}
+
+template<class T> std::size_t packed_lab_or_legacy(const T* input, T* output, std::size_t n,
+    const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
+    using Op = PerceptualTransform;
+    const auto op=spec.transform;
+    // The paired double path uses complete groups and round-to-nearest.
+    // Other double spans use the original four-lane loop and tail.
+    if (n>=64 && pixels==3 && channels==1 && spec.channels==3 && (op==Op::xyz2lab || op==Op::rgb2lab) &&
+        (std::is_same_v<T,float> || (n%8==0 && _MM_GET_ROUNDING_MODE()==_MM_ROUND_NEAREST)) &&
+        std::all_of(spec.white.begin(),spec.white.end(),[](double v) { return v>=0.25 && v<=2; }) &&
+        ordinary_lab_span(input,3*n)) {
+        if (op==Op::xyz2lab) return ordinary_lab_transform<false>(input,output,n,spec.white);
+        return ordinary_lab_transform<true>(input,output,n,spec.white);
+    }
+    return run_perceptual(input,output,n,spec,pixels,channels,info);
+}
 }
 std::size_t perceptual_transform(const void* source, void* out, std::size_t n, PixelType type,
     const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
@@ -687,20 +771,10 @@ std::size_t perceptual_transform(const void* source, void* out, std::size_t n, P
         PERCEPTUAL_CASE(uint16,std::uint16_t,double); PERCEPTUAL_CASE(int16,std::int16_t,double);
         PERCEPTUAL_CASE(uint32,std::uint32_t,double); PERCEPTUAL_CASE(int32,std::int32_t,double);
         PERCEPTUAL_CASE(uint64,std::uint64_t,double); PERCEPTUAL_CASE(int64,std::int64_t,double);
-        case PixelType::float32: {
-            const auto* p=static_cast<const float*>(source);
-            auto* dst=static_cast<float*>(out);
-            const auto op=spec.transform;
-            using Op = PerceptualTransform;
-            if (n>=64 && pixels==3 && channels==1 && spec.channels==3 && (op==Op::xyz2lab || op==Op::rgb2lab) &&
-                std::all_of(spec.white.begin(),spec.white.end(),[](double v) { return v>=0.25 && v<=2; }) &&
-                ordinary_lab_span(p,3*n)) {
-                if (op==Op::xyz2lab) return ordinary_lab_transform<false>(p,dst,n,spec.white);
-                return ordinary_lab_transform<true>(p,dst,n,spec.white);
-            }
-            return run_perceptual(p,dst,n,spec,pixels,channels,info);
-        }
-        PERCEPTUAL_CASE(float64,double,double);
+        case PixelType::float32:
+            return packed_lab_or_legacy(static_cast<const float*>(source),static_cast<float*>(out),n,spec,pixels,channels,info);
+        case PixelType::float64:
+            return packed_lab_or_legacy(static_cast<const double*>(source),static_cast<double*>(out),n,spec,pixels,channels,info);
         default: return 0;
     }
 #undef PERCEPTUAL_CASE
