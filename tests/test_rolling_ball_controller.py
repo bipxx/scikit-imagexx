@@ -94,6 +94,7 @@ def test_actual_bound_probe_reaches_import_request_refusal(monkeypatch,tmp_path,
         if n.split('.')[0]in('numpy','skimage','skimagexx','scipy'):requests.append(n);raise Refused()
         return prior(n,*a,**k)
     with monkeypatch.context()as patch:
+        patch.delenv('SKIMAGEXX_DISABLE_SIMD', raising=False)
         patch.setattr(builtins,'__import__',request)
         with pytest.raises(Refused if tamper=='none'else AssertionError):PROBE.main()
     assert requests==(['numpy']if tamper=='none'else[])and builtins.__import__ is prior

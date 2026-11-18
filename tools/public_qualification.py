@@ -900,6 +900,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v21.js
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v23.json', 'coverage/contracts/speed-parity-current-source-v16.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-h-extrema-v1.json', 'coverage/contracts/vi4-public-matmul-capture-ci-h-extrema-v1.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v24.json', 'coverage/contracts/speed-parity-current-source-v17.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-r4-stager-v1.json', 'coverage/contracts/vi4-public-matmul-capture-ci-r4-stager-v1.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v25.json', 'coverage/contracts/speed-parity-current-source-v18.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-crop-li-v1.json', 'coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json')
+DRAW_SOURCE_PATHS += ('coverage/contracts/vi-public-matmul-source-history-v26.json', 'coverage/contracts/speed-parity-current-source-v19.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-scalar-tail-v1.json', 'coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json')
 
 
 

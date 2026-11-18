@@ -182,7 +182,9 @@ def test_MARK_controller_inverse_refuses_unreviewed_inputs(tmp_path,fault):
     # Authenticate the current controller once before entering a synthetic root
     # that intentionally contains only the unchanged historical lineage.
     from tools.current_validation_context import predecessor_bytes as validation_predecessor
-    from tools.mark_lbp_fp_context import CURRENT_VALIDATION_CONTEXT_SHA256
+    from tools.mark_lbp_fp_context import CURRENT_VALIDATION_CONTEXT_SHA256, VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    from tools.vi_public_matmul_context import predecessor_bytes as matmul_predecessor
+    raw=matmul_predecessor(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,canonical=True)
     raw=validation_predecessor(ROOT,name,raw,CURRENT_VALIDATION_CONTEXT_SHA256,canonical=True)
     directory=tmp_path/'coverage/contracts';directory.mkdir(parents=True)
     for filename in ('mark-lbp-controller-source-successor-v1.json','mark-lbp-fp-integration-v1.json','mark-lbp-fp-integration-v2.json'):

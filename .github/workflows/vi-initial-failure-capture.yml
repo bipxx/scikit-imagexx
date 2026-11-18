@@ -91,7 +91,7 @@ jobs:
           run, revision, artifact, digest = (os.environ[k] for k in ('PRODUCER_RUN', 'PRODUCER_REVISION', 'ARTIFACT_ID', 'ARTIFACT_SHA256'))
           assert re.fullmatch('[1-9][0-9]*', run) and re.fullmatch('[1-9][0-9]*', artifact)
           assert re.fullmatch('[0-9a-f]{40}', revision) and re.fullmatch('[0-9a-f]{64}', digest)
-          frozen = json.loads(Path('controller/coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json').read_bytes())
           assert frozen['status'] == 'ROOT_AUTHORIZED_ONE_INITIAL_COMPARISON', 'UNBOUND: fresh current genuine-source binding required'
           assert revision != '16a5b50193125199ad26cf5a89acec5babf5290c', 'Old16 campaign is historical'
           assert (run, revision, artifact, digest) == tuple(str(frozen['producer'][key]) for key in ('run','revision','artifact','sha256'))
@@ -157,7 +157,7 @@ jobs:
           Path('results/measurement.json').write_bytes((prepared / 'runtime.json').read_bytes())
           Path('results/runtime-lock.txt').write_bytes((prepared / 'runtime-lock.txt').read_bytes())
           assert manifest['source']['revision'] == os.environ['PRODUCER_REVISION']
-          frozen = json.loads(Path('controller/coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json').read_bytes())
+          frozen = json.loads(Path('controller/coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json').read_bytes())
           sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
           assert sha(prepared/'runtime.json')==frozen['runtime_sha256']
           first=frozen['first_cohort']
@@ -259,8 +259,8 @@ jobs:
           import json, shutil
           from pathlib import Path
           root=Path('controller')
-          context=root/'coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json'
-          names=['tools/vi4_public_matmul_capture.py','coverage/contracts/vi4-public-matmul-capture-ci-crop-li-v1.json','tests/test_vi4_public_matmul_capture.py','.github/workflows/vi-initial-failure-capture.yml']
+          context=root/'coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json'
+          names=['tools/vi4_public_matmul_capture.py','coverage/contracts/vi4-public-matmul-capture-ci-scalar-tail-v1.json','tests/test_vi4_public_matmul_capture.py','.github/workflows/vi-initial-failure-capture.yml']
           if context.is_file():names+=list(json.loads(context.read_bytes())['capture']['dependencies'])
           for name in sorted(set(names)):
               source=root/name

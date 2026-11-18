@@ -79,6 +79,7 @@ def synthetic(tmp_path,monkeypatch,route):
 @pytest.mark.parametrize('fault',('none','counter','route','helper'))
 def test_inert_bound_actual_probe_stops_at_request(route,cached,fault,monkeypatch,tmp_path):
     path,b,gp,go,m=synthetic(tmp_path,monkeypatch,route)
+    monkeypatch.delenv('SKIMAGEXX_DISABLE_SIMD', raising=False)
     if fault=='counter':go['maximum_original_topcalls']=2
     elif fault=='route':go['routes']=['foreign']
     elif fault=='helper':go['helper_binding_sha256']='0'*64

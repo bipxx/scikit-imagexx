@@ -339,8 +339,17 @@ template<class T> std::pair<double,double> intensity_bounds(const T* p, std::siz
     }
     return {low,high};
 }
+// NumPy completes the rescale multiply and add in separate ufuncs. Preserve
+// both roundings for scalar floating results on FMA hosts.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC push_options
+#pragma GCC optimize ("fp-contract=off")
+#endif
 template<class Input, class Output> void rescale_into(const Input* p, Output* out, std::size_t h, std::size_t w,
                                                       double imin, double imax, double omin, double omax) {
+#ifdef __clang__
+#pragma clang fp contract(off)
+#endif
     const auto n = checked_size(p,h,w);
     check_output(out);
     if constexpr (std::is_same_v<Output,std::uint8_t>) {
@@ -387,6 +396,9 @@ template<class Input, class Output> void rescale_into(const Input* p, Output* ou
         }
     });
 }
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC pop_options
+#endif
 template<class T> void exposure_into(const T* p, T* out, std::size_t h, std::size_t w,
                                      ExposureTransform transform, double parameter, double gain, bool inverse) {
     const auto n = checked_size(p,h,w);
