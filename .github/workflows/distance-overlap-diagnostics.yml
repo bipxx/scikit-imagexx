@@ -1,14 +1,20 @@
-name: Installed Ubuntu NumPy dispatch diagnostic
+name: Installed Ubuntu strict arithmetic diagnostic
 on:
   workflow_dispatch:
+    inputs:
+      source_revision:
+        description: Frozen candidate source
+        required: true
+        type: string
 permissions:
   contents: read
   actions: read
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
+      PRODUCT_SOURCE: ${{ inputs.source_revision }}
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
@@ -20,7 +26,7 @@ jobs:
           persist-credentials: false
       - uses: actions/checkout@v4
         with:
-          ref: e27633bf9186bb7cab5c1d0b9fbf1584c94c6b81
+          ref: ${{ inputs.source_revision }}
           path: source
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -34,10 +40,10 @@ jobs:
           path: ${{ runner.temp }}/scikit-imagexx-failed-wheel
           run-id: '44207792316'
           github-token: ${{ github.token }}
-      - name: Compare exact failed nodes in fresh processes
-        run: python -B diagnostic-ci-linux.py
+      - name: Validate strict arithmetic with the retained runtime inputs
+        run: python -B diagnostic-strict-ubuntu.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: installed-ubuntu-numpy-dispatch-diagnostic
-          path: diagnostic-evidence/
+          name: installed-ubuntu-strict-diagnostic
+          path: proof/
