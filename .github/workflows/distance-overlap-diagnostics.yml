@@ -1,4 +1,4 @@
-name: Installed Ubuntu numerical diagnostic
+name: Installed Ubuntu NumPy dispatch diagnostic
 on:
   workflow_dispatch:
 permissions:
@@ -39,5 +39,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: installed-ubuntu-numeric-diagnostic
+          name: installed-ubuntu-numpy-dispatch-diagnostic
           path: diagnostic-evidence/

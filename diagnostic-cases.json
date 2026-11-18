@@ -159,5 +159,9 @@
       "tests/test_reconstruction_terrain_contracts.py::test_original_frozen_parity[high-cardinality/f8/erosion/2d]",
       "tests/test_reconstruction_terrain_contracts.py::test_original_frozen_parity[high-cardinality/f8/erosion/3d]"
     ]
-  }
+  },
+  "numpy_disabled_features": [
+    "X86_V4"
+  ],
+  "previous_witness_run": 44214933486
 }

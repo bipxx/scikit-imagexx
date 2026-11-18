@@ -38,6 +38,7 @@ with tempfile.TemporaryDirectory(dir=os.environ['RUNNER_TEMP'], prefix='installe
     env = dict(os.environ, PYTHONPATH=temp, PYTHONDONTWRITEBYTECODE='1',
                SKIMAGEXX_RECONSTRUCTION_PRIMARY_SOURCE=str(source / 'tests/data/reconstruction-primary-0.26'))
     env.pop('SKIMAGEXX_DISABLE_SIMD', None)
+    env['NPY_DISABLE_CPU_FEATURES'] = ','.join(data['numpy_disabled_features'])
     probe = (
         "import ctypes, json, os, platform, sys, numpy, scipy, skimage, skimagexx, pytest;"
         "assert (numpy.__version__, scipy.__version__, skimage.__version__, pytest.__version__)=="
@@ -51,6 +52,9 @@ with tempfile.TemporaryDirectory(dir=os.environ['RUNNER_TEMP'], prefix='installe
     )
     with (output / 'runtime.json').open('xb') as out:
         subprocess.run([sys.executable, '-B', '-c', probe, temp, str(core)], cwd=source, env=env, stdout=out, check=True)
+    feature_observation = json.loads((output / 'runtime.json').read_bytes())['cpu_features']
+    assert feature_observation['AVX2'] and feature_observation['FMA3']
+    assert not any(feature_observation[name] for name in data['numpy_disabled_features']), feature_observation
     executions = {}
     for label, nodes in data['groups'].items():
         for mode in (('normal', 'disabled') if label == 'native' else ('normal',)):
@@ -69,5 +73,5 @@ with tempfile.TemporaryDirectory(dir=os.environ['RUNNER_TEMP'], prefix='installe
             print(case, run.returncode, json.dumps(suite), flush=True)
     receipt = {'run_base': 44207792316, 'source': data['source'], 'installed_wheels': hashes,
                'core_sha256': data['core_sha256'], 'executions': executions,
-               'builds': 0, 'timing_batches': 0, 'transport_wheels_left': len(list(archive.glob('*.whl')))}
+               'numpy_disabled_features': data['numpy_disabled_features'], 'builds': 0, 'timing_batches': 0, 'transport_wheels_left': len(list(archive.glob('*.whl')))}
     (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
