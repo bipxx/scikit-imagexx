@@ -12,6 +12,33 @@ BENCHMARK_INTAKES = (
     'test_regionprops_coords_scaled_benchmark_intake.py',
     'test_draw_polygon_benchmark_intake.py',
 )
+# These guards inspect process-wide imports. Keep each compatible group fresh.
+NUMPY_ONLY_INTAKES = (
+    'test_array_views_intake.py',
+    'test_crop_intake.py',
+    'test_slice_along_axes_intake.py',
+)
+FIXTURE_ONLY_CASES = (
+    'test_approximate_polygon_public.py::test_approximate_polygon_fixture_without_original',
+    'test_subdivide_polygon_public.py::test_subdivide_polygon_fixture_without_original',
+    'test_rolling_ball_kernels_public.py::test_geometry_fixture_serializes_without_original_calls',
+)
+SOURCE_ONLY_CASES = (
+    'test_tv_positive_zero_compare.py::test_new_controller_exact_byte_attributes_and_no_scientific_imports',
+)
+# The registered integration tests compare these same cases to the running
+# scikit-image provider. Leave the Linux-captured callback values as history.
+HISTORICAL_RDP_CALLBACK_CASES = tuple(
+    f'test_approximate_polygon_public.py::test_approximate_polygon_native_public_contract[{workers}-{case}]'
+    for workers in (1, 4)
+    for case in ('tolerance-provider-positive', 'tolerance-mutates-coordinates')
+)
+# Replay the exact original traces with the frozen NumPy sort dispatch.
+LINUX_ORIGINAL_TRACE_CASES = (
+    'test_h_extrema_contracts.py::test_original_fixed_contract',
+    'test_reconstruction_benchmark_contracts.py::test_original_frozen_contract',
+    'test_reconstruction_terrain_contracts.py::test_original_frozen_parity',
+)
 LINUX_FENV_MODULES = (
     'test_mark_wide_outer_public.py',
     'test_draw_multiblock_lbp_public.py',
@@ -51,9 +78,13 @@ def main():
 
     env = os.environ.copy()
     env['REGULAR_GRID_UPSTREAM_SOURCE'] = str(upstream)
-    switches = [f'--ignore=tests/{name}' for name in BENCHMARK_INTAKES]
+    env['PYTHONDONTWRITEBYTECODE'] = '1'
+    switches = [f'--ignore=tests/{name}' for name in (*BENCHMARK_INTAKES, *NUMPY_ONLY_INTAKES)]
+    switches.extend(f'--deselect=tests/{node}' for node in
+                    (*FIXTURE_ONLY_CASES, *SOURCE_ONLY_CASES, *HISTORICAL_RDP_CALLBACK_CASES))
     if sys.platform == 'linux':
         switches.append('--ignore=tests/test_vi_public_matmul_windows_public.py')
+        switches.extend(f'--deselect=tests/{node}' for node in LINUX_ORIGINAL_TRACE_CASES)
         outputs = {
             'FINITE_RADON_RECORDS': 'radon-saved-rows.json',
             'FINITE_RADON_EXCEPTIONAL_RECORDS': 'radon-exceptional-rows.json',
@@ -73,8 +104,20 @@ def main():
         env['SKIMAGEXX_DISABLE_SIMD'] = '1'
     else:
         env.pop('SKIMAGEXX_DISABLE_SIMD', None)
-    command = [sys.executable, '-m', 'pytest', '-q', *switches]
-    return subprocess.run(command, cwd=ROOT, env=env, check=False).returncode
+    command = [sys.executable, '-m', 'pytest', '-q']
+    for group in (SOURCE_ONLY_CASES, NUMPY_ONLY_INTAKES, FIXTURE_ONLY_CASES):
+        result = subprocess.run([*command, *(f'tests/{node}' for node in group)],
+                                cwd=ROOT, env=env, check=False)
+        if result.returncode:
+            return result.returncode
+    if sys.platform == 'linux':
+        original_env = {**env, 'NPY_DISABLE_CPU_FEATURES': 'X86_V4'}
+        original_env.pop('NPY_ENABLE_CPU_FEATURES', None)
+        result = subprocess.run([*command, *(f'tests/{node}' for node in LINUX_ORIGINAL_TRACE_CASES)],
+                                cwd=ROOT, env=original_env, check=False)
+        if result.returncode:
+            return result.returncode
+    return subprocess.run([*command, *switches], cwd=ROOT, env=env, check=False).returncode
 
 
 if __name__ == '__main__':

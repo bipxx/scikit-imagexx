@@ -17,9 +17,12 @@ SOURCE_FILES=('coverage/contracts/util-array-views-v1.json','tests/array_views_c
 
 
 def source_revision():
-    # Retained Windows-linked trees require native Windows Git even in WSL.
-    executable='git'if os.name=='nt'else'/mnt/c/Program Files/Git/cmd/git.exe'
-    root=str(ROOT)if os.name=='nt'else str(ROOT).replace('/mnt/c/','C:/',1)
+    executable = 'git'
+    root = str(ROOT)
+    # Windows-linked trees mounted in WSL still need native Windows Git.
+    if os.name != 'nt' and root.startswith('/mnt/c/'):
+        executable = '/mnt/c/Program Files/Git/cmd/git.exe'
+        root = 'C:/' + root.removeprefix('/mnt/c/')
     return subprocess.check_output([executable,'-C',root,'rev-parse','HEAD'],text=True).strip()
 
 

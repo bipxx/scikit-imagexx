@@ -141,7 +141,9 @@ def test_scalar_distance_flag_is_authenticated_before_frozen_MARK_rules(canonica
     assert H(view)==context()['sources'][name]['current_'+domain]
     addition=(b'    # Preserve separately rounded hue products for CIE94 and CMC.\n'
               b'    set_source_files_properties(src/distance.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off")\n')
-    compared=current.replace(b'\r\n',b'\n')if canonical else current
+    from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+    from tools.vi_public_matmul_context import immediate_predecessor_bytes
+    compared=immediate_predecessor_bytes(ROOT,name,current,VI_PUBLIC_MATMUL_CONTEXT_SHA256,canonical)
     assert compared.count(addition)==1 and compared.replace(addition,b'',1)==view
     for invalid in (current+b'\n# changed scalar flags',view):
         with pytest.raises(AssertionError):compatibility_source_bytes(name,invalid,canonical)

@@ -1048,7 +1048,7 @@ def installed_pytest_intakes():
     values, = [node.value for node in tree.body if isinstance(node, ast.Assign)
                and any(isinstance(target, ast.Name) and target.id == 'BENCHMARK_INTAKES'
                        for target in node.targets)]
-    assert "switches = [f'--ignore=tests/{name}' for name in BENCHMARK_INTAKES]" in driver
+    assert "switches = [f'--ignore=tests/{name}' for name in (*BENCHMARK_INTAKES, *NUMPY_ONLY_INTAKES)]" in driver
     return ast.literal_eval(values)
 
 
@@ -1123,7 +1123,7 @@ def test_broad_driver_keeps_platform_selector_and_record_boundaries():
         "output.mkdir(parents=True, exist_ok=False)",
         "env['SKIMAGEXX_DISABLE_SIMD'] = '1'",
         "env.pop('SKIMAGEXX_DISABLE_SIMD', None)",
-        "subprocess.run(command, cwd=ROOT, env=env, check=False).returncode",
+        "subprocess.run([*command, *switches], cwd=ROOT, env=env, check=False).returncode",
     ):
         assert token in driver
 
@@ -1156,3 +1156,94 @@ def test_check_linux_fenv_setup_rejects_missing_or_unbound_helper(old, new):
     changed = source.replace(block, block.replace(old, new, 1), 1)
     with pytest.raises(AssertionError):
         assert_check_linux_fenv_setup(changed, (ROOT / 'tools/check_cmake_install.py').read_text(encoding='utf-8'))
+
+
+@pytest.mark.parametrize('platform,failing_child', [
+    (platform, failure) for platform, count in (('linux', 5), ('win32', 4))
+    for failure in (None, *range(count))
+])
+@pytest.mark.parametrize('mode', ('normal', 'disabled'))
+def test_broad_driver_runs_exact_isolated_groups_and_propagates_failures(
+        tmp_path, monkeypatch, platform, mode, failing_child):
+    import sys
+
+    source = ROOT / 'tools/check_installed_pytest.py'
+    spec = importlib.util.spec_from_file_location('installed_pytest_source_guard', source)
+    driver = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(driver)
+    upstream = tmp_path / 'original-regular-grid.py'
+    upstream.write_bytes(b'# inert installed source\n')
+    monkeypatch.setattr(driver, 'ROOT', tmp_path)
+    monkeypatch.setattr(driver, 'distribution', lambda name: SimpleNamespace(
+        locate_file=lambda relative: upstream))
+    monkeypatch.setenv('SKIMAGEXX_DISABLE_SIMD', 'stale')
+    monkeypatch.setenv('NPY_DISABLE_CPU_FEATURES', 'FMA3')
+    monkeypatch.setenv('NPY_ENABLE_CPU_FEATURES', 'SSE3')
+    monkeypatch.setattr(sys, 'platform', platform)
+    monkeypatch.setattr(sys, 'argv', [str(source), '--mode', mode])
+
+    calls = []
+    def run(argv, *, cwd, env, check):
+        assert cwd == tmp_path and check is False
+        assert env['REGULAR_GRID_UPSTREAM_SOURCE'] == str(upstream)
+        assert env['PYTHONDONTWRITEBYTECODE'] == '1'
+        assert env.get('SKIMAGEXX_DISABLE_SIMD') == ('1' if mode == 'disabled' else None)
+        assert argv[:4] == [sys.executable, '-m', 'pytest', '-q']
+        if platform == 'linux' and len(calls) == 3:
+            assert env['NPY_DISABLE_CPU_FEATURES'] == 'X86_V4'
+            assert 'NPY_ENABLE_CPU_FEATURES' not in env
+        else:
+            assert env['NPY_DISABLE_CPU_FEATURES'] == 'FMA3'
+            assert env['NPY_ENABLE_CPU_FEATURES'] == 'SSE3'
+        calls.append(argv[4:])
+        return SimpleNamespace(returncode=47 if len(calls) - 1 == failing_child else 0)
+
+    monkeypatch.setattr(driver.subprocess, 'run', run)
+    assert driver.main() == (0 if failing_child is None else 47)
+    child_count = 5 if platform == 'linux' else 4
+    assert len(calls) == (child_count if failing_child is None else failing_child + 1)
+    assert driver.os.environ['NPY_DISABLE_CPU_FEATURES'] == 'FMA3'
+    assert driver.os.environ['NPY_ENABLE_CPU_FEATURES'] == 'SSE3'
+    isolated = [
+        ['test_tv_positive_zero_compare.py::test_new_controller_exact_byte_attributes_and_no_scientific_imports'],
+        ['test_array_views_intake.py', 'test_crop_intake.py', 'test_slice_along_axes_intake.py'],
+        ['test_approximate_polygon_public.py::test_approximate_polygon_fixture_without_original',
+         'test_subdivide_polygon_public.py::test_subdivide_polygon_fixture_without_original',
+         'test_rolling_ball_kernels_public.py::test_geometry_fixture_serializes_without_original_calls'],
+    ]
+    original = []
+    if platform == 'linux':
+        original = [
+            'test_h_extrema_contracts.py::test_original_fixed_contract',
+            'test_reconstruction_benchmark_contracts.py::test_original_frozen_contract',
+            'test_reconstruction_terrain_contracts.py::test_original_frozen_parity',
+        ]
+        isolated.append(original)
+    assert calls[:len(isolated)] == [[f'tests/{node}' for node in group]
+                                    for group in isolated[:len(calls)]]
+    if len(calls) != child_count:
+        return
+    switches = calls[-1]
+    assert len(switches) == len(set(switches))
+    assert set(switches) == {
+        *(f'--ignore=tests/{name}' for name in (*installed_pytest_intakes(), *isolated[1])),
+        *(f'--deselect=tests/{node}' for node in (*isolated[0], *isolated[2], *original)),
+        *(f'--deselect=tests/test_approximate_polygon_public.py::test_approximate_polygon_native_public_contract[{workers}-{case}]'
+          for workers in (1, 4)
+          for case in ('tolerance-provider-positive', 'tolerance-mutates-coordinates')),
+        *(['--ignore=tests/test_vi_public_matmul_windows_public.py'] if platform == 'linux'
+          else [*(f'--ignore=tests/{name}' for name in driver.LINUX_FENV_MODULES),
+                *(f'--deselect=tests/{node}' for node in driver.LINUX_FENV_CASES)]),
+    }
+    integration = 'tests/test_approximate_polygon_integration.py'
+    assert not any(integration in option for option in switches)
+    test, = [node for node in ast.parse((ROOT / integration).read_bytes()).body
+             if isinstance(node, ast.FunctionDef) and node.name == 'test_polygon_registered_public_frozen_contract']
+    assert any(isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+               and node.func.id == 'runtime_reference'
+               and tuple(arg.id for arg in node.args[1:] if isinstance(arg, ast.Name)) == ('np',)
+               for node in ast.walk(test))
+    workers_param = [node for node in test.decorator_list if isinstance(node, ast.Call)
+                     and node.args and isinstance(node.args[0], ast.Constant)
+                     and node.args[0].value == 'workers']
+    assert len(workers_param) == 1 and ast.literal_eval(workers_param[0].args[1]) == (1, 4)

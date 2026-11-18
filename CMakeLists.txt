@@ -182,6 +182,9 @@ else()
     set_source_files_properties(src/color.cpp src/bind_color_status.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     # Preserve separately rounded hue products for CIE94 and CMC.
     set_source_files_properties(src/distance.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off")
+    # Preserve the separate rounding steps used by the upstream array operations.
+    set_source_files_properties(src/farid.cpp src/local_threshold.cpp src/perceptual.cpp src/small_edge.cpp
+        PROPERTIES COMPILE_OPTIONS "-ffp-contract=off")
     set_source_files_properties(src/colocalization.cpp src/bind_colocalization.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/moments.cpp src/moments_hu.cpp src/moments_normalized.cpp src/inertia.cpp src/coords.cpp src/bind_moments.cpp src/bind_moments_derived.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/footprint_shapes.cpp src/bind_footprint_shapes.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")

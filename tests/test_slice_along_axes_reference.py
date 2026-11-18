@@ -79,7 +79,7 @@ def test_unreviewed_intake_rejected_before_science(fault,monkeypatch):
 
 
 def _cli(tmp_path,mode):
-    go=dict(status='ROOT_AUTHORIZED_SLICE_ALONG_AXES_REFERENCE_ONCE',api=API,contract_sha256=hashlib.sha256((ROOT/'coverage/contracts/slice-along-axes-v2.json').read_bytes()).hexdigest(),upstream_canonical_lf_sha256=SOURCE_SHA256,maximum_public_topcalls_per_profile=len(cases()),native_calls=0,timed_batches=0)
+    go=dict(status='ROOT_AUTHORIZED_SLICE_ALONG_AXES_REFERENCE_ONCE',api=API,contract_sha256=hashlib.sha256((ROOT/'coverage/contracts/slice-along-axes-v3.json').read_bytes()).hexdigest(),upstream_canonical_lf_sha256=SOURCE_SHA256,maximum_public_topcalls_per_profile=len(cases()),native_calls=0,timed_batches=0)
     path=tmp_path/'inert-test-binding.json';path.write_text(json.dumps(go))
     script=r'''
 import builtins,json,runpy,sys,types

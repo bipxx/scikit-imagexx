@@ -164,6 +164,8 @@ def _validate_mark_wide_source_closure(contract):
             from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
             from tools.vi_public_matmul_context import speed_predecessor_bytes
             raw=speed_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+        elif name == 'tests/test_find_boundaries_layout_contract.py':
+            raw=binding_source_bytes(name)
         assert hashlib.sha256(raw).hexdigest()==pin,name
     row=tracked['mark_wide_successor'];raw=(ROOT/row['contract']).read_bytes()
     assert hashlib.sha256(raw).hexdigest()==row['sha256']
@@ -173,11 +175,21 @@ def _validate_mark_wide_source_closure(contract):
     _validate_predecessor_source_closure(old)
 
 
+def binding_source_bytes(name):
+    """Authenticate the two current source-only rows against frozen v8."""
+    raw=(ROOT/name).read_bytes()
+    if name in ('benchmarks/find_boundaries.py', 'tests/test_find_boundaries_layout_contract.py'):
+        from tools.vi_public_matmul_context import immediate_predecessor_bytes
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        return immediate_predecessor_bytes(ROOT,name,raw,VI_PUBLIC_MATMUL_CONTEXT_SHA256,True)
+    return raw.replace(b'\r\n',b'\n')
+
+
 def validate_source_closure(contract):
     tracked=json.loads(CONTRACT.read_bytes())
     provenance={'state','shared_CMake_sha256','genuine_core_sha256','prepared_run','prepared_artifact'}
     assert {k:v for k,v in contract.items()if k not in provenance}=={k:v for k,v in tracked.items()if k not in provenance}
-    values={name:(ROOT/name).read_bytes().replace(b'\r\n',b'\n')for name in tracked['source_closure']}
+    values={name:binding_source_bytes(name) for name in tracked['source_closure']}
     while 'speed_source_successor' in tracked:
         for name,pin in tracked['source_closure'].items():assert hashlib.sha256(values[name]).hexdigest()==pin,name
         row=tracked['speed_source_successor'];encoded=(ROOT/row['contract']).read_bytes()

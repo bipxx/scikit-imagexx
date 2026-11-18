@@ -245,7 +245,7 @@ def test_actual_current_install_projections_and_final_harness_bytes():
     module=runpy.run_path(str(ROOT/'tools/public_qualification.py'))
     for profile in module['PROFILES']:
         layout=module['current_install_layout'](read,names,profile)
-        assert (layout['product_count'],layout['SDK_count'])==(176,83)
+        assert (layout['product_count'],layout['SDK_count'])==(228,108)
     harness=(ROOT/'benchmarks/approximate_polygon.py').read_bytes().replace(b'\r\n',b'\n')
     contract=(ROOT/'coverage/contracts/approximate-polygon-benchmark.json').read_bytes()
     assert hashlib.sha256(harness).hexdigest()=='518c256877e5f0bf6708c94ac91901a6ace1676f1b243359fef95d65d9ffd29d'

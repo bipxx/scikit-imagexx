@@ -338,6 +338,63 @@ void sincos(__m256 h, __m256& s, __m256& c) {
     s = _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(s0)),_mm256_cvtpd_ps(s1),1);
     c = _mm256_insertf128_ps(_mm256_castps128_ps256(_mm256_cvtpd_ps(c0)),_mm256_cvtpd_ps(c1),1);
 }
+void unpack_uint8_triples(const std::uint8_t* input, __m128i& x, __m128i& y, __m128i& z) {
+    // Load exactly twelve bytes, including the final four-pixel packet.
+    std::int64_t low;
+    std::int32_t high;
+    std::memcpy(&low,input,sizeof(low));
+    std::memcpy(&high,input+sizeof(low),sizeof(high));
+    const auto pixels = _mm_unpacklo_epi64(_mm_cvtsi64_si128(low),_mm_cvtsi32_si128(high));
+    x = _mm_cvtepu8_epi32(_mm_shuffle_epi8(pixels,_mm_setr_epi8(0,3,6,9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)));
+    y = _mm_cvtepu8_epi32(_mm_shuffle_epi8(pixels,_mm_setr_epi8(1,4,7,10,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)));
+    z = _mm_cvtepu8_epi32(_mm_shuffle_epi8(pixels,_mm_setr_epi8(2,5,8,11,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1)));
+}
+
+std::size_t xyz8_to_lab(const std::uint8_t* input, double* output, std::size_t n,
+    const std::array<double,3>& white) {
+    using V = Vector<double>;
+    double curves[3][256];
+    const auto scale=V::set(1.0/255.0);
+    // Cache the existing SIMD curve for each possible byte, within this call.
+    // The admitted white range keeps all lanes on the same cube-root implementation.
+    for (int j=0;j<3;++j) {
+        const auto w=V::set(white[j]);
+        for (int k=0;k<256;k+=4) {
+            const auto bytes=_mm_setr_epi32(k,k+1,k+2,k+3);
+            const auto scaled=V::div(V::mul(_mm256_cvtepi32_pd(bytes),scale),w);
+            const auto mask=V::gt(scaled,V::set(0.008856));
+            auto curve=V::add(V::mul(V::set(7.787),scaled),V::set(16.0/116.0));
+            if (V::bits(mask)) curve=V::choose(curve,cube_root(V::choose(V::set(1),scaled,mask)),mask);
+            _mm256_storeu_pd(curves[j]+k,curve);
+        }
+    }
+    std::size_t i=0;
+    for (;i+4<=n;i+=4) {
+        __m128i a,b,c;
+        unpack_uint8_triples(input+3*i,a,b,c);
+        const auto x=_mm256_i32gather_pd(curves[0],a,8);
+        const auto y=_mm256_i32gather_pd(curves[1],b,8);
+        const auto z=_mm256_i32gather_pd(curves[2],c,8);
+        pack(output+3*i,V::sub(V::mul(V::set(116),y),V::set(16)),
+            V::mul(V::set(500),V::sub(x,y)),V::mul(V::set(200),V::sub(y,z)));
+    }
+    return i;
+}
+
+std::size_t lab8_to_lch(const std::uint8_t* input, double* output, std::size_t n) {
+    const auto scale=_mm256_set1_pd(1.0/255.0);
+    std::size_t i=0;
+    for (;i+4<=n;i+=4) {
+        __m128i x,y,z;
+        unpack_uint8_triples(input+3*i,x,y,z);
+        __m256d radius,angle;
+        polar(_mm256_mul_pd(_mm256_cvtepi32_pd(y),scale),
+              _mm256_mul_pd(_mm256_cvtepi32_pd(z),scale),radius,angle);
+        pack(output+3*i,_mm256_mul_pd(_mm256_cvtepi32_pd(x),scale),radius,angle);
+    }
+    return i;
+}
+
 template<class Input> std::size_t run_perceptual(const Input* p, detail::ColorOutput<Input>* out, std::size_t n,
     const detail::PerceptualSpec& spec, std::ptrdiff_t pixels, std::ptrdiff_t channels, PerceptualInfo& info) {
     using T = detail::ColorOutput<Input>; using V = Vector<T>; using R = typename V::R; using Op = PerceptualTransform;
@@ -502,7 +559,17 @@ std::size_t perceptual_transform(const void* source, void* out, std::size_t n, P
 #define PERCEPTUAL_CASE(KIND,TYPE,OUTPUT) case PixelType::KIND: return run_perceptual(static_cast<const TYPE*>(source),static_cast<OUTPUT*>(out),n,spec,pixels,channels,info)
     switch(type) {
         PERCEPTUAL_CASE(boolean,bool,double);
-        PERCEPTUAL_CASE(uint8,std::uint8_t,double); PERCEPTUAL_CASE(int8,std::int8_t,double);
+        case PixelType::uint8: {
+            const auto* p=static_cast<const std::uint8_t*>(source);
+            auto* dst=static_cast<double*>(out);
+            if (pixels==3 && channels==1 && spec.channels==3) {
+                if (spec.transform==PerceptualTransform::xyz2lab && n>=1024 &&
+                    std::all_of(spec.white.begin(),spec.white.end(),[](double v) { return v>=0.25 && v<=2; }))
+                    return xyz8_to_lab(p,dst,n,spec.white);
+                if (spec.transform==PerceptualTransform::lab2lch) return lab8_to_lch(p,dst,n);
+            }
+            return run_perceptual(p,dst,n,spec,pixels,channels,info);
+        } PERCEPTUAL_CASE(int8,std::int8_t,double);
         PERCEPTUAL_CASE(uint16,std::uint16_t,double); PERCEPTUAL_CASE(int16,std::int16_t,double);
         PERCEPTUAL_CASE(uint32,std::uint32_t,double); PERCEPTUAL_CASE(int32,std::int32_t,double);
         PERCEPTUAL_CASE(uint64,std::uint64_t,double); PERCEPTUAL_CASE(int64,std::int64_t,double);

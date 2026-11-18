@@ -10,8 +10,8 @@ import runpy
 import subprocess
 import sys
 
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-ci-fenv-v1.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-ci-fenv-v1.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-ci-r4-stager-v1.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-ci-r4-stager-v1.json'
 PROBE='tools/vi_first_cohort_probe.py'
 CODEC='tools/vi_cohort_value_diagnostic.py'
 EXECUTE='benchmarks/variation_of_information_execution.py'

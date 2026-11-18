@@ -241,7 +241,29 @@ def test_fixed_corpus_and_all376_ids_preserved():
     old=json.loads((ROOT/'coverage/contracts/rank-statistics-benchmark.json').read_text());cfg=c.config()
     assert old['case_inventory']==cfg['case_inventory'] and len(cfg['case_inventory'])==1379
     assert cfg['case_contract_sha256']==old['case_contract_sha256'] and len(cfg['timed_ids'])==len(set(cfg['timed_ids']))==376
-    for name,value in cfg['source_text_sha256'].items():assert c.text_sha(ROOT/name)==value
+    for name,value in cfg['source_text_sha256'].items():
+        if name=='tests/test_rank_statistics_compare.py':
+            # Restore only the changed guard loop to authenticate the historical self-pin.
+            raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+            start=raw.index(b'\n    for name,value in cfg[',raw.index(b'def test_fixed_corpus_and_all376_ids_preserved():'))
+            end=raw.index(b'\n    assert not any(cfg[',start)
+            old_loop=b"\n    for name,value in cfg['source_text_sha256'].items():assert c.text_sha(ROOT/name)==value"
+            assert hashlib.sha256(raw[:start]+old_loop+raw[end:]).hexdigest()==value,name
+            continue
+        if name!='benchmarks/rank_statistics.py':
+            assert c.text_sha(ROOT/name)==value,name
+            continue
+        # Authenticate the approved SDK-verifier delta against the historical R4 pin.
+        raw=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        assert hashlib.sha256(raw).hexdigest()=='3c63b1008790917d4e6e5187ffe6f187e64410afb89321307a5330f7512f5338'
+        for current,previous in (
+            (b'from tools.rank_corpus_sdk_scope import validate_sdk_scope\n',b''),
+            (b'validate_sdk_scope(ROOT,capsule,runtime)',
+             b"assert len(runtime['runtime']['sdk_sha256'])==SDK_MEMBERS"),
+        ):
+            assert raw.count(current)==1
+            raw=raw.replace(current,previous,1)
+        assert hashlib.sha256(raw).hexdigest()==value
     assert not any(cfg['accepted_products'][r][p] for r in ('before','after') for p in c.PROFILES)
 
 

@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import pytest
@@ -91,15 +92,18 @@ def tv_certificate(monkeypatch):
 @pytest.mark.parametrize('fixture_name', ['rank_certificate', 'tv_certificate'])
 def test_known_validators_publish_only_exact_bytes(tmp_path, request, fixture_name):
     value = request.getfixturevalue(fixture_name)
+    revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
+    if fixture_name == 'tv_certificate':
+        value['controller_revision'] = revision
     raw, (encoded, digest) = encoded_document(value)
-    result = p.publish(encoded, digest, REVISION, tmp_path / 'artifact')
+    result = p.publish(encoded, digest, revision, tmp_path / 'artifact')
     target = tmp_path / 'artifact/experiment.json'
     assert target.read_bytes() == raw
     assert result == dict(schema=value['schema'], sha256=digest, bytes=len(raw),
-                         controller_revision=REVISION, path=str(target))
+                         controller_revision=revision, path=str(target))
     assert [x.name for x in target.parent.iterdir()] == ['experiment.json']
     with pytest.raises(RuntimeError, match='already exists'):
-        p.publish(encoded, digest, REVISION, target.parent)
+        p.publish(encoded, digest, revision, target.parent)
     assert target.read_bytes() == raw
 
 
