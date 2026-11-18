@@ -1,20 +1,30 @@
-name: Installed Ubuntu packed-float CIE parity
+name: Installed Ubuntu packed float Lab x86-v4 performance
 on:
   workflow_dispatch:
     inputs:
       source_revision:
-        description: Frozen candidate source
+        description: Frozen candidate source from strict parity receipt
+        required: true
+        type: string
+      parity_run:
+        description: Exact run with the admitted optimized installed product
+        required: true
+        type: string
+      receipt_sha256:
+        description: SHA256 of the complete installed-parity receipt
         required: true
         type: string
 permissions:
   contents: read
   actions: read
 jobs:
-  diagnose:
+  measure:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 14
     env:
       PRODUCT_SOURCE: ${{ inputs.source_revision }}
+      PARITY_RUN: ${{ inputs.parity_run }}
+      EXPECTED_STRICT_RECEIPT_SHA256: ${{ inputs.receipt_sha256 }}
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
@@ -40,10 +50,16 @@ jobs:
           path: ${{ runner.temp }}/scikit-imagexx-failed-wheel
           run-id: '44207792316'
           github-token: ${{ github.token }}
-      - name: Verify packed-float CIE parity
-        run: python -B diagnostic-cie-f32-ubuntu.py
+      - uses: actions/download-artifact@v4
+        with:
+          name: installed-ubuntu-cie-f32-diagnostic
+          path: ${{ runner.temp }}/scikit-imagexx-strict-proof
+          run-id: ${{ inputs.parity_run }}
+          github-token: ${{ github.token }}
+      - name: Measure the exact installed product at one thread
+        run: python -B diagnostic-cie-f32-v4-speed.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: installed-ubuntu-cie-f32-diagnostic
-          path: proof/
+          name: installed-ubuntu-cie-f32-v4-speed
+          path: speed-proof/
