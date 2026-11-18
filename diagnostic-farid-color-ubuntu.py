@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
+import zipfile
 
 root = Path.cwd()
 source = root / 'source'
@@ -32,7 +33,8 @@ all_wheels = sorted(archive.glob('*.whl'))
 deps = [path for path in all_wheels if not path.name.startswith(('scikit_imagexx-', 'cmake-'))]
 assert len(deps) == 13
 assert all(sha(path) == prior[path.name] for path in deps)
-modules = ['tests/test_farid.py', 'tests/test_perceptual.py', 'tests/test_color_transforms.py']
+modules = ['tests/test_farid.py', 'tests/test_perceptual.py',
+           'tests/test_color_transforms.py', 'tests/test_color_distance.py']
 units = {'farid.cpp', 'simd_color_avx2.cpp'}
 
 with tempfile.TemporaryDirectory(dir=temp_root, prefix='strict-ubuntu-wheel-') as scratch:
@@ -49,6 +51,21 @@ with tempfile.TemporaryDirectory(dir=temp_root, prefix='strict-ubuntu-wheel-') a
                        stdout=log, stderr=subprocess.STDOUT, check=True)
     wheel, = wheels.glob('scikit_imagexx-*.whl')
     wheel_sha = sha(wheel)
+    proof_package = output / 'package'
+    with zipfile.ZipFile(wheel) as archive:
+        for entry in archive.infolist():
+            if entry.is_dir() or not entry.filename.startswith('skimagexx/'):
+                continue
+            target = proof_package / entry.filename
+            assert target.resolve().is_relative_to(proof_package.resolve())
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with target.open('xb') as stream:
+                stream.write(archive.read(entry))
+    proof_core, = (proof_package / 'skimagexx').glob('_core*.so')
+    (output / 'wheel-evidence.json').write_text(json.dumps(
+        {'source': os.environ['PRODUCT_SOURCE'], 'wheel_sha256': wheel_sha, 'core_sha256': sha(proof_core)},
+        indent=2
+    ) + '\n', encoding='utf-8')
     compile_db, = build.glob('compile_commands.json')
     command_rows = json.loads(compile_db.read_bytes())
     checked = {}
@@ -61,15 +78,20 @@ with tempfile.TemporaryDirectory(dir=temp_root, prefix='strict-ubuntu-wheel-') a
         assert args.count('-ffp-contract=off') == 1
         obj = Path(row['directory']) / args[args.index('-o') + 1]
         asm = subprocess.check_output(['objdump', '-d', str(obj)], text=True)
-        assert not re.search(r'\bv(?:fmadd|fnmadd|fmsub|fnmsub)\w*', asm), name
-        checked[name] = {'argv': args, 'object_sha256': sha(obj), 'fma': 0}
+        fused = re.findall(r'\bv(?:fmadd|fnmadd|fmsub|fnmsub)\w*', asm)
+        # The SIMD color object also contains the explicitly fused SVML
+        # distance code. Farid has no explicit fused arithmetic.
+        if name == 'farid.cpp':
+            assert not fused, name
+        checked[name] = {'argv': args, 'object_sha256': sha(obj), 'fma_in_object': len(fused)}
     assert checked.keys() == units
     (output / 'compile_commands.json').write_bytes(compile_db.read_bytes())
     subprocess.run([sys.executable, '-m', 'pip', 'install', '--no-index', '--no-deps',
-                    '--no-cache-dir', '--target', str(package), str(wheel), *map(str, deps)], check=True)
+                    '--no-cache-dir', '--no-compile', '--target', str(package), str(wheel), *map(str, deps)], check=True)
     for path in all_wheels + [wheel]:
         path.unlink()
     core, = (package / 'skimagexx').glob('_core*.so')
+    assert sha(core) == sha(proof_core)
     verification = (
         "import ctypes, json, os, sys, numpy, scipy, skimage, skimagexx, pytest;"
         "assert (numpy.__version__, scipy.__version__, skimage.__version__, pytest.__version__)=="
@@ -110,4 +132,3 @@ with tempfile.TemporaryDirectory(dir=temp_root, prefix='strict-ubuntu-wheel-') a
               'timing_batches': 0, 'transport_wheels_left': len(list(archive.glob('*.whl')))}
     (output / 'receipt.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     assert all(row['actual_exit'] == 0 and row['formerly_failed_passed'] == len(prior_nodes) for row in outcomes.values())
-    shutil.copytree(package / 'skimagexx', output / 'package/skimagexx')
