@@ -1,36 +1,237 @@
-name: distance-overlap-diagnostics
+name: Frozen ordinary measurements with corrected grid comparison
 on:
   workflow_dispatch:
+    inputs:
+      source_revision:
+        description: Exact ordinary producer revision
+        required: true
+        type: string
+      ordinary_run:
+        description: Exact ordinary run with both completed producer jobs
+        required: true
+        type: string
+permissions:
+  actions: read
+  contents: read
 jobs:
-  diagnose:
+  measure:
     strategy:
       fail-fast: false
       matrix:
-        replica: [1, 2]
-        numpy: ['1.24.4', '2.5.4']
-    runs-on: ubuntu-latest
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     env:
-      CMAKE_BUILD_PARALLEL_LEVEL: '4'
+      PRODUCT_SOURCE: ${{ inputs.source_revision }}
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
+      OMP_WAIT_POLICY: PASSIVE
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_revision }}
+          path: source
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.numpy == '1.24.4' && '3.11' || '3.13' }}
-      - run: python -m pip wheel . --no-deps --wheel-dir build/wheels
-      - if: matrix.numpy == '1.24.4'
-        run: python -m pip install "numpy==1.24.4" "scipy>=1.11,<1.16" "scikit-image==0.26.0" "pytest>=8"
-      - if: matrix.numpy != '1.24.4'
-        run: python -m pip install "numpy==2.5.4" "scikit-image==0.26.0" "pytest>=8"
-      - run: python -m pip install --no-deps build/wheels/*.whl
-      - run: python tools/diagnose_distance_precision.py > build/precision.json
-      - run: python tools/diagnose_distance_overlap.py > build/overlap.json
-      - run: python -m pytest -q tests/test_distance_math_provider.py
+          python-version: '3.13.16'
+      - name: Check the exact producer source and space
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C source rev-parse HEAD)" = "$PRODUCT_SOURCE"
+          python -c "import shutil; assert shutil.disk_usage('.').free >= 30 * 1024**3"
+          mkdir proof
+      - uses: actions/download-artifact@v4
+        with:
+          name: parity-package-${{ matrix.os }}
+          path: prepared
+          run-id: ${{ inputs.ordinary_run }}
+          github-token: ${{ github.token }}
+      - name: Install and verify the exact offline input
+        id: offline_verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --no-index --no-deps --require-hashes --find-links prepared/wheels -r prepared/ci-artifacts/runtime-lock.txt
+          cd source
+          python tools/ci_measurement_artifacts.py verify --wheel-dir ../prepared/wheels --artifact ../prepared/ci-artifacts/measurement.json | tee ../proof/verify-before.log
+      - name: Ordinary measurement metadata.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python -c 'import hashlib,pathlib,runpy,sys,types; path=pathlib.Path("benchmarks/coverage.py").resolve(); raw=pathlib.Path("../benchmarks/coverage.py").read_bytes(); assert hashlib.sha256(raw).hexdigest()=="d7074de93b6d0145bc57325d9df1b86aad8d36d01f3545e94ece758b8d46abc6"; sys.path.insert(0,str(path.parent)); driver=types.ModuleType("coverage"); driver.__file__=str(path); sys.modules["coverage"]=driver; exec(compile(raw,str(path),"exec"),driver.__dict__); wrapper=path.with_name("metadata.py"); sys.argv[0]=str(wrapper); runpy.run_path(str(wrapper),run_name="__main__")' --sizes 32 --threads 1 --repeat 1 --output ../proof/ci-metadata.json
+      - name: Ordinary measurement conversions.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/conversions.py --size 64 --threads 1 --dtypes uint16 int16 --output ../proof/ci-conversions.json
+      - name: Ordinary measurement color.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/color.py --size 32 --threads 1 --output ../proof/ci-color-layouts.json
+      - name: Ordinary measurement perceptual.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/perceptual.py --size 32 --threads 1 --output ../proof/ci-perceptual.json
+      - name: Ordinary measurement stains.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/stains.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-stains.json
+      - name: Ordinary measurement farid.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/farid.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-farid.json
+      - name: Ordinary measurement edges.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/edges.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-edges.json
+      - name: Ordinary measurement alpha.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/alpha.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-alpha.json
+      - name: Ordinary measurement local_thresholds.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/local_thresholds.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-local-thresholds.json
+      - name: Ordinary measurement thresholds.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/thresholds.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-thresholds.json
+      - name: Ordinary measurement minimum.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/minimum.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-minimum.json
+      - name: Ordinary measurement li.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/li.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-li.json
+      - name: Ordinary measurement adaptive.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/adaptive.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-adaptive.json
+      - name: Ordinary measurement rank_order.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/rank_order.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-rank-order.json
+      - name: Ordinary measurement hysteresis.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/hysteresis.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-hysteresis.json
+      - name: Ordinary measurement sparse.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/sparse.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-sparse.json
+      - name: Ordinary measurement median.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/median.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-median.json
+      - name: Ordinary measurement multiotsu.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/multiotsu.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-multiotsu.json
+      - name: Ordinary measurement clahe.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/clahe.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-clahe.json
+      - name: Ordinary measurement label_colors.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/label_colors.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-label-colors.json
+      - name: Ordinary measurement distance.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/distance.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-distance.json
+      - name: Ordinary measurement morphology.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/morphology.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-morphology.json
+      - name: Ordinary measurement match_histograms.py
+        if: ${{ !cancelled() && steps.offline_verify.outcome == 'success' }}
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python benchmarks/match_histograms.py --size 32 --threads 1 --repeat 1 --output ../proof/ci-match-histograms.json
+      - name: Verify the same offline inputs after measurements
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd source
+          python tools/ci_measurement_artifacts.py verify --wheel-dir ../prepared/wheels --artifact ../prepared/ci-artifacts/measurement.json | tee ../proof/verify-after.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: distance-overlap-${{ matrix.numpy }}-${{ matrix.replica }}
-          path: |
-            build/precision.json
-            build/overlap.json
-            build/wheels/*.whl
+          name: frozen-ordinary-measurements-${{ matrix.os }}
+          path: proof/
