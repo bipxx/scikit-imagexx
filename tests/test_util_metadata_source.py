@@ -37,6 +37,34 @@ def test_util_metadata_source_bound_reference_and_checker():
     assert not any(isinstance(n,ast.Call)and isinstance(n.func,ast.Call)and ast.unparse(n.func).startswith('getattr(original')for n in ast.walk(branch))
 
 
+def test_ordinary_coverage_checks_regular_grid_slice_metadata():
+    path=ROOT/'benchmarks/coverage.py'
+    tree=ast.parse(path.read_bytes())
+    assert any(isinstance(node,ast.ImportFrom)and node.module=='skimagexx.coverage'
+               and any(name.name=='util_metadata_default_error' for name in node.names) for node in tree.body)
+    main=next(node for node in tree.body if isinstance(node,ast.FunctionDef)and node.name=='main')
+    comparison=next(node for node in ast.walk(main)if isinstance(node,ast.If)
+                    and ast.unparse(node.test)=="api == 'segmentation.find_boundaries'")
+    while ast.unparse(comparison.test)!="api == 'util.regular_grid'":
+        assert len(comparison.orelse)==1 and isinstance(comparison.orelse[0],ast.If)
+        comparison=comparison.orelse[0]
+    branch=ast.If(test=comparison.test,body=comparison.body,orelse=[])
+    code=compile(ast.fix_missing_locations(ast.Module(body=[branch],type_ignores=[])),str(path),'exec')
+    actual=(slice(1,None,2),slice(0,None,3))
+    expected=(slice(1,None,2),slice(0,None,3))
+
+    def check(api,observed,reference):
+        assert api=='util.regular_grid' and observed is actual and reference is expected
+        return 0.
+
+    context=dict(api='util.crop',actual=actual,expected=expected,util_metadata_default_error=check)
+    exec(code,context)
+    assert 'error' not in context
+    context['api']='util.regular_grid'
+    exec(code,context)
+    assert context['error']==0.
+
+
 def test_util_metadata_real_pytest_pipeline_and_SDK_closure():
     line=next(l for l in(ROOT/'.github/workflows/public-qualification.yml').read_text().splitlines()if 'qualification-tool-guards.log' in l and 'python -m pytest' in l)
     left,right=line.split('2>&1 |');assert shlex.split(right)==['tee','build/qualification-tool-guards.log']

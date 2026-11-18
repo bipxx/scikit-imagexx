@@ -323,6 +323,34 @@ template<class T> std::pair<double,double> intensity_bounds(const T* p, std::siz
 #else
         (void)vectorized;
 #endif
+        if constexpr (std::is_same_v<T,float>) {
+            // Two consecutive runs allow independent comparisons. Merge the
+            // earlier run first so equal extrema retain the first zero's sign.
+            const auto half = (end-begin)/2;
+            const auto middle = begin+half;
+            constexpr auto float_inf = std::numeric_limits<float>::infinity();
+            float left_low = float_inf, left_high = -float_inf;
+            float right_low = float_inf, right_high = -float_inf;
+            bool ordered = true;
+            for (std::size_t i = 0; i < half; ++i) {
+                const float left = p[begin+i], right = p[middle+i];
+                if (std::isnan(left) || std::isnan(right)) { ordered = false; break; }
+                left_low = std::min(left_low,left); left_high = std::max(left_high,left);
+                right_low = std::min(right_low,right); right_high = std::max(right_high,right);
+            }
+            if (ordered && (end-begin)%2 != 0) {
+                const float last = p[end-1];
+                ordered = !std::isnan(last);
+                if (ordered) {
+                    right_low = std::min(right_low,last); right_high = std::max(right_high,last);
+                }
+            }
+            if (ordered) {
+                partials[id] = {std::min(left_low,right_low),std::max(left_high,right_high)};
+                return;
+            }
+            // Retain the original ordered double scan for NaN exception behavior.
+        }
         bool nan = false;
         for (auto i = begin; i < end; ++i) {
             const double value = double(p[i]);
@@ -381,18 +409,26 @@ template<class Input, class Output> void rescale_into(const Input* p, Output* ou
         (void)vectorized;
 #endif
         using Arithmetic = std::conditional_t<std::is_same_v<Input,std::uint8_t>,double,Input>;
-        for (auto i = begin; i < end; ++i) {
-            Arithmetic value = Arithmetic(p[i]);
-            if (std::isnan(imin) || std::isnan(imax) || std::isnan(omin) || std::isnan(omax)) {
-                out[i] = Output(std::numeric_limits<Arithmetic>::quiet_NaN());
-                continue;
+        if (begin == end) return;
+        if (std::isnan(imin) || std::isnan(imax) || std::isnan(omin) || std::isnan(omax)) {
+            std::fill(out+begin,out+end,Output(std::numeric_limits<Arithmetic>::quiet_NaN()));
+            return;
+        }
+        const Arithmetic lower = Arithmetic(imin), upper = Arithmetic(imax);
+        const Arithmetic output_lower = Arithmetic(omin);
+        if (imin != imax) {
+            const Arithmetic input_span = Arithmetic(imax-imin), output_span = Arithmetic(omax-omin);
+            for (auto i = begin; i < end; ++i) {
+                const Arithmetic value = std::min(std::max(Arithmetic(p[i]),lower),upper);
+                const Arithmetic scaled = Arithmetic(value-lower)/input_span;
+                out[i] = Output(Arithmetic(scaled*output_span)+output_lower);
             }
-            value = std::min(std::max(value,Arithmetic(imin)),Arithmetic(imax));
-            if (imin != imax) {
-                value = Arithmetic(value-Arithmetic(imin))/Arithmetic(imax-imin);
-                value = Arithmetic(value*Arithmetic(omax-omin))+Arithmetic(omin);
-            } else value = std::min(std::max(value,Arithmetic(omin)),Arithmetic(omax));
-            out[i] = Output(value);
+        } else {
+            const Arithmetic output_upper = Arithmetic(omax);
+            for (auto i = begin; i < end; ++i) {
+                const Arithmetic value = std::min(std::max(Arithmetic(p[i]),lower),upper);
+                out[i] = Output(std::min(std::max(value,output_lower),output_upper));
+            }
         }
     });
 }

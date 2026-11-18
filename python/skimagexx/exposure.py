@@ -1,4 +1,6 @@
 """Native exposure transforms and explicit upstream compatibility fallback."""
+import math as _math
+
 import numpy as np
 import warnings
 from functools import wraps
@@ -181,8 +183,17 @@ def adjust_sigmoid(image, cutoff=0.5, gain=10, inv=False):
 def _supported_range(value):
     if isinstance(value, str):
         return value in ('image', 'dtype')
-    return (isinstance(value, (tuple, list)) and len(value) == 2
-            and all(_finite_scalar(v) for v in value))
+    if not isinstance(value, (tuple, list)) or len(value) != 2:
+        return False
+    for bound in value:
+        if type(bound) is float:
+            if not _math.isfinite(bound):
+                return False
+        elif type(bound) is int and -(1 << 63) <= bound < (1 << 63):
+            continue
+        elif not _finite_scalar(bound):
+            return False
+    return True
 
 
 def rescale_intensity(image, in_range='image', out_range='dtype'):
@@ -200,7 +211,7 @@ def rescale_intensity(image, in_range='image', out_range='dtype'):
         return tuple(map(float, spec))
     imin, imax = resolve(in_range)
     omin, omax = resolve(out_range, imin >= 0)
-    if any(np.isnan(v) for v in (imin, imax, omin, omax)):
+    if _math.isnan(imin) or _math.isnan(imax) or _math.isnan(omin) or _math.isnan(omax):
         warnings.warn('One or more intensity levels are NaN. Rescaling will broadcast '
                       'NaN to the full image. Provide intensity levels yourself to '
                       'avoid this. E.g. with np.nanmin(image), np.nanmax(image).',
