@@ -1,0 +1,62 @@
+{
+  "status": "PASS_ONE_SOURCE_BOUND_CONTRACTION_WITNESS",
+  "run": 44174979377,
+  "job": 134363823555,
+  "artifact": 14370340770,
+  "source": "23ca90fdc85129362c23a056c430403d82962f7f",
+  "os": "Ubuntu 26.04.1 LTS",
+  "glibc": "2.43",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "runtime": {
+    "python": "3.11.17",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "skimage": "0.26.0"
+  },
+  "codegen_instructions": {
+    "baseline": [
+      "116e:\tc4 e2 d1 99 64 24 08 \tvfmadd132sd 0x8(%rsp),%xmm5,%xmm4",
+      "1175:\tc4 e2 d9 9b 44 24 18 \tvfmsub132sd 0x18(%rsp),%xmm4,%xmm0"
+    ],
+    "strict": []
+  },
+  "outputs": {
+    "original": 0.0,
+    "baseline": 7.008232789266337e-13,
+    "strict": 0.0
+  },
+  "calls": {
+    "original": 1,
+    "baseline": 1,
+    "strict": 1,
+    "backend": 1,
+    "fegetenv": 10,
+    "restore": 3,
+    "public_color": 0,
+    "timing": 0
+  },
+  "full32_roundtrips": 3,
+  "F1_controls": [
+    32,
+    6
+  ],
+  "proof_files": {
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\entry.json": "fbc648ea39232c45732eaa94457a79ff77ec566716eef16e6ea9739dfc4e2772",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\body\\result-v1.json": "c23ea4de94649803314089adc9775eb3e16037595bf5bd880895c4709ec2ada2",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\body-terminal.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\ROOT_GO.json": "bb3fc8e49ac1f3a8ac7ac768a5bd0a61aec1537158c3d1d94f32c555744a539d",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\compiler-and-command-adaptation.json": "d1751b89615ea34813dfc693142d84b01153c972e6963ec74d4e8e861c44dd26",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\F1\\receipt.json": "fa456db694b21c9301c6008dc0f2ad880862bceedda066194de84c552d603420",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\baseline-codegen.stdout": "6705cbf84fb225692d8968a5e2d7d2f405610c7719efba900533d91d3bb29af6",
+    "scikit-imagexx\\scikit-imagexx\\build\\weighted-contraction-v1\\strict-codegen.stdout": "7de93fa62ea8d179e341479e101e9b9d32825500f994d1370d0d9c8580d44431",
+    "_temp\\weighted-host-entry-v1.json": "4bea8572084840c5b352496ffdbc5f28e32c9a6ef056e5a1f9c59e2dd3639595"
+  },
+  "scope": "Positive primitive cause on the new matching runtime. Earlier failed CI compiler/codegen was unlogged. Requires narrow source correction and actual installed public parity and one-thread speed. No benchmark replay by this diagnostic.",
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44174979377",
+  "local_raw_receipt": {
+    "path": "build/speed-parity-ci-correction-v1/entry-review/private-ref-v1/root-witness-admission-v1.json",
+    "sha256": "146640280e559f9df1f0a30fe980d20cc64414277da0f4be3e26d87ccbac2a8d"
+  },
+  "archive_retained": false,
+  "next": "Test the compiler option on the full installed binary, including affected public parity, SDK and one-thread speed. The earlier failed CI run remains failed."
+}

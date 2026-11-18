@@ -1,0 +1,48 @@
+{
+  "run": 44178276138,
+  "source": "f61ea45c2de06b65d05c5f3e25504a2d75830538",
+  "corrected_installed_parity": "PASS",
+  "mode_counts": {
+    "normal": 3360,
+    "disabled": 3360
+  },
+  "SDK_pass": 1,
+  "FP_roundtrips": 8,
+  "native_core_sha256": "abb00a4166bac789f28290d2b00eaf9381db9dd06c73c6247ab56d51a3f5bddb",
+  "speed_status": "FAILED_3_OF_100_SLOWER_THAN_ORIGINAL",
+  "benchmark_raw_sha256": "25616e6fc72c6c23f6e7174817ace83d414d863c1e13ed8030644905553b8bae",
+  "parity_manifest_sha256": "1b74d1e40ae98e44538e26620739be0c62df79564e6549d494e7d7d3a1c5c420",
+  "losses": [
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "workload": "strided",
+      "reference_ms": 0.6438303888888889,
+      "cpp_ms": 0.7048034285714285,
+      "speedup": 0.9134892975675127
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "float32",
+      "workload": "broadcast",
+      "reference_ms": 9.567912,
+      "cpp_ms": 12.951573,
+      "speedup": 0.7387451701812591
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "workload": "extra-channels",
+      "reference_ms": 0.42823136363636366,
+      "cpp_ms": 0.4513868333333333,
+      "speedup": 0.9487014950658295
+    }
+  ],
+  "scope": "Actual isolated one thread at 512, 7 samples per role. Preserve all results, correct demonstrated workload losses before final delivery. Compiled checksum is private f61 scope.",
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44178276138",
+  "root_receipt": {
+    "path": "build/speed-parity-ci-correction-v1/weighted/validation-entry-v1/hosted-readout-v1/root-disposition-v1.json",
+    "sha256": "7077068d3319cae7bf352ee6c3223876e9851097d85ff100a8ffd00d287418fd"
+  },
+  "retained_archive": false
+}

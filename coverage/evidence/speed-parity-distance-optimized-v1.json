@@ -1,0 +1,62 @@
+{
+  "status": "PASS_ROOT_100_AFFECTED_ONE_THREAD_PUBLIC_CALL_CASES",
+  "run": 44183707419,
+  "url": "https://github.com/bipxx/scikit-imagexx/actions/runs/44183707419",
+  "source": "f49f1a54bbe4b9370d8ef0f0e6b3b28bd16b2e79",
+  "cases": 100,
+  "wins": 100,
+  "losses": 0,
+  "minimum_speedup": 1.010692243585968,
+  "maximum_speedup": 7.492444509695847,
+  "corrected_cases": [
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "workload": "strided",
+      "reference_ms": 1.2714207142857143,
+      "cpp_ms": 0.8383059333333334,
+      "speedup": 1.5166547959766887
+    },
+    {
+      "api": "color.deltaE_cmc",
+      "dtype": "float32",
+      "workload": "broadcast",
+      "reference_ms": 19.339872,
+      "cpp_ms": 19.135273,
+      "speedup": 1.010692243585968
+    },
+    {
+      "api": "color.deltaE_cie76",
+      "dtype": "float32",
+      "workload": "extra-channels",
+      "reference_ms": 0.7745772727272727,
+      "cpp_ms": 0.40077005,
+      "speedup": 1.932722449512564
+    }
+  ],
+  "recomputed_samples": 1400,
+  "raw_report_sha256": "45d90d7f56edd10d5c642aa27d701fb9fe6b4db1825b9bff31ab1090b548c36b",
+  "parity_admission": {
+    "status": "PASS_ROOT_INSTALLED_OPTIMIZED_PARITY_SDK_FP",
+    "run": 44183707419,
+    "source": "f49f1a54bbe4b9370d8ef0f0e6b3b28bd16b2e79",
+    "XML_each_mode": 3414,
+    "modes": [
+      "normal",
+      "disabled"
+    ],
+    "SDK": 2,
+    "full32_restorations": 8,
+    "core_sha256": "6ccf2395462679071564b52f3287999d2dc67e6f063c00f45139a5a38e3e1bab",
+    "producer_manifest_sha256": "a3fe18315e25822abebb395108984667842539e65e8ee2ca79d53e97a8bd322b",
+    "timing": "pending actual isolated results"
+  },
+  "mode": "one-thread 512 limits with allocation/destruction included, matched fresh hosted profile",
+  "other_report_rows": 23,
+  "archive_retained_locally": false,
+  "archive_scope": "Fine-grained per-case evidence on this host. No unqualified hardware/library-wide speed claim.",
+  "root_record": {
+    "path": "build/speed-parity-ci-correction-v1/weighted/native-optimization-v1/hosted-readout-v1/root-speed-admission-v1.json",
+    "sha256": "a6cbcbe2984c7dfe93ebb6674357d34c7b13e65bce0b08103485b1baf097acd3"
+  }
+}
