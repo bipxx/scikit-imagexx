@@ -13,7 +13,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
-    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information'),
+    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
     'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
@@ -350,6 +350,8 @@ def native_dtypes(api):
     if api=='transform.ifrt2':return ('bool','uint8','uint16','uint32','uint64')
     if api in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
     if api=='metrics.variation_of_information':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api == 'metrics.structural_similarity':
+        return ('float32', 'float64')
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
     if api=='util.crop':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
@@ -628,6 +630,9 @@ def default_call(api, image):
         labels=np.array([[0,1,1],[2,2,2]],dtype=image.dtype)
         test=labels.copy() if api=='metrics.adapted_rand_error' else np.array([[0,2,2],[1,1,2]],dtype=image.dtype)
         return (labels,test),{}
+    if api == 'metrics.structural_similarity':
+        window = 3 if min(image.shape) < 7 else 7
+        return (image, image[::-1].copy()), {'win_size': window, 'data_range': 1.0}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):
@@ -1200,6 +1205,13 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         return
     if api=='metrics.variation_of_information':
         variation_of_information_default_error(actual,expected);return
+    if api == 'metrics.structural_similarity':
+        import numpy as np
+        actual, expected = np.asarray(actual), np.asarray(expected)
+        assert actual.shape == expected.shape == () and actual.dtype == expected.dtype == np.dtype('float64')
+        rtol, atol = parity_tolerance(api, dtype)
+        np.testing.assert_allclose(actual, expected, rtol=rtol, atol=atol, equal_nan=False)
+        return
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         label_pair_default_error(api,actual,expected);return
     """Shared assertion; previous scalar budgets keep their existing checker."""
@@ -1388,6 +1400,8 @@ def parity_tolerance(api, dtype, image=None, expected=None):
         # Prospective entropy/ratio policy; exact counts, metadata and events
         # have separate assertions in the frozen214-case public contract.
         return (2e-12,2e-13)
+    if api == 'metrics.structural_similarity':
+        return (0., 2e-7 if str(dtype) == 'float32' else 1e-13)
     if api=='restoration.denoise_tv_bregman' or api in MAX_TREE_PATHS:return (0.,0.)
     if api in ('morphology.remove_small_objects','morphology.remove_small_holes','segmentation.clear_border','segmentation.relabel_sequential','segmentation.join_segmentations'):
         return (0.,0.)

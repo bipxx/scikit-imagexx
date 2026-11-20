@@ -83,11 +83,11 @@ def test_util_metadata_real_pytest_pipeline_and_SDK_closure():
 
 @pytest.mark.parametrize('profile',('minimum','modern','windows','debug'))
 def test_util_metadata_current_source_plan(profile):
-    q=load('util_metadata_qualifier_'+profile,'tools/public_qualification.py');result=q.plan(ROOT,profile,281)
+    q=load('util_metadata_qualifier_'+profile,'tools/public_qualification.py');result=q.plan(ROOT,profile,282)
     assert not result['blockers'],result['blockers']
-    assert result['registry']['registered_count']==284 and result['registry']['image_count']==281
-    assert result['product_members']==228 and result['SDK_members']==108
-    assert len(q.CURRENT_FAMILIES)==38
+    assert result['registry']['registered_count']==285 and result['registry']['image_count']==282
+    assert result['product_members']==230 and result['SDK_members']==109
+    assert len(q.CURRENT_FAMILIES)==39
 
 
 def test_util_metadata_descriptor_consumers_keep_source_bound_whole_results():
@@ -164,7 +164,7 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
         }
         assert set(expected).isdisjoint(original)
         assert groups==dict(original,**expected)
-    plan=q.plan(ROOT,profile,281);assert not plan['blockers']
+    plan=q.plan(ROOT,profile,282);assert not plan['blockers']
     assert plan['public_groups']==groups
     scope=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_bytes())['VI_current_runtime_large_reference']
     assert scope['legacy_nodes_per_mode']==scope['current_nodes_per_mode']==scope['current_records_per_mode']==8

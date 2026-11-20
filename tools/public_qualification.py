@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current281'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball')
-CURRENT_SDK_CLIENT_SCOPE = 'current38 required installed clients; complete rolling-ball floating/typed-storage owning operations plus admitted VI/flood families; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v10.json'
+CURRENT_PRODUCT_SCOPE = 'current282'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity')
+CURRENT_SDK_CLIENT_SCOPE = 'current39 required installed clients; current281 clients plus the bounded structural similarity score; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v11.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -669,7 +669,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-fenv-v1.json', 'tests/test_
 
 DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_execution.py', 'coverage/contracts/next-util-benchmark-execution-v1.json', 'tests/next_util_benchmark_support.py', 'tests/test_next_util_benchmark_execution.py', 'tests/test_next_util_benchmark_factories.py', 'coverage/contracts/next-util-benchmark-execution-v2.json')
 POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
-POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py')
+POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py','test_structural_similarity.py')
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -712,6 +712,19 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/current281-sdk-family-source-v2.json',
 
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/rolling-ball-sentinel-v1.json','coverage/contracts/rolling-ball-native-v3.json','coverage/contracts/rolling-ball-benchmark-execution-v3.json','coverage/contracts/rolling-ball-measurement-v3.json','tools/rolling_ball_sentinel_context.py','tests/test_rolling_ball_sentinel.py')
+
+DRAW_SOURCE_PATHS += (
+    CURRENT_SCOPE_CONTRACT,
+    'include/skimagexx/structural_similarity.hpp',
+    'src/structural_similarity.cpp',
+    'src/bind_structural_similarity.cpp',
+    'python/skimagexx/_structural_similarity.py',
+    'tests/cmake_consumer/structural_similarity_consumer.cpp',
+    'tests/test_structural_similarity.py',
+    'tests/structural_similarity_reference.py',
+    'benchmarks/structural_similarity.py',
+)
+
 
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
@@ -909,6 +922,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v25.json',
 DRAW_SOURCE_PATHS += ('benchmarks/coverage.py', 'coverage/contracts/speed-parity-current-source-v26.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v6.json', 'coverage/contracts/vi-public-matmul-source-history-v34.json', 'coverage/contracts/vi4-public-matmul-capture-ci-native-team-v6.json')
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v27.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ci-native-team-v7.json', 'coverage/contracts/vi-public-matmul-source-history-v35.json', 'coverage/contracts/vi4-public-matmul-capture-ci-native-team-v7.json')
 
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v13.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v13.json', 'coverage/contracts/speed-parity-current-source-v29.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ssim-integration-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v37.json', 'coverage/contracts/vi4-public-matmul-capture-ssim-integration-v1.json')
 
 
 def environment(package=None, scalar=False):
@@ -1143,55 +1159,36 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v9.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v10.json'
     previous_raw = read_bytes(previous_path)
+    previous_digest = hashlib.sha256(previous_raw).hexdigest()
+    require(previous_digest == '9f96134f2d35ffcf12a127d879fd74403418210787f8e3730862e1bd538faeee',
+            'current281 qualification predecessor differs')
     previous = json.loads(previous_raw)
-    require(data.get('predecessor_contract') == dict(path=previous_path, sha256=hashlib.sha256(previous_raw).hexdigest()),
-            'optimized qualification predecessor differs')
-    require(data.get('execution_authority') is None, 'source contract is not execution authority')
-    for name, value in previous.items():
-        if name not in ('required_selectors', 'predecessor_contract', 'current_source_scope', 'speed_parity_runtime'):
-            require(data.get(name) == value, 'unchanged qualification contract differs: ' + name)
-    extra = ['tests/test_flood_disjoint_assignment.py']
-    expected_runtime = dict(previous['speed_parity_runtime'])
-    expected_runtime['public-flood-disjoint-linux'] = dict(modules=extra, profiles=['minimum','modern','debug'], nodes_per_mode=13, FENV='source-built-full32', caller_records_per_mode=13)
-    require(data.get('speed_parity_runtime') == expected_runtime, 'optimized runtime policy differs')
-    require(data.get('required_selectors') == previous['required_selectors'] + extra,
-            'optimized qualification selector contract differs; every prior selector required')
-    require(data.get('schema') == 'current-public-qualification-v1'
-            and data.get('scope') == CURRENT_PRODUCT_SCOPE
-            and data.get('baseline_revision') == 'ea35a2481880301b8ce7b4eb2d77665adb813ca2', 'current qualification scope contract differs')
-    require(data.get('SDK_scope') == CURRENT_SDK_CLIENT_SCOPE
-            and data.get('required_client_families') == list(CURRENT_FAMILIES[len(FAMILIES):])
-            and data.get('required_client_headers') == ['include/skimagexx/colocalization.hpp', 'include/skimagexx/footprint_shapes.hpp', 'include/skimagexx/regular_seeds.hpp', 'include/skimagexx/unique_rows.hpp', 'include/skimagexx/label_points.hpp', 'include/skimagexx/map_array.hpp', 'include/skimagexx/level_set.hpp', 'include/skimagexx/compare_images.hpp', 'include/skimagexx/uniform_filter.hpp', 'include/skimagexx/profile_line.hpp', 'include/skimagexx/montage.hpp', 'include/skimagexx/rolling_ball_kernels.hpp', 'include/skimagexx/approximate_polygon.hpp', 'include/skimagexx/subdivide_polygon.hpp', 'include/skimagexx/draw_coordinates.hpp', 'include/skimagexx/circle_perimeter.hpp', 'include/skimagexx/line_aa.hpp', 'include/skimagexx/regionprops_state.hpp', 'include/skimagexx/circle_perimeter_aa.hpp', 'include/skimagexx/line_nd.hpp', 'include/skimagexx/draw_ellipsoid.hpp', 'include/skimagexx/draw_ellipse_perimeter.hpp', 'include/skimagexx/draw_polygon.hpp', 'include/skimagexx/bezier_curve.hpp', 'include/skimagexx/draw_set_color.hpp', 'include/skimagexx/label_pair_metrics.hpp', 'include/skimagexx/find_boundaries.hpp', 'include/skimagexx/join_segmentations.hpp', 'include/skimagexx/crop.hpp', 'include/skimagexx/regular_grid.hpp','include/skimagexx/array_views.hpp','include/skimagexx/slice_along_axes.hpp','include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','include/skimagexx/finite_radon.hpp','include/skimagexx/variation_of_information.hpp','include/skimagexx/flood_fill.hpp','include/skimagexx/rolling_ball.hpp'],
+    api = 'metrics.structural_similarity'
+    selector = 'tests/test_structural_similarity.py'
+    expected = dict(
+        previous,
+        scope=CURRENT_PRODUCT_SCOPE,
+        SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
+        predecessor_contract=dict(path=previous_path, sha256=previous_digest),
+        image_paths=sorted(previous['image_paths'] + [api]),
+        post203_contracts={**previous['post203_contracts'], api: selector},
+        required_selectors=previous['required_selectors'] + [selector],
+        required_client_families=previous['required_client_families'] + ['structural_similarity'],
+        required_client_headers=previous['required_client_headers'] + ['include/skimagexx/structural_similarity.hpp'],
+    )
+    require(data.get('required_selectors') == expected['required_selectors'],
+            'current qualification selector contract differs')
+    require(data == expected, 'current structural similarity qualification contract differs')
+    require(data['required_client_families'] == list(CURRENT_FAMILIES[len(FAMILIES):]),
             'current installed-client scope differs')
-    for key in ('baseline_image_paths', 'image_paths', 'metadata_paths', 'required_selectors'):
-        values = data.get(key)
-        require(isinstance(values, list) and all(isinstance(n, str) and n for n in values)
-                and len(values) == len(set(values)), 'invalid current contract list: ' + key)
-    require(len(data['baseline_image_paths']) == 203
-            and set(data['baseline_image_paths']) <= set(data['image_paths'])
-            and not set(data['image_paths']) & set(data['metadata_paths']), 'current historical image/metadata boundary differs')
-    contracts = data.get('post203_contracts')
-    require(isinstance(contracts, dict) and set(contracts) == set(data['image_paths']) - set(data['baseline_image_paths']),
-            'unmapped current image API contracts')
-    require(all(isinstance(n, str) for n in contracts.values())
-            and set(contracts.values()) <= set(data['required_selectors']), 'current API contract missing from selectors')
     require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py'},
             'current qualification selector contract differs')
-    require(set(data['required_selectors']) >= {'tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py'}, 'current optimized runtime selector missing')
-    require(data.get('Linux_saved_grid_profiles')==['minimum','modern','debug'],'Linux saved-grid profile scope differs')
-    require(data.get('Linux_saved_util_views_profiles')==['minimum','modern','debug'],'Linux saved util views profile scope differs')
-    require(data.get('Linux_saved_mark_lbp_profiles')==['minimum','modern','debug'],'Linux saved MARK/LBP profile scope differs')
-    require(data.get('Linux_saved_rolling_ball_profiles')==['minimum','modern','debug'] and data.get('rolling_ball_saved_nodes_per_mode')==81,'Linux rolling-ball saved scope differs')
-    require(data.get('VI_current_runtime_large_reference')==VI_CURRENT_LARGE_REFERENCE_POLICY,
-            'current VI large-reference domain/provider scope differs')
-    require(data.get('VI_current_runtime_public_reference')==VI_CURRENT_PUBLIC_REFERENCE_POLICY,
-            'current VI public Linux/Windows reference scope differs')
-    require(data.get('VI_current_provider_controls')==VI_CURRENT_PROVIDER_CONTROLS_POLICY,
-            'current VI saved/provider/hot-swap scope differs')
-    require(contracts.get('metrics.variation_of_information')=='tests/test_vi_public_log2_provider_large.py',
-            'current VI public original-pair contract missing')
+    require(data['VI_current_runtime_large_reference'] == VI_CURRENT_LARGE_REFERENCE_POLICY
+            and data['VI_current_runtime_public_reference'] == VI_CURRENT_PUBLIC_REFERENCE_POLICY
+            and data['VI_current_provider_controls'] == VI_CURRENT_PROVIDER_CONTROLS_POLICY,
+            'current VI runtime policy differs')
     return data
 
 
@@ -1250,6 +1247,8 @@ def current_install_layout(read_bytes, names, profile):
             'current set-color install closure absent')
     require('include/skimagexx/find_boundaries.hpp' in headers and 'skimagexx/_find_boundaries.py' in sources, 'current find_boundaries install closure absent')
     require(all('include/skimagexx/'+n+'.hpp'in headers and 'skimagexx/_'+n+'.py'in sources for n in ('variation_of_information','flood_fill','rolling_ball')),'current VI/flood install closure absent')
+    require('include/skimagexx/structural_similarity.hpp' in headers
+            and 'skimagexx/_structural_similarity.py' in sources, 'current structural similarity install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

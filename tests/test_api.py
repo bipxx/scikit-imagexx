@@ -48,11 +48,14 @@ VALUE_CASES = [
     for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
                   or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon'))
                   else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in (*LEVEL_SET_FUNCTIONS,'segmentation.find_boundaries')
+                  else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))
                   if ((native is xx.restoration and name == 'denoise_tv_bregman')
                       or (native is xx.morphology and name in ('max_tree','max_tree_local_maxima',
                           'area_opening','area_closing','diameter_opening','diameter_closing')))
+                  else ((3, 19), (7, 19), (519, 521))
+                  if native is xx.metrics and name == 'structural_similarity'
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 

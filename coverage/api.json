@@ -6026,11 +6026,15 @@
       "api": "metrics.structural_similarity",
       "kind": "callable",
       "signature": "(im1, im2, *, win_size=None, gradient=False, data_range=None, channel_axis=None, gaussian_weights=False, full=False, **kwargs)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_structural_similarity.py",
+      "benchmark": "benchmarks/structural_similarity.py",
+      "default_input_kind": "Matching C-order 2D float32 or float64 images, uniform windows, explicit range and scalar score. NumPy provides array and scalar representation. Other layouts, ranges, channel handling, maps and gradients remain compatibility domains."
     },
     {
       "api": "metrics.variation_of_information",

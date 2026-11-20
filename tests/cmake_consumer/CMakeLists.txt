@@ -237,3 +237,13 @@ else()
     target_compile_options(rolling_ball_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
 endif()
 add_test(NAME installed_rolling_ball_consumer COMMAND rolling_ball_consumer "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/rolling_ball_sdk_v1.bin" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/rolling_ball_sdk_dtypes_v1.bin")
+
+add_executable(structural_similarity_consumer structural_similarity_consumer.cpp)
+target_link_libraries(structural_similarity_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(structural_similarity_consumer PRIVATE /fp:strict)
+else()
+    target_compile_options(structural_similarity_consumer PRIVATE -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+add_test(NAME installed_structural_similarity_consumer
+    COMMAND structural_similarity_consumer 0x1.88dacc0000000p-2 0x1.88dacb8cd48dbp-2)

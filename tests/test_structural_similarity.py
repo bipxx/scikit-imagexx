@@ -1,3 +1,5 @@
+import inspect
+
 import numpy as np
 import pytest
 import skimage
@@ -32,6 +34,48 @@ def test_uniform_score(left, right, options, strict_native):
     assert type(actual) is type(expected) is np.float64
     assert actual == pytest.approx(expected, abs=ATOL[left.dtype.name], rel=0)
     assert left.tobytes() == left_bytes and right.tobytes() == right_bytes
+
+
+def test_installed_public_hot_swap(strict_native, monkeypatch):
+    from skimagexx import _structural_similarity as owned
+    from skimagexx.coverage import native_dtypes, native_functions
+
+    namespace = {}
+    exec("from skimagexx.metrics import *", namespace)
+    assert xx.metrics.structural_similarity is namespace["structural_similarity"]
+    assert xx.metrics.structural_similarity is owned.structural_similarity
+    api = "metrics.structural_similarity"
+    assert native_functions().count(api) == 1
+    assert native_dtypes(api) == ("float32", "float64")
+    assert owned._core is xx._core
+    entry = owned._core.structural_similarity_score
+    assert inspect.isbuiltin(entry) and entry.__module__ == "skimagexx._core"
+
+    _, left, right, options = next(case for case in cases() if case[0] == "float64-signed")
+
+    def pipeline(backend):
+        return backend.metrics.structural_similarity(left, right, **options)
+
+    expected = pipeline(skimage)
+    native_calls = []
+
+    def track_entry(*args):
+        native_calls.append(args)
+        return entry(*args)
+
+    def reject_original(*args, **kwargs):
+        pytest.fail("native SSIM unexpectedly entered the original public API")
+
+    monkeypatch.setattr(owned._core, "structural_similarity_score", track_entry)
+    monkeypatch.setattr(skimage.metrics, "structural_similarity", reject_original)
+    actual = pipeline(xx)
+    assert type(actual) is type(expected) is np.float64
+    assert actual == pytest.approx(expected, abs=ATOL[left.dtype.name], rel=0)
+    assert len(native_calls) == 1
+    native_left, native_right, window, data_range, sample = native_calls[0]
+    assert native_left is left and native_right is right
+    assert (window, data_range, sample) == (options["win_size"], options["data_range"],
+                                           options["use_sample_covariance"])
 
 
 def test_default_options_aliasing_and_immutable_view(strict_native):
