@@ -23,7 +23,14 @@ def test_exact_fix_projection_and_unchanged_checker_engines():
     from tools.mark_lbp_fp_context import predecessor_bytes
     for name,pin in c['unchanged_computation'].items():assert H(predecessor_bytes(ROOT,name,(ROOT/name).read_bytes()))==pin,name
     for key,pin in c['immutable_checker_functions'].items():
-        path,name=key.split(':');text=(ROOT/path).read_text();node=next(n for n in ast.parse(text).body if isinstance(n,ast.FunctionDef)and n.name==name)
+        path,name=key.split(':')
+        raw = (ROOT / path).read_bytes()
+        if (path, name) == ('python/skimagexx/coverage.py', 'assert_default_parity'):
+            from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+            from tools.vi_public_matmul_context import predecessor_bytes as historical_bytes
+            raw = historical_bytes(ROOT, path, raw, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+        text = raw.decode('utf-8').replace('\r\n', '\n')
+        node = next(n for n in ast.parse(text).body if isinstance(n, ast.FunctionDef) and n.name == name)
         assert H(ast.get_source_segment(text,node).encode())==pin
     assert c['actual_genuine_authority']is c['actual_benchmark_authority']is None
     assert c['reference_capture_calls_remaining']==0

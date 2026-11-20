@@ -714,7 +714,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/current281-sdk-family-source-v2.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/rolling-ball-sentinel-v1.json','coverage/contracts/rolling-ball-native-v3.json','coverage/contracts/rolling-ball-benchmark-execution-v3.json','coverage/contracts/rolling-ball-measurement-v3.json','tools/rolling_ball_sentinel_context.py','tests/test_rolling_ball_sentinel.py')
 
 DRAW_SOURCE_PATHS += (
-    CURRENT_SCOPE_CONTRACT,
+    'coverage/contracts/current-public-qualification-v11.json',
     'include/skimagexx/structural_similarity.hpp',
     'src/structural_similarity.cpp',
     'src/bind_structural_similarity.cpp',
@@ -925,6 +925,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v27.json',
 
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v13.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v13.json', 'coverage/contracts/speed-parity-current-source-v29.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ssim-integration-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v37.json', 'coverage/contracts/vi4-public-matmul-capture-ssim-integration-v1.json')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v30.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ssim-integration-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v38.json', 'coverage/contracts/vi4-public-matmul-capture-ssim-integration-v2.json')
 
 
 def environment(package=None, scalar=False):
