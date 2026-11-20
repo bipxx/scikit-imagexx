@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.18)
+project(golden_angles_installed_client LANGUAGES CXX)
+find_package(skimagexx CONFIG REQUIRED)
+add_executable(golden_angles_complete_consumer ../../test_order_angles_golden_ratio_sdk.cpp)
+target_link_libraries(golden_angles_complete_consumer PRIVATE skimagexx::skimagexx ${CMAKE_DL_LIBS})
+target_compile_features(golden_angles_complete_consumer PRIVATE cxx_std_17)

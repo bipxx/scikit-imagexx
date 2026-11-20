@@ -1,0 +1,203 @@
+{
+  "schema": "order-angles-golden-ratio-benchmark-v1",
+  "state": "PROSPECTIVE_UNBOUND_NO_MEASUREMENT",
+  "unbound": {
+    "source": null,
+    "producer_run": null,
+    "producer_artifact": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "root_GO": null,
+    "measurement_GO": null
+  },
+  "case_ids": [
+    "singleton-zero",
+    "dtype-float32",
+    "eight",
+    "sixteen"
+  ],
+  "routes": {
+    "golden": {
+      "driver": "benchmarks/order_angles_golden_ratio_native.py",
+      "apis": [
+        "transform.order_angles_golden_ratio"
+      ],
+      "cases": [
+        {
+          "id": "singleton-zero",
+          "api": "transform.order_angles_golden_ratio",
+          "values": [
+            0.0
+          ],
+          "carrier": "ndarray",
+          "dtype": "float64",
+          "layout": "C",
+          "readonly": false,
+          "protocol": "exhaust",
+          "mutation": null,
+          "call_kind": "ordinary"
+        },
+        {
+          "id": "dtype-float32",
+          "api": "transform.order_angles_golden_ratio",
+          "values": [
+            90,
+            0,
+            30,
+            60
+          ],
+          "carrier": "ndarray",
+          "dtype": "float32",
+          "layout": "C",
+          "readonly": false,
+          "protocol": "exhaust",
+          "mutation": null,
+          "call_kind": "ordinary"
+        },
+        {
+          "id": "eight",
+          "api": "transform.order_angles_golden_ratio",
+          "values": [
+            0.0,
+            22.5,
+            45.0,
+            67.5,
+            90.0,
+            112.5,
+            135.0,
+            157.5
+          ],
+          "carrier": "ndarray",
+          "dtype": "float64",
+          "layout": "C",
+          "readonly": false,
+          "protocol": "exhaust",
+          "mutation": null,
+          "call_kind": "ordinary"
+        },
+        {
+          "id": "sixteen",
+          "api": "transform.order_angles_golden_ratio",
+          "values": [
+            0.0,
+            11.25,
+            22.5,
+            33.75,
+            45.0,
+            56.25,
+            67.5,
+            78.75,
+            90.0,
+            101.25,
+            112.5,
+            123.75,
+            135.0,
+            146.25,
+            157.5,
+            168.75
+          ],
+          "carrier": "ndarray",
+          "dtype": "float64",
+          "layout": "C",
+          "readonly": false,
+          "protocol": "exhaust",
+          "mutation": null,
+          "call_kind": "ordinary"
+        }
+      ]
+    }
+  },
+  "sources": {
+    "benchmarks/order_angles_golden_ratio_native.py": {
+      "current_canonical_sha256": "d982e182d154441af984e86190efcca4cf76b7813bea8c42f6cb6d2675b22751",
+      "predecessor_canonical_sha256": "d982e182d154441af984e86190efcca4cf76b7813bea8c42f6cb6d2675b22751",
+      "inverse_fragments": []
+    },
+    "benchmarks/next_util_execution.py": {
+      "current_canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+      "predecessor_canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+      "inverse_fragments": []
+    },
+    "tests/order_angles_golden_ratio_contract.py": {
+      "current_canonical_sha256": "7603d50d22b6de69f02dc55246c3bef3c0fe102a7c33dbcecdac5f1a81ee6b42",
+      "predecessor_canonical_sha256": "7603d50d22b6de69f02dc55246c3bef3c0fe102a7c33dbcecdac5f1a81ee6b42",
+      "inverse_fragments": []
+    },
+    "tools/montage_sustained.py": {
+      "current_canonical_sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+      "predecessor_canonical_sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+      "inverse_fragments": []
+    },
+    "benchmarks/provenance.py": {
+      "current_canonical_sha256": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "predecessor_canonical_sha256": "e71b277a7d43d286d56ac442c900d9a5ae673ecf4e9a81a4e080df6b6e4b883d",
+      "inverse_fragments": []
+    }
+  },
+  "production_source_canonical_sha256": {
+    "src/order_angles_golden_ratio.cpp": "02de61b06bce92f876a7cc7ac0fd0baf4e06950b21225386296f79ddcb7bc4ff",
+    "src/bind_order_angles_golden_ratio.cpp": "73433b0b8bf110913aed6147d98484dd5fdb49cb58afaf78670ff05a219bfb9a",
+    "include/skimagexx/order_angles_golden_ratio.hpp": "e539a1e7c6b62482123ba656a7cd8bcbd7ffe0afa84e7d4d5193c11034ad2be3",
+    "python/skimagexx/_order_angles_golden_ratio.py": "e5671c212ef828504af299a7d92455393f99b4637aef0c896a9f2fc9bf4c639a",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016"
+  },
+  "FENV_dependency": {
+    "source": "659dfd616587a73df1f9eeb5a61e201dbaf5d17e",
+    "source_files_raw_sha256": {
+      "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+      "tests/test_util_views_fenv.py": "c5c00ede275014f5d3b9b410ca0255b31f5b73a80499526fa3fea2befccdb9ed",
+      "tests/test_util_views_public.py": "43d0ba21d3889225def4ae0fde5de4578c4fde9e0e06804c5d71f67d5976310c",
+      "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+      "tests/util_views_fenv_build.py": "2876f223a689bf020b6869d6d6a752536685a80140ae695ea130721d52510b2d",
+      "tests/util_views_fenv_probe.py": "98421b0d0229fb2e52e38e4a7a233e6405c7810d63758af18037601b0dc1ee8b",
+      "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6"
+    },
+    "module": "tests/util_views_fenv.py",
+    "backend": "backend",
+    "mode": "source-built-v1",
+    "receipt_environment": "UTIL_VIEWS_FENV_RECEIPT",
+    "external_digest_environment": "UTIL_VIEWS_FENV_RECEIPT_SHA256",
+    "legacy": "F1 private-fixed-v1 scope retained; forbidden by this benchmark genuine consumer",
+    "collector": "C prepares current-source helper and exports MODE/RECEIPT/RECEIPT_SHA256, no HELPER. Retain entire emitted helper bundle recursively and7F1sourcefiles/context. Receipt/toolchain/source/current-library/control validation precedes target calls.",
+    "scope": "Reviewed empty-x87/masked exceptions/Linux x86_64 glibc32/MXCSR28; no Windows/general machine-state claim."
+  },
+  "supported_numpy": [
+    "1.24.4",
+    "2.5.4"
+  ],
+  "method": {
+    "sampler": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "threads": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "retain_all_losses": true,
+    "allocation_inclusive": true
+  },
+  "common_canonical_sha256": "03f9cf7ab2b05722b4e74b25b7b4023327383d4b27f974b62fea674fad4a836d",
+  "original_source_canonical_sha256": "792bfaf8d5946b76225b0b6b05fb9f2815493f3d5a2be131af630caa0c8f65d8",
+  "native_entries": [
+    "_order_angles_begin",
+    "_order_angles_resume",
+    "_order_angles_next"
+  ],
+  "public_boundary": "Fresh generator construction and complete list consumption per callback; NumPy representation/scalar boxing included; no timed native instrumentation. Ordered serial recurrence, one captured global worker budget, default1.",
+  "parity": "Untimed original/native strict np.int64 words, input/NP-policy/warnings/FP/native-C-return checks required on actual genuine product before sampler. Four cases source-safe, no current benchmark execution.",
+  "pass_index": 0,
+  "case_index": "Selected argv order, zero-based",
+  "pending": [
+    "Independent source admission",
+    "Future shared exact current-source contexts/registry/SDK/import and genuine four-profile release",
+    "Actual prepared product/runtime/core/SDK/helper/root binding",
+    "Real sampler-entry zero-body cohort and post-stop/post-batch authority checks",
+    "Separate root measurement GO and one-thread original comparison, retaining every loss",
+    "Broader generator/protocol/FP/platform domains"
+  ]
+}

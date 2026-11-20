@@ -1,0 +1,26 @@
+{
+  "minimum": {
+    "path": "tests/fixtures/order_angles_golden_ratio_native_v1/minimum.bin",
+    "sha256": "63fd7b8b48094a0bd88f9ca0dd18e9879504d2eaed56ba4bcff52fd6725654b1",
+    "rows": 36,
+    "yield_words": 143,
+    "partial_rows": 1,
+    "error_rows": 1,
+    "mutation_rows": 2,
+    "source": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\order-angles-golden-ratio-reference-v1\\minimum-capture-v1\\observations.json",
+    "source_admission": "coverage/evidence/order-angles-golden-ratio-minimum-root-raw-v1.json",
+    "scope": "Exact saved ndarray inputs/observed yield words only; no-body protocols and Python list/tuple/arity are frontend scope, not fabricated SDKgold"
+  },
+  "modern": {
+    "path": "tests/fixtures/order_angles_golden_ratio_native_v1/modern.bin",
+    "sha256": "d14793b7e16094a644b31d64d446b04556aafec6fc00201ead46d8fa779e0721",
+    "rows": 36,
+    "yield_words": 143,
+    "partial_rows": 1,
+    "error_rows": 1,
+    "mutation_rows": 2,
+    "source": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\build\\order-angles-golden-ratio-reference-v1\\modern-capture-v1\\observations.json",
+    "source_admission": "coverage/evidence/order-angles-golden-ratio-modern-root-raw-v1.json",
+    "scope": "Exact saved ndarray inputs/observed yield words only; no-body protocols and Python list/tuple/arity are frontend scope, not fabricated SDKgold"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "order-angles-golden-ratio-native-v1",
+  "status": "PRIVATE_ASSEMBLED_NOT_ADMITTED",
+  "base": "ff9b0949ff91bbf50fb1eef0aef9b7686a7a568b",
+  "source_canonical_sha256": {
+    "src/order_angles_golden_ratio.cpp": "02de61b06bce92f876a7cc7ac0fd0baf4e06950b21225386296f79ddcb7bc4ff",
+    "src/bind_order_angles_golden_ratio.cpp": "73433b0b8bf110913aed6147d98484dd5fdb49cb58afaf78670ff05a219bfb9a",
+    "include/skimagexx/order_angles_golden_ratio.hpp": "e539a1e7c6b62482123ba656a7cd8bcbd7ffe0afa84e7d4d5193c11034ad2be3",
+    "python/skimagexx/_order_angles_golden_ratio.py": "e5671c212ef828504af299a7d92455393f99b4637aef0c896a9f2fc9bf4c639a",
+    "tests/order_angles_golden_ratio_private_bridge.cpp": "b4484fe703dbb5d3f4c8c6e1650b0374885319946339ed348c14628cb1830610",
+    "tests/order_angles_golden_ratio_saved.py": "d2ffcf62de654ce87e90220507e662ae107c73525f38e353b5ab7d69caf3614a",
+    "tests/test_order_angles_golden_ratio_public.py": "f6b91c2f4e94aade313b2c93356e16c985dc83a16e788f61829e2fd994b1c3e0",
+    "tests/test_order_angles_golden_ratio_sdk.cpp": "a97c08ce65b9973c0f4cda82f9b231b627036522a3ca593355c0a206235ee818",
+    "tests/test_order_angles_golden_ratio_native.cpp": "9abed95dc0c5fb3fba15f704c021f1e63ffdcc3254b6401925717bd223b0c508",
+    "tests/order_angles_golden_ratio_fenv.hpp": "3b2e53fce40af2d01f597156cc98f7e79604d1ac7a69cdc070e7afa285582790",
+    "tests/sdk/order_angles_golden_ratio/CMakeLists.txt": "89a366d3df726ffcdab5e06046b5e7800d53944c9402bc703647a1e4f828291e"
+  },
+  "dependency_canonical_sha256": {
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "include/skimagexx/components.hpp": "6133cfdaacddc55dabda89af0d15f8a234f86f4146075151c015e8c9ec4e3cd7",
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "include/skimagexx/convert.hpp": "829e727d1665b7fc2ad2ff90bc3b81bf5bc2318d7da07fcaab2df595ffe21016"
+  },
+  "saved": {
+    "records_per_profile": 45,
+    "profiles": [
+      "minimum",
+      "modern"
+    ],
+    "immutable_public_fixture": "tests/fixtures/order_angles_golden_ratio_public_v1.json",
+    "native_records_per_profile": 36,
+    "native_words_per_profile": 143,
+    "FP": "Each action uses authentic captured incoming control/status/MXCSR; all immediate outgoing semantic fields strict; outer caller/process exact32. Diagnostic instruction/address/reserved bytes retained raw, not portable expected values."
+  },
+  "ownership": {
+    "native": "Owned sort/search/source negative-divisor divmod/live gather/recurrence",
+    "providers": "NumPy array representation, Python list/tuple fancy-error semantics, np.int64 output boxing; no upstream or NumPy sort/search/arithmetic provider",
+    "workers": "Lazy constructor; one process-global capture at first native begin; default1; ordered tiny recurrence serial for any optional budget",
+    "SIMD": "Dependent tiny scalar metadata: no SIMD algorithm or speed claim; true compiler-scalar and runtime-disable ownership evidence are distinct"
+  },
+  "FP": {
+    "source_clear": "Reuse reviewed IGG source scalar-operation boundary; FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW before actual arithmetic, not after target. Inexact preserved. NumPy npy_clear_floatstatus_barrier/divmod disassembly inspected in retained runtimes.",
+    "no_normalization": true
+  },
+  "pending": [
+    "Independent family admission",
+    "Shared single genuine core/hot-swap/global ownership",
+    "Exact-source four-profile qualification and installed complete SDK",
+    "One-thread public original benchmark actual binding/cohort/timing",
+    "Nonfinite/object/subclass/protocol/0D/2D/large duplicate-sort/default-quicksort and int64 outside exact-double frontier",
+    "Broader warning/error-callback/rounding/trap/FTZ/DAZ/incoming hardware state accuracy",
+    "Windows-original/public fullFP and broader platforms"
+  ],
+  "benchmark_context": "coverage/contracts/order-angles-golden-ratio-benchmark-v1.json"
+}
