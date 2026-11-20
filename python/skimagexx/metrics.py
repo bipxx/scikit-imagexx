@@ -5,10 +5,12 @@ from ._normalized_mutual_information import normalized_mutual_information
 from ._label_pair_metrics import adapted_rand_error
 from ._contingency_table import contingency_table
 from ._variation_of_information import variation_of_information
+from ._structural_similarity import structural_similarity
 from ._compat import module_attribute
 
 __all__ = ['mean_squared_error', 'normalized_root_mse', 'peak_signal_noise_ratio',
-           'normalized_mutual_information', 'adapted_rand_error', 'contingency_table', 'variation_of_information']
+           'normalized_mutual_information', 'adapted_rand_error', 'contingency_table',
+           'variation_of_information', 'structural_similarity']
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
