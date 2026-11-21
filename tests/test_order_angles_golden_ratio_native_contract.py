@@ -12,7 +12,9 @@ import zlib
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = json.loads((ROOT / 'coverage/contracts/order-angles-golden-ratio-native-v1.json').read_bytes())
+NATIVE_PATH = 'coverage/contracts/order-angles-golden-ratio-native-v1.json'
+NATIVE = json.loads((ROOT / NATIVE_PATH).read_bytes())
+COMPAT = json.loads((ROOT / 'coverage/contracts/order-angles-golden-ratio-compatibility-v1.json').read_bytes())
 BENCH = json.loads((ROOT / 'coverage/contracts/order-angles-golden-ratio-benchmark-v2.json').read_bytes())
 
 
@@ -23,7 +25,10 @@ def load(relative, name):
     return module
 
 
-@pytest.mark.parametrize('name,pin', sorted({**NATIVE['source_canonical_sha256'], **NATIVE['dependency_canonical_sha256']}.items()))
+@pytest.mark.parametrize('name,pin', sorted({
+    **NATIVE['source_canonical_sha256'], **NATIVE['dependency_canonical_sha256'],
+    **COMPAT['source_canonical_sha256'],
+}.items()))
 def test_exact_native_and_dependency_bytes(name, pin):
     assert hashlib.sha256((ROOT / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == pin
 
@@ -33,11 +38,27 @@ def test_benchmark_dependency_bytes(name, row):
     assert hashlib.sha256((ROOT / name).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == row['current_canonical_sha256']
 
 
+def test_compatibility_successor_pins_only_affected_family_sources():
+    old = (ROOT / NATIVE_PATH).read_bytes().replace(b'\r\n', b'\n')
+    assert COMPAT['predecessor'] == {'path': NATIVE_PATH, 'canonical_sha256': hashlib.sha256(old).hexdigest()}
+    assert set(COMPAT['source_canonical_sha256']) == {
+        'python/skimagexx/_order_angles_golden_ratio.py',
+        'src/bind_order_angles_golden_ratio.cpp', 'tests/test_order_angles_golden_ratio_public.py',
+    }
+    assert COMPAT['native_route']['max_length'] == 16
+    assert COMPAT['native_route']['absolute_input_limit'] == 360
+    assert COMPAT['execution_authority'] is None
+
+
 def test_true_lazy_frontend_and_owned_arithmetic():
     module = ast.parse((ROOT / 'python/skimagexx/_order_angles_golden_ratio.py').read_bytes())
     fn = next(n for n in module.body if isinstance(n, ast.FunctionDef))
     assert fn.name == 'order_angles_golden_ratio' and [a.arg for a in fn.args.args] == ['theta']
     assert any(isinstance(n, ast.Yield) for n in ast.walk(fn))
+    assert all(isinstance(node.value, ast.Call) and ast.unparse(node.value) ==
+               "fallback('transform', 'order_angles_golden_ratio', theta)"
+               for node in ast.walk(fn) if isinstance(node, ast.YieldFrom))
+    assert sum(isinstance(node, ast.YieldFrom) for node in ast.walk(fn)) == 2
     calls = {ast.unparse(n.func) for n in ast.walk(fn) if isinstance(n, ast.Call)}
     assert not calls.intersection({'np.argsort', 'np.searchsorted', 'np.remainder', 'np.sort'})
     assert not any(isinstance(n, ast.ImportFrom) and (n.module or '').startswith('skimage.') for n in ast.walk(module))

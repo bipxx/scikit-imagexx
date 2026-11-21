@@ -1,26 +1,39 @@
-"""Owned finite POD ordering; NumPy represents arrays and int64 index scalars.
-
-No upstream delegate. Source0.26 lazy recurrence/order preserved; provider
-protocol/nonfinite/large duplicate-sort/extended accuracy domains stay pending.
-"""
+"""Native ordering within a small input range, with first-resume fallback."""
 import numpy as np
+
 from . import _core
+from ._compat import fallback
+
+_WEAK_SCALARS = int(np.__version__.split('.')[0]) >= 2
 
 
 def order_angles_golden_ratio(theta):
-    # This is a true generator: even conversion and worker snapshot wait until
-    # first resume. Plain list/tuple conversion is the argsort input's explicit
-    # NumPy representation provider, not a replacement of the live theta.
-    if type(theta) not in (np.ndarray,list,tuple):
-        raise NotImplementedError('golden-angle arbitrary protocol frontier')
-    array=np.asarray(theta)
-    if array.ndim!=1 or array.dtype.kind not in 'biuf' or array.dtype.itemsize not in (1,2,4,8):
-        raise NotImplementedError('golden-angle shape/dtype frontier')
-    state=_core._order_angles_begin(array,int(np.__version__.split('.')[0])>=2)
+    """Yield indices into theta in golden-ratio order.
+
+    The native path accepts up to 16 angles in [-360, 360], using zero or
+    normal values and round-to-nearest. Other input domains use the configured
+    scikit-image fallback on first resume. Once native iteration begins,
+    ndarray values are read live and must remain within the native domain.
+    """
+    carrier = type(theta)
+    if carrier is np.ndarray:
+        array = theta
+    elif carrier in (list, tuple) and len(theta) <= 16 and all(
+        type(value) in (bool, int, float) for value in theta
+    ):
+        array = np.asarray(theta)
+    else:
+        yield from fallback('transform', 'order_angles_golden_ratio', theta)
+        return
+
+    state = _core._order_angles_begin(array, _WEAK_SCALARS)
+    if state is None:
+        yield from fallback('transform', 'order_angles_golden_ratio', theta)
+        return
+
     yield np.int64(state.first)
     while _core._order_angles_resume(state):
-        if type(theta) in (list,tuple):
-            # Source fancy-indexes the original carrier only AFTER firstyield
-            # and increment construction. Let CPython own exact lazy error.
+        if carrier is not np.ndarray:
+            # Preserve the original carrier's deferred fancy-indexing error.
             theta[state.remaining_indices]
-        yield np.int64(_core._order_angles_next(state,theta))
+        yield np.int64(_core._order_angles_next(state, theta))

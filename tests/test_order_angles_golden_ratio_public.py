@@ -57,3 +57,109 @@ def test_one_lazy_global_budget_snapshot_and_live_native_state(native):
     core.set_num_threads(1);second=next(g);assert state.worker_budget==4 and type(first)is type(second)is np.int64
     g.close();assert core.get_num_threads()==1
     if os.environ.get('SKIMAGEXX_DISABLE_SIMD')=='1':assert not core.has_avx2()
+
+
+@pytest.mark.parametrize('kind', (
+    'provider', 'long', 'matrix', 'complex', 'nan', 'signaling-nan', 'infinity',
+    'subnormal', 'outside', 'integer-outside', 'foreign-buffer', 'noncanonical-bool',
+))
+def test_fallback_is_lazy_and_forwards_generator_protocol(kind, native, monkeypatch):
+    np, _, own, _, _, _ = native
+    events = []
+
+    class Provider:
+        def __array__(self, *args, **kwargs):
+            raise AssertionError('provider was coerced before fallback')
+
+    class Thrown(Exception):
+        pass
+
+    factories = {
+        'provider': Provider,
+        'long': lambda: np.arange(17),
+        'matrix': lambda: np.zeros((2, 2)),
+        'complex': lambda: np.zeros(3, dtype=np.complex64),
+        'nan': lambda: np.array([0.0, np.nan]),
+        'signaling-nan': lambda: np.array([0x7ff0000000000001], dtype=np.uint64).view(np.float64),
+        'infinity': lambda: np.array([-np.inf], dtype=np.float16),
+        'subnormal': lambda: np.array([1], dtype=np.uint32).view(np.float32),
+        'outside': lambda: np.array([361.0]),
+        'integer-outside': lambda: np.array([2**53 + 1], dtype=np.uint64),
+        'foreign-buffer': lambda: np.frombuffer(bytearray(8), dtype=np.float64),
+        'noncanonical-bool': lambda: np.array([2], dtype=np.uint8).view(np.bool_),
+    }
+    theta = factories[kind]()
+    token, error = object(), Thrown()
+
+    def upstream(value):
+        assert value is theta
+        events.append('upstream started')
+        try:
+            assert (yield 8) is token
+            try:
+                yield 3
+            except Thrown as thrown:
+                assert thrown is error
+                yield 1
+        finally:
+            events.append('upstream closed')
+
+    def fallback(module, name, value):
+        assert (module, name) == ('transform', 'order_angles_golden_ratio')
+        events.append('fallback')
+        return upstream(value)
+
+    monkeypatch.setattr(own, 'fallback', fallback)
+    pending = own.order_angles_golden_ratio(theta)
+    pending.close()
+    assert events == []
+    result = own.order_angles_golden_ratio(theta)
+    assert inspect.getgeneratorstate(result) == 'GEN_CREATED' and events == []
+    assert next(result) == 8
+    assert events == ['fallback', 'upstream started']
+    assert result.send(token) == 3
+    assert result.throw(error) == 1
+    result.close()
+    assert events == ['fallback', 'upstream started', 'upstream closed']
+
+
+def test_strict_refusal_happens_at_first_resume(native):
+    np, _, own, _, _, _ = native
+    compat = importlib.import_module(own.fallback.__module__)
+    saved = compat.set_fallback_enabled(False)
+    try:
+        result = own.order_angles_golden_ratio(np.ones(17))
+        assert inspect.getgeneratorstate(result) == 'GEN_CREATED'
+        with pytest.raises(NotImplementedError, match='fallback is disabled'):
+            next(result)
+    finally:
+        compat.set_fallback_enabled(saved)
+
+
+def test_native_refusal_does_not_touch_fp_or_resume_upstream(native, monkeypatch):
+    import ctypes
+    from util_views_fenv import FEnv
+
+    np, core, own, _, libc, helper = native
+    signaling_nan = np.array([0x7ff0000000000001], dtype=np.uint64).view(np.float64)
+    captured = FEnv()
+    assert libc.fegetenv(ctypes.byref(captured)) == 0
+    try:
+        refused = core._order_angles_begin(signaling_nan, False)
+        after = FEnv()
+        assert libc.fegetenv(ctypes.byref(after)) == 0
+        assert refused is None and bytes(after) == bytes(captured)
+    finally:
+        assert helper.reference_fenv_restore(ctypes.byref(captured), 32) == 0
+
+    def refuse(*args):
+        raise AssertionError('native iteration fell back after yielding')
+
+    monkeypatch.setattr(own, 'fallback', refuse)
+    theta = np.array([0.0, 45.0, 90.0])
+    result = own.order_angles_golden_ratio(theta)
+    assert next(result) == 0
+    theta[1] = np.nan
+    with pytest.raises(ValueError, match='live input left the native domain'):
+        next(result)
+    assert inspect.getgeneratorstate(result) == 'GEN_CLOSED'

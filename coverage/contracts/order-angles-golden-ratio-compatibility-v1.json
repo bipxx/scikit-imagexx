@@ -1,0 +1,21 @@
+{
+  "schema": "order-angles-golden-ratio-compatibility-v1",
+  "predecessor": {
+    "path": "coverage/contracts/order-angles-golden-ratio-native-v1.json",
+    "canonical_sha256": "64ef271dc60d9c661b64022f70200e9bef219f8c87abba01a530f167b58f4fd4"
+  },
+  "source_canonical_sha256": {
+    "python/skimagexx/_order_angles_golden_ratio.py": "c88a2c06f264a2675d0e47cd7bfcd59cfb38d03320b858f8195284667836fd18",
+    "src/bind_order_angles_golden_ratio.cpp": "a8b9dbacce47d2713a019befc1c015bfed6246f13fde5ef26801cbcbbaf3aedb",
+    "tests/test_order_angles_golden_ratio_public.py": "7e3b57945217357e93788ab4b5b78de61d9b76b0d7f626129430d3c50c017eff"
+  },
+  "native_route": {
+    "max_length": 16,
+    "absolute_input_limit": 360,
+    "float_storage": "zero or normal IEEE words",
+    "rounding": "nearest",
+    "compatibility": "select lazily on first resume before yielding",
+    "late_mutation": "read live values in the checked domain; refuse an out-of-domain remaining value or changed descriptor"
+  },
+  "execution_authority": null
+}
