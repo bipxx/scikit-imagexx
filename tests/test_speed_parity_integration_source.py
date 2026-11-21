@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v33.json'
-CONTEXT_SHA256 = '2d727308c4cb99e8e285be2e5e813f30b09aa60c289bd87531e463fc736b114b'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v34.json'
+CONTEXT_SHA256 = 'e7487f4b328357a221bdd08a57164174ba6440d8dc47f19a7581ed284a0d13ef'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -120,7 +120,7 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
 @pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
 def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
     value = data()
-    path = 'coverage/contracts/' + name + '-benchmark-execution-v14.json'
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v15.json'
     boundary = load('benchmarks/mark_boundaries_execution.py')
     current = boundary.current_context(ROOT, path)
     predecessor = current['speed_source_successor']['predecessor_context']
@@ -148,7 +148,7 @@ def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_read
 def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
     import test_mark_boundaries_benchmark_execution as factory
     monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
-    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v14.json')
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v15.json')
     binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
     boundary = load('benchmarks/mark_boundaries_execution.py')
     relative = path.relative_to(ROOT).as_posix()
