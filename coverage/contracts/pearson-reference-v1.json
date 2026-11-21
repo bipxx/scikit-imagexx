@@ -1,0 +1,138 @@
+{
+  "schema": "pearson-reference-contract-v1",
+  "api": "measure.pearson_corr_coeff",
+  "status": "Frozen original Windows reference and prospective initial domain. Native, parity and timing gates remain open.",
+  "base": {
+    "commit": "15c79172863f328f2ed8adb2568b73d45c560cd8",
+    "tree": "1a82956a8cf6153c0f5e9f9d766294b1af006a7a"
+  },
+  "reference": {
+    "fixture": "tests/fixtures/pearson_original_windows_v1.json",
+    "sha256": "d1a69aa2afd015b8a8194ca97eb73771032fd0b503481969614574f00d298647",
+    "observer": "tests/fixtures/pearson_reference_v1.py",
+    "case_count": 70,
+    "errors": 18,
+    "warned_rows": 8,
+    "capture": {
+      "command": [
+        "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+        "D:/Scratch/ng-pearson/tests/fixtures/pearson_reference_v1.py",
+        "--output",
+        "D:/Scratch/ng-pearson/tests/fixtures/pearson_original_windows_v1.json"
+      ],
+      "cwd": "D:\\Scratch\\ng-pearson",
+      "exit_code": 0,
+      "elapsed_seconds": 1.143
+    }
+  },
+  "observations": [
+    "Success returns an exact Python tuple of two Python floats, including NaN pairs.",
+    "Shapes must match exactly; scalar and empty images then cannot supply two selected samples.",
+    "Mask coercion checks binary values before same-shape validation. Bool and numeric 0/1 masks, including complex 0/1, produced identical pairs in the retained binary cases.",
+    "Zero or one sample raises ValueError; two distinct finite observations return signed one and p=1 exactly. Two samples with a constant input warn and return a NaN pair.",
+    "Constant and near-constant warnings differ by category; an explicitly constant counterpart can suppress the near-constant warning. A warning configured as an error propagates the original category.",
+    "A NaN in a selected pixel produced a quiet NaN pair; unselected NaNs did not affect the result. A selected infinity produced a subtraction RuntimeWarning and a NaN pair.",
+    "Identically correlated ordinary arrays need not produce an exact endpoint: perfect-plus and perfect-minus retained magnitude 0.9999999999999998 with positive p about 2.74e-47. Near-perfect and rounded upper beta tails are sensitive to a change of one r ulp.",
+    "Float16, float32, mixed dtypes, endian and strided arrays follow upstream promotion/layout behavior. Near-constant warnings depend on the promoted dtype. Distinct wide int64 values can collapse to a constant after promotion."
+  ],
+  "initial_native_proposal": {
+    "input": "Two same-shape exact NumPy ndarray objects with ordinary bounded owner spans, aligned native float64 C order and rank 1 or 2. Readonly is valid. Accept no mask, or an exact same-shape aligned C-order bool ndarray with comparably bounded ownership.",
+    "samples": "At most 1048576 pixels and at least two selected. Inspect values only for selected pixels. Selected magnitudes are zero or in [2**-100, 2**20], finite, with sufficiently nonconstant variation. For every selected count, require each centered RMS >= 2**-18 times its selected maximum absolute magnitude. Implementation must confirm the guard refuses warning-sensitive ordinary and FP-environment cases.",
+    "two_selected": "When both selected pairs are distinct and pass the same warning-sensitive guard, compute sign by order comparison with exact abs(r)=1 and p=1. A constant or nearly constant pair delegates.",
+    "correlation": "C++ selected count and Pearson r using stable centering, scaling and normalized product sum; use one native worker by default. Admit n>2 only with abs(r)<=0.95 and finite p>=1e-12. No warnings are expected in the admitted numerical core. Thresholds are prospective until tested across the release runtimes.",
+    "p_provider": "For n>2 explicitly call SciPy special.betaincc as a single scalar numerical provider, 2*betaincc(n/2-1, n/2-1, (1+abs(r))/2), with no SciPy stats.pearsonr call on the admitted branch. Include this provider cost in public timings.",
+    "output_and_comparison": "Keep exact builtins.tuple and two builtins.float, operand bytes, warnings and exception behavior. Exact two-selected results. For n>2 admitted finite results, absolute r tolerance 2e-14 (zero relative); relative p tolerance 2e-9 (zero absolute). Full reference behavior governs all deferred boundaries.",
+    "delegation": "Use the existing original compatibility route for coercion, non-float64 or unsupported shapes/layouts/owners, numeric or invalid masks, insufficient selected counts, constants, near-constants, selected nonfinite or extreme values, FP-sensitive cases, unavailable provider, perfect/near-perfect r and tiny p. Preserve mask-error precedence and original warning action. Upstream-only domains receive no native credit."
+  },
+  "benchmark": {
+    "status": "Input and reference values frozen. No candidate timing.",
+    "timed": false,
+    "native_workers": 1,
+    "reference_pool_workers": 1,
+    "accepted_pairs": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms_per_side": 250,
+    "smoke": "Require same-process pinned candidate/original pair, both outputs, one native entry, zero whole upstream calls on candidate, fallback disabled, and unchanged inputs. Check active BLAS and OpenMP pool limits, installed native ownership, actual runtime and source identity.",
+    "boundary": "Allocation-inclusive public calls over the identical preconstructed images and mask; include wrapper, mask scan, native r, Python tuple and scalar p provider. Use the existing sustained sampler and alternating paired order. Retain every raw accepted or rejected batch and every losing workload.",
+    "cases": [
+      {
+        "id": "tiny-unmasked",
+        "shape": [
+          2,
+          4
+        ],
+        "mask_percent": null,
+        "selected_count": 8
+      },
+      {
+        "id": "tiny-mask-half",
+        "shape": [
+          2,
+          4
+        ],
+        "mask_percent": 50,
+        "selected_count": 3
+      },
+      {
+        "id": "mid-unmasked",
+        "shape": [
+          64,
+          67
+        ],
+        "mask_percent": null,
+        "selected_count": 4288
+      },
+      {
+        "id": "mid-mask-quarter",
+        "shape": [
+          64,
+          67
+        ],
+        "mask_percent": 25,
+        "selected_count": 1037
+      },
+      {
+        "id": "large-unmasked",
+        "shape": [
+          513,
+          641
+        ],
+        "mask_percent": null,
+        "selected_count": 328833
+      },
+      {
+        "id": "large-mask-half",
+        "shape": [
+          513,
+          641
+        ],
+        "mask_percent": 50,
+        "selected_count": 164187
+      },
+      {
+        "id": "large-mask-sparse",
+        "shape": [
+          513,
+          641
+        ],
+        "mask_percent": 2,
+        "selected_count": 6600
+      },
+      {
+        "id": "large-mask-all",
+        "shape": [
+          513,
+          641
+        ],
+        "mask_percent": 100,
+        "selected_count": 328833
+      }
+    ]
+  },
+  "pending": [
+    "Independent root admission of frozen reference, proposed domain, and paired design.",
+    "Native selected-count and r implementation, scalar p provider integration, structured fallback and hot-swap contract.",
+    "Exact cases across retained Python versions, applicable scalar and SIMD/profile paths, default and optional worker scope, and installed SDK and native ownership.",
+    "Exclusive same-process one-worker comparison of installed candidate, complete two-Python source barriers and four-profile release qualification."
+  ]
+}
