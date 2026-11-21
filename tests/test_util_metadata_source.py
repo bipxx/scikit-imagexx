@@ -161,6 +161,7 @@ def test_regular_grid_full_saved_group_has_explicit_profile_scope(profile):
             'public-flood-copy-linux':('test_flood_copy_protocol.py',),
             'public-flood-disjoint-linux':('test_flood_disjoint_assignment.py',),
             'public-rolling-ball-saved-linux':('test_rolling_ball_public.py',),
+            'public-golden-angle-saved-linux':('test_order_angles_golden_ratio_public.py',),
         }
         assert set(expected).isdisjoint(original)
         assert groups==dict(original,**expected)
