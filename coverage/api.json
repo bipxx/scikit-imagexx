@@ -6460,21 +6460,41 @@
       "api": "morphology.local_maxima",
       "kind": "callable",
       "signature": "(image, footprint=None, connectivity=None, indices=False, allow_borders=True)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_local_extrema_public.py",
+      "benchmark": "benchmarks/local_extrema.py",
+      "default_input_kind": "Native-endian 2D integers with centered standard connectivity. Native serial plateau traversal; NumPy provides input normalization, mask storage and nonzero indices."
     },
     {
       "api": "morphology.local_minima",
       "kind": "callable",
       "signature": "(image, footprint=None, connectivity=None, indices=False, allow_borders=True)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_local_extrema_public.py",
+      "benchmark": "benchmarks/local_extrema.py",
+      "default_input_kind": "Native-endian 2D integers with centered standard connectivity. Native serial plateau traversal; NumPy provides input normalization, mask storage and nonzero indices."
     },
     {
       "api": "morphology.max_tree",

@@ -1,6 +1,7 @@
 import hashlib
 import inspect
 import json
+from importlib.machinery import EXTENSION_SUFFIXES
 from pathlib import Path
 
 import numpy as np
@@ -23,6 +24,55 @@ FUNCTIONS = ('local_maxima', 'local_minima')
 def input_array(row):
     image = np.array(row['values'], dtype=row['dtype'], order='F' if row['layout'] == 'F' else 'C')
     return image[:, ::-1] if row['layout'] == 'reverse' else image
+
+
+@pytest.mark.parametrize('name', FUNCTIONS)
+def test_installed_public_hot_swap(name, monkeypatch):
+    import skimage
+
+    from skimagexx import _local_extrema as owned
+
+    namespace = {}
+    exec('from skimagexx.morphology import *', namespace)
+    assert namespace[name] is getattr(xx.morphology, name) is getattr(owned, name)
+    assert owned._core is xx._core
+    assert xx._core.__file__.endswith(tuple(EXTENSION_SUFFIXES))
+    entry = xx._core.local_extrema_integer_mask
+    assert inspect.isbuiltin(entry) and entry.__module__ == 'skimagexx._core'
+
+    row = next(row for row in CASES if row['id'] == 'default-plateau')
+    image = input_array(row)
+    saved = row['results'][name]['mask']
+
+    def pipeline(backend):
+        return getattr(backend.morphology, name)(image)
+
+    np.testing.assert_array_equal(pipeline(skimage), saved)
+
+    def reject_original(*args, **kwargs):
+        pytest.fail('native extrema unexpectedly entered the original public API')
+
+    called = []
+
+    def track_entry(array, minima, connectivity, allow_borders):
+        assert array is image
+        called.append((xx.get_num_threads(), minima, connectivity, allow_borders))
+        return entry(array, minima, connectivity, allow_borders)
+
+    monkeypatch.setattr(upstream, name, reject_original)
+    monkeypatch.setattr(xx._core, 'local_extrema_integer_mask', track_entry)
+    saved_fallback = xx.set_fallback_enabled(False)
+    saved_workers = xx.get_num_threads()
+    budgets = (1, 2) if xx._core.has_openmp else (1,)
+    try:
+        for workers in budgets:
+            xx.set_num_threads(workers)
+            np.testing.assert_array_equal(pipeline(xx), saved)
+            assert xx.get_num_threads() == workers
+    finally:
+        xx.set_num_threads(saved_workers)
+        xx.set_fallback_enabled(saved_fallback)
+    assert called == [(workers, name == 'local_minima', 2, True) for workers in budgets]
 
 
 @pytest.mark.parametrize('name', FUNCTIONS)

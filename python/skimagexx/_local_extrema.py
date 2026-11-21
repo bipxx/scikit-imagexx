@@ -47,7 +47,7 @@ def _connectivity(footprint, connectivity):
 def _local_extrema(name, image, footprint, connectivity, indices, allow_borders):
     if (type(image) is np.ndarray and image.ndim == 2 and min(image.shape) >= 3
             and image.dtype.kind in 'iu' and image.dtype.isnative
-            and image.dtype.itemsize in (1, 2, 4, 8) and image.dtype.metadata is None
+            and image.dtype.itemsize in (1, 2, 4, 8)
             and type(indices) is bool and type(allow_borders) is bool
             and _has_numpy_span(image)):
         neighbors = _connectivity(footprint, connectivity)

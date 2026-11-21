@@ -5,7 +5,7 @@ import pytest
 import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS
+from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
 from skimagexx.coverage import set_color_default_result
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
@@ -48,6 +48,8 @@ VALUE_CASES = [
     for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
                   or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon'))
                   else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in (*LEVEL_SET_FUNCTIONS,'segmentation.find_boundaries')
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes('morphology.' + name))
+                  if 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS and native is xx.morphology
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))
@@ -55,7 +57,8 @@ VALUE_CASES = [
                       or (native is xx.morphology and name in ('max_tree','max_tree_local_maxima',
                           'area_opening','area_closing','diameter_opening','diameter_closing')))
                   else ((3, 19), (7, 19), (519, 521))
-                  if native is xx.metrics and name == 'structural_similarity'
+                  if ((native is xx.metrics and name == 'structural_similarity')
+                      or (native is xx.morphology and 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS))
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 

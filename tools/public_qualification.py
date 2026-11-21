@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current282'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity')
-CURRENT_SDK_CLIENT_SCOPE = 'current39 required installed clients; current281 clients plus the bounded structural similarity score; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v11.json'
+CURRENT_PRODUCT_SCOPE = 'current284'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema')
+CURRENT_SDK_CLIENT_SCOPE = 'current40 required installed clients; current282 clients plus the bounded local extrema pair; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v12.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -669,7 +669,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-fenv-v1.json', 'tests/test_
 
 DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_execution.py', 'coverage/contracts/next-util-benchmark-execution-v1.json', 'tests/next_util_benchmark_support.py', 'tests/test_next_util_benchmark_execution.py', 'tests/test_next_util_benchmark_factories.py', 'coverage/contracts/next-util-benchmark-execution-v2.json')
 POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
-POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py','test_structural_similarity.py')
+POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py','test_structural_similarity.py','test_local_extrema_public.py')
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -723,6 +723,15 @@ DRAW_SOURCE_PATHS += (
     'tests/test_structural_similarity.py',
     'tests/structural_similarity_reference.py',
     'benchmarks/structural_similarity.py',
+    'coverage/contracts/current-public-qualification-v12.json',
+    'include/skimagexx/local_extrema.hpp',
+    'src/local_extrema.cpp',
+    'src/bind_local_extrema.cpp',
+    'python/skimagexx/_local_extrema.py',
+    'tests/cmake_consumer/local_extrema_consumer.cpp',
+    'tests/test_local_extrema_public.py',
+    'coverage/contracts/local-extrema-reference-v1.json',
+    'benchmarks/local_extrema.py',
 )
 
 
@@ -928,6 +937,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-executio
 
 
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v30.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-ssim-integration-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v38.json', 'coverage/contracts/vi4-public-matmul-capture-ssim-integration-v2.json')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v14.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v14.json', 'coverage/contracts/speed-parity-current-source-v31.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-extrema-integration-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v40.json', 'coverage/contracts/vi4-public-matmul-capture-extrema-integration-v1.json')
 
 
 def environment(package=None, scalar=False):
@@ -1162,28 +1174,28 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v10.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v11.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == '9f96134f2d35ffcf12a127d879fd74403418210787f8e3730862e1bd538faeee',
-            'current281 qualification predecessor differs')
+    require(previous_digest == 'f1a2e9432befc722ccb40dc3deb7ffdd28d5e5febf4c8d71789f0fb290ad6ad3',
+            'current282 qualification predecessor differs')
     previous = json.loads(previous_raw)
-    api = 'metrics.structural_similarity'
-    selector = 'tests/test_structural_similarity.py'
+    apis = ('morphology.local_maxima', 'morphology.local_minima')
+    selector = 'tests/test_local_extrema_public.py'
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
-        image_paths=sorted(previous['image_paths'] + [api]),
-        post203_contracts={**previous['post203_contracts'], api: selector},
+        image_paths=sorted(previous['image_paths'] + list(apis)),
+        post203_contracts={**previous['post203_contracts'], **dict.fromkeys(apis, selector)},
         required_selectors=previous['required_selectors'] + [selector],
-        required_client_families=previous['required_client_families'] + ['structural_similarity'],
-        required_client_headers=previous['required_client_headers'] + ['include/skimagexx/structural_similarity.hpp'],
+        required_client_families=previous['required_client_families'] + ['local_extrema'],
+        required_client_headers=previous['required_client_headers'] + ['include/skimagexx/local_extrema.hpp'],
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
-    require(data == expected, 'current structural similarity qualification contract differs')
+    require(data == expected, 'current local extrema qualification contract differs')
     require(data['required_client_families'] == list(CURRENT_FAMILIES[len(FAMILIES):]),
             'current installed-client scope differs')
     require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py'},
@@ -1252,6 +1264,8 @@ def current_install_layout(read_bytes, names, profile):
     require(all('include/skimagexx/'+n+'.hpp'in headers and 'skimagexx/_'+n+'.py'in sources for n in ('variation_of_information','flood_fill','rolling_ball')),'current VI/flood install closure absent')
     require('include/skimagexx/structural_similarity.hpp' in headers
             and 'skimagexx/_structural_similarity.py' in sources, 'current structural similarity install closure absent')
+    require('include/skimagexx/local_extrema.hpp' in headers
+            and 'skimagexx/_local_extrema.py' in sources, 'current local extrema install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

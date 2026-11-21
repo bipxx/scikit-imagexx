@@ -20,7 +20,7 @@ NATIVE_FUNCTIONS = {
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
-                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill'),
+                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -343,7 +343,11 @@ def class_contract(api):
 
 FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill')
 
+LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
+
 def native_dtypes(api):
+    if api in LOCAL_EXTREMA_FUNCTIONS:
+        return ('int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64')
     if api=='restoration.rolling_ball':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     """Dtypes covered by the default native per-function parity/benchmark case."""
     if api=='transform.frt2':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64','complex64','complex128')
@@ -410,6 +414,8 @@ def flood_fill_contract():
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api in LOCAL_EXTREMA_FUNCTIONS:
+        return (image,), {}
     if api=='restoration.rolling_ball':return (image,),{'radius':1}
     if api=='segmentation.find_boundaries':
         import numpy as np
@@ -1180,6 +1186,13 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api in LOCAL_EXTREMA_FUNCTIONS:
+        import numpy as np
+        assert type(actual) is type(expected) is np.ndarray
+        assert actual.dtype == expected.dtype == np.dtype(bool)
+        assert actual.shape == expected.shape and actual.strides == expected.strides
+        assert actual.tobytes() == expected.tobytes()
+        return
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
         util_views_default_error(actual,expected);return
     if api in ('util.crop','util.regular_grid'):

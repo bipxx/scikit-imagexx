@@ -16,6 +16,7 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
+    (('morphology.local_maxima', 'morphology.local_minima'), 'tests/test_local_extrema_public.py', 'benchmarks/local_extrema.py'),
     (('restoration.rolling_ball',),'tests/test_rolling_ball_public.py::test_saved_original','benchmarks/rolling_ball_native.py'),
     (('util.slice_along_axes',),'tests/test_util_views_integration.py','benchmarks/slice_along_axes.py'),
     (('util.view_as_blocks','util.view_as_windows'),'tests/test_util_views_integration.py','benchmarks/array_views.py'),
@@ -197,6 +198,8 @@ def inventory():
                 entries[-1]['default_input_kind']='NumPy full-image image.min and full-mask count_nonzero reductions plus selected RHS cast/broadcast temporary; native serial BFS/current POD copy/final writes. Providers and broad domains/performance remain explicit.'
             elif path=='metrics.variation_of_information':
                 entries[-1]['default_input_kind']='Bounded valid six-label integer partition: actual integer carrier dtype/metadata preserved; nominal noninteger image carriers select captured int16, not floating-label support. Owned VI entropy/current counts with named NumPy/SciPy providers; invalid floating-label TypeError/native-count refusal is a separate domain. Genuine/fullFP/platform/performance gates remain explicit.'
+            elif path in ('morphology.local_maxima', 'morphology.local_minima'):
+                entries[-1]['default_input_kind'] = 'Native-endian 2D integers with centered standard connectivity. Native serial plateau traversal; NumPy provides input normalization, mask storage and nonzero indices.'
             elif path == 'metrics.structural_similarity':
                 entries[-1]['default_input_kind'] = 'Matching C-order 2D float32 or float64 images, uniform windows, explicit range and scalar score. NumPy provides array and scalar representation. Other layouts, ranges, channel handling, maps and gradients remain compatibility domains.'
             elif path in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):

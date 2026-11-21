@@ -247,3 +247,7 @@ else()
 endif()
 add_test(NAME installed_structural_similarity_consumer
     COMMAND structural_similarity_consumer 0x1.88dacc0000000p-2 0x1.88dacb8cd48dbp-2)
+
+add_executable(local_extrema_consumer local_extrema_consumer.cpp)
+target_link_libraries(local_extrema_consumer PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_local_extrema_consumer COMMAND local_extrema_consumer)
