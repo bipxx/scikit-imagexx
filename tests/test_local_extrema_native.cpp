@@ -41,6 +41,28 @@ void check() {
     } catch (const std::invalid_argument&) {}
 }
 
+void check_rejected_plateau() {
+    const std::array<std::uint8_t, 25> image{
+        8, 0, 0, 0, 0,
+        6, 6, 6, 0, 2,
+        0, 0, 6, 0, 2,
+        7, 0, 6, 6, 2,
+        0, 0, 0, 0, 0};
+    const std::array<std::uint8_t, 25> maxima{
+        1, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        1, 0, 0, 0, 0,
+        0, 0, 0, 0, 0};
+    std::array<std::uint8_t, 25> flags{};
+    local_extrema_2d_into(image.data(), image.size(), 5, 5, LocalExtremaKind::maxima,
+                         LocalExtremaNeighbors::four, true, flags.data(), flags.size(), 5);
+    require(flags == maxima);
+    local_extrema_2d_into(image.data(), image.size(), 5, 5, LocalExtremaKind::maxima,
+                         LocalExtremaNeighbors::four, false, flags.data(), flags.size(), 5);
+    require(flags == std::array<std::uint8_t, 25>{});
+}
+
 int main() {
     check<std::uint8_t>();
     check<std::int8_t>();
@@ -50,4 +72,5 @@ int main() {
     check<std::int32_t>();
     check<std::uint64_t>();
     check<std::int64_t>();
+    check_rejected_plateau();
 }

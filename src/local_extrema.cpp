@@ -6,6 +6,109 @@
 #include <vector>
 
 namespace skimagexx {
+namespace {
+
+struct Position {
+    std::size_t row;
+    std::size_t column;
+};
+
+constexpr std::uint8_t unseen = 0;
+constexpr std::uint8_t extremum = 1;
+constexpr std::uint8_t rejected = 2;
+constexpr std::uint8_t visiting = 3;
+
+template<bool Corners, class Visit>
+bool any_neighbor(Position p, std::size_t rows, std::size_t columns, const Visit& visit) {
+    const auto [y, x] = p;
+    const bool up = y > 0;
+    const bool down = y + 1 < rows;
+    const bool left = x > 0;
+    const bool right = x + 1 < columns;
+    if ((left && visit(y, x - 1)) || (right && visit(y, x + 1)) ||
+        (up && visit(y - 1, x)) || (down && visit(y + 1, x)))
+        return true;
+    if constexpr (Corners) {
+        return (up && ((left && visit(y - 1, x - 1)) || (right && visit(y - 1, x + 1)))) ||
+               (down && ((left && visit(y + 1, x - 1)) || (right && visit(y + 1, x + 1))));
+    } else {
+        return false;
+    }
+}
+
+template<class T, bool Minima, bool Corners>
+void mark_extrema(const T* image, std::size_t rows, std::size_t columns,
+                  bool allow_borders, std::uint8_t* mask, std::size_t mask_stride) {
+    const auto better = [](T value, T level) {
+        if constexpr (Minima)
+            return value < level;
+        else
+            return value > level;
+    };
+    const auto disallowed_border = [&](Position p) {
+        return !allow_borders && (p.row == 0 || p.row + 1 == rows ||
+                                  p.column == 0 || p.column + 1 == columns);
+    };
+
+    std::vector<Position> plateau;
+    for (std::size_t row = 0; row < rows; ++row) {
+        for (std::size_t column = 0; column < columns; ++column) {
+            auto& initial = mask[row * mask_stride + column];
+            if (initial != unseen)
+                continue;
+
+            const Position start{row, column};
+            const T level = image[row * columns + column];
+            bool tied = false;
+            const bool inadmissible = disallowed_border(start) ||
+                any_neighbor<Corners>(start, rows, columns, [&](auto y, auto x) {
+                    const T value = image[y * columns + x];
+                    if (better(value, level))
+                        return true;
+                    if (value != level)
+                        return false;
+                    tied = true;
+                    return mask[y * mask_stride + x] == rejected;
+                });
+            if (inadmissible || !tied) {
+                initial = inadmissible ? rejected : extremum;
+                continue;
+            }
+
+            // A better neighbor or a previously rejected equal neighbor
+            // disqualifies the entire plateau. Mark the visited subset and
+            // let remaining equal pixels find that rejection in later scans.
+            plateau.clear();
+            plateau.push_back(start);
+            initial = visiting;
+            bool reject = false;
+            bool has_strict_neighbor = false;
+            for (std::size_t i = 0; i < plateau.size() && !reject; ++i) {
+                const Position p = plateau[i];
+                reject = disallowed_border(p) ||
+                    any_neighbor<Corners>(p, rows, columns, [&](auto y, auto x) {
+                        const T value = image[y * columns + x];
+                        if (value != level) {
+                            has_strict_neighbor = true;
+                            return better(value, level);
+                        }
+                        auto& flag = mask[y * mask_stride + x];
+                        if (flag == unseen) {
+                            plateau.push_back({y, x});
+                            flag = visiting;
+                        }
+                        return flag == rejected;
+                    });
+            }
+            // No unequal neighbor can occur only for a constant image.
+            const auto state = !reject && has_strict_neighbor ? extremum : rejected;
+            for (const auto p : plateau)
+                mask[p.row * mask_stride + p.column] = state;
+        }
+    }
+}
+
+}  // namespace
 
 template<class T>
 void local_extrema_2d_into(const T* image, std::size_t image_count,
@@ -23,64 +126,24 @@ void local_extrema_2d_into(const T* image, std::size_t image_count,
         throw std::invalid_argument("Invalid local extrema image, mask or options");
     }
 
-    const bool minima = kind == LocalExtremaKind::minima;
     const bool corners = neighbors == LocalExtremaNeighbors::eight;
     for (std::size_t row = 0; row < rows; ++row)
-        std::fill_n(mask + row * mask_stride, columns, std::uint8_t{0});
+        std::fill_n(mask + row * mask_stride, columns, unseen);
 
-    // Zero means unseen, two means discovered, and one means accepted.
-    // Reject a plateau only after checking every connected equal pixel.
-    std::vector<std::size_t> plateau;
-    for (std::size_t row = 0; row < rows; ++row) {
-        for (std::size_t column = 0; column < columns; ++column) {
-            auto& initial = mask[row * mask_stride + column];
-            if (initial != 0)
-                continue;
-
-            const auto first = row * columns + column;
-            const T level = image[first];
-            bool admissible = true;
-            bool has_strict_neighbor = false;
-            plateau.clear();
-            plateau.push_back(first);
-            initial = 2;
-            for (std::size_t i = 0; i < plateau.size(); ++i) {
-                const auto p = plateau[i] / columns;
-                const auto q = plateau[i] % columns;
-                if (!allow_borders && (p == 0 || p == rows - 1 || q == 0 || q == columns - 1))
-                    admissible = false;
-
-                for (auto y = p == 0 ? p : p - 1; y <= std::min(p + 1, rows - 1); ++y) {
-                    for (auto x = q == 0 ? q : q - 1; x <= std::min(q + 1, columns - 1); ++x) {
-                        if ((y == p && x == q) || (!corners && y != p && x != q))
-                            continue;
-                        const auto pos = y * columns + x;
-                        const T value = image[pos];
-                        if (value != level) {
-                            has_strict_neighbor = true;
-                            if (minima ? value < level : value > level)
-                                admissible = false;
-                        } else {
-                            auto& flag = mask[y * mask_stride + x];
-                            if (flag == 0) {
-                                flag = 2;
-                                plateau.push_back(pos);
-                            }
-                        }
-                    }
-                }
-            }
-            // With four or eight neighbors, no unequal neighbor means the
-            // entire image is constant. Original scikit-image emits no extrema.
-            if (admissible && has_strict_neighbor)
-                for (const auto p : plateau)
-                    mask[p / columns * mask_stride + p % columns] = 1;
-        }
+    if (kind == LocalExtremaKind::minima) {
+        if (corners)
+            mark_extrema<T, true, true>(image, rows, columns, allow_borders, mask, mask_stride);
+        else
+            mark_extrema<T, true, false>(image, rows, columns, allow_borders, mask, mask_stride);
+    } else if (corners) {
+        mark_extrema<T, false, true>(image, rows, columns, allow_borders, mask, mask_stride);
+    } else {
+        mark_extrema<T, false, false>(image, rows, columns, allow_borders, mask, mask_stride);
     }
     for (std::size_t row = 0; row < rows; ++row)
         for (std::size_t column = 0; column < columns; ++column) {
             auto& flag = mask[row * mask_stride + column];
-            flag = std::uint8_t(flag == 1);
+            flag = std::uint8_t(flag == extremum);
         }
 }
 
