@@ -10,8 +10,8 @@ import runpy
 import subprocess
 import sys
 
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v2.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v2.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v3.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v3.json'
 PROBE='tools/vi_first_cohort_probe.py'
 CODEC='tools/vi_cohort_value_diagnostic.py'
 EXECUTE='benchmarks/variation_of_information_execution.py'

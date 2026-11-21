@@ -34,11 +34,25 @@ def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  import sys,types
  record=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v1.json').read_bytes())
  raw=(c.ROOT/record['source']).read_bytes()
+ successor=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v2.json').read_bytes())
+ assert successor['schema']=='finite-radon-public-exports-v2'
+ assert successor['previous_record']=='coverage/contracts/finite-radon-public-exports-v1.json'
+ assert hashlib.sha256((c.ROOT/successor['previous_record']).read_bytes()).hexdigest()==successor['previous_record_raw_sha256']
+ assert hashlib.sha256(raw).hexdigest()==successor['current_raw_sha256']
+ addition=successor['source_suffix'].encode()
+ assert addition and raw.endswith(addition) and raw.count(addition)==1
+ raw=raw.removesuffix(addition)
  assert hashlib.sha256(raw).hexdigest()==record['current_raw_sha256']
  fragment=record['inverse_fragment'].encode();assert raw.count(fragment)==1
  predecessor=raw.replace(fragment,b'',1)
  assert hashlib.sha256(predecessor).hexdigest()==record['predecessor_raw_sha256']
- assert hashlib.sha256(Path(__file__).read_bytes()).hexdigest()==record['guard_raw_sha256']
+ guard=Path(__file__).read_bytes()
+ assert hashlib.sha256(guard).hexdigest()==successor['guard_raw_sha256']
+ current_block=successor['current_guard_block'].encode()
+ previous_block=successor['previous_guard_block'].encode()
+ assert current_block and guard.count(current_block)==1
+ guard=guard.replace(current_block,previous_block,1)
+ assert hashlib.sha256(guard).hexdigest()==record['guard_raw_sha256']
  # Execute only actual export/import declarations. Existing public names are
  # inert objects; no NumPy, frontend, core or provider body is imported/called.
  parent=types.ModuleType('skimagexx');parent.__path__=[]
