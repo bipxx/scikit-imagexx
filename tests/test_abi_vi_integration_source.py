@@ -17,10 +17,10 @@ def qualifier():
 
 @pytest.mark.parametrize('profile',('minimum','modern','debug','windows'))
 def test_actual_source_census_and_profile_groups(profile):
-    q=qualifier();data=q.plan(ROOT,profile,284)
-    assert data['registry']['image_count']==284 and data['registry']['registered_count']==287
-    assert data['product_scope']=='current284'and data['product_members']==232 and data['SDK_members']==110
-    assert len(data['SDK_families'])==40 and data['SDK_checks']==80
+    q=qualifier();data=q.plan(ROOT,profile,286)
+    assert data['registry']['image_count']==286 and data['registry']['registered_count']==289
+    assert data['product_scope']=='current286'and data['product_members']==236 and data['SDK_members']==112
+    assert len(data['SDK_families'])==42 and data['SDK_checks']==84
     groups=data['public_groups']
     if profile=='windows':
         assert not{'public-VI-saved-linux','public-radon-ABI-policy-linux','public-radon-saved-linux','public-flood-saved-linux'}&groups.keys()

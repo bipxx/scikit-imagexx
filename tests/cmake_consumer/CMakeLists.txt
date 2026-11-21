@@ -251,3 +251,28 @@ add_test(NAME installed_structural_similarity_consumer
 add_executable(local_extrema_consumer local_extrema_consumer.cpp)
 target_link_libraries(local_extrema_consumer PRIVATE skimagexx::skimagexx)
 add_test(NAME installed_local_extrema_consumer COMMAND local_extrema_consumer)
+
+add_executable(order_angles_golden_ratio_consumer order_angles_golden_ratio_consumer.cpp)
+target_link_libraries(order_angles_golden_ratio_consumer PRIVATE skimagexx::skimagexx ${CMAKE_DL_LIBS})
+add_executable(pearson_consumer pearson_consumer.cpp)
+target_link_libraries(pearson_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(order_angles_golden_ratio_consumer PRIVATE /UNDEBUG /fp:strict)
+    target_compile_options(pearson_consumer PRIVATE /fp:strict)
+else()
+    target_compile_options(order_angles_golden_ratio_consumer PRIVATE -UNDEBUG -ffp-contract=off -fno-fast-math -frounding-math)
+    target_compile_options(pearson_consumer PRIVATE -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64|amd64)$")
+    if(NOT EXISTS "${SKIMAGEXX_FENV_HELPER}")
+        message(FATAL_ERROR "Golden installed SDK test requires authenticated source-built FENV helper")
+    endif()
+    set(golden_fenv "${SKIMAGEXX_FENV_HELPER}")
+else()
+    set(golden_fenv "WINDOWS_VALUE_SCOPE_NO_LINUX_FENV")
+endif()
+add_test(NAME installed_order_angles_golden_ratio_consumer COMMAND order_angles_golden_ratio_consumer
+    "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/order_angles_golden_ratio_native_v1/minimum.bin"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/order_angles_golden_ratio_native_v1/modern.bin"
+    "${golden_fenv}")
+add_test(NAME installed_pearson_consumer COMMAND pearson_consumer)

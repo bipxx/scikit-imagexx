@@ -48,6 +48,16 @@ def calls(api,dtype):
         expected=set_color_default_result(reference,arguments,options)
         actual=set_color_default_result(native,arguments,options)
         return actual,expected,data
+    if api == 'measure.pearson_corr_coeff':
+        with pytest.raises(NotImplementedError, match='pearson_corr_coeff'):
+            native(*arguments, **options)
+        previous = xx.set_fallback_enabled(True)
+        try:
+            with pytest.warns(xx.FallbackWarning, match='pearson_corr_coeff'):
+                actual = native(*arguments, **options)
+        finally:
+            xx.set_fallback_enabled(previous)
+        return actual, reference(*arguments, **options), data
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         expected=reference(*arguments,**options)
@@ -72,6 +82,9 @@ def compare(actual,expected,api,dtype,path='result',image=None):
     if api=='measure.inertia_tensor_eigvals':
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=image)
         assert all(a.dtype.metadata==e.dtype.metadata for a,e in zip(actual,expected)),path
+        return
+    if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected)
         return
     if isinstance(expected,(tuple,list)):
         assert type(actual) is type(expected),path

@@ -12,10 +12,10 @@ NATIVE_FUNCTIONS = {
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff'),
+    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
@@ -346,6 +346,10 @@ FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.f
 LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
 
 def native_dtypes(api):
+    if api == 'transform.order_angles_golden_ratio':
+        return ('bool', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64', 'float16', 'float32', 'float64')
+    if api == 'measure.pearson_corr_coeff':
+        return ('float64',)
     if api in LOCAL_EXTREMA_FUNCTIONS:
         return ('int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64')
     if api=='restoration.rolling_ball':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
@@ -414,6 +418,13 @@ def flood_fill_contract():
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
+    if api == 'transform.order_angles_golden_ratio':
+        import numpy as np
+        return (np.asarray([0, 1], dtype=image.dtype),), {}
+    if api == 'measure.pearson_corr_coeff':
+        import numpy as np
+        return (np.asarray([0, 1, 2, 3], dtype=image.dtype),
+                np.asarray([0, 2, 3, 1], dtype=image.dtype)), {}
     if api in LOCAL_EXTREMA_FUNCTIONS:
         return (image,), {}
     if api=='restoration.rolling_ball':return (image,),{'radius':1}
@@ -1186,6 +1197,21 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api == 'transform.order_angles_golden_ratio':
+        import inspect
+        import numpy as np
+        assert inspect.isgenerator(actual) and inspect.isgenerator(expected)
+        left, right = list(actual), list(expected)
+        assert len(left) == len(right) == 2
+        assert all(type(a) is type(e) is np.int64 and a == e for a, e in zip(left, right))
+        return
+    if api == 'measure.pearson_corr_coeff':
+        import math
+        assert type(actual) is type(expected) is tuple and len(actual) == len(expected) == 2
+        assert all(type(a) is type(e) is float for a, e in zip(actual, expected))
+        assert math.isclose(actual[0], expected[0], rel_tol=0, abs_tol=2e-14)
+        assert math.isclose(actual[1], expected[1], rel_tol=2e-9, abs_tol=0)
+        return
     if api in LOCAL_EXTREMA_FUNCTIONS:
         import numpy as np
         assert type(actual) is type(expected) is np.ndarray

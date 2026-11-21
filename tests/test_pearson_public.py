@@ -129,16 +129,72 @@ def test_pearson_missing_provider_only_declines_larger_samples(fallback_state, m
         _pearson.pearson_corr_coeff(left, right)
 
 
-def test_pearson_installed_hot_swap(fallback_state):
+@pytest.mark.parametrize("left_values, right_values", (
+    pytest.param((0., 1.), (0., -1.), id="two-exact"),
+    pytest.param((-2., -1., 0., 1., 2.), (1., -2., 2., -2., 1. + 2**-30),
+                 id="odd-near-zero"),
+    # The orthogonal centered components give r = 33 / sqrt(33**2 + 12**2)
+    # and a small positive tail for 25 samples, with room above the native floor.
+    pytest.param((-1., -1., 1., 1.) * 6 + (0.,), (-45., -21., 21., 45.) * 6 + (0.,),
+                 id="near-floor"),
+))
+def test_pearson_installed_hot_swap(left_values, right_values, fallback_state, monkeypatch):
+    from types import SimpleNamespace
+
+    from scipy import special
+
     public = xx.measure.pearson_corr_coeff
     assert public is _pearson.pearson_corr_coeff
     assert inspect.signature(public) == inspect.signature(original)
-    assert xx._core.pearson_f64.__module__ == "skimagexx._core"
+    entry = xx._core.pearson_f64
+    assert inspect.isbuiltin(entry) and entry.__module__ == "skimagexx._core"
 
     def pipeline(backend, left, right):
         return backend.measure.pearson_corr_coeff(left, right)
 
-    from types import SimpleNamespace
+    left, right = np.array(left_values), np.array(right_values)
+    before = descriptor(left), descriptor(right)
+    expected = pipeline(SimpleNamespace(measure=original_measure), left, right)
 
-    left, right = np.array([0., 1.]), np.array([0., -1.])
-    assert pipeline(xx, left, right) == pipeline(SimpleNamespace(measure=original_measure), left, right)
+    provider = special.betaincc
+    provider_calls = []
+
+    def counted_beta_tail(shape_a, shape_b, x):
+        provider_calls.append((shape_a, shape_b, x))
+        assert xx.get_num_threads() == 1
+        return provider(shape_a, shape_b, x)
+
+    monkeypatch.setattr(special, "betaincc", counted_beta_tail)
+    returns = []
+
+    def profile(frame, event, value):
+        if event == "c_return" and value is entry:
+            returns.append(value)
+
+    previous_workers = xx.get_num_threads()
+    previous_profile = sys.getprofile()
+    xx.set_num_threads(1)
+    try:
+        assert xx.get_num_threads() == 1
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            sys.setprofile(profile)
+            try:
+                result = pipeline(xx, left, right)
+            finally:
+                sys.setprofile(previous_profile)
+        assert xx.get_num_threads() == 1
+    finally:
+        xx.set_num_threads(previous_workers)
+
+    assert returns == [entry]
+    assert type(result) is tuple and tuple(map(type, result)) == (float, float)
+    assert (descriptor(left), descriptor(right)) == before
+    if left.size == 2:
+        assert result == expected and not provider_calls
+    else:
+        assert result[0] == pytest.approx(expected[0], rel=0, abs=2e-14)
+        assert result[1] == pytest.approx(expected[1], rel=2e-9, abs=0)
+        shape = left.size * 0.5 - 1
+        assert provider_calls == [(shape, shape, (1 + abs(result[0])) * 0.5)]
+        assert all(type(value) is float for value in provider_calls[0])

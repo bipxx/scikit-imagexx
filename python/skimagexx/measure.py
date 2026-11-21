@@ -82,3 +82,7 @@ __all__ += ['subdivide_polygon']
 from ._regionprops_state import regionprops
 
 __all__ += ['regionprops']
+
+from ._pearson import pearson_corr_coeff
+
+__all__ += ['pearson_corr_coeff']

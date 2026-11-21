@@ -5781,11 +5781,14 @@
       "api": "measure.pearson_corr_coeff",
       "kind": "callable",
       "signature": "(image0, image1, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_pearson_public.py",
+      "benchmark": "benchmarks/pearson.py",
+      "default_input_kind": "Bounded aligned C-order float64 pairs and optional Boolean mask. C++ correlation; one scalar SciPy beta-tail call for larger supported samples."
     },
     {
       "api": "measure.perimeter",
@@ -8731,11 +8734,25 @@
       "api": "transform.order_angles_golden_ratio",
       "kind": "callable",
       "signature": "(theta)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_order_angles_golden_ratio_integration.py",
+      "benchmark": "benchmarks/order_angles_golden_ratio_native.py",
+      "default_input_kind": "Bounded finite angle order with lazy iteration and live supported ndarray storage. Larger and unsupported requests use compatibility on first resume."
     },
     {
       "api": "transform.probabilistic_hough_line",

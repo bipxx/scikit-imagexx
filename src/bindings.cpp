@@ -43,6 +43,8 @@ void bind_li(pybind11::module_&);
 void bind_metrics(pybind11::module_&);
 void bind_structural_similarity(pybind11::module_&);
 void bind_local_extrema(pybind11::module_&);
+void bind_order_angles_golden_ratio(pybind11::module_&);
+void bind_pearson(pybind11::module_&);
 void bind_normalized_mutual_information(pybind11::module_&);
 void bind_h_extrema(pybind11::module_&);
 void bind_footprint_dense(pybind11::module_&);
@@ -869,6 +871,8 @@ PYBIND11_MODULE(_core, m) {
     bind_metrics(m);
     bind_structural_similarity(m);
     bind_local_extrema(m);
+    bind_order_angles_golden_ratio(m);
+    bind_pearson(m);
     bind_normalized_mutual_information(m);
     bind_h_extrema(m);
     bind_footprint_dense(m);

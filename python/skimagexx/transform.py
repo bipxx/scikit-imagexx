@@ -232,3 +232,7 @@ __all__ += ['matrix_transform']
 
 from ._finite_radon import frt2, ifrt2
 __all__ += ['frt2','ifrt2']
+
+from ._order_angles_golden_ratio import order_angles_golden_ratio
+
+__all__ += ['order_angles_golden_ratio']

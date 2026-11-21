@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current284'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema')
-CURRENT_SDK_CLIENT_SCOPE = 'current40 required installed clients; current282 clients plus the bounded local extrema pair; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v12.json'
+CURRENT_PRODUCT_SCOPE = 'current286'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson')
+CURRENT_SDK_CLIENT_SCOPE = 'current42 required installed clients; current284 clients plus bounded golden-angle ordering and Pearson correlation; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v13.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -670,6 +670,7 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/util-views-fenv-v1.json', 'tests/test_
 DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_execution.py', 'coverage/contracts/next-util-benchmark-execution-v1.json', 'tests/next_util_benchmark_support.py', 'tests/test_next_util_benchmark_execution.py', 'tests/test_next_util_benchmark_factories.py', 'coverage/contracts/next-util-benchmark-execution-v2.json')
 POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
 POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py','test_structural_similarity.py','test_local_extrema_public.py')
+POST203_TESTS += ('test_order_angles_golden_ratio_integration.py', 'test_pearson_public.py')
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -734,6 +735,47 @@ DRAW_SOURCE_PATHS += (
     'benchmarks/local_extrema.py',
 )
 
+DRAW_SOURCE_PATHS += (
+    'benchmarks/order_angles_golden_ratio_native.py',
+    'benchmarks/pearson.py',
+    'coverage/contracts/current-public-qualification-v13.json',
+    'coverage/contracts/order-angles-golden-ratio-benchmark-v1.json',
+    'coverage/contracts/order-angles-golden-ratio-benchmark-v2.json',
+    'coverage/contracts/order-angles-golden-ratio-compatibility-v1.json',
+    'coverage/contracts/order-angles-golden-ratio-native-v1.json',
+    'coverage/contracts/pearson-reference-v1.json',
+    'include/skimagexx/order_angles_golden_ratio.hpp',
+    'include/skimagexx/pearson.hpp',
+    'python/skimagexx/_order_angles_golden_ratio.py',
+    'python/skimagexx/_pearson.py',
+    'src/bind_order_angles_golden_ratio.cpp',
+    'src/bind_pearson.cpp',
+    'src/order_angles_golden_ratio.cpp',
+    'src/pearson.cpp',
+    'tests/cmake_consumer/order_angles_golden_ratio_consumer.cpp',
+    'tests/cmake_consumer/pearson_consumer.cpp',
+    'tests/fixtures/order_angles_golden_ratio_native_v1/manifest.json',
+    'tests/fixtures/order_angles_golden_ratio_native_v1/minimum.bin',
+    'tests/fixtures/order_angles_golden_ratio_native_v1/modern.bin',
+    'tests/fixtures/order_angles_golden_ratio_public_v1.json',
+    'tests/fixtures/pearson_original_windows_v1.json',
+    'tests/fixtures/pearson_reference_v1.py',
+    'tests/order_angles_golden_ratio_contract.py',
+    'tests/order_angles_golden_ratio_fenv.hpp',
+    'tests/order_angles_golden_ratio_observer_v2.py',
+    'tests/order_angles_golden_ratio_private_bridge.cpp',
+    'tests/order_angles_golden_ratio_saved.py',
+    'tests/sdk/order_angles_golden_ratio/CMakeLists.txt',
+    'tests/sdk/pearson/CMakeLists.txt',
+    'tests/test_order_angles_golden_ratio_integration.py',
+    'tests/test_order_angles_golden_ratio_native.cpp',
+    'tests/test_order_angles_golden_ratio_native_contract.py',
+    'tests/test_order_angles_golden_ratio_public.py',
+    'tests/test_order_angles_golden_ratio_sdk.cpp',
+    'tests/test_pearson_public.py',
+    'tests/test_pearson_reference_contract.py',
+)
+
 
 def groups_for_source(root):
     """Counts-after has one additional genuine-public gate; before has none."""
@@ -789,6 +831,8 @@ def applicable_public_groups(groups,profile):
         selected['public-flood-copy-linux'] = ('test_flood_copy_protocol.py',)
         selected['public-flood-disjoint-linux'] = ('test_flood_disjoint_assignment.py',)
         selected['public-rolling-ball-saved-linux'] = ('test_rolling_ball_public.py',)
+        if 'test_order_angles_golden_ratio_integration.py' in selected['public-post203']:
+            selected['public-golden-angle-saved-linux'] = ('test_order_angles_golden_ratio_public.py',)
     if 'public-post203' in selected and profile=='windows':
         selected['public-VI-current-windows']=('test_vi_public_matmul_windows_public.py',)
     return selected
@@ -1177,31 +1221,35 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v11.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v12.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == 'f1a2e9432befc722ccb40dc3deb7ffdd28d5e5febf4c8d71789f0fb290ad6ad3',
-            'current282 qualification predecessor differs')
+    require(previous_digest == '034d3699e8cfbfdc3f6a41ca826d1087f2c8df57da56c45999201434358a36d7',
+            'current284 qualification predecessor differs')
     previous = json.loads(previous_raw)
-    apis = ('morphology.local_maxima', 'morphology.local_minima')
-    selector = 'tests/test_local_extrema_public.py'
+    selectors = {
+        'transform.order_angles_golden_ratio': 'tests/test_order_angles_golden_ratio_integration.py',
+        'measure.pearson_corr_coeff': 'tests/test_pearson_public.py',
+    }
+    saved_selector = 'tests/test_order_angles_golden_ratio_public.py'
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
-        image_paths=sorted(previous['image_paths'] + list(apis)),
-        post203_contracts={**previous['post203_contracts'], **dict.fromkeys(apis, selector)},
-        required_selectors=previous['required_selectors'] + [selector],
-        required_client_families=previous['required_client_families'] + ['local_extrema'],
-        required_client_headers=previous['required_client_headers'] + ['include/skimagexx/local_extrema.hpp'],
+        image_paths=sorted(previous['image_paths'] + list(selectors)),
+        post203_contracts={**previous['post203_contracts'], **selectors},
+        required_selectors=previous['required_selectors'] + list(selectors.values()) + [saved_selector],
+        required_client_families=previous['required_client_families'] + ['order_angles_golden_ratio', 'pearson'],
+        required_client_headers=previous['required_client_headers'] + [
+            'include/skimagexx/order_angles_golden_ratio.hpp', 'include/skimagexx/pearson.hpp'],
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
-    require(data == expected, 'current local extrema qualification contract differs')
+    require(data == expected, 'current golden-angle and Pearson qualification contract differs')
     require(data['required_client_families'] == list(CURRENT_FAMILIES[len(FAMILIES):]),
             'current installed-client scope differs')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py'},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py',saved_selector},
             'current qualification selector contract differs')
     require(data['VI_current_runtime_large_reference'] == VI_CURRENT_LARGE_REFERENCE_POLICY
             and data['VI_current_runtime_public_reference'] == VI_CURRENT_PUBLIC_REFERENCE_POLICY
@@ -1269,6 +1317,10 @@ def current_install_layout(read_bytes, names, profile):
             and 'skimagexx/_structural_similarity.py' in sources, 'current structural similarity install closure absent')
     require('include/skimagexx/local_extrema.hpp' in headers
             and 'skimagexx/_local_extrema.py' in sources, 'current local extrema install closure absent')
+    require('include/skimagexx/order_angles_golden_ratio.hpp' in headers
+            and 'skimagexx/_order_angles_golden_ratio.py' in sources, 'current golden-angle install closure absent')
+    require('include/skimagexx/pearson.hpp' in headers
+            and 'skimagexx/_pearson.py' in sources, 'current Pearson install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
@@ -2328,6 +2380,12 @@ def child(out, group):
     if group=='public-regular-grid-saved-linux':
         require(not os.environ.get('REGULAR_GRID_COMPONENT_DIR'),'Genuine grid group forbids private component override')
         os.environ['REGULAR_GRID_RESULT_DIR']=str(out/(mode+'-regular-grid-saved-rows'))
+    if group in ('public-golden-angle-saved-linux', 'public-post203'):
+        require('GOLDEN_CORE_EXTENSION' not in os.environ, 'genuine Golden forbids a private core overlay')
+    if group == 'public-golden-angle-saved-linux':
+        require(state['profile'] != 'windows', 'Golden saved fixtures require Linux FEnv')
+        os.environ.update(util_views_fenv_environment(out, state))
+        os.environ['GOLDEN_PROFILE'] = 'minimum' if state['profile'] == 'minimum' else 'modern'
     if group == 'public-post203':
         if state['profile']!='windows':
             os.environ.update(util_views_fenv_environment(out,state))
@@ -2542,7 +2600,10 @@ def sdk(out, state, journal):
                     or name in ('tests/fixtures/bezier_curve_originals_v1.bin', 'tests/matrix_prescott_controls.hpp', 'tests/fixtures/matrix_prescott_native.hpp',
                                 'tests/fixtures/find_boundaries_originals_v1.hpp', 'tests/label_pair_metrics_native_controls.hpp',
                                 'tests/fixtures/label_pair_metrics_originals_v1.hpp', 'tests/fixtures/label_pair_rand_originals_v1.hpp',
-                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/fixtures/flood_fill_sdk_original_v1.inc','tests/fixtures/rolling_ball_sdk_v1.bin','tests/fixtures/rolling_ball_sdk_dtypes_v1.bin','tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc','tests/fixtures/mark_wide_outer_sdk_v1.hpp')):
+                                'tests/contingency_preweighted_controls.hpp','tests/fixtures/join_segmentations_originals_v1.hpp','tests/fixtures/regular_grid_originals_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/finite_radon_saved_v2.hpp','tests/fixtures/finite_radon_exceptional_saved_v1.hpp','tests/fixtures/variation_of_information_saved_v1.hpp','tests/variation_of_information_current_counts_controls.hpp','tests/fixtures/flood_fill_sdk_original_v1.inc','tests/fixtures/rolling_ball_sdk_v1.bin','tests/fixtures/rolling_ball_sdk_dtypes_v1.bin','tests/fixtures/rolling_ball_sdk_dtype_fp_v1.inc','tests/fixtures/mark_wide_outer_sdk_v1.hpp',
+                                'tests/order_angles_golden_ratio_fenv.hpp',
+                                'tests/fixtures/order_angles_golden_ratio_native_v1/minimum.bin',
+                                'tests/fixtures/order_angles_golden_ratio_native_v1/modern.bin')):
                 target = sdk_source / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(archive.read(name))
     cmake = tool_in(out / 'build-env', 'cmake'); ctest = tool_in(out / 'build-env', 'ctest'); build = out / 'sdk-build'
     config = state['profile_config']['config']; env = environment()
@@ -2787,6 +2848,8 @@ def seal(out):
             require(row['tests'] > 0, 'empty public selector: ' + group)
             if group=='public-radon-saved-linux':require(row['tests']==224,'Full224 Radon saved-domain nodes required; no partial selector')
             if group=='public-radon-ABI-policy-linux':require(row['tests']==18,'Full18 Radon runtime-ABI policy nodes required; saved224 remains separate')
+            if group=='public-golden-angle-saved-linux':
+                require(row['tests']==105, 'Full105 golden-angle saved and compatibility nodes required')
             if group=='public-rolling-ball-saved-linux':require(row['tests']==81,'Full81rolling saved/boundary nodes required; no partial selector')
             if group=='public-flood-saved-linux':require(row['tests']==100,'Full100 flood saved-domain nodes required; no partial selector')
             if group=='public-flood-saved-linux':
@@ -2862,7 +2925,7 @@ def main(argv=None):
     parser.add_argument('--profile', choices=PROFILES, default='modern')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--expected-native-images', type=int)
-    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-VI-current-public-linux','public-VI-current-windows','public-flood-saved-linux','public-rolling-ball-saved-linux','public-mark-fast-paths','public-lbp-batched-linux','public-flood-assignment-linux','public-flood-copy-linux','public-flood-disjoint-linux',*GROUPS])
+    parser.add_argument('--group', choices=['admission','inventory','returned-maps','public-mark-wide-saved-linux','public-regular-grid-saved-linux','public-util-views-saved-linux','public-mark-saved-linux','public-lbp-saved-linux','public-lbp-metadata-linux','public-radon-saved-linux','public-radon-ABI-policy-linux','public-VI-saved-linux','public-VI-large-saved-linux','public-VI-current-public-linux','public-VI-current-windows','public-flood-saved-linux','public-rolling-ball-saved-linux','public-mark-fast-paths','public-lbp-batched-linux','public-flood-assignment-linux','public-flood-copy-linux','public-flood-disjoint-linux','public-golden-angle-saved-linux',*GROUPS])
     parser.add_argument('--product-scope', choices=[PRODUCT_SCOPE,CURRENT_PRODUCT_SCOPE], default=PRODUCT_SCOPE)
     parser.add_argument('--wheel', type=Path); parser.add_argument('--source-archive', type=Path); parser.add_argument('--source-revision')
     args = parser.parse_args(argv); out = args.output.resolve()

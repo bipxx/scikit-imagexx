@@ -46,10 +46,12 @@ VALUE_CASES = [
     for native, original, name in FUNCTIONS
     # Shape constructors use one descriptor carrier, not image dtype cases.
     for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
-                  or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon'))
+                  or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon','pearson_corr_coeff'))
                   else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in (*LEVEL_SET_FUNCTIONS,'segmentation.find_boundaries')
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes('morphology.' + name))
                   if 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS and native is xx.morphology
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes('transform.order_angles_golden_ratio'))
+                  if native is xx.transform and name == 'order_angles_golden_ratio'
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))
@@ -523,6 +525,9 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
         for value,reference in zip(actual,expected):
             assert value.dtype==reference.dtype and value.shape==reference.shape
             np.testing.assert_array_equal(value,reference)
+        return
+    if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
     assert_default_parity(api,np.dtype(dtype),actual,expected,
