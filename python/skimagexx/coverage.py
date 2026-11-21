@@ -346,7 +346,7 @@ FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.f
 LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
 
 def native_dtypes(api):
-    if api in LOCAL_EXTREMA_FUNCTIONS:
+    if api in ('morphology.local_maxima', 'morphology.local_minima'):
         return ('int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64')
     if api=='restoration.rolling_ball':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     """Dtypes covered by the default native per-function parity/benchmark case."""
@@ -414,8 +414,6 @@ def flood_fill_contract():
 
 def default_call(api, image):
     """Arguments for the shared default parity/performance workload."""
-    if api in LOCAL_EXTREMA_FUNCTIONS:
-        return (image,), {}
     if api=='restoration.rolling_ball':return (image,),{'radius':1}
     if api=='segmentation.find_boundaries':
         import numpy as np
