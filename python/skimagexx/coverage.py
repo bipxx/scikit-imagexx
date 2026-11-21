@@ -350,7 +350,7 @@ def native_dtypes(api):
         return ('bool', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64', 'float16', 'float32', 'float64')
     if api == 'measure.pearson_corr_coeff':
         return ('float64',)
-    if api in LOCAL_EXTREMA_FUNCTIONS:
+    if api in ('morphology.local_maxima', 'morphology.local_minima'):
         return ('int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64')
     if api=='restoration.rolling_ball':return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float16','float32','float64')
     """Dtypes covered by the default native per-function parity/benchmark case."""
@@ -425,8 +425,6 @@ def default_call(api, image):
         import numpy as np
         return (np.asarray([0, 1, 2, 3], dtype=image.dtype),
                 np.asarray([0, 2, 3, 1], dtype=image.dtype)), {}
-    if api in LOCAL_EXTREMA_FUNCTIONS:
-        return (image,), {}
     if api=='restoration.rolling_ball':return (image,),{'radius':1}
     if api=='segmentation.find_boundaries':
         import numpy as np
