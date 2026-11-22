@@ -1,0 +1,13 @@
+# Bounded random shape placement
+
+The bounded route accepts an ordinary two-integer shape tuple with extents from 1 to 256, size controls within 256, up to 128 requested shapes, and up to 100 trials per slot. It handles grayscale and up to eight ordinary channels with a single documented range, broadcast range or per-channel ranges. Seeds are plain nonnegative integers below 2⁶⁴ or ordinary NumPy Generators backed by PCG64. Other protocols and larger inputs use the existing compatibility policy before any draw.
+
+NumPy owns the seeded Generator, random count, each channel's color draws, mixed object choice, and every trial and geometry draw. The Python placement loop preserves the category and color on retry. It keeps warning order and late errors, including invalid channel-axis failure after placement. The shipped polygon, disk and ellipse routes supply ordered raster coordinates. Native paint checks the full coordinate span and bounds, then checks one occupancy byte per pixel and writes all channels. Output bytes do not signal occupancy. A rejected overlap leaves the image and occupancy unchanged.
+
+Return values preserve the original uint8 view over a fresh HWC owner and the list of placement-ordered category/box tuples. Ellipse bounds come from the selected clipped coordinates. The thin fixture contains exact image and label digests, layout/base metadata, warnings and complete caller PCG64 states. The two admitted NumPy profiles have different qualified AxisError names for the same late invalid-axis control.
+
+The four fixed performance recipes keep the entire seed-to-result path and warnings. Independent admission, packaged SDK and one-worker parity-speed remain pending. [Original stock source](https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/draw/_random_shapes.py)
+
+The versioned Linux-modern reference records the admitted retained Linux CPython 3.13.8 and NumPy 2.5.4 capture. All 24 stock rows match Windows exactly, including the qualified numpy.exceptions.AxisError name and late PCG64 state. The NumPy 1.24.4 Linux fixture has numpy.AxisError for the same control. The selector binds operating system and NumPy version explicitly. Modern and debug builds are intended to use the Linux-modern fixture after exact hosted runtime and provider verification. The Windows and minimum fixture bytes remain frozen.
+
+The installed checks witness the actual painting symbol before the late channel-axis error. A list carrier for the frozen rectangle forces fallback while retaining stock's two scalar dimensions. The paired check requires strict refusal before the caller stream changes, then genuine stock delegation and the exact saved image, ordered boxes and Generator state.

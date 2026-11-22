@@ -1,0 +1,37 @@
+{
+  "saved_profile": "linux-modern",
+  "base_profile": "linux-minimum",
+  "retained_python": "3.13.8",
+  "numpy": "2.5.4",
+  "stock_admission_sha256": "97d0fd2b25172e777403e5129d4d15cd0892f109c0ef76e5bda15e6e1f12917f",
+  "stock_rows_sha256": "857c7060b03ec3b335c0614d5b3fe44ec852793d86214380da90027ad879f3e0",
+  "case_count": 38,
+  "overrides": {
+    "sp-p0-q0-signed-zero-clip": {
+      "output": {
+        "array_chain": [
+          {
+            "shape": [
+              2,
+              3
+            ],
+            "strides": [
+              24,
+              8
+            ],
+            "dtype": "<f8",
+            "type": "numpy.ndarray",
+            "c_contiguous": true,
+            "f_contiguous": false,
+            "aligned": true,
+            "owns": true,
+            "writable": true
+          }
+        ],
+        "terminal_base": "builtins.NoneType",
+        "logical_sha256": "efdbcf0d666039f8e69e414211087665ba0e886c51166352f95c13e3c3e95966"
+      },
+      "data_hex": "00000000000000800000000000000000000000000000d03f000000000000e03f000000000000e83f000000000000f03f"
+    }
+  }
+}

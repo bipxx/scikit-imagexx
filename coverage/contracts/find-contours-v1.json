@@ -1,0 +1,30 @@
+{
+  "api": "measure.find_contours",
+  "status": "Private component. Shared registration and installed qualification are pending.",
+  "base": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+  "stock": {
+    "version": "0.26.0",
+    "pre_capture_handoff_sha256": "dd29fb6a2f30fd91e3cadee974bd50a1abca98c4fe7cd700efd520a4c39c161a",
+    "fixture": "tests/fixtures/find_contours_originals_v1.json",
+    "fixture_sha256": "e9ed43707672f02f7b99f55fda355d345fadee5fb1514943003f16b4ed177b5a",
+    "cases": 85,
+    "expected_native_cases": 74,
+    "expected_compatibility_cases": 11
+  },
+  "native_scope": {
+    "image": "Plain canonical C-contiguous native-endian aligned ndarray of float64, float32 or uint8 with verified backing. Both axes are at least two, with up to 131072 elements.",
+    "level": "Explicit finite exact Python float or ordinary int level. Native default midpoint applies to float64 only. Finite values and explicit level are bounded by 2^40 in magnitude under round-to-nearest.",
+    "mask": "None or a plain matching canonical C-contiguous bool ndarray with bounded backing.",
+    "order": "Row-major marching squares. Strict comparisons, binary64 edge interpolation, ordered ambiguous segments, and first-created contour identity on splice. Exact endpoint equality skips a degenerate segment.",
+    "ownership": "A list of independent writable float64 arrays. Low orientation has owning C-order contours; high orientation returns ordinary reversed ndarray views of their respective owners.",
+    "parallelism": "Serial kernel, with the same native path in normal and runtime-forced-scalar modes.",
+    "compatibility": "Other objects, layouts, descriptors, floating extremes, NaN/Inf, rounding and missing default precision domains are passed to the established compatibility path. Raw floating environment equivalence is pending."
+  },
+  "timing": {
+    "case_ids": ["f64-ridges-default", "f64-masked-grid-high", "f32-islands-high", "u8-tiles-low"],
+    "workers": 1,
+    "boundary": "Whole public call including response allocation, contour path materialization and orientation view.",
+    "minimum_speed_ratio_each": 1,
+    "execution_authority": null
+  }
+}

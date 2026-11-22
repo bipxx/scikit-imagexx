@@ -7,16 +7,16 @@ MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.cent
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'data': ('binary_blobs',),
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color','random_shapes'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','expand_labels'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff'),
+    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
@@ -36,7 +36,7 @@ NATIVE_FUNCTIONS = {
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
                 'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
     'util': ('slice_along_axes','view_as_blocks','view_as_windows','crop','regular_grid','montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
-             'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits'),
+             'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits','random_noise'),
 }
 
 
@@ -353,10 +353,16 @@ FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.f
 LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
 
 PYRAMID_FUNCTIONS = ('transform.pyramid_reduce', 'transform.pyramid_expand')
+PYRAMID_GENERATOR_FUNCTIONS = ('transform.pyramid_gaussian', 'transform.pyramid_laplacian')
 HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature', 'feature.haar_like_feature_coord')
 
 
 def native_dtypes(api):
+    if api == 'util.random_noise':
+        return ('uint8', 'uint16', 'float64')
+    if api == 'draw.random_shapes':
+        # The image is a shape carrier. The generated image is always uint8.
+        return ('uint8',)
     if api == 'feature.draw_haar_like_feature':
         return ('bool', 'uint8', 'float32', 'float64')
     if api == 'feature.haar_like_feature':
@@ -440,6 +446,17 @@ def flood_fill_contract():
 
 
 def default_call(api, image):
+    if api in PYRAMID_GENERATOR_FUNCTIONS:
+        return (image,), {'max_layer': 2}
+    if api == 'measure.find_contours':
+        level = 127.5 if image.dtype.name == 'uint8' else 0.5
+        return (image,), {'level': level}
+    if api == 'util.random_noise':
+        return (image,), {'rng': 739}
+    if api == 'draw.random_shapes':
+        return (image.shape, 4), {'min_shapes': 4, 'min_size': 3, 'max_size': 9,
+                                  'shape': 'rectangle', 'allow_overlap': True,
+                                  'channel_axis': None, 'rng': 739}
     if api == 'feature.haar_like_feature_coord':
         height, width = image.shape[:2]
         return (min(width, 3), min(height, 3), 'type-2-x'), {}
@@ -1240,6 +1257,42 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
+        import inspect
+        import numpy as np
+
+        if api in PYRAMID_GENERATOR_FUNCTIONS:
+            if inspect.isgenerator(expected):
+                assert inspect.isgenerator(actual)
+                actual, expected = list(actual), list(expected)
+            assert type(actual) is type(expected) is list
+            assert len(actual) == len(expected) and len(actual) > 0
+            if image is not None:
+                assert (actual[0] is image) == (expected[0] is image)
+            pairs = zip(actual, expected)
+        elif api == 'measure.find_contours':
+            assert type(actual) is type(expected) is list and len(actual) == len(expected)
+            pairs = zip(actual, expected)
+        elif api == 'draw.random_shapes':
+            assert type(actual) is type(expected) is tuple and len(actual) == len(expected) == 2
+            labels, references = actual[1], expected[1]
+            assert type(labels) is type(references) is list and labels == references
+            for label, reference in zip(labels, references):
+                assert type(label) is type(reference) is tuple
+                assert type(label[0]) is type(reference[0]) is str
+                assert type(label[1]) is type(reference[1]) is tuple
+                for axis, reference_axis in zip(label[1], reference[1]):
+                    assert type(axis) is type(reference_axis) is tuple
+                    assert all(type(a) is type(e) for a, e in zip(axis, reference_axis))
+            pairs = ((actual[0], expected[0]),)
+        else:
+            pairs = ((actual, expected),)
+        for value, reference in pairs:
+            assert type(value) is type(reference) is np.ndarray
+            assert value.shape == reference.shape and value.dtype == reference.dtype
+            assert value.dtype.metadata == reference.dtype.metadata
+            assert value.tobytes(order='C') == reference.tobytes(order='C')
+        return
     if api in HAAR_FUNCTIONS:
         import numpy as np
         if api == 'feature.haar_like_feature_coord':

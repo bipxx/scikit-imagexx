@@ -1,0 +1,10 @@
+{
+  "saved_profile": "linux-modern",
+  "base_profile": "windows",
+  "retained_python": "3.13.8",
+  "numpy": "2.5.4",
+  "stock_admission_sha256": "313ef9e2cfe38847c5991f785ceb14d96ba358bf8bfb095ebcb71fc2f998e701",
+  "stock_rows_sha256": "4bfc738348f09b1b30c5e1f22192244d3ab2f4a9fbaea9e07e9bfbab73f60c48",
+  "case_count": 24,
+  "overrides": {}
+}

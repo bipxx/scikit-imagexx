@@ -239,3 +239,8 @@ __all__ += ['frt2','ifrt2']
 from ._order_angles_golden_ratio import order_angles_golden_ratio
 
 __all__ += ['order_angles_golden_ratio']
+
+
+from ._pyramid_generators import pyramid_gaussian, pyramid_laplacian
+
+__all__ += ['pyramid_gaussian', 'pyramid_laplacian']

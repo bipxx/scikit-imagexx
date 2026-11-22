@@ -15,7 +15,7 @@ import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error, draw_polygon_default_error
-from skimagexx.coverage import PYRAMID_FUNCTIONS, util_metadata_default_error
+from skimagexx.coverage import PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, assert_default_parity, util_metadata_default_error
 from skimagexx.coverage import set_color_default_result, set_color_default_error, label_pair_default_error, find_boundaries_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error, line_nd_default_error, ellipsoid_default_error
 
@@ -160,6 +160,14 @@ def main():
                    'and private-storage preparation and allocation. The shared Snum<=2**53 exact checker '
                    'runs before timing; the canonical 2D/3D cohort is benchmarks/euler_number.py.')
     provider_frontiers = {api: lpi_scope for api in apis if api in lpi_apis}
+    provider_frontiers.update({api: 'Native Gaussian and resize with NumPy array allocation and residual subtraction; timed calls exhaust the iterator.'
+                               for api in apis if api in PYRAMID_GENERATOR_FUNCTIONS})
+    if 'measure.find_contours' in apis:
+        provider_frontiers['measure.find_contours'] = 'Ordered native marching squares; output uses NumPy coordinate arrays.'
+    if 'util.random_noise' in apis:
+        provider_frontiers['util.random_noise'] = 'Seeded Gaussian default. NumPy supplies conversion, RNG, range and clipping; C++ applies bounded pixel values.'
+    if 'draw.random_shapes' in apis:
+        provider_frontiers['draw.random_shapes'] = 'Shape-only carrier with NumPy RNG and ordered boxes; native raster and indexed paint.'
     if 'measure.subdivide_polygon' in apis:
         provider_frontiers['measure.subdivide_polygon'] = ('Owned weighted B-spline convolution, interleave, closure and ordinary endpoint copies; '
             'NumPy input normalization and exceptional SciPy paths remain providers. Float64 is the actual default coordinate carrier, not all input dtype coverage.')
@@ -283,6 +291,20 @@ def main():
                                   else f'Default pyramid input or output exceeds the native bounds at size {size}')
                         unassessed.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name, 'reason': reason})
                         continue
+                maximum_size = {'measure.find_contours': 362, 'draw.random_shapes': 256,
+                                'util.random_noise': 724}.get(api)
+                if api in PYRAMID_GENERATOR_FUNCTIONS:
+                    maximum_size = 512
+                if maximum_size is not None:
+                    minimum_size = 4 if api == 'draw.random_shapes' else 2 if api == 'measure.find_contours' else 1
+                    reason = None
+                    if not minimum_size <= size <= maximum_size:
+                        reason = f'Size {size} exceeds the scoped native geometry'
+                    elif args.dtype_metadata and api != 'draw.random_shapes':
+                        reason = 'Tagged input is outside native scope'
+                    if reason is not None:
+                        unassessed.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name, 'reason': reason})
+                        continue
                 module, name = api.rsplit('.', 1)
                 if np.dtype(dtype).name not in native_dtypes(api):
                     continue
@@ -295,13 +317,21 @@ def main():
                     call_args=(first,*call_args[1:])
                 case_size = 4 if api in DERIVED_MOMENTS_FUNCTIONS else call_args[0].shape[0] if api in COORDS_MOMENTS_FUNCTIONS else size
                 case_dtype = call_args[0].dtype.name if api in DERIVED_MOMENTS_FUNCTIONS or api in COORDS_MOMENTS_FUNCTIONS else np.dtype(dtype).name
+                consume = api in PYRAMID_GENERATOR_FUNCTIONS
                 expected = set_color_default_result(reference,call_args,options) if api=='draw.set_color' else reference(*call_args,**options)
+                if consume:
+                    expected = list(expected)
                 for threads in args.threads:
                     xx.set_num_threads(threads)
                     assert xx.get_num_threads() == threads
                     actual = set_color_default_result(native,call_args,options) if api=='draw.set_color' else native(*call_args,**options)
                     assert xx.get_num_threads() == threads
-                    if api=='segmentation.find_boundaries':
+                    if consume:
+                        actual = list(actual)
+                    if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
+                        assert_default_parity(api, np.dtype(dtype), actual, expected, image=data)
+                        error = 0.0
+                    elif api=='segmentation.find_boundaries':
                         error=find_boundaries_default_error(actual,expected)
                     elif api in ('metrics.adapted_rand_error','metrics.contingency_table'):
                         error=label_pair_default_error(api,actual,expected)
@@ -373,20 +403,23 @@ def main():
                     if args.dtype_metadata:assert dtype_metadata(actual)==dtype_metadata(expected)
                     if api=='draw.set_color':
                         timing=measure(lambda:set_color_default_result(reference,call_args,options),lambda:set_color_default_result(native,call_args,options),args.repeat,15)
+                    elif consume:
+                        timing = measure(lambda: list(reference(*call_args, **options)),
+                                         lambda: list(native(*call_args, **options)), args.repeat, 15)
                     else:
                         timing = measure(lambda: reference(*call_args,**options), lambda: native(*call_args,**options), args.repeat, 15)
                     assert xx.get_num_threads() == threads
                     backend = 'identity' if call_args and actual is call_args[0] else execution_kind(api)
                     if api == 'measure.mesh_surface_area' and call_args[0].dtype.char not in ('f', 'd'):
                         backend = 'primitive-provider'
-                    results.append({'api': api, 'size': case_size, 'dtype': 'shape-only' if api in LEVEL_SET_FUNCTIONS else case_dtype,
+                    results.append({'api': api, 'size': case_size, 'dtype': 'shape-only' if api in (*LEVEL_SET_FUNCTIONS, 'draw.random_shapes') else case_dtype,
                                     **({'default_input_kind':'shape-derived-constructor',
                                         'descriptor_carrier_shape':list(data.shape),
                                         'constructor_parameters':({'radius':call_args[0],'ndim':call_args[1]}
                                             if api=='restoration.ball_kernel' else {'shape':list(call_args[0]),'intensity':call_args[1]}),
                                         'requested_output_dtype':'float64'} if api in ROLLING_KERNEL_FUNCTIONS else {}),
                                     **({'input_shape': list(call_args[0]), 'default_input_kind': 'image-shape-only',
-                                        'descriptor_carrier_dtype': case_dtype} if api in LEVEL_SET_FUNCTIONS else {}),
+                                        'descriptor_carrier_dtype': case_dtype} if api in (*LEVEL_SET_FUNCTIONS, 'draw.random_shapes') else {}),
                                     **({'input_shape': list(call_args[0]),'n_points':call_args[1],
                                         'default_input_kind':'shape-count-output-dtype-adapter',
                                         'requested_output_dtype':str(options['dtype'])} if api=='util.regular_seeds' else {}),
@@ -471,7 +504,7 @@ def main():
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
     if unassessed:
-        lines.extend(('', 'Pyramid requests outside the bounded native route are listed in the JSON report.'))
+        lines.extend(('', 'Cases outside supported native bounds are listed in the JSON report.'))
     args.output.with_suffix('.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
 
 
