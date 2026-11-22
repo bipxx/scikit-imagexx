@@ -1,0 +1,31 @@
+{
+  "api": "morphology.medial_axis",
+  "signature": "(image, mask=None, return_distance=False, *, rng=None)",
+  "source_base": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+  "reference": {
+    "stock": "scikit-image 0.26.0",
+    "admission_sha256": "f374a25491b3170728c84b1e3ff971c40b405a1dfca4094fc9704ac50a2e3376",
+    "fixture": "tests/fixtures/medial_axis_originals_v1.json",
+    "fixture_raw_sha256": "952e27f23474acd7517c55b3cfd01163334958d74bcf18a00ebbaf38a2c54c40",
+    "table_raw_sha256": "71f28a6db665d55f029fb538f636d3f5b9911eeebcb42b6167a7a442f5262593"
+  },
+  "bounded_native": {
+    "inputs": "Plain owner-validated C-order canonical Boolean ndarray, rank 2, 1..192 in each dimension. Optional exact same-shape Boolean mask. Ordinary bool return_distance.",
+    "rng": "Explicit nonnegative Python integer, exact PCG64 bit generator or exact NumPy Generator with PCG64. Genuine NumPy default_rng and permutation preserve caller state and tie ranks.",
+    "distance": "Genuine SciPy ndimage EDT on the masked foreground, with stock all-foreground behavior. SciPy is optional; a missing or replaced provider invokes established compatibility.",
+    "native": "C++ prepares the canonical masked foreground, validates provider buffers, derives fixed original corner scores, orders by distance then corner score then unique seeded rank, and uses the canonical 512-entry table for the single ordered pass.",
+    "outputs": "Independent owning writable C Boolean skeleton and optionally separate owning writable C float64 distance. NumPy restores original Boolean values outside mask; returned distance remains that of masked foreground.",
+    "remaining": "Seedless/default entropy, other RNGs, numeric and alternative ndarray descriptors/layouts, empty/rank/error controls and replacement providers are compatibility routes. Distinguish provider work and the serial native topology.",
+    "threading": "Serial native topology in normal and forced-scalar modes."
+  },
+  "timing": {
+    "cases": ["symmetric-thick", "perforated-distance", "masked-components-distance", "seeded-corridors"],
+    "workers": 1,
+    "boundary": "Complete public call from fixed allocated inputs, with independent per-call deterministic integer seed. Include optional EDT copy, RNG, provider work and output allocation.",
+    "warmup_ms_per_side": 250,
+    "accepted_rounds_per_side": 7,
+    "minimum_batch_ms": 100,
+    "minimum_ratio_each": 1,
+    "execution_authority": null
+  }
+}
