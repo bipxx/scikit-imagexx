@@ -11,9 +11,9 @@ import subprocess
 import sys
 import time
 
-SOURCE = '7f8d4c5a517cba527c6eb4d9912db93fb264132a'
-TREE = 'a4f94c2fd8b0d18e2074567efb2c200cdabd10ab'
-MANIFEST_PIN = 'cc462bbf0e8092d3f68439e800ab5ff3909e59dfd7d77750d041858e5aecee31'
+SOURCE = '136b0d16f85f56f3c479e918ac16bdab486c36b1'
+TREE = '5cd4fda8894f946516526f943313a558c5b7abb0'
+MANIFEST_PIN = '4a2f0cb171ee0f3c71ccf3498587b95d4eef0582aa9a76fe7223614a8d6ad1ae'
 WORKFLOW = '.github/workflows/public-qualification.yml'
 VERSIONS = {'windows311': '3.11.11', 'windows313': '3.13.14'}
 
