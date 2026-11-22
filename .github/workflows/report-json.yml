@@ -1,22 +1,86 @@
-name: benchmark-report-json
+name: Haar exact-source barrier
 on:
-  push:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
-  pull_request:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
-  json-syntax:
-    runs-on: ubuntu-latest
+  source:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [windows311, windows313]
+    runs-on: windows-latest
+    timeout-minutes: 45
+    env:
+      SOURCE_PROFILE: ${{ matrix.profile }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      UV_NO_CACHE: '1'
     steps:
+      - name: Verify runner scratch capacity
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $required = 32GB
+          foreach ($path in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
+            $drive = [System.IO.DriveInfo]::new([System.IO.Path]::GetPathRoot($path))
+            Write-Output "$path free=$($drive.AvailableFreeSpace) required=$required"
+            if ($drive.AvailableFreeSpace -lt $required) { throw 'Runner free capacity is below peak plus reserve' }
+          }
+          git config --global core.autocrlf true
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git config --global core.longpaths true
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/checkout@v4
+        with:
+          path: carrier
+          persist-credentials: false
+          sparse-checkout: |
+            .github/u182-source-proof
+      - uses: actions/checkout@v4
+        with:
+          ref: 817b6f82f47ce4cf4ef6656491f4d7b1fc40b346
+          path: tested
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - run: python tools/check_report_json.py
+          python-version: '3.13.14'
+      - name: Execute the complete source-only workflow command
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $script = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-source-proof/run-source-barrier.py'
+          $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
+          $receipts = Join-Path $env:GITHUB_WORKSPACE 'receipts'
+          $fixture = Join-Path $env:RUNNER_TEMP 'u182-haar-source'
+          git -C $source fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $py = (Get-Command python -ErrorAction Stop).Source
+          if ($env:SOURCE_PROFILE -eq 'windows311') {
+            & $py -m pip install --disable-pip-version-check --no-cache-dir uv==0.12.5
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            uv python install 3.11.11
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            $py = (uv python find --managed-python 3.11.11)
+            if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $py)) { throw 'Cannot resolve Windows CPython 3.11.11' }
+          }
+          & $py -m ensurepip --upgrade
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $py -m pip install --disable-pip-version-check --no-cache-dir pytest==9.1.1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $py -B $script --profile $env:SOURCE_PROFILE --source $source --out $receipts --fixture $fixture
+          $outer = $LASTEXITCODE
+          if (Test-Path -LiteralPath $receipts) {
+            $outer | Set-Content -Encoding ascii (Join-Path $receipts 'pytest-process.exit')
+          }
+          exit $outer
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: haar-exact-source-${{ matrix.profile }}
+          path: |
+            receipts/*.json
+            receipts/*.xml
+            receipts/*.bin
+            receipts/*.exit
+          if-no-files-found: warn
