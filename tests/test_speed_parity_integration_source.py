@@ -10,8 +10,8 @@ import subprocess
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v47.json'
-CONTEXT_SHA256 = 'd3ea4d218ced7fb02a2c3a52d0f568df5d99485cbb67de2d76ce644348b520a6'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v48.json'
+CONTEXT_SHA256 = 'e4b0504df24c108ac5370f8e856b49a4d77d31935ac142b6616551e9ef0ff90d'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')

@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import re
+import runpy
 from types import SimpleNamespace
 import zipfile
 
@@ -475,20 +476,10 @@ def test_moments_provider_metadata_does_not_claim_fft_workers():
 
 
 def test_derived_benchmark_has_five_actual_tensor_cases():
-    source = ast.parse((ROOT / 'python/skimagexx/coverage.py').read_bytes())
-    coords_family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
-                         and any(isinstance(t, ast.Name) and t.id == 'COORDS_MOMENTS_FUNCTIONS' for t in n.targets))
-    family = next(ast.literal_eval(n.value) for n in source.body if isinstance(n, ast.Assign)
-                  and any(isinstance(t, ast.Name) and t.id == 'DERIVED_MOMENTS_FUNCTIONS' for t in n.targets))
-    dtype_function = next(n for n in source.body if isinstance(n, ast.FunctionDef) and n.name == 'native_dtypes')
-    namespace = {'DRAW_COORDINATE_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
-                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
-                     and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
-                 'LEVEL_SET_FUNCTIONS':level_set_family(source),
-                 'ROLLING_KERNEL_FUNCTIONS':next(ast.literal_eval(n.value) for n in source.body
-                     if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
-                     and t.id == 'ROLLING_KERNEL_FUNCTIONS' for t in n.targets))}
-    exec(compile(ast.Module(body=[dtype_function], type_ignores=[]), '<supported default dtypes>', 'exec'), namespace)
+    # Load the same import-free registry as the qualifier, including the real dtype globals.
+    namespace = runpy.run_path(str(ROOT / 'python/skimagexx/coverage.py'))
+    coords_family = namespace['COORDS_MOMENTS_FUNCTIONS']
+    family = namespace['DERIVED_MOMENTS_FUNCTIONS']
     main = next(n for n in ast.parse((ROOT / 'benchmarks/coverage.py').read_bytes()).body
                 if isinstance(n, ast.FunctionDef) and n.name == 'main')
     guard = next(n for n in ast.walk(main) if isinstance(n, ast.If)
@@ -508,7 +499,7 @@ def test_derived_benchmark_has_five_actual_tensor_cases():
               and any(isinstance(t, ast.Name) and t.id in ('case_size', 'case_dtype') for t in n.targets)]
     code = compile(ast.Module(body=labels, type_ignores=[]), '<actual input labels>', 'exec')
     for api in (*family, 'measure.moments'):
-        values = dict(api=api, LEVEL_SET_FUNCTIONS=level_set_family(source), DERIVED_MOMENTS_FUNCTIONS=family, COORDS_MOMENTS_FUNCTIONS=coords_family, size=1024, dtype='fixture dtype',
+        values = dict(api=api, LEVEL_SET_FUNCTIONS=namespace['LEVEL_SET_FUNCTIONS'], DERIVED_MOMENTS_FUNCTIONS=family, COORDS_MOMENTS_FUNCTIONS=coords_family, size=1024, dtype='fixture dtype',
                       call_args=(SimpleNamespace(dtype=SimpleNamespace(name='actual dtype')),),
                       np=SimpleNamespace(dtype=lambda x: SimpleNamespace(name=x)))
         exec(code, values)
