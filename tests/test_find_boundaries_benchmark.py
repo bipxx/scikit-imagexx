@@ -143,7 +143,14 @@ def test_boundary_external_root_envelope_only_metadata(tmp_path,monkeypatch,faul
             'coverage/contracts/vi-public-log2-provider-source-v1.json',
             'coverage/contracts/mark-lbp-controller-source-successor-v1.json',
             'coverage/contracts/mark-lbp-fp-integration-v2.json')
-        for name in reader_inputs:
+        from tools import vi_public_matmul_context as history_reader
+        from tools.mark_lbp_fp_context import VI_PUBLIC_MATMUL_CONTEXT_SHA256
+        history = history_reader._context(ROOT, VI_PUBLIC_MATMUL_CONTEXT_SHA256)
+        assert history is not None
+        active_history_inputs = (history_reader.CONTEXT,
+                                 history['previous_candidate_history']['path'],
+                                 history['attached_data_history']['path'])
+        for name in dict.fromkeys((*reader_inputs, *active_history_inputs)):
             target=tmp_path/name;target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes((ROOT/name).read_bytes())
         if fault=='bound-cases':effective['cases']=[]

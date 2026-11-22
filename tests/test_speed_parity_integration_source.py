@@ -10,8 +10,8 @@ import subprocess
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v41.json'
-CONTEXT_SHA256 = 'cae8288bbfc17d01646f3a471cfa013c771bf8142ef1d1292b2b39c44123a7a5'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v42.json'
+CONTEXT_SHA256 = '7857785659f11e61d48ba5a71a59fc8c6d253087f5a3d79903871bb69ba081a6'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -113,7 +113,7 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
 def test_collector_covers_every_current_input_and_installed_LBP_header():
     value = data()
     q = load('tools/public_qualification.py')
-    required = set(value['source_raw_sha256']) | set(RUNTIME) | set(SOURCE)
+    required = set(value['source_raw_sha256']) | set(RUNTIME) | set(SOURCE) | {CONTEXT}
     assert required <= set(q.DRAW_SOURCE_PATHS)
     # The qualifier archives the whole commit. The successor metadata and
     # merged tests are authenticated against that archive's inputs.
