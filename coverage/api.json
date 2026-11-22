@@ -1116,11 +1116,14 @@
       "api": "draw.ellipsoid_stats",
       "kind": "callable",
       "signature": "(a, b, c)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_ellipsoid_stats_public.py",
+      "benchmark": "benchmarks/ellipsoid_stats.py",
+      "default_input_kind": "Scalar Python float radii. Native bounded volume and elliptic-integral area; exceptional scalars can use SciPy and unsupported protocols use compatibility."
     },
     {
       "api": "draw.line",
@@ -7001,11 +7004,21 @@
       "api": "segmentation.expand_labels",
       "kind": "callable",
       "signature": "(label_image, distance=1, spacing=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_expand_labels_public.py",
+      "benchmark": "benchmarks/expand_labels.py",
+      "default_input_kind": "Bounded 1D–3D native-endian C-order integer labels with ordinary distance and spacing. Native ordered Euclidean expansion; unsupported requests use compatibility."
     },
     {
       "api": "segmentation.felzenszwalb",

@@ -6,9 +6,9 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','expand_labels'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
@@ -360,6 +360,10 @@ def native_dtypes(api):
     if api=='metrics.variation_of_information':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
     if api in ('metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
         return ('bool', 'uint8')
+    if api == 'draw.ellipsoid_stats':
+        return ('float64',)
+    if api == 'segmentation.expand_labels':
+        return ('int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64')
     if api == 'metrics.structural_similarity':
         return ('float32', 'float64')
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
@@ -419,6 +423,12 @@ def flood_fill_contract():
 
 
 def default_call(api, image):
+    if api == 'draw.ellipsoid_stats':
+        return (1.0, 2.0, 3.0), {}
+    if api == 'segmentation.expand_labels':
+        import numpy as np
+        labels = np.array([[1, 0, 2], [0, 0, 0]], dtype=image.dtype)
+        return (labels,), {}
     """Arguments for the shared default parity/performance workload."""
     if api == 'transform.order_angles_golden_ratio':
         import numpy as np
@@ -1202,6 +1212,20 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api == 'draw.ellipsoid_stats':
+        import numpy as np
+        assert type(actual) is type(expected) is tuple and len(actual) == len(expected) == 2
+        assert type(actual[0]) is type(expected[0]) is float and actual[0] == expected[0]
+        assert type(actual[1]) is type(expected[1]) is np.float64
+        np.testing.assert_allclose(actual[1], expected[1], rtol=2e-14, atol=0)
+        return
+    if api == 'segmentation.expand_labels':
+        import numpy as np
+        assert actual.dtype == expected.dtype == dtype
+        assert actual.shape == expected.shape and actual.strides == expected.strides
+        assert actual.flags.c_contiguous and expected.flags.c_contiguous
+        np.testing.assert_array_equal(actual, expected)
+        return
     if api == 'transform.order_angles_golden_ratio':
         import inspect
         import numpy as np

@@ -47,11 +47,14 @@ VALUE_CASES = [
     # Shape constructors use one descriptor carrier, not image dtype cases.
     for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
                   or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon','pearson_corr_coeff'))
+                  or (native is xx.draw and name == 'ellipsoid_stats')
                   else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in (*LEVEL_SET_FUNCTIONS,'segmentation.find_boundaries')
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes('morphology.' + name))
                   if 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS and native is xx.morphology
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes('transform.order_angles_golden_ratio'))
                   if native is xx.transform and name == 'order_angles_golden_ratio'
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes('segmentation.expand_labels'))
+                  if native is xx.segmentation and name == 'expand_labels'
                   else (np.bool_, np.uint8) if native is xx.metrics and name in ('hausdorff_distance', 'hausdorff_pair')
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
@@ -528,7 +531,8 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             np.testing.assert_array_equal(value,reference)
         return
     if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff',
-               'metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
+               'metrics.hausdorff_distance', 'metrics.hausdorff_pair', 'draw.ellipsoid_stats',
+               'segmentation.expand_labels'):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype

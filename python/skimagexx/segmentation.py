@@ -15,6 +15,8 @@ from ._join_segmentations import join_segmentations
 __all__ += ['join_segmentations']
 from ._mark_boundaries import mark_boundaries
 __all__ += ['mark_boundaries']
+from ._expand_labels import expand_labels
+__all__ += ['expand_labels']
 
 
 @wraps(_consumers.clear_border)
