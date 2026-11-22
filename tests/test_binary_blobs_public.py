@@ -14,7 +14,7 @@ import skimagexx as xx
 from skimagexx import _core
 from skimagexx._compat import FallbackWarning
 
-from binary_blobs_reference import cases, generator_state, observe, sha
+from binary_blobs_reference import SOURCE_SHA, cases, generator_state, observe, sha
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +35,10 @@ PROFILE_VALUES = json.loads(PROFILE_BYTES)['profiles'][PROFILE_KEY]
 SAVED['default']['gaussian'][0]['output'] = PROFILE_VALUES['default_gaussian_sha256']
 SAVED['rank-zero']['observed']['output']['type'] = PROFILE_VALUES['rank_zero_type_name']
 
+MINIMUM_SAME_HOST_GAUSSIAN = frozenset((
+    'default', 'line', 'plane-endpoint-zero', 'plane-endpoint-full', 'one-point', 'nearest-double-cutoff',
+))
+
 
 @pytest.mark.parametrize('name,options,native', list(cases()), ids=list(SAVED))
 def test_binary_blobs_frozen_public(name, options, native, monkeypatch):
@@ -45,6 +49,32 @@ def test_binary_blobs_frozen_public(name, options, native, monkeypatch):
     assert inspect.signature(owned) == inspect.signature(original)
     row = SAVED[name]
     assert native == row['native']
+    expected_gaussian = row['gaussian']
+    if PROFILE_KEY == 'Linux/x86_64/3.11/1.24.4/1.15.3/0.26.0' and name in MINIMUM_SAME_HOST_GAUSSIAN:
+        from skimage._shared.filters import gaussian as stock_gaussian
+        from skimage.data import _binary_blobs as stock_blobs
+
+        # These archived minimum rows have host-dependent Gaussian words. Bind
+        # the live stock field only after the same seed reproduces the frozen
+        # input mask and complete public outcome.
+        assert native and type(options['rng']) is int
+        assert original is stock_blobs.binary_blobs and stock_blobs.gaussian is stock_gaussian
+        assert sha(Path(inspect.getsourcefile(original)).read_bytes()) == SOURCE_SHA
+        stock_trace = []
+
+        def record_stock_gaussian(mask, *args, **kwargs):
+            input_sha = sha(mask.tobytes())
+            field = stock_gaussian(mask, *args, **kwargs)
+            stock_trace.append(dict(input=input_sha, output=sha(field.tobytes())))
+            return field
+
+        with monkeypatch.context() as stock:
+            stock.setattr(stock_blobs, 'gaussian', record_stock_gaussian)
+            assert observe(original, options) == row['observed']
+        assert len(stock_trace) == len(row['gaussian']) == 1
+        assert stock_trace[0]['input'] == row['gaussian'][0]['input']
+        expected_gaussian = stock_trace
+
     gaussian, contrast = _core.gaussian_nd, _core.contrast
     assert all(inspect.isbuiltin(entry) and entry.__module__ == 'skimagexx._core'
                for entry in (gaussian, contrast))
@@ -82,7 +112,7 @@ def test_binary_blobs_frozen_public(name, options, native, monkeypatch):
     finally:
         xx.set_fallback_enabled(previous)
     assert len(contrast_calls) == int(native)
-    assert gaussian_calls == (row['gaussian'] if native else [])
+    assert gaussian_calls == (expected_gaussian if native else [])
 
 
 def test_binary_blobs_export_and_default_generator(monkeypatch):

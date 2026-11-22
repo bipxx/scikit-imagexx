@@ -8,8 +8,8 @@ import sys
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-u182-integration-v2.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v2.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-data-corrective-v1.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-data-corrective-v1.json'
 RUNNER='tools/vi4_public_matmul_capture.py'
 ADAPTER='benchmarks/vi_public_matmul_provider_execution_v2.py'
 CONSUMER='benchmarks/vi_public_matmul_provider_consumer_v2.py'
@@ -58,8 +58,11 @@ def test_unbound_current_route_exact_dependencies_and_caps():
     golden_pearson_v3_parent_capture=data('coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v2.json');golden_pearson_v3_parent_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v2.json')
     upstream_only_parent_capture=data('coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v3.json');upstream_only_parent_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v3.json')
     asset_blobs_parent_capture=data('coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json');asset_blobs_parent_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json')
-    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json').read_bytes()))
-    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json').read_bytes()))
+    corrective_parent_capture=data('coverage/contracts/vi4-public-matmul-capture-u182-integration-v2.json');corrective_parent_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v2.json')
+    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-u182-integration-v2.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-u182-integration-v2.json').read_bytes()))
+    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v2.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v2.json').read_bytes()))
+    assert corrective_parent_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json').read_bytes()))
+    assert corrective_parent_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json').read_bytes()))
     assert asset_blobs_parent_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v3.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v3.json').read_bytes()))
     assert asset_blobs_parent_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v3.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v3.json').read_bytes()))
     assert upstream_only_parent_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v2.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v2.json').read_bytes()))

@@ -7,6 +7,7 @@ from skimage import filters as reference_filters, color as reference_color, util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
 from skimagexx.coverage import set_color_default_result
+from skimage import data as reference_data
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
@@ -35,6 +36,8 @@ FUNCTIONS = [(native, original, name) for native, original in MODULES for name i
 # Exercise signatures and values independently of the advertised __all__ list.
 FUNCTIONS += [(native_rank_generic, reference_rank_generic, name)
               for name in ('sum', 'windowed_histogram', 'majority') if name not in native_rank_generic.__all__]
+# Data resource accessors have separate packaged-asset tests.
+FUNCTIONS.append((xx.data, reference_data, "binary_blobs"))
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
            if inspect.isclass(getattr(native,name))]
 
