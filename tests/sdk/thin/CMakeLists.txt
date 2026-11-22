@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.18)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    project(ThinClient LANGUAGES CXX)
+    find_package(skimagexx CONFIG REQUIRED)
+    enable_testing()
+endif()
+
+add_executable(thin_client ../../cmake_consumer/thin_consumer.cpp)
+target_compile_features(thin_client PRIVATE cxx_std_17)
+target_link_libraries(thin_client PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_thin_consumer COMMAND thin_client)

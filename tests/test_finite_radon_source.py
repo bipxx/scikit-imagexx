@@ -33,8 +33,22 @@ def test_missing_intake_refuses_before_runtime(monkeypatch):
 def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  import sys,types
  record=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v1.json').read_bytes())
- live_raw=(c.ROOT/record['source']).read_bytes()
- live_guard=Path(__file__).read_bytes()
+ newest_raw=(c.ROOT/record['source']).read_bytes()
+ newest_guard=Path(__file__).read_bytes()
+ v5=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v5.json').read_bytes())
+ assert v5['schema']=='finite-radon-public-exports-v5' and v5['original_calls']==0
+ assert v5['previous_record']=='coverage/contracts/finite-radon-public-exports-v4.json'
+ assert hashlib.sha256((c.ROOT/v5['previous_record']).read_bytes()).hexdigest()==v5['previous_record_raw_sha256']
+ assert hashlib.sha256(newest_raw).hexdigest()==v5['current_raw_sha256']
+ assert hashlib.sha256(newest_guard).hexdigest()==v5['guard_raw_sha256']
+ v5_suffix=v5['source_suffix'].encode()
+ assert v5_suffix and newest_raw.endswith(v5_suffix) and newest_raw.count(v5_suffix)==1
+ live_raw=newest_raw.removesuffix(v5_suffix)
+ live_guard=newest_guard
+ for edit in v5['guard_inverse']:
+  block=edit['current'].encode()
+  assert block and live_guard.count(block)==1
+  live_guard=live_guard.replace(block,edit['previous'].encode(),1)
  v4=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v4.json').read_bytes())
  assert v4['schema']=='finite-radon-public-exports-v4' and v4['original_calls']==0
  assert v4['previous_record']=='coverage/contracts/finite-radon-public-exports-v3.json'
@@ -88,7 +102,7 @@ def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  provider.frt2=object();provider.ifrt2=object()
  monkeypatch.setitem(sys.modules,'skimagexx',parent)
  monkeypatch.setitem(sys.modules,'skimagexx._finite_radon',provider)
- for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True)):
+ for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True)):
   tree=ast.parse(text);declarations=[]
   for node in tree.body:
    if isinstance(node,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='__all__'for t in node.targets):declarations.append(node)

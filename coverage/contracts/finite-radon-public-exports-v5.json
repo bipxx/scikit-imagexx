@@ -1,0 +1,19 @@
+{
+  "schema": "finite-radon-public-exports-v5",
+  "previous_record": "coverage/contracts/finite-radon-public-exports-v4.json",
+  "previous_record_raw_sha256": "1bca9053796881b432cbb222ac1fb80cb05e14db020ecd04ae7ab2bf4f1fb62b",
+  "current_raw_sha256": "75109ae7604167626101fc3cf1f60f74f952f603c122ceb0e12226d00a89f97a",
+  "source_suffix": "\nfrom ._hough_circle import hough_circle\nfrom ._hough_line_peaks import hough_line_peaks\n__all__ += ['hough_circle', 'hough_line_peaks']\n",
+  "guard_raw_sha256": "e92187a7ed935944f28398173ac6f42813a34b805cfe1f9d398dd3b58a551083",
+  "guard_inverse": [
+    {
+      "current": " newest_raw=(c.ROOT/record['source']).read_bytes()\n newest_guard=Path(__file__).read_bytes()\n v5=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v5.json').read_bytes())\n assert v5['schema']=='finite-radon-public-exports-v5' and v5['original_calls']==0\n assert v5['previous_record']=='coverage/contracts/finite-radon-public-exports-v4.json'\n assert hashlib.sha256((c.ROOT/v5['previous_record']).read_bytes()).hexdigest()==v5['previous_record_raw_sha256']\n assert hashlib.sha256(newest_raw).hexdigest()==v5['current_raw_sha256']\n assert hashlib.sha256(newest_guard).hexdigest()==v5['guard_raw_sha256']\n v5_suffix=v5['source_suffix'].encode()\n assert v5_suffix and newest_raw.endswith(v5_suffix) and newest_raw.count(v5_suffix)==1\n live_raw=newest_raw.removesuffix(v5_suffix)\n live_guard=newest_guard\n for edit in v5['guard_inverse']:\n  block=edit['current'].encode()\n  assert block and live_guard.count(block)==1\n  live_guard=live_guard.replace(block,edit['previous'].encode(),1)\n",
+      "previous": " live_raw=(c.ROOT/record['source']).read_bytes()\n live_guard=Path(__file__).read_bytes()\n"
+    },
+    {
+      "current": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True)):\n",
+      "previous": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True)):\n"
+    }
+  ],
+  "original_calls": 0
+}

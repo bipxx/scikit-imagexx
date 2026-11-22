@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "77614c7bc3670b6ad94e93b86f91b64cc7a3019cf9fb77a029e923c6dbbedc70",
+  "source_inventory_sha256": "47f451bd99e58164e9d7e205f7ecb4e6c9f474284a2c25d055a7519d8d54e3e3",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,9 +26,9 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 301,
+      "native-partial": 306,
       "packaged-asset-partial": 10,
-      "upstream-only": 157
+      "upstream-only": 152
     },
     "kinds": {
       "callable": 448,
@@ -5952,15 +5952,17 @@
       "api": "feature.match_descriptors",
       "kind": "callable",
       "signature": "(descriptors1, descriptors2, metric=None, p=2, max_distance=inf, cross_check=True, max_ratio=1.0)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool"
+      ],
       "canonical_api": "feature.match_descriptors",
       "identity_alias": false,
       "family": "feature",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Blocked pairwise Hamming/Lp distances plus reciprocal and ratio filtering",
+      "easiest_credible_path": "Audit/extend existing native implementation: Blocked pairwise Hamming/Lp distances plus reciprocal and ratio filtering",
       "mandatory_route_dependencies": [
         "array",
         "pointwise",
@@ -5968,7 +5970,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze binary/float descriptors with duplicates and outliers against pinned upstream, including metric selection, equal-distance tie, zero denominator and empty descriptors; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered metric selection, equal-distance tie, zero denominator and empty descriptors. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "metric selection, equal-distance tie, zero denominator and empty descriptors",
       "parity_cases_to_freeze": "binary/float descriptors with duplicates and outliers",
       "numerical_policy": "Exact candidate/descriptor shape, mask, ordering, tie and RNG decisions; declared tolerance for response and normalized descriptor floats.",
@@ -5979,10 +5981,10 @@
         "kind": "compute",
         "specific_workload": "binary/float descriptors with duplicates and outliers",
         "one_worker_recipe": "Blank/textured images, edge-heavy images, tiny and megapixel sizes, sparse/dense keypoints; report detect/extract/full pipeline separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/match_descriptors.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_match_descriptors_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -15060,15 +15062,18 @@
       "api": "morphology.skeletonize",
       "kind": "callable",
       "signature": "(image, *, method=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
       "canonical_api": "morphology.skeletonize",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Port source LUT-based Zhang 2D and Lee 2D/3D thinning with exact deletion schedule",
+      "easiest_credible_path": "Audit/extend existing native implementation: Port source LUT-based Zhang 2D and Lee 2D/3D thinning with exact deletion schedule",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood",
@@ -15076,7 +15081,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze loops/branches/thin bridges and 3D topology against pinned upstream, including method/dimension defaults, topology, iteration order and boolean output; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered method/dimension defaults, topology, iteration order and boolean output. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "method/dimension defaults, topology, iteration order and boolean output",
       "parity_cases_to_freeze": "loops/branches/thin bridges and 3D topology",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -15087,10 +15092,10 @@
         "kind": "compute",
         "specific_workload": "loops/branches/thin bridges and 3D topology",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/skeletonize.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_skeletonize_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -15137,15 +15142,18 @@
       "api": "morphology.thin",
       "kind": "callable",
       "signature": "(image, max_num_iter=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
       "canonical_api": "morphology.thin",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Port two-subiteration Guo-Hall LUT thinning",
+      "easiest_credible_path": "Audit/extend existing native implementation: Port two-subiteration Guo-Hall LUT thinning",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood",
@@ -15153,7 +15161,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze loops, isolated pixels and truncated iterations against pinned upstream, including max_num_iter, convergence, deletion order and border padding; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered max_num_iter, convergence, deletion order and border padding. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "max_num_iter, convergence, deletion order and border padding",
       "parity_cases_to_freeze": "loops, isolated pixels and truncated iterations",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -15164,10 +15172,10 @@
         "kind": "compute",
         "specific_workload": "loops, isolated pixels and truncated iterations",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/thin.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_thin_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17260,15 +17268,18 @@
       "api": "transform.hough_circle",
       "kind": "callable",
       "signature": "(image, radius, normalize=True, full_output=False)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
       "canonical_api": "transform.hough_circle",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Vote precomputed discrete perimeter offsets for each radius",
+      "easiest_credible_path": "Audit/extend existing native implementation: Vote precomputed discrete perimeter offsets for each radius",
       "mandatory_route_dependencies": [
         "array",
         "geometry",
@@ -17276,7 +17287,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze exact single circles and dense edge masks against pinned upstream, including normalize, full_output padding, radius cast and duplicate perimeter votes; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered normalize, full_output padding, radius cast and duplicate perimeter votes. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "normalize, full_output padding, radius cast and duplicate perimeter votes",
       "parity_cases_to_freeze": "exact single circles and dense edge masks",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -17287,10 +17298,10 @@
         "kind": "compute",
         "specific_workload": "exact single circles and dense edge masks",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/hough_circle.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_hough_circle_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17408,15 +17419,17 @@
       "api": "transform.hough_line_peaks",
       "kind": "callable",
       "signature": "(hspace, angles, dists, min_distance=9, min_angle=10, threshold=None, num_peaks=inf)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint64"
+      ],
       "canonical_api": "transform.hough_line_peaks",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Separable accumulator maximum suppression with angle wrap logic",
+      "easiest_credible_path": "Audit/extend existing native implementation: Separable accumulator maximum suppression with angle wrap logic",
       "mandatory_route_dependencies": [
         "array",
         "geometry",
@@ -17424,7 +17437,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze equal/symmetric peaks near angle boundaries against pinned upstream, including min_distance/min_angle, threshold default, tie order and peak count; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered min_distance/min_angle, threshold default, tie order and peak count. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "min_distance/min_angle, threshold default, tie order and peak count",
       "parity_cases_to_freeze": "equal/symmetric peaks near angle boundaries",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -17435,10 +17448,10 @@
         "kind": "compute",
         "specific_workload": "equal/symmetric peaks near angle boundaries",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/hough_line_peaks.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_hough_line_peaks_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

@@ -268,3 +268,6 @@ def hessian_matrix_det(image,sigma=1,approximate=True):
 
 
 __all__+=['hessian_matrix_det']
+
+from ._match_descriptors import match_descriptors
+__all__ += ['match_descriptors']

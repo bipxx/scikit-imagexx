@@ -8,6 +8,7 @@ import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HOUGH_FUNCTIONS, THINNING_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 _UNTAGGED_ARRAY_APIS = {
@@ -21,25 +22,60 @@ _UNTAGGED_ARRAY_APIS = {
 }
 
 
-def calls(api,dtype):
+def calls(api,dtype,monkeypatch):
     rng=np.random.default_rng(533)
     shape=(17,19,3) if needs_color_input(api) else (17,19)
     data=rng.integers(0,256,shape,dtype=np.uint8)
     if api == 'util.random_noise' and dtype == 'uint16':
         data = data.astype(np.uint16) * 257
+    elif api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == 'bool':
+        data = data >= 128
     elif dtype!='uint8':
         data=(data/255).astype(dtype)
     tags = {'units': 'linear', 'source': 'parity'}
     untagged_arrays = api in _UNTAGGED_ARRAY_APIS
-    if not untagged_arrays:
+    if not untagged_arrays and api not in HOUGH_FUNCTIONS:
         data = data.astype(np.dtype(dtype, metadata=tags))
     arguments,options=default_call(api,data)
-    if not untagged_arrays and arguments and isinstance(arguments[0],np.ndarray):
+    if not untagged_arrays and api not in HOUGH_FUNCTIONS and arguments and isinstance(arguments[0],np.ndarray):
         first = arguments[0].view(np.dtype(arguments[0].dtype, metadata=tags))
         arguments=(first,*arguments[1:])
     module,name=api.rsplit('.',1)
-    reference=getattr(importlib.import_module('skimage.'+module),name)
+    reference_module=importlib.import_module('skimage.'+module)
+    reference=getattr(reference_module,name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
+    if api in HOUGH_FUNCTIONS:
+        # Each array carrier has an independent native tag boundary.
+        marker = object()
+        for index, value in enumerate(arguments):
+            if not isinstance(value, np.ndarray):
+                continue
+            tagged = value.view(np.dtype(value.dtype, metadata=tags))
+            assert tagged.dtype.metadata == tags and value.dtype.metadata is None
+            tagged_arguments = (*arguments[:index], tagged, *arguments[index + 1:])
+            with pytest.raises(NotImplementedError, match=re.escape(api)):
+                native(*tagged_arguments, **options)
+            called = []
+
+            def replaced(*args, **kwargs):
+                called.append(args)
+                return marker
+
+            with monkeypatch.context() as patch:
+                patch.setattr(reference_module, name, replaced)
+                previous = xx.set_fallback_enabled(True)
+                try:
+                    with pytest.warns(xx.FallbackWarning, match=re.escape(api)):
+                        assert native(*tagged_arguments, **options) is marker
+                finally:
+                    xx.set_fallback_enabled(previous)
+            assert len(called) == 1 and all(
+                actual is source for actual, source in zip(called[0], tagged_arguments, strict=True)
+            )
+    elif api == 'feature.match_descriptors':
+        assert all(operand.dtype.metadata == tags for operand in arguments)
+    elif api in THINNING_FUNCTIONS:
+        assert arguments[0].dtype.metadata == tags
     if untagged_arrays:
         # Preserve the tag boundary check and the native parity case for every advertised dtype.
         tagged_arguments = tuple(array.view(np.dtype(array.dtype, metadata=tags)) for array in arguments)
@@ -84,6 +120,17 @@ def calls(api,dtype):
         finally:
             xx.set_fallback_enabled(previous)
         return actual, reference(*arguments, **options), data
+    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+        with warnings.catch_warnings(record=True) as reference_notices:
+            warnings.simplefilter('always')
+            expected = reference(*arguments, **options)
+        with warnings.catch_warnings(record=True) as notices:
+            warnings.simplefilter('always')
+            actual = native(*arguments, **options)
+        assert [(n.category, str(n.message)) for n in notices] == [
+            (n.category, str(n.message)) for n in reference_notices
+        ]
+        return actual, expected, arguments
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         expected=reference(*arguments,**options)
@@ -93,6 +140,9 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=image)
+        return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
         assert_default_parity(api, np.dtype(dtype), actual, expected, image=image)
         return
@@ -172,8 +222,8 @@ def configuration(request):
 
 
 @pytest.mark.parametrize('api,dtype',CASES)
-def test_every_native_entry_dtype_metadata(api,dtype):
-    actual,expected,image=calls(api,dtype)
+def test_every_native_entry_dtype_metadata(api,dtype,monkeypatch):
+    actual,expected,image=calls(api,dtype,monkeypatch)
     compare(actual,expected,api,dtype,image=image)
 
 

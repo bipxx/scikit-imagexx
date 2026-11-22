@@ -7,6 +7,7 @@ import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HOUGH_FUNCTIONS, THINNING_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -31,6 +32,8 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     rgb=rng.integers(0,256,(9,11,3),dtype=np.uint8)
     if api == 'util.random_noise' and dtype == 'uint16':
         gray = gray.astype(np.uint16) * 257
+    elif api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == 'bool':
+        gray = gray >= 128
     elif dtype!='uint8':
         gray=(gray/255).astype(dtype);rgb=(rgb/255).astype(dtype)
     image=(rgb if needs_color_input(api) else gray).view(descriptor)
@@ -41,6 +44,13 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
         assert owning.flags.owndata and owning.dtype == descriptor
         image = owning
     arguments,options=default_call(api,image)
+    if api == 'feature.match_descriptors':
+        assert all(operand.dtype is descriptor for operand in arguments)
+    elif api == 'transform.hough_line_peaks':
+        assert arguments[0].dtype is descriptor
+        arguments = (arguments[0], *(vector.view(alias('float64')) for vector in arguments[1:]))
+    elif api in (*THINNING_FUNCTIONS, 'transform.hough_circle'):
+        assert arguments[0].dtype is descriptor
     if api == 'metrics.hausdorff_pair':
         arguments = tuple(mask.view(descriptor) for mask in arguments)
     module,name=api.rsplit('.',1)
@@ -82,6 +92,9 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
         if api == 'metrics.hausdorff_pair':
             assert all(type(point) is type(reference) is np.ndarray
                        for point, reference in zip(actual, expected))
+        return
+    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=arguments)
         return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
         assert_default_parity(api, np.dtype(dtype), actual, expected, image=image)

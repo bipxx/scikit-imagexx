@@ -23,13 +23,16 @@ def current_capsule(tmp_path):
     names = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files'], text=True).splitlines()
     layout = q.current_install_layout(lambda n: (ROOT / n).read_bytes(), names, 'modern')
     # This capsule models current source install rules, not historical71 acceptance.
-    assert layout['SDK_count'] == 120
+    assert layout['SDK_count'] == 125
     assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']
     assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',
             'include/skimagexx/pearson.hpp', 'include/skimagexx/hausdorff.hpp',
             'include/skimagexx/ellipsoid_stats.hpp', 'include/skimagexx/expand_labels.hpp',
             'include/skimagexx/find_contours.hpp', 'include/skimagexx/random_noise.hpp',
             'include/skimagexx/random_shapes.hpp'} <= set(layout['SDK_members'])
+    assert {'include/skimagexx/match_descriptors.hpp', 'include/skimagexx/thin.hpp',
+            'include/skimagexx/skeletonize.hpp', 'include/skimagexx/hough_circle.hpp',
+            'include/skimagexx/hough_line_peaks.hpp'} <= set(layout['SDK_members'])
     runtime = dict(source=dict(revision='a' * 40, files_sha256=dict.fromkeys(names, 'inert-authenticated-source')),
                    runtime=dict(sdk_sha256=dict.fromkeys(layout['SDK_members'], 'inert-authenticated-sdk')))
     marker = dict(schema='rank-corpus-sdk-scope-v1', scope=c.CURRENT_PRODUCT_SCOPE,
@@ -47,18 +50,19 @@ def test_current_scope_uses_exact_source_derived_sdk_names(current_capsule, prof
     assert c.validate_sdk_scope(ROOT, capsule, runtime) == c.CURRENT_PRODUCT_SCOPE
 
 
-@pytest.mark.parametrize('fault', ('old68', 'old71', 'old83', 'old85', 'old86', 'old87', 'old88', 'old89', 'old90', 'old91', 'stale247', 'foreign-name', 'extra-name', 'wrong-profile', 'missing-marker', 'missing-marker-false68', 'revision'))
+@pytest.mark.parametrize('fault', ('old68', 'old71', 'old83', 'old85', 'old86', 'old87', 'old88', 'old89', 'old90', 'old91', 'old120', 'stale247', 'stale301', 'foreign-name', 'extra-name', 'wrong-profile', 'missing-marker', 'missing-marker-false68', 'revision'))
 def test_current_wrong_sdk_or_scope_cannot_pass(current_capsule, fault):
     capsule, runtime, marker = current_capsule; sdk = runtime['runtime']['sdk_sha256']
-    if fault in ('old68', 'old71', 'old83', 'old85', 'old86', 'old87', 'old88', 'old89', 'old90', 'old91', 'missing-marker-false68'):
+    if fault in ('old68', 'old71', 'old83', 'old85', 'old86', 'old87', 'old88', 'old89', 'old90', 'old91', 'old120', 'missing-marker-false68'):
         # Synthetic stale-size subsets; these are not historical SDK manifests.
-        historical_count = {'old71':71, 'old83':83, 'old85':85, 'old86':86, 'old87':87, 'old88':88, 'old89':89, 'old90':90, 'old91':91}.get(fault,68)
+        historical_count = {'old71':71, 'old83':83, 'old85':85, 'old86':86, 'old87':87, 'old88':88, 'old89':89, 'old90':90, 'old91':91, 'old120':120}.get(fault,68)
         for name in list(sdk)[historical_count:]: del sdk[name]
         assert len(sdk) == historical_count
     if fault == 'foreign-name': sdk['include/skimagexx/foreign.hpp'] = sdk.pop(next(iter(sdk)))
     if fault == 'extra-name': sdk['include/skimagexx/foreign.hpp'] = 'inert'
     if fault == 'wrong-profile': marker['profile'] = 'windows'
     if fault == 'stale247': marker['scope'] = 'current247'
+    if fault == 'stale301': marker['scope'] = 'current301'
     if fault == 'revision': marker['source_revision'] = 'b' * 40
     if fault.startswith('missing-marker'): (capsule / c.MARKER).unlink()
     else: (capsule / c.MARKER).write_text(json.dumps(marker))

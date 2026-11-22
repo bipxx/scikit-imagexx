@@ -1,0 +1,36 @@
+{
+  "api": "morphology.skeletonize",
+  "signature": "(image, *, method=None)",
+  "state": "Private, bounded Zhang component. Shared registration and installed qualification are pending.",
+  "base": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+  "reference": {
+    "scikit_image": "0.26.0",
+    "stock_handoff_sha256": "a3f6198cbfe9e2dc23ce4eae07dbfa2898145619e347e658e1d161ed4e779aff",
+    "class_table_raw_sha256": "92f3844634d02cd64ee2d2021dc1dc206758b176c89e22dc83b30f97fd13c1a7",
+    "fixture_path": "tests/fixtures/skeletonize_originals_v1.json",
+    "fixture_raw_sha256": "1d7dc129321b5690b16ea6e4fb60d379c01688b295515522bf68ed7ef45b032e",
+    "frozen_equal_rows": 18,
+    "profiles": ["Linux minimum", "Windows modern"]
+  },
+  "native": {
+    "image": "Exact C-order two-dimensional ndarray with known-bound storage, Boolean or uint8 including the two frozen descriptor variants. Each extent is within [1, 512].",
+    "method": "Exact string zhang or default None for two-dimensional inputs.",
+    "result": "Independent owning, writable C-contiguous ndarray with ordinary Boolean dtype and no metadata.",
+    "algorithm": "Zero halo, clockwise neighborhood class table, simultaneous deletions by phase. Run phases 1 then 2 until a complete pair has no deletion.",
+    "errors": "Read-only bounded C Boolean input preserves the stock buffer error. Known unbounded owners and noncanonical two-dimensional Boolean Zhang buffers are refused before upstream delegation. UInt8 accepts every nonzero byte as foreground.",
+    "threading": "Serial implementation for both normal and forced-scalar process modes."
+  },
+  "compatibility": {
+    "routes": "Explicit Lee in two or three dimensions and default Lee in three dimensions pass through established compatibility. The same policy applies to other dtypes, unclaimed dimensions, layouts, empty shapes, and method handling outside native scope.",
+    "unverified": "Lee kernels were neither captured nor implemented. Only the unchanged compatibility call shape is exercised by a hot-swap sentinel. Arbitrary array subclasses and dtype/cast-provider behavior are outside native admission."
+  },
+  "timing": {
+    "case_ids": ["tiny-diamond", "sparse-islands", "dense-edged-rectangle", "explicit-zhang-junctions"],
+    "worker_count": 1,
+    "warmup_ms_per_side": 250,
+    "accepted_rounds_per_side": 7,
+    "minimum_batch_ms": 100,
+    "minimum_speed_ratio_each": 1.0,
+    "execution_authority": null
+  }
+}

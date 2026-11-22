@@ -2060,11 +2060,14 @@
       "api": "feature.match_descriptors",
       "kind": "callable",
       "signature": "(descriptors1, descriptors2, metric=None, p=2, max_distance=inf, cross_check=True, max_ratio=1.0)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_match_descriptors_public.py",
+      "benchmark": "benchmarks/match_descriptors.py",
+      "default_input_kind": "Two independent bounded C-order Boolean descriptor arrays, each with 1\u20131024 rows and a shared width of 1\u2013256. Native ordered Hamming matches; equivalent and tagged descriptors preserve dispatch. Other metrics, layouts and parameter domains use compatibility."
     },
     {
       "api": "feature.match_template",
@@ -6702,11 +6705,15 @@
       "api": "morphology.skeletonize",
       "kind": "callable",
       "signature": "(image, *, method=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_skeletonize_public.py",
+      "benchmark": "benchmarks/skeletonize.py",
+      "default_input_kind": "Bounded C-order 2D canonical Boolean or uint8 input with extents through 512. C++ owns default and explicit Zhang. Explicit Lee and default 3D are compatibility routes."
     },
     {
       "api": "morphology.star",
@@ -6726,11 +6733,15 @@
       "api": "morphology.thin",
       "kind": "callable",
       "signature": "(image, max_num_iter=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_thin_public.py",
+      "benchmark": "benchmarks/thin.py",
+      "default_input_kind": "Bounded C-order 2D canonical Boolean or uint8 input with extents through 512. C++ owns ordered Guo\u2013Hall subiterations. None or 0 converges, and a positive exact integer through 512 caps full iterations. Other layouts and protocols use compatibility."
     },
     {
       "api": "morphology.white_tophat",
@@ -8659,11 +8670,15 @@
       "api": "transform.hough_circle",
       "kind": "callable",
       "signature": "(image, radius, normalize=True, full_output=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hough_circle_public.py",
+      "benchmark": "benchmarks/hough_circle.py",
+      "default_input_kind": "Bounded untagged C-order 2D Boolean or uint8 image with extents through 512 and ordered integer radii 0\u201364. C++ owns Bresenham votes and normalization; unsupported radii, tags and layouts use compatibility."
     },
     {
       "api": "transform.hough_circle_peaks",
@@ -8699,11 +8714,14 @@
       "api": "transform.hough_line_peaks",
       "kind": "callable",
       "signature": "(hspace, angles, dists, min_distance=9, min_angle=10, threshold=None, num_peaks=inf)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hough_line_peaks_public.py",
+      "benchmark": "benchmarks/hough_line_peaks.py",
+      "default_input_kind": "Bounded untagged C-order uint64 accumulator with fewer than 262144 cells and matching finite float64 angles and distances. C++ owns peak selection; NumPy provides capped ordering and coordinate gathers. Tagged carriers and unsupported requests use compatibility."
     },
     {
       "api": "transform.ifrt2",

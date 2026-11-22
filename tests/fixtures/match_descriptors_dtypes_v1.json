@@ -1,0 +1,1358 @@
+{
+  "root_admission_sha256": "8381c8fa5a6ef03c88587d233e5f068046b042de0fab3e04ab65ca3f1e609c4e",
+  "stock_handoff_sha256": "7147de5963834490152a80fb8a15c960dc638900024b5ee4fb227dc27681bac2",
+  "stock_receipt_sha256": {
+    "windows": "a5e48d96cd8115db18f2a7f33322f325436b87eddd573866b7615d5cd5e6986a",
+    "minimum": "1288c3b5f21cf93eff70eea862cf4eeda6fa4d384738d4765ed9b96166a62803"
+  },
+  "rows": [
+    {
+      "case": "tiny-cross",
+      "descriptor": "equivalent",
+      "changed_sides": [
+        "left"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            8,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              8,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            9,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              9,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "tiny-cross",
+      "descriptor": "equivalent",
+      "changed_sides": [
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            8,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              8,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            9,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              9,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "tiny-cross",
+      "descriptor": "equivalent",
+      "changed_sides": [
+        "left",
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            8,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              8,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            9,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              9,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "tiny-cross",
+      "descriptor": "tagged",
+      "changed_sides": [
+        "left"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            8,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "left",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              8,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            9,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              9,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "tiny-cross",
+      "descriptor": "tagged",
+      "changed_sides": [
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            8,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              8,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            9,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "right",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              9,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "tiny-cross",
+      "descriptor": "tagged",
+      "changed_sides": [
+        "left",
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            8,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "left",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              8,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            9,
+            16
+          ],
+          "strides": [
+            16,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "right",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              9,
+              16
+            ],
+            "strides": [
+              16,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "mid-cross",
+      "descriptor": "equivalent",
+      "changed_sides": [
+        "left"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            96,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              96,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            128,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              128,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "mid-cross",
+      "descriptor": "equivalent",
+      "changed_sides": [
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            96,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              96,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            128,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              128,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "mid-cross",
+      "descriptor": "equivalent",
+      "changed_sides": [
+        "left",
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            96,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              96,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            128,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              128,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "mid-cross",
+      "descriptor": "tagged",
+      "changed_sides": [
+        "left"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            96,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "left",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              96,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            128,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              128,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "mid-cross",
+      "descriptor": "tagged",
+      "changed_sides": [
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            96,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": null,
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              96,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            128,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "right",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              128,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    },
+    {
+      "case": "mid-cross",
+      "descriptor": "tagged",
+      "changed_sides": [
+        "left",
+        "right"
+      ],
+      "inputs": [
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            96,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "left",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              96,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c"
+          }
+        },
+        {
+          "type": "numpy.ndarray",
+          "shape": [
+            128,
+            64
+          ],
+          "strides": [
+            64,
+            1
+          ],
+          "dtype": "|b1",
+          "metadata": {
+            "descriptor": "right",
+            "kind": "canonical-bool"
+          },
+          "owns": false,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5",
+          "base_type": "ndarray",
+          "base": {
+            "type": "numpy.ndarray",
+            "shape": [
+              128,
+              64
+            ],
+            "strides": [
+              64,
+              1
+            ],
+            "dtype": "|u1",
+            "metadata": null,
+            "owns": true,
+            "c": true,
+            "f": false,
+            "aligned": true,
+            "writeable": true,
+            "bytes_sha256": "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+          }
+        }
+      ],
+      "exact_original_output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "metadata": null,
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "bytes_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf",
+        "base_type": "NoneType",
+        "base": null
+      },
+      "input_preserved": true,
+      "warnings": []
+    }
+  ]
+}

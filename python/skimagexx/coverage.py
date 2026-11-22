@@ -15,13 +15,13 @@ NATIVE_FUNCTIONS = {
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
-    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian'),
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord','match_descriptors'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line_peaks'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
-                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima'),
+                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -355,9 +355,17 @@ LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
 PYRAMID_FUNCTIONS = ('transform.pyramid_reduce', 'transform.pyramid_expand')
 PYRAMID_GENERATOR_FUNCTIONS = ('transform.pyramid_gaussian', 'transform.pyramid_laplacian')
 HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature', 'feature.haar_like_feature_coord')
+THINNING_FUNCTIONS = ('morphology.thin', 'morphology.skeletonize')
+HOUGH_FUNCTIONS = ('transform.hough_circle', 'transform.hough_line_peaks')
 
 
 def native_dtypes(api):
+    if api == 'feature.match_descriptors':
+        return ('bool',)
+    if api in (*THINNING_FUNCTIONS, 'transform.hough_circle'):
+        return ('bool', 'uint8')
+    if api == 'transform.hough_line_peaks':
+        return ('uint64',)
     if api == 'util.random_noise':
         return ('uint8', 'uint16', 'float64')
     if api == 'draw.random_shapes':
@@ -446,6 +454,28 @@ def flood_fill_contract():
 
 
 def default_call(api, image):
+    if api == 'feature.match_descriptors':
+        import numpy as np
+
+        rows, columns = np.ogrid[:image.shape[0], :image.shape[1]]
+        left = np.empty(image.shape, dtype=image.dtype)
+        right = np.empty_like(left)
+        left[...] = (3 * columns + 5 * rows + rows * columns) % 11 < 4
+        right[...] = left[::-1]
+        return (left, right), {}
+    if api == 'transform.hough_circle':
+        return (image, (0, 3, 5)), {}
+    if api == 'transform.hough_line_peaks':
+        import numpy as np
+
+        rows, columns = image.shape
+        votes = np.zeros(image.shape, dtype=image.dtype)
+        votes[rows // 4, columns // 4] = 12
+        votes[rows // 2, columns // 2] = 8
+        votes[3 * rows // 4, 3 * columns // 4] = 5
+        angles = np.linspace(-np.pi / 2, np.pi / 2, columns, endpoint=False, dtype=np.float64)
+        distances = np.arange(rows, dtype=np.float64) - rows // 2
+        return (votes, angles, distances), {'min_distance': 1, 'min_angle': 1, 'threshold': 0}
     if api in PYRAMID_GENERATOR_FUNCTIONS:
         return (image,), {'max_layer': 2}
     if api == 'measure.find_contours':
@@ -1257,6 +1287,26 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+        import numpy as np
+
+        if api == 'transform.hough_line_peaks':
+            assert type(actual) is type(expected) is tuple
+            assert len(actual) == len(expected) == 3
+            pairs = zip(actual, expected, strict=True)
+        else:
+            pairs = ((actual, expected),)
+        sources = image if isinstance(image, tuple) else (image,)
+        for value, reference in pairs:
+            assert type(value) is type(reference) is np.ndarray
+            assert value.shape == reference.shape and value.dtype == reference.dtype
+            assert value.dtype.metadata is reference.dtype.metadata is None
+            assert value.strides == reference.strides
+            assert value.flags.owndata and value.base is None
+            assert value.flags.c_contiguous and value.flags.aligned and value.flags.writeable
+            assert value.tobytes(order='C') == reference.tobytes(order='C')
+            assert not any(np.shares_memory(value, source) for source in sources if isinstance(source, np.ndarray))
+        return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
         import inspect
         import numpy as np

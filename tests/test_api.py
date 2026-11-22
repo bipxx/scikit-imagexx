@@ -1,5 +1,6 @@
 """Public interchangeability, native dispatch, and per-function reference tests."""
 import inspect
+import sys
 import numpy as np
 import pytest
 import skimage
@@ -7,6 +8,7 @@ from skimage import filters as reference_filters, color as reference_color, util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HOUGH_FUNCTIONS, THINNING_FUNCTIONS
 from skimage import data as reference_data
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
@@ -41,6 +43,14 @@ FUNCTIONS.append((xx.data, reference_data, "binary_blobs"))
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
            if inspect.isclass(getattr(native,name))]
 
+_OWNED_ARRAY_ENTRIES = {
+    'feature.match_descriptors': 'match_descriptors_bool',
+    'morphology.thin': 'thin_binary',
+    'morphology.skeletonize': 'skeletonize_zhang',
+    'transform.hough_circle': 'hough_circle_accumulate',
+    'transform.hough_line_peaks': 'hough_line_peak_indices',
+}
+
 # The original Bregman Cython helper has unchecked halo reads for small axes.
 # Use separately reviewed geometry for Bregman and max-tree APIs; their contracts retain
 # unsafe geometry as explicitly blocked intake metadata, never original calls.
@@ -63,6 +73,8 @@ VALUE_CASES = [
                   else (np.bool_, np.uint8) if native is xx.metrics and name in ('hausdorff_distance', 'hausdorff_pair')
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes(native.__name__.split('.', 1)[1]+'.'+name))
                   if (native is xx.util and name == 'random_noise') or (native is xx.draw and name == 'random_shapes')
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes(native.__name__.split('.', 1)[1] + '.' + name))
+                  if native.__name__.split('.', 1)[1] + '.' + name in _OWNED_ARRAY_ENTRIES
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((2, 2), (7, 19), (519, 521))
@@ -78,6 +90,8 @@ VALUE_CASES = [
                   if native is xx.transform and 'transform.' + name in (*PYRAMID_FUNCTIONS, *PYRAMID_GENERATOR_FUNCTIONS)
                   else ((13, 17), (31, 49), (127, 129))
                   if (native is xx.measure and name == 'find_contours') or (native is xx.draw and name == 'random_shapes')
+                  else ((13, 17), (31, 49), (127, 129))
+                  if native.__name__.split('.', 1)[1] + '.' + name in _OWNED_ARRAY_ENTRIES
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 
@@ -407,6 +421,8 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if api == 'util.random_noise' and dtype == np.uint16:
         a = a.astype(np.uint16) * 257
+    elif api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == np.bool_:
+        a = a >= 128
     elif dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
@@ -500,6 +516,28 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             getattr(native, name)(a)
         return
     args, options = default_call(api,a)
+    if api in _OWNED_ARRAY_ENTRIES:
+        stock = getattr(original, name)
+        expected = stock(*args, **options)
+        entry = getattr(xx._core, _OWNED_ARRAY_ENTRIES[api])
+        assert inspect.isbuiltin(entry) and entry.__module__ == 'skimagexx._core'
+        returns = []
+
+        def trace(frame, event, value):
+            if event == 'call' and frame.f_code is stock.__code__:
+                pytest.fail('bounded native call entered the stock public implementation')
+            if event == 'c_return' and value is entry:
+                returns.append(value)
+
+        previous = sys.getprofile()
+        try:
+            sys.setprofile(trace)
+            actual = getattr(native, name)(*args, **options)
+        finally:
+            sys.setprofile(previous)
+        assert returns == [entry]
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=args)
+        return
     if api in ('segmentation.mark_boundaries','feature.draw_multiblock_lbp'):
         expected=getattr(original,name)(*args,**options)
         actual=getattr(native,name)(*args,**options)
