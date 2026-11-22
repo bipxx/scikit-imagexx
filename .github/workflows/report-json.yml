@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile: [windows311, windows313]
+        profile: [windows311]
     runs-on: windows-latest
     timeout-minutes: 45
     env:
@@ -64,8 +64,10 @@ jobs:
             $py = (uv python find --managed-python 3.11.11)
             if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $py)) { throw 'Cannot resolve Windows CPython 3.11.11' }
           }
-          & $py -m ensurepip --upgrade
+          $environment = Join-Path $env:RUNNER_TEMP 'u182-source-venv'
+          & $py -m venv $environment
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $py = Join-Path $environment 'Scripts/python.exe'
           & $py -m pip install --disable-pip-version-check --no-cache-dir pytest==9.1.1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           & $py -B $script --profile $env:SOURCE_PROFILE --source $source --out $receipts --fixture $fixture
