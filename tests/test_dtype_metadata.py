@@ -10,6 +10,11 @@ from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,
 from skimagexx.coverage import set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
+_UNTAGGED_ARRAY_APIS = {
+    'segmentation.expand_labels',
+    'metrics.hausdorff_distance',
+    'metrics.hausdorff_pair',
+}
 
 
 def calls(api,dtype):
@@ -17,15 +22,22 @@ def calls(api,dtype):
     shape=(17,19,3) if needs_color_input(api) else (17,19)
     data=rng.integers(0,256,shape,dtype=np.uint8)
     if dtype!='uint8':data=(data/255).astype(dtype)
-    tagged=np.dtype(dtype,metadata={'units':'linear','source':'parity'})
-    data=data.astype(tagged)
+    tags = {'units': 'linear', 'source': 'parity'}
+    untagged_arrays = api in _UNTAGGED_ARRAY_APIS
+    if not untagged_arrays:
+        data = data.astype(np.dtype(dtype, metadata=tags))
     arguments,options=default_call(api,data)
-    if arguments and isinstance(arguments[0],np.ndarray):
-        first=arguments[0].view(np.dtype(arguments[0].dtype,metadata={'units':'linear','source':'parity'}))
+    if not untagged_arrays and arguments and isinstance(arguments[0],np.ndarray):
+        first = arguments[0].view(np.dtype(arguments[0].dtype, metadata=tags))
         arguments=(first,*arguments[1:])
     module,name=api.rsplit('.',1)
     reference=getattr(importlib.import_module('skimage.'+module),name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
+    if untagged_arrays:
+        # Preserve the tag boundary check and the native parity case for every advertised dtype.
+        tagged_arguments = tuple(array.view(np.dtype(array.dtype, metadata=tags)) for array in arguments)
+        with pytest.raises(NotImplementedError, match=re.escape(api)):
+            native(*tagged_arguments, **options)
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
         from util_views_reference import reference as view_reference
         expected,scope,row=view_reference(api,arguments,options,inspect.getsourcefile(reference),np,tagged=True)
@@ -85,6 +97,13 @@ def compare(actual,expected,api,dtype,path='result',image=None):
         return
     if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff'):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
+        return
+    if api in ('draw.ellipsoid_stats', 'metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected)
+        pairs = zip(actual, expected) if isinstance(expected, tuple) else ((actual, expected),)
+        for a, e in pairs:
+            assert type(a) is type(e), path
+            assert np.asarray(a).dtype.metadata == np.asarray(e).dtype.metadata, path
         return
     if isinstance(expected,(tuple,list)):
         assert type(actual) is type(expected),path

@@ -32,6 +32,8 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     if dtype!='uint8':gray=(gray/255).astype(dtype);rgb=(rgb/255).astype(dtype)
     image=(rgb if needs_color_input(api) else gray).view(descriptor)
     arguments,options=default_call(api,image)
+    if api == 'metrics.hausdorff_pair':
+        arguments = tuple(mask.view(descriptor) for mask in arguments)
     module,name=api.rsplit('.',1)
     original=getattr(importlib.import_module('skimage.'+module),name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
@@ -65,8 +67,12 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     assert [(type(w.message),str(w.message)) for w in notices]==[(type(w.message),str(w.message)) for w in expected_notices]
     if api=='segmentation.find_boundaries' or api in ('metrics.adapted_rand_error','metrics.contingency_table'):
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=image);return
-    if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff'):
+    if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff',
+               'draw.ellipsoid_stats', 'metrics.hausdorff_pair'):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
+        if api == 'metrics.hausdorff_pair':
+            assert all(type(point) is type(reference) is np.ndarray
+                       for point, reference in zip(actual, expected))
         return
     if expected is image:assert actual is image
     if isinstance(expected,tuple):
