@@ -11,9 +11,9 @@ import subprocess
 import sys
 import time
 
-SOURCE = 'eddec69fa8bfb64811f465ae38368a70ce61add5'
-TREE = 'c7e9b04630329e72447028a6e85f9a77fdad4d4a'
-MANIFEST_PIN = '3d74c9d88b0c8192f62e876ad559e582ba888f6e6d9f1d78caeeff012fa863ad'
+SOURCE = '0b33a90c20c8e26912e4fb9e0fd427529f327c7a'
+TREE = '44937060407ece134e268e5aa46fb675029d9d84'
+MANIFEST_PIN = '5052cbfeff2f5b0096ab364b5221d221536128501ce175c2ac91296853ea25e6'
 WORKFLOW = '.github/workflows/public-qualification.yml'
 VERSIONS = {'windows311': '3.11.11', 'windows313': '3.13.14'}
 
@@ -76,7 +76,7 @@ def main():
     require(not fixture.is_relative_to(out) and not out.is_relative_to(fixture), 'Fixtures and evidence must be separate')
     out.mkdir(exist_ok=False, parents=True)
     free = shutil.disk_usage(fixture.parent).free
-    required = 32 * 1024**3
+    required = 44 * 1024**3
     write(out / 'capacity.json', {'observed_free_bytes': free, 'required_bytes': required, 'scope': 'one Windows profile',
                                   'pass': free >= required})
     require(free >= required, 'Hosted fixture destination has insufficient capacity')
@@ -85,7 +85,7 @@ def main():
     def git(*args):
         return subprocess.check_output([native_git, '-C', str(source), *args])
 
-    manifest_path = Path(__file__).with_name('source-manifest-301-v2.json')
+    manifest_path = Path(__file__).with_name('source-manifest-306-v1.json')
     require(digest(manifest_path) == MANIFEST_PIN, 'Frozen source manifest changed')
     manifest = json.loads(manifest_path.read_bytes())
     require(manifest['source'] == SOURCE and manifest['tree'] == TREE, 'Wrong manifest provenance')
