@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
-from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -29,9 +29,12 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     rng=np.random.default_rng(439)
     gray=rng.integers(0,256,(9,11),dtype=np.uint8)
     rgb=rng.integers(0,256,(9,11,3),dtype=np.uint8)
-    if dtype!='uint8':gray=(gray/255).astype(dtype);rgb=(rgb/255).astype(dtype)
+    if api == 'util.random_noise' and dtype == 'uint16':
+        gray = gray.astype(np.uint16) * 257
+    elif dtype!='uint8':
+        gray=(gray/255).astype(dtype);rgb=(rgb/255).astype(dtype)
     image=(rgb if needs_color_input(api) else gray).view(descriptor)
-    if api in PYRAMID_FUNCTIONS:
+    if api in (*PYRAMID_FUNCTIONS, *PYRAMID_GENERATOR_FUNCTIONS):
         # Keep the equivalent descriptor while satisfying the owned image contract.
         owning = np.empty(image.shape, dtype=descriptor)
         owning[...] = image
@@ -79,6 +82,9 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
         if api == 'metrics.hausdorff_pair':
             assert all(type(point) is type(reference) is np.ndarray
                        for point, reference in zip(actual, expected))
+        return
+    if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=image)
         return
     if expected is image:assert actual is image
     if isinstance(expected,tuple):

@@ -6,7 +6,7 @@ import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
-from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
 from skimage import data as reference_data
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
@@ -61,6 +61,8 @@ VALUE_CASES = [
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes('segmentation.expand_labels'))
                   if native is xx.segmentation and name == 'expand_labels'
                   else (np.bool_, np.uint8) if native is xx.metrics and name in ('hausdorff_distance', 'hausdorff_pair')
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes(native.__name__.split('.', 1)[1]+'.'+name))
+                  if (native is xx.util and name == 'random_noise') or (native is xx.draw and name == 'random_shapes')
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((2, 2), (7, 19), (519, 521))
@@ -73,7 +75,9 @@ VALUE_CASES = [
                   if ((native is xx.metrics and name == 'structural_similarity')
                       or (native is xx.morphology and 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS))
                   else ((1, 1), (3, 19), (113, 127))
-                  if native is xx.transform and 'transform.' + name in PYRAMID_FUNCTIONS
+                  if native is xx.transform and 'transform.' + name in (*PYRAMID_FUNCTIONS, *PYRAMID_GENERATOR_FUNCTIONS)
+                  else ((13, 17), (31, 49), (127, 129))
+                  if (native is xx.measure and name == 'find_contours') or (native is xx.draw and name == 'random_shapes')
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 
@@ -401,7 +405,9 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
     rng = np.random.default_rng(15)
     api = native.__name__.split('.', 1)[1]+'.'+name
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
-    if dtype != np.uint8:
+    if api == 'util.random_noise' and dtype == np.uint16:
+        a = a.astype(np.uint16) * 257
+    elif dtype != np.uint8:
         a = (a/255).astype(dtype)
     if np.dtype(dtype).name not in native_dtypes(api):
         if api == 'segmentation.join_segmentations':
@@ -570,6 +576,9 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
                'metrics.hausdorff_distance', 'metrics.hausdorff_pair', 'draw.ellipsoid_stats',
                'segmentation.expand_labels', *HAAR_FUNCTIONS):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
+        return
+    if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=a)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
     assert_default_parity(api,np.dtype(dtype),actual,expected,

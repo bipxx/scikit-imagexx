@@ -86,3 +86,8 @@ __all__ += ['regionprops']
 from ._pearson import pearson_corr_coeff
 
 __all__ += ['pearson_corr_coeff']
+
+
+from ._find_contours import find_contours
+
+__all__ += ['find_contours']

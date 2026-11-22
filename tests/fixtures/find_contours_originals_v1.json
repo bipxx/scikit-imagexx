@@ -1,0 +1,4795 @@
+{
+  "f64-ridges-default": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        128,
+        192
+      ],
+      "dtype": "<f8",
+      "strides": [
+        1536,
+        8
+      ],
+      "writeable": true,
+      "digest": "9044d68659e1c9e0746abfe88527b47db80ea48c7e8a438b25d3d61d148ec35a"
+    },
+    "options": {},
+    "output": {
+      "type": "list",
+      "count": 11,
+      "total_points": 2112,
+      "ordered_metadata_sha256": "256916620a48a310366a7ea2427a05d6f640021d5544c4e708a4ce7c35993df8"
+    },
+    "warnings": []
+  },
+  "f64-masked-grid-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        224,
+        256
+      ],
+      "dtype": "<f8",
+      "strides": [
+        2048,
+        8
+      ],
+      "writeable": true,
+      "digest": "d9120367eb4db80238ac83dab47197868c42ed6c053c6adddd378973e315bb3a"
+    },
+    "options": {
+      "level": 0.47,
+      "fully_connected": "high",
+      "mask": {
+        "type": "ndarray",
+        "shape": [
+          224,
+          256
+        ],
+        "dtype": "|b1",
+        "strides": [
+          256,
+          1
+        ],
+        "writeable": true,
+        "digest": "a824981e1695fadb4cee7bb267289b5f894501163f49d66b34251daa04f15585"
+      }
+    },
+    "output": {
+      "type": "list",
+      "count": 1590,
+      "total_points": 13144,
+      "ordered_metadata_sha256": "cd70d83db54d23b8bfcc4d23e18e4a7f69f66b4b08388091974fd8a2fd680ead"
+    },
+    "warnings": []
+  },
+  "f32-islands-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        128,
+        176
+      ],
+      "dtype": "<f4",
+      "strides": [
+        704,
+        4
+      ],
+      "writeable": true,
+      "digest": "6b1e9012df645d5c67184905e4ee3f85a041ac460b9f82b6e774032d90121318"
+    },
+    "options": {
+      "level": 0.28,
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 56,
+      "total_points": 3121,
+      "ordered_metadata_sha256": "4fab440c2e219a37e367e6a3440278680900e719347d09fe139355423bbaec3b"
+    },
+    "warnings": []
+  },
+  "u8-tiles-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        320,
+        352
+      ],
+      "dtype": "|u1",
+      "strides": [
+        352,
+        1
+      ],
+      "writeable": true,
+      "digest": "12b3f87ad012ca1a4dadc83532beadc3ff065cb2ccd74fdeb46092b5fefcd1c0"
+    },
+    "options": {
+      "level": 120.0
+    },
+    "output": {
+      "type": "list",
+      "count": 530,
+      "total_points": 23869,
+      "ordered_metadata_sha256": "422c85244c4f3e8eba51c8b6e88e8d0123d66e197a4bdbe26701f7e8bf07a568"
+    },
+    "warnings": []
+  },
+  "cell-0-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-0-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-0-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-0-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-1-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "41e57a811ac9776a5931d1ac2f1f354df344c042329b13e20b4b516db8b78410"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-1-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "41e57a811ac9776a5931d1ac2f1f354df344c042329b13e20b4b516db8b78410"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "2faf07e023bdb85fc4462637133da366cebb88edec5eba733cb7d71f599f4f1e",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-1-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "41e57a811ac9776a5931d1ac2f1f354df344c042329b13e20b4b516db8b78410"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-1-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "41e57a811ac9776a5931d1ac2f1f354df344c042329b13e20b4b516db8b78410"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "2faf07e023bdb85fc4462637133da366cebb88edec5eba733cb7d71f599f4f1e",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-2-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "1b11810b413b046348c92216a94cfad3b6f770f07b6652df482d9483803859d5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "0993a0d81f3fe511b63f5ed6e841a463e0ee0c06a5486c3b59e069826a0ab849",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-2-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "1b11810b413b046348c92216a94cfad3b6f770f07b6652df482d9483803859d5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "f296cf1c530a26222d3a4a44d6f99e4c62996384ef3a68468ae1f8de427e08f5",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-2-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "1b11810b413b046348c92216a94cfad3b6f770f07b6652df482d9483803859d5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "0993a0d81f3fe511b63f5ed6e841a463e0ee0c06a5486c3b59e069826a0ab849",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-2-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "1b11810b413b046348c92216a94cfad3b6f770f07b6652df482d9483803859d5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "f296cf1c530a26222d3a4a44d6f99e4c62996384ef3a68468ae1f8de427e08f5",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-3-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "595de2551c38d3bcf1d7f45857945c715bc6f3735194f9f177ba8ade8c3c7170"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "219598d7650d1faa723274da107954700cddbc73dda98ddabeeadc0d8d6d9970",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-3-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "595de2551c38d3bcf1d7f45857945c715bc6f3735194f9f177ba8ade8c3c7170"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "9c3bbd2f6c65676b44b5960eebb7d72db147f16398ecb9bd2999a5ccea2a9aa5",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-3-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "595de2551c38d3bcf1d7f45857945c715bc6f3735194f9f177ba8ade8c3c7170"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "219598d7650d1faa723274da107954700cddbc73dda98ddabeeadc0d8d6d9970",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-3-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "595de2551c38d3bcf1d7f45857945c715bc6f3735194f9f177ba8ade8c3c7170"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "9c3bbd2f6c65676b44b5960eebb7d72db147f16398ecb9bd2999a5ccea2a9aa5",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-4-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ee282b9a2a908de59370144927dbde8229713e5d8873d82b72a649cb2e6c621a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b04864ffb500d15797e1f1fd3d4785bb1896305e4dd89d56d3da6177a91d99c8",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-4-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ee282b9a2a908de59370144927dbde8229713e5d8873d82b72a649cb2e6c621a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "1fa0615b30b08b3b34ca58fb84c9a301833eaf5429fd936fb0453e9a7f1357a5",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-4-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ee282b9a2a908de59370144927dbde8229713e5d8873d82b72a649cb2e6c621a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b04864ffb500d15797e1f1fd3d4785bb1896305e4dd89d56d3da6177a91d99c8",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-4-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ee282b9a2a908de59370144927dbde8229713e5d8873d82b72a649cb2e6c621a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "1fa0615b30b08b3b34ca58fb84c9a301833eaf5429fd936fb0453e9a7f1357a5",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-5-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7ef3f8f5c4dd62531e89531861ad52accc91ddb38fcc96dfbd21a06696734e01"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "e7068f7c71bda14cc345b8b39f351e3b4920a47b4bbfd47c74389f83e8204a5e",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-5-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7ef3f8f5c4dd62531e89531861ad52accc91ddb38fcc96dfbd21a06696734e01"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "cbcc02f86c73e6abd07ef110d80dbf09aa4ae7de7689e5fa1f0e32c9d7e2eaa7",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-5-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7ef3f8f5c4dd62531e89531861ad52accc91ddb38fcc96dfbd21a06696734e01"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "e7068f7c71bda14cc345b8b39f351e3b4920a47b4bbfd47c74389f83e8204a5e",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-5-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7ef3f8f5c4dd62531e89531861ad52accc91ddb38fcc96dfbd21a06696734e01"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "cbcc02f86c73e6abd07ef110d80dbf09aa4ae7de7689e5fa1f0e32c9d7e2eaa7",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-6-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c9a2fb79c96caefae3797082eb0820d925a5170c74bcba2446db9484124acb82"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "0993a0d81f3fe511b63f5ed6e841a463e0ee0c06a5486c3b59e069826a0ab849",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b04864ffb500d15797e1f1fd3d4785bb1896305e4dd89d56d3da6177a91d99c8",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-6-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c9a2fb79c96caefae3797082eb0820d925a5170c74bcba2446db9484124acb82"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "f296cf1c530a26222d3a4a44d6f99e4c62996384ef3a68468ae1f8de427e08f5",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "1fa0615b30b08b3b34ca58fb84c9a301833eaf5429fd936fb0453e9a7f1357a5",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-6-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c9a2fb79c96caefae3797082eb0820d925a5170c74bcba2446db9484124acb82"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "2faf07e023bdb85fc4462637133da366cebb88edec5eba733cb7d71f599f4f1e",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "a3f498d4e76a9e799b943b1ca387ebff02fd9dcd49c59dcd002ce9930eccf9a6",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-6-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c9a2fb79c96caefae3797082eb0820d925a5170c74bcba2446db9484124acb82"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "e858e8486c9b7e996f8f1c71d3f83e253330666e619aeaae76c2e3b24dbb0bcc",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-7-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "be21622c7a8e0bacaf6fd7e6a3121384467dd031da3e3d9d9ad0b18f6cf38c5b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "a3f498d4e76a9e799b943b1ca387ebff02fd9dcd49c59dcd002ce9930eccf9a6",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-7-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "be21622c7a8e0bacaf6fd7e6a3121384467dd031da3e3d9d9ad0b18f6cf38c5b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "e858e8486c9b7e996f8f1c71d3f83e253330666e619aeaae76c2e3b24dbb0bcc",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-7-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "be21622c7a8e0bacaf6fd7e6a3121384467dd031da3e3d9d9ad0b18f6cf38c5b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "a3f498d4e76a9e799b943b1ca387ebff02fd9dcd49c59dcd002ce9930eccf9a6",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-7-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "be21622c7a8e0bacaf6fd7e6a3121384467dd031da3e3d9d9ad0b18f6cf38c5b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "e858e8486c9b7e996f8f1c71d3f83e253330666e619aeaae76c2e3b24dbb0bcc",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-8-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "e858e8486c9b7e996f8f1c71d3f83e253330666e619aeaae76c2e3b24dbb0bcc",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-8-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "a3f498d4e76a9e799b943b1ca387ebff02fd9dcd49c59dcd002ce9930eccf9a6",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-8-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "e858e8486c9b7e996f8f1c71d3f83e253330666e619aeaae76c2e3b24dbb0bcc",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-8-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "ae2cc60d29de85c7ed46adf5bb27e89a62bdafc75e3f8822473568055af8b86e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "a3f498d4e76a9e799b943b1ca387ebff02fd9dcd49c59dcd002ce9930eccf9a6",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-9-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7b38b86d9a7e623764dc234b5d8aa67afbf388f139b4dc5a266ed0b4b7a258ea"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "e858e8486c9b7e996f8f1c71d3f83e253330666e619aeaae76c2e3b24dbb0bcc",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-9-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7b38b86d9a7e623764dc234b5d8aa67afbf388f139b4dc5a266ed0b4b7a258ea"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "2faf07e023bdb85fc4462637133da366cebb88edec5eba733cb7d71f599f4f1e",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "a3f498d4e76a9e799b943b1ca387ebff02fd9dcd49c59dcd002ce9930eccf9a6",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-9-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7b38b86d9a7e623764dc234b5d8aa67afbf388f139b4dc5a266ed0b4b7a258ea"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "f296cf1c530a26222d3a4a44d6f99e4c62996384ef3a68468ae1f8de427e08f5",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "1fa0615b30b08b3b34ca58fb84c9a301833eaf5429fd936fb0453e9a7f1357a5",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-9-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "7b38b86d9a7e623764dc234b5d8aa67afbf388f139b4dc5a266ed0b4b7a258ea"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "0993a0d81f3fe511b63f5ed6e841a463e0ee0c06a5486c3b59e069826a0ab849",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "b04864ffb500d15797e1f1fd3d4785bb1896305e4dd89d56d3da6177a91d99c8",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-10-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "f192dc7d8f8e51b5782248598724a065ac9cf30d5ae200fd886c79b0940c2fc6"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "cbcc02f86c73e6abd07ef110d80dbf09aa4ae7de7689e5fa1f0e32c9d7e2eaa7",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-10-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "f192dc7d8f8e51b5782248598724a065ac9cf30d5ae200fd886c79b0940c2fc6"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "e7068f7c71bda14cc345b8b39f351e3b4920a47b4bbfd47c74389f83e8204a5e",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-10-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "f192dc7d8f8e51b5782248598724a065ac9cf30d5ae200fd886c79b0940c2fc6"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "cbcc02f86c73e6abd07ef110d80dbf09aa4ae7de7689e5fa1f0e32c9d7e2eaa7",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-10-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "f192dc7d8f8e51b5782248598724a065ac9cf30d5ae200fd886c79b0940c2fc6"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "e7068f7c71bda14cc345b8b39f351e3b4920a47b4bbfd47c74389f83e8204a5e",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-11-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "56c2a41bfc79a0ef26462fb62872e01850f628c4cd6486a4071b03a3a4c7267e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "1fa0615b30b08b3b34ca58fb84c9a301833eaf5429fd936fb0453e9a7f1357a5",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-11-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "56c2a41bfc79a0ef26462fb62872e01850f628c4cd6486a4071b03a3a4c7267e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "b04864ffb500d15797e1f1fd3d4785bb1896305e4dd89d56d3da6177a91d99c8",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-11-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "56c2a41bfc79a0ef26462fb62872e01850f628c4cd6486a4071b03a3a4c7267e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "1fa0615b30b08b3b34ca58fb84c9a301833eaf5429fd936fb0453e9a7f1357a5",
+          "first": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-11-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "56c2a41bfc79a0ef26462fb62872e01850f628c4cd6486a4071b03a3a4c7267e"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "b04864ffb500d15797e1f1fd3d4785bb1896305e4dd89d56d3da6177a91d99c8",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-12-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c2678240d4475ab3b5f7904bbe2a167b44f4282b8ac4cf80b7e7b87ee210b2b5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "9c3bbd2f6c65676b44b5960eebb7d72db147f16398ecb9bd2999a5ccea2a9aa5",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-12-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c2678240d4475ab3b5f7904bbe2a167b44f4282b8ac4cf80b7e7b87ee210b2b5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "219598d7650d1faa723274da107954700cddbc73dda98ddabeeadc0d8d6d9970",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-12-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c2678240d4475ab3b5f7904bbe2a167b44f4282b8ac4cf80b7e7b87ee210b2b5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "9c3bbd2f6c65676b44b5960eebb7d72db147f16398ecb9bd2999a5ccea2a9aa5",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-12-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c2678240d4475ab3b5f7904bbe2a167b44f4282b8ac4cf80b7e7b87ee210b2b5"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "219598d7650d1faa723274da107954700cddbc73dda98ddabeeadc0d8d6d9970",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-13-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "d8bd4eab9a59f75ac3b0df775019ad62d3f249ad2868e75a1c83af798ebc914a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "f296cf1c530a26222d3a4a44d6f99e4c62996384ef3a68468ae1f8de427e08f5",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-13-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "d8bd4eab9a59f75ac3b0df775019ad62d3f249ad2868e75a1c83af798ebc914a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "0993a0d81f3fe511b63f5ed6e841a463e0ee0c06a5486c3b59e069826a0ab849",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-13-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "d8bd4eab9a59f75ac3b0df775019ad62d3f249ad2868e75a1c83af798ebc914a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "f296cf1c530a26222d3a4a44d6f99e4c62996384ef3a68468ae1f8de427e08f5",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-13-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "d8bd4eab9a59f75ac3b0df775019ad62d3f249ad2868e75a1c83af798ebc914a"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "0993a0d81f3fe511b63f5ed6e841a463e0ee0c06a5486c3b59e069826a0ab849",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x1.0000000000000p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-14-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "124fc60dac41dc47baad781dd0007eeb48fafe636020e7aba99bb0ab9611bd9b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "2faf07e023bdb85fc4462637133da366cebb88edec5eba733cb7d71f599f4f1e",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-14-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "124fc60dac41dc47baad781dd0007eeb48fafe636020e7aba99bb0ab9611bd9b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-14-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "124fc60dac41dc47baad781dd0007eeb48fafe636020e7aba99bb0ab9611bd9b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "2faf07e023bdb85fc4462637133da366cebb88edec5eba733cb7d71f599f4f1e",
+          "first": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-14-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "124fc60dac41dc47baad781dd0007eeb48fafe636020e7aba99bb0ab9611bd9b"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "cell-15-low-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c914e8188e43fff1c96e25283e15b252af0d9f39b469f2d1518915802c756d18"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-15-low-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c914e8188e43fff1c96e25283e15b252af0d9f39b469f2d1518915802c756d18"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "low",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-15-high-low": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c914e8188e43fff1c96e25283e15b252af0d9f39b469f2d1518915802c756d18"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "low"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "cell-15-high-high": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "<f8",
+      "strides": [
+        16,
+        8
+      ],
+      "writeable": true,
+      "digest": "c914e8188e43fff1c96e25283e15b252af0d9f39b469f2d1518915802c756d18"
+    },
+    "options": {
+      "level": 0.5,
+      "fully_connected": "high",
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": []
+  },
+  "closed-islands-in-scan-order": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "level": 0.37
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            11,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "2288d77af4815c3af9074794f6796a6e023d8634fc99da2924b137d550a6fa6b",
+          "first": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ],
+          "last": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            15,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "707ee579b14014e705e5ca339444bc78773ae498dea9d8d9fd143237cbe7cffa",
+          "first": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ],
+          "last": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "orientation-reverses-each-array": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "level": 0.37,
+      "positive_orientation": "high"
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            11,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": true,
+          "digest": "d2bf28874c7c565fb23bac874106b25e05b36f1fcdef0ca3eb12266aade1ddbb",
+          "first": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ],
+          "last": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            15,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            -16,
+            8
+          ],
+          "writeable": true,
+          "owns": false,
+          "base_type": "ndarray",
+          "base_owns": true,
+          "closed": true,
+          "digest": "1967960d7386b547a242c8960c2990a6543d3f15fd3dfa9eb34aca69726f8986",
+          "first": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ],
+          "last": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "mask-cuts-into-open-contours": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "level": 0.37,
+      "mask": {
+        "type": "ndarray",
+        "shape": [
+          9,
+          13
+        ],
+        "dtype": "|b1",
+        "strides": [
+          13,
+          1
+        ],
+        "writeable": true,
+        "digest": "a2526cfa581225e4de22ad2ac204c878a0e0fc0936d0161f4dfa26e7b5862191"
+      }
+    },
+    "output": {
+      "type": "list",
+      "count": 3,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "7a2242f6788bf3f7d2a5b81fed871e4696d28d6d336a6fd13a71d3711cef1f70",
+          "first": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.8000000000000p+1"
+          ],
+          "last": [
+            "0x1.66f4de9bd37a7p+0",
+            "0x1.8000000000000p+1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "fb6055aac038266795dd58745b704c5e2634389e3990ff3aa5a6c427bccf2627",
+          "first": [
+            "0x1.66f4de9bd37a7p+0",
+            "0x1.4000000000000p+2"
+          ],
+          "last": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            15,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "707ee579b14014e705e5ca339444bc78773ae498dea9d8d9fd143237cbe7cffa",
+          "first": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ],
+          "last": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "readonly-mask": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "level": 0.37,
+      "mask": {
+        "type": "ndarray",
+        "shape": [
+          9,
+          13
+        ],
+        "dtype": "|b1",
+        "strides": [
+          13,
+          1
+        ],
+        "writeable": false,
+        "digest": "a2526cfa581225e4de22ad2ac204c878a0e0fc0936d0161f4dfa26e7b5862191"
+      }
+    },
+    "output": {
+      "type": "list",
+      "count": 3,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "7a2242f6788bf3f7d2a5b81fed871e4696d28d6d336a6fd13a71d3711cef1f70",
+          "first": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.8000000000000p+1"
+          ],
+          "last": [
+            "0x1.66f4de9bd37a7p+0",
+            "0x1.8000000000000p+1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "fb6055aac038266795dd58745b704c5e2634389e3990ff3aa5a6c427bccf2627",
+          "first": [
+            "0x1.66f4de9bd37a7p+0",
+            "0x1.4000000000000p+2"
+          ],
+          "last": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            15,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "707ee579b14014e705e5ca339444bc78773ae498dea9d8d9fd143237cbe7cffa",
+          "first": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ],
+          "last": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "readonly-decimal-edges": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        3,
+        9
+      ],
+      "dtype": "<f8",
+      "strides": [
+        72,
+        8
+      ],
+      "writeable": false,
+      "digest": "0bd2b4a39b9f6f6f8908a07467d7948b7603fc45d463f1e295e7dc028bf41c16"
+    },
+    "options": {
+      "level": 12.31
+    },
+    "output": {
+      "type": "list",
+      "count": 1,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            10,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "ea07553b36350859748d001fc816fdfb50ddecdc913fdf1b425d33ec405a36d6",
+          "first": [
+            "0x1.5e26af37c048dp+0",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.ea61d950c83fcp-2",
+            "0x1.0000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "plateau-exact-level-splits": {
+    "native": true,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "<f8",
+      "strides": [
+        32,
+        8
+      ],
+      "writeable": true,
+      "digest": "b1cdcb5df106d7e74799fd5c4fe66996046c6910b98f76145aa1464bdddfa401"
+    },
+    "options": {
+      "level": 1.0
+    },
+    "output": {
+      "type": "list",
+      "count": 5,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "b80064f096da2a2dc7cc8bc5f4e68890d8ed56d85dd74f4bed09a2b0862a6fb6",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p-1"
+          ],
+          "last": [
+            "0x1.0000000000000p-1",
+            "0x0.0p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "a11ff810deacc905beee82ba156e8273f751c74ddc39a7704d715a4b9a657d49",
+          "first": [
+            "0x1.5555555555555p-1",
+            "0x1.8000000000000p+1"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.0000000000000p+1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            3,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "103ecdfdf2e8a035b60cf23b2f47a6aeae95055a4b11b34560b82ed15f4cb19b",
+          "first": [
+            "0x1.5555555555555p+0",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.5555555555555p+1",
+            "0x0.0p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            3,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "7bc24cb7c6de8ea698be24d89277b943d9d5eae963db5612cb2c0137c63978a8",
+          "first": [
+            "0x1.6000000000000p+1",
+            "0x1.8000000000000p+1"
+          ],
+          "last": [
+            "0x1.4000000000000p+0",
+            "0x1.8000000000000p+1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            3,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "00e5319d3fb48140af7be3564eed17fc0ae98f0058ce495de0b6ad1b98eb788a",
+          "first": [
+            "0x1.8000000000000p+1",
+            "0x1.5555555555555p-2"
+          ],
+          "last": [
+            "0x1.8000000000000p+1",
+            "0x1.0000000000000p+1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "negative-stride-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "<f8",
+      "strides": [
+        -32,
+        8
+      ],
+      "writeable": true,
+      "digest": "f84b590ed45ef8d2b8bdeb823d2ab10a0a8a7e5a024ab8234c8a57360e9cd2fa"
+    },
+    "options": {
+      "level": 1.0
+    },
+    "output": {
+      "type": "list",
+      "count": 5,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            3,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "e29d7814ad5d77f2b164ef1e43617efc93f88e15369308c8d3972fcac6bacbf3",
+          "first": [
+            "0x1.5555555555555p-2",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x0.0p+0",
+            "0x1.5555555555555p-2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            3,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "55822d09e0510ad5e07046b517f8718f618c84db2062816aa97660e8e82d9201",
+          "first": [
+            "0x0.0p+0",
+            "0x1.0000000000000p+1"
+          ],
+          "last": [
+            "0x1.aaaaaaaaaaaaap+0",
+            "0x0.0p+0"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            3,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "a275d227734d53df35b2f69b05f11b1ee5865bfe9f9dfff4bf6e6df8c1ad5a81",
+          "first": [
+            "0x1.c000000000000p+0",
+            "0x1.8000000000000p+1"
+          ],
+          "last": [
+            "0x1.0000000000000p-2",
+            "0x1.8000000000000p+1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "341bb3ceb233579239f0e9c75a6ef558ef247bcd12fd175baa6f5f0c89e669a0",
+          "first": [
+            "0x1.4000000000000p+1",
+            "0x0.0p+0"
+          ],
+          "last": [
+            "0x1.8000000000000p+1",
+            "0x1.0000000000000p-1"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "57efd6707c2f5f4f9cfce1cbae777655c9c9331e34dd247ddcefbdb89bab0292",
+          "first": [
+            "0x1.8000000000000p+1",
+            "0x1.0000000000000p+1"
+          ],
+          "last": [
+            "0x1.2aaaaaaaaaaabp+1",
+            "0x1.8000000000000p+1"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "nan-cell-skip-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "fdbfaf836121cf4f467438f3fecaf27690b0dad6f21cc30683faa646676b26f3"
+    },
+    "options": {
+      "level": 0.37
+    },
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            9,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": false,
+          "digest": "48c028a9cfb7500b7ce42e8d07e47ccaca6a61291de3dfa2a2402ea176cb9ec0",
+          "first": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.8000000000000p+1"
+          ],
+          "last": [
+            "0x1.cc8590b21642cp+1",
+            "0x1.4000000000000p+2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            15,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "707ee579b14014e705e5ca339444bc78773ae498dea9d8d9fd143237cbe7cffa",
+          "first": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ],
+          "last": [
+            "0x1.e2c3f35ba7819p+2",
+            "0x1.6000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "all-nan-warning-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        3
+      ],
+      "dtype": "<f8",
+      "strides": [
+        24,
+        8
+      ],
+      "writeable": true,
+      "digest": "ff5387f994cd7b48d176d06c06ef90b8a6fb668d593d52db530043bd47a327f1"
+    },
+    "options": {},
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": [
+      [
+        "RuntimeWarning",
+        "All-NaN slice encountered"
+      ],
+      [
+        "RuntimeWarning",
+        "All-NaN slice encountered"
+      ]
+    ]
+  },
+  "rank-three-error-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2,
+        3
+      ],
+      "dtype": "<f8",
+      "strides": [
+        48,
+        24,
+        8
+      ],
+      "writeable": true,
+      "digest": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"
+    },
+    "options": {},
+    "error": [
+      "ValueError",
+      "Only 2D arrays are supported."
+    ],
+    "warnings": []
+  },
+  "narrow-image-error-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        1,
+        3
+      ],
+      "dtype": "<f8",
+      "strides": [
+        24,
+        8
+      ],
+      "writeable": true,
+      "digest": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0"
+    },
+    "options": {},
+    "error": [
+      "ValueError",
+      "Input array must be at least 2x2."
+    ],
+    "warnings": []
+  },
+  "mask-shape-before-type-error": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "level": 0.37,
+      "mask": {
+        "type": "ndarray",
+        "shape": [
+          2,
+          2
+        ],
+        "dtype": "<f8",
+        "strides": [
+          16,
+          8
+        ],
+        "writeable": true,
+        "digest": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+      }
+    },
+    "error": [
+      "ValueError",
+      "Parameters \"array\" and \"mask\" must have same shape."
+    ],
+    "warnings": []
+  },
+  "mask-type-error-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "level": 0.37,
+      "mask": {
+        "type": "ndarray",
+        "shape": [
+          9,
+          13
+        ],
+        "dtype": "|u1",
+        "strides": [
+          13,
+          1
+        ],
+        "writeable": true,
+        "digest": "fee3d3a17121f0dd0962d02ae385a9076d6e1ccc7b82085992ff41eca3c2811a"
+      }
+    },
+    "error": [
+      "TypeError",
+      "Parameter \"mask\" must be a binary array."
+    ],
+    "warnings": []
+  },
+  "invalid-orientation-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "positive_orientation": "middle"
+    },
+    "error": [
+      "ValueError",
+      "Parameters \"positive_orientation\" must be either \"high\" or \"low\"."
+    ],
+    "warnings": []
+  },
+  "both-invalid-options-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f8",
+      "strides": [
+        104,
+        8
+      ],
+      "writeable": true,
+      "digest": "c29c89cbc5ae72f56adfbbec43a69e90795baea2c223b7e45d25b6aa8580a3b2"
+    },
+    "options": {
+      "fully_connected": "middle",
+      "positive_orientation": "middle"
+    },
+    "error": [
+      "ValueError",
+      "Parameters \"fully_connected\" must be either \"high\" or \"low\"."
+    ],
+    "warnings": []
+  },
+  "f32-default-fallback": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        9,
+        13
+      ],
+      "dtype": "<f4",
+      "strides": [
+        52,
+        4
+      ],
+      "writeable": true,
+      "digest": "d455fc8d3305a854401cf36593ae9105f5bc9508113f5aa49215497c9c5e92b8"
+    },
+    "options": {},
+    "output": {
+      "type": "list",
+      "count": 2,
+      "contours": [
+        {
+          "type": "ndarray",
+          "shape": [
+            11,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "34fd8ccf293eea766555b6e2f39ea074887c1c67c96bc27ca3a2928d5c7a9c3a",
+          "first": [
+            "0x1.c000000000000p+1",
+            "0x1.4000000000000p+2"
+          ],
+          "last": [
+            "0x1.c000000000000p+1",
+            "0x1.4000000000000p+2"
+          ]
+        },
+        {
+          "type": "ndarray",
+          "shape": [
+            15,
+            2
+          ],
+          "dtype": "<f8",
+          "strides": [
+            16,
+            8
+          ],
+          "writeable": true,
+          "owns": true,
+          "base_type": "NoneType",
+          "base_owns": null,
+          "closed": true,
+          "digest": "61a1c1a40ab1aba8b817f06ee9fce5bc3edc3fcecef1461137f8b52480c74bbd",
+          "first": [
+            "0x1.dba7818b46bd9p+2",
+            "0x1.6000000000000p+3"
+          ],
+          "last": [
+            "0x1.dba7818b46bd9p+2",
+            "0x1.6000000000000p+3"
+          ]
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "uint8-default-overflow-warning": {
+    "native": false,
+    "input": {
+      "type": "ndarray",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "|u1",
+      "strides": [
+        2,
+        1
+      ],
+      "writeable": true,
+      "digest": "25be575e84a3ef5e33984d00c6096b954d46b084acbfbd789b66aabd0cc1e15e"
+    },
+    "options": {},
+    "output": {
+      "type": "list",
+      "count": 0,
+      "contours": []
+    },
+    "warnings": [
+      [
+        "RuntimeWarning",
+        "overflow encountered in scalar add"
+      ]
+    ]
+  }
+}

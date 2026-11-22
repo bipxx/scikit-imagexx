@@ -20,3 +20,8 @@ __path__ = []
 
 def __getattr__(name):
     return module_attribute('draw', name)
+
+
+from ._random_shapes import random_shapes
+
+__all__ += ['random_shapes']

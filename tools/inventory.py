@@ -20,6 +20,10 @@ for _names, _test, _benchmark in (
     (('data.brick', 'data.grass', 'data.gravel', 'data.text'), 'tests/test_data_textures_public.py', 'benchmarks/data_textures.py'),
     (('data.camera', 'data.coffee'), 'tests/test_data_camera_coffee_public.py', 'benchmarks/data_camera_coffee.py'),
     (('transform.pyramid_reduce', 'transform.pyramid_expand'), 'tests/test_pyramid_spatial_public.py', 'benchmarks/pyramid_spatial.py'),
+    (('transform.pyramid_gaussian', 'transform.pyramid_laplacian'), 'tests/test_pyramid_generators_public.py', 'benchmarks/pyramid_generators.py'),
+    (('measure.find_contours',), 'tests/test_find_contours_public.py', 'benchmarks/find_contours.py'),
+    (('util.random_noise',), 'tests/test_random_noise_public.py', 'benchmarks/random_noise.py'),
+    (('draw.random_shapes',), 'tests/test_random_shapes_public.py', 'benchmarks/random_shapes.py'),
     (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
@@ -208,6 +212,14 @@ def inventory():
                 entries[-1]['default_input_kind'] = 'Seeded Boolean field; the generic image dtype is an unused descriptor. NumPy supplies RNG and Boolean output operations. C++ supplies Gaussian smoothing and percentile selection on the bounded domain.'
             elif path in ('transform.pyramid_reduce', 'transform.pyramid_expand'):
                 entries[-1]['default_input_kind'] = 'Bounded owning aligned C-order image. Existing C++ Gaussian and resize stages run in stock order. Unsupported layouts, options and values use compatibility.'
+            elif path in ('transform.pyramid_gaussian', 'transform.pyramid_laplacian'):
+                entries[-1]['default_input_kind'] = 'Bounded owning C-order image. Existing C++ Gaussian and resize stages with lazy stock-order yields. Benchmarks exhaust the iterator. Unsupported requests use compatibility.'
+            elif path == 'measure.find_contours':
+                entries[-1]['default_input_kind'] = 'Bounded finite 2D image and explicit crossing level. C++ follows ordered marching squares and NumPy owns contiguous contour arrays; unsupported requests use compatibility.'
+            elif path == 'util.random_noise':
+                entries[-1]['default_input_kind'] = 'Bounded seeded Gaussian, speckle, salt-and-pepper and pepper routes. NumPy supplies conversion, RNG, range and clipping; C++ combines or replaces pixels. Other modes use compatibility.'
+            elif path == 'draw.random_shapes':
+                entries[-1]['default_input_kind'] = 'The uint8 descriptor carries only image shape. NumPy supplies RNG and ordered metadata. Native raster and paint stages produce a uint8 image. Unsupported carriers and options use compatibility.'
             elif path in assets:
                 entries[-1].update(implementation='packaged-asset-partial', execution_kind='packaged-asset',
                                    parity_test=evidence[0], benchmark=evidence[1])

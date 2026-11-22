@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "bc88415e3e5c90cc0f1632d6f80f26868f20b634267d15d3cd61dd30c7edceee",
+  "source_inventory_sha256": "77614c7bc3670b6ad94e93b86f91b64cc7a3019cf9fb77a029e923c6dbbedc70",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,9 +26,9 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 296,
+      "native-partial": 301,
       "packaged-asset-partial": 10,
-      "upstream-only": 162
+      "upstream-only": 157
     },
     "kinds": {
       "callable": 448,
@@ -4157,15 +4157,17 @@
       "api": "draw.random_shapes",
       "kind": "callable",
       "signature": "(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=None, num_channels=3, shape=None, intensity_range=None, allow_overlap=False, num_trials=100, rng=None, *, channel_axis=-1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8"
+      ],
       "canonical_api": "draw.random_shapes",
       "identity_alias": false,
       "family": "random",
       "wave": "W2",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Preserve seeded shape-choice/placement rejection loop and reuse raster kernels",
+      "easiest_credible_path": "Audit/extend existing native implementation: Preserve seeded shape-choice/placement rejection loop and reuse raster kernels",
       "mandatory_route_dependencies": [
         "array",
         "rng",
@@ -4173,7 +4175,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze seeded mixed-shape crowded and sparse canvases against pinned upstream, including num_trials, overlap, intensity_range, channel_axis and RNG draw order; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered num_trials, overlap, intensity_range, channel_axis and RNG draw order. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "num_trials, overlap, intensity_range, channel_axis and RNG draw order",
       "parity_cases_to_freeze": "seeded mixed-shape crowded and sparse canvases",
       "numerical_policy": "Exact seed/Generator state, draw count/order and distribution algorithm where interchangeability requires it; distribution-only tests cannot prove seeded parity.",
@@ -4184,10 +4186,10 @@
         "kind": "compute",
         "specific_workload": "seeded mixed-shape crowded and sparse canvases",
         "one_worker_recipe": "Fixed saved RNG states, tiny/large output shapes and all distribution/mode branches; reset equivalent state outside each timed call.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/random_shapes.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_random_shapes_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -11872,22 +11874,26 @@
       "api": "measure.find_contours",
       "kind": "callable",
       "signature": "(image, level=None, fully_connected='low', positive_orientation='low', *, mask=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "measure.find_contours",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Marching squares with interpolated crossings and stable segment stitching",
+      "easiest_credible_path": "Audit/extend existing native implementation: Marching squares with interpolated crossings and stable segment stitching",
       "mandatory_route_dependencies": [
         "array",
         "geometry"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze ambiguous saddles and border/masked level sets against pinned upstream, including saddle fully_connected choice, positive_orientation, NaNs/mask and open contours; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered saddle fully_connected choice, positive_orientation, NaNs/mask and open contours. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "saddle fully_connected choice, positive_orientation, NaNs/mask and open contours",
       "parity_cases_to_freeze": "ambiguous saddles and border/masked level sets",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -11898,10 +11904,10 @@
         "kind": "compute",
         "specific_workload": "ambiguous saddles and border/masked level sets",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/find_contours.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_find_contours_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17807,22 +17813,26 @@
       "api": "transform.pyramid_gaussian",
       "kind": "callable",
       "signature": "(image, max_layer=-1, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "transform.pyramid_gaussian",
       "identity_alias": false,
       "family": "resample",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Lazy generator chaining native pyramid_reduce until shape/max_layer termination",
+      "easiest_credible_path": "Audit/extend existing native implementation: Lazy generator chaining native pyramid_reduce until shape/max_layer termination",
       "mandatory_route_dependencies": [
         "array",
         "resample"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze tiny/odd shapes and finite/infinite max_layer against pinned upstream, including yield count/order, original first level, channel_axis and lazy exceptions; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered yield count/order, original first level, channel_axis and lazy exceptions. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "yield count/order, original first level, channel_axis and lazy exceptions",
       "parity_cases_to_freeze": "tiny/odd shapes and finite/infinite max_layer",
       "numerical_policy": "Exact shape/coordinate conventions, clipping, dtype, errors and branch choices; interpolation tolerance predeclared and strict historical profiles retained.",
@@ -17833,32 +17843,36 @@
         "kind": "compute",
         "specific_workload": "tiny/odd shapes and finite/infinite max_layer",
         "one_worker_recipe": "Tiny/HD images and volumes, integer/float, contiguous/reversed inputs, affine/nonlinear maps, all supported interpolation/boundary modes.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/pyramid_generators.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_pyramid_generators_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "transform.pyramid_laplacian",
       "kind": "callable",
       "signature": "(image, max_layer=-1, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "transform.pyramid_laplacian",
       "identity_alias": false,
       "family": "resample",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Lazy levels of image minus smoothed image then reduction",
+      "easiest_credible_path": "Audit/extend existing native implementation: Lazy levels of image minus smoothed image then reduction",
       "mandatory_route_dependencies": [
         "array",
         "resample"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze reconstruction-oriented pyramids and odd shapes against pinned upstream, including first/last level, residual dtype, sigma and lazy state; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered first/last level, residual dtype, sigma and lazy state. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "first/last level, residual dtype, sigma and lazy state",
       "parity_cases_to_freeze": "reconstruction-oriented pyramids and odd shapes",
       "numerical_policy": "Exact shape/coordinate conventions, clipping, dtype, errors and branch choices; interpolation tolerance predeclared and strict historical profiles retained.",
@@ -17869,10 +17883,10 @@
         "kind": "compute",
         "specific_workload": "reconstruction-oriented pyramids and odd shapes",
         "one_worker_recipe": "Tiny/HD images and volumes, integer/float, contiguous/reversed inputs, affine/nonlinear maps, all supported interpolation/boundary modes.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/pyramid_generators.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_pyramid_generators_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -18962,22 +18976,26 @@
       "api": "util.random_noise",
       "kind": "callable",
       "signature": "(image, mode='gaussian', rng=None, clip=True, **kwargs)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "uint16",
+        "float64"
+      ],
       "canonical_api": "util.random_noise",
       "identity_alias": false,
       "family": "random",
       "wave": "W2",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Preserve Generator draws/distributions and native mode-specific transforms/clipping",
+      "easiest_credible_path": "Audit/extend existing native implementation: Preserve Generator draws/distributions and native mode-specific transforms/clipping",
       "mandatory_route_dependencies": [
         "array",
         "rng"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze saved-state mode matrix and clipping/range edges against pinned upstream, including gaussian/localvar/poisson/salt/pepper/s&p/speckle, signed range and RNG state; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered gaussian/localvar/poisson/salt/pepper/s&p/speckle, signed range and RNG state. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "gaussian/localvar/poisson/salt/pepper/s&p/speckle, signed range and RNG state",
       "parity_cases_to_freeze": "saved-state mode matrix and clipping/range edges",
       "numerical_policy": "Exact seed/Generator state, draw count/order and distribution algorithm where interchangeability requires it; distribution-only tests cannot prove seeded parity.",
@@ -18988,10 +19006,10 @@
         "kind": "compute",
         "specific_workload": "saved-state mode matrix and clipping/range edges",
         "one_worker_recipe": "Fixed saved RNG states, tiny/large output shapes and all distribution/mode branches; reset equivalent state outside each timed call.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/random_noise.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_random_noise_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

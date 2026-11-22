@@ -1222,11 +1222,14 @@
       "api": "draw.random_shapes",
       "kind": "callable",
       "signature": "(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=None, num_channels=3, shape=None, intensity_range=None, allow_overlap=False, num_trials=100, rng=None, *, channel_axis=-1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_random_shapes_public.py",
+      "benchmark": "benchmarks/random_shapes.py",
+      "default_input_kind": "The uint8 descriptor carries only image shape. NumPy supplies RNG and ordered metadata. Native raster and paint stages produce a uint8 image. Unsupported carriers and options use compatibility."
     },
     {
       "api": "draw.rectangle",
@@ -5593,11 +5596,16 @@
       "api": "measure.find_contours",
       "kind": "callable",
       "signature": "(image, level=None, fully_connected='low', positive_orientation='low', *, mask=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_find_contours_public.py",
+      "benchmark": "benchmarks/find_contours.py",
+      "default_input_kind": "Bounded finite 2D image and explicit crossing level. C++ follows ordered marching squares and NumPy owns contiguous contour arrays; unsupported requests use compatibility."
     },
     {
       "api": "measure.grid_points_in_poly",
@@ -5988,7 +5996,7 @@
       "execution_kind": "native",
       "parity_test": "tests/test_hausdorff_public.py",
       "benchmark": "benchmarks/hausdorff.py",
-      "default_input_kind": "Bounded C-order sparse bool/u8 masks of matching rank 1–4. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility."
+      "default_input_kind": "Bounded C-order sparse bool/u8 masks of matching rank 1\u20134. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility."
     },
     {
       "api": "metrics.hausdorff_pair",
@@ -6002,7 +6010,7 @@
       "execution_kind": "native",
       "parity_test": "tests/test_hausdorff_public.py",
       "benchmark": "benchmarks/hausdorff.py",
-      "default_input_kind": "Bounded C-order sparse bool/u8 masks of matching rank 1–4. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility."
+      "default_input_kind": "Bounded C-order sparse bool/u8 masks of matching rank 1\u20134. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility."
     },
     {
       "api": "metrics.mean_squared_error",
@@ -7042,7 +7050,7 @@
       "execution_kind": "native",
       "parity_test": "tests/test_expand_labels_public.py",
       "benchmark": "benchmarks/expand_labels.py",
-      "default_input_kind": "Bounded 1D–3D native-endian C-order integer labels with ordinary distance and spacing. Native ordered Euclidean expansion; unsupported requests use compatibility."
+      "default_input_kind": "Bounded 1D\u20133D native-endian C-order integer labels with ordinary distance and spacing. Native ordered Euclidean expansion; unsupported requests use compatibility."
     },
     {
       "api": "segmentation.felzenszwalb",
@@ -8828,21 +8836,31 @@
       "api": "transform.pyramid_gaussian",
       "kind": "callable",
       "signature": "(image, max_layer=-1, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_pyramid_generators_public.py",
+      "benchmark": "benchmarks/pyramid_generators.py",
+      "default_input_kind": "Bounded owning C-order image. Existing C++ Gaussian and resize stages with lazy stock-order yields. Benchmarks exhaust the iterator. Unsupported requests use compatibility."
     },
     {
       "api": "transform.pyramid_laplacian",
       "kind": "callable",
       "signature": "(image, max_layer=-1, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_pyramid_generators_public.py",
+      "benchmark": "benchmarks/pyramid_generators.py",
+      "default_input_kind": "Bounded owning C-order image. Existing C++ Gaussian and resize stages with lazy stock-order yields. Benchmarks exhaust the iterator. Unsupported requests use compatibility."
     },
     {
       "api": "transform.pyramid_reduce",
@@ -9499,11 +9517,16 @@
       "api": "util.random_noise",
       "kind": "callable",
       "signature": "(image, mode='gaussian', rng=None, clip=True, **kwargs)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "uint16",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_random_noise_public.py",
+      "benchmark": "benchmarks/random_noise.py",
+      "default_input_kind": "Bounded seeded Gaussian, speckle, salt-and-pepper and pepper routes. NumPy supplies conversion, RNG, range and clipping; C++ combines or replaces pixels. Other modes use compatibility."
     },
     {
       "api": "util.regular_grid",

@@ -113,3 +113,8 @@ def __getattr__(name):
 
 def __dir__():
     return sorted(set(globals()) | set(__all__) | {'FailedEstimationAccessError'})
+
+
+from ._random_noise import random_noise
+
+__all__ += ['random_noise']

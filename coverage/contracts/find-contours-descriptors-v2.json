@@ -1,0 +1,21 @@
+{
+  "api": "measure.find_contours",
+  "predecessor": {
+    "revision": "523e155391265a1516d04e9e67d52f0d7fa1991f",
+    "contract": "coverage/contracts/find-contours-v1.json",
+    "contract_sha256": "662c4f76363734ef6c44cbd3ba272632dd17b393bc14f0f7697415aa5996700c"
+  },
+  "descriptor_scope": {
+    "image": "The built-in float64, float32 and uint8 descriptors and their untagged, NumPy-equivalent native-endian descriptors.",
+    "mask": "The built-in bool descriptor and its untagged, NumPy-equivalent descriptor.",
+    "fallback": "Tagged and byte-swapped descriptors follow the established compatibility policy without conversion or mutation by the native binder.",
+    "other_requirements": "The v1 exact ndarray type, shape, layout, backing, alignment, level, floating environment, options, ordering and return ownership limits still apply. Only float64 supports a native default level."
+  },
+  "validation": {
+    "status": "Private source only. Runtime validation and performance are pending on the successor binding.",
+    "test": "tests/test_find_contours_public.py",
+    "new_cases_per_mode": 9,
+    "predecessor_stock_fixture_reused": true,
+    "performance_case_ids_unchanged": true
+  }
+}

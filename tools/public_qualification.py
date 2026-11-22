@@ -292,10 +292,11 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current296'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels', 'haar_like_feature_drawing', 'haar_like_features')
-CURRENT_SDK_CLIENT_SCOPE = 'current47 required installed clients; current291 clients plus the Haar drawing and coordinate/value consumers; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v17.json'
+CURRENT_PRODUCT_SCOPE = 'current301'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels', 'haar_like_feature_drawing', 'haar_like_features',
+                            'find_contours', 'random_noise', 'random_shapes')
+CURRENT_SDK_CLIENT_SCOPE = 'current50 required installed clients; current296 clients plus contour tracing, random noise and random shapes; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v18.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -678,6 +679,9 @@ HAAR_TESTS = ('test_draw_haar_like_feature_public.py', 'test_haar_like_features_
 POST203_TESTS += HAAR_TESTS
 PYRAMID_TESTS = ('test_pyramid_spatial_public.py',)
 POST203_TESTS += PYRAMID_TESTS
+FOLLOWING_PUBLIC_TESTS = ('test_pyramid_generators_public.py', 'test_find_contours_public.py',
+                          'test_random_noise_public.py', 'test_random_shapes_public.py')
+POST203_TESTS += FOLLOWING_PUBLIC_TESTS
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -1109,6 +1113,54 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v43.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/finite-radon-public-exports-v3.json', 'coverage/contracts/speed-parity-current-source-v44.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v53.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v2.json')
 
 
+DRAW_SOURCE_PATHS += (
+    'coverage/contracts/current-public-qualification-v18.json',
+    'benchmarks/find_contours.py',
+    'benchmarks/pyramid_generators.py',
+    'benchmarks/random_noise.py',
+    'benchmarks/random_shapes.py',
+    'coverage/contracts/find-contours-descriptors-v2.json',
+    'coverage/contracts/find-contours-v1.json',
+    'coverage/contracts/pyramid-generators-stock-v1.json',
+    'coverage/contracts/pyramid-generators.md',
+    'coverage/contracts/random-noise-stock-modern-v1.json',
+    'coverage/contracts/random-noise-stock-v1.json',
+    'coverage/contracts/random-noise.md',
+    'coverage/contracts/random-shapes-stock-modern-v1.json',
+    'coverage/contracts/random-shapes-stock-v1.json',
+    'coverage/contracts/random-shapes.md',
+    'include/skimagexx/find_contours.hpp',
+    'include/skimagexx/random_noise.hpp',
+    'include/skimagexx/random_shapes.hpp',
+    'python/skimagexx/_find_contours.py',
+    'python/skimagexx/_pyramid_generators.py',
+    'python/skimagexx/_random_noise.py',
+    'python/skimagexx/_random_shapes.py',
+    'src/bind_find_contours.cpp',
+    'src/bind_random_noise.cpp',
+    'src/bind_random_shapes.cpp',
+    'src/find_contours.cpp',
+    'src/random_noise.cpp',
+    'src/random_shapes.cpp',
+    'tests/cmake_consumer/find_contours_consumer.cpp',
+    'tests/cmake_consumer/random_noise_consumer.cpp',
+    'tests/cmake_consumer/random_shapes_consumer.cpp',
+    'tests/find_contours_cases.py',
+    'tests/find_contours_comparison.py',
+    'tests/fixtures/find_contours_originals_v1.json',
+    'tests/pyramid_generator_cases.py',
+    'tests/random_noise_reference.py',
+    'tests/random_shapes_reference.py',
+    'tests/test_find_contours_public.py',
+    'tests/test_pyramid_generators_public.py',
+    'tests/test_random_noise_public.py',
+    'tests/test_random_shapes_public.py',
+)
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v18.json', 'coverage/contracts/finite-radon-public-exports-v4.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v18.json', 'coverage/contracts/speed-parity-current-source-v45.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v3.json', 'coverage/contracts/vi-public-matmul-source-history-v54.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v3.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):
@@ -1360,22 +1412,29 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v16.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v17.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == '7d2aa5b967b382f82b2a7ad0da2582f40881d405466437c6dfe469b4ca3bbce3', 'current294 qualification predecessor differs')
+    require(previous_digest == '25c83a5038fb4a52886be7665f2e0578269b56b872f4da8a7f21a91fc3ee83fe', 'current296 qualification predecessor differs')
     previous = json.loads(previous_raw)
-    pyramid_paths = {name: 'tests/test_pyramid_spatial_public.py'
-                     for name in ('transform.pyramid_reduce', 'transform.pyramid_expand')}
+    routes = {
+        'transform.pyramid_gaussian': 'tests/test_pyramid_generators_public.py',
+        'transform.pyramid_laplacian': 'tests/test_pyramid_generators_public.py',
+        'measure.find_contours': 'tests/test_find_contours_public.py',
+        'util.random_noise': 'tests/test_random_noise_public.py',
+        'draw.random_shapes': 'tests/test_random_shapes_public.py',
+    }
+    families = ('find_contours', 'random_noise', 'random_shapes')
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
-        image_paths=sorted(previous['image_paths'] + list(pyramid_paths)),
-        post203_contracts={**previous['post203_contracts'], **pyramid_paths},
-        required_selectors=previous['required_selectors'] + ['tests/' + name for name in PYRAMID_TESTS],
-        packaged_asset_paths=['data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee', 'data.grass', 'data.gravel', 'data.horse', 'data.text'],
-        required_asset_selectors=['tests/' + name for name in PACKAGED_ASSET_TESTS],
+        image_paths=sorted(previous['image_paths'] + list(routes)),
+        post203_contracts={**previous['post203_contracts'], **routes},
+        required_selectors=previous['required_selectors'] + ['tests/' + name for name in FOLLOWING_PUBLIC_TESTS],
+        SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
+        required_client_families=[*previous['required_client_families'], *families],
+        required_client_headers=previous['required_client_headers'] + [f'include/skimagexx/{name}.hpp' for name in families],
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
@@ -1463,6 +1522,10 @@ def current_install_layout(read_bytes, names, profile):
                 ('_pyramid_spatial.py', '_data_camera_coffee.py', '_data_assets/camera.gray',
                  '_data_assets/coffee.rgb', '_data_assets/camera-coffee.RIGHTS.txt')),
             'current pyramid and camera/coffee install closure absent')
+    require('skimagexx/_pyramid_generators.py' in sources
+            and all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
+                    for name in ('find_contours', 'random_noise', 'random_shapes')),
+            'current generators, contours, noise and shapes install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

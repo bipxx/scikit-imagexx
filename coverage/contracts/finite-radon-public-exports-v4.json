@@ -1,0 +1,19 @@
+{
+  "schema": "finite-radon-public-exports-v4",
+  "previous_record": "coverage/contracts/finite-radon-public-exports-v3.json",
+  "previous_record_raw_sha256": "c5e4a420f4144c53e7ef53728df455548aa14761cccc32a8efd401633dd89be1",
+  "current_raw_sha256": "770fe5795efee01e442e29369ad85699bad3960434e245075563259ed0182abf",
+  "source_suffix": "\n\nfrom ._pyramid_generators import pyramid_gaussian, pyramid_laplacian\n\n__all__ += ['pyramid_gaussian', 'pyramid_laplacian']\n",
+  "guard_raw_sha256": "28dfcb32a5db8f52f1f258757f298e212960d4b99dd38a4bc7cfba9f0f3a83bb",
+  "guard_inverse": [
+    {
+      "current": " live_raw=(c.ROOT/record['source']).read_bytes()\n live_guard=Path(__file__).read_bytes()\n v4=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v4.json').read_bytes())\n assert v4['schema']=='finite-radon-public-exports-v4' and v4['original_calls']==0\n assert v4['previous_record']=='coverage/contracts/finite-radon-public-exports-v3.json'\n assert hashlib.sha256((c.ROOT/v4['previous_record']).read_bytes()).hexdigest()==v4['previous_record_raw_sha256']\n assert hashlib.sha256(live_raw).hexdigest()==v4['current_raw_sha256']\n assert hashlib.sha256(live_guard).hexdigest()==v4['guard_raw_sha256']\n suffix=v4['source_suffix'].encode()\n assert suffix and live_raw.endswith(suffix) and live_raw.count(suffix)==1\n current_raw=live_raw.removesuffix(suffix)\n current_guard=live_guard\n for edit in v4['guard_inverse']:\n  block=edit['current'].encode()\n  assert block and current_guard.count(block)==1\n  current_guard=current_guard.replace(block,edit['previous'].encode(),1)\n",
+      "previous": " current_raw=(c.ROOT/record['source']).read_bytes()\n current_guard=Path(__file__).read_bytes()\n"
+    },
+    {
+      "current": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True)):\n",
+      "previous": " for text,current in ((predecessor,False),(raw,True),(current_raw,True)):\n"
+    }
+  ],
+  "original_calls": 0
+}
