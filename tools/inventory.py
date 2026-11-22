@@ -23,6 +23,8 @@ for _names, _test, _benchmark in (
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
     (('measure.pearson_corr_coeff',), 'tests/test_pearson_public.py', 'benchmarks/pearson.py'),
     (('metrics.hausdorff_distance', 'metrics.hausdorff_pair'), 'tests/test_hausdorff_public.py', 'benchmarks/hausdorff.py'),
+    (('feature.draw_haar_like_feature',), 'tests/test_draw_haar_like_feature_public.py', 'benchmarks/draw_haar_like_feature.py'),
+    (('feature.haar_like_feature', 'feature.haar_like_feature_coord'), 'tests/test_haar_like_features_contract.py', 'benchmarks/haar_like_features.py'),
     (('draw.ellipsoid_stats',), 'tests/test_ellipsoid_stats_public.py', 'benchmarks/ellipsoid_stats.py'),
     (('segmentation.expand_labels',), 'tests/test_expand_labels_public.py', 'benchmarks/expand_labels.py'),
     (('morphology.local_maxima', 'morphology.local_minima'), 'tests/test_local_extrema_public.py', 'benchmarks/local_extrema.py'),
