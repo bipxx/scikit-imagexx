@@ -66,6 +66,9 @@ __all__=['integral_image','integrate','downscale_local_mean']
 from ._resize import resize,rescale
 __all__ += ['resize','rescale']
 
+from ._pyramid_spatial import pyramid_expand, pyramid_reduce
+__all__ += ['pyramid_reduce', 'pyramid_expand']
+
 # Class exports are tracked separately from image-call coverage. Coordinate
 # application uses the shared C++ core; fitting and small matrices retain the
 # explicit NumPy/SciPy providers described by coverage.class_contract.

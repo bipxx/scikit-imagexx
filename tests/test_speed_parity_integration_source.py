@@ -10,8 +10,8 @@ import subprocess
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v42.json'
-CONTEXT_SHA256 = '7857785659f11e61d48ba5a71a59fc8c6d253087f5a3d79903871bb69ba081a6'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v43.json'
+CONTEXT_SHA256 = '0be4fd6ca6222e9c53e608afcc5fd83e20a0ef1bead6e04111d7211b8cc1d30a'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -90,13 +90,13 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v16.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v17.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
         'tests/test_order_angles_golden_ratio_integration.py', 'tests/test_pearson_public.py',
         'tests/test_order_angles_golden_ratio_public.py', 'tests/test_hausdorff_public.py',
         'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py', 'tests/test_binary_blobs_public.py',
-        'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py', 'tests/test_draw_haar_like_feature_public.py', 'tests/test_haar_like_features_contract.py']
+        'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py', 'tests/test_draw_haar_like_feature_public.py', 'tests/test_haar_like_features_contract.py', 'tests/test_pyramid_spatial_public.py']
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
     assert groups['public-post203'] == ('retained',)
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)

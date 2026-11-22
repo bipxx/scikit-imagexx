@@ -1,0 +1,47 @@
+{
+  "schema": "data-camera-coffee-assets-v1",
+  "reference_version": "0.26.0",
+  "companions": "Exact bundled local resources with Python and NumPy array construction.",
+  "rights_notice": "camera-coffee.RIGHTS.txt",
+  "assets": {
+    "camera": {
+      "member": "camera.gray",
+      "upstream_source": "skimage/data/camera.png",
+      "upstream_bytes": 139512,
+      "upstream_sha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a",
+      "rights": {"dedication": "CC0", "creator": "Lav Varshney", "revision_notice": "replacement image introduced in scikit-image 0.18"},
+      "representation": {
+        "dtype": "|u1", "shape": [512, 512], "strides": [512, 1], "bytes": 262144,
+        "decoded_sha256": "5cb24482a53416f99052258be2b1ee38cd31c559a70c8a8b321cba231b332e21"
+      }
+    },
+    "coffee": {
+      "member": "coffee.rgb",
+      "upstream_source": "skimage/data/coffee.png",
+      "upstream_bytes": 466706,
+      "upstream_sha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+      "rights": {"dedication": "CC0", "creator": "Rachel Michetti", "courtesy": "Pikolo Espresso Bar"},
+      "representation": {
+        "dtype": "|u1", "shape": [400, 600, 3], "strides": [1800, 3, 1], "bytes": 720000,
+        "decoded_sha256": "0ce2b51640b9c95f19617f03eabf40c3f0368589cc1ee1190b70966165ac184f"
+      }
+    }
+  },
+  "reference": {
+    "source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+    "profiles": {
+      "windows": "054f0dcc38548cb36e163bdfd6266651fc88a8d406bc3ed7e3093c0e8c2855e9",
+      "linux-minimum": "5115921f9c9bc31ff48599e46c7a567fdadd900fb285db86ba53d689121e0579"
+    },
+    "output": "No arguments or warnings. Each call creates a distinct aligned, writable, C-contiguous ndarray that owns its data.",
+    "observed_provider_scope": "Bundled originals on the Windows and Linux minimum reference profiles without Pooch.",
+    "invalid_resource": "Missing, wrong-size, or wrong-digest owned members follow the existing strict or warned upstream fallback policy."
+  },
+  "performance": {
+    "cases": ["camera-warm-local", "coffee-warm-local"],
+    "freeze_sha256": "d5fbd5c6d050ed70909f4c3b020036173b2a95f8f30935e571f8cb302fb811a8",
+    "sampler": "sustained-adaptive-full-public-v1",
+    "workers": 1, "warmup_ms": 250, "minimum_sample_ms": 100, "samples_per_implementation": 7,
+    "boundary": "Warm no-argument public functions including local reads and fresh output allocation."
+  }
+}

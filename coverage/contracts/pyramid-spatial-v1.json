@@ -1,0 +1,20 @@
+{
+  "apis": ["transform.pyramid_reduce", "transform.pyramid_expand"],
+  "state": "Private composed route using already shipped native stages.",
+  "reference_admission_sha256": "88108dbb29a86380b28b7045344c91270dd472f0f36f5b5915be94449afd19b7",
+  "reference_fixture": "tests/fixtures/pyramid_spatial_originals_v1.json",
+  "reference_fixture_raw_sha256": "26863806d71754887ed9536a1f909fad75eee2144fe2278159475c2ee268e665",
+  "native_domain": "Aligned, C-order, owning, plain ndarray with ordinary native-endian uint8/float32/float64. Rank 2 without channel axis or rank 3 with exact integer channel axis. Input and output 1..512 per extent and at most 262144 elements. Ordinary finite scale (1,4], scalar sigma 0..4 or default, order 0/1, reflect/constant/wrap, ordinary Boolean preserve_range, finite floating inputs and cval within ±65536.",
+  "order": "Convert first. Reduce applies Gaussian then resize. Expand applies resize then Gaussian. Gaussian gets its own border convention and an empty_like destination. Resize uses shipped translation/grid mode/clipping, with anti_aliasing=False. Channel axis is normalized by rank; shape uses ceil and no channel growth or Gaussian.",
+  "ownership": "Both stages call the already exported native functions. The Python composition adds no compiled stage, provider replacement, or standalone C++ ABI.",
+  "compatibility": "Unsupported inputs and options delegate the whole operation without running a partial composition. NaN warnings and error ordering retain the pinned profile-specific upstream behavior.",
+  "timing": {
+    "cases": ["reduce-odd-f32-reflect", "reduce-planar-u8-constant", "expand-odd-f32-wrap", "expand-rgb-u8-reflect"],
+    "workers": 1,
+    "warmup_ms_per_side": 250,
+    "accepted_rounds_per_side": 7,
+    "minimum_batch_ms": 100,
+    "minimum_ratio_each": 1,
+    "execution_authority": null
+  }
+}

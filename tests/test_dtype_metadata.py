@@ -7,10 +7,11 @@ import numpy as np
 import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
-from skimagexx.coverage import HAAR_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 _UNTAGGED_ARRAY_APIS = {
+    *PYRAMID_FUNCTIONS,
     'segmentation.expand_labels',
     'metrics.hausdorff_distance',
     'metrics.hausdorff_pair',
@@ -36,6 +37,11 @@ def calls(api,dtype):
     if untagged_arrays:
         # Preserve the tag boundary check and the native parity case for every advertised dtype.
         tagged_arguments = tuple(array.view(np.dtype(array.dtype, metadata=tags)) for array in arguments)
+        if api in PYRAMID_FUNCTIONS:
+            tagged = np.empty(data.shape, dtype=np.dtype(data.dtype, metadata=tags))
+            tagged[...] = data
+            assert tagged.flags.owndata and tagged.dtype.metadata == tags
+            tagged_arguments = (tagged,)
         with pytest.raises(NotImplementedError, match=re.escape(api)):
             native(*tagged_arguments, **options)
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):

@@ -800,3 +800,5 @@ python/skimagexx/_data_assets/grass.gray binary
 python/skimagexx/_data_assets/gravel.gray binary
 python/skimagexx/_data_assets/horse.bool binary
 python/skimagexx/_data_assets/text.gray binary
+python/skimagexx/_data_assets/camera.gray binary
+python/skimagexx/_data_assets/coffee.rgb binary

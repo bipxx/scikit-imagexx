@@ -16,7 +16,7 @@ NATIVE_FUNCTIONS = {
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
@@ -135,7 +135,7 @@ def native_functions():
 
 
 PACKAGED_ASSET_FUNCTIONS = (
-    'data.brick', 'data.cat', 'data.chelsea', 'data.clock',
+    'data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee',
     'data.grass', 'data.gravel', 'data.horse', 'data.text',
 )
 
@@ -352,6 +352,7 @@ FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.f
 
 LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
 
+PYRAMID_FUNCTIONS = ('transform.pyramid_reduce', 'transform.pyramid_expand')
 HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature', 'feature.haar_like_feature_coord')
 
 

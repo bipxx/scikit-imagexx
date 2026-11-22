@@ -15,7 +15,7 @@ import skimagexx as xx
 from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_default_error, profile_default_error, blur_default_error, compare_default_error, level_set_default_error, map_array_default_error, label_points_default_error, unique_rows_default_error, regular_seeds_default_error, LEVEL_SET_FUNCTIONS
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error, draw_polygon_default_error
-from skimagexx.coverage import util_metadata_default_error
+from skimagexx.coverage import PYRAMID_FUNCTIONS, util_metadata_default_error
 from skimagexx.coverage import set_color_default_result, set_color_default_error, label_pair_default_error, find_boundaries_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error, line_nd_default_error, ellipsoid_default_error
 
@@ -258,6 +258,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     fingerprint = source_fingerprint(root)
     results = []
+    unassessed = []
     for size_index, size in enumerate(args.sizes):
         for dtype in (np.uint8, np.float32, np.float64):
             rng = np.random.default_rng(2026)
@@ -275,6 +276,13 @@ def main():
                 # Window consumes only shape, so fixture pixel dtypes are not distinct cases.
                 if api == 'filters.window' and dtype != np.float64:
                     continue
+                if api in PYRAMID_FUNCTIONS:
+                    limit = 256 if api == 'transform.pyramid_expand' else 512
+                    if size > limit or args.dtype_metadata:
+                        reason = ('Tagged input is outside native scope' if args.dtype_metadata
+                                  else f'Default pyramid input or output exceeds the native bounds at size {size}')
+                        unassessed.append({'api': api, 'size': size, 'dtype': np.dtype(dtype).name, 'reason': reason})
+                        continue
                 module, name = api.rsplit('.', 1)
                 if np.dtype(dtype).name not in native_dtypes(api):
                     continue
@@ -418,7 +426,7 @@ def main():
     if reference_fft_workers is not None:
         reference_fft_workers['after'] = reference_fft.get_workers()
         assert reference_fft_workers['after'] == 1
-    assert set(r['api'] for r in results) == set(apis)
+    assert {r['api'] for r in (*results, *unassessed)} == set(apis)
     report = {'metadata': {'timestamp_utc': datetime.now(timezone.utc).isoformat(), 'platform': platform.platform(),
                            'cpu': platform.processor(), 'reference': skimage.__version__, 'numpy': np.__version__,
                            **fingerprint, 'fallback_enabled': False, 'avx2': xx.has_avx2(),
@@ -434,6 +442,8 @@ def main():
                                'color.combine_stains':'conv_matrix=rgb_from_hed'},
                            'repeat': args.repeat, 'timing': 'allocation-inclusive, warmed Python calls; original reference pools limited to one thread'},
               'results': results}
+    if unassessed:
+        report['unassessed'] = unassessed
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2)+'\n',encoding='utf-8')
     lines = ['# Native function performance versus scikit-image'+(' with dtype metadata' if args.dtype_metadata else ''), '',
@@ -460,6 +470,8 @@ def main():
              '| API | Size | Dtype | Workers | Execution | Reference ms | Current ms | Speedup |', '|---|---:|---|---:|---|---:|---:|---:|']
     for r in results:
         lines.append(f'| {r["api"]} | {r["size"]} | {r["dtype"]} | {r["threads"]} | {r["backend"]} | {r["reference_ms"]:.4f} | {r["cpp_ms"]:.4f} | {r["speedup"]:.2f}x |')
+    if unassessed:
+        lines.extend(('', 'Pyramid requests outside the bounded native route are listed in the JSON report.'))
     args.output.with_suffix('.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
 
 

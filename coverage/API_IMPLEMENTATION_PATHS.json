@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "667c182877372ea3b7cf9b5b9a1d04031795a042e332e0c9f0a34369e86ad090",
+  "source_inventory_sha256": "bc88415e3e5c90cc0f1632d6f80f26868f20b634267d15d3cd61dd30c7edceee",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,8 +26,9 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 281,
-      "upstream-only": 187
+      "native-partial": 296,
+      "packaged-asset-partial": 10,
+      "upstream-only": 162
     },
     "kinds": {
       "callable": 448,
@@ -2150,15 +2151,19 @@
       "api": "data.binary_blobs",
       "kind": "callable",
       "signature": "(length=512, blob_size_fraction=0.1, n_dim=2, volume_fraction=0.5, rng=None, *, boundary_mode='nearest')",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "data.binary_blobs",
       "identity_alias": false,
       "family": "random",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Preserve upstream random point sampling then Gaussian smoothing and percentile threshold",
+      "easiest_credible_path": "Audit/extend existing native implementation: Preserve upstream random point sampling then Gaussian smoothing and percentile threshold",
       "mandatory_route_dependencies": [
         "array",
         "rng",
@@ -2167,7 +2172,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze seeded 2D/3D fields at extreme volume fractions against pinned upstream, including RNG consumption, volume_fraction ties, n_dim, blob_size_fraction and boundary_mode; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered RNG consumption, volume_fraction ties, n_dim, blob_size_fraction and boundary_mode. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "RNG consumption, volume_fraction ties, n_dim, blob_size_fraction and boundary_mode",
       "parity_cases_to_freeze": "seeded 2D/3D fields at extreme volume fractions",
       "numerical_policy": "Exact seed/Generator state, draw count/order and distribution algorithm where interchangeability requires it; distribution-only tests cannot prove seeded parity.",
@@ -2178,10 +2183,10 @@
         "kind": "compute",
         "specific_workload": "seeded 2D/3D fields at extreme volume fractions",
         "one_worker_recipe": "Fixed saved RNG states, tiny/large output shapes and all distribution/mode branches; reset equivalent state outside each timed call.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/binary_blobs.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_binary_blobs_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -2224,8 +2229,8 @@
       "api": "data.brick",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.brick",
       "identity_alias": false,
@@ -2250,18 +2255,18 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_textures.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_textures_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "data.camera",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.camera",
       "identity_alias": false,
@@ -2286,18 +2291,18 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_camera_coffee.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_camera_coffee_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "data.cat",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.chelsea",
       "identity_alias": true,
@@ -2322,11 +2327,11 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null,
+        "existing_inventory_reference": "benchmarks/chelsea.py",
         "alias_rule": "Run alias dispatch/identity checks; inherit canonical algorithm timings only after identity proof and report public-wrapper overhead separately. Never count alias as a new algorithm."
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_chelsea_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes.",
       "alias_identity_evidence": "Pinned skimage/data/_fetchers.py assigns cat = chelsea (0.26.0 local source)."
     },
@@ -2442,8 +2447,8 @@
       "api": "data.chelsea",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.chelsea",
       "identity_alias": false,
@@ -2468,18 +2473,18 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/chelsea.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_chelsea_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "data.clock",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.clock",
       "identity_alias": false,
@@ -2504,18 +2509,18 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_clock_horse.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_clock_horse_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "data.coffee",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.coffee",
       "identity_alias": false,
@@ -2540,10 +2545,10 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_camera_coffee.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_camera_coffee_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -2730,8 +2735,8 @@
       "api": "data.grass",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.grass",
       "identity_alias": false,
@@ -2756,18 +2761,18 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_textures.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_textures_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "data.gravel",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.gravel",
       "identity_alias": false,
@@ -2792,18 +2797,18 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_textures.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_textures_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "data.horse",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.horse",
       "identity_alias": false,
@@ -2828,10 +2833,10 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_clock_horse.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_clock_horse_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -3522,8 +3527,8 @@
       "api": "data.text",
       "kind": "callable",
       "signature": "()",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
+      "current_implementation": "packaged-asset-partial",
+      "current_execution_kind": "packaged-asset",
       "current_native_default_case_dtypes": [],
       "canonical_api": "data.text",
       "identity_alias": false,
@@ -3548,10 +3553,10 @@
         "kind": "noncompute-boundary",
         "specific_workload": "warm-cache exact fixture and offline/missing/corrupt resource",
         "one_worker_recipe": "Noncompute boundary: separate warm-cache decode/local file latency from cold authorized fetch; never compare network timing as C++ kernel speed.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/data_textures.py"
       },
       "native_provider_frontier": "Asset manifest/cache and codec adapter first. This preserves API behavior but is not a native image algorithm or standalone C++ codec completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_data_textures_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -3874,22 +3879,24 @@
       "api": "draw.ellipsoid_stats",
       "kind": "callable",
       "signature": "(a, b, c)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "float64"
+      ],
       "canonical_api": "draw.ellipsoid_stats",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Direct volume formula plus reviewed elliptic-integral surface-area implementation",
+      "easiest_credible_path": "Audit/extend existing native implementation: Direct volume formula plus reviewed elliptic-integral surface-area implementation",
       "mandatory_route_dependencies": [
         "pointwise",
         "provider"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze spheres, oblate/prolate and triaxial cases against pinned upstream, including sphere/spheroid limits, axis ordering and special-function accuracy; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered sphere/spheroid limits, axis ordering and special-function accuracy. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "sphere/spheroid limits, axis ordering and special-function accuracy",
       "parity_cases_to_freeze": "spheres, oblate/prolate and triaxial cases",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -3900,10 +3907,10 @@
         "kind": "compute",
         "specific_workload": "spheres, oblate/prolate and triaxial cases",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/ellipsoid_stats.py"
       },
       "native_provider_frontier": "Direct native volume is simple; surface area needs licensed accurate elliptic-integral implementation or disclosed special-function provider. Adapter effort does not imply standalone completion.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_ellipsoid_stats_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -5424,15 +5431,20 @@
       "api": "feature.draw_haar_like_feature",
       "kind": "callable",
       "signature": "(image, r, c, width, height, feature_coord, color_positive_block=(1.0, 0.0, 0.0), color_negative_block=(0.0, 1.0, 0.0), alpha=0.5, max_n_features=None, rng=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "feature.draw_haar_like_feature",
       "identity_alias": false,
       "family": "draw",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse rectangle coordinate fill and alpha overlay for selected Haar blocks",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse rectangle coordinate fill and alpha overlay for selected Haar blocks",
       "mandatory_route_dependencies": [
         "array",
         "geometry",
@@ -5441,7 +5453,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze overlapping positive/negative blocks and seeded subsets against pinned upstream, including random feature selection state, signed colors, ROI clipping and copy; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered random feature selection state, signed colors, ROI clipping and copy. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "random feature selection state, signed colors, ROI clipping and copy",
       "parity_cases_to_freeze": "overlapping positive/negative blocks and seeded subsets",
       "numerical_policy": "Exact coordinate order, endpoint/clip rules and duplicate pixels; declared tolerance for anti-alias values.",
@@ -5452,10 +5464,10 @@
         "kind": "compute",
         "specific_workload": "overlapping positive/negative blocks and seeded subsets",
         "one_worker_recipe": "Short/long/degenerate primitives, clipped and unclipped output, small and megapixel masks; include coordinate allocation.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/draw_haar_like_feature.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_draw_haar_like_feature_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -5623,15 +5635,27 @@
       "api": "feature.haar_like_feature",
       "kind": "callable",
       "signature": "(int_image, r, c, width, height, feature_type=None, feature_coord=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "feature.haar_like_feature",
       "identity_alias": false,
       "family": "feature",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Use integral-image rectangle inclusion-exclusion for supplied/enumerated Haar blocks",
+      "easiest_credible_path": "Audit/extend existing native implementation: Use integral-image rectangle inclusion-exclusion for supplied/enumerated Haar blocks",
       "mandatory_route_dependencies": [
         "array",
         "reduce",
@@ -5639,7 +5663,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze all feature families and custom coordinates against pinned upstream, including feature ordering/types, ROI offsets and signed output overflow; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered feature ordering/types, ROI offsets and signed output overflow. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "feature ordering/types, ROI offsets and signed output overflow",
       "parity_cases_to_freeze": "all feature families and custom coordinates",
       "numerical_policy": "Exact candidate/descriptor shape, mask, ordering, tie and RNG decisions; declared tolerance for response and normalized descriptor floats.",
@@ -5650,25 +5674,27 @@
         "kind": "compute",
         "specific_workload": "all feature families and custom coordinates",
         "one_worker_recipe": "Blank/textured images, edge-heavy images, tiny and megapixel sizes, sparse/dense keypoints; report detect/extract/full pipeline separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/haar_like_features.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_haar_like_features_contract.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "feature.haar_like_feature_coord",
       "kind": "callable",
       "signature": "(width, height, feature_type=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8"
+      ],
       "canonical_api": "feature.haar_like_feature_coord",
       "identity_alias": false,
       "family": "feature",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Enumerate ordered rectangle tuples for each Haar feature family",
+      "easiest_credible_path": "Audit/extend existing native implementation: Enumerate ordered rectangle tuples for each Haar feature family",
       "mandatory_route_dependencies": [
         "array",
         "reduce",
@@ -5676,7 +5702,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze tiny exact enumeration and larger windows against pinned upstream, including combinatorial ordering, feature_type selection and empty geometry; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered combinatorial ordering, feature_type selection and empty geometry. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "combinatorial ordering, feature_type selection and empty geometry",
       "parity_cases_to_freeze": "tiny exact enumeration and larger windows",
       "numerical_policy": "Exact candidate/descriptor shape, mask, ordering, tie and RNG decisions; declared tolerance for response and normalized descriptor floats.",
@@ -5687,10 +5713,10 @@
         "kind": "compute",
         "specific_workload": "tiny exact enumeration and larger windows",
         "one_worker_recipe": "Blank/textured images, edge-heavy images, tiny and megapixel sizes, sparse/dense keypoints; report detect/extract/full pipeline separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/haar_like_features.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_haar_like_features_contract.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -12478,15 +12504,17 @@
       "api": "measure.pearson_corr_coeff",
       "kind": "callable",
       "signature": "(image0, image1, mask=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "float64"
+      ],
       "canonical_api": "measure.pearson_corr_coeff",
       "identity_alias": false,
       "family": "reduce",
       "wave": "W1",
       "next_increment_effort": "S",
-      "easiest_credible_path": "Reuse stable masked centered sums plus reviewed p-value special function/provider",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse stable masked centered sums plus reviewed p-value special function/provider",
       "mandatory_route_dependencies": [
         "array",
         "reduce",
@@ -12494,7 +12522,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze constant/near-perfect/uncorrelated channels against pinned upstream, including constant input warnings, sample count, mask and p-value tails; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered constant input warnings, sample count, mask and p-value tails. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "constant input warnings, sample count, mask and p-value tails",
       "parity_cases_to_freeze": "constant/near-perfect/uncorrelated channels",
       "numerical_policy": "Exact counts, tie outcomes, dtype and ordering; predeclare error bounds for floating reductions and test cancellation/nonfinite inputs.",
@@ -12505,10 +12533,10 @@
         "kind": "compute",
         "specific_workload": "constant/near-perfect/uncorrelated channels",
         "one_worker_recipe": "Tiny and large arrays, repeated/unique distributions, sparse masks, strided layouts; retain allocation-inclusive timing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/pearson.py"
       },
       "native_provider_frontier": "Native correlation reductions plus a separately qualified beta/t-distribution tail implementation or disclosed statistical p-value provider; provider retention does not complete standalone C++.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_pearson_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -12974,22 +13002,25 @@
       "api": "metrics.hausdorff_distance",
       "kind": "callable",
       "signature": "(image0, image1, method='standard')",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
       "canonical_api": "metrics.hausdorff_distance",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Extract foreground points and compute bidirectional nearest-neighbor distances",
+      "easiest_credible_path": "Audit/extend existing native implementation: Extract foreground points and compute bidirectional nearest-neighbor distances",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze sparse/dense/equidistant 2D/3D masks against pinned upstream, including standard versus modified mean, empty sets and max ties; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered standard versus modified mean, empty sets and max ties. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "standard versus modified mean, empty sets and max ties",
       "parity_cases_to_freeze": "sparse/dense/equidistant 2D/3D masks",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -13000,32 +13031,35 @@
         "kind": "compute",
         "specific_workload": "sparse/dense/equidistant 2D/3D masks",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/hausdorff.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_hausdorff_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "metrics.hausdorff_pair",
       "kind": "callable",
       "signature": "(image0, image1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
       "canonical_api": "metrics.hausdorff_pair",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse Hausdorff nearest-neighbor search and return attaining point pair",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse Hausdorff nearest-neighbor search and return attaining point pair",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze multiple maximizing pairs and empty masks against pinned upstream, including empty-set warning, coordinate order and tie selection; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered empty-set warning, coordinate order and tie selection. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "empty-set warning, coordinate order and tie selection",
       "parity_cases_to_freeze": "multiple maximizing pairs and empty masks",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -13036,10 +13070,10 @@
         "kind": "compute",
         "specific_workload": "multiple maximizing pairs and empty masks",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/hausdorff.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_hausdorff_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -13210,22 +13244,25 @@
       "api": "metrics.structural_similarity",
       "kind": "callable",
       "signature": "(im1, im2, *, win_size=None, gradient=False, data_range=None, channel_axis=None, gaussian_weights=False, full=False, **kwargs)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
       "canonical_api": "metrics.structural_similarity",
       "identity_alias": false,
       "family": "stencil",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse local mean/variance/covariance filters and SSIM formula; derive gradient/full map paths",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse local mean/variance/covariance filters and SSIM formula; derive gradient/full map paths",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze constant/tiny images, channel layouts and gradient checks against pinned upstream, including data_range, sample covariance, channel axis, crop, gaussian weights and return tuple; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered data_range, sample covariance, channel axis, crop, gaussian weights and return tuple. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "data_range, sample covariance, channel axis, crop, gaussian weights and return tuple",
       "parity_cases_to_freeze": "constant/tiny images, channel layouts and gradient checks",
       "numerical_policy": "Exact boundaries, footprint origins, dtype/out rules; freeze floating tolerance before comparison and retain strict scopes.",
@@ -13236,10 +13273,10 @@
         "kind": "compute",
         "specific_workload": "constant/tiny images, channel layouts and gradient checks",
         "one_worker_recipe": "2D/3D images with narrow/wide kernels, border-heavy tiny inputs, masks, channel axes and strided/output-buffer cases.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/structural_similarity.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_structural_similarity.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -14453,22 +14490,31 @@
       "api": "morphology.local_maxima",
       "kind": "callable",
       "signature": "(image, footprint=None, connectivity=None, indices=False, allow_borders=True)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "morphology.local_maxima",
       "identity_alias": false,
       "family": "tree",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Flood equal-valued plateaus and reject those touching larger neighbors",
+      "easiest_credible_path": "Audit/extend existing native implementation: Flood equal-valued plateaus and reject those touching larger neighbors",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze border and interior flat maxima against pinned upstream, including allow_borders, connectivity/footprint, indices and plateau tie; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered allow_borders, connectivity/footprint, indices and plateau tie. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "allow_borders, connectivity/footprint, indices and plateau tie",
       "parity_cases_to_freeze": "border and interior flat maxima",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -14479,32 +14525,41 @@
         "kind": "compute",
         "specific_workload": "border and interior flat maxima",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/local_extrema.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_local_extrema_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "morphology.local_minima",
       "kind": "callable",
       "signature": "(image, footprint=None, connectivity=None, indices=False, allow_borders=True)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "morphology.local_minima",
       "identity_alias": false,
       "family": "tree",
       "wave": "W2",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse plateau flood with reversed comparison",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse plateau flood with reversed comparison",
       "mandatory_route_dependencies": [
         "array",
         "order_graph"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze border and interior flat minima against pinned upstream, including allow_borders, connectivity/footprint, indices and dtype extremes; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered allow_borders, connectivity/footprint, indices and dtype extremes. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "allow_borders, connectivity/footprint, indices and dtype extremes",
       "parity_cases_to_freeze": "border and interior flat minima",
       "numerical_policy": "Exact plateau/tie order, connectivity, parent/traverser consistency, integer dtype, offsets and seed-mask constraints.",
@@ -14515,10 +14570,10 @@
         "kind": "compute",
         "specific_workload": "border and interior flat minima",
         "one_worker_recipe": "Plateaus, ramps, noisy/nested components, sparse markers, 2D/3D and dtype extremes; include tree construction versus reuse separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/local_extrema.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_local_extrema_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -16109,22 +16164,31 @@
       "api": "segmentation.expand_labels",
       "kind": "callable",
       "signature": "(label_image, distance=1, spacing=1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64"
+      ],
       "canonical_api": "segmentation.expand_labels",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse exact Euclidean nearest-label indices and threshold distance",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse exact Euclidean nearest-label indices and threshold distance",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze competing labels and anisotropic 2D/3D volumes against pinned upstream, including equidistant-label tie, spacing, background and output label dtype; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered equidistant-label tie, spacing, background and output label dtype. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "equidistant-label tie, spacing, background and output label dtype",
       "parity_cases_to_freeze": "competing labels and anisotropic 2D/3D volumes",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -16135,10 +16199,10 @@
         "kind": "compute",
         "specific_workload": "competing labels and anisotropic 2D/3D volumes",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/expand_labels.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_expand_labels_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17615,15 +17679,28 @@
       "api": "transform.order_angles_golden_ratio",
       "kind": "callable",
       "signature": "(theta)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float16",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "transform.order_angles_golden_ratio",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Ordered nearest-angle selection around golden-ratio angular targets",
+      "easiest_credible_path": "Audit/extend existing native implementation: Ordered nearest-angle selection around golden-ratio angular targets",
       "mandatory_route_dependencies": [
         "array",
         "reduce",
@@ -17631,7 +17708,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze repeated/unsorted angle lists against pinned upstream, including ties, duplicates, angle periodicity and generator semantics; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered ties, duplicates, angle periodicity and generator semantics. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "ties, duplicates, angle periodicity and generator semantics",
       "parity_cases_to_freeze": "repeated/unsorted angle lists",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -17642,10 +17719,10 @@
         "kind": "compute",
         "specific_workload": "repeated/unsorted angle lists",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/order_angles_golden_ratio_native.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_order_angles_golden_ratio_integration.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17690,22 +17767,26 @@
       "api": "transform.pyramid_expand",
       "kind": "callable",
       "signature": "(image, upscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "transform.pyramid_expand",
       "identity_alias": false,
       "family": "resample",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Reuse resize-up and Gaussian smoothing with exact scale-derived sigma",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse resize-up and Gaussian smoothing with exact scale-derived sigma",
       "mandatory_route_dependencies": [
         "array",
         "resample"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze odd/even sizes and per-axis channels against pinned upstream, including channel_axis, rounding, mode and preserve_range; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered channel_axis, rounding, mode and preserve_range. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "channel_axis, rounding, mode and preserve_range",
       "parity_cases_to_freeze": "odd/even sizes and per-axis channels",
       "numerical_policy": "Exact shape/coordinate conventions, clipping, dtype, errors and branch choices; interpolation tolerance predeclared and strict historical profiles retained.",
@@ -17716,10 +17797,10 @@
         "kind": "compute",
         "specific_workload": "odd/even sizes and per-axis channels",
         "one_worker_recipe": "Tiny/HD images and volumes, integer/float, contiguous/reversed inputs, affine/nonlinear maps, all supported interpolation/boundary modes.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/pyramid_spatial.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_pyramid_spatial_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17798,22 +17879,26 @@
       "api": "transform.pyramid_reduce",
       "kind": "callable",
       "signature": "(image, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
       "canonical_api": "transform.pyramid_reduce",
       "identity_alias": false,
       "family": "resample",
       "wave": "W3",
       "next_increment_effort": "M",
-      "easiest_credible_path": "Gaussian smooth then native resize-down at source-defined output shape",
+      "easiest_credible_path": "Audit/extend existing native implementation: Gaussian smooth then native resize-down at source-defined output shape",
       "mandatory_route_dependencies": [
         "array",
         "resample"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze noninteger downscale and anisotropic inputs against pinned upstream, including downscale validation, sigma default, shape rounding and channels; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered downscale validation, sigma default, shape rounding and channels. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "downscale validation, sigma default, shape rounding and channels",
       "parity_cases_to_freeze": "noninteger downscale and anisotropic inputs",
       "numerical_policy": "Exact shape/coordinate conventions, clipping, dtype, errors and branch choices; interpolation tolerance predeclared and strict historical profiles retained.",
@@ -17824,10 +17909,10 @@
         "kind": "compute",
         "specific_workload": "noninteger downscale and anisotropic inputs",
         "one_worker_recipe": "Tiny/HD images and volumes, integer/float, contiguous/reversed inputs, affine/nonlinear maps, all supported interpolation/boundary modes.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/pyramid_spatial.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_pyramid_spatial_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

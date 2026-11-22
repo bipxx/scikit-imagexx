@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current294'
+CURRENT_PRODUCT_SCOPE = 'current296'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels', 'haar_like_feature_drawing', 'haar_like_features')
 CURRENT_SDK_CLIENT_SCOPE = 'current47 required installed clients; current291 clients plus the Haar drawing and coordinate/value consumers; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v16.json'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v17.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -676,6 +676,8 @@ POST203_TESTS += ('test_binary_blobs_public.py', 'test_gaussian_nd.py',
                   'test_gaussian_family.py', 'test_resize_gaussian_raw.py')
 HAAR_TESTS = ('test_draw_haar_like_feature_public.py', 'test_haar_like_features_contract.py')
 POST203_TESTS += HAAR_TESTS
+PYRAMID_TESTS = ('test_pyramid_spatial_public.py',)
+POST203_TESTS += PYRAMID_TESTS
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -821,10 +823,14 @@ DRAW_SOURCE_PATHS += (
 
 
 PACKAGED_ASSET_TESTS = ('test_chelsea_public.py', 'test_data_textures_public.py',
-                        'test_data_clock_horse_public.py', 'test_data_resource_exports.py')
+                        'test_data_clock_horse_public.py', 'test_data_resource_exports.py',
+                        'test_data_camera_coffee_public.py')
 PACKAGED_ASSET_FILES = ('brick.gray', 'chelsea.CC0.txt', 'chelsea.rgb', 'clock-horse.RIGHTS.txt',
                         'clock.gray', 'grass.gray', 'gravel.gray', 'horse.bool', 'text.gray',
-                        'textures.RIGHTS.txt')
+                        'textures.RIGHTS.txt', 'camera.gray', 'coffee.rgb', 'camera-coffee.RIGHTS.txt')
+
+
+DRAW_SOURCE_PATHS += ('benchmarks/pyramid_spatial.py', 'coverage/contracts/pyramid-spatial-v1.json', 'python/skimagexx/_pyramid_spatial.py', 'tests/fixtures/pyramid_spatial_originals_v1.json', 'tests/pyramid_spatial_cases.py', 'tests/test_pyramid_spatial_public.py', 'benchmarks/data_camera_coffee.py', 'coverage/contracts/data-camera-coffee-assets-v1.json', 'python/skimagexx/_data_assets/camera-coffee.RIGHTS.txt', 'python/skimagexx/_data_assets/camera.gray', 'python/skimagexx/_data_assets/coffee.rgb', 'python/skimagexx/_data_camera_coffee.py', 'tests/test_data_camera_coffee_public.py', 'tests/test_data_camera_coffee_source.py', 'coverage/contracts/current-public-qualification-v17.json')
 
 
 def groups_for_source(root):
@@ -1097,6 +1103,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-executio
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v41.json', 'coverage/contracts/speed-parity-current-source-v42.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-haar-integration-v3.json', 'coverage/contracts/vi-public-matmul-source-history-data-corrective-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v50.json', 'coverage/contracts/vi-public-matmul-source-history-v51.json', 'coverage/contracts/vi4-public-matmul-capture-haar-integration-v3.json')
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v43.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v52.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v1.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):
@@ -1319,7 +1328,8 @@ def plan(root, profile, expected=None):
                     and registry['image_count'] == len(contract['image_paths']), 'current registry has unmapped or stale image API scope')
             require(set(groups.get('public-post203', ())) == set(POST203_TESTS), 'current dedicated qualification group missing/stale')
             require(groups.get('public-polygon-intake') == ('test_draw_polygon_benchmark_intake.py',), 'current cold polygon intake group missing/stale')
-            if registry.get('packaged_assets'):
+            require(registry.get('packaged_assets') == contract['packaged_asset_paths'], 'current packaged asset routes differ')
+            if contract['packaged_asset_paths']:
                 require(groups.get('public-packaged-assets') == PACKAGED_ASSET_TESTS and
                         all((root / 'tests' / name).is_file() for name in PACKAGED_ASSET_TESTS),
                         'packaged asset test group missing/stale')
@@ -1347,23 +1357,22 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v15.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v16.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == '41debfd69f3009c77b40fafc7afd9233fcbe349b5a3bea4c2ce1ccee4c1f8594', 'current291 qualification predecessor differs')
+    require(previous_digest == '7d2aa5b967b382f82b2a7ad0da2582f40881d405466437c6dfe469b4ca3bbce3', 'current294 qualification predecessor differs')
     previous = json.loads(previous_raw)
-    haar_paths = {'feature.draw_haar_like_feature': 'tests/test_draw_haar_like_feature_public.py', 'feature.haar_like_feature': 'tests/test_haar_like_features_contract.py', 'feature.haar_like_feature_coord': 'tests/test_haar_like_features_contract.py'}
+    pyramid_paths = {name: 'tests/test_pyramid_spatial_public.py'
+                     for name in ('transform.pyramid_reduce', 'transform.pyramid_expand')}
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
-        image_paths=sorted(previous['image_paths'] + list(haar_paths)),
-        post203_contracts={**previous['post203_contracts'], **haar_paths},
-        required_selectors=previous['required_selectors'] + ['tests/' + name for name in HAAR_TESTS],
-        required_client_families=previous['required_client_families'] + ['haar_like_feature_drawing', 'haar_like_features'],
-        required_client_headers=previous['required_client_headers'] + [
-            'include/skimagexx/draw_haar_like_feature.hpp', 'include/skimagexx/haar_like_features.hpp'],
-        SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
+        image_paths=sorted(previous['image_paths'] + list(pyramid_paths)),
+        post203_contracts={**previous['post203_contracts'], **pyramid_paths},
+        required_selectors=previous['required_selectors'] + ['tests/' + name for name in PYRAMID_TESTS],
+        packaged_asset_paths=['data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee', 'data.grass', 'data.gravel', 'data.horse', 'data.text'],
+        required_asset_selectors=['tests/' + name for name in PACKAGED_ASSET_TESTS],
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
@@ -1447,6 +1456,10 @@ def current_install_layout(read_bytes, names, profile):
             'current Hausdorff, ellipsoid statistics and label expansion install closure absent')
     require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
                 for name in ('draw_haar_like_feature', 'haar_like_features')), 'current Haar install closure absent')
+    require(all('skimagexx/' + name in sources for name in
+                ('_pyramid_spatial.py', '_data_camera_coffee.py', '_data_assets/camera.gray',
+                 '_data_assets/coffee.rgb', '_data_assets/camera-coffee.RIGHTS.txt')),
+            'current pyramid and camera/coffee install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

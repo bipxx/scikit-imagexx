@@ -17,9 +17,9 @@ def qualifier():
 
 @pytest.mark.parametrize('profile',('minimum','modern','debug','windows'))
 def test_actual_source_census_and_profile_groups(profile):
-    q=qualifier();data=q.plan(ROOT,profile,294)
-    assert data['registry']['image_count']==294 and data['registry']['registered_count']==297
-    assert data['product_scope']=='current294'and data['product_members']==260 and data['SDK_members']==117
+    q=qualifier();data=q.plan(ROOT,profile,296)
+    assert data['registry']['image_count']==296 and data['registry']['registered_count']==299
+    assert data['product_scope']=='current296'and data['product_members']==265 and data['SDK_members']==117
     assert len(data['SDK_families'])==47 and data['SDK_checks']==94
     groups=data['public_groups']
     if profile=='windows':

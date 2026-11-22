@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
-from skimagexx.coverage import HAAR_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -31,6 +31,12 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     rgb=rng.integers(0,256,(9,11,3),dtype=np.uint8)
     if dtype!='uint8':gray=(gray/255).astype(dtype);rgb=(rgb/255).astype(dtype)
     image=(rgb if needs_color_input(api) else gray).view(descriptor)
+    if api in PYRAMID_FUNCTIONS:
+        # Keep the equivalent descriptor while satisfying the owned image contract.
+        owning = np.empty(image.shape, dtype=descriptor)
+        owning[...] = image
+        assert owning.flags.owndata and owning.dtype == descriptor
+        image = owning
     arguments,options=default_call(api,image)
     if api == 'metrics.hausdorff_pair':
         arguments = tuple(mask.view(descriptor) for mask in arguments)

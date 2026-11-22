@@ -6,7 +6,7 @@ import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
-from skimagexx.coverage import HAAR_FUNCTIONS, set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, set_color_default_result
 from skimage import data as reference_data
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
@@ -72,6 +72,8 @@ VALUE_CASES = [
                   else ((3, 19), (7, 19), (519, 521))
                   if ((native is xx.metrics and name == 'structural_similarity')
                       or (native is xx.morphology and 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS))
+                  else ((1, 1), (3, 19), (113, 127))
+                  if native is xx.transform and 'transform.' + name in PYRAMID_FUNCTIONS
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 
@@ -83,6 +85,33 @@ def test_registry_matches_per_function_tests():
     assert tested_classes==set(native_classes())
     assert set(class_metadata_providers())=={'util.FailedEstimationAccessError'}
     assert inspect.isclass(xx.util.FailedEstimationAccessError)
+
+
+@pytest.mark.parametrize('api', PYRAMID_FUNCTIONS)
+@pytest.mark.parametrize('outside', ('oversized', 'nonowning'))
+def test_pyramid_unsupported_geometry_and_storage_keep_compatibility(api, outside, monkeypatch):
+    name = api.rsplit('.', 1)[1]
+    image = np.zeros((513, 2), dtype=np.uint8) if outside == 'oversized' else np.zeros((4, 8), dtype=np.uint8).view()
+    token = object()
+    calls = []
+
+    def original(view, *args, **kwargs):
+        calls.append(view)
+        return token
+
+    monkeypatch.setattr(reference_transform, name, original)
+    native = getattr(xx.transform, name)
+    enabled = xx.set_fallback_enabled(False)
+    try:
+        with pytest.raises(NotImplementedError, match='fallback is disabled'):
+            native(image)
+        assert not calls
+        xx.set_fallback_enabled(True)
+        with pytest.warns(xx.FallbackWarning, match=api):
+            assert native(image) is token
+        assert len(calls) == 1 and calls[0] is image
+    finally:
+        xx.set_fallback_enabled(enabled)
 
 
 def test_level_set_default_shape_adapter_and_exact_checker():

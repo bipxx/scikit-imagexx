@@ -1,0 +1,19 @@
+Camera and coffee sample images
+
+These pixel-byte resources reproduce the corresponding public arrays from
+scikit-image 0.26.0. Its pinned data function documentation records the
+following asset-specific provenance and rights.
+
+camera.gray
+Camera photograph by Lav Varshney, dedicated under CC0 by the photographer.
+Source in the distribution: skimage/data/camera.png.
+This is the replacement image introduced in scikit-image 0.18.
+https://github.com/scikit-image/scikit-image/issues/3927
+
+coffee.rgb
+Coffee cup photograph by Rachel Michetti, dedicated under CC0 by the
+photographer, courtesy of Pikolo Espresso Bar.
+Source in the distribution: skimage/data/coffee.png.
+
+https://creativecommons.org/publicdomain/zero/1.0/
+https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/data/_fetchers.py

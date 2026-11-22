@@ -18,6 +18,8 @@ for _names, _test, _benchmark in (
     (('data.binary_blobs',), 'tests/test_binary_blobs_public.py', 'benchmarks/binary_blobs.py'),
     (('data.cat', 'data.chelsea'), 'tests/test_chelsea_public.py', 'benchmarks/chelsea.py'),
     (('data.brick', 'data.grass', 'data.gravel', 'data.text'), 'tests/test_data_textures_public.py', 'benchmarks/data_textures.py'),
+    (('data.camera', 'data.coffee'), 'tests/test_data_camera_coffee_public.py', 'benchmarks/data_camera_coffee.py'),
+    (('transform.pyramid_reduce', 'transform.pyramid_expand'), 'tests/test_pyramid_spatial_public.py', 'benchmarks/pyramid_spatial.py'),
     (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
@@ -204,6 +206,8 @@ def inventory():
                             'benchmark': evidence[1] if path in native else None})
             if path == 'data.binary_blobs':
                 entries[-1]['default_input_kind'] = 'Seeded Boolean field; the generic image dtype is an unused descriptor. NumPy supplies RNG and Boolean output operations. C++ supplies Gaussian smoothing and percentile selection on the bounded domain.'
+            elif path in ('transform.pyramid_reduce', 'transform.pyramid_expand'):
+                entries[-1]['default_input_kind'] = 'Bounded owning aligned C-order image. Existing C++ Gaussian and resize stages run in stock order. Unsupported layouts, options and values use compatibility.'
             elif path in assets:
                 entries[-1].update(implementation='packaged-asset-partial', execution_kind='packaged-asset',
                                    parity_test=evidence[0], benchmark=evidence[1])

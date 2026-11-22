@@ -648,11 +648,11 @@
       "api": "data.camera",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_camera_coffee_public.py",
+      "benchmark": "benchmarks/data_camera_coffee.py"
     },
     {
       "api": "data.cat",
@@ -718,11 +718,11 @@
       "api": "data.coffee",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_camera_coffee_public.py",
+      "benchmark": "benchmarks/data_camera_coffee.py"
     },
     {
       "api": "data.coins",
@@ -8813,11 +8813,16 @@
       "api": "transform.pyramid_expand",
       "kind": "callable",
       "signature": "(image, upscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_pyramid_spatial_public.py",
+      "benchmark": "benchmarks/pyramid_spatial.py",
+      "default_input_kind": "Bounded owning aligned C-order image. Existing C++ Gaussian and resize stages run in stock order. Unsupported layouts, options and values use compatibility."
     },
     {
       "api": "transform.pyramid_gaussian",
@@ -8843,11 +8848,16 @@
       "api": "transform.pyramid_reduce",
       "kind": "callable",
       "signature": "(image, downscale=2, sigma=None, order=1, mode='reflect', cval=0, preserve_range=False, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_pyramid_spatial_public.py",
+      "benchmark": "benchmarks/pyramid_spatial.py",
+      "default_input_kind": "Bounded owning aligned C-order image. Existing C++ Gaussian and resize stages run in stock order. Unsupported layouts, options and values use compatibility."
     },
     {
       "api": "transform.radon",
