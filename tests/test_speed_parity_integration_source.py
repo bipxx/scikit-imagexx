@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v36.json'
-CONTEXT_SHA256 = 'ef8869bf76a60b3c9d54b5fd909b5e5fd31e9507b91651f45ff0ddc5d5d85bdf'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v37.json'
+CONTEXT_SHA256 = '50c54def2e922abe4f0ba57e82768764195716917cf726b3a5a5ea624f0bcf05'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -89,7 +89,7 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v13.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v14.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
         'tests/test_order_angles_golden_ratio_integration.py', 'tests/test_pearson_public.py',
@@ -120,7 +120,7 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
 @pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
 def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
     value = data()
-    path = 'coverage/contracts/' + name + '-benchmark-execution-v15.json'
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v16.json'
     boundary = load('benchmarks/mark_boundaries_execution.py')
     current = boundary.current_context(ROOT, path)
     predecessor = current['speed_source_successor']['predecessor_context']
@@ -148,7 +148,7 @@ def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_read
 def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
     import test_mark_boundaries_benchmark_execution as factory
     monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
-    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v15.json')
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v16.json')
     binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
     boundary = load('benchmarks/mark_boundaries_execution.py')
     relative = path.relative_to(ROOT).as_posix()

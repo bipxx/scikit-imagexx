@@ -1032,6 +1032,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v35.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v36.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-golden-pearson-integration-v3.json', 'coverage/contracts/vi-public-matmul-source-history-v45.json', 'coverage/contracts/vi4-public-matmul-capture-golden-pearson-integration-v3.json')
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v16.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v16.json', 'coverage/contracts/speed-parity-current-source-v37.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v46.json', 'coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):
