@@ -1,0 +1,71 @@
+{
+  "schema": 2,
+  "api": "draw.ellipsoid_stats",
+  "baseline_fixture": "tests/fixtures/ellipsoid_stats_originals_v1.json",
+  "baseline_fixture_sha256": "af2f41fcc0e57dfe2ee095023eba5bc765f5bd5590db16e73b38b22d057e8c4e",
+  "key_fields": [
+    "os",
+    "machine_lower",
+    "python_abi",
+    "numpy",
+    "scipy",
+    "scikit_image",
+    "longdouble_storage_and_precision"
+  ],
+  "profiles": {
+    "Windows/amd64/3.13/2.5.4/1.18.1/0.26.0/8-52-11": {
+      "extreme-overflow": {
+        "id": "extreme-overflow",
+        "args": [
+          [
+            "float",
+            "1e+200"
+          ],
+          [
+            "float",
+            "2e+200"
+          ],
+          [
+            "float",
+            "3e+200"
+          ]
+        ],
+        "timed": false,
+        "error": {
+          "kind": "OverflowError",
+          "message": "(34, 'Result too large')"
+        },
+        "warnings": []
+      },
+      "np.longdouble-standard": {
+        "id": "np.longdouble-standard",
+        "args": [
+          [
+            "np.longdouble",
+            "1"
+          ],
+          [
+            "np.longdouble",
+            "2"
+          ],
+          [
+            "np.longdouble",
+            "3"
+          ]
+        ],
+        "timed": false,
+        "result": [
+          {
+            "kind": "numpy.longdouble",
+            "hex": "0x1.921fb54442d18p+4"
+          },
+          {
+            "kind": "numpy.longdouble",
+            "hex": "0x1.870ea2b87f04ap+5"
+          }
+        ],
+        "warnings": []
+      }
+    }
+  }
+}

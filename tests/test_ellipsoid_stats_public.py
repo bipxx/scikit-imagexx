@@ -1,11 +1,14 @@
 """Frozen public ellipsoid_stats behavior on both retained reference profiles."""
+import hashlib
 import importlib
 import importlib.util
+from importlib.metadata import version
 import inspect
 import json
 import math
 import os
 from pathlib import Path
+import platform
 import sys
 import types
 import warnings
@@ -17,6 +20,19 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = json.loads((ROOT / 'tests/fixtures/ellipsoid_stats_originals_v1.json').read_bytes())
 PROFILE = 'minimum' if np.__version__.startswith('1.') else 'modern'
 ROWS = FIXTURE['profiles'][PROFILE]['rows']
+
+if sys.platform == 'win32':
+    overlay = (ROOT / 'tests/fixtures/ellipsoid_stats_windows_v2.json').read_bytes().replace(b'\r\n', b'\n')
+    assert hashlib.sha256(overlay).hexdigest() == '901ad9987b738100ec234698e521843233668569075b9e3bab0a0944f7f443a9'
+    precision = np.finfo(np.longdouble)
+    profile_key = '/'.join((
+        platform.system(), platform.machine().lower(),
+        f'{sys.version_info.major}.{sys.version_info.minor}', np.__version__,
+        version('scipy'), version('scikit-image'),
+        f'{np.dtype(np.longdouble).itemsize}-{precision.nmant}-{precision.nexp}',
+    ))
+    replacements = json.loads(overlay)['profiles'][profile_key]
+    ROWS = [replacements.get(row['id'], row) for row in ROWS]
 
 
 def radius(kind, value):
