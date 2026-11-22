@@ -1,0 +1,149 @@
+{
+  "source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+  "python": "3.12.13 (main, Apr 14 2026, 14:29:00) [Clang 22.1.3 ]",
+  "executable": "/home/heq/.cache/napachan-spatial-audit-venv/bin/python",
+  "command": [
+    "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-chelsea-cat/capture-original-v1.py",
+    "--output",
+    "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-chelsea-cat/linux-original-v1.json",
+    "--fit",
+    "/mnt/d/Scratch/u182-cat/build/private-chelsea"
+  ],
+  "fixture_retained": false,
+  "reference": "0.26.0",
+  "numpy": "2.5.1",
+  "pillow": "12.3.0",
+  "imageio": "2.37.4",
+  "pooch": "1.9.0",
+  "provider_scope": "controlled offline fetch substitute",
+  "png_path": "/home/heq/.cache/napachan-spatial-audit-venv/lib/python3.12/site-packages/skimage/data/chelsea.png",
+  "png_bytes": 240512,
+  "png_sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+  "callable_sha256": "50e6234fa2170820eaf8d0f8f42b51905822afc3680a4f09113fa11d435f7fb4",
+  "attribution": "Stefan van der Walt (CC0)",
+  "signature": "()",
+  "aliases_identical": true,
+  "calls_independent": true,
+  "observed": {
+    "type": "ndarray",
+    "shape": [
+      300,
+      451,
+      3
+    ],
+    "strides": [
+      1353,
+      3,
+      1
+    ],
+    "dtype": "|u1",
+    "writable": true,
+    "owns": true,
+    "c_order": true,
+    "f_order": false,
+    "base_type": "NoneType",
+    "base_shape": null,
+    "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+  },
+  "outcomes": [
+    {
+      "id": "warm-cache",
+      "route": "cache",
+      "image": {
+        "type": "ndarray",
+        "shape": [
+          300,
+          451,
+          3
+        ],
+        "strides": [
+          1353,
+          3,
+          1
+        ],
+        "dtype": "|u1",
+        "writable": true,
+        "owns": true,
+        "c_order": true,
+        "f_order": false,
+        "base_type": "NoneType",
+        "base_shape": null,
+        "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+      },
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "valid-legacy-only",
+      "route": "legacy",
+      "image": {
+        "type": "ndarray",
+        "shape": [
+          300,
+          451,
+          3
+        ],
+        "strides": [
+          1353,
+          3,
+          1
+        ],
+        "dtype": "|u1",
+        "writable": true,
+        "owns": true,
+        "c_order": true,
+        "f_order": false,
+        "base_type": "NoneType",
+        "base_shape": null,
+        "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+      },
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "corrupt-cache-valid-legacy",
+      "route": "legacy",
+      "image": {
+        "type": "ndarray",
+        "shape": [
+          300,
+          451,
+          3
+        ],
+        "strides": [
+          1353,
+          3,
+          1
+        ],
+        "dtype": "|u1",
+        "writable": true,
+        "owns": true,
+        "c_order": true,
+        "f_order": false,
+        "base_type": "NoneType",
+        "base_shape": null,
+        "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+      },
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "missing-both",
+      "error": "ConnectionError",
+      "message": "Tried to download a scikit-image dataset, but no internet connection is available. To avoid this message in the future, try `skimage.data.download_all()` when you are connected to the internet.",
+      "provider_requests": [
+        "data/chelsea.png"
+      ],
+      "ensure_calls": 1
+    },
+    {
+      "id": "corrupt-both",
+      "error": "ConnectionError",
+      "message": "Tried to download a scikit-image dataset, but no internet connection is available. To avoid this message in the future, try `skimage.data.download_all()` when you are connected to the internet.",
+      "provider_requests": [
+        "data/chelsea.png"
+      ],
+      "ensure_calls": 1
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "data-clock-horse-contract-v1",
+  "reference": "scikit-image 0.26.0",
+  "upstream_provenance_sha256": "9a716f8a45ac7570b7ffa9bd37497dce99eb8bdbebe87f076a8601f761d33bdd",
+  "captures": {
+    "windows": {
+      "report_sha256": "feda0fa84fcacc3f3957d5bf500d99809b9de7ea0f951c30842a2827be54072b",
+      "original_sha256": "b7cd4c45ef69dd74918b604418133a0a9da6d204248e38c5575b72f68e93485f",
+      "versions": {
+        "scikit-image": "0.26.0",
+        "numpy": "2.5.4",
+        "pillow": "13.0.0",
+        "imageio": "2.38.1"
+      },
+      "pooch": null
+    },
+    "linux": {
+      "report_sha256": "b909824207f3d164b92f9081e8721f3e5a8a6f324e3bb54e4f35547f9af85acb",
+      "original_sha256": "50e6234fa2170820eaf8d0f8f42b51905822afc3680a4f09113fa11d435f7fb4",
+      "versions": {
+        "scikit-image": "0.26.0",
+        "numpy": "2.5.1",
+        "pillow": "12.3.0",
+        "imageio": "2.37.4"
+      },
+      "pooch": "1.9.0"
+    }
+  },
+  "assets": {
+    "clock": {
+      "signature": "()",
+      "metadata": {
+        "type": "ndarray",
+        "dtype": "|u1",
+        "shape": [
+          300,
+          400
+        ],
+        "strides": [
+          400,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "ad313afa739ea86c00ce55d190f1fa284c1982e9bc70eb4c9b21ac29c5c7a85c"
+      },
+      "packaged_path": "python/skimagexx/_data_assets/clock.gray",
+      "resource_bytes": 120000,
+      "upstream_file": "skimage/data/clock_motion.png",
+      "upstream_bytes": 58784,
+      "upstream_sha256": "f029226b28b642e80113d86622e9b215ee067a0966feaf5e60604a1e05733955",
+      "record_digest": "sha256=8Ckiayi2QugBE9hmIumyFe4Geglm_q9eYGBKHgVzOVU",
+      "registry_url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/clock_motion.png",
+      "rights_notice": "Released into the public domain by the photographer (Stefan van der Walt)."
+    },
+    "horse": {
+      "signature": "()",
+      "metadata": {
+        "type": "ndarray",
+        "dtype": "|b1",
+        "shape": [
+          328,
+          400
+        ],
+        "strides": [
+          400,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "1c40c41499d11d4864907189c6d278bf0cb47e7dbf889ae1f5fb0359659a24ab"
+      },
+      "packaged_path": "python/skimagexx/_data_assets/horse.bool",
+      "resource_bytes": 131200,
+      "upstream_file": "skimage/data/horse.png",
+      "upstream_bytes": 16633,
+      "upstream_sha256": "c7fb60789fe394c485f842291ea3b21e50d140f39d6dcb5fb9917cc178225455",
+      "record_digest": "sha256=x_tgeJ_jlMSF-EIpHqOyHlDRQPOdbctfuZF8wXgiVFU",
+      "registry_url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/horse.png",
+      "rights_notice": "No copyright restrictions. CC0 given by owner (Andreas Preuss (marauder)).",
+      "polarity": {
+        "true_count": 87788,
+        "false_count": 43412,
+        "pixels": {
+          "0,0": true,
+          "0,399": true,
+          "163,200": false,
+          "275,180": true,
+          "327,399": true
+        },
+        "conversion": "img_as_bool(_load(\"data/horse.png\", as_gray=True))"
+      }
+    }
+  },
+  "derivation": "Byte-identical final public arrays from both pinned original runtimes. Horse stores post-compositing, grayscale and img_as_bool output, not source alpha.",
+  "package": "Authenticated local resource, then fresh owning C-order NumPy result. Missing/truncated/wrong digest follows the existing compatibility policy. Upstream reset/download remains compatibility-owned.",
+  "performance": {
+    "cases": [
+      "clock-warm-local",
+      "horse-warm-local"
+    ],
+    "workers": 1,
+    "repeat": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms": 250,
+    "scope": "Fixed local original PNG verification/decode or candidate packaged resource read/hash/representation; public object allocation included."
+  },
+  "sdk": "Not applicable to local package resources."
+}

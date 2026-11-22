@@ -1,0 +1,145 @@
+{
+  "source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+  "command": [
+    "C:/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-chelsea-cat/capture-original-v1.py",
+    "--output",
+    "C:/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-chelsea-cat/windows-original-v1.json",
+    "--fit",
+    "D:/Scratch/u182-cat/build/private-chelsea"
+  ],
+  "fixture_retained": false,
+  "reference": "0.26.0",
+  "numpy": "2.5.4",
+  "pillow": "13.0.0",
+  "imageio": "2.38.1",
+  "pooch": null,
+  "provider_scope": "no Pooch installed",
+  "png_path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\data\\chelsea.png",
+  "png_bytes": 240512,
+  "png_sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+  "callable_sha256": "b7cd4c45ef69dd74918b604418133a0a9da6d204248e38c5575b72f68e93485f",
+  "attribution": "Stefan van der Walt (CC0)",
+  "signature": "()",
+  "aliases_identical": true,
+  "calls_independent": true,
+  "observed": {
+    "type": "ndarray",
+    "shape": [
+      300,
+      451,
+      3
+    ],
+    "strides": [
+      1353,
+      3,
+      1
+    ],
+    "dtype": "|u1",
+    "writable": true,
+    "owns": true,
+    "c_order": true,
+    "f_order": false,
+    "base_type": "NoneType",
+    "base_shape": null,
+    "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+  },
+  "outcomes": [
+    {
+      "id": "warm-cache",
+      "route": "cache",
+      "image": {
+        "type": "ndarray",
+        "shape": [
+          300,
+          451,
+          3
+        ],
+        "strides": [
+          1353,
+          3,
+          1
+        ],
+        "dtype": "|u1",
+        "writable": true,
+        "owns": true,
+        "c_order": true,
+        "f_order": false,
+        "base_type": "NoneType",
+        "base_shape": null,
+        "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+      },
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "valid-legacy-only",
+      "route": "legacy",
+      "image": {
+        "type": "ndarray",
+        "shape": [
+          300,
+          451,
+          3
+        ],
+        "strides": [
+          1353,
+          3,
+          1
+        ],
+        "dtype": "|u1",
+        "writable": true,
+        "owns": true,
+        "c_order": true,
+        "f_order": false,
+        "base_type": "NoneType",
+        "base_shape": null,
+        "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+      },
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "corrupt-cache-valid-legacy",
+      "route": "legacy",
+      "image": {
+        "type": "ndarray",
+        "shape": [
+          300,
+          451,
+          3
+        ],
+        "strides": [
+          1353,
+          3,
+          1
+        ],
+        "dtype": "|u1",
+        "writable": true,
+        "owns": true,
+        "c_order": true,
+        "f_order": false,
+        "base_type": "NoneType",
+        "base_shape": null,
+        "decoded_sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031"
+      },
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "missing-both",
+      "error": "ModuleNotFoundError",
+      "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+      "provider_requests": [],
+      "ensure_calls": 0
+    },
+    {
+      "id": "corrupt-both",
+      "error": "ModuleNotFoundError",
+      "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+      "provider_requests": [],
+      "ensure_calls": 0
+    }
+  ]
+}

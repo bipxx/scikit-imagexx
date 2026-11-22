@@ -1,0 +1,143 @@
+{
+  "source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+  "python": "3.12.13 (main, Apr 14 2026, 14:29:00) [Clang 22.1.3 ]",
+  "executable": "/home/heq/.cache/napachan-spatial-audit-venv/bin/python",
+  "argv": [
+    "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-clock-horse/capture-original-v1.py",
+    "--review",
+    "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-next-asset-provenance/handoff-v1.json",
+    "--work",
+    "/mnt/d/Scratch/u182-clock-horse/build/private-clock-horse",
+    "--output",
+    "/mnt/c/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-clock-horse/linux-original-v1.json"
+  ],
+  "fixture_retained": false,
+  "versions": {
+    "scikit-image": "0.26.0",
+    "numpy": "2.5.1",
+    "pillow": "12.3.0",
+    "imageio": "2.37.4"
+  },
+  "provider_version": "1.9.0",
+  "provider_scope": "controlled offline Pooch substitute",
+  "original_sha256": "50e6234fa2170820eaf8d0f8f42b51905822afc3680a4f09113fa11d435f7fb4",
+  "assets": {
+    "clock": {
+      "signature": "()",
+      "observed": {
+        "type": "ndarray",
+        "dtype": "|u1",
+        "shape": [
+          300,
+          400
+        ],
+        "strides": [
+          400,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "ad313afa739ea86c00ce55d190f1fa284c1982e9bc70eb4c9b21ac29c5c7a85c"
+      },
+      "source_png_sha256": "f029226b28b642e80113d86622e9b215ee067a0966feaf5e60604a1e05733955",
+      "states": [
+        {
+          "id": "warm-cache",
+          "route": "cache",
+          "provider_calls": []
+        },
+        {
+          "id": "valid-legacy-only",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-cache-valid-legacy",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "missing-both",
+          "error": "ConnectionError",
+          "message": "Tried to download a scikit-image dataset, but no internet connection is available. To avoid this message in the future, try `skimage.data.download_all()` when you are connected to the internet.",
+          "provider_calls": [
+            "data/clock_motion.png"
+          ]
+        },
+        {
+          "id": "corrupt-both",
+          "error": "ConnectionError",
+          "message": "Tried to download a scikit-image dataset, but no internet connection is available. To avoid this message in the future, try `skimage.data.download_all()` when you are connected to the internet.",
+          "provider_calls": [
+            "data/clock_motion.png"
+          ]
+        }
+      ]
+    },
+    "horse": {
+      "signature": "()",
+      "observed": {
+        "type": "ndarray",
+        "dtype": "|b1",
+        "shape": [
+          328,
+          400
+        ],
+        "strides": [
+          400,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "1c40c41499d11d4864907189c6d278bf0cb47e7dbf889ae1f5fb0359659a24ab"
+      },
+      "source_png_sha256": "c7fb60789fe394c485f842291ea3b21e50d140f39d6dcb5fb9917cc178225455",
+      "states": [
+        {
+          "id": "warm-cache",
+          "route": "cache",
+          "provider_calls": []
+        },
+        {
+          "id": "valid-legacy-only",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-cache-valid-legacy",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "missing-both",
+          "error": "ConnectionError",
+          "message": "Tried to download a scikit-image dataset, but no internet connection is available. To avoid this message in the future, try `skimage.data.download_all()` when you are connected to the internet.",
+          "provider_calls": [
+            "data/horse.png"
+          ]
+        },
+        {
+          "id": "corrupt-both",
+          "error": "ConnectionError",
+          "message": "Tried to download a scikit-image dataset, but no internet connection is available. To avoid this message in the future, try `skimage.data.download_all()` when you are connected to the internet.",
+          "provider_calls": [
+            "data/horse.png"
+          ]
+        }
+      ],
+      "true_count": 87788,
+      "false_count": 43412,
+      "pixels": {
+        "0,0": true,
+        "0,399": true,
+        "163,200": false,
+        "275,180": true,
+        "327,399": true
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+Clock and horse sample images
+
+These pixel-byte resources reproduce the corresponding public arrays from
+scikit-image 0.26.0. Its pinned data function documentation records the
+following asset-specific provenance and rights.
+
+clock.gray
+Motion-blurred clock by Stefan van der Walt, released by the photographer
+into the public domain. Source in the distribution: skimage/data/clock_motion.png.
+
+horse.bool
+Horse silhouette by Andreas Preuss (marauder), CC0 1.0 Universal.
+https://openclipart.org/detail/158377/horse-by-marauder
+https://creativecommons.org/publicdomain/zero/1.0/
+Source in the distribution: skimage/data/horse.png. These are the final public
+Boolean pixels after the original image compositing and conversion pipeline.

@@ -1,0 +1,245 @@
+{
+  "source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+  "command": [
+    "C:/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-texture-assets/capture-original-v1.py",
+    "--output",
+    "C:/Users/HEQ/Projects/scikit-imagexx/build/evidence/u182-texture-assets/windows-original-v1.json",
+    "--fixture-root",
+    "D:/Scratch/u182-textures/build/private-textures"
+  ],
+  "fixture_retained": false,
+  "versions": {
+    "scikit-image": "0.26.0",
+    "numpy": "2.5.4",
+    "pillow": "13.0.0",
+    "imageio": "2.38.1"
+  },
+  "pooch": null,
+  "provider": "no Pooch",
+  "fetcher_sha256": "b7cd4c45ef69dd74918b604418133a0a9da6d204248e38c5575b72f68e93485f",
+  "registry_sha256": "78f21d9afe55ab908ec36ce7bdd748920a7d9b12ba7f910f2342e97a0e9831f3",
+  "assets": {
+    "brick": {
+      "signature": "()",
+      "observed": {
+        "type": "ndarray",
+        "dtype": "|u1",
+        "shape": [
+          512,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "664a145c5253f0d66db1a12776785f0ea35a44cc7447ffc933f6d6118dc58643"
+      },
+      "source_file": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\data\\brick.png",
+      "png_sha256": "7966caf324f6ba843118d98f7a07746d22f6a343430add0233eca5f6eaaa8fcf",
+      "png_bytes": 106634,
+      "record_digest": "sha256=eWbK8yT2uoQxGNmPegd0bSL2o0NDCt0CM-yl9uqqj88",
+      "license_claim": "Creative Commons CC0 License",
+      "origin": "https://cc0textures.com/view.php?tex=Bricks25",
+      "states": [
+        {
+          "id": "warm-cache",
+          "route": "cache",
+          "provider_calls": []
+        },
+        {
+          "id": "valid-legacy-only",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-cache-valid-legacy",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "missing-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        }
+      ]
+    },
+    "grass": {
+      "signature": "()",
+      "observed": {
+        "type": "ndarray",
+        "dtype": "|u1",
+        "shape": [
+          512,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "b18dae4c68bf850a7a7b28a29d1846c76be890665117b57fd125fe29c4d4ede6"
+      },
+      "source_file": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\data\\grass.png",
+      "png_sha256": "b6b6022426b38936c43a4ac09635cd78af074e90f42ffa8227ac8b7452d39f89",
+      "png_bytes": 217893,
+      "record_digest": "sha256=trYCJCaziTbEOkrAljXNeK8HTpD0L_qCJ6yLdFLTn4k",
+      "license_claim": "Creative Commons CC0 License",
+      "origin": "https://www.deviantart.com/linolafett/art/Grass-01-434853879",
+      "states": [
+        {
+          "id": "warm-cache",
+          "route": "cache",
+          "provider_calls": []
+        },
+        {
+          "id": "valid-legacy-only",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-cache-valid-legacy",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "missing-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        }
+      ]
+    },
+    "gravel": {
+      "signature": "()",
+      "observed": {
+        "type": "ndarray",
+        "dtype": "|u1",
+        "shape": [
+          512,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "3d51ad45f789cd8b98534b7af6bce774e499ead45421135afd757358c7230009"
+      },
+      "source_file": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\data\\gravel.png",
+      "png_sha256": "c48615b451bf1e606fbd72c0aa9f8cc0f068ab7111ef7d93bb9b0f2586440c12",
+      "png_bytes": 194247,
+      "record_digest": "sha256=xIYVtFG_HmBvvXLAqp-MwPBoq3ER732Tu5sPJYZEDBI",
+      "license_claim": "Creative Commons CC0 License",
+      "origin": "https://cc0textures.com/view.php?tex=Gravel04",
+      "states": [
+        {
+          "id": "warm-cache",
+          "route": "cache",
+          "provider_calls": []
+        },
+        {
+          "id": "valid-legacy-only",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-cache-valid-legacy",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "missing-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        }
+      ]
+    },
+    "text": {
+      "signature": "()",
+      "observed": {
+        "type": "ndarray",
+        "dtype": "|u1",
+        "shape": [
+          172,
+          448
+        ],
+        "strides": [
+          448,
+          1
+        ],
+        "owns": true,
+        "writable": true,
+        "c_order": true,
+        "base": "NoneType",
+        "decoded_sha256": "6705caed21e6281799a52591c27498da5526cace39f2b6af3141b2ff11e2e517"
+      },
+      "source_file": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\data\\text.png",
+      "png_sha256": "bd84aa3a6e3c9887850d45d606c96b2e59433fbef50338570b63c319e668e6d1",
+      "png_bytes": 42704,
+      "record_digest": "sha256=vYSqOm48mIeFDUXWBslrLllDP771AzhXC2PDGeZo5tE",
+      "license_claim": "released into the public domain",
+      "origin": "https://en.wikipedia.org/wiki/File:Corner.png",
+      "states": [
+        {
+          "id": "warm-cache",
+          "route": "cache",
+          "provider_calls": []
+        },
+        {
+          "id": "valid-legacy-only",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-cache-valid-legacy",
+          "route": "legacy",
+          "provider_calls": []
+        },
+        {
+          "id": "missing-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        },
+        {
+          "id": "corrupt-both",
+          "error": "ModuleNotFoundError",
+          "message": "The requested file is part of the scikit-image distribution, but requires the installation of an optional dependency, pooch. To install pooch, use your preferred python package manager. Follow installation instruction found at https://scikit-image.org/docs/stable/user_guide/install.html",
+          "provider_calls": []
+        }
+      ]
+    }
+  }
+}

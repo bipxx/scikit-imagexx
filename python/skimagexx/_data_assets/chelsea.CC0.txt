@@ -1,0 +1,12 @@
+Chelsea the cat
+Photograph by Stefan van der Walt, CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The included chelsea.rgb is a row-major RGB rendering of the Chelsea PNG
+distributed by scikit-image 0.26.0. The scikit-image chelsea docstring
+identifies the photographer and their CC0 dedication.
+
+Original PNG SHA-256:
+596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb
+Decoded RGB SHA-256:
+416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031

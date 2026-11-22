@@ -791,3 +791,12 @@ tools/** -text
 # Preserve raw historical source identities on Windows checkouts.
 /.gitignore -text
 /LICENSE -text
+
+# Exact raw image bytes from admitted public data resources.
+python/skimagexx/_data_assets/brick.gray binary
+python/skimagexx/_data_assets/chelsea.rgb binary
+python/skimagexx/_data_assets/clock.gray binary
+python/skimagexx/_data_assets/grass.gray binary
+python/skimagexx/_data_assets/gravel.gray binary
+python/skimagexx/_data_assets/horse.bool binary
+python/skimagexx/_data_assets/text.gray binary

@@ -1,0 +1,23 @@
+Packaged grayscale texture samples
+
+The raw pixel files in this family reproduce the images distributed with
+scikit-image 0.26.0. The following asset-specific rights and origins are
+recorded in the upstream scikit-image data documentation.
+
+brick.gray: Creative Commons CC0 1.0
+Origin: CC0Textures Bricks25
+https://cc0textures.com/view.php?tex=Bricks25
+
+grass.gray: Creative Commons CC0 1.0
+Origin: linolafett Grass-01
+https://www.deviantart.com/linolafett/art/Grass-01-434853879
+
+gravel.gray: Creative Commons CC0 1.0
+Origin: CC0Textures Gravel04
+https://cc0textures.com/view.php?tex=Gravel04
+
+text.gray: Public domain, as recorded by scikit-image
+Origin: Wikipedia Corner.png
+https://en.wikipedia.org/wiki/File:Corner.png
+
+CC0 legal text: https://creativecommons.org/publicdomain/zero/1.0/

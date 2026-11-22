@@ -1,0 +1,64 @@
+{
+  "schema": "chelsea-cat-contract-v1",
+  "apis": [
+    "data.chelsea",
+    "data.cat"
+  ],
+  "alias": "cat is chelsea",
+  "signature": "()",
+  "rights": {
+    "artist": "Stefan van der Walt",
+    "license": "CC0-1.0",
+    "evidence": "scikit-image 0.26.0 skimage/data/_fetchers.py chelsea docstring grants CC0 by the photographer",
+    "fetcher_windows_sha256": "b7cd4c45ef69dd74918b604418133a0a9da6d204248e38c5575b72f68e93485f"
+  },
+  "original": {
+    "distribution": "scikit-image 0.26.0",
+    "path": "skimage/data/chelsea.png",
+    "bytes": 240512,
+    "sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+    "record_digest": "WWqh58uHXrefQ34xA4HSazOKgcLaI0OXBKc8RlHoxLs",
+    "registry_windows_sha256": "78f21d9afe55ab908ec36ce7bdd748920a7d9b12ba7f910f2342e97a0e9831f3",
+    "registry_url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/chelsea.png"
+  },
+  "resource": {
+    "path": "python/skimagexx/_data_assets/chelsea.rgb",
+    "wheel_path": "skimagexx/_data_assets/chelsea.rgb",
+    "bytes": 405900,
+    "sha256": "416b729128bfb2c3d1eb69bf9b1734a796293abc17939267b2dc94f8a5784031",
+    "format": "raw row-major RGB uint8",
+    "sidecar": "python/skimagexx/_data_assets/chelsea.CC0.txt",
+    "generation": "Pillow 13.0.0 Image.open on the verified retained PNG, require mode RGB and size (451, 300), then write image.tobytes(); compare decoded bytes to both frozen upstream results.",
+    "scope": "scikit-build-core wheel.packages already maps all unignored package data; authenticated source staging and built-wheel member counts are downstream gates."
+  },
+  "contract": {
+    "output": "Fresh writable owning C-order NumPy ndarray, shape (300,451,3), uint8, strides (1353,3,1), RGB byte-exact. Independent between calls and aliases.",
+    "supplier": "No runtime codec or native algorithm. NumPy supplies array allocation and byte representation; stdlib supplies packaged file access and SHA-256 verification.",
+    "errors": "A missing or corrupted installed resource enters the existing policy-aware compatibility route. No fallback use on valid resource, including strict mode.",
+    "unresolved": "Upstream Pooch cache reset/re-download behavior remains compatibility-owned. Windows no-Pooch missing/corrupt offline errors and Linux offline provider errors differ."
+  },
+  "original_captures": {
+    "windows": "bfd1d4b2a913dccbc14a8d9eb6905c4c2175caee7bdef9bd46d341087dfb7be3",
+    "linux": "a9ecb85b0bc56d51c918fb79f4f0b6c48b25f6aa59eb394d6b6e4db7b968d8c6",
+    "states": [
+      "warm-cache",
+      "valid-legacy-only",
+      "corrupt-cache-valid-legacy",
+      "missing-both",
+      "corrupt-both"
+    ],
+    "controlled_offline": true
+  },
+  "performance": {
+    "cases": [
+      "chelsea-warm-local",
+      "cat-warm-local"
+    ],
+    "workers": 1,
+    "repeat": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms": 250,
+    "includes": "Fresh public invocation, resource read/hash, decode or reconstruction and output allocation. Original uses the validated existing local PNG and its pinned decoder."
+  },
+  "sdk": "Inapplicable to provider-backed Python asset access."
+}
