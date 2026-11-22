@@ -10,11 +10,12 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT = 'coverage/contracts/speed-parity-current-source-v37.json'
-CONTEXT_SHA256 = '50c54def2e922abe4f0ba57e82768764195716917cf726b3a5a5ea624f0bcf05'
+CONTEXT_SHA256 = '68c236323a953cc051ac80ec4c5611a64ab10991a48dd5a7cb800bb04eacefd3'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
-SOURCE = ('tests/test_speed_parity_integration_source.py', 'tests/test_flood_speed_source.py')
+SOURCE = ('tests/test_speed_parity_integration_source.py', 'tests/test_flood_speed_source.py',
+          'tests/test_ellipsoid_stats_source.py')
 
 
 def digest(raw):
@@ -79,7 +80,7 @@ def test_actual_source_command_preserves181_and_adds_only_current_source_guards(
     value = data()
     raw = (ROOT / '.github/workflows/public-qualification.yml').read_bytes()
     selected = selectors(raw)
-    assert len(selected) == len(set(selected)) == 183
+    assert len(selected) == len(set(selected)) == 184
     assert selected == value['previous_source_selectors'] + list(SOURCE)
     assert not set(RUNTIME) & set(selected)
 
@@ -93,7 +94,8 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
         'tests/test_order_angles_golden_ratio_integration.py', 'tests/test_pearson_public.py',
-        'tests/test_order_angles_golden_ratio_public.py']
+        'tests/test_order_angles_golden_ratio_public.py', 'tests/test_hausdorff_public.py',
+        'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py']
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
     assert groups['public-post203'] == ('retained',)
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)
