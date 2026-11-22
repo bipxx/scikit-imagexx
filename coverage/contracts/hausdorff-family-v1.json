@@ -1,0 +1,39 @@
+{
+  "schema": "hausdorff-family-contract-v1",
+  "reference": "scikit-image 0.26.0 / Windows CPython 3.13.14 / NumPy 2.5.4 / SciPy 1.18.1",
+  "fixture": "tests/fixtures/hausdorff_original_windows_v1.json",
+  "fixture_sha256": "40d7a1b02b6a4a5e05bbe67e3957319f6e10948341e5e1aae6411b5bb01755f6",
+  "native": {
+    "inputs": "Two aligned C-order, bounded plain ndarray Boolean or uint8 masks of the same rank 1–4; shapes need not match. At most 262144 elements per image, 256 nonzero pixels per set, each extent at most 16384. Rank mismatch, outside storage, other dtypes and larger domains use the original compatibility route.",
+    "distances": "Euclidean distance, maximum of directed maxima for standard, maximum of directed means for modified. The nonempty result is a numpy.float64. Both empty returns Python zero, one empty returns Python infinity.",
+    "pair": "Original left/right order. For tied directed maxima select the max query in the right set; within a direction select the first attaining query in C order. Prefer the first target in C order in a single cKDTree leaf (at most 16 target points); preserve unique nearest targets beyond one leaf and defer ambiguous multi-leaf winning nearest choices. Each nonempty result is a writable intp view over its complete coordinate backing matrix. Empty sets issue the original UserWarning and return an empty tuple for each side.",
+    "method": "Plain strings other than standard and modified fail before data handling. Dispatch coercion and subclass behavior through compatibility.",
+    "bounds": "Native computation is ordered serial. NumPy supplies return value representation. No computation provider handles admitted cases."
+  },
+  "tie_source": [
+    "https://github.com/scipy/scipy/blob/v1.15.3/scipy/spatial/ckdtree/src/query.cxx#L263-L294",
+    "https://github.com/scipy/scipy/blob/v1.15.3/scipy/spatial/ckdtree/src/build.cxx#L41-L47",
+    "https://github.com/scipy/scipy/blob/v1.18.1/scipy/spatial/ckdtree/src/query.cxx#L263-L288",
+    "https://github.com/scipy/scipy/blob/v1.18.1/scipy/spatial/ckdtree/src/build.cxx#L41-L47"
+  ],
+  "performance": {
+    "case_ids": [
+      "tiny",
+      "rank1-sparse",
+      "rank2-sparse",
+      "rank3-sparse",
+      "rank2-wide"
+    ],
+    "operations": [
+      "standard",
+      "modified",
+      "pair"
+    ],
+    "scope": "Frozen case recipes; each public call includes coordinate extraction, the comparison and output allocation.",
+    "worker_count": 1,
+    "repeat": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms": 250,
+    "minimum_ratio": 1
+  }
+}

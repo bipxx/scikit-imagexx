@@ -1,0 +1,2391 @@
+{
+  "source_path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\metrics\\set_metrics.py",
+  "source_sha256": "78ac855145bf04450c3a461a434483db264a4f6d8982ad850e5fafc418ceb425",
+  "observer_sha256": "f04c2aecb287532db323c25cd4f75088d0075eeb2ad33445a05dc9c3646df8ec",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "scipy": "1.18.1",
+  "numpy": "2.5.4",
+  "scikit_image": "0.26.0",
+  "rows": [
+    {
+      "id": "ordinary",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2625e7938df058ea9525254ad1651acbbf9f8c133887b71031e829fdc4904e4c"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cd82b446159f3p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.a6c15a230acfap+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                10,
+                12
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "readonly",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2625e7938df058ea9525254ad1651acbbf9f8c133887b71031e829fdc4904e4c"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cd82b446159f3p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.a6c15a230acfap+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                10,
+                12
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "readonly-flag",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2625e7938df058ea9525254ad1651acbbf9f8c133887b71031e829fdc4904e4c"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cd82b446159f3p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.a6c15a230acfap+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                10,
+                12
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "both-empty",
+      "inputs": [
+        {
+          "shape": [
+            3,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+        },
+        {
+          "shape": [
+            6,
+            7
+          ],
+          "strides": [
+            7,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "094c4931fdb2f2af417c9e0322a9716006e8211fe9017f671ac6e3251300acca"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "builtins.int",
+          "hex": "0x0.0p+0"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "builtins.int",
+          "hex": "0x0.0p+0"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "builtins.tuple",
+              "items": []
+            },
+            {
+              "type": "builtins.tuple",
+              "items": []
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "type": "builtins.UserWarning",
+            "message": "One or both of the images is empty."
+          }
+        ]
+      }
+    },
+    {
+      "id": "left-empty",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "e1ce337635c2684f43024a67656880ad3cc19cd94aecb2b47c18f13312067508"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2625e7938df058ea9525254ad1651acbbf9f8c133887b71031e829fdc4904e4c"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "builtins.float",
+          "hex": "inf"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "builtins.float",
+          "hex": "inf"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "builtins.tuple",
+              "items": []
+            },
+            {
+              "type": "builtins.tuple",
+              "items": []
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "type": "builtins.UserWarning",
+            "message": "One or both of the images is empty."
+          }
+        ]
+      }
+    },
+    {
+      "id": "right-empty",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "e1ce337635c2684f43024a67656880ad3cc19cd94aecb2b47c18f13312067508"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "builtins.float",
+          "hex": "inf"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "builtins.float",
+          "hex": "inf"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "builtins.tuple",
+              "items": []
+            },
+            {
+              "type": "builtins.tuple",
+              "items": []
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "type": "builtins.UserWarning",
+            "message": "One or both of the images is empty."
+          }
+        ]
+      }
+    },
+    {
+      "id": "rank-zero-extent",
+      "inputs": [
+        {
+          "shape": [
+            0,
+            3,
+            1
+          ],
+          "strides": [
+            0,
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "shape": [
+            2,
+            1,
+            0
+          ],
+          "strides": [
+            0,
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "builtins.int",
+          "hex": "0x0.0p+0"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "builtins.int",
+          "hex": "0x0.0p+0"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "builtins.tuple",
+              "items": []
+            },
+            {
+              "type": "builtins.tuple",
+              "items": []
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "type": "builtins.UserWarning",
+            "message": "One or both of the images is empty."
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-mismatch",
+      "inputs": [
+        {
+          "shape": [
+            4,
+            8
+          ],
+          "strides": [
+            8,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "75ad7f11f45d8e7201567b28893e5585e8c9683f1f424fa98906950e8f1ed2df"
+        },
+        {
+          "shape": [
+            7,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "4583219cab8bb978af79c973f0a03a8c1b73382910141785155b03483a8c114d"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.4000000000000p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cf1bbcdcbfa54p+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2,
+                7
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                4
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                24
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                3
+              ],
+              "base_strides": [
+                24,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dimension-mismatch",
+      "inputs": [
+        {
+          "shape": [
+            12
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "44da05f9da9c114502f0d10e3a0a7ed448d98954e7f302ffc9f12fc75feb9d7f"
+        },
+        {
+          "shape": [
+            4,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "a3b2ac39a46697259efb5b464e0a58ec43acced86727d4b54c2a37846a0a88f1"
+        }
+      ],
+      "standard": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "x must consist of vectors of length 1 but has shape (1, 2)"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "x must consist of vectors of length 1 but has shape (1, 2)"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "x must consist of vectors of length 1 but has shape (1, 2)"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dimension-mismatch-empty",
+      "inputs": [
+        {
+          "shape": [
+            4
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "builtins.float",
+          "hex": "inf"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "builtins.float",
+          "hex": "inf"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "builtins.tuple",
+              "items": []
+            },
+            {
+              "type": "builtins.tuple",
+              "items": []
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "type": "builtins.UserWarning",
+            "message": "One or both of the images is empty."
+          }
+        ]
+      }
+    },
+    {
+      "id": "three-dimensional",
+      "inputs": [
+        {
+          "shape": [
+            3,
+            4,
+            5
+          ],
+          "strides": [
+            20,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "5f6cc1f130220cb8438516c1bb421992bed17013830f41ef3bc626796bb96925"
+        },
+        {
+          "shape": [
+            3,
+            4,
+            5
+          ],
+          "strides": [
+            20,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "94058414b82ad9dbcdcd41593a8158ef485e10fef48812afed6c3bb9b7caeef2"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.deeea11683f49p+1"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.4a4f8b0781518p+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2,
+                3,
+                1
+              ],
+              "dtype": "<i8",
+              "shape": [
+                3
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                3,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                0,
+                0,
+                0
+              ],
+              "dtype": "<i8",
+              "shape": [
+                3
+              ],
+              "strides": [
+                24
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                3,
+                3
+              ],
+              "base_strides": [
+                24,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "four-dimensional",
+      "inputs": [
+        {
+          "shape": [
+            4,
+            4,
+            5,
+            3
+          ],
+          "strides": [
+            60,
+            15,
+            3,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "e0d2e01ac90c6f4b6bf7bb76087887cdd9a49b47aafcbcd52449698eca4189d3"
+        },
+        {
+          "shape": [
+            4,
+            4,
+            5,
+            3
+          ],
+          "strides": [
+            60,
+            15,
+            3,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "ed5f8efedfd31a79a874f39776ae63f43bc107a3f1b980d65bf683509a7fff86"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.94c583ada5b53p+1"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.597e7eb3927fep+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                1,
+                3,
+                1,
+                1
+              ],
+              "dtype": "<i8",
+              "shape": [
+                4
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                4,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2,
+                0,
+                1,
+                1
+              ],
+              "dtype": "<i8",
+              "shape": [
+                4
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                4,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "nonzero-float",
+      "inputs": [
+        {
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "dtype": "<f8",
+          "data": "85ddd6bd6cfec96784225ba11ef0e385de336fdc65e0246c1a852fd904c96949"
+        },
+        {
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "dtype": "<f8",
+          "data": "4218a69694b0aa37e0f199f44b306fe077f776c6c8ae326760632116b0cba979"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.8000000000000p+1"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                3
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                24
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                3
+              ],
+              "base_strides": [
+                24,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                0
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                8
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                1
+              ],
+              "base_strides": [
+                8,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "nonzero-uint8",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|u1",
+          "data": "58370a4fa1d9bb3d8b8c5fc188197fea097d42d8a5460b04a2b74d5b49bc61d9"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|u1",
+          "data": "508457d1b5b8f389bf232ee3af2726d041f2617589ee0ebc734605b54200db83"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cd82b446159f3p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.a6c15a230acfap+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                10,
+                12
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "strided",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "6e64fe9b97dddcaab45d547413ac29dea8aa8c5b0ef26dc5ab415d3f0addee5a"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "440981ca122eb95b1c42c40a92579c0b3ea0b954964cb52df2e842123ec98245"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cd82b446159f3p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.a6c15a230acfap+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                12
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                10,
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "list-inputs",
+      "inputs": [
+        {
+          "shape": [
+            3
+          ],
+          "strides": [
+            8
+          ],
+          "dtype": "<i8",
+          "data": "f95f8eadc54fa71e640a67ff7e86733158e44683c7f77996ea3a0008397167ac"
+        },
+        {
+          "shape": [
+            3
+          ],
+          "strides": [
+            8
+          ],
+          "dtype": "<i8",
+          "data": "85526ba79728a470972be92942ef4de212630c9368703cb4ab3cb42dece95912"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+1"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+0"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                0
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                8
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                1
+              ],
+              "base_strides": [
+                8,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "scalar",
+      "inputs": [
+        {
+          "shape": [],
+          "strides": [],
+          "dtype": "<i8",
+          "data": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8"
+        },
+        {
+          "shape": [],
+          "strides": [],
+          "dtype": "<i8",
+          "data": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+        }
+      ],
+      "standard": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "Calling nonzero on 0d arrays is not allowed. Use np.atleast_1d(scalar).nonzero() instead."
+        },
+        "warnings": []
+      },
+      "modified": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "Calling nonzero on 0d arrays is not allowed. Use np.atleast_1d(scalar).nonzero() instead."
+        },
+        "warnings": []
+      },
+      "pair": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "Calling nonzero on 0d arrays is not allowed. Use np.atleast_1d(scalar).nonzero() instead."
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "attainer-query-tie",
+      "inputs": [
+        {
+          "shape": [
+            13
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "b2f630bcc8c37bfdf4b766afb068d9d9b0e1da1a303e91a8c4d46c57be878a31"
+        },
+        {
+          "shape": [
+            13
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "d8b97b59c7460fcdbc69e3895bb4e955da0df0b111dbab425b9602701187cb4f"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+2"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                8
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                1
+              ],
+              "base_strides": [
+                8,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "direction-maximum-tie",
+      "inputs": [
+        {
+          "shape": [
+            12
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "d141453f747bc3fd0f813c2eb6cde5970b48a59ba440e1816031e69384a70cb4"
+        },
+        {
+          "shape": [
+            12
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "3443ba65afa46b2391902a84d5faf9d27cff623d8ab652b5db1a288fae1db2fa"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+1"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                1
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                3
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "nearest-tie-leaf",
+      "inputs": [
+        {
+          "shape": [
+            18
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "1a2ec57872f668f2e19a2a934b175a5080cccb0eaf39d5f9dd7c9ff10790f9d9"
+        },
+        {
+          "shape": [
+            18
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "be03cd3f546045d8976db350c52945b98b2c5e668c5e375257e404614600524f"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.5555555555555p+0"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                16
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                2
+              ],
+              "base_strides": [
+                16,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                24
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                3
+              ],
+              "base_strides": [
+                24,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "nearest-tie-tree",
+      "inputs": [
+        {
+          "shape": [
+            60
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "4ccfab8000c7a8289b6dd9207c42caf0b1b0ca64ef4966addd2377d2c9e1e204"
+        },
+        {
+          "shape": [
+            60
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "04a3f5b0638a1b27dda690d0ee73aedfb773ce242d4e69645102e663f0e43098"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.0000000000000p+1"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.745d1745d1746p-4"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                23
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                168
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                21
+              ],
+              "base_strides": [
+                168,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                25
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                176
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                22
+              ],
+              "base_strides": [
+                176,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "identical",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x0.0p+0"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x0.0p+0"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                1,
+                2
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                1,
+                2
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "tiny",
+      "inputs": [
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2e11d6afc75b1f99f9e5bd4cc9c713a13f1a10c22f4c0b0713474cf86651eebc"
+        },
+        {
+          "shape": [
+            17,
+            19
+          ],
+          "strides": [
+            19,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "2625e7938df058ea9525254ad1651acbbf9f8c133887b71031e829fdc4904e4c"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.cd82b446159f3p+2"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.a6c15a230acfap+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                6,
+                6
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                10,
+                12
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                32
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                4
+              ],
+              "base_strides": [
+                32,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "rank1-sparse",
+      "inputs": [
+        {
+          "shape": [
+            1024
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "3d58cf103059e3d2bf6ec5aadac931764c5949863945537ccb4874a39cdcad9c"
+        },
+        {
+          "shape": [
+            1024
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "19c5ebe001a08ea8db7299dbbf2d1694399bf56bea7aec00cffd04d9f1423d7e"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.9000000000000p+5"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.1471c71c71c72p+4"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                93
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                144
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                18
+              ],
+              "base_strides": [
+                144,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                143
+              ],
+              "dtype": "<i8",
+              "shape": [
+                1
+              ],
+              "strides": [
+                192
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                1,
+                24
+              ],
+              "base_strides": [
+                192,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "rank2-sparse",
+      "inputs": [
+        {
+          "shape": [
+            128,
+            128
+          ],
+          "strides": [
+            128,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "f25d64456f9d5dd70c842febe6ec3221155b2f1d73ab5059194bc49ee8d7ccac"
+        },
+        {
+          "shape": [
+            128,
+            128
+          ],
+          "strides": [
+            128,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "146a46dcdf0ed8422de923edb972196af7e047758fcbbdfb2eb22f4e6b121526"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.97ebeb6d6bbf4p+4"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.2364fe309e10ep+3"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                127,
+                38
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                384
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                48
+              ],
+              "base_strides": [
+                384,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                122,
+                13
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                576
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                72
+              ],
+              "base_strides": [
+                576,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "rank3-sparse",
+      "inputs": [
+        {
+          "shape": [
+            18,
+            19,
+            20
+          ],
+          "strides": [
+            380,
+            20,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "63d5a3b8343df6b7de8d4e951ba04a8b6f2bc7f997a009a0b2aafe67eb2f4806"
+        },
+        {
+          "shape": [
+            18,
+            19,
+            20
+          ],
+          "strides": [
+            380,
+            20,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "6cb5210aaba6fa0ad4114ce85a7d3ac189f0134ff978fb49844df949998abdfa"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.1520cd1372febp+3"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.e2712a12e1b45p+1"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                2,
+                8,
+                4
+              ],
+              "dtype": "<i8",
+              "shape": [
+                3
+              ],
+              "strides": [
+                288
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                3,
+                36
+              ],
+              "base_strides": [
+                288,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                1,
+                1,
+                9
+              ],
+              "dtype": "<i8",
+              "shape": [
+                3
+              ],
+              "strides": [
+                416
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                3,
+                52
+              ],
+              "base_strides": [
+                416,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "rank2-wide",
+      "inputs": [
+        {
+          "shape": [
+            256,
+            320
+          ],
+          "strides": [
+            320,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "24704db28e3ff0cb028e95515406e0712d40a1639045f010f4c29de4761a08ee"
+        },
+        {
+          "shape": [
+            256,
+            320
+          ],
+          "strides": [
+            320,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "28c207157da9b15517e03ee9a0a15b04767373588f1c1c4b6fb02af22133e2c8"
+        }
+      ],
+      "standard": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.7f150d753c2d2p+5"
+        },
+        "warnings": []
+      },
+      "modified": {
+        "result": {
+          "type": "numpy.float64",
+          "hex": "0x1.b8807c56b578ep+3"
+        },
+        "warnings": []
+      },
+      "pair": {
+        "result": {
+          "type": "builtins.tuple",
+          "items": [
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                231,
+                275
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                768
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                96
+              ],
+              "base_strides": [
+                768,
+                8
+              ]
+            },
+            {
+              "type": "numpy.ndarray",
+              "values": [
+                254,
+                317
+              ],
+              "dtype": "<i8",
+              "shape": [
+                2
+              ],
+              "strides": [
+                1024
+              ],
+              "owns": false,
+              "writeable": true,
+              "base_shape": [
+                2,
+                128
+              ],
+              "base_strides": [
+                1024,
+                8
+              ]
+            }
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "method-unknown",
+      "result": {
+        "error": {
+          "type": "builtins.ValueError",
+          "message": "unrecognized method other"
+        },
+        "warnings": []
+      }
+    }
+  ]
+}
