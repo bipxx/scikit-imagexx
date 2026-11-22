@@ -39,7 +39,7 @@ jobs:
             .github/u182-source-proof
       - uses: actions/checkout@v4
         with:
-          ref: 0b33a90c20c8e26912e4fb9e0fd427529f327c7a
+          ref: 1fdc51e34bb8326671374aa7cda59be9389cb73c
           path: tested
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -52,7 +52,7 @@ jobs:
           $script = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-source-proof/run-source-barrier.py'
           $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
           $receipts = Join-Path $env:GITHUB_WORKSPACE 'receipts'
-          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current306-source-v1'
+          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current306-source-v2'
           git -C $source fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $py = (Get-Command python -ErrorAction Stop).Source
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current306-exact-source-v1-${{ matrix.profile }}
+          name: current306-exact-source-v2-${{ matrix.profile }}
           path: |
             receipts/*.json
             receipts/*.xml
