@@ -1,7 +1,7 @@
 {
-  "source": "136b0d16f85f56f3c479e918ac16bdab486c36b1",
-  "tree": "5cd4fda8894f946516526f943313a558c5b7abb0",
-  "parent": "817b6f82f47ce4cf4ef6656491f4d7b1fc40b346",
+  "source": "94522169d6111a6dcf5f7b044d6d267773e27de6",
+  "tree": "1939643448b968ddc0e14ed61b7d42e1c4e9fd3e",
+  "parent": "136b0d16f85f56f3c479e918ac16bdab486c36b1",
   "workflow_sha256": "772089faf0c8abf79c4ed7d2c2542598e20b3dc3271898bb31d0b68ba6ea779b",
   "selectors": [
     "tests/test_public_qualification.py",
@@ -446,7 +446,7 @@
     "tests/test_matrix_transform_numpy124_skylakex_certificate.py": "13724b9bf22d3aeb4ce513aeefaa2166afda9df475552b0098d88de4d72a94db",
     "tests/test_next_util_benchmark_execution.py": "1e4e010980046aeca2b69de97b962baa26512ab079996584a85801209c9fb586",
     "tests/test_public_qualification.py": "a7d6e09c3adb867b617477bf9e2499bcf4c8f03e4c74394eb4f55c22c2100db4",
-    "tests/test_pyramid_spatial_public.py": "63faeb46de00ccf4a845d57d091f871df234833f968a6c54d6e3d6e79749c2ef",
+    "tests/test_pyramid_spatial_public.py": "5a62acc59e31cc1e5ad975302784ea928c8a0d5b88b8069f2084e2e96e1d7ee6",
     "tests/test_rank_bilateral_fixture_reuse_metadata.py": "e99bd16310b72dc91647ff1a8bb06d0af59a44f2fa19e56ff8e07b916a4a3a0c",
     "tests/test_rank_corpus_sdk_scope.py": "e945d9cfff99daa1abd9cc7e53e3552580a6396b750cbbee621fddbf4784f815",
     "tests/test_rank_statistics_products.py": "98f168edf7651115b8764d9d495a58b354a50ab564defe693470c19672d13095",
@@ -507,6 +507,6 @@
     "tools/vi4_public_matmul_capture.py": "05f74b1436fc2ec3b6ab845911e5a239a0075ac9e8eedc8402f3fdca28f333cd",
     "tools/vi_public_matmul_context.py": "ffc141b9af5bf7b2cabec499138ca518798f7d11e143cd16eb07da3dc394f98c"
   },
-  "accepted_runner_template_sha256": "a5d85312c79fe20d64e77d49e2c9382844c97e1621dc216373b9ed2239784292",
+  "accepted_runner_template_sha256": "469ad87e4f722b12ad45a1a5fb5aaf0f4ea3f22b168cd8184ea10e173021fda7",
   "capacity_required_bytes_per_profile": 34359738368
 }
