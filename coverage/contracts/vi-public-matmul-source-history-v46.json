@@ -4204,23 +4204,23 @@
         "raw": [
           {
             "start": 826,
-            "end": 1087,
-            "current": "12\n    assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']\n    assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',\n            'include/skimagexx/pearson.hpp'} <= set(layout['SDK_members'])",
+            "end": 1214,
+            "current": "15\n    assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']\n    assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',\n            'include/skimagexx/pearson.hpp', 'include/skimagexx/hausdorff.hpp',\n            'include/skimagexx/ellipsoid_stats.hpp', 'include/skimagexx/expand_labels.hpp'} <= set(layout['SDK_members'])",
             "predecessor": "08"
           }
         ],
         "canonical": [
           {
             "start": 826,
-            "end": 1087,
-            "current": "12\n    assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']\n    assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',\n            'include/skimagexx/pearson.hpp'} <= set(layout['SDK_members'])",
+            "end": 1214,
+            "current": "15\n    assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']\n    assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',\n            'include/skimagexx/pearson.hpp', 'include/skimagexx/hausdorff.hpp',\n            'include/skimagexx/ellipsoid_stats.hpp', 'include/skimagexx/expand_labels.hpp'} <= set(layout['SDK_members'])",
             "predecessor": "08"
           }
         ]
       },
-      "current_raw_sha256": "bdd7c60ad2ec9add5cb1c036f81659c388ad37bfeb8e6c54d5d29bc7a664b877",
+      "current_raw_sha256": "a5429fe62e2e08c69625e758825849e0f2fef19d6d713bb3e067fc02958dd1e4",
       "predecessor_raw_sha256": "f3b4c6dd71cef5def7c5ccc79cc99b3d91af67f70c59dcc825239353d05429ff",
-      "current_canonical_sha256": "bdd7c60ad2ec9add5cb1c036f81659c388ad37bfeb8e6c54d5d29bc7a664b877",
+      "current_canonical_sha256": "a5429fe62e2e08c69625e758825849e0f2fef19d6d713bb3e067fc02958dd1e4",
       "predecessor_canonical_sha256": "f3b4c6dd71cef5def7c5ccc79cc99b3d91af67f70c59dcc825239353d05429ff"
     },
     "python/skimagexx/morphology.py": {

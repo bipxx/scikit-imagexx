@@ -23,10 +23,11 @@ def current_capsule(tmp_path):
     names = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files'], text=True).splitlines()
     layout = q.current_install_layout(lambda n: (ROOT / n).read_bytes(), names, 'modern')
     # This capsule models current source install rules, not historical71 acceptance.
-    assert layout['SDK_count'] == 112
+    assert layout['SDK_count'] == 115
     assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']
     assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',
-            'include/skimagexx/pearson.hpp'} <= set(layout['SDK_members'])
+            'include/skimagexx/pearson.hpp', 'include/skimagexx/hausdorff.hpp',
+            'include/skimagexx/ellipsoid_stats.hpp', 'include/skimagexx/expand_labels.hpp'} <= set(layout['SDK_members'])
     runtime = dict(source=dict(revision='a' * 40, files_sha256=dict.fromkeys(names, 'inert-authenticated-source')),
                    runtime=dict(sdk_sha256=dict.fromkeys(layout['SDK_members'], 'inert-authenticated-sdk')))
     marker = dict(schema='rank-corpus-sdk-scope-v1', scope=c.CURRENT_PRODUCT_SCOPE,
