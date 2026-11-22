@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
-from skimagexx.coverage import set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, set_color_default_result
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 _UNTAGGED_ARRAY_APIS = {
@@ -79,6 +79,9 @@ def calls(api,dtype):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
+    if api in HAAR_FUNCTIONS:
+        assert_default_parity(api, np.dtype(dtype), actual, expected)
+        return
     if api in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):
         assert_default_parity(api,np.dtype(dtype),actual,expected);return
     if api in ('util.crop','util.regular_grid'):

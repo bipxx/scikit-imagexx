@@ -1,0 +1,50 @@
+{
+  "schema": "draw-haar-like-feature-v1",
+  "api": "feature.draw_haar_like_feature",
+  "reference": {
+    "fixture": "tests/fixtures/draw_haar_like_feature_originals_v1.json",
+    "original": "scikit-image 0.26.0",
+    "cases_per_profile": 76,
+    "original_sha256": "b06b549e60fcf8a186bec2beeab8ac63e9531fe0982f8b41adb1531858e13d10"
+  },
+  "native": {
+    "storage": "C-order 2D or 3-channel, native bool/uint8/float32/float64; owned, directly bounded contiguous ndarray-owner view, or immutable bytes owner. At most 2^22 pixels.",
+    "coordinates": "Inclusive integer rectangles, validated ROI offset, Python lists/tuples in unsampled calls or one-dimensional owned object arrays and concrete 4D int64 arrays. Empty geometry keeps a fresh image. Source width and height are not read.",
+    "arithmetic": "Draw features and rectangles in provider order, starting negative. Wrap in-bounds negative indices and blend each indexed pixel once per rectangle. Float32 image product is rounded before float64 color sum and final float32 assignment.",
+    "bounds": "Maximum 4096 features, 16 rectangles per feature, and 16 total for float32 or 128 otherwise. Ordinary finite nonzero float magnitudes 2^-24 through 10^6 or zero; three bounded RGB palette entries; alpha 0, 1, or [0.25,0.75].",
+    "workers": "Ordered serial native operation, no artificial SIMD or threading dispatch."
+  },
+  "providers": {
+    "numpy": "default_rng and integer population choice without replacement after bounded coordinate preparation. Exact seeded order and Generator state verified in both pinned profiles, including same-size permutation and error-before-blend.",
+    "compatibility": "Original fallback before any RNG/callback replay for unsupported geometry, storage, palettes, alpha, providers or protocols. Out-of-range index exceptions and modern/minimum RandomState differences stay provider-compatible."
+  },
+  "parity": "For frozen successful calls exact raw output bytes, dtype, shape, strides, ownership, incoming image content and Generator states; malformed calls exact error/non-fallback warning text and available callback traces.",
+  "timing": {
+    "case_ids": [
+      "gray-u8-all",
+      "rgb-f64-overlap",
+      "gray-f32-offset",
+      "seeded-u8-subset",
+      "large-overlap"
+    ],
+    "method": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "execution_authority": null,
+    "boundary": "Public call including provider RNG, output allocation, conversion and blend. Seeded case uses two identical-seeded independent generators, each advancing naturally."
+  },
+  "source_canonical_sha256": {
+    "src/draw_haar_like_feature.cpp": "cdad27689e421d8e0345947f0cc1ee8a618c3a7c546fe9afc0f7f5b931050ead",
+    "src/bind_draw_haar_like_feature.cpp": "2d56677ee91e8bdd93f3659a94cd00bf45c20a8c2ae6335b61fdce0a0c8b5984",
+    "include/skimagexx/draw_haar_like_feature.hpp": "41502784e48e474c389021da30ee486e713001d0966a24c20550e2ebf63daac0",
+    "python/skimagexx/_draw_haar_like_feature.py": "bb864816e7bdf4dbac70ddedf47ad1d86ff4da08bf07bcf8faa7ff3e0e900a59",
+    "tests/fixtures/draw_haar_like_feature_originals_v1.json": "ef266af0e9275a71892160c16aaab79b034694c58243a9a08d3c2e40e04fa502",
+    "tests/haar_feature_drawing_cases.py": "18d41b917545dfe78fb290f5a3b410f2c0c2bf24cb62868ea38d15864d3ecf0b",
+    "tests/test_draw_haar_like_feature_public.py": "dfa66fd9a6ff5ef5d13ca204f4e4f323605c232f749c896856dfe24c3b15e14f",
+    "tests/cmake_consumer/haar_like_feature_drawing_consumer.cpp": "3ecd621b3ef34e5014beeeb6d41837c2409e23c27876ef30430e0b7c4faa1864",
+    "benchmarks/draw_haar_like_feature.py": "6b7393c499be697a5c31f6ffc0a23d2d0c817e0ec4876db87f8767a925a48828"
+  }
+}

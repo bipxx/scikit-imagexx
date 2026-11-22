@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "functions": ["feature.haar_like_feature_coord", "feature.haar_like_feature"],
+  "upstream": {
+    "release": "0.26.0",
+    "python_source_sha256": "b06b549e60fcf8a186bec2beeab8ac63e9531fe0982f8b41adb1531858e13d10",
+    "coordinate_and_value_fixture": "tests/fixtures/haar_like_features_original_minimum_v2.json",
+    "minimum_fixture_sha256": "97ee6044b8fe57ce516b724ed5cf787a7e324f3c1c2d12563e9860166c455352",
+    "modern_raw_sha256": "e0f2c7f3e81b504765279f633c35837f279739fc73978da5f5fc2f23ffc31f32",
+    "common_safe_cases": 93,
+    "unsafe_exclusions": ["value-subset-few-rectangles"]
+  },
+  "implementation": {
+    "geometry": "Inclusive row-column rectangles in family order, with row, column, block height and block width enumeration",
+    "values": "ROI-relative ordered inclusion-exclusion in input precision, followed by alternating-sign rectangle reductions",
+    "providers": "NumPy owns object arrays, selection masks and the verified ROI copy. Native C++ owns enumeration, rectangle validation and value evaluation.",
+    "integral_output": "int64 with signed input-width rectangle arithmetic and modulo-64-bit reduction",
+    "scratch_buffers": "Embedded rectangles are validated before native input reads. Generated windows must fit the actual slice. Supplied windows use actual slice bounds.",
+    "execution": "Ordered serial geometry and value loops; default one worker; no separate SIMD or parallel variant",
+    "gaps": "Foreign backing buffers and ndarray subclasses are refused. Dimensions must fit native int coordinates. Original error ordering for arbitrary array protocols, nondefault NumPy floating-point policy at overflow, and wider platform behavior require separate evidence.",
+    "fallback": "Both APIs use local validation and native operations independently of the fallback switch. Values never call the unchecked original."
+  },
+  "timing": {
+    "workers": 1,
+    "case_ids": ["coord-tiny", "coord-mixed-large", "value-small", "value-roi-large", "value-subset"],
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "minimum_speedup_each": 1.0,
+    "execution_authority": null
+  }
+}

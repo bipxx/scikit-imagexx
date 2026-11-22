@@ -12,6 +12,7 @@ target_sources(skimagexx PRIVATE src/normalized_mutual_information.cpp)
 target_sources(skimagexx PRIVATE src/structural_similarity.cpp src/local_extrema.cpp
     src/order_angles_golden_ratio.cpp src/pearson.cpp src/hausdorff.cpp
     src/ellipsoid_stats.cpp src/expand_labels.cpp)
+target_sources(skimagexx PRIVATE src/draw_haar_like_feature.cpp src/haar_like_features.cpp)
 target_sources(skimagexx PRIVATE src/compare_images.cpp)
 target_sources(skimagexx PRIVATE src/level_set.cpp)
 target_sources(skimagexx PRIVATE src/map_array.cpp)
@@ -170,6 +171,8 @@ if(MSVC)
     set_source_files_properties(src/polygon.cpp src/bind_polygon.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/bind_profile_line.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/adaptive.cpp src/bind_uniform_filter.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
+    set_source_files_properties(src/draw_haar_like_feature.cpp src/haar_like_features.cpp
+        src/bind_draw_haar_like_feature.cpp src/bind_haar_like_features.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/order_angles_golden_ratio.cpp src/bind_order_angles_golden_ratio.cpp
         src/pearson.cpp src/bind_pearson.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
@@ -222,6 +225,8 @@ else()
     set_source_files_properties(src/gaussian_nd.cpp src/spline.cpp src/resample.cpp src/resize_clip.cpp src/resize_range.cpp src/resize_half.cpp src/integral.cpp src/integrate.cpp src/downscale.cpp src/contrast.cpp src/label_color.cpp src/histogram_matching.cpp src/li.cpp src/adaptive.cpp src/hysteresis.cpp src/sparse.cpp src/median.cpp src/multiotsu.cpp src/clahe.cpp src/gabor.cpp src/gabor_filter.cpp src/symmetric_eigen.cpp src/structure_tensor.cpp src/corner_response.cpp src/kitchen.cpp src/hessian.cpp src/shape_index.cpp src/hessian_det.cpp src/sato.cpp src/frangi.cpp src/meijering.cpp src/metrics.cpp src/footprint_dense.cpp src/footprint_decomposition.cpp src/footprint_util.cpp src/components.cpp src/component_consumers.cpp src/rank.cpp src/projective.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off")
     set_source_files_properties(src/resample.cpp src/bind_profile_line.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/adaptive.cpp src/bind_uniform_filter.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
+    set_source_files_properties(src/draw_haar_like_feature.cpp src/haar_like_features.cpp
+        src/bind_draw_haar_like_feature.cpp src/bind_haar_like_features.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/order_angles_golden_ratio.cpp src/bind_order_angles_golden_ratio.cpp
         PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math;-fno-builtin-pow")
@@ -240,6 +245,7 @@ if(SKIMAGEXX_BUILD_PYTHON)
     target_link_libraries(_core PRIVATE skimagexx Python::NumPy)
     target_sources(_core PRIVATE src/bind_tv_chambolle.cpp src/bind_tv_bregman.cpp src/bind_max_tree.cpp src/bind_matrix_transform.cpp src/bind_reconstruction.cpp)
     target_sources(_core PRIVATE src/bind_normalized_mutual_information.cpp)
+    target_sources(_core PRIVATE src/bind_draw_haar_like_feature.cpp src/bind_haar_like_features.cpp)
     target_sources(_core PRIVATE src/bind_structural_similarity.cpp src/bind_local_extrema.cpp
         src/bind_order_angles_golden_ratio.cpp src/bind_pearson.cpp src/bind_hausdorff.cpp
         src/bind_ellipsoid_stats.cpp src/bind_expand_labels.cpp)

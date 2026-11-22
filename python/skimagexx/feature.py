@@ -7,6 +7,9 @@ __path__=[]
 __all__=['hessian_matrix_eigvals','structure_tensor_eigenvalues']
 from ._draw_multiblock_lbp import draw_multiblock_lbp
 __all__ += ['draw_multiblock_lbp']
+from ._draw_haar_like_feature import draw_haar_like_feature
+from ._haar_like_features import haar_like_feature, haar_like_feature_coord
+__all__ += ['draw_haar_like_feature', 'haar_like_feature', 'haar_like_feature_coord']
 _LEGACY_SCALARS=np.lib.NumpyVersion(np.__version__)<'2.0.0'
 
 

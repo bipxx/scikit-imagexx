@@ -2357,17 +2357,17 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,291)
+    result=q.plan(ROOT,profile,294)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current291' and result['registry']['image_count']==291
-    assert result['product_members']==256 and result['SDK_members']==115
+    assert result['product_scope']=='current294' and result['registry']['image_count']==294
+    assert result['product_members']==260 and result['SDK_members']==117
     assert set(result['registry']['packaged_assets']) == {
         'data.brick', 'data.cat', 'data.chelsea', 'data.clock',
         'data.grass', 'data.gravel', 'data.horse', 'data.text',
     }
     assert result['public_groups']['public-packaged-assets'] == q.PACKAGED_ASSET_TESTS
-    assert result['SDK_checks']==90 and 'current45 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==156
+    assert result['SDK_checks']==94 and 'current47 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==158
     assert result['public_groups']['public-polygon-intake']==('test_draw_polygon_benchmark_intake.py',)
     groups=result['public_groups']
     assert {'test_order_angles_golden_ratio_integration.py','test_pearson_public.py','test_hausdorff_public.py','test_ellipsoid_stats_public.py','test_expand_labels_public.py'} <= set(groups['public-post203'])
@@ -2375,11 +2375,11 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
         assert 'public-golden-angle-saved-linux' not in groups
     else:
         assert groups['public-golden-angle-saved-linux']==('test_order_angles_golden_ratio_public.py',)
-    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v15.json'
+    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v16.json'
     selectors=q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors']
     previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v8.json').read_bytes())['required_selectors']
-    assert len(previous)==162 and len(selectors)==179
-    assert selectors==previous+['tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py','tests/test_structural_similarity.py','tests/test_local_extrema_public.py','tests/test_order_angles_golden_ratio_integration.py','tests/test_pearson_public.py','tests/test_order_angles_golden_ratio_public.py','tests/test_hausdorff_public.py','tests/test_ellipsoid_stats_public.py','tests/test_expand_labels_public.py','tests/test_binary_blobs_public.py','tests/test_gaussian_nd.py','tests/test_gaussian_family.py','tests/test_resize_gaussian_raw.py']
+    assert len(previous)==162 and len(selectors)==181
+    assert selectors==previous+['tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py','tests/test_structural_similarity.py','tests/test_local_extrema_public.py','tests/test_order_angles_golden_ratio_integration.py','tests/test_pearson_public.py','tests/test_order_angles_golden_ratio_public.py','tests/test_hausdorff_public.py','tests/test_ellipsoid_stats_public.py','tests/test_expand_labels_public.py','tests/test_binary_blobs_public.py','tests/test_gaussian_nd.py','tests/test_gaussian_family.py','tests/test_resize_gaussian_raw.py','tests/test_draw_haar_like_feature_public.py','tests/test_haar_like_features_contract.py']
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2443,12 +2443,12 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current291' and result['record_verified']
+        assert result['product_scope']=='current294' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
 
-@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels'))
+@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features'))
 @pytest.mark.parametrize('fault',('missing-target','missing-source'))
 def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
     if fault=='missing-target':
@@ -2457,14 +2457,14 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',291)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',294)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels') and len(q.FAMILIES)==23
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features') and len(q.FAMILIES)==23
     assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==45
-    plan=q.plan(ROOT,'modern',291)
-    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(115,45,90)
+    plan=q.plan(ROOT,'modern',294)
+    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(117,47,94)
     assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)
     without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}
     with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)
@@ -2936,7 +2936,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',291)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',294)['blockers']
 
 
 @pytest.mark.parametrize('selector',(

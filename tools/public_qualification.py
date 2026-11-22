@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current291'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels')
-CURRENT_SDK_CLIENT_SCOPE = 'current45 required installed clients; current286 clients plus bounded Hausdorff, ellipsoid statistics and label expansion; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v15.json'
+CURRENT_PRODUCT_SCOPE = 'current294'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels', 'haar_like_feature_drawing', 'haar_like_features')
+CURRENT_SDK_CLIENT_SCOPE = 'current47 required installed clients; current291 clients plus the Haar drawing and coordinate/value consumers; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v16.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -674,6 +674,8 @@ POST203_TESTS += ('test_order_angles_golden_ratio_integration.py', 'test_pearson
 POST203_TESTS += ('test_hausdorff_public.py', 'test_ellipsoid_stats_public.py', 'test_expand_labels_public.py')
 POST203_TESTS += ('test_binary_blobs_public.py', 'test_gaussian_nd.py',
                   'test_gaussian_family.py', 'test_resize_gaussian_raw.py')
+HAAR_TESTS = ('test_draw_haar_like_feature_public.py', 'test_haar_like_features_contract.py')
+POST203_TESTS += HAAR_TESTS
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -1057,6 +1059,38 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-executio
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v38.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v47.json', 'coverage/contracts/vi4-public-matmul-capture-u182-integration-v2.json')
 
 
+DRAW_SOURCE_PATHS += (
+    'benchmarks/draw_haar_like_feature.py',
+    'benchmarks/haar_like_features.py',
+    'coverage/contracts/current-public-qualification-v16.json',
+    'coverage/contracts/draw-haar-like-feature-v1.json',
+    'coverage/contracts/draw-haar-like-feature-v2.json',
+    'coverage/contracts/haar-like-features-v1.json',
+    'include/skimagexx/draw_haar_like_feature.hpp',
+    'include/skimagexx/haar_like_features.hpp',
+    'python/skimagexx/_draw_haar_like_feature.py',
+    'python/skimagexx/_haar_like_features.py',
+    'src/bind_draw_haar_like_feature.cpp',
+    'src/bind_haar_like_features.cpp',
+    'src/draw_haar_like_feature.cpp',
+    'src/haar_like_features.cpp',
+    'tests/cmake_consumer/haar_headers_together.cpp',
+    'tests/cmake_consumer/haar_like_feature_drawing_consumer.cpp',
+    'tests/cmake_consumer/haar_like_features_consumer.cpp',
+    'tests/fixtures/draw_haar_like_feature_originals_v1.json',
+    'tests/fixtures/haar_like_features_original_minimum_v2.json',
+    'tests/haar_feature_cases.py',
+    'tests/haar_feature_drawing_cases.py',
+    'tests/test_draw_haar_like_feature_public.py',
+    'tests/test_draw_haar_like_feature_source.py',
+    'tests/test_haar_like_features_contract.py',
+    'tests/test_haar_like_features_source.py',
+)
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v39.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-haar-integration-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v48.json', 'coverage/contracts/vi4-public-matmul-capture-haar-integration-v1.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):
@@ -1307,22 +1341,23 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v14.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v15.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == 'edcc4bcd94e14bdd7516190f463429b841c9e63de2e3707dc9524ae6ee8b6986',
-            'current290 qualification predecessor differs')
+    require(previous_digest == '41debfd69f3009c77b40fafc7afd9233fcbe349b5a3bea4c2ce1ccee4c1f8594', 'current291 qualification predecessor differs')
     previous = json.loads(previous_raw)
+    haar_paths = {'feature.draw_haar_like_feature': 'tests/test_draw_haar_like_feature_public.py', 'feature.haar_like_feature': 'tests/test_haar_like_features_contract.py', 'feature.haar_like_feature_coord': 'tests/test_haar_like_features_contract.py'}
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
-        image_paths=sorted(previous['image_paths'] + ['data.binary_blobs']),
-        post203_contracts={**previous['post203_contracts'],
-                           'data.binary_blobs': 'tests/test_binary_blobs_public.py'},
-        required_selectors=previous['required_selectors'] + [
-            'tests/test_binary_blobs_public.py', 'tests/test_gaussian_nd.py',
-            'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py'],
+        image_paths=sorted(previous['image_paths'] + list(haar_paths)),
+        post203_contracts={**previous['post203_contracts'], **haar_paths},
+        required_selectors=previous['required_selectors'] + ['tests/' + name for name in HAAR_TESTS],
+        required_client_families=previous['required_client_families'] + ['haar_like_feature_drawing', 'haar_like_features'],
+        required_client_headers=previous['required_client_headers'] + [
+            'include/skimagexx/draw_haar_like_feature.hpp', 'include/skimagexx/haar_like_features.hpp'],
+        SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
@@ -1404,6 +1439,8 @@ def current_install_layout(read_bytes, names, profile):
     require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
                 for name in ('hausdorff', 'ellipsoid_stats', 'expand_labels')),
             'current Hausdorff, ellipsoid statistics and label expansion install closure absent')
+    require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
+                for name in ('draw_haar_like_feature', 'haar_like_features')), 'current Haar install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

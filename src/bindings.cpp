@@ -44,6 +44,8 @@ void bind_metrics(pybind11::module_&);
 void bind_structural_similarity(pybind11::module_&);
 void bind_local_extrema(pybind11::module_&);
 void bind_order_angles_golden_ratio(pybind11::module_&);
+void bind_draw_haar_like_feature(pybind11::module_&);
+void bind_haar_like_features(pybind11::module_&);
 void bind_pearson(pybind11::module_&);
 void bind_hausdorff(pybind11::module_&);
 void bind_ellipsoid_stats(pybind11::module_&);
@@ -875,6 +877,8 @@ PYBIND11_MODULE(_core, m) {
     bind_structural_similarity(m);
     bind_local_extrema(m);
     bind_order_angles_golden_ratio(m);
+    bind_draw_haar_like_feature(m);
+    bind_haar_like_features(m);
     bind_pearson(m);
     bind_hausdorff(m);
     bind_ellipsoid_stats(m);

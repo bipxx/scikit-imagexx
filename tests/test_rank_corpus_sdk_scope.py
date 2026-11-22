@@ -23,7 +23,7 @@ def current_capsule(tmp_path):
     names = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files'], text=True).splitlines()
     layout = q.current_install_layout(lambda n: (ROOT / n).read_bytes(), names, 'modern')
     # This capsule models current source install rules, not historical71 acceptance.
-    assert layout['SDK_count'] == 115
+    assert layout['SDK_count'] == 117
     assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']
     assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',
             'include/skimagexx/pearson.hpp', 'include/skimagexx/hausdorff.hpp',

@@ -15,7 +15,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
-    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord'),
     'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
@@ -352,7 +352,16 @@ FLOOD_FILL_FUNCTIONS=('morphology.flood','morphology.flood_fill','segmentation.f
 
 LOCAL_EXTREMA_FUNCTIONS = ('morphology.local_maxima', 'morphology.local_minima')
 
+HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature', 'feature.haar_like_feature_coord')
+
+
 def native_dtypes(api):
+    if api == 'feature.draw_haar_like_feature':
+        return ('bool', 'uint8', 'float32', 'float64')
+    if api == 'feature.haar_like_feature':
+        return ('bool', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64', 'float32', 'float64')
+    if api == 'feature.haar_like_feature_coord':
+        return ('uint8',)
     if api == 'transform.order_angles_golden_ratio':
         return ('bool', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64', 'float16', 'float32', 'float64')
     if api == 'measure.pearson_corr_coeff':
@@ -430,6 +439,15 @@ def flood_fill_contract():
 
 
 def default_call(api, image):
+    if api == 'feature.haar_like_feature_coord':
+        height, width = image.shape[:2]
+        return (min(width, 3), min(height, 3), 'type-2-x'), {}
+    if api == 'feature.haar_like_feature':
+        return (image, 0, 0, 2, 2, 'type-2-x'), {}
+    if api == 'feature.draw_haar_like_feature':
+        height, width = image.shape[:2]
+        point = [(0, 0), (0, 0)]
+        return (image, 0, 0, width, height, [[point]]), {'rng': 739}
     if api == 'data.binary_blobs':
         return (), {'length': 24, 'rng': 86427}
     if api == 'draw.ellipsoid_stats':
@@ -1221,6 +1239,24 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api in HAAR_FUNCTIONS:
+        import numpy as np
+        if api == 'feature.haar_like_feature_coord':
+            assert type(actual) is type(expected) is tuple and len(actual) == len(expected) == 2
+            pairs = zip(actual, expected)
+        else:
+            pairs = ((actual, expected),)
+        for value, reference in pairs:
+            assert type(value) is type(reference) is np.ndarray
+            assert value.dtype == reference.dtype and value.dtype.metadata == reference.dtype.metadata
+            assert value.shape == reference.shape and value.strides == reference.strides
+            assert value.flags.owndata and value.flags.writeable and value.flags.aligned
+            assert value.base is None and not np.shares_memory(value, reference)
+            if value.dtype == np.dtype('O'):
+                assert value.tolist() == reference.tolist()
+            else:
+                assert value.tobytes() == reference.tobytes()
+        return
     if api == 'data.binary_blobs':
         import numpy as np
         assert type(actual) is type(expected) is np.ndarray

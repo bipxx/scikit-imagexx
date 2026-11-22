@@ -9,13 +9,12 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v38.json'
-CONTEXT_SHA256 = '4a8669a042c967b8fe7338b46a00b2e3226637d006a03a20d36343334ca8b725'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v39.json'
+CONTEXT_SHA256 = 'fab6f3be7a63d93c27f3f01b5ab54bd35ba141ed7e7122129564808455b25419'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
-SOURCE = ('tests/test_speed_parity_integration_source.py', 'tests/test_flood_speed_source.py',
-          'tests/test_ellipsoid_stats_source.py')
+SOURCE = ('tests/test_draw_haar_like_feature_source.py', 'tests/test_haar_like_features_source.py')
 
 
 def digest(raw):
@@ -76,11 +75,11 @@ def test_current_source_and_predecessor_contexts_are_bound_without_authority():
                    for node in ast.walk(ast.parse(Path(__file__).read_bytes())))
 
 
-def test_actual_source_command_preserves181_and_adds_only_current_source_guards():
+def test_actual_source_command_preserves184_and_adds_only_haar_source_guards():
     value = data()
     raw = (ROOT / '.github/workflows/public-qualification.yml').read_bytes()
     selected = selectors(raw)
-    assert len(selected) == len(set(selected)) == 184
+    assert len(selected) == len(set(selected)) == 186
     assert selected == value['previous_source_selectors'] + list(SOURCE)
     assert not set(RUNTIME) & set(selected)
 
@@ -90,13 +89,13 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v15.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v16.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
         'tests/test_order_angles_golden_ratio_integration.py', 'tests/test_pearson_public.py',
         'tests/test_order_angles_golden_ratio_public.py', 'tests/test_hausdorff_public.py',
         'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py', 'tests/test_binary_blobs_public.py',
-        'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py']
+        'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py', 'tests/test_draw_haar_like_feature_public.py', 'tests/test_haar_like_features_contract.py']
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
     assert groups['public-post203'] == ('retained',)
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)

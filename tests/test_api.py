@@ -6,7 +6,7 @@ import skimage
 from skimage import filters as reference_filters, color as reference_color, util as reference_util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
-from skimagexx.coverage import set_color_default_result
+from skimagexx.coverage import HAAR_FUNCTIONS, set_color_default_result
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
 from skimage import morphology as reference_morphology
@@ -48,6 +48,8 @@ VALUE_CASES = [
     for dtype in ((np.float64,) if (native is xx.restoration and name in ('ball_kernel','ellipsoid_kernel'))
                   or (native is xx.measure and name in ('approximate_polygon','subdivide_polygon','pearson_corr_coeff'))
                   or (native is xx.draw and name == 'ellipsoid_stats')
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes('feature.' + name))
+                  if native is xx.feature and 'feature.' + name in HAAR_FUNCTIONS
                   else (np.uint8,) if native.__name__.split('.',1)[1]+'.'+name in (*LEVEL_SET_FUNCTIONS,'segmentation.find_boundaries')
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes('morphology.' + name))
                   if 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS and native is xx.morphology
@@ -58,7 +60,9 @@ VALUE_CASES = [
                   else (np.bool_, np.uint8) if native is xx.metrics and name in ('hausdorff_distance', 'hausdorff_pair')
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
-    for shape in (((4, 5), (7, 19), (519, 521))
+    for shape in (((2, 2), (7, 19), (519, 521))
+                  if native is xx.feature and name == 'haar_like_feature'
+                  else ((4, 5), (7, 19), (519, 521))
                   if ((native is xx.restoration and name == 'denoise_tv_bregman')
                       or (native is xx.morphology and name in ('max_tree','max_tree_local_maxima',
                           'area_opening','area_closing','diameter_opening','diameter_closing')))
@@ -532,7 +536,7 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
         return
     if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff',
                'metrics.hausdorff_distance', 'metrics.hausdorff_pair', 'draw.ellipsoid_stats',
-               'segmentation.expand_labels'):
+               'segmentation.expand_labels', *HAAR_FUNCTIONS):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
@@ -631,3 +635,27 @@ def test_integral_pipeline_can_swap_backend():
     actual,expected=pipeline(xx),pipeline(skimage)
     assert actual.dtype==expected.dtype and actual.strides==expected.strides
     np.testing.assert_allclose(actual,expected,rtol=2e-13,atol=2e-13)
+
+
+def test_installed_haar_pipeline_can_swap_backend():
+    from skimagexx import _draw_haar_like_feature, _haar_like_features
+
+    assert xx.feature.draw_haar_like_feature is _draw_haar_like_feature.draw_haar_like_feature
+    assert xx.feature.haar_like_feature is _haar_like_features.haar_like_feature
+    assert xx.feature.haar_like_feature_coord is _haar_like_features.haar_like_feature_coord
+    image = np.array([[1, 2], [3, 4]], dtype=np.uint8)
+    integral = np.array([[1, 3], [4, 10]], dtype=np.uint16)
+
+    def pipeline(backend):
+        coordinates, kinds = backend.haar_like_feature_coord(2, 2, 'type-4')
+        drawn = backend.draw_haar_like_feature(image, 0, 0, 2, 2, coordinates, rng=739)
+        values = backend.haar_like_feature(integral, 0, 0, 2, 2, kinds, coordinates)
+        return drawn, values, (coordinates, kinds)
+
+    previous = xx.set_fallback_enabled(False)
+    try:
+        actual, expected = pipeline(xx.feature), pipeline(reference_feature)
+        for api, value, reference in zip(HAAR_FUNCTIONS, actual, expected):
+            assert_default_parity(api, image.dtype, value, reference)
+    finally:
+        xx.set_fallback_enabled(previous)

@@ -1884,11 +1884,16 @@
       "api": "feature.draw_haar_like_feature",
       "kind": "callable",
       "signature": "(image, r, c, width, height, feature_coord, color_positive_block=(1.0, 0.0, 0.0), color_negative_block=(0.0, 1.0, 0.0), alpha=0.5, max_n_features=None, rng=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_draw_haar_like_feature_public.py",
+      "benchmark": "benchmarks/draw_haar_like_feature.py"
     },
     {
       "api": "feature.draw_multiblock_lbp",
@@ -1947,21 +1952,35 @@
       "api": "feature.haar_like_feature",
       "kind": "callable",
       "signature": "(int_image, r, c, width, height, feature_type=None, feature_coord=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_haar_like_features_contract.py",
+      "benchmark": "benchmarks/haar_like_features.py"
     },
     {
       "api": "feature.haar_like_feature_coord",
       "kind": "callable",
       "signature": "(width, height, feature_type=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_haar_like_features_contract.py",
+      "benchmark": "benchmarks/haar_like_features.py"
     },
     {
       "api": "feature.hessian_matrix",

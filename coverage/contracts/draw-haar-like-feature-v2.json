@@ -1,0 +1,14 @@
+{
+  "schema": "draw-haar-like-feature-descriptor-successor-v1",
+  "predecessor": {
+    "path": "coverage/contracts/draw-haar-like-feature-v1.json",
+    "sha256": "0e8836dc03d98e3619a5564faeee1dba09d56b5146c1c8c3a93ddfcdcc6d0009"
+  },
+  "stock_descriptor_admission_sha256": "cda287b925d2152b5fdca1d00a4f3d4f09f1744bc7ebfbca876ee4747bd71727",
+  "native_descriptors": "Canonical and logically equivalent native bool, uint8, float32 and float64 image dtypes retain the original storage and geometry admission rules. RGB float copies retain the input dtype descriptor, including when alpha is zero. Grayscale float copies and promoted bool/uint8 results have untagged output dtypes.",
+  "source_canonical_sha256": {
+    "src/bind_draw_haar_like_feature.cpp": "4542665bfe68d8f1dd9c23bb431b0167c8b8b5e3bd9ae4021e29ae53d86a5a7b",
+    "tests/test_draw_haar_like_feature_public.py": "6290be68a098df5be09efffc20e5d1b03a54b1410d15f32bfd73cd5cb043ef24"
+  },
+  "execution_authority": null
+}
