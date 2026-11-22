@@ -1,88 +1,112 @@
-name: Current301 exact-source barrier
+name: Pyramid minimum causal comparison
 on:
   workflow_dispatch:
+
 permissions:
+  actions: read
   contents: read
+
 jobs:
-  source:
-    strategy:
-      fail-fast: false
-      matrix:
-        profile: [windows311, windows313]
-    runs-on: windows-latest
-    timeout-minutes: 45
+  minimum-causal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
     env:
-      SOURCE_PROFILE: ${{ matrix.profile }}
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
-      UV_NO_CACHE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      OMP_THREAD_LIMIT: '1'
     steps:
-      - name: Verify runner scratch capacity
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          $required = 32GB
-          foreach ($path in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
-            $drive = [System.IO.DriveInfo]::new([System.IO.Path]::GetPathRoot($path))
-            Write-Output "$path free=$($drive.AvailableFreeSpace) required=$required"
-            if ($drive.AvailableFreeSpace -lt $required) { throw 'Runner free capacity is below peak plus reserve' }
-          }
-          git config --global core.autocrlf true
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          git config --global core.longpaths true
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/checkout@v4
         with:
           path: carrier
           persist-credentials: false
-          sparse-checkout: |
-            .github/u182-source-proof
+          sparse-checkout: .github/pyramid-hosted-minimum-causal-v1
       - uses: actions/checkout@v4
         with:
-          ref: 1766580e11c7120b3c04ffc9b1ed89fbcad5c808
+          ref: 136b0d16f85f56f3c479e918ac16bdab486c36b1
           path: tested
           persist-credentials: false
+          sparse-checkout: |
+            tests/pyramid_spatial_cases.py
+            tests/fixtures/pyramid_spatial_originals_v1.json
+            python/skimagexx/_pyramid_spatial.py
+            python/skimagexx/filters.py
+            src/gaussian_nd.cpp
+            src/simd_gaussian_nd_avx2.cpp
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13.14'
-      - name: Execute the complete source-only workflow command
-        shell: pwsh
+          python-version: '3.11.17'
+      - name: Bind exact inputs and verify runner capacity
+        shell: bash
         run: |
-          $ErrorActionPreference = 'Stop'
-          $script = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-source-proof/run-source-barrier.py'
-          $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
-          $receipts = Join-Path $env:GITHUB_WORKSPACE 'receipts'
-          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current301-source-v1'
-          git -C $source fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $py = (Get-Command python -ErrorAction Stop).Source
-          if ($env:SOURCE_PROFILE -eq 'windows311') {
-            & $py -m pip install --disable-pip-version-check --no-cache-dir uv==0.12.5
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-            uv python install 3.11.11
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-            $py = (uv python find --managed-python 3.11.11)
-            if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $py)) { throw 'Cannot resolve Windows CPython 3.11.11' }
-          }
-          $environment = Join-Path $env:RUNNER_TEMP 'u182-source-venv'
-          & $py -m venv $environment
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $py = Join-Path $environment 'Scripts/python.exe'
-          & $py -m pip install --disable-pip-version-check --no-cache-dir pytest==9.1.1
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          & $py -B $script --profile $env:SOURCE_PROFILE --source $source --out $receipts --fixture $fixture
-          $outer = $LASTEXITCODE
-          if (Test-Path -LiteralPath $receipts) {
-            $outer | Set-Content -Encoding ascii (Join-Path $receipts 'pytest-process.exit')
-          }
-          exit $outer
+          set -euo pipefail
+          python -I -S -B - <<'PY'
+          import os, shutil, sys
+          assert sys.version_info[:3] == (3, 11, 17), sys.version
+          for label in ('GITHUB_WORKSPACE', 'RUNNER_TEMP'):
+              actual = shutil.disk_usage(os.environ[label]).free
+              assert actual >= 32 * 2**30, (label, actual)
+              print(label, actual)
+          PY
+          scratch=$(mktemp -d "$RUNNER_TEMP/pyramid-minimum-causal-v1.XXXXXXXX")
+          echo "PYRAMID_CAUSAL_SCRATCH=$scratch" >> "$GITHUB_ENV"
+          mkdir -p "$scratch/pip" receipts
+          companion="$GITHUB_WORKSPACE/carrier/.github/pyramid-hosted-minimum-causal-v1"
+          echo "PYRAMID_CAUSAL_COMPANION=$companion" >> "$GITHUB_ENV"
+          echo "ad18bd86522b3ee91723952d696fa71285caf236f6c514b12cee45362e2198b5  $companion/requirements-runtime.txt" | sha256sum -c
+          python -I -S -B "$companion/extract_candidate.py" --entry-only
+          python -I -S -B "$companion/diagnose.py" --entry-only
+      - name: Install the exact failed minimum stock runtime wheels
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMPDIR="$PYRAMID_CAUSAL_SCRATCH/pip" python -I -B -m pip --disable-pip-version-check install \
+            --only-binary=:all: --no-deps --require-hashes --no-cache-dir \
+            --target "$PYRAMID_CAUSAL_SCRATCH/stock" \
+            -r "$PYRAMID_CAUSAL_COMPANION/requirements-runtime.txt"
+      - name: Authenticate the previously built candidate wheel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python -I -S -B "$PYRAMID_CAUSAL_COMPANION/extract_candidate.py" \
+            --destination "$PYRAMID_CAUSAL_SCRATCH/candidate" --proof "$GITHUB_WORKSPACE/receipts/extraction.json"
+      - name: Compare the single affected public case
+        shell: bash
+        run: |
+          set -euo pipefail
+          cpu=$(python -I -S -B -c 'import os; print(min(os.sched_getaffinity(0)))')
+          set +e
+          env -u GH_TOKEN -u PYTHONPATH -u PYTHONHOME -u NPY_DISABLE_CPU_FEATURES -u SKIMAGEXX_DISABLE_SIMD \
+            taskset -c "$cpu" python -I -S -B "$PYRAMID_CAUSAL_COMPANION/diagnose.py" \
+            --source "$GITHUB_WORKSPACE/tested" --stock "$PYRAMID_CAUSAL_SCRATCH/stock" \
+            --candidate "$PYRAMID_CAUSAL_SCRATCH/candidate" --out "$GITHUB_WORKSPACE/receipts" \
+            --extraction "$GITHUB_WORKSPACE/receipts/extraction.json" >receipts/diagnostic.stdout 2>receipts/diagnostic.stderr
+          result=$?
+          set -e
+          printf '%s\n' "$result" >receipts/diagnostic.exit
+          exit "$result"
+      - name: Release temporary installed products
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -v PYRAMID_CAUSAL_SCRATCH && -d "$PYRAMID_CAUSAL_SCRATCH" ]]; then
+            target=$(realpath "$PYRAMID_CAUSAL_SCRATCH")
+            parent=$(realpath "$RUNNER_TEMP")
+            [[ $(dirname "$target") == "$parent" && $(basename "$target") == pyramid-minimum-causal-v1.* ]]
+            rm -r -- "$target"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current301-exact-source-v1-${{ matrix.profile }}
-          path: |
-            receipts/*.json
-            receipts/*.xml
-            receipts/*.bin
-            receipts/*.exit
+          name: pyramid-minimum-causal-v1
+          path: receipts/
           if-no-files-found: warn

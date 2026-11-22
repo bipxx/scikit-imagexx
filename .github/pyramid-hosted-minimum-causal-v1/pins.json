@@ -1,0 +1,117 @@
+{
+  "source": "136b0d16f85f56f3c479e918ac16bdab486c36b1",
+  "tree": "5cd4fda8894f946516526f943313a558c5b7abb0",
+  "run": 45058138452,
+  "job": 137317876055,
+  "artifact": 14769734037,
+  "outer_digest": "sha256:641fba25cf3148c8d5aa86aab8e0a3712646755cb527cb93f6c683d04a77b747",
+  "namespace": "public-qualification/minimum/",
+  "branch": "integrate/upstream-only-post-haar-draft",
+  "pinned_outer": {
+    "manifest.json": {
+      "bytes": 10618733,
+      "sha256": "6db00cd0050929c7cd23200c25c7bd80503dcfe25e66c33ec94b63e618a7330a"
+    },
+    "package.json": {
+      "bytes": 42404,
+      "sha256": "2c3a1cea624cd99f88598ae890d26aab20422f19bf212df02dbbe7f5f2306c57"
+    }
+  },
+  "candidate_wheel_member": "product-wheels/scikit_imagexx-0.1.0-cp311-cp311-linux_x86_64.whl",
+  "candidate_wheel": {
+    "bytes": 8700477,
+    "sha256": "57e58b61179ebb138e59fed556018e10d3538d012cd1cd3e65062c2b2e50b404"
+  },
+  "candidate_core_member": "skimagexx/_core.cpython-311-x86_64-linux-gnu.so",
+  "candidate_core_sha256": "c319aefa476c518e221928de7d730c7f946692ee075ee943af315c1cf7c40a29",
+  "stock_members": {
+    "numpy/core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so": {
+      "bytes": 6311456,
+      "sha256": "db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86"
+    },
+    "scipy/ndimage/_nd_image.cpython-311-x86_64-linux-gnu.so": {
+      "bytes": 147184,
+      "sha256": "56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe"
+    },
+    "scipy/ndimage/_filters.py": {
+      "bytes": 70982,
+      "sha256": "e821fbd5ae150dc9fdb616ae5a213504904e5416febcde421739f3fe52769c0c"
+    },
+    "scipy/ndimage/_interpolation.py": {
+      "bytes": 36670,
+      "sha256": "6656f865125b4ceadfdb575e74edbc1874d70342a1f613020d605d1af45b728e"
+    },
+    "scipy/ndimage/_ni_support.py": {
+      "bytes": 5308,
+      "sha256": "c1e60b92002969fd161b9e1d92cc499c5118d93a024fd3b75cd3f8778a69a453"
+    },
+    "skimage/transform/pyramids.py": {
+      "bytes": 13357,
+      "sha256": "b3a784bae6957d3ee09b653ba0f63e21f2ab69d7aca15c1329c8c5a039047a65"
+    },
+    "skimage/transform/_warps.py": {
+      "bytes": 49125,
+      "sha256": "3749a6db262c7091285daea455c655cfc228478de3eb7bd78c4d0e4564e2e09e"
+    },
+    "skimage/_shared/filters.py": {
+      "bytes": 4877,
+      "sha256": "c906451edf7b3fc5f242e679a84915c414f5291497a1605b0507f63629924f42"
+    },
+    "skimage/util/dtype.py": {
+      "bytes": 17701,
+      "sha256": "d4f99f88966e4d0dbbe80a3c0b8acb3890644cc5fbfb707ba9b5a90e9119e627"
+    }
+  },
+  "stock_versions": {
+    "imageio": "2.38.1",
+    "iniconfig": "2.3.1",
+    "lazy-loader": "0.6",
+    "packaging": "26.3",
+    "pillow": "13.0.0",
+    "pluggy": "1.7.0",
+    "pygments": "2.21.0",
+    "pytest": "9.1.1",
+    "scikit-image": "0.26.0",
+    "numpy": "1.24.4",
+    "scipy": "1.15.3",
+    "networkx": "3.6.1",
+    "tifffile": "2026.3.3"
+  },
+  "source_paths": {
+    "tests/pyramid_spatial_cases.py": {
+      "git_raw_sha256": "e3bc21539683f56b0ec431db58b270156f84ff5d30fe0296445f6be87f01bf09",
+      "normalized_lf_sha256": "e3bc21539683f56b0ec431db58b270156f84ff5d30fe0296445f6be87f01bf09"
+    },
+    "tests/fixtures/pyramid_spatial_originals_v1.json": {
+      "git_raw_sha256": "26863806d71754887ed9536a1f909fad75eee2144fe2278159475c2ee268e665",
+      "normalized_lf_sha256": "26863806d71754887ed9536a1f909fad75eee2144fe2278159475c2ee268e665"
+    },
+    "python/skimagexx/_pyramid_spatial.py": {
+      "git_raw_sha256": "97417954672196ccbb9ee4c0e34a3256e5e81989cde0496dc152ec2d2aa9bc31",
+      "normalized_lf_sha256": "97417954672196ccbb9ee4c0e34a3256e5e81989cde0496dc152ec2d2aa9bc31"
+    },
+    "python/skimagexx/filters.py": {
+      "git_raw_sha256": "d2bc6e76d40de29868e886290c1e0dea305c3cbdb3920fd658c2396fdd22bee4",
+      "normalized_lf_sha256": "015f31a4988ca1e085bb986e6361985aa91a6a51cc3e27f90db76bfa7626565b"
+    },
+    "src/gaussian_nd.cpp": {
+      "git_raw_sha256": "e066a1ec28e05ea6091e4b6bc5a4044c3374a87e156f42d634ee6d91524396a7",
+      "normalized_lf_sha256": "e066a1ec28e05ea6091e4b6bc5a4044c3374a87e156f42d634ee6d91524396a7"
+    },
+    "src/simd_gaussian_nd_avx2.cpp": {
+      "git_raw_sha256": "e57b0770e3d3d1d8facba62f0a5d98697b7d0bd2e7a7a43db8853a75b6bc9c3d",
+      "normalized_lf_sha256": "e57b0770e3d3d1d8facba62f0a5d98697b7d0bd2e7a7a43db8853a75b6bc9c3d"
+    }
+  },
+  "case": "expand-rgb-u8-reflect",
+  "frozen_input_sha256": "7d82a12197943a0f6f4e3809af58174aa44290d171a184ad772336df47fafcaa",
+  "frozen_stages_sha256": {
+    "convert": "253c3ec7c364789886ff6760e1b9900c9711195feeaf7e9a7a1f4c529e315158",
+    "resize": "1695f0976962c64c35d7d8f402af6fbeadbdb5f73a6972fb66a39073118241f7",
+    "scipy-zoom": "1695f0976962c64c35d7d8f402af6fbeadbdb5f73a6972fb66a39073118241f7",
+    "gaussian": "0991cfe532f80a3a3cc892714ebb6577203edbe601e3cdc38cf70286db573146",
+    "scipy-gaussian": "0991cfe532f80a3a3cc892714ebb6577203edbe601e3cdc38cf70286db573146"
+  },
+  "frozen_output_sha256": "0991cfe532f80a3a3cc892714ebb6577203edbe601e3cdc38cf70286db573146",
+  "hosted_observed_candidate_sha256": "96e753e43849136331c5f9adf8f961a17dc102c68d89d9bc7c5fff7878605c14"
+}
