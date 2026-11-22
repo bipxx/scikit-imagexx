@@ -13,7 +13,7 @@ NATIVE_FUNCTIONS = {
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff'),
-    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity'),
+    'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp'),
     'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
@@ -358,6 +358,8 @@ def native_dtypes(api):
     if api=='transform.ifrt2':return ('bool','uint8','uint16','uint32','uint64')
     if api in ('morphology.flood','morphology.flood_fill','segmentation.flood','segmentation.flood_fill'):return ('bool','int8','uint8','int16','uint16','int32','uint32','int64','uint64','float32','float64')
     if api=='metrics.variation_of_information':return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
+    if api in ('metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
+        return ('bool', 'uint8')
     if api == 'metrics.structural_similarity':
         return ('float32', 'float64')
     if api in ('metrics.adapted_rand_error','metrics.contingency_table'):return ('int8','uint8','int16','uint16','int32','uint32','int64','uint64')
@@ -648,6 +650,11 @@ def default_call(api, image):
     if api == 'metrics.structural_similarity':
         window = 3 if min(image.shape) < 7 else 7
         return (image, image[::-1].copy()), {'win_size': window, 'data_range': 1.0}
+    if api in ('metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
+        import numpy as np
+        left = np.array([1, 0, 1, 0], dtype=image.dtype)
+        right = np.array([0, 1, 0, 1], dtype=image.dtype)
+        return (left, right), {}
     if api.startswith('metrics.'):
         return (image,image[::-1]),{}
     if api in ('measure.label','morphology.label'):
@@ -1242,6 +1249,19 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         return
     if api=='metrics.variation_of_information':
         variation_of_information_default_error(actual,expected);return
+    if api == 'metrics.hausdorff_distance':
+        import numpy as np
+        assert type(actual) is type(expected) is np.float64
+        assert actual == expected
+        return
+    if api == 'metrics.hausdorff_pair':
+        import numpy as np
+        assert type(actual) is type(expected) is tuple and len(actual) == len(expected) == 2
+        for point, reference in zip(actual, expected):
+            assert point.dtype == reference.dtype == np.dtype('intp')
+            assert point.shape == reference.shape and point.strides == reference.strides
+            np.testing.assert_array_equal(point, reference)
+        return
     if api == 'metrics.structural_similarity':
         import numpy as np
         actual, expected = np.asarray(actual), np.asarray(expected)

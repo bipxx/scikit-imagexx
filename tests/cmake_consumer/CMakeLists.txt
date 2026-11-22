@@ -276,3 +276,12 @@ add_test(NAME installed_order_angles_golden_ratio_consumer COMMAND order_angles_
     "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures/order_angles_golden_ratio_native_v1/modern.bin"
     "${golden_fenv}")
 add_test(NAME installed_pearson_consumer COMMAND pearson_consumer)
+
+add_executable(hausdorff_consumer hausdorff_consumer.cpp)
+target_link_libraries(hausdorff_consumer PRIVATE skimagexx::skimagexx)
+if(MSVC)
+    target_compile_options(hausdorff_consumer PRIVATE /fp:strict)
+else()
+    target_compile_options(hausdorff_consumer PRIVATE -ffp-contract=off -fno-fast-math -frounding-math)
+endif()
+add_test(NAME installed_hausdorff_consumer COMMAND hausdorff_consumer)

@@ -5953,21 +5953,29 @@
       "api": "metrics.hausdorff_distance",
       "kind": "callable",
       "signature": "(image0, image1, method='standard')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hausdorff_public.py",
+      "benchmark": "benchmarks/hausdorff.py",
+      "default_input_kind": "Bounded C-order sparse bool/u8 masks of matching rank 1–4. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility."
     },
     {
       "api": "metrics.hausdorff_pair",
       "kind": "callable",
       "signature": "(image0, image1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hausdorff_public.py",
+      "benchmark": "benchmarks/hausdorff.py",
+      "default_input_kind": "Bounded C-order sparse bool/u8 masks of matching rank 1–4. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility."
     },
     {
       "api": "metrics.mean_squared_error",

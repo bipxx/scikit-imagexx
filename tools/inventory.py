@@ -18,6 +18,7 @@ for _names, _test, _benchmark in (
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
     (('measure.pearson_corr_coeff',), 'tests/test_pearson_public.py', 'benchmarks/pearson.py'),
+    (('metrics.hausdorff_distance', 'metrics.hausdorff_pair'), 'tests/test_hausdorff_public.py', 'benchmarks/hausdorff.py'),
     (('morphology.local_maxima', 'morphology.local_minima'), 'tests/test_local_extrema_public.py', 'benchmarks/local_extrema.py'),
     (('restoration.rolling_ball',),'tests/test_rolling_ball_public.py::test_saved_original','benchmarks/rolling_ball_native.py'),
     (('util.slice_along_axes',),'tests/test_util_views_integration.py','benchmarks/slice_along_axes.py'),
@@ -206,6 +207,8 @@ def inventory():
                 entries[-1]['default_input_kind'] = 'Bounded finite angle order with lazy iteration and live supported ndarray storage. Larger and unsupported requests use compatibility on first resume.'
             elif path == 'measure.pearson_corr_coeff':
                 entries[-1]['default_input_kind'] = 'Bounded aligned C-order float64 pairs and optional Boolean mask. C++ correlation; one scalar SciPy beta-tail call for larger supported samples.'
+            elif path in ('metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
+                entries[-1]['default_input_kind'] = 'Bounded C-order sparse bool/u8 masks of matching rank 1–4. Native serial distance and pair computation; unsupported masks and ambiguous multi-leaf pair ties use compatibility.'
             elif path == 'metrics.structural_similarity':
                 entries[-1]['default_input_kind'] = 'Matching C-order 2D float32 or float64 images, uniform windows, explicit range and scalar score. NumPy provides array and scalar representation. Other layouts, ranges, channel handling, maps and gradients remain compatibility domains.'
             elif path in ('util.slice_along_axes','util.view_as_blocks','util.view_as_windows'):

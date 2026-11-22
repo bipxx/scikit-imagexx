@@ -52,6 +52,7 @@ VALUE_CASES = [
                   if 'morphology.' + name in LOCAL_EXTREMA_FUNCTIONS and native is xx.morphology
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes('transform.order_angles_golden_ratio'))
                   if native is xx.transform and name == 'order_angles_golden_ratio'
+                  else (np.bool_, np.uint8) if native is xx.metrics and name in ('hausdorff_distance', 'hausdorff_pair')
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((4, 5), (7, 19), (519, 521))
@@ -526,7 +527,8 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
             assert value.dtype==reference.dtype and value.shape==reference.shape
             np.testing.assert_array_equal(value,reference)
         return
-    if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff'):
+    if api in ('transform.order_angles_golden_ratio', 'measure.pearson_corr_coeff',
+               'metrics.hausdorff_distance', 'metrics.hausdorff_pair'):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
         return
     assert np.asarray(actual).dtype == np.asarray(expected).dtype
