@@ -26,6 +26,29 @@ NATIVE = {case['id'] for case in FIXED} | {
 }
 
 
+def _same_host_minimum_reference(case, stock, image, options, row):
+    if case != 'expand-rgb-u8-reflect' or sys.platform != 'linux' or np.__version__ != '1.24.4':
+        return None
+
+    import scipy
+    import skimage
+    from skimage.transform import pyramids
+
+    if (scipy.__version__, skimage.__version__) != ('1.15.3', '0.26.0'):
+        return None
+
+    # The stock Gaussian output words vary across hosts on this pinned profile.
+    assert stock is pyramids.pyramid_expand
+    assert array_state(image) == row['input']
+    with warnings.catch_warnings(record=True) as notices:
+        warnings.simplefilter('always')
+        reference = stock(image, **options)
+    assert [[notice.category.__name__, str(notice.message)] for notice in notices] == row['warnings']
+    assert bool(np.shares_memory(image, reference)) == row['shares_input']
+    assert array_state(image) == row['input']
+    return reference
+
+
 @pytest.mark.parametrize('case,api,image,options', list(cases({'fixed': FIXED}, np)), ids=list(ROWS))
 def test_frozen_pyramid_stages(case, api, image, options, monkeypatch):
     from skimage import transform as skimage_transform
@@ -72,14 +95,28 @@ def test_frozen_pyramid_stages(case, api, image, options, monkeypatch):
         if case in NATIVE:
             expected_stages = [(stage['stage'], stage['output']) for stage in row['stages']
                                if not stage['stage'].startswith('scipy-')]
-            assert stage_results == expected_stages
             assert [type(notice.message).__name__ for notice in notices] == [x[0] for x in row['warnings']]
             expected_calls = ['gaussian_nd', 'resize_zoom_typed'] if api == 'pyramid_reduce' else [
                 'resize_zoom_typed', 'gaussian_nd']
             if image.dtype.type is np.uint8:
                 expected_calls.insert(0, 'gaussian_nd')
             assert visited == expected_calls
-            assert array_state(result) == row['output'] and not np.shares_memory(image, result)
+
+            expected_output = row['output']
+            reference = _same_host_minimum_reference(case, stock, image, options, row)
+            if reference is not None:
+                reference_state = array_state(reference)
+                assert {key: value for key, value in reference_state.items() if key != 'sha256'} == {
+                    key: value for key, value in expected_output.items() if key != 'sha256'}
+                assert result.tobytes() == reference.tobytes()
+
+                stage, frozen_gaussian = expected_stages[-1]
+                assert stage == 'gaussian'
+                expected_stages[-1] = (stage, dict(frozen_gaussian, sha256=reference_state['sha256']))
+                expected_output = dict(expected_output, sha256=reference_state['sha256'])
+
+            assert stage_results == expected_stages
+            assert array_state(result) == expected_output and not np.shares_memory(image, result)
         else:
             assert not stage_results and not visited and not notices
             received = []
