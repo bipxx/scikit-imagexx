@@ -1,16 +1,22 @@
-name: Pyramid minimum causal comparison
+name: Pyramid minimum four-node cache prefix
 on:
   workflow_dispatch:
+    inputs:
+      root_authorization:
+        description: Exact four-node source and carrier authority with UTC deadline
+        required: true
+        type: string
 
 permissions:
   actions: read
   contents: read
 
 jobs:
-  minimum-causal:
+  minimum-prefix:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     env:
+      ROOT_AUTHORIZATION_JSON: ${{ inputs.root_authorization }}
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
       OMP_NUM_THREADS: '1'
@@ -21,17 +27,26 @@ jobs:
       NUMEXPR_NUM_THREADS: '1'
       OMP_THREAD_LIMIT: '1'
     steps:
+      - name: Require explicit root authority
+        shell: bash
+        run: |
+          set -eu
+          [[ -n "$ROOT_AUTHORIZATION_JSON" && "$ROOT_AUTHORIZATION_JSON" != UNBOUND ]]
       - uses: actions/checkout@v4
         with:
           path: carrier
           persist-credentials: false
-          sparse-checkout: .github/pyramid-hosted-minimum-causal-v1
+          sparse-checkout: .github/pyramid-hosted-minimum-prefix-v1
       - uses: actions/checkout@v4
         with:
           ref: 136b0d16f85f56f3c479e918ac16bdab486c36b1
           path: tested
           persist-credentials: false
           sparse-checkout: |
+            pyproject.toml
+            tests/conftest.py
+            tests/util_views_fenv.py
+            tests/test_pyramid_spatial_public.py
             tests/pyramid_spatial_cases.py
             tests/fixtures/pyramid_spatial_originals_v1.json
             python/skimagexx/_pyramid_spatial.py
@@ -54,14 +69,15 @@ jobs:
               assert actual >= 32 * 2**30, (label, actual)
               print(label, actual)
           PY
-          scratch=$(mktemp -d "$RUNNER_TEMP/pyramid-minimum-causal-v1.XXXXXXXX")
+          scratch=$(mktemp -d "$RUNNER_TEMP/pyramid-minimum-prefix-v1.XXXXXXXX")
           echo "PYRAMID_CAUSAL_SCRATCH=$scratch" >> "$GITHUB_ENV"
           mkdir -p "$scratch/pip" receipts
-          companion="$GITHUB_WORKSPACE/carrier/.github/pyramid-hosted-minimum-causal-v1"
+          companion="$GITHUB_WORKSPACE/carrier/.github/pyramid-hosted-minimum-prefix-v1"
           echo "PYRAMID_CAUSAL_COMPANION=$companion" >> "$GITHUB_ENV"
           echo "ad18bd86522b3ee91723952d696fa71285caf236f6c514b12cee45362e2198b5  $companion/requirements-runtime.txt" | sha256sum -c
+          cpu=$(python -I -S -B -c 'import os; print(min(os.sched_getaffinity(0)))')
+          taskset -c "$cpu" python -I -S -B "$companion/observe_prefix.py" --entry-only --source "$GITHUB_WORKSPACE/tested"
           python -I -S -B "$companion/extract_candidate.py" --entry-only
-          python -I -S -B "$companion/diagnose.py" --entry-only
       - name: Install the exact failed minimum stock runtime wheels
         shell: bash
         run: |
@@ -78,20 +94,20 @@ jobs:
           set -euo pipefail
           python -I -S -B "$PYRAMID_CAUSAL_COMPANION/extract_candidate.py" \
             --destination "$PYRAMID_CAUSAL_SCRATCH/candidate" --proof "$GITHUB_WORKSPACE/receipts/extraction.json"
-      - name: Compare the single affected public case
+      - name: Run the four-node exact qualification prefix
         shell: bash
         run: |
           set -euo pipefail
           cpu=$(python -I -S -B -c 'import os; print(min(os.sched_getaffinity(0)))')
           set +e
           env -u GH_TOKEN -u PYTHONPATH -u PYTHONHOME -u NPY_DISABLE_CPU_FEATURES -u SKIMAGEXX_DISABLE_SIMD \
-            taskset -c "$cpu" python -I -S -B "$PYRAMID_CAUSAL_COMPANION/diagnose.py" \
+            taskset -c "$cpu" python -I -S -B "$PYRAMID_CAUSAL_COMPANION/observe_prefix.py" \
             --source "$GITHUB_WORKSPACE/tested" --stock "$PYRAMID_CAUSAL_SCRATCH/stock" \
-            --candidate "$PYRAMID_CAUSAL_SCRATCH/candidate" --out "$GITHUB_WORKSPACE/receipts" \
-            --extraction "$GITHUB_WORKSPACE/receipts/extraction.json" >receipts/diagnostic.stdout 2>receipts/diagnostic.stderr
+            --candidate "$PYRAMID_CAUSAL_SCRATCH/candidate" --output "$GITHUB_WORKSPACE/receipts" --temporary "$PYRAMID_CAUSAL_SCRATCH" \
+            --extraction "$GITHUB_WORKSPACE/receipts/extraction.json" >receipts/prefix.stdout 2>receipts/prefix.stderr
           result=$?
           set -e
-          printf '%s\n' "$result" >receipts/diagnostic.exit
+          printf '%s\n' "$result" >receipts/prefix.exit
           exit "$result"
       - name: Release temporary installed products
         if: always()
@@ -101,12 +117,12 @@ jobs:
           if [[ -v PYRAMID_CAUSAL_SCRATCH && -d "$PYRAMID_CAUSAL_SCRATCH" ]]; then
             target=$(realpath "$PYRAMID_CAUSAL_SCRATCH")
             parent=$(realpath "$RUNNER_TEMP")
-            [[ $(dirname "$target") == "$parent" && $(basename "$target") == pyramid-minimum-causal-v1.* ]]
+            [[ $(dirname "$target") == "$parent" && $(basename "$target") == pyramid-minimum-prefix-v1.* ]]
             rm -r -- "$target"
           fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pyramid-minimum-causal-v1
+          name: pyramid-minimum-prefix-v1
           path: receipts/
           if-no-files-found: warn
