@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current290'
+CURRENT_PRODUCT_SCOPE = 'current291'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels')
 CURRENT_SDK_CLIENT_SCOPE = 'current45 required installed clients; current286 clients plus bounded Hausdorff, ellipsoid statistics and label expansion; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v14.json'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v15.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -672,6 +672,8 @@ POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_executio
 POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py','test_structural_similarity.py','test_local_extrema_public.py')
 POST203_TESTS += ('test_order_angles_golden_ratio_integration.py', 'test_pearson_public.py')
 POST203_TESTS += ('test_hausdorff_public.py', 'test_ellipsoid_stats_public.py', 'test_expand_labels_public.py')
+POST203_TESTS += ('test_binary_blobs_public.py', 'test_gaussian_nd.py',
+                  'test_gaussian_family.py', 'test_resize_gaussian_raw.py')
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -804,8 +806,23 @@ DRAW_SOURCE_PATHS += (
     'tests/test_ellipsoid_stats_public.py',
     'tests/test_ellipsoid_stats_source.py',
     'tests/test_expand_labels_public.py',
+    'coverage/contracts/current-public-qualification-v14.json',
+    'coverage/contracts/current-public-qualification-v15.json',
+    'coverage/contracts/binary-blobs-reference-v1.json',
+    'tests/binary_blobs_reference.py',
+    'tests/test_binary_blobs_public.py',
+    'tests/test_gaussian_nd.py',
+    'tests/test_gaussian_family.py',
+    'tests/test_resize_gaussian_raw.py',
     'tests/test_hausdorff_public.py',
 )
+
+
+PACKAGED_ASSET_TESTS = ('test_chelsea_public.py', 'test_data_textures_public.py',
+                        'test_data_clock_horse_public.py', 'test_data_resource_exports.py')
+PACKAGED_ASSET_FILES = ('brick.gray', 'chelsea.CC0.txt', 'chelsea.rgb', 'clock-horse.RIGHTS.txt',
+                        'clock.gray', 'grass.gray', 'gravel.gray', 'horse.bool', 'text.gray',
+                        'textures.RIGHTS.txt')
 
 
 def groups_for_source(root):
@@ -818,6 +835,8 @@ def groups_for_source(root):
     if (Path(root) / CURRENT_SCOPE_CONTRACT).is_file():
         groups['public-post203'] = POST203_TESTS
         groups['public-polygon-intake'] = ('test_draw_polygon_benchmark_intake.py',)
+    if (Path(root) / 'tests/test_data_resource_exports.py').is_file():
+        groups['public-packaged-assets'] = PACKAGED_ASSET_TESTS
     return groups
 
 
@@ -1035,6 +1054,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v36.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v16.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v16.json', 'coverage/contracts/speed-parity-current-source-v37.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v46.json', 'coverage/contracts/vi4-public-matmul-capture-u182-integration-v1.json')
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v38.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-u182-integration-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v47.json', 'coverage/contracts/vi4-public-matmul-capture-u182-integration-v2.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):
@@ -1066,12 +1088,19 @@ def registry_expectation(root):
     declared = tuple(namespace['native_functions']())
     require(len(declared) == len(set(declared)), 'duplicate source registry paths')
     names = set(declared)
-    validate_declared_inventory(root, namespace, names)
+    asset_functions = tuple(namespace.get('PACKAGED_ASSET_FUNCTIONS', ()))
+    assets = set(asset_functions)
+    require(len(assets) == len(asset_functions) and not assets.intersection(names),
+            'duplicate or overlapping source asset paths')
+    validate_declared_inventory(root, namespace, names, assets)
     image_count = sum(namespace['execution_kind'](n) == 'native' for n in names)
-    return dict(functions=sorted(names), image_count=image_count, registered_count=len(names), metadata_count=len(names)-image_count)
+    result = dict(functions=sorted(names), image_count=image_count, registered_count=len(names), metadata_count=len(names)-image_count)
+    if assets:
+        result['packaged_assets'] = sorted(assets)
+    return result
 
 
-def validate_declared_inventory(root, namespace, registered):
+def validate_declared_inventory(root, namespace, registered, assets=()):
     """Cheap source-only consistency gate, before any environment or product build.
 
     The existing coverage metadata loader has no top-level package imports.
@@ -1095,15 +1124,19 @@ def validate_declared_inventory(root, namespace, registered):
     require(declared == registered,
             'source inventory/registry mismatch: missing native declarations ' + repr(sorted(registered - declared))
             + '; extra native declarations ' + repr(sorted(declared - registered)))
-    for name in sorted(registered):
+    declared_assets = {name for name, row in rows.items() if row.get('implementation') == 'packaged-asset-partial'}
+    require(declared_assets == set(assets), 'source inventory/packaged asset registry mismatch')
+    for name in sorted(registered | set(assets)):
         row = rows[name]
-        kind = namespace['execution_kind'](name)
-        require(kind in ('native', 'metadata'), 'unknown source execution kind: ' + name)
-        expected = 'metadata' if kind == 'metadata' else 'native-partial'
+        kind = 'packaged-asset' if name in assets else namespace['execution_kind'](name)
+        require(kind in ('native', 'metadata', 'packaged-asset'), 'unknown source execution kind: ' + name)
+        expected = {'metadata': 'metadata', 'native': 'native-partial',
+                    'packaged-asset': 'packaged-asset-partial'}[kind]
         require(row.get('kind') == 'callable' and row.get('implementation') == expected
                 and row.get('execution_kind') == kind,
                 'source inventory classification differs: ' + name)
-        require(row.get('native_default_case_dtypes') == list(namespace['native_dtypes'](name)),
+        dtypes = [] if name in assets else list(namespace['native_dtypes'](name))
+        require(row.get('native_default_case_dtypes') == dtypes,
                 'source inventory default dtypes differ: ' + name)
         for field in ('parity_test', 'benchmark'):
             reference = row.get(field)
@@ -1246,6 +1279,13 @@ def plan(root, profile, expected=None):
                     and registry['image_count'] == len(contract['image_paths']), 'current registry has unmapped or stale image API scope')
             require(set(groups.get('public-post203', ())) == set(POST203_TESTS), 'current dedicated qualification group missing/stale')
             require(groups.get('public-polygon-intake') == ('test_draw_polygon_benchmark_intake.py',), 'current cold polygon intake group missing/stale')
+            if registry.get('packaged_assets'):
+                require(groups.get('public-packaged-assets') == PACKAGED_ASSET_TESTS and
+                        all((root / 'tests' / name).is_file() for name in PACKAGED_ASSET_TESTS),
+                        'packaged asset test group missing/stale')
+                for name in PACKAGED_ASSET_FILES:
+                    require((root / 'python/skimagexx/_data_assets' / name).is_file(),
+                            'missing packaged data asset: ' + name)
             require((groups.get('public-regular-grid-saved-linux')==('test_regular_grid_public.py',)) if profile!='windows' else ('public-regular-grid-saved-linux'not in groups),'Linux saved-grid selector/profile differs')
             require((groups.get('public-util-views-saved-linux')==('test_util_views_public.py',)) if profile!='windows' else ('public-util-views-saved-linux'not in groups),'Linux saved util views selector/profile differs')
             names = [p.relative_to(root).as_posix() for prefix in ('python/skimagexx', 'include')
@@ -1267,29 +1307,22 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v13.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v14.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == 'c9cd1fb3c373da9cc9a342eddfb06a68c8c558c6238678564ee99eabcf71dd2d',
-            'current286 qualification predecessor differs')
+    require(previous_digest == 'edcc4bcd94e14bdd7516190f463429b841c9e63de2e3707dc9524ae6ee8b6986',
+            'current290 qualification predecessor differs')
     previous = json.loads(previous_raw)
-    selectors = {
-        'metrics.hausdorff_distance': 'tests/test_hausdorff_public.py',
-        'metrics.hausdorff_pair': 'tests/test_hausdorff_public.py',
-        'draw.ellipsoid_stats': 'tests/test_ellipsoid_stats_public.py',
-        'segmentation.expand_labels': 'tests/test_expand_labels_public.py',
-    }
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
-        SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
-        image_paths=sorted(previous['image_paths'] + list(selectors)),
-        post203_contracts={**previous['post203_contracts'], **selectors},
-        required_selectors=previous['required_selectors'] + list(dict.fromkeys(selectors.values())),
-        required_client_families=previous['required_client_families'] + ['hausdorff', 'ellipsoid_stats', 'expand_labels'],
-        required_client_headers=previous['required_client_headers'] + [
-            'include/skimagexx/hausdorff.hpp', 'include/skimagexx/ellipsoid_stats.hpp', 'include/skimagexx/expand_labels.hpp'],
+        image_paths=sorted(previous['image_paths'] + ['data.binary_blobs']),
+        post203_contracts={**previous['post203_contracts'],
+                           'data.binary_blobs': 'tests/test_binary_blobs_public.py'},
+        required_selectors=previous['required_selectors'] + [
+            'tests/test_binary_blobs_public.py', 'tests/test_gaussian_nd.py',
+            'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py'],
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
@@ -1472,7 +1505,12 @@ def inspect_wheel(wheel, source_archive, revision, *, scope=PRODUCT_SCOPE, profi
         require(source.comment.decode() == revision, 'source archive revision differs')
         if layout is not None:
             for destination, name in layout['source_members'].items():
-                require(source.read(name).replace(b'\r\n', b'\n') == product.read(destination).replace(b'\r\n', b'\n'), 'current installed source bytes differ: ' + name)
+                archived = source.read(name)
+                installed = product.read(destination)
+                if not name.startswith('python/skimagexx/_data_assets/') or name.endswith('.txt'):
+                    archived = archived.replace(b'\r\n', b'\n')
+                    installed = installed.replace(b'\r\n', b'\n')
+                require(archived == installed, 'current installed source bytes differ: ' + name)
         tv = set(TV_SOURCE_PATHS[:3]) | {'python/skimagexx/_tv_chambolle.py'}
         require((tv <= set(source.namelist())) if scope in ('tv17', 'bregman18', 'max_tree19', 'matrix20', 'reconstruction21', 'nmi22', 'h_extrema22', 'h_extrema23') else not (tv & set(source.namelist())),
                 'TV product scope/source headers or helper differ')
@@ -2355,7 +2393,9 @@ def inventory(out, state):
     diffs = [dict(api=n, field=k, actual=a[n].get(k), target=b[n].get(k)) for n in a for k in fields if a[n].get(k) != b[n].get(k)]
     counts = dict(collections.Counter(r['implementation'] for r in a.values()))
     dump(out / 'inventory-comparison.json', dict(differences=diffs, counts=counts, target_sha256=sha(ROOT / 'coverage/api.json')))
-    require(not diffs and counts.get('native-partial') == state['expected']['image_count'], 'actual inventory differs from target')
+    require(not diffs and counts.get('native-partial') == state['expected']['image_count'] and
+            counts.get('packaged-asset-partial', 0) == len(state['expected'].get('packaged_assets', ())),
+            'actual inventory differs from target')
 
 
 def child(out, group):

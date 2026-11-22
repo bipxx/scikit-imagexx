@@ -1,0 +1,1159 @@
+{
+  "version": {
+    "python": "3.13.14",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "original": "0.26.0"
+  },
+  "sources": {
+    "original": "c8f82559d5b6972670b0f566b1ef356909f453cc58dd76b42da3a4938d3a9416",
+    "scipy_filters": "b83ba559da8ab41d1aa0b4beecf93b01ccb0064ed5bc56a45798ecf6c7041f35",
+    "scipy_binary": "6e08479ba26603611b7033e561a4569dd3a072b86c6bb6a8c802b9f2098c293e",
+    "skimage_gaussian": "0e1ef6097a65b07575c6088b12b89011e3509fcd9711f890b5a9d86dc4b31b53",
+    "observer": "19d9a5443f4ff4b611c105cb629aa194510a386ebd81bb4d68cf99caf8580712",
+    "benchmark": "261c7e315fb3333dd8bec00749894f9553ecabff34d8eb9a66894d85c02bb30c"
+  },
+  "rows": [
+    {
+      "id": "default",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            512,
+            512
+          ],
+          "strides": [
+            512,
+            1
+          ],
+          "count": 131072,
+          "data_sha256": "2053865bed2c0d6c36eda52a0e4b615a302d2eb8b16527c8f8d0fd750e5d884a",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "b7dbfac6dff539e02b6fa51776eb4c2fedccdb500a8897eb6add9ffa7107b0fa",
+          "output": "162ab7fb32ade6316a9144b90b60df15473f85d9aa582cada3344cecb9df845f"
+        }
+      ]
+    },
+    {
+      "id": "line",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            17
+          ],
+          "strides": [
+            1
+          ],
+          "count": 4,
+          "data_sha256": "c1e1361d277408c4df686e41bfca73abc98ee598bd0f46c1743d12c0f2699ad4",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "3d5600748bc76e43ec1f1ca41a3d8fd2a369beb4e4b1bd8e1b15ab3b4ad746bd",
+          "output": "d1c11857f3e29f73fc9b6e361fac3c95a5a1e5068adc6a9ba83bf83571c206ec"
+        }
+      ]
+    },
+    {
+      "id": "line-wrap",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            25
+          ],
+          "strides": [
+            1
+          ],
+          "count": 11,
+          "data_sha256": "18bcc70f78a28fd80f417b02579ad6e398ef2e25c5d8756b291bbe67d9ddac55",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "577263b97e26d2a40fde1ae736fc4203baacf7cbbf5ac85f352c090c4f3f6ba6",
+          "output": "3fe97e789378d0171b0285432fc24dd2dabf26b40b4cb93dfa372f8efb94e4d7"
+        }
+      ]
+    },
+    {
+      "id": "plane-endpoint-zero",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            20,
+            20
+          ],
+          "strides": [
+            20,
+            1
+          ],
+          "count": 1,
+          "data_sha256": "5e89d42bc2042c64aa684e40971172e78411e7a9fc74fe67b263a6391e9585fa",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "1b5a213c8f9b3d90774dd4cff74bd00762b597be9ce261e5bac45cafbb1106fa",
+          "output": "1632f555880ee5f96d949ebe190ce3e27f569d3dc4f2320f36c8b4fbadda9026"
+        }
+      ]
+    },
+    {
+      "id": "plane-endpoint-full",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            20,
+            20
+          ],
+          "strides": [
+            20,
+            1
+          ],
+          "count": 400,
+          "data_sha256": "afb6cecb558a0858d1ae9afeff0650dbfe2c109a2e6ee8a4d71e94e88bc43015",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "1b5a213c8f9b3d90774dd4cff74bd00762b597be9ce261e5bac45cafbb1106fa",
+          "output": "1632f555880ee5f96d949ebe190ce3e27f569d3dc4f2320f36c8b4fbadda9026"
+        }
+      ]
+    },
+    {
+      "id": "volume-endpoint-zero",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            11,
+            11,
+            11
+          ],
+          "strides": [
+            121,
+            11,
+            1
+          ],
+          "count": 1,
+          "data_sha256": "b61d9abdee59c6010154761619601cba3cbf5af1ddbf089cf0f74972c5f5798d",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "801aa8c1950b2053d1346d206ee7f6521cb9e0aa48f2d9d26d23ddaedacd2017",
+          "output": "99f7428f71bd3d5f842167d936a3f751789c72c29aba9901f332c3d0ac467858"
+        }
+      ]
+    },
+    {
+      "id": "volume-endpoint-full",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            11,
+            11,
+            11
+          ],
+          "strides": [
+            121,
+            11,
+            1
+          ],
+          "count": 1331,
+          "data_sha256": "35045e7d7d82de7545387076836b644ea9b5f8166f556ef05d2efe38f7885fcc",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "801aa8c1950b2053d1346d206ee7f6521cb9e0aa48f2d9d26d23ddaedacd2017",
+          "output": "16c0a88d99d49e8309dd09f22032b9acb2bb5c76729de9dd15ff9b66f5141f9e"
+        }
+      ]
+    },
+    {
+      "id": "pcg-generator",
+      "native": true,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            12
+          ],
+          "strides": [
+            1
+          ],
+          "count": 6,
+          "data_sha256": "372a2ba00eb84b885477dc558805b9d4b4388f960be7cc50885c851d49fd828e",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": "a3989758f95ddc7bbab026e484757383713fffee16b63df3c8251508acecab3c"
+      },
+      "gaussian": [
+        {
+          "input": "4956a8b7073acbf62c0a4070884706323d52a74128344d39265a36640cb6958c",
+          "output": "6edcad70e006503f1a3366ddeb43a57b83d0bcf44e0eb3bd46cf956330ab1102"
+        }
+      ]
+    },
+    {
+      "id": "mt-generator",
+      "native": true,
+      "observed": {
+        "state_before": "fde55a584d52ae926a6cf9b90befa4837276ae63548b281cef828c65afad36a5",
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            10,
+            10,
+            10
+          ],
+          "strides": [
+            100,
+            10,
+            1
+          ],
+          "count": 500,
+          "data_sha256": "fad4b98d38f2b1b4f9437dde789095584e3e544324a0f26255434fcb12ed3ce8",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": "b09dcf74e7031934aa345e0a2d30fa50081416cbc952c941b3b5081df78d6b1e"
+      },
+      "gaussian": [
+        {
+          "input": "c81f93211e7781fe3b4cd1f2722402aac552112bcf702026b82f120133b846f0",
+          "output": "052f60292c46f23ba047d2b7173a75d5e88af899ca33bb597afb2e25cd69dacb"
+        }
+      ]
+    },
+    {
+      "id": "philox-generator",
+      "native": true,
+      "observed": {
+        "state_before": "776e50749fbc8e3ab32de5ff059ef8ce2434829f9bd7be9322a9241eb318b311",
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            13,
+            13,
+            13
+          ],
+          "strides": [
+            169,
+            13,
+            1
+          ],
+          "count": 2154,
+          "data_sha256": "4b059c4bee3f81e88526b8d7cd8671daa319e676f0dc0fe302d1934dc753ad58",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": "6f6c55fdd1f43162c163eccbd03095cffc1c501e0a04f7a85962538cd049fbda"
+      },
+      "gaussian": [
+        {
+          "input": "ee66c6f06080c8f045803a0b844a5c9475c178425f79b2ea5db16c91bfe386d1",
+          "output": "4dfca50e5adfbd339fa1d449159dc648c359eb4bf299990b23a89b26a0a0d87a"
+        }
+      ]
+    },
+    {
+      "id": "radius-zero-ties",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            4,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "count": 16,
+          "data_sha256": "cc8cd41cef907c4d216069122c4b89936211361f9050a717a1e37ad1862e952f",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "dbd8ebb4d364765882694170cedf5afc7702dd5338a7198705c45b613f6e1c9d",
+          "output": "dbd8ebb4d364765882694170cedf5afc7702dd5338a7198705c45b613f6e1c9d"
+        }
+      ]
+    },
+    {
+      "id": "many-tied-zeros",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            16,
+            16,
+            16
+          ],
+          "strides": [
+            256,
+            16,
+            1
+          ],
+          "count": 3891,
+          "data_sha256": "4271460363fee4e519966ada864cb6c9000053a4616ec1368e139e94b7454d3b",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "30331c1f9099ea2552d223cfe37c2da5dc74d2056c8b900058d432171af0811c",
+          "output": "be17d0ecb94ee0b82c75e8bd7a597f5b0984c914f9075e16004eea6a889ad114"
+        }
+      ]
+    },
+    {
+      "id": "one-point",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            13,
+            13
+          ],
+          "strides": [
+            13,
+            1
+          ],
+          "count": 85,
+          "data_sha256": "27ba18bd29b8a46abedcddd6492288395b7e9ee8b63d7d7eccf8eaeb56c0f555",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "210d24556b5d6df8ac0d56a0c70009a2e84157c64640679b781275b60b0122e0",
+          "output": "660062fc859e6fbe9d69d3b9171eca037e6b07bccc6c1f475ae4d1fd6a2c481f"
+        }
+      ]
+    },
+    {
+      "id": "singleton",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            1
+          ],
+          "strides": [
+            1
+          ],
+          "count": 1,
+          "data_sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712",
+          "output": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        }
+      ]
+    },
+    {
+      "id": "nearest-double-cutoff",
+      "native": true,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            21,
+            21
+          ],
+          "strides": [
+            21,
+            1
+          ],
+          "count": 221,
+          "data_sha256": "523c55eaa0ec59831264c7ec6192eb2ccbfd43f0f6b1f2b9c63243ba8ece68f3",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "a3d09f1595acc7b42bf8cef156ee63319b1ccdb3e2943ea72b7b54fe6f85d54c",
+          "output": "09c2f782aa11ac9576c90a0e4f7ed50cbbc7816a1545a3467fe222afbfabb847"
+        }
+      ]
+    },
+    {
+      "id": "seed-sequence-list",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            12,
+            12
+          ],
+          "strides": [
+            12,
+            1
+          ],
+          "count": 72,
+          "data_sha256": "942b0c1cdcc38a8a5bc0f15207b31b732588c8d5503d72f85e68cff745f8c250",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "e668936229f3e82fc29aad06035c25bad26e9a6e3a9a6ca7f4f76da1a34716ae",
+          "output": "ceac8032491b2e096dd47087a77ed732eb61b0ea48a979c06a5e840f1e8cce51"
+        }
+      ]
+    },
+    {
+      "id": "numpy-integer",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            12,
+            12
+          ],
+          "strides": [
+            12,
+            1
+          ],
+          "count": 73,
+          "data_sha256": "f3bde83bbbc6b6ef9e57e53ed6f717a3ea953137af62d76766259190fc42f261",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "3292466edb97f687c87eaed5a52db18988a5aaefe5fd60461c698a953651d9a5",
+          "output": "d469fd75116c1bdb94dbe491cd86a2eb2df65148ef46fb8147dcfc5dc23ffa73"
+        }
+      ]
+    },
+    {
+      "id": "invalid-boundary-before-draw",
+      "native": false,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "error": [
+          "builtins",
+          "ValueError",
+          "unsupported `boundary_mode`: 'reflect'"
+        ],
+        "warnings": [],
+        "state_after": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206"
+      },
+      "gaussian": []
+    },
+    {
+      "id": "unhashable-boundary",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "TypeError",
+          "unhashable type: 'list'"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "invalid-seed",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "TypeError",
+          "SeedSequence expects int or sequence of ints for entropy not seed"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "negative-seed",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "ValueError",
+          "expected non-negative integer"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "zero-volume-error",
+      "native": false,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "error": [
+          "builtins",
+          "ValueError",
+          "Percentiles must be in the range [0, 100]"
+        ],
+        "warnings": [],
+        "state_after": "507eb619c302b5f4eeccafd6c769a96d573ad49948dcfd87dfd755db39c5d9b5"
+      },
+      "gaussian": [
+        {
+          "input": "4da94e58738c21d216eb00db9071cdc190872b580889d23772cb239594f7b5b4",
+          "output": "10e873f42bd0a3c1a8a5307db1c40d99600f60c96f49af82dd5ca56dbcef4c34"
+        }
+      ]
+    },
+    {
+      "id": "full-volume-error",
+      "native": false,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "error": [
+          "builtins",
+          "ValueError",
+          "Percentiles must be in the range [0, 100]"
+        ],
+        "warnings": [],
+        "state_after": "507eb619c302b5f4eeccafd6c769a96d573ad49948dcfd87dfd755db39c5d9b5"
+      },
+      "gaussian": [
+        {
+          "input": "4da94e58738c21d216eb00db9071cdc190872b580889d23772cb239594f7b5b4",
+          "output": "10e873f42bd0a3c1a8a5307db1c40d99600f60c96f49af82dd5ca56dbcef4c34"
+        }
+      ]
+    },
+    {
+      "id": "nan-volume-error",
+      "native": false,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "error": [
+          "builtins",
+          "ValueError",
+          "Percentiles must be in the range [0, 100]"
+        ],
+        "warnings": [],
+        "state_after": "507eb619c302b5f4eeccafd6c769a96d573ad49948dcfd87dfd755db39c5d9b5"
+      },
+      "gaussian": [
+        {
+          "input": "4da94e58738c21d216eb00db9071cdc190872b580889d23772cb239594f7b5b4",
+          "output": "10e873f42bd0a3c1a8a5307db1c40d99600f60c96f49af82dd5ca56dbcef4c34"
+        }
+      ]
+    },
+    {
+      "id": "vector-volume",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            2,
+            2
+          ],
+          "strides": [
+            2,
+            1
+          ],
+          "count": 4,
+          "data_sha256": "27ecd0a598e76f8a2fd264d427df0a119903e8eae384e478902541756f089dd1",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "c914e8188e43fff1c96e25283e15b252af0d9f39b469f2d1518915802c756d18",
+          "output": "c914e8188e43fff1c96e25283e15b252af0d9f39b469f2d1518915802c756d18"
+        }
+      ]
+    },
+    {
+      "id": "clamped-fraction",
+      "native": false,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            4,
+            4,
+            4
+          ],
+          "strides": [
+            16,
+            4,
+            1
+          ],
+          "count": 64,
+          "data_sha256": "7c8975e1e60a5c8337f28edf8c33c3b180360b7279644a9bc1af3c51e6220bf5",
+          "owns": true
+        },
+        "warnings": [
+          [
+            "builtins",
+            "RuntimeWarning",
+            "`blob_size_fraction=0.01` together with `length=4` would result in a blob size of 0.04 pixels. Small blob sizes likely lead to unexpected results! Clamping to `blob_size_fraction=0.025` and a blob size of 0.1 pixels to avoid allocating excessive memory."
+          ]
+        ],
+        "state_after": "b37eb7fa24f21c00d58c0f305994f1214bd569a51291d01e0be3981c5b2535af"
+      },
+      "gaussian": [
+        {
+          "input": "e31bedb0d9a84d336f4601611ba5c1f0c14a22ede9bbb52afb09092dc79d6b67",
+          "output": "e31bedb0d9a84d336f4601611ba5c1f0c14a22ede9bbb52afb09092dc79d6b67"
+        }
+      ]
+    },
+    {
+      "id": "negative-fraction",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            4,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "count": 16,
+          "data_sha256": "cc8cd41cef907c4d216069122c4b89936211361f9050a717a1e37ad1862e952f",
+          "owns": true
+        },
+        "warnings": [
+          [
+            "builtins",
+            "RuntimeWarning",
+            "`blob_size_fraction=-0.03` together with `length=4` would result in a blob size of -0.12 pixels. Small blob sizes likely lead to unexpected results! Clamping to `blob_size_fraction=0.025` and a blob size of 0.1 pixels to avoid allocating excessive memory."
+          ]
+        ],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "dbd8ebb4d364765882694170cedf5afc7702dd5338a7198705c45b613f6e1c9d",
+          "output": "dbd8ebb4d364765882694170cedf5afc7702dd5338a7198705c45b613f6e1c9d"
+        }
+      ]
+    },
+    {
+      "id": "large-fraction",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            4,
+            4
+          ],
+          "strides": [
+            4,
+            1
+          ],
+          "count": 8,
+          "data_sha256": "25c9aef83e7b6c3fd2cb8918c725bac9c46f6ce469488731479d790b7fc2c372",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "b30d9900011a7a3e1dc597728c6b983cb1f0fb5d9e0140e4b3eaf79d88dbffdb",
+          "output": "e8ed7693804e9ae428cb7794560576f9d08ed1d78ea422d334722525f47ed235"
+        }
+      ]
+    },
+    {
+      "id": "nan-fraction",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "ValueError",
+          "cannot convert float NaN to integer"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "zero-length",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "ZeroDivisionError",
+          "float division by zero"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "negative-length",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "ValueError",
+          "negative dimensions are not allowed"
+        ],
+        "warnings": [
+          [
+            "builtins",
+            "RuntimeWarning",
+            "`blob_size_fraction=0.1` together with `length=-3` would result in a blob size of -0.30000000000000004 pixels. Small blob sizes likely lead to unexpected results! Clamping to `blob_size_fraction=-0.03333333333333333` and a blob size of 0.1 pixels to avoid allocating excessive memory."
+          ]
+        ],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "float-length",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "TypeError",
+          "'float' object cannot be interpreted as an integer"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "rank-zero",
+      "native": false,
+      "observed": {
+        "state_before": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206",
+        "output": {
+          "type": "bool",
+          "dtype": "|b1",
+          "shape": [],
+          "strides": [],
+          "count": 1,
+          "data_sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": "48d9c01e856e28a69e4ce80da714a91bf31bfbea7063f4cf8b8435b61f202206"
+      },
+      "gaussian": [
+        {
+          "input": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712",
+          "output": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        }
+      ]
+    },
+    {
+      "id": "rank-negative",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "error": [
+          "builtins",
+          "ValueError",
+          "negative dimensions are not allowed"
+        ],
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": []
+    },
+    {
+      "id": "rank-four",
+      "native": false,
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "strides": [
+            64,
+            16,
+            4,
+            1
+          ],
+          "count": 128,
+          "data_sha256": "9745ed83890d646d250be403855f6d45500ad8736785b55add92d01d6517ac9f",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "6195ff9a59852a793dd1dabb98363c125ebf8dcff902d2a1ef7dc0b350d4ad64",
+          "output": "e9c551fc2e49e597b1ae3199efeb4ce42a76adc526e67cec9326c71c46db0d66"
+        }
+      ]
+    }
+  ],
+  "benchmark": [
+    {
+      "id": "line-nearest",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            129
+          ],
+          "strides": [
+            1
+          ],
+          "count": 21,
+          "data_sha256": "620923405e02bbab33fe0cdc2bc5d7a058b7377dcdf88af34f49aea70058ba49",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "dddeacac24e425e9daf92d637c407782808036bb8294a82dc9f6b1b0a031adc3",
+          "output": "83db59ea953733ca85210e54c8fb12aa18fd08d3116e3bb877f143ecd304f2be"
+        }
+      ]
+    },
+    {
+      "id": "line-wrap",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            257
+          ],
+          "strides": [
+            1
+          ],
+          "count": 131,
+          "data_sha256": "eb339fb19e6cd8fcef4ca78f7cc753acfe1cedcec5ac5872c1fe24695e8b98ac",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "50868ca6583301abf78ac2a958a2a240796f2fa2db0bc3e3abca729c56e08709",
+          "output": "f1c938d3868d8e36f82fd5cb908a14314461e873c66d4f7c9e56aa52c24b48df"
+        }
+      ]
+    },
+    {
+      "id": "default-plane",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            512,
+            512
+          ],
+          "strides": [
+            512,
+            1
+          ],
+          "count": 131072,
+          "data_sha256": "1afcc386df1dbc44c775a1aea228acf3180325f00df53cd09ec14bbcc80f62a2",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "2700e2ccef41ff939a2e16a5be72cc80adf4716291f0067b5618d820c3e8d13e",
+          "output": "76a077b26a3327b7798a3264f9d8b22d88972b4d6806d3e6649d40baa629fe72"
+        }
+      ]
+    },
+    {
+      "id": "plane-wrap",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            168,
+            168
+          ],
+          "strides": [
+            168,
+            1
+          ],
+          "count": 23143,
+          "data_sha256": "51f10147ab9d735ebfb26a4cdf907fd641e906123a49cb56735c4f136abf3172",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "3b3b0ade0f93b177ecb59ed83b4d5d77f227ba07d9b3cc5b851b08cf7c674e09",
+          "output": "c22f9b4a69b92fa30ff316058be4891b1baf8740e3231eecab64a7314d032dac"
+        }
+      ]
+    },
+    {
+      "id": "plane-zero-volume",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            192,
+            192
+          ],
+          "strides": [
+            192,
+            1
+          ],
+          "count": 1,
+          "data_sha256": "e4c1193c42b80595560e7501b07cb83f3e453fe4ee7ba7d648de6ebf0bd45b99",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "477923b1713c5627cdc2377442f2db403b700823e557cfe35d77a3453db20e86",
+          "output": "6d1572ef22c067841116496fd69d69fadae4f1edeeacefd20dd431f81fbbb83c"
+        }
+      ]
+    },
+    {
+      "id": "volume-nearest",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            39,
+            39,
+            39
+          ],
+          "strides": [
+            1521,
+            39,
+            1
+          ],
+          "count": 5932,
+          "data_sha256": "145725b890bb1bf450d524638f9934b75cf0462ea68a6b80971967eb53389506",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "21e8c4a098bada4e8d17283a8691fb37288a92bfc5cf3c454a5170f09e41fb77",
+          "output": "3e3161c458c3e8ebfcd0f53a3517abef85ac6bc38abfe807e962fadfc25cac66"
+        }
+      ]
+    },
+    {
+      "id": "volume-wrap",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            37,
+            37,
+            37
+          ],
+          "strides": [
+            1369,
+            37,
+            1
+          ],
+          "count": 45587,
+          "data_sha256": "7a51d4cf5601e0ab08a6fda5637f0c6abf5c7570762b8e803c11781d4f217285",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "ceed14159c0ab03aa863c63e3e572f8ef8635f4e8e7ab599724caffe9d8bf575",
+          "output": "525da0453f2ffc5074306991f87247da8edbd30bc6f7920a0b4b2991e101998b"
+        }
+      ]
+    },
+    {
+      "id": "volume-full",
+      "observed": {
+        "state_before": null,
+        "output": {
+          "type": "ndarray",
+          "dtype": "|b1",
+          "shape": [
+            34,
+            34,
+            34
+          ],
+          "strides": [
+            1156,
+            34,
+            1
+          ],
+          "count": 39304,
+          "data_sha256": "ed22a8823f3b6469e0f1296c62bca234628b0dcaf14de1d2e1eef8809bf8bdfc",
+          "owns": true
+        },
+        "warnings": [],
+        "state_after": null
+      },
+      "gaussian": [
+        {
+          "input": "0bbef734be4a640c72988999ece985764df43d3acb26711cf5a9119ae0671b55",
+          "output": "7c7f862a1b1b80b72bc5f628d5db1d7125fdcc4269178300fd79e431374925b6"
+        }
+      ]
+    }
+  ]
+}

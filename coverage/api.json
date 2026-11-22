@@ -613,11 +613,16 @@
       "api": "data.binary_blobs",
       "kind": "callable",
       "signature": "(length=512, blob_size_fraction=0.1, n_dim=2, volume_fraction=0.5, rng=None, *, boundary_mode='nearest')",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8",
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_binary_blobs_public.py",
+      "benchmark": "benchmarks/binary_blobs.py",
+      "default_input_kind": "Seeded Boolean field; the generic image dtype is an unused descriptor. NumPy supplies RNG and Boolean output operations. C++ supplies Gaussian smoothing and percentile selection on the bounded domain."
     },
     {
       "api": "data.brain",
@@ -633,11 +638,11 @@
       "api": "data.brick",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_textures_public.py",
+      "benchmark": "benchmarks/data_textures.py"
     },
     {
       "api": "data.camera",
@@ -653,11 +658,11 @@
       "api": "data.cat",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_chelsea_public.py",
+      "benchmark": "benchmarks/chelsea.py"
     },
     {
       "api": "data.cell",
@@ -693,21 +698,21 @@
       "api": "data.chelsea",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_chelsea_public.py",
+      "benchmark": "benchmarks/chelsea.py"
     },
     {
       "api": "data.clock",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_clock_horse_public.py",
+      "benchmark": "benchmarks/data_clock_horse.py"
     },
     {
       "api": "data.coffee",
@@ -773,31 +778,31 @@
       "api": "data.grass",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_textures_public.py",
+      "benchmark": "benchmarks/data_textures.py"
     },
     {
       "api": "data.gravel",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_textures_public.py",
+      "benchmark": "benchmarks/data_textures.py"
     },
     {
       "api": "data.horse",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_clock_horse_public.py",
+      "benchmark": "benchmarks/data_clock_horse.py"
     },
     {
       "api": "data.hubble_deep_field",
@@ -993,11 +998,11 @@
       "api": "data.text",
       "kind": "callable",
       "signature": "()",
-      "implementation": "upstream-only",
+      "implementation": "packaged-asset-partial",
       "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "execution_kind": "packaged-asset",
+      "parity_test": "tests/test_data_textures_public.py",
+      "benchmark": "benchmarks/data_textures.py"
     },
     {
       "api": "data.vortex",

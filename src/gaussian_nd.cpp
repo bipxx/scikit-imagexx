@@ -6,6 +6,7 @@
 #include "resize_cast.hpp"
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <cstring>
 #include <limits>
 #include <memory>
@@ -46,11 +47,37 @@ template<class T,bool Boolean=false> void prepare(const T* input,double* output,
         }
     });
 }
+struct EdgeTap {
+    std::uint16_t left, right;
+};
+
+// The coordinates are shared by every contiguous row and worker. Leave wide
+// radii, overlapping edges and short row batches on the existing traversal.
+std::vector<EdgeTap> row_edge_taps(std::size_t length,std::size_t radius,GaussianBorder border) {
+    std::vector<EdgeTap> taps;
+    taps.reserve(2*radius*radius);
+    for(std::size_t edge=0;edge<2*radius;++edge) {
+        const auto x=std::ptrdiff_t(edge<radius ? edge : length-2*radius+edge);
+        for(std::size_t j=0;j<radius;++j) {
+            const auto distance=std::ptrdiff_t(radius-j);
+            taps.push_back({static_cast<std::uint16_t>(index_at(x-distance,length,border)),
+                            static_cast<std::uint16_t>(index_at(x+distance,length,border))});
+        }
+    }
+    return taps;
+}
 template<class Input,class Output> void convolve(const Input* input,Output* output,
     const std::vector<std::size_t>& shape,const GaussianPass& pass,std::size_t count,int workers) {
     const auto radius=pass.weights.size()/2,length=shape[pass.axis];
     std::size_t stride=1;for(std::size_t d=pass.axis+1;d<shape.size();++d)stride*=shape[d];
     const auto center_weight=pass.weights[radius];
+    std::vector<EdgeTap> edge_taps;
+    if constexpr(std::is_same_v<Input,double> && std::is_same_v<Output,double>) {
+        if(stride==1 && radius>=4 && radius<=64 && 2*radius<length &&
+           length-1<=std::numeric_limits<std::uint16_t>::max() && count/length>=16 &&
+           (pass.border==GaussianBorder::nearest || pass.border==GaussianBorder::wrap))
+            edge_taps=row_edge_taps(length,radius,pass.border);
+    }
     detail::partition(count,workers,[&](auto begin,auto end,auto) {
         std::vector<const void*> left(radius),right(radius);
         while(begin<end) {
@@ -73,7 +100,22 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                 auto stop=std::min(end,block+length),position=begin;
                 const auto inside_begin=block+std::min(radius,length);
                 const auto inside_end=block+(length>radius ? length-radius : 0);
-                for(;position<stop && position<inside_begin;++position)scalar(position);
+                const auto cached_edge=[&](std::size_t x,std::size_t edge) {
+                    const auto* row=input+block;
+                    const auto* taps=edge_taps.data()+edge*radius;
+                    double sum=double(row[x])*center_weight;
+                    for(std::size_t j=0;j<radius;++j) {
+                        const double a=double(row[taps[j].left]),b=double(row[taps[j].right]);
+                        sum+=(a+b)*pass.weights[j];
+                    }
+                    output[block+x]=Output(sum);
+                };
+                if(edge_taps.empty()) {
+                    for(;position<stop && position<inside_begin;++position)scalar(position);
+                } else {
+                    for(;position<stop && position<inside_begin;++position)
+                        cached_edge(position-block,position-block);
+                }
                 const auto vector_end=std::min(stop,inside_end);
                 if(position<vector_end) {
                     for(std::size_t j=0;j<radius;++j) {
@@ -93,7 +135,12 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
 #endif
                     for(;position<vector_end;++position)scalar(position);
                 }
-                for(;position<stop;++position)scalar(position);
+                if(edge_taps.empty()) {
+                    for(;position<stop;++position)scalar(position);
+                } else {
+                    for(;position<stop;++position)
+                        cached_edge(position-block,position-inside_end+radius);
+                }
                 begin=stop;
             } else {
                 const auto inner=begin%stride;

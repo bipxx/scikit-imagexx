@@ -4,7 +4,7 @@ Reference: scikit-image 0.26.0.
 
 This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.
 
-477 public callable names inventoried in 20 modules; 271 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 291 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Eight data APIs use packaged assets with compatibility handling for misses. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -52,25 +52,25 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `color.ypbpr2rgb` | native-partial | yes (partial input contract) | yes |
 | `color.yuv2rgb` | native-partial | yes (partial input contract) | yes |
 | `data.astronaut` | upstream-only | pending | pending |
-| `data.binary_blobs` | upstream-only | pending | pending |
+| `data.binary_blobs` | native-partial | yes (partial input contract) | yes |
 | `data.brain` | upstream-only | pending | pending |
-| `data.brick` | upstream-only | pending | pending |
+| `data.brick` | packaged-asset-partial | yes (partial input contract) | yes |
 | `data.camera` | upstream-only | pending | pending |
-| `data.cat` | upstream-only | pending | pending |
+| `data.cat` | packaged-asset-partial | yes (partial input contract) | yes |
 | `data.cell` | upstream-only | pending | pending |
 | `data.cells3d` | upstream-only | pending | pending |
 | `data.checkerboard` | upstream-only | pending | pending |
-| `data.chelsea` | upstream-only | pending | pending |
-| `data.clock` | upstream-only | pending | pending |
+| `data.chelsea` | packaged-asset-partial | yes (partial input contract) | yes |
+| `data.clock` | packaged-asset-partial | yes (partial input contract) | yes |
 | `data.coffee` | upstream-only | pending | pending |
 | `data.coins` | upstream-only | pending | pending |
 | `data.colorwheel` | upstream-only | pending | pending |
 | `data.download_all` | upstream-only | pending | pending |
 | `data.eagle` | upstream-only | pending | pending |
 | `data.file_hash` | upstream-only | pending | pending |
-| `data.grass` | upstream-only | pending | pending |
-| `data.gravel` | upstream-only | pending | pending |
-| `data.horse` | upstream-only | pending | pending |
+| `data.grass` | packaged-asset-partial | yes (partial input contract) | yes |
+| `data.gravel` | packaged-asset-partial | yes (partial input contract) | yes |
+| `data.horse` | packaged-asset-partial | yes (partial input contract) | yes |
 | `data.hubble_deep_field` | upstream-only | pending | pending |
 | `data.human_mitosis` | upstream-only | pending | pending |
 | `data.immunohistochemistry` | upstream-only | pending | pending |
@@ -90,7 +90,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `data.shepp_logan_phantom` | upstream-only | pending | pending |
 | `data.skin` | upstream-only | pending | pending |
 | `data.stereo_motorcycle` | upstream-only | pending | pending |
-| `data.text` | upstream-only | pending | pending |
+| `data.text` | packaged-asset-partial | yes (partial input contract) | yes |
 | `data.vortex` | upstream-only | pending | pending |
 | `draw.bezier_curve` | native-partial | yes (partial input contract) | yes |
 | `draw.circle_perimeter` | native-partial | yes (partial input contract) | yes |

@@ -6,6 +6,7 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
+    'data': ('binary_blobs',),
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color'),
     'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','expand_labels'),
@@ -131,6 +132,12 @@ def butterworth_contract():
 
 def native_functions():
     return tuple(f'{module}.{name}' for module, names in NATIVE_FUNCTIONS.items() for name in names)
+
+
+PACKAGED_ASSET_FUNCTIONS = (
+    'data.brick', 'data.cat', 'data.chelsea', 'data.clock',
+    'data.grass', 'data.gravel', 'data.horse', 'data.text',
+)
 
 
 RANK_CANONICAL_FUNCTIONS=tuple('filters.rank.'+name for name in NATIVE_FUNCTIONS['filters.rank'])
@@ -423,6 +430,8 @@ def flood_fill_contract():
 
 
 def default_call(api, image):
+    if api == 'data.binary_blobs':
+        return (), {'length': 24, 'rng': 86427}
     if api == 'draw.ellipsoid_stats':
         return (1.0, 2.0, 3.0), {}
     if api == 'segmentation.expand_labels':
@@ -1212,6 +1221,14 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if api == 'data.binary_blobs':
+        import numpy as np
+        assert type(actual) is type(expected) is np.ndarray
+        assert actual.dtype == expected.dtype == np.dtype(bool)
+        assert actual.shape == expected.shape and actual.strides == expected.strides
+        assert actual.flags.owndata and expected.flags.owndata
+        np.testing.assert_array_equal(actual, expected)
+        return
     if api == 'draw.ellipsoid_stats':
         import numpy as np
         assert type(actual) is type(expected) is tuple and len(actual) == len(expected) == 2

@@ -9,8 +9,8 @@ import shlex
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v37.json'
-CONTEXT_SHA256 = '4c2ab00de09225a046ded17b0eda2f2f8b2e75cdb7ee1697449546150d0bbc7d'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v38.json'
+CONTEXT_SHA256 = '673398deb1974e9a5928b2b8d96912a11339e701d441a5b90cc81aa5ac4f5265'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -90,12 +90,13 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v14.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v15.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
         'tests/test_order_angles_golden_ratio_integration.py', 'tests/test_pearson_public.py',
         'tests/test_order_angles_golden_ratio_public.py', 'tests/test_hausdorff_public.py',
-        'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py']
+        'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py', 'tests/test_binary_blobs_public.py',
+        'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py']
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
     assert groups['public-post203'] == ('retained',)
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)

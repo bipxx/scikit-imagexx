@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 import skimage
 import numpy as np
-from skimagexx.coverage import native_functions, native_dtypes, execution_kind, native_classes, class_contract, class_metadata_providers
+from skimagexx.coverage import native_functions, native_dtypes, execution_kind, native_classes, class_contract, class_metadata_providers, PACKAGED_ASSET_FUNCTIONS
 
 MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.rank', 'filters.rank.bilateral', 'filters.rank.generic', 'future',
            'graph', 'io', 'measure', 'metrics', 'morphology', 'registration',
@@ -15,6 +15,10 @@ MODULES = ('color', 'data', 'draw', 'exposure', 'feature', 'filters', 'filters.r
 
 DEDICATED_EVIDENCE = {}
 for _names, _test, _benchmark in (
+    (('data.binary_blobs',), 'tests/test_binary_blobs_public.py', 'benchmarks/binary_blobs.py'),
+    (('data.cat', 'data.chelsea'), 'tests/test_chelsea_public.py', 'benchmarks/chelsea.py'),
+    (('data.brick', 'data.grass', 'data.gravel', 'data.text'), 'tests/test_data_textures_public.py', 'benchmarks/data_textures.py'),
+    (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
     (('measure.pearson_corr_coeff',), 'tests/test_pearson_public.py', 'benchmarks/pearson.py'),
@@ -169,6 +173,7 @@ def class_members(value,path):
 
 def inventory():
     native = set(native_functions())
+    assets = set(PACKAGED_ASSET_FUNCTIONS)
     classes=set(native_classes())
     providers=set(class_metadata_providers())
     entries = []
@@ -195,7 +200,12 @@ def inventory():
                             'execution_kind': execution_kind(path) if path in native else 'upstream',
                             'parity_test': evidence[0] if path in native else None,
                             'benchmark': evidence[1] if path in native else None})
-            if path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
+            if path == 'data.binary_blobs':
+                entries[-1]['default_input_kind'] = 'Seeded Boolean field; the generic image dtype is an unused descriptor. NumPy supplies RNG and Boolean output operations. C++ supplies Gaussian smoothing and percentile selection on the bounded domain.'
+            elif path in assets:
+                entries[-1].update(implementation='packaged-asset-partial', execution_kind='packaged-asset',
+                                   parity_test=evidence[0], benchmark=evidence[1])
+            elif path in ('segmentation.checkerboard_level_set','segmentation.disk_level_set'):
                 entries[-1]['default_input_kind']='image-shape-only; uint8 is a descriptor carrier, not image-pixel or dtype-conversion coverage'
             elif path=='restoration.rolling_ball':
                 entries[-1]['default_input_kind']='Actual requested image/dtype, explicit radius1 shared adapter; owned padding/min-plus/source NaN-row order and defaultball primitive. NumPy dtype/allocation/custom-kernel arithmetic/protocol providers; literal default100 separately saved1D. SDK float32/64, Windows/broaderFP/genuine/performance gaps explicit.'
@@ -250,9 +260,9 @@ def inventory():
                     entries[-1].update(implementation=contract['implementation'],execution_kind='exception-metadata' if path in providers else 'stateful-class',
                                       parity_test=contract['public_parity_test'],class_contract=contract)
     inventoried = {entry['api'] for entry in entries}
-    missing = (native|classes|providers)-inventoried
+    missing = (native | assets | classes | providers) - inventoried
     if missing:
-        raise ValueError(f'Native registry entries absent from upstream inventory: {sorted(missing)}')
+        raise ValueError(f'Registered entries absent from upstream inventory: {sorted(missing)}')
     return {'reference_version': skimage.__version__, 'modules': list(MODULES),
             'class_member_scope':'Static public descriptors and custom data-model methods, including inherited members. Instance fields and runtime-generated attributes remain unassessed. Availability and signatures are not numerical parity.',
             'entries': entries}
@@ -265,9 +275,10 @@ def main():
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(result, indent=2)+'\n',encoding='utf-8')
     entries = result['entries']
-    implemented = [e for e in entries if e['implementation'] in ('native-partial', 'metadata','native-class-partial','exception-metadata-provider')]
+    implemented = [e for e in entries if e['implementation'] in ('native-partial', 'metadata', 'packaged-asset-partial', 'native-class-partial', 'exception-metadata-provider')]
     kernels = sum(e['implementation'] == 'native-partial' for e in entries)
     metadata = sum(e['implementation'] == 'metadata' for e in entries)
+    asset_count = sum(e['implementation'] == 'packaged-asset-partial' for e in entries)
     class_count=sum(e['implementation']=='native-class-partial' for e in entries)
     exception_count=sum(e['implementation']=='exception-metadata-provider' for e in entries)
     lines = ['# API implementation inventory', '', f'Reference: scikit-image {skimage.__version__}.', '',
@@ -276,6 +287,7 @@ def main():
              f'{kernels} have partially native image implementations and {metadata} '
              f'{"has" if metadata == 1 else "have"} metadata-only execution. '
              f'{class_count} have separate partial native class/state implementations and {exception_count} have exception metadata providers; these never increase image-kernel counts. '
+             f'{asset_count} have packaged asset routes with compatibility handling for misses. '
              'Covered entries link to per-function test and benchmark files; '
              'these paths do not prove a passing contract or measured performance.', '',
              'An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, '
@@ -298,7 +310,7 @@ def main():
             '| Class | Static member paths | Native member parity |','|---|---:|---|']
     for entry in classes:lines.append(f"| `{entry['api']}` | {len(entry['members'])} | {'partial implementation; evidence separate' if entry['implementation']=='native-class-partial' else 'pending'} |")
     (path.parent/'README.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
-    print(f'{len(entries)} API names; {kernels} native-partial image, {metadata} metadata, {class_count} native-class-partial, {exception_count} exception metadata providers; {len(entries)-len(implemented)} pending')
+    print(f'{len(entries)} API names; {kernels} native-partial image, {metadata} metadata, {asset_count} packaged-asset-partial, {class_count} native-class-partial, {exception_count} exception metadata providers; {len(entries)-len(implemented)} pending')
     print(f'{len(classes)} class names; {len(members)} static member paths; execution evidence tracked separately')
 
 
