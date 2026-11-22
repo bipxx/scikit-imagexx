@@ -1,10 +1,14 @@
 import inspect
 import json
 from pathlib import Path
+import platform
+import sys
 from types import SimpleNamespace
 
 import numpy as np
 import pytest
+import scipy
+import skimage
 
 import skimagexx as xx
 from skimagexx import _core
@@ -18,6 +22,18 @@ FIXTURE = ROOT / 'coverage/contracts/binary-blobs-reference-v1.json'
 REFERENCE = FIXTURE.read_bytes()
 assert sha(REFERENCE.replace(b'\r\n', b'\n')) == '3a76afee05fd672ed033a8d6fbf6f0315093e4132c79e0d3a4a8f55c0c6b6fa6'
 SAVED = {row['id']: row for row in json.loads(REFERENCE)['rows']}
+
+PROFILE_FIXTURE = ROOT / 'coverage/contracts/binary-blobs-reference-profile-v2.json'
+PROFILE_BYTES = PROFILE_FIXTURE.read_bytes().replace(b'\r\n', b'\n')
+assert sha(PROFILE_BYTES) == '2702bcdb903187f24c0f1ad6c7ff2396c6785b8bea6e95dd1bfc9c46ddddc9af'
+PROFILE_KEY = '/'.join((
+    platform.system(), platform.machine().lower(),
+    f'{sys.version_info.major}.{sys.version_info.minor}',
+    np.__version__, scipy.__version__, skimage.__version__,
+))
+PROFILE_VALUES = json.loads(PROFILE_BYTES)['profiles'][PROFILE_KEY]
+SAVED['default']['gaussian'][0]['output'] = PROFILE_VALUES['default_gaussian_sha256']
+SAVED['rank-zero']['observed']['output']['type'] = PROFILE_VALUES['rank_zero_type_name']
 
 
 @pytest.mark.parametrize('name,options,native', list(cases()), ids=list(SAVED))

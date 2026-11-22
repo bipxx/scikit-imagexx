@@ -1,0 +1,27 @@
+{
+  "schema": 2,
+  "inherited_fixture": "coverage/contracts/binary-blobs-reference-v1.json",
+  "inherited_fixture_canonical_sha256": "3a76afee05fd672ed033a8d6fbf6f0315093e4132c79e0d3a4a8f55c0c6b6fa6",
+  "key_fields": [
+    "system",
+    "machine_lower",
+    "python_major_minor",
+    "numpy",
+    "scipy",
+    "scikit_image"
+  ],
+  "profiles": {
+    "Windows/amd64/3.13/2.5.4/1.18.1/0.26.0": {
+      "default_gaussian_sha256": "162ab7fb32ade6316a9144b90b60df15473f85d9aa582cada3344cecb9df845f",
+      "rank_zero_type_name": "bool"
+    },
+    "Linux/x86_64/3.11/1.24.4/1.15.3/0.26.0": {
+      "default_gaussian_sha256": "0a2b2a5b921e0f24bdb4578c48a79ee6bc69e3b0b1c55c7493b495e4f6591423",
+      "rank_zero_type_name": "bool_"
+    },
+    "Linux/x86_64/3.13/2.5.4/1.18.1/0.26.0": {
+      "default_gaussian_sha256": "0a2b2a5b921e0f24bdb4578c48a79ee6bc69e3b0b1c55c7493b495e4f6591423",
+      "rank_zero_type_name": "bool"
+    }
+  }
+}
