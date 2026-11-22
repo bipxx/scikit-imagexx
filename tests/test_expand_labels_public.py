@@ -50,7 +50,14 @@ def test_frozen_expand_labels(name, image, options, native, monkeypatch):
                 with pytest.raises(Exception) as caught:
                     owned(image, **options)
                 error = caught.value
-                assert [type(error).__module__, type(error).__name__, str(error)] == saved['error']
+                expected = saved['error']
+                if name == 'wrong-distance-type' and int(np.__version__.split('.')[0]) == 1:
+                    # NumPy 1 raises a built-in TypeError for this provider comparison.
+                    with pytest.raises(TypeError) as current_original:
+                        original(image, **options)
+                    reference_error = current_original.value
+                    expected = [type(reference_error).__module__, type(reference_error).__name__, str(reference_error)]
+                assert [type(error).__module__, type(error).__name__, str(error)] == expected
             else:
                 result = owned(image, **options)
                 assert type(result) is np.ndarray

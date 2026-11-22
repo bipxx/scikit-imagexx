@@ -292,10 +292,10 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current286'
-CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson')
-CURRENT_SDK_CLIENT_SCOPE = 'current42 required installed clients; current284 clients plus bounded golden-angle ordering and Pearson correlation; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v13.json'
+CURRENT_PRODUCT_SCOPE = 'current290'
+CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels')
+CURRENT_SDK_CLIENT_SCOPE = 'current45 required installed clients; current286 clients plus bounded Hausdorff, ellipsoid statistics and label expansion; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v14.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -671,6 +671,7 @@ DRAW_SOURCE_PATHS += ('benchmarks/join_segmentations.py', 'benchmarks/next_util_
 POST203_TESTS += ('test_util_views_source.py','test_next_util_benchmark_execution.py','test_next_util_benchmark_factories.py')
 POST203_TESTS += ('test_mark_lbp_enabled_public.py','test_mark_lbp_enabled_source.py','test_structural_similarity.py','test_local_extrema_public.py')
 POST203_TESTS += ('test_order_angles_golden_ratio_integration.py', 'test_pearson_public.py')
+POST203_TESTS += ('test_hausdorff_public.py', 'test_ellipsoid_stats_public.py', 'test_expand_labels_public.py')
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -774,6 +775,36 @@ DRAW_SOURCE_PATHS += (
     'tests/test_order_angles_golden_ratio_sdk.cpp',
     'tests/test_pearson_public.py',
     'tests/test_pearson_reference_contract.py',
+    'benchmarks/ellipsoid_stats.py',
+    'benchmarks/expand_labels.py',
+    'benchmarks/hausdorff.py',
+    'coverage/contracts/current-public-qualification-v14.json',
+    'coverage/contracts/ellipsoid-stats-v1.json',
+    'coverage/contracts/expand-labels-reference-v1.json',
+    'coverage/contracts/hausdorff-family-v1.json',
+    'include/skimagexx/ellipsoid_stats.hpp',
+    'include/skimagexx/expand_labels.hpp',
+    'include/skimagexx/hausdorff.hpp',
+    'python/skimagexx/_ellipsoid_stats.py',
+    'python/skimagexx/_expand_labels.py',
+    'python/skimagexx/_hausdorff.py',
+    'src/bind_ellipsoid_stats.cpp',
+    'src/bind_expand_labels.cpp',
+    'src/bind_hausdorff.cpp',
+    'src/ellipsoid_stats.cpp',
+    'src/expand_labels.cpp',
+    'src/hausdorff.cpp',
+    'tests/cmake_consumer/ellipsoid_stats_consumer.cpp',
+    'tests/cmake_consumer/expand_labels_consumer.cpp',
+    'tests/cmake_consumer/hausdorff_consumer.cpp',
+    'tests/expand_labels_reference.py',
+    'tests/fixtures/ellipsoid_stats_originals_v1.json',
+    'tests/fixtures/hausdorff_original_windows_v1.json',
+    'tests/fixtures/hausdorff_reference_v1.py',
+    'tests/test_ellipsoid_stats_public.py',
+    'tests/test_ellipsoid_stats_source.py',
+    'tests/test_expand_labels_public.py',
+    'tests/test_hausdorff_public.py',
 )
 
 
@@ -1233,17 +1264,18 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v12.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v13.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == '034d3699e8cfbfdc3f6a41ca826d1087f2c8df57da56c45999201434358a36d7',
-            'current284 qualification predecessor differs')
+    require(previous_digest == 'c9cd1fb3c373da9cc9a342eddfb06a68c8c558c6238678564ee99eabcf71dd2d',
+            'current286 qualification predecessor differs')
     previous = json.loads(previous_raw)
     selectors = {
-        'transform.order_angles_golden_ratio': 'tests/test_order_angles_golden_ratio_integration.py',
-        'measure.pearson_corr_coeff': 'tests/test_pearson_public.py',
+        'metrics.hausdorff_distance': 'tests/test_hausdorff_public.py',
+        'metrics.hausdorff_pair': 'tests/test_hausdorff_public.py',
+        'draw.ellipsoid_stats': 'tests/test_ellipsoid_stats_public.py',
+        'segmentation.expand_labels': 'tests/test_expand_labels_public.py',
     }
-    saved_selector = 'tests/test_order_angles_golden_ratio_public.py'
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
@@ -1251,17 +1283,17 @@ def current_contract(read_bytes):
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
         image_paths=sorted(previous['image_paths'] + list(selectors)),
         post203_contracts={**previous['post203_contracts'], **selectors},
-        required_selectors=previous['required_selectors'] + list(selectors.values()) + [saved_selector],
-        required_client_families=previous['required_client_families'] + ['order_angles_golden_ratio', 'pearson'],
+        required_selectors=previous['required_selectors'] + list(dict.fromkeys(selectors.values())),
+        required_client_families=previous['required_client_families'] + ['hausdorff', 'ellipsoid_stats', 'expand_labels'],
         required_client_headers=previous['required_client_headers'] + [
-            'include/skimagexx/order_angles_golden_ratio.hpp', 'include/skimagexx/pearson.hpp'],
+            'include/skimagexx/hausdorff.hpp', 'include/skimagexx/ellipsoid_stats.hpp', 'include/skimagexx/expand_labels.hpp'],
     )
     require(data.get('required_selectors') == expected['required_selectors'],
             'current qualification selector contract differs')
-    require(data == expected, 'current golden-angle and Pearson qualification contract differs')
+    require(data == expected, 'current numerical-family qualification contract differs')
     require(data['required_client_families'] == list(CURRENT_FAMILIES[len(FAMILIES):]),
             'current installed-client scope differs')
-    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py',saved_selector},
+    require(set(data['required_selectors']) == {'tests/' + n for n in POST203_TESTS} | {'tests/test_draw_polygon_benchmark_intake.py','tests/test_regular_grid_public.py','tests/test_util_views_public.py','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/test_finite_radon_saved_public.py','tests/test_finite_radon_exceptional_saved_public.py','tests/test_draw_multiblock_lbp_dtype_metadata.py','tests/test_finite_radon_numpy_abi_public.py','tests/test_variation_of_information_public.py','tests/test_variation_of_information_current_counts_public.py','tests/test_flood_fill_public.py','tests/test_variation_of_information_large_saved.py','tests/test_rolling_ball_public.py','tests/test_vi_public_log2_provider_large.py','tests/test_vi_public_matmul_provider_public.py','tests/test_vi_public_matmul_windows_public.py','tests/test_mark_boundaries_fast_paths.py','tests/test_draw_multiblock_lbp_batched.py','tests/test_flood_assignment_protocol.py','tests/test_flood_copy_protocol.py','tests/test_flood_disjoint_assignment.py','tests/test_order_angles_golden_ratio_public.py'},
             'current qualification selector contract differs')
     require(data['VI_current_runtime_large_reference'] == VI_CURRENT_LARGE_REFERENCE_POLICY
             and data['VI_current_runtime_public_reference'] == VI_CURRENT_PUBLIC_REFERENCE_POLICY
@@ -1333,6 +1365,9 @@ def current_install_layout(read_bytes, names, profile):
             and 'skimagexx/_order_angles_golden_ratio.py' in sources, 'current golden-angle install closure absent')
     require('include/skimagexx/pearson.hpp' in headers
             and 'skimagexx/_pearson.py' in sources, 'current Pearson install closure absent')
+    require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
+                for name in ('hausdorff', 'ellipsoid_stats', 'expand_labels')),
+            'current Hausdorff, ellipsoid statistics and label expansion install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)
