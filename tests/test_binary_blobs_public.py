@@ -14,7 +14,7 @@ import skimagexx as xx
 from skimagexx import _core
 from skimagexx._compat import FallbackWarning
 
-from binary_blobs_reference import SOURCE_SHA, cases, generator_state, observe, sha
+from binary_blobs_reference import cases, generator_state, observe, sha
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,6 +38,7 @@ SAVED['rank-zero']['observed']['output']['type'] = PROFILE_VALUES['rank_zero_typ
 MINIMUM_SAME_HOST_GAUSSIAN = frozenset((
     'default', 'line', 'plane-endpoint-zero', 'plane-endpoint-full', 'one-point', 'nearest-double-cutoff',
 ))
+MINIMUM_STOCK_SOURCE_SHA256 = '007d82e7cbd4c308bec0fa1fe02510d8fc685c874a71096152a1e1948fdc16ce'
 
 
 @pytest.mark.parametrize('name,options,native', list(cases()), ids=list(SAVED))
@@ -59,7 +60,7 @@ def test_binary_blobs_frozen_public(name, options, native, monkeypatch):
         # input mask and complete public outcome.
         assert native and type(options['rng']) is int
         assert original is stock_blobs.binary_blobs and stock_blobs.gaussian is stock_gaussian
-        assert sha(Path(inspect.getsourcefile(original)).read_bytes()) == SOURCE_SHA
+        assert sha(Path(inspect.getsourcefile(original)).read_bytes()) == MINIMUM_STOCK_SOURCE_SHA256
         stock_trace = []
 
         def record_stock_gaussian(mask, *args, **kwargs):
