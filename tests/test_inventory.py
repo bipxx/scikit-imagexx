@@ -8,7 +8,8 @@ import warnings
 import pytest
 import skimage
 import skimagexx as xx
-from skimagexx.coverage import native_functions, native_dtypes, native_classes, class_contract, class_metadata_providers
+from skimagexx.coverage import (PACKAGED_ASSET_FUNCTIONS, native_functions, native_dtypes,
+                               native_classes, class_contract, class_metadata_providers)
 from tools.inventory import signature_of
 
 INVENTORY = json.loads((Path(__file__).resolve().parents[1]/'coverage/api.json').read_text(encoding='utf-8'))
@@ -18,6 +19,10 @@ def test_inventory_reference_version():
     assert INVENTORY['reference_version'] == skimage.__version__ == '0.26.0'
     declared = {entry['api'] for entry in INVENTORY['entries'] if entry['implementation'] in ('native-partial', 'metadata')}
     assert declared == set(native_functions())
+    packaged = {entry['api'] for entry in INVENTORY['entries']
+                if entry['implementation'] == 'packaged-asset-partial'}
+    assert packaged == set(PACKAGED_ASSET_FUNCTIONS)
+    assert not packaged & declared
     classes={entry['api'] for entry in INVENTORY['entries'] if entry['implementation']=='native-class-partial'}
     assert classes==set(native_classes()) and not classes&declared
     providers={entry['api'] for entry in INVENTORY['entries'] if entry['implementation']=='exception-metadata-provider'}
@@ -40,6 +45,11 @@ def test_api_availability_and_signature(entry):
             assert entry['parity_test'] is None
             assert entry['benchmark'] is None
             assert entry['native_default_case_dtypes'] == []
+        elif entry['implementation'] == 'packaged-asset-partial':
+            assert entry['api'] in PACKAGED_ASSET_FUNCTIONS
+            assert entry['execution_kind'] == 'packaged-asset'
+            assert entry['native_default_case_dtypes'] == []
+            assert entry['parity_test'] and entry['benchmark']
         elif entry['implementation'] in ('native-class-partial','exception-metadata-provider'):
             assert entry['kind']=='class' and entry['native_default_case_dtypes']==[]
             assert entry['class_contract']==class_contract(entry['api'])

@@ -5,12 +5,13 @@ import importlib.util
 import json
 from pathlib import Path
 import shlex
+import subprocess
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v40.json'
-CONTEXT_SHA256 = '58ddfca92252996ce14b7fd4eaf4592ee1e84d3df98ece94e3eb966af0df8930'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v41.json'
+CONTEXT_SHA256 = 'cae8288bbfc17d01646f3a471cfa013c771bf8142ef1d1292b2b39c44123a7a5'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -112,8 +113,20 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
 def test_collector_covers_every_current_input_and_installed_LBP_header():
     value = data()
     q = load('tools/public_qualification.py')
-    required = set(value['source_raw_sha256']) | set(RUNTIME) | set(SOURCE) | {CONTEXT}
+    required = set(value['source_raw_sha256']) | set(RUNTIME) | set(SOURCE)
     assert required <= set(q.DRAW_SOURCE_PATHS)
+    # The qualifier archives the whole commit. The successor metadata and
+    # merged tests are authenticated against that archive's inputs.
+    merged = {**value['git_archive_inputs_sha256'], CONTEXT: CONTEXT_SHA256}
+    git = ['git', '--no-optional-locks', '-C', str(ROOT)]
+    for name, expected in merged.items():
+        assert digest((ROOT / name).read_bytes()) == expected, name
+        assert digest(subprocess.check_output([*git, 'cat-file', 'blob', ':' + name])) == expected, name
+        attributes = subprocess.check_output(
+            [*git, 'check-attr', '--cached', 'export-ignore', 'export-subst', '--', name], text=True
+        ).splitlines()
+        assert attributes == [name + ': export-ignore: unspecified',
+                              name + ': export-subst: unspecified'], name
     cmake = (ROOT / 'tests/cmake_consumer/CMakeLists.txt').read_text()
     assert 'set(_boundary_source draw_multiblock_lbp_enabled_consumer.cpp)' in cmake
     assert 'draw_multiblock_lbp_consumer.hpp' in (ROOT / 'tests/cmake_consumer/draw_multiblock_lbp_consumer.cpp').read_text()
