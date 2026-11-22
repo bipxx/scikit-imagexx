@@ -978,8 +978,13 @@ def test_current_stager_never_bypasses_historical_source_guards(guard):
 def test_current_stager_rejects_missing_or_replaced_client_declaration(declaration):
     text=(ROOT/'tools/public_qualification.py').read_text()
     original=text
-    declaration_line=next(line for line in text.splitlines()if line.startswith('CURRENT_FAMILIES = '))
-    text=text.replace(declaration_line,'CURRENT_FAMILIES = '+declaration,1)
+    target, = [node for node in ast.parse(text).body if isinstance(node, ast.Assign)
+               and any(isinstance(name, ast.Name) and name.id == 'CURRENT_FAMILIES'
+                       for name in node.targets)]
+    declaration_source = ast.get_source_segment(text, target)
+    assert declaration_source and text.count(declaration_source) == 1
+    text = text.replace(declaration_source, 'CURRENT_FAMILIES = ' + declaration, 1)
+    ast.parse(text)
     assert text!=original
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include') for f in (ROOT/prefix).rglob('*') if f.is_file()]
     with pytest.raises(RuntimeError):p.qualification_scope_text(text,read_bytes=lambda n:(ROOT/n).read_bytes(),names=names)

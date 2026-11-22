@@ -31,6 +31,12 @@ def timing_commands(block):
     return re.findall(r'^      - run: (python benchmarks/[^\n]+)', block, flags=re.M)
 
 
+def pyramid_generator_family(tree):
+    return next(ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign)
+                and any(isinstance(target, ast.Name) and target.id == 'PYRAMID_GENERATOR_FUNCTIONS'
+                        for target in node.targets))
+
+
 def test_timing_commands_only_on_fresh_artifact_hosts():
     workflow = (ROOT / '.github/workflows/ci.yml').read_text()
     blocks = jobs(workflow)
@@ -451,7 +457,9 @@ def test_moments_provider_metadata_does_not_claim_fft_workers():
     family = ('measure.moments', 'measure.moments_central', 'measure.centroid')
     update = next(n for n in main.body if isinstance(n, ast.Expr) and isinstance(n.value, ast.Call)
                   and isinstance(n.value.func, ast.Attribute) and n.value.func.attr == 'update'
-                  and isinstance(n.value.func.value, ast.Name) and n.value.func.value.id == 'provider_frontiers')
+                  and isinstance(n.value.func.value, ast.Name) and n.value.func.value.id == 'provider_frontiers'
+                  and any(isinstance(ref, ast.Name) and ref.id == 'MOMENTS_FUNCTIONS'
+                          for ref in ast.walk(n.value)))
     values = dict(apis=[*family, 'filters.window'], MOMENTS_FUNCTIONS=family,
                   provider_frontiers={'filters.window': 'old scope'}, moments_scope=scope)
     exec(compile(ast.Module(body=[update], type_ignores=[]), '<moments provider metadata>', 'exec'), values)
@@ -532,7 +540,8 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
     namespace = dict(DRAW_COORDINATE_FUNCTIONS=next(ast.literal_eval(n.value) for n in tree.body
                      if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
                      and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
-                     LEVEL_SET_FUNCTIONS=level_set_family(tree), DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
+                     LEVEL_SET_FUNCTIONS=level_set_family(tree), PYRAMID_GENERATOR_FUNCTIONS=pyramid_generator_family(tree),
+                     DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
                      COORDS_MOMENTS_FUNCTIONS=coords_family,
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[function], type_ignores=[]), '<derived preparer>', 'exec'), namespace)
@@ -567,7 +576,8 @@ def test_coordinate_default_preparation_uses_actual_points(api, shape):
     namespace = dict(DRAW_COORDINATE_FUNCTIONS=next(ast.literal_eval(n.value) for n in tree.body
                      if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
                      and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
-                     LEVEL_SET_FUNCTIONS=level_set_family(tree), __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
+                     LEVEL_SET_FUNCTIONS=level_set_family(tree), PYRAMID_GENERATOR_FUNCTIONS=pyramid_generator_family(tree),
+                     __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[family, function], type_ignores=[]), '<coordinate preparer>', 'exec'), namespace)
     (points,), options = namespace['default_call'](api, image)
     assert points is not image and points.shape == (shape[0], 2) and points.dtype is descriptor
