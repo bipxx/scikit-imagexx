@@ -1,0 +1,56 @@
+{
+  "schema": "ellipsoid-stats-v1",
+  "api": "draw.ellipsoid_stats",
+  "signature": "(a, b, c)",
+  "reference": {
+    "fixture": "tests/fixtures/ellipsoid_stats_originals_v1.json",
+    "original": "scikit-image 0.26.0",
+    "cases_each": 73,
+    "original_source_sha256": "78c9a91b754d8a0ca59e8eccd75fa9458dc12a529230f542858d4ee6ae6c57ca"
+  },
+  "owned": {
+    "api": "Finite exact Python float/int/bool radii within [2^-96, 2^96]. Native binary64 volume and Carlson integral. General finite typed scalar inputs preserve NumPy arithmetic before the owned integral where transformed arguments fit.",
+    "arithmetic": "Volume multiplies in caller order; only elliptic-integral inputs sort. Sphere short circuit; common R_F/R_D duplication for spheroids and triaxial.",
+    "surface": "With the median chosen as z, the R_D contribution in DLMF 19.21.10 is nonnegative. Normalization avoids large intermediate differences. Equations DLMF 19.21.10, 19.26.18, 19.36.1\u20132.",
+    "platform": "Scalar and serial, independent of process-global workers. No SIMD branch."
+  },
+  "providers": {
+    "numpy": "Preserves typed scalar arithmetic, promotions, casting and scalar representations.",
+    "scipy.special.elliprg": "Only transformed integral arguments outside the native finite/provider precision route, including exceptional values and extended scalar types.",
+    "compatibility": "Array and arbitrary object protocols retain original configured compatibility and warnings."
+  },
+  "parity_policy": {
+    "volume": "exact finite scalar values and type",
+    "surface_relative_binary64": 2e-14,
+    "surface_relative_binary32": 3e-07,
+    "special": "exact error and non-fallback warning class/text, infinity and NaN classifications"
+  },
+  "timing": {
+    "case_ids": [
+      "sphere-unit",
+      "oblate",
+      "prolate",
+      "triaxial-permutation-0",
+      "fractional-triaxial",
+      "elongated-triaxial"
+    ],
+    "method": "tools/montage_sustained.py:measure",
+    "method_sha256": "c05b519d7470f5ac8b87d13d971df64f404e1d3a283120cfbee0d340767a9fb0",
+    "workers": 1,
+    "repeat": 7,
+    "target_ms": 100,
+    "warmup_min_ms": 250,
+    "actual_authority": null,
+    "boundary": "Original and candidate public-call tuple construction and consumption, same chosen scalar recipes; no provider or array timing claim."
+  },
+  "source_canonical_sha256": {
+    "src/ellipsoid_stats.cpp": "b376e2a9b0c1be6067fe6a6cc9b136a6351cc0cc6f2b05722ba03a0f20eaa75b",
+    "src/bind_ellipsoid_stats.cpp": "7047b7f54903b80570d5184b0a743ced70afa39065b6714c30cc5717cc230ae9",
+    "include/skimagexx/ellipsoid_stats.hpp": "88879f1c136fda8bf93e335f44f83199963cc847a55c16ab662a85d8ff054089",
+    "python/skimagexx/_ellipsoid_stats.py": "a1e58edf20dbe5fdf74523e2c4bcc95db98ea0a1ff73dfdb373d7d80c2def849",
+    "tests/fixtures/ellipsoid_stats_originals_v1.json": "af2f41fcc0e57dfe2ee095023eba5bc765f5bd5590db16e73b38b22d057e8c4e",
+    "benchmarks/ellipsoid_stats.py": "b1e9270a16f0835f54f05272545f8e41172b8eaf4bc0b0f9dbbb805f8e468844",
+    "tests/test_ellipsoid_stats_public.py": "3103f9de702cde8a255e5219555f8ab51547b7681d076743d560377c2ce67b63",
+    "tests/cmake_consumer/ellipsoid_stats_consumer.cpp": "d8d6dfe3aae94bc574c0f139e34884c41d0c64ca5f981b7fdc91d2efd4c8e8a6"
+  }
+}
