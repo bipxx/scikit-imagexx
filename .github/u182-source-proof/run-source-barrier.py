@@ -11,9 +11,9 @@ import subprocess
 import sys
 import time
 
-SOURCE = '1766580e11c7120b3c04ffc9b1ed89fbcad5c808'
-TREE = '4ed9bf7fa354e9c4166e1dc5ba06a780ecd673ea'
-MANIFEST_PIN = '173257a0055da25c9f2bed39ed0fca62f5e63702101b4f488c5685265447d46a'
+SOURCE = 'eddec69fa8bfb64811f465ae38368a70ce61add5'
+TREE = 'c7e9b04630329e72447028a6e85f9a77fdad4d4a'
+MANIFEST_PIN = '3d74c9d88b0c8192f62e876ad559e582ba888f6e6d9f1d78caeeff012fa863ad'
 WORKFLOW = '.github/workflows/public-qualification.yml'
 VERSIONS = {'windows311': '3.11.11', 'windows313': '3.13.14'}
 
@@ -85,7 +85,7 @@ def main():
     def git(*args):
         return subprocess.check_output([native_git, '-C', str(source), *args])
 
-    manifest_path = Path(__file__).with_name('source-manifest-301-v1.json')
+    manifest_path = Path(__file__).with_name('source-manifest-301-v2.json')
     require(digest(manifest_path) == MANIFEST_PIN, 'Frozen source manifest changed')
     manifest = json.loads(manifest_path.read_bytes())
     require(manifest['source'] == SOURCE and manifest['tree'] == TREE, 'Wrong manifest provenance')
