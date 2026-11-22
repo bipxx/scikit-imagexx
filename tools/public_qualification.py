@@ -1106,6 +1106,9 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v41.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v43.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v52.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v1.json')
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/finite-radon-public-exports-v3.json', 'coverage/contracts/speed-parity-current-source-v44.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v2.json', 'coverage/contracts/vi-public-matmul-source-history-v53.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v2.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):

@@ -33,7 +33,22 @@ def test_missing_intake_refuses_before_runtime(monkeypatch):
 def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  import sys,types
  record=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v1.json').read_bytes())
- raw=(c.ROOT/record['source']).read_bytes()
+ current_raw=(c.ROOT/record['source']).read_bytes()
+ current_guard=Path(__file__).read_bytes()
+ attached=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v3.json').read_bytes())
+ assert attached['schema']=='finite-radon-public-exports-v3' and attached['original_calls']==0
+ assert attached['previous_record']=='coverage/contracts/finite-radon-public-exports-v2.json'
+ assert hashlib.sha256((c.ROOT/attached['previous_record']).read_bytes()).hexdigest()==attached['previous_record_raw_sha256']
+ assert hashlib.sha256(current_raw).hexdigest()==attached['current_raw_sha256']
+ assert hashlib.sha256(current_guard).hexdigest()==attached['guard_raw_sha256']
+ insertion=attached['source_fragment'].encode()
+ assert insertion and current_raw.count(insertion)==1
+ raw=current_raw.replace(insertion,b'',1)
+ guard=current_guard
+ for edit in attached['guard_inverse']:
+  block=edit['current'].encode()
+  assert block and guard.count(block)==1
+  guard=guard.replace(block,edit['previous'].encode(),1)
  successor=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v2.json').read_bytes())
  assert successor['schema']=='finite-radon-public-exports-v2'
  assert successor['previous_record']=='coverage/contracts/finite-radon-public-exports-v1.json'
@@ -46,7 +61,6 @@ def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  fragment=record['inverse_fragment'].encode();assert raw.count(fragment)==1
  predecessor=raw.replace(fragment,b'',1)
  assert hashlib.sha256(predecessor).hexdigest()==record['predecessor_raw_sha256']
- guard=Path(__file__).read_bytes()
  assert hashlib.sha256(guard).hexdigest()==successor['guard_raw_sha256']
  current_block=successor['current_guard_block'].encode()
  previous_block=successor['previous_guard_block'].encode()
@@ -60,7 +74,7 @@ def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  provider.frt2=object();provider.ifrt2=object()
  monkeypatch.setitem(sys.modules,'skimagexx',parent)
  monkeypatch.setitem(sys.modules,'skimagexx._finite_radon',provider)
- for text,current in ((predecessor,False),(raw,True)):
+ for text,current in ((predecessor,False),(raw,True),(current_raw,True)):
   tree=ast.parse(text);declarations=[]
   for node in tree.body:
    if isinstance(node,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='__all__'for t in node.targets):declarations.append(node)

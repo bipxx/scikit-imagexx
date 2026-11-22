@@ -1,0 +1,23 @@
+{
+  "schema": "finite-radon-public-exports-v3",
+  "previous_record": "coverage/contracts/finite-radon-public-exports-v2.json",
+  "previous_record_raw_sha256": "36c2122ba6ec20ee3e1763b302a8624a301af85f589ba8e77a1dfb3a65dfab8f",
+  "current_raw_sha256": "6e0b3dad5502f1dbc67ac3a9f535d62e29ba3e0798c43c02ea1740e0b8002c0f",
+  "source_fragment": "\nfrom ._pyramid_spatial import pyramid_expand, pyramid_reduce\n__all__ += ['pyramid_reduce', 'pyramid_expand']\n",
+  "guard_raw_sha256": "5a6685783117eb8d661d9b95bc51f78de852e87a4aeec65f47fd66c56c5cec47",
+  "guard_inverse": [
+    {
+      "current": " current_raw=(c.ROOT/record['source']).read_bytes()\n current_guard=Path(__file__).read_bytes()\n attached=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v3.json').read_bytes())\n assert attached['schema']=='finite-radon-public-exports-v3' and attached['original_calls']==0\n assert attached['previous_record']=='coverage/contracts/finite-radon-public-exports-v2.json'\n assert hashlib.sha256((c.ROOT/attached['previous_record']).read_bytes()).hexdigest()==attached['previous_record_raw_sha256']\n assert hashlib.sha256(current_raw).hexdigest()==attached['current_raw_sha256']\n assert hashlib.sha256(current_guard).hexdigest()==attached['guard_raw_sha256']\n insertion=attached['source_fragment'].encode()\n assert insertion and current_raw.count(insertion)==1\n raw=current_raw.replace(insertion,b'',1)\n guard=current_guard\n for edit in attached['guard_inverse']:\n  block=edit['current'].encode()\n  assert block and guard.count(block)==1\n  guard=guard.replace(block,edit['previous'].encode(),1)\n",
+      "previous": " raw=(c.ROOT/record['source']).read_bytes()\n"
+    },
+    {
+      "current": " assert hashlib.sha256(guard).hexdigest()==successor['guard_raw_sha256']\n",
+      "previous": " guard=Path(__file__).read_bytes()\n assert hashlib.sha256(guard).hexdigest()==successor['guard_raw_sha256']\n"
+    },
+    {
+      "current": " for text,current in ((predecessor,False),(raw,True),(current_raw,True)):\n",
+      "previous": " for text,current in ((predecessor,False),(raw,True)):\n"
+    }
+  ],
+  "original_calls": 0
+}
