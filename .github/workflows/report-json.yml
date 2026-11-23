@@ -40,6 +40,7 @@ jobs:
         with:
           ref: 5b94b20d30e572164a6473c8bb029e18d4a7e706
           path: tested
+          fetch-depth: 2
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -66,6 +67,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current306-windows-fixed20-measurement-v1
+          name: current306-windows-fixed20-measurement-v2
           path: timing-receipts/
           if-no-files-found: warn
