@@ -54,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: u182-circle-peaks-modern-fixed-speed-v1
+          name: u182-circle-peaks-modern-fixed-speed-v2
           path: |
             circle-timing-stage/*.json
             circle-timing-stage/*.log

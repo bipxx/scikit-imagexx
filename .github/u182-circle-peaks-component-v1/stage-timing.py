@@ -19,7 +19,7 @@ from zipfile import ZipFile
 
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
-REF = "refs/heads/diagnostics/u182-circle-peaks-modern-timing-v1"
+REF = "refs/heads/diagnostics/u182-circle-peaks-modern-timing-v2"
 FLOOR = 30 * 2**30
 
 

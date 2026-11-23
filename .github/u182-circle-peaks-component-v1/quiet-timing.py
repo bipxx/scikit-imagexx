@@ -196,10 +196,10 @@ def execute(args, grant, params, plan, quiet, binary, stock, base, proofs):
                 assert datetime.now(timezone.utc) < datetime.fromisoformat(grant["deadline_utc"])
                 _core.hough_circle_peak_indices = observe_native
                 try:
-                    private = fixture.observe(native, np, inputs, row)
+                    private = fixture.observe(transform.hough_circle_peaks, np, inputs, row)
                 finally:
                     _core.hough_circle_peak_indices = kernel
-                stock_check = fixture.observe(ref, np, inputs, row)
+                stock_check = fixture.observe(original.hough_circle_peaks, np, inputs, row)
                 assert private == stock_check
                 assert hits == [(True, options.get("min_xdistance", 1), options.get("min_ydistance", 1),
                                   options.get("threshold"), inputs[0].shape[0])]
