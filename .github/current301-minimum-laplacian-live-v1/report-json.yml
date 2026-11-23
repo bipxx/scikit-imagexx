@@ -1,0 +1,126 @@
+name: Exact current301 minimum Laplacian diagnostic
+on:
+  workflow_dispatch:
+    inputs:
+      root_authorization:
+        description: Exact source, failed artifact, payload digests and UTC deadline
+        type: string
+        required: true
+permissions:
+  actions: read
+  contents: read
+jobs:
+  minimum-laplacian:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      ROOT_AUTHORIZATION_JSON: ${{ inputs.root_authorization }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      OMP_THREAD_LIMIT: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: carrier
+          persist-credentials: false
+          sparse-checkout: .github/current301-minimum-laplacian-live-v1
+      - uses: actions/checkout@v4
+        with:
+          ref: eddec69fa8bfb64811f465ae38368a70ce61add5
+          path: tested
+          fetch-depth: 2
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            pyproject.toml
+            tests/conftest.py
+            tests/test_pyramid_generators_public.py
+            tests/pyramid_generator_cases.py
+            tests/pyramid_spatial_cases.py
+            coverage/contracts/pyramid-generators-stock-v1.json
+            python/skimagexx/_pyramid_generators.py
+            python/skimagexx/_pyramid_spatial.py
+            python/skimagexx/_resize.py
+            python/skimagexx/filters.py
+            python/skimagexx/transform.py
+            src/gaussian_nd.cpp
+            src/simd_gaussian_nd_avx2.cpp
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Verify source and exact authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          companion="$GITHUB_WORKSPACE/carrier/.github/current301-minimum-laplacian-live-v1"
+          python -I -S -B "$companion/run.py" --bind-only --source "$GITHUB_WORKSPACE/tested"
+          python -I -S -B - <<'PY'
+          import os, shutil
+          for name in ('GITHUB_WORKSPACE', 'RUNNER_TEMP'):
+              free = shutil.disk_usage(os.environ[name]).free
+              print(name, free)
+              assert free >= 32 * 2**30, (name, free)
+          PY
+          scratch=$(mktemp -d "$RUNNER_TEMP/current301-laplacian.XXXXXXXX")
+          printf 'SCOPE_SCRATCH=%s\nSCOPE_COMPANION=%s\n' "$scratch" "$companion" >> "$GITHUB_ENV"
+          mkdir -p "$scratch/pip" receipts
+      - name: Install the exact 13 stock wheels transiently
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMPDIR="$SCOPE_SCRATCH/pip" python -I -B -m pip --disable-pip-version-check install \
+            --only-binary=:all: --no-deps --require-hashes --no-cache-dir \
+            --target "$SCOPE_SCRATCH/stock" -r "$SCOPE_COMPANION/requirements-runtime.txt"
+      - name: Authenticate and extract the failed product's selected wheel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python -I -S -B "$SCOPE_COMPANION/extract_candidate.py" \
+            --destination "$SCOPE_SCRATCH/candidate" --proof "$GITHUB_WORKSPACE/receipts/extraction.json"
+      - name: Observe the exact three fixtures in both modes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cpu=$(python -I -S -B -c 'import os; print(min(os.sched_getaffinity(0)))')
+          failure=0
+          for mode in normal scalar; do
+            unset SKIMAGEXX_DISABLE_SIMD
+            if [[ "$mode" == scalar ]]; then
+              export SKIMAGEXX_DISABLE_SIMD=1
+            fi
+            status=0
+            env -u GH_TOKEN -u PYTHONPATH -u PYTHONHOME -u NPY_DISABLE_CPU_FEATURES -u LD_PRELOAD \
+              taskset -c "$cpu" python -I -S -B "$SCOPE_COMPANION/run.py" \
+              --mode "$mode" --source "$GITHUB_WORKSPACE/tested" --stock "$SCOPE_SCRATCH/stock" \
+              --candidate "$SCOPE_SCRATCH/candidate" --output "$GITHUB_WORKSPACE/receipts" \
+              --extraction "$GITHUB_WORKSPACE/receipts/extraction.json" \
+              >"receipts/$mode.stdout" 2>"receipts/$mode.stderr" || status=$?
+            printf '%s\n' "$status" >"receipts/$mode.exit"
+            if [[ "$status" != 0 ]]; then failure=1; fi
+          done
+          exit "$failure"
+      - name: Release temporary installed products
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -v SCOPE_SCRATCH && -d "$SCOPE_SCRATCH" ]]; then
+            target=$(realpath "$SCOPE_SCRATCH")
+            parent=$(realpath "$RUNNER_TEMP")
+            [[ $(dirname "$target") == "$parent" && $(basename "$target") == current301-laplacian.* ]]
+            rm -r -- "$target"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: current301-minimum-laplacian-live-v1
+          path: receipts/
+          if-no-files-found: warn

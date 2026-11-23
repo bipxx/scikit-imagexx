@@ -1,25 +1,22 @@
-name: Exact minimum pyramid reference validation
+name: Exact current301 minimum Laplacian diagnostic
 on:
   workflow_dispatch:
     inputs:
       root_authorization:
-        description: Exact successor, carrier and two-mode authority with UTC deadline
-        required: true
+        description: Exact source, failed artifact, payload digests and UTC deadline
         type: string
-
+        required: true
 permissions:
   actions: read
   contents: read
-
 jobs:
-  minimum-reference:
+  minimum-laplacian:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     env:
       ROOT_AUTHORIZATION_JSON: ${{ inputs.root_authorization }}
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
-      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
@@ -32,62 +29,63 @@ jobs:
         with:
           path: carrier
           persist-credentials: false
-          sparse-checkout: .github/pyramid-minimum-reference-validation-v1
+          sparse-checkout: .github/current301-minimum-laplacian-live-v1
       - uses: actions/checkout@v4
         with:
-          ref: 94522169d6111a6dcf5f7b044d6d267773e27de6
+          ref: eddec69fa8bfb64811f465ae38368a70ce61add5
           path: tested
           fetch-depth: 2
           persist-credentials: false
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
             pyproject.toml
             tests/conftest.py
-            tests/test_pyramid_spatial_public.py
+            tests/test_pyramid_generators_public.py
+            tests/pyramid_generator_cases.py
             tests/pyramid_spatial_cases.py
-            tests/fixtures/pyramid_spatial_originals_v1.json
+            coverage/contracts/pyramid-generators-stock-v1.json
+            python/skimagexx/_pyramid_generators.py
             python/skimagexx/_pyramid_spatial.py
+            python/skimagexx/_resize.py
             python/skimagexx/filters.py
+            python/skimagexx/transform.py
             src/gaussian_nd.cpp
             src/simd_gaussian_nd_avx2.cpp
-          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11.17'
-      - name: Bind the exact correction and reserve runner scratch
+      - name: Verify source and exact authority
         shell: bash
         run: |
           set -euo pipefail
-          companion="$GITHUB_WORKSPACE/carrier/.github/pyramid-minimum-reference-validation-v1"
-          python -I -S -B "$companion/validate.py" --bind-only --source "$GITHUB_WORKSPACE/tested"
+          companion="$GITHUB_WORKSPACE/carrier/.github/current301-minimum-laplacian-live-v1"
+          python -I -S -B "$companion/run.py" --bind-only --source "$GITHUB_WORKSPACE/tested"
           python -I -S -B - <<'PY'
-          import os, shutil, sys
-          assert sys.version_info[:3] == (3, 11, 17)
-          for label in ('GITHUB_WORKSPACE', 'RUNNER_TEMP'):
-              actual = shutil.disk_usage(os.environ[label]).free
-              print(label, actual)
-              assert actual >= 32 * 2**30, (label, actual)
+          import os, shutil
+          for name in ('GITHUB_WORKSPACE', 'RUNNER_TEMP'):
+              free = shutil.disk_usage(os.environ[name]).free
+              print(name, free)
+              assert free >= 32 * 2**30, (name, free)
           PY
-          scratch=$(mktemp -d "$RUNNER_TEMP/pyramid-minimum-reference-v1.XXXXXXXX")
-          printf 'PYRAMID_REFERENCE_SCRATCH=%s\nPYRAMID_REFERENCE_COMPANION=%s\n' "$scratch" "$companion" >> "$GITHUB_ENV"
+          scratch=$(mktemp -d "$RUNNER_TEMP/current301-laplacian.XXXXXXXX")
+          printf 'SCOPE_SCRATCH=%s\nSCOPE_COMPANION=%s\n' "$scratch" "$companion" >> "$GITHUB_ENV"
           mkdir -p "$scratch/pip" receipts
-          echo "ad18bd86522b3ee91723952d696fa71285caf236f6c514b12cee45362e2198b5  $companion/requirements-runtime.txt" | sha256sum -c
-      - name: Install archived minimum stock wheel identities
+      - name: Install the exact 13 stock wheels transiently
         shell: bash
         run: |
           set -euo pipefail
-          TMPDIR="$PYRAMID_REFERENCE_SCRATCH/pip" python -I -B -m pip --disable-pip-version-check install \
+          TMPDIR="$SCOPE_SCRATCH/pip" python -I -B -m pip --disable-pip-version-check install \
             --only-binary=:all: --no-deps --require-hashes --no-cache-dir \
-            --target "$PYRAMID_REFERENCE_SCRATCH/stock" \
-            -r "$PYRAMID_REFERENCE_COMPANION/requirements-runtime.txt"
-      - name: Authenticate the retained built candidate wheel
+            --target "$SCOPE_SCRATCH/stock" -r "$SCOPE_COMPANION/requirements-runtime.txt"
+      - name: Authenticate and extract the failed product's selected wheel
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python -I -S -B "$PYRAMID_REFERENCE_COMPANION/extract_candidate.py" \
-            --destination "$PYRAMID_REFERENCE_SCRATCH/candidate" --proof "$GITHUB_WORKSPACE/receipts/extraction.json"
-      - name: Run all 40 installed tests in both modes
+          python -I -S -B "$SCOPE_COMPANION/extract_candidate.py" \
+            --destination "$SCOPE_SCRATCH/candidate" --proof "$GITHUB_WORKSPACE/receipts/extraction.json"
+      - name: Observe the exact three fixtures in both modes
         shell: bash
         run: |
           set -euo pipefail
@@ -99,11 +97,11 @@ jobs:
               export SKIMAGEXX_DISABLE_SIMD=1
             fi
             status=0
-            env -u GH_TOKEN -u PYTHONPATH -u PYTHONHOME -u NPY_DISABLE_CPU_FEATURES -u PYTEST_ADDOPTS -u PYTEST_PLUGINS \
-              taskset -c "$cpu" python -I -S -B "$PYRAMID_REFERENCE_COMPANION/validate.py" \
-              --mode "$mode" --source "$GITHUB_WORKSPACE/tested" --stock "$PYRAMID_REFERENCE_SCRATCH/stock" \
-              --candidate "$PYRAMID_REFERENCE_SCRATCH/candidate" --temporary "$PYRAMID_REFERENCE_SCRATCH" \
-              --output "$GITHUB_WORKSPACE/receipts" --extraction "$GITHUB_WORKSPACE/receipts/extraction.json" \
+            env -u GH_TOKEN -u PYTHONPATH -u PYTHONHOME -u NPY_DISABLE_CPU_FEATURES -u LD_PRELOAD \
+              taskset -c "$cpu" python -I -S -B "$SCOPE_COMPANION/run.py" \
+              --mode "$mode" --source "$GITHUB_WORKSPACE/tested" --stock "$SCOPE_SCRATCH/stock" \
+              --candidate "$SCOPE_SCRATCH/candidate" --output "$GITHUB_WORKSPACE/receipts" \
+              --extraction "$GITHUB_WORKSPACE/receipts/extraction.json" \
               >"receipts/$mode.stdout" 2>"receipts/$mode.stderr" || status=$?
             printf '%s\n' "$status" >"receipts/$mode.exit"
             if [[ "$status" != 0 ]]; then failure=1; fi
@@ -114,15 +112,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ -v PYRAMID_REFERENCE_SCRATCH && -d "$PYRAMID_REFERENCE_SCRATCH" ]]; then
-            target=$(realpath "$PYRAMID_REFERENCE_SCRATCH")
+          if [[ -v SCOPE_SCRATCH && -d "$SCOPE_SCRATCH" ]]; then
+            target=$(realpath "$SCOPE_SCRATCH")
             parent=$(realpath "$RUNNER_TEMP")
-            [[ $(dirname "$target") == "$parent" && $(basename "$target") == pyramid-minimum-reference-v1.* ]]
+            [[ $(dirname "$target") == "$parent" && $(basename "$target") == current301-laplacian.* ]]
             rm -r -- "$target"
           fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pyramid-minimum-reference-validation-v1
+          name: current301-minimum-laplacian-live-v1
           path: receipts/
           if-no-files-found: warn

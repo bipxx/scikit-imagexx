@@ -17,7 +17,7 @@ from zipfile import ZipFile
 
 HERE = Path(__file__).resolve().parent
 REPO = 'bipxx/scikit-imagexx'
-PINS_SHA = '1e40efe17bf4faf2a3659955f668c15789ac0bb7765e4b0c2ac6dd0ab6192334'
+PINS_SHA = '72e8ffabc97cdfbd450865af7f624fd3681787efddc78fce304dea123b2b7b6d'
 HELPER_SHA = '1a54751980e8d5c06e31c46891f5a6112b5a6f64a07f494497fe93b98e912475'
 
 
@@ -40,7 +40,7 @@ def verify_inner(raw, package, output):
     with ZipFile(BytesIO(raw)) as z:
         infos = z.infolist()
         names = [entry.filename for entry in infos]
-        assert len(names) == len(set(names)) == len(hashes) == 265 and set(names) == set(hashes)
+        assert len(names) == len(set(names)) == len(hashes) == 272 and set(names) == set(hashes)
         name, = [n for n in names if n.endswith('.dist-info/RECORD')]
         payload = z.read(name)
         assert digest(payload) == hashes[name]
@@ -149,6 +149,7 @@ if __name__ == '__main__':
         print(json.dumps({'source': pins['source'], 'artifact': pins['artifact'], 'helper_sha256': HELPER_SHA}))
         raise SystemExit(0)
     assert sys.version_info[:3] == (3, 11, 17) and sys.flags.isolated and sys.dont_write_bytecode
+    runpy.run_path(str(HERE / 'run.py'))['authorize'](pins)
     assert args.destination and args.proof and not args.destination.exists() and not args.proof.exists()
     proof = download(pins, helper, args.destination)
     with args.proof.open('x', encoding='utf-8', newline='\n') as out:
