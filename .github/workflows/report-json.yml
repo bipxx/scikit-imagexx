@@ -1,82 +1,72 @@
-name: Current308 Windows focused product v1 (optional)
+name: Exact current308 Windows same-job timing
 on:
   workflow_dispatch:
+    inputs:
+      root_authority_json:
+        type: string
+        required: true
+      root_authority_sha256:
+        type: string
+        required: true
 permissions:
+  actions: read
   contents: read
+concurrency:
+  group: current308-windows-fixed8-exact-source
+  cancel-in-progress: false
 jobs:
-  windows-focus:
+  measure:
     runs-on: windows-latest
-    timeout-minutes: 120
-    env:
-      PYTHONDONTWRITEBYTECODE: '1'
-      PYTHONNOUSERSITE: '1'
-      PIP_DISABLE_PIP_VERSION_CHECK: '1'
-      PIP_NO_CACHE_DIR: '1'
-      CMAKE_BUILD_PARALLEL_LEVEL: '2'
+    timeout-minutes: 16
     steps:
-      - name: Verify fresh host capacity
+      - name: Reserve destination and preserve native Windows checkout behavior
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
           foreach ($path in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
-            $drive = [System.IO.DriveInfo]::new([System.IO.Path]::GetPathRoot($path))
-            Write-Output "$path free=$($drive.AvailableFreeSpace) required=$(44GB)"
-            if ($drive.AvailableFreeSpace -lt 44GB) { throw 'Runner free capacity is below peak plus reserve' }
+            $drive = Get-Item -LiteralPath $path
+            if ($drive.PSDrive.Free -lt 32GB) { throw 'Insufficient exact Windows timing-host capacity' }
           }
+          git config --global core.autocrlf true
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git config --global core.longpaths true
+          exit $LASTEXITCODE
       - uses: actions/checkout@v4
         with:
           path: carrier
           persist-credentials: false
-          sparse-checkout: |
-            .github/u182-current308-windows-focus
-      - name: Verify root-admitted complete source before provisioning
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          $proof = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-current308-windows-focus'
-          python -B (Join-Path $proof 'run.py') --preflight --manifest (Join-Path $proof 'source-manifest-308-v2.json') --complete-source-receipt (Join-Path $proof 'complete-source-root.json') --authority (Join-Path $proof 'root-authority.json')
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          git config --global core.autocrlf true
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          git config --global core.longpaths true
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          sparse-checkout: .github/current308-timing-host-v1
       - uses: actions/checkout@v4
         with:
           ref: e44a720dd2c84eedbd7e75641829c6c4f76d9a6c
           path: tested
+          fetch-depth: 2
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13.16'
           architecture: x64
-      - name: Prepare genuine product and verify focused public and SDK scope
+      - name: Authenticate actual product, prepare and conditionally time on this host
         shell: pwsh
+        env:
+          ROOT_AUTHORITY_JSON: ${{ inputs.root_authority_json }}
+          ROOT_AUTHORITY_SHA256: ${{ inputs.root_authority_sha256 }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           $ErrorActionPreference = 'Stop'
-          $proof = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-current308-windows-focus'
+          $base = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/current308-timing-host-v1'
+          $evidence = Join-Path $env:GITHUB_WORKSPACE 'timing-receipts'
           $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
-          $evidence = Join-Path $env:GITHUB_WORKSPACE 'current308-focus-receipts'
-          python -I -B (Join-Path $proof 'run.py') --source $source --manifest (Join-Path $proof 'source-manifest-308-v2.json') --complete-source-receipt (Join-Path $proof 'complete-source-root.json') --authority (Join-Path $proof 'root-authority.json') --evidence $evidence
-          exit $LASTEXITCODE
+          $null = New-Item -ItemType Directory -Path $evidence
+          $approval = Join-Path $evidence 'root-conditional-authority.json'
+          [IO.File]::WriteAllText($approval, $env:ROOT_AUTHORITY_JSON, [Text.UTF8Encoding]::new($false))
+          python -I -S -B (Join-Path $base 'host.py') --approval $approval --approval-sha256 $env:ROOT_AUTHORITY_SHA256 --product-admission (Join-Path $base 'root-focus-admission-v1.json') --compact-readback (Join-Path $base 'readback-v2.json') --source $source --focus (Join-Path $base 'focus') --prepare (Join-Path $base 'prepare.py') --runner (Join-Path $base 'fixed8') --stock-template (Join-Path $base 'fixed8/binding-template-v1.json') --threadpoolctl (Join-Path $base 'threadpoolctl.py') --evidence $evidence
+          $actual = $LASTEXITCODE
+          [IO.File]::WriteAllText((Join-Path $evidence 'host-exit.txt'), ([string]$actual + [char]10))
+          exit $actual
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current308-windows-focused-receipts-v1
-          retention-days: 7
-          path: |
-            current308-focus-receipts/*.json
-            current308-focus-receipts/*.log
-            current308-focus-receipts/*.xml
-            current308-focus-receipts/*.txt
+          name: current308-windows-fixed8-measurement-v1
+          path: timing-receipts/
           if-no-files-found: warn
-      - uses: actions/upload-artifact@v4
-        if: success()
-        with:
-          name: current308-windows-timing-transport-v1
-          path: |
-            tested/build/qp308/transport-wheels/*.whl
-            current308-focus-receipts/measurement.json
-            current308-focus-receipts/terminal.json
-          retention-days: 1
-          compression-level: 0
-          if-no-files-found: error

@@ -1,0 +1,11 @@
+{
+  "mode": "scalar",
+  "candidate_core": "D:\\a\\scikit-imagexx\\scikit-imagexx\\tested\\build\\qp308\\package\\skimagexx\\_core.cp313-win_amd64.pyd",
+  "stock_module": "D:\\a\\scikit-imagexx\\scikit-imagexx\\tested\\build\\qp308\\runtime-env\\Lib\\site-packages\\skimage\\morphology\\convex_hull.py",
+  "native": "tiny-diagonal-1",
+  "strict_refusal_and_replaced_provider": "strided",
+  "calls": {
+    "builtin": 3,
+    "stock": 1
+  }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="2"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="0"
+	timestamp="2026-11-23T03:59:20"
+	>
+	<testcase name="installed_convex_hull_image_consumer" classname="installed_convex_hull_image_consumer" time="0.0122342" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="installed_convex_hull_object_consumer" classname="installed_convex_hull_object_consumer" time="0.0109305" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+</testsuite>

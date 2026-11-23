@@ -1,0 +1,41 @@
+{
+  "scope": "current308-windows-installed-fixed8-v1",
+  "source": "e44a720dd2c84eedbd7e75641829c6c4f76d9a6c",
+  "tree": "c501bff41f16a4eecbde630a7d16bfa1884ceac8",
+  "stock": {
+    "scikit-image": {
+      "distribution": "scikit-image",
+      "version": "0.26.0",
+      "input_wheel_sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+      "modules": {
+        "skimage": "skimage/__init__.py",
+        "skimage.measure._label": "skimage/measure/_label.py",
+        "skimage.measure._pnpoly": "skimage/measure/_pnpoly.cp313-win_amd64.pyd",
+        "skimage.measure.pnpoly": "skimage/measure/pnpoly.py",
+        "skimage.morphology._convex_hull": "skimage/morphology/_convex_hull.cp313-win_amd64.pyd",
+        "skimage.morphology.convex_hull": "skimage/morphology/convex_hull.py"
+      }
+    },
+    "scipy": {
+      "distribution": "scipy",
+      "version": "1.18.1",
+      "input_wheel_sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+      "modules": {
+        "scipy": "scipy/__init__.py",
+        "scipy.ndimage._ni_label": "scipy/ndimage/_ni_label.cp313-win_amd64.pyd",
+        "scipy.spatial._qhull": "scipy/spatial/_qhull.cp313-win_amd64.pyd"
+      },
+      "openblas_member": "scipy.libs/libscipy_openblas-197ee2fc9b4d071f7e048078cac74115.dll"
+    },
+    "numpy": {
+      "distribution": "numpy",
+      "version": "2.5.4",
+      "input_wheel_sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129",
+      "modules": {
+        "numpy": "numpy/__init__.py",
+        "numpy._core._multiarray_umath": "numpy/_core/_multiarray_umath.cp313-win_amd64.pyd"
+      },
+      "openblas_member": "numpy.libs/libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll"
+    }
+  }
+}

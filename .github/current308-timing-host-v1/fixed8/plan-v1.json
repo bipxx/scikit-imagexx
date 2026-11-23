@@ -1,0 +1,448 @@
+{
+  "scope": "current308-windows-installed-fixed8-v1",
+  "source": "e44a720dd2c84eedbd7e75641829c6c4f76d9a6c",
+  "tree": "c501bff41f16a4eecbde630a7d16bfa1884ceac8",
+  "parent": "fc9f029391f6943695f625fa64aa6673838ba8d9",
+  "versions": {
+    "python": "3.13.16",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-image": "0.26.0"
+  },
+  "cases": {
+    "convex_hull_image": [
+      "tiny-concave",
+      "wide-sparse-extrema",
+      "dense-frame",
+      "strict-centre-hull"
+    ],
+    "convex_hull_object": [
+      "tiny-diagonal-1",
+      "tiny-diagonal-2",
+      "wide-separated",
+      "overlapping-hulls"
+    ]
+  },
+  "sources": {
+    "CMakeLists.txt": "4b3bc0dc60baf498f15c23aee6210bc1dc75f63bdd84046f62ec3f359418867f",
+    "benchmarks/convex_hull_image.py": "fcdaca6fa145a5db523d97a7d98879ec1642a2e38e8c8f67e6a9773dabd1cbf0",
+    "benchmarks/convex_hull_object.py": "4a60b50855129fa481452ea478e2256fe1191d1267dd7fea77c45f1a6b36d372",
+    "coverage/contracts/convex-hull-image-v1.json": "2cfd361c62998f369ec46cec00280ef6c8a9742b6e930936534859af8b4f6882",
+    "coverage/contracts/convex-hull-object-v1.json": "850855621b7ad41ced022ca80fe19822d48fa66ef5daf3ea00bf128e4c248272",
+    "include/skimagexx/convex_hull_image.hpp": "d4971b8f0e5bf13c7ac7825432a4c560717319a41d454243151c748dfe910c0b",
+    "include/skimagexx/convex_hull_object.hpp": "8863e8421d6b703a94e9a35a1a3ca167c69a7ac18311972331a99c002c3bc50a",
+    "pyproject.toml": "8bb611200035980a4df9e212d1d80c12ffa6890174fc851936976a51d6197866",
+    "python/skimagexx/__init__.py": "4987e9d1d2e348a8c1d5ac2bb8479f645da977a4c4fee9739aea2b90c9ed4c27",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+    "python/skimagexx/_convex_hull_image.py": "350d38a20d88ac94e1d4f6a201f9b22dad0bb7d40a5b517116f4aa2169c17bb9",
+    "python/skimagexx/_convex_hull_object.py": "da1f078dd56287ef0494fa6765feb86087513344107951670dd07734913037ac",
+    "python/skimagexx/morphology.py": "66d80047ec8b9b111d3565dd7b3c9fa27e426c9f010465b843266188bd1f742d",
+    "src/bind_convex_hull_image.cpp": "ad571709043293ed57ab60a6fd28086d1182733e8270f80c7e42065112e95bac",
+    "src/bind_convex_hull_object.cpp": "1be2e2e8910e8c5be6e1397bfedbad10a8782e56787ac86b2945402f2ef5388e",
+    "src/bindings.cpp": "8c7ff430fc32b2fac7c079653b0958a5398c3703775672c5391809edcab68f38",
+    "src/convex_hull_image.cpp": "27a37928be937467b9342535512cdc80aba72c2e030c2d7a84dc3ea668a044e7",
+    "src/convex_hull_object.cpp": "d72b8634026bba3fef16b3c7ed81a710c8e397c8fc4cca4617571d85f666a636",
+    "tests/cmake_consumer/convex_hull_image_consumer.cpp": "95ca70c1d1f4239e0b3efcd8b5b799aff59c64abb735b4019516b9eb1dfb8283",
+    "tests/cmake_consumer/convex_hull_object_consumer.cpp": "27140e77073d88cc7b32b7de899506701f4240e51e72e6d19dad14804e30d0d7",
+    "tests/fixtures/convex_hull_image_v1.py": "59c8f8f685adf930ce05069829717f554bdc9be8293e39be8435832ce454fc28",
+    "tests/fixtures/convex_hull_object_026.json": "2d9866381fa84db268938b333a134f470bd22c9b706249fd4b527a6c70347e7a",
+    "tests/sdk/convex_hull_image/CMakeLists.txt": "f39c85a1cfef004141a1c144323d275def306cc5cb10e68edc2c8cca24dcc4b9",
+    "tests/test_convex_hull_image_public.py": "95df53cd2f61734ed248995d65fd93d420e6524e7b4b324a5190d9211df9155e",
+    "tests/test_morphology_convex_hull_object.py": "87eca154f86989331c4a332653da202c3937620d775129a5e625c5b354c75516",
+    "tools/ci_measurement_artifacts.py": "104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
+    "tools/public_qualification.py": "ae9f076a3908b149161a8ea17aa5666cce424ec1b99e3bce07478fd5d2f6c1ea"
+  },
+  "stock_wheels": {
+    "scikit-image": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+    "scipy": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+    "numpy": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129"
+  },
+  "protocol": {
+    "workers": 1,
+    "cpu": 0,
+    "warmup_ms": 250,
+    "batch_ms": 100,
+    "batches_per_side": 7,
+    "accepted_total": 112,
+    "minimum_each_speedup": 1.0
+  },
+  "snapshots": {
+    "convex_hull_image": {
+      "tiny-concave": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            13,
+            17
+          ],
+          "strides": [
+            17,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "70d5269b3475f40b7540ee4256ee56cdbc484378c15d268e9b508f07dea301d5"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            13,
+            17
+          ],
+          "strides": [
+            17,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "6640c95d66fd1e0378371da4f8a1c3d40037ad927d04b1463d8d131ff150c9fc"
+        },
+        "kwargs": {
+          "offset_coordinates": true,
+          "include_borders": true
+        },
+        "stock_qhull_calls": 1
+      },
+      "wide-sparse-extrema": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            320,
+            512
+          ],
+          "strides": [
+            512,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "e94f6cb0c726bd84741a53c5aec074bf1af4c7e49a88c5d0556afc838b15bac7"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            320,
+            512
+          ],
+          "strides": [
+            512,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "d1a7e3132cf34a2c6d932f15476f42d00054c7f73b98bfea14520414b8502390"
+        },
+        "kwargs": {
+          "offset_coordinates": true,
+          "include_borders": true
+        },
+        "stock_qhull_calls": 1
+      },
+      "dense-frame": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            192,
+            256
+          ],
+          "strides": [
+            256,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "cfa57438fde2397a57bd9910dd0f7af9e8000ea086a9eb2c7dfd47826f84928b"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            192,
+            256
+          ],
+          "strides": [
+            256,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "60044b0b2001b2497bd6102800d18423d41b140b3dc12509e9b1350d918896cb"
+        },
+        "kwargs": {
+          "offset_coordinates": true,
+          "include_borders": true
+        },
+        "stock_qhull_calls": 1
+      },
+      "strict-centre-hull": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            121,
+            173
+          ],
+          "strides": [
+            173,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "2a02480ecbb9badca114b607f53d3685987faba4c1ff17989d76ff72249d937c"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            121,
+            173
+          ],
+          "strides": [
+            173,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "cdc3762623cafb00baa1f041c3b6e95624fbefdb7b5827906e9ea06a784bbece"
+        },
+        "kwargs": {
+          "offset_coordinates": false,
+          "include_borders": false
+        },
+        "stock_qhull_calls": 1
+      }
+    },
+    "convex_hull_object": {
+      "tiny-diagonal-1": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            13,
+            17
+          ],
+          "strides": [
+            17,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "d2190e52f6cba7bc003f9d108e185f36ac09df16d1928fdc14d33e5bb9e7504c"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            13,
+            17
+          ],
+          "strides": [
+            17,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "760824fcd34382dc3c88290e7b4fe6ae01e4567bf9fe152f6cf3b9915875764d"
+        },
+        "kwargs": {
+          "connectivity": 1
+        },
+        "stock_qhull_calls": 2
+      },
+      "tiny-diagonal-2": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            13,
+            17
+          ],
+          "strides": [
+            17,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "d2190e52f6cba7bc003f9d108e185f36ac09df16d1928fdc14d33e5bb9e7504c"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            13,
+            17
+          ],
+          "strides": [
+            17,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "3a0cedf205832878f43dd5b8c37c69cd4fb25523da1128c53ef09972675d577b"
+        },
+        "kwargs": {},
+        "stock_qhull_calls": 1
+      },
+      "wide-separated": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            128,
+            192
+          ],
+          "strides": [
+            192,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "5115e55ba69a89c0f548db806c5daacadd6aad60233091fb45cc717b6090ff6a"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            128,
+            192
+          ],
+          "strides": [
+            192,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "ca8e195ec4fdeb47897d5e96fad5289546d58d75eef52e3ffe610b46c37dc572"
+        },
+        "kwargs": {
+          "connectivity": 1
+        },
+        "stock_qhull_calls": 35
+      },
+      "overlapping-hulls": {
+        "input": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            96,
+            144
+          ],
+          "strides": [
+            144,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "e87bc157aa1bd0b0c480d7dfd0c2533c77d6c8840f960d73b4a25f04d01fbbaf"
+        },
+        "output": {
+          "type": "numpy.ndarray",
+          "dtype": "|b1",
+          "metadata": null,
+          "shape": [
+            96,
+            144
+          ],
+          "strides": [
+            144,
+            1
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "aligned": true,
+          "writeable": true,
+          "base_type": "NoneType",
+          "sha256": "58c8ba76caf36295505bba935ee6dad23409c812b304c09621980fd5dc688d51"
+        },
+        "kwargs": {},
+        "stock_qhull_calls": 2
+      }
+    }
+  },
+  "receipt_pins": {
+    "build/evidence/u182-next-numerical-lookahead/convex-hull/image-timing-v1/windows-correctness-v1.jsonl": "86a762118df6d56c9519bf7d522944f11ae3b9d16be094c611c84f1636aca4c9",
+    "build/evidence/u182-next-numerical-lookahead/convex-hull/object-timing-v1/windows-correctness-v1.jsonl": "ac1cce58d160cef5e6643f6a4e34ae9db19c9838b531acdf1426945d878aae74"
+  }
+}
