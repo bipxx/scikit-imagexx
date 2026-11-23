@@ -1,0 +1,216 @@
+{
+  "source": "1f38e91f3a7d422a5b370d769edd75c412310c6d",
+  "tree": "06e0502fa06bb4bae231df85944338b4f1212428",
+  "parent": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+  "identity": {
+    "runtime_version": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+    "runtime_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
+    "versions": {
+      "python": "3.13.8",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit_image": "0.26.0"
+    },
+    "distributions": {
+      "scikit_image": {
+        "version": "0.26.0",
+        "record_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+        "files": {
+          "skimage/__init__.py": {
+            "bytes": 4107,
+            "sha256": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071",
+            "lf_sha256": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071"
+          },
+          "skimage/transform/hough_transform.py": {
+            "bytes": 15861,
+            "sha256": "a4790f5ad1570e18b35a6d52828a3390124fe7f05acb9c6bd2ab05797c0ca198",
+            "lf_sha256": "a4790f5ad1570e18b35a6d52828a3390124fe7f05acb9c6bd2ab05797c0ca198"
+          },
+          "skimage/transform/_hough_transform.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 314928,
+            "sha256": "3d81a160bcad46a69edce38431cb4c5add65894c049d3e2ba3b163716d153e49",
+            "lf_sha256": null
+          },
+          "skimage/feature/peak.py": {
+            "bytes": 14478,
+            "sha256": "85bfb42d42ad7150f3eec68d5778ded7556a36d386cf7953e326b0d09767cdc3",
+            "lf_sha256": "85bfb42d42ad7150f3eec68d5778ded7556a36d386cf7953e326b0d09767cdc3"
+          },
+          "skimage/measure/_label.py": {
+            "bytes": 3960,
+            "sha256": "5a84738defe564b6e5074052a46b1be2b1e27d683d64ef6ed7d16e76afc798f5",
+            "lf_sha256": "5a84738defe564b6e5074052a46b1be2b1e27d683d64ef6ed7d16e76afc798f5"
+          },
+          "skimage/measure/_regionprops.py": {
+            "bytes": 54319,
+            "sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+            "lf_sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007"
+          },
+          "skimage/measure/_regionprops_utils.py": {
+            "bytes": 15999,
+            "sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21",
+            "lf_sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+          },
+          "skimage/morphology/_util.py": {
+            "bytes": 12019,
+            "sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7",
+            "lf_sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7"
+          },
+          "skimage/draw/draw.py": {
+            "sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+            "bytes": 33590,
+            "lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49"
+          },
+          "skimage/draw/_draw.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4",
+            "bytes": 356776,
+            "lf_sha256": null
+          }
+        }
+      },
+      "scipy": {
+        "version": "1.18.1",
+        "record_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+        "files": {
+          "scipy/__init__.py": {
+            "bytes": 4193,
+            "sha256": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76",
+            "lf_sha256": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76"
+          },
+          "scipy/ndimage/_filters.py": {
+            "bytes": 93373,
+            "sha256": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223",
+            "lf_sha256": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223"
+          },
+          "scipy/ndimage/_measurements.py": {
+            "bytes": 56274,
+            "sha256": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911",
+            "lf_sha256": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911"
+          },
+          "scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 175576,
+            "sha256": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092",
+            "lf_sha256": null
+          },
+          "scipy/ndimage/_ni_label.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 224360,
+            "sha256": "16f667276c477502c72fa24257c681d6ccddf2786a2b76f133f81a2c446918dc",
+            "lf_sha256": null
+          },
+          "scipy/spatial/_ckdtree.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "912c98f19e3fafea9b29a5242f993f9bd1aae97d69ed0de179d680eecdd9eb00",
+            "bytes": 782320,
+            "lf_sha256": null
+          }
+        }
+      },
+      "numpy": {
+        "version": "2.5.4",
+        "record_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+        "files": {
+          "numpy/__init__.py": {
+            "bytes": 25220,
+            "sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+            "lf_sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11"
+          },
+          "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "lf_sha256": null
+          }
+        }
+      }
+    }
+  },
+  "prepared": {
+    "full-output-sparse": {
+      "sha256": "5d0c0ecf4a304aeb0ee13a64d9fe74ef83477e769bd781c6007fb1aace7157f6",
+      "input": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": false,
+        "size": 37440,
+        "shape": [
+          3,
+          104,
+          120
+        ],
+        "strides": [
+          99840,
+          960,
+          8
+        ],
+        "c_order": true,
+        "f_order": false,
+        "aligned": true,
+        "owns": true,
+        "writable": true,
+        "base": "NoneType",
+        "sha256": "cf60a49866d37ebbd543287fef9024bacbb097be78d4e0eefd02f4b1e740bb52"
+      }
+    },
+    "dense-unit-counts": {
+      "sha256": "98a30f19d2474b1bf813c450f5ae20338743281114503e2321ccbdb1eb950ca2",
+      "input": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": false,
+        "size": 11520,
+        "shape": [
+          2,
+          72,
+          80
+        ],
+        "strides": [
+          46080,
+          640,
+          8
+        ],
+        "c_order": true,
+        "f_order": false,
+        "aligned": true,
+        "owns": true,
+        "writable": true,
+        "base": "NoneType",
+        "sha256": "9a18e6bcc669eecddb5ec01d3b21abc2479213102b1e9f770d28213c7726891d"
+      }
+    },
+    "sparse-normalized": {
+      "sha256": "5e4b6d8636cfa462550e7631e79f2e3aa634d727440c5942a5d8c2d7eb5ed1f7",
+      "input": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": false,
+        "size": 43008,
+        "shape": [
+          3,
+          112,
+          128
+        ],
+        "strides": [
+          114688,
+          1024,
+          8
+        ],
+        "c_order": true,
+        "f_order": false,
+        "aligned": true,
+        "owns": true,
+        "writable": true,
+        "base": "NoneType",
+        "sha256": "9af159f28a7269486777849e4697ff8dc541ce4d8d53906866e585c75502b2cb"
+      }
+    }
+  },
+  "launcher_sha256": "18cac8c35f1b4986e702aa20800c02e5c9585a8828f337849ef74eaa0024361f",
+  "fixed": [
+    "peak-default-real",
+    "peak-normalized-ranking",
+    "peak-cross-radius-pruning",
+    "peak-capped-equal"
+  ],
+  "actual_affinity": [
+    0
+  ],
+  "incremental_cap_bytes": 8388608
+}

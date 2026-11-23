@@ -1,22 +1,51 @@
-name: benchmark-report-json
+name: Circular Hough peaks modern stock diagnostic
 on:
-  push:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
-  pull_request:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
   workflow_dispatch:
+    inputs:
+      authority:
+        required: true
+        type: string
+      authority_sha256:
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
 jobs:
-  json-syntax:
-    runs-on: ubuntu-latest
+  stock:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      OMP_THREAD_LIMIT: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - run: python tools/check_report_json.py
+          persist-credentials: false
+          sparse-checkout: .github/u182-circle-peaks-stock-v1
+      - name: Verify scope and run stock capture
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HOUGH_STOCK_AUTHORITY: ${{ inputs.authority }}
+          HOUGH_STOCK_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-stock-v1/run.py
+          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-stock-v1/collect.py circle-peaks-stock-results > circle-peaks-stock-results/collection.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: u182-circle-peaks-modern-stock-v1
+          path: |
+            circle-peaks-stock-results/*.json
+            circle-peaks-stock-results/*.log
+            circle-peaks-stock-results/capture/*.json
+            circle-peaks-stock-results/capture/*.jsonl
+          if-no-files-found: warn

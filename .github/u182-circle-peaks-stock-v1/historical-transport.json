@@ -1,0 +1,27 @@
+{
+  "compressed_member_sizes": {
+    "manifest.json": 1983990,
+    "runtime-wheels/imageio-2.38.1-py3-none-any.whl": 324062,
+    "runtime-wheels/lazy_loader-0.6-py3-none-any.whl": 8287,
+    "runtime-wheels/networkx-3.7-py3-none-any.whl": 2079183,
+    "runtime-wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": 16522730,
+    "runtime-wheels/packaging-26.3-py3-none-any.whl": 128146,
+    "runtime-wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": 7108006,
+    "runtime-wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": 13592561,
+    "runtime-wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": 34895509,
+    "runtime-wheels/tifffile-2026.10.15-py3-none-any.whl": 275204
+  },
+  "head_branch": "integrate/upstream-only-haar-draft",
+  "namespace": "public-qualification/modern/",
+  "size_in_bytes": 2341255972,
+  "transport_source_sha256": {
+    "artifact.json": {
+      "bytes": 418,
+      "sha256": "b798255b865162e0d57b8c94c4807ec24c60985e7fe796cc01da912b2eb4a7a8"
+    },
+    "central-directory.json": {
+      "bytes": 14851220,
+      "sha256": "3b6e0a7eb79a54c256aa6e73e733305ab6c92727fa4b863c6d33a77de4462b86"
+    }
+  }
+}

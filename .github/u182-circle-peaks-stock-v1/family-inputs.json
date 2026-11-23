@@ -1,0 +1,65 @@
+{
+  "source_identity": [
+    "1f38e91f3a7d422a5b370d769edd75c412310c6d",
+    "06e0502fa06bb4bae231df85944338b4f1212428",
+    "3a1e341cef14d143ebd055e40750be2cfe6012f9"
+  ],
+  "inputs": {
+    "capture": "18cac8c35f1b4986e702aa20800c02e5c9585a8828f337849ef74eaa0024361f",
+    "prior_entry": "198df3471302f423ef0183d85343df9ea082c064ea151095a3ddfbfa59fdfeb0"
+  },
+  "source_files": {
+    "tests/hough_circle_peaks_reference.py": {
+      "bytes": 5508,
+      "git_blob": "c88b7c3d4d6eda547915a4136ec471c9d3a35f91",
+      "sha256": "94e5705f44445087c54369795836d45c9ed36e3c1da123beb32e1ffc7940ee2e"
+    },
+    "coverage/contracts/hough-circle-peaks-stock-v1.json": {
+      "bytes": 237066,
+      "git_blob": "c560c8e9da1cf4cd7be9b334b4bf9a17743cfb4f",
+      "sha256": "cbe53ceb7e81926337637ef40324f7725fe3de002dbe96e8818a7785e804d2d9"
+    }
+  },
+  "prepared_sizes": {
+    "full-output-sparse": 299648,
+    "dense-unit-counts": 92288,
+    "sparse-normalized": 344192
+  },
+  "fixed": [
+    "peak-default-real",
+    "peak-normalized-ranking",
+    "peak-cross-radius-pruning",
+    "peak-capped-equal"
+  ],
+  "row_ids": [
+    "raw-default",
+    "normalized-sorts-raw-output",
+    "default-centers-retained",
+    "inclusive-cross-suppression",
+    "normalized-cross-suppression",
+    "threshold-strict-and-plane-cap",
+    "total-cap-default-view",
+    "total-cap-zero",
+    "plane-cap-zero",
+    "blank",
+    "from-full-border",
+    "reordered-radius-dtype",
+    "short-radii-zip",
+    "zero-radius-normalize",
+    "fractional-active-cap",
+    "peak-default-real",
+    "peak-normalized-ranking",
+    "peak-cross-radius-pruning",
+    "peak-capped-equal",
+    "zero-radius-axis-matching",
+    "zero-radius-axis-zip-truncation",
+    "zero-spatial-default-threshold",
+    "zero-spatial-explicit-threshold",
+    "total-zero-with-pruning",
+    "zero-spacing-mixed-centroid-half-even",
+    "negative-local-distance",
+    "wrapped-x-mirrors-and-preserves-row-zero",
+    "anisotropic-inclusive-corner-and-outside",
+    "float32-accumulator-int16-radii"
+  ]
+}
