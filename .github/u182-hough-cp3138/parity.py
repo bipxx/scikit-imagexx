@@ -1,4 +1,4 @@
-"""Compare private component calls to admitted saved modern stock rows."""
+"""Check the four pinned performance cases on one new private component."""
 from hashlib import sha256
 from importlib import import_module
 from importlib.util import module_from_spec, spec_from_file_location
@@ -92,10 +92,6 @@ def line_cases(source, helper, np, xx, function, hits):
         finally:
             xx.set_fallback_enabled(False)
 
-    for case, expected in zip(helper["stock_cases"](np), observation["rows"], strict=True):
-        case_id, image, theta, scope = case
-        assert (case_id, scope) == (expected["id"], expected["scope"])
-        yield case_id, lambda: check(image, theta, expected, scope == "bounded")
     recipes = runpy.run_path(str(source / "benchmarks/hough_line.py"))["benchmark_cases"](np)
     for case, expected in zip(recipes, observation["future_benchmark_endpoints"], strict=True):
         case_id, image, theta, recipe = case
@@ -125,6 +121,8 @@ def ellipse_cases(helper, np, function, hits):
         assert snapshot(image, content=True) == row["image"]
 
     for row in rows:
+        if row["scope"] != "benchmark":
+            continue
         yield row["id"], lambda: check(row)
 
 
@@ -150,16 +148,20 @@ def probabilistic_cases(helper, np, function, hits):
 
     for case, row in zip(helper["cases"](np), saved, strict=True):
         assert case[0] == row["id"]
-        yield row["id"], lambda: check(case, row)
+        if row["scope"] == "benchmark":
+            yield row["id"], lambda: check(case, row)
 
 
 def main():
     name, mode, source, binary, stock, candidate, result = sys.argv[1:]
     assert not sys.flags.optimize and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode
-    assert mode in {"normal", "scalar"} and bool(os.environ.get("SKIMAGEXX_DISABLE_SIMD")) == (mode == "scalar")
+    assert mode == "normal" and not os.environ.get("SKIMAGEXX_DISABLE_SIMD")
     assert os.sched_getaffinity(0) == {0}
     source, binary, stock, candidate, result = map(Path, (source, binary, stock, candidate, result))
     packet = json.loads((HERE / "bootstrap-v1.json").read_bytes())
+    prepared = json.loads((HERE / "speed-prep-v1.json").read_bytes())["families"][name]
+    recipe = prepared["benchmark_recipe"]
+    assert digest(source / recipe["path"]) == recipe["sha256"]
     sys.path[:0] = [str(candidate), str(stock)]
     import numpy as np
     import skimagexx as xx
@@ -177,7 +179,7 @@ def main():
         assert random.default_rng is modules["_generator"].default_rng
     core = packet["donor"]["core"]
     assert Path(_core.__file__).resolve() == candidate / core["member"] and digest(_core.__file__) == core["sha256"]
-    assert xx.get_num_threads() == 1 and (mode != "scalar" or not xx.has_avx2())
+    assert xx.get_num_threads() == 1
     attach("_" + name + "_private", binary).attach_to_core(_core)
     symbol = SYMBOLS[name]
     native = getattr(_core, symbol)
@@ -202,20 +204,22 @@ def main():
     else:
         cases = probabilistic_cases(helper, np, function, hits)
     rows = []
-    for label, check in cases:
+    for (label, check), expected in zip(cases, prepared["frozen_cases"], strict=True):
+        assert label == expected["id"]
         hits.clear()
         try:
             check()
             failure = None
         except Exception:
             failure = traceback.format_exc()
-        rows.append({"id": label, "native_hits": len(hits), "failure": failure})
+        rows.append({"id": label, "native_hits": len(hits), "failure": failure,
+                     "expected_stock_row_sha256": expected["canonical_row_sha256"]})
     setattr(_core, symbol, native)
     with result.open("x", encoding="utf-8", newline="\n") as output:
         json.dump({"rows": rows, "mode": mode, "private_sha256": digest(binary), "core_sha256": core["sha256"],
                    "workers": xx.get_num_threads(), "avx2": bool(xx.has_avx2())}, output, indent=2)
         output.write("\n")
-    assert len(rows) == packet["families"]["transform." + name]["named_stock_rows"] and all(not row["failure"] for row in rows)
+    assert len(rows) == 4 and all(row["native_hits"] == 1 and row["failure"] is None for row in rows)
 
 
 if __name__ == "__main__":

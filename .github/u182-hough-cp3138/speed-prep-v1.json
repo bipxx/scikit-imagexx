@@ -1,0 +1,221 @@
+{
+  "purpose": "prepare-modern-fixed-hough",
+  "prior_modern_admission_sha256": "821418991253dcf6f8d3ac9e46325822cf95394675021bfa7697020aef155b7e",
+  "readiness_sha256": "82f253abc0f8e02b8c5f1bfe88bea8ed8be14e67777557354224bd81a30a35d7",
+  "prior_carrier": "16c0353c3f9357026c9f2a4d82b0729bb7727725",
+  "bootstrap_sha256": "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8",
+  "families": {
+    "hough_line": {
+      "source_ref": "refs/heads/diagnostics/u182-cp3138-source-hough-line-v1",
+      "source": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1",
+      "tree": "e4beb81959d967ddfa84f49d12ecf244aee0748e",
+      "benchmark_recipe": {
+        "blob": "1f2f5b4855e787c6c4dc67f995f2b229ad84dc65",
+        "bytes": 1218,
+        "path": "benchmarks/hough_line.py",
+        "sha256": "795efc14c5f954d5ba4eae3803199000c436c707850b7ee8602970fac54cf733",
+        "source": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1"
+      },
+      "frozen_cases": [
+        {
+          "canonical_row_sha256": "1cf93c67baa9b29e772c16742e43f9d467a172ff4ca0a46583d73c9f8e6b1d56",
+          "id": "no-votes-default-64x96"
+        },
+        {
+          "canonical_row_sha256": "b1c02f042e4a7ebe1ca2917f2bdd8e543b642e4b4d628ec42a0d142f15bc6f5c",
+          "id": "linework-default-160x192"
+        },
+        {
+          "canonical_row_sha256": "6f4856eef3bcd82f860cfcd68cb461c1e6e2e75e5a32192e7cd0d3fc09bafa73",
+          "id": "sparse-custom-257"
+        },
+        {
+          "canonical_row_sha256": "af8c720103770963aa006750ca9f977ce63dde9b41d0d3b1870673426575e229",
+          "id": "dense-custom-91"
+        }
+      ],
+      "argv": {
+        "leaf": [
+          "/usr/bin/g++",
+          "-std=c++17",
+          "-O3",
+          "-fPIC",
+          "-fvisibility=hidden",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-frounding-math",
+          "-I{FIXTURE}/hough_line/include",
+          "-c",
+          "{FIXTURE}/hough_line/src/hough_line.cpp",
+          "-o",
+          "{FIXTURE}/hough_line.o"
+        ],
+        "link": [
+          "/usr/bin/g++",
+          "-std=c++17",
+          "-O3",
+          "-fPIC",
+          "-fvisibility=hidden",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-frounding-math",
+          "-I{FIXTURE}/hough_line/include",
+          "-I{FIXTURE}/hough_line/src",
+          "-I{FIXTURE}/cp3138/python/include/python3.13",
+          "-I{FIXTURE}/pybind/pybind11/include",
+          "-shared",
+          "{FIXTURE}/hough_line/src/bind_hough_line.cpp",
+          "{CARRIER}/.github/u182-hough-cp3138/storage_projection.cpp",
+          "{CARRIER}/.github/u182-hough-cp3138/hough_line-bridge.cpp",
+          "{FIXTURE}/hough_line.o",
+          "-o",
+          "{FIXTURE}/_hough_line_private.cpython-313-x86_64-linux-gnu.so"
+        ]
+      }
+    },
+    "hough_ellipse": {
+      "source_ref": "refs/heads/diagnostics/u182-cp3138-source-hough-ellipse-v1",
+      "source": "ec6baf91152757be6d1c8b632defed07c37a2ee0",
+      "tree": "038f67c871a50e5668160eb514b3bd7da720bcbe",
+      "benchmark_recipe": {
+        "blob": "01132933c8b4d388aec1746279683d71fdcd3125",
+        "bytes": 800,
+        "path": "benchmarks/hough_ellipse.py",
+        "sha256": "1f7e4882dab3975e74fad0619db9eae88e80d8fc573daf1a657a52ef99f2c06a",
+        "source": "ec6baf91152757be6d1c8b632defed07c37a2ee0"
+      },
+      "frozen_cases": [
+        {
+          "canonical_row_sha256": "36bb12720936481bce0eaa196afcdd68795910d4a64480f7d72b5b5825df77db",
+          "id": "documented-axis-ellipse"
+        },
+        {
+          "canonical_row_sha256": "9f527a664b3b93bb59c7183a7d8b3e9399db1eb09d21cb53b13966eab885920f",
+          "id": "asymmetric-binary-step"
+        },
+        {
+          "canonical_row_sha256": "6699b9c756fd9b706872272f4fe08fcb6138b78e9e9783004b2381cc90618950",
+          "id": "two-small-rings"
+        },
+        {
+          "canonical_row_sha256": "57cdd1d4472c4c234c0fdfa3e30124956123401b839725740d205fec0602e587",
+          "id": "clipped-sheared-ring"
+        }
+      ],
+      "argv": {
+        "leaf": [
+          "/usr/bin/g++",
+          "-std=c++17",
+          "-O3",
+          "-fPIC",
+          "-fvisibility=hidden",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-frounding-math",
+          "-I{FIXTURE}/hough_ellipse/include",
+          "-c",
+          "{FIXTURE}/hough_ellipse/src/hough_ellipse.cpp",
+          "-o",
+          "{FIXTURE}/hough_ellipse.o"
+        ],
+        "link": [
+          "/usr/bin/g++",
+          "-std=c++17",
+          "-O3",
+          "-fPIC",
+          "-fvisibility=hidden",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-frounding-math",
+          "-I{FIXTURE}/hough_ellipse/include",
+          "-I{FIXTURE}/hough_ellipse/src",
+          "-I{FIXTURE}/cp3138/python/include/python3.13",
+          "-I{FIXTURE}/pybind/pybind11/include",
+          "-shared",
+          "{FIXTURE}/hough_ellipse/src/bind_hough_ellipse.cpp",
+          "{CARRIER}/.github/u182-hough-cp3138/storage_projection.cpp",
+          "{CARRIER}/.github/u182-hough-cp3138/hough_ellipse-bridge.cpp",
+          "{FIXTURE}/hough_ellipse.o",
+          "-o",
+          "{FIXTURE}/_hough_ellipse_private.cpython-313-x86_64-linux-gnu.so"
+        ]
+      }
+    },
+    "probabilistic_hough_line": {
+      "source_ref": "refs/heads/diagnostics/u182-cp3138-source-probabilistic-hough-line-v1",
+      "source": "de12294729f875559862a9c3a9afcf6061694f94",
+      "tree": "c27e1f7181e26b244b2e452f1e46af47ad3c7210",
+      "benchmark_recipe": {
+        "blob": "89d50cc47206b0c6361173ed647c8c48744cbf15",
+        "bytes": 901,
+        "path": "benchmarks/probabilistic_hough_line.py",
+        "sha256": "1aee1b3e2e52dffea0703d91165dae16e851926e790356e6b6ab7f56ce697c82",
+        "source": "de12294729f875559862a9c3a9afcf6061694f94"
+      },
+      "frozen_cases": [
+        {
+          "canonical_row_sha256": "d9f162e79c7dfba01d82b3fc46a497a0dd03e05f34e6042dabbcd40f0d2970d4",
+          "id": "default-cross-diagonal"
+        },
+        {
+          "canonical_row_sha256": "0ad11678b9c2a96b9a07f72df714ae543fb14d75ae68ba114e6d94e4cda17d64",
+          "id": "gapped-three-angles"
+        },
+        {
+          "canonical_row_sha256": "c95a48cb96389479dbd7e23e0d7c4273069965859a04ccd1dfeeaf676c49795a",
+          "id": "sparse-two-diagonals"
+        },
+        {
+          "canonical_row_sha256": "af205b33581dd5e493fef0623fe8c5b2d18d0b4c70d6c0ec3596f69ef8102f35",
+          "id": "dense-default-bands"
+        }
+      ],
+      "argv": {
+        "leaf": [
+          "/usr/bin/g++",
+          "-std=c++17",
+          "-O3",
+          "-fPIC",
+          "-fvisibility=hidden",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-frounding-math",
+          "-I{FIXTURE}/probabilistic_hough_line/include",
+          "-c",
+          "{FIXTURE}/probabilistic_hough_line/src/probabilistic_hough_line.cpp",
+          "-o",
+          "{FIXTURE}/probabilistic_hough_line.o"
+        ],
+        "link": [
+          "/usr/bin/g++",
+          "-std=c++17",
+          "-O3",
+          "-fPIC",
+          "-fvisibility=hidden",
+          "-fno-fast-math",
+          "-ffp-contract=off",
+          "-frounding-math",
+          "-I{FIXTURE}/probabilistic_hough_line/include",
+          "-I{FIXTURE}/probabilistic_hough_line/src",
+          "-I{FIXTURE}/cp3138/python/include/python3.13",
+          "-I{FIXTURE}/pybind/pybind11/include",
+          "-shared",
+          "{FIXTURE}/probabilistic_hough_line/src/bind_probabilistic_hough_line.cpp",
+          "{CARRIER}/.github/u182-hough-cp3138/storage_projection.cpp",
+          "{CARRIER}/.github/u182-hough-cp3138/probabilistic_hough_line-bridge.cpp",
+          "{FIXTURE}/probabilistic_hough_line.o",
+          "-o",
+          "{FIXTURE}/_probabilistic_hough_line_private.cpython-313-x86_64-linux-gnu.so"
+        ]
+      }
+    }
+  },
+  "core": {
+    "bytes": 8929992,
+    "member": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+    "sha256": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc"
+  },
+  "selected_provider_files": 24,
+  "transport_artifact": "u182-hough-modern-fixed-prep-elf-v1",
+  "transport_size_limit_bytes": 4194304
+}

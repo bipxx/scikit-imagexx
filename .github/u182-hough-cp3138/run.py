@@ -1,4 +1,4 @@
-"""Authorized hosted Hough input and direct-component diagnostic."""
+"""Prepare authenticated modern Hough mini-extensions for a later quiet run."""
 from base64 import urlsafe_b64encode
 import csv
 from datetime import datetime, timezone
@@ -22,8 +22,8 @@ from zipfile import ZipFile
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
 BOOT = "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
-PRIOR_ADMISSION = "8529d59841e44304ec8120d46ef6a9448fde0163449e88bb388de9ea7fe972c5"
-FAMILY = "probabilistic_hough_line"
+PRIOR_ADMISSION = "821418991253dcf6f8d3ac9e46325822cf95394675021bfa7697020aef155b7e"
+PREP = "8c9dd5b42d5bc88249794f1c7a2de229716ed5c916c8dbb2f35c5b21d81c5df4"
 FLOOR = 30 * 2**30
 FLAGS = ["-std=c++17", "-O3", "-fPIC", "-fvisibility=hidden", "-fno-fast-math", "-ffp-contract=off", "-frounding-math"]
 CAP = 150 * 2**20
@@ -45,14 +45,14 @@ def write(path, value):
 
 def authority(env, now):
     assert env["GITHUB_ACTIONS"] == "true" and env["GITHUB_REPOSITORY"] == REPO
-    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-direct-v4"
+    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-speed-prep-v1"
     assert env["GITHUB_EVENT_NAME"] == "workflow_dispatch"
     raw = env["HOUGH_AUTHORITY"].encode()
     assert len(raw) < 1024 and digest(raw) == env["HOUGH_AUTHORITY_SHA256"]
     value = json.loads(raw)
-    assert set(value) == {"carrier", "packet", "purpose", "deadline_utc", "prior_root_admission_sha256"}
-    assert (value["carrier"], value["packet"]) == (env["GITHUB_SHA"], BOOT)
-    assert (value["purpose"], value["prior_root_admission_sha256"]) == ("probabilistic-parity", PRIOR_ADMISSION)
+    assert set(value) == {"carrier", "packet", "preparation", "purpose", "deadline_utc", "prior_modern_admission_sha256"}
+    assert (value["carrier"], value["packet"], value["preparation"]) == (env["GITHUB_SHA"], BOOT, PREP)
+    assert (value["purpose"], value["prior_modern_admission_sha256"]) == ("prepare-modern-fixed-hough", PRIOR_ADMISSION)
     deadline = datetime.fromisoformat(value["deadline_utc"])
     assert 0 < (deadline - now).total_seconds() <= 5400
     return value
@@ -226,23 +226,24 @@ def stage_source(packet, out, work):
         ("remote.origin.promisor", "true"), ("remote.origin.partialclonefilter", "blob:none")
     ):
         command(out, "git-" + key.rsplit(".", 1)[-1], [*repo_git, "config", key, value])
-    family_id = "transform." + FAMILY
-    family = packet["families"][family_id]
-    ref = family["ref"]
+    refs = [row["ref"] for row in packet["families"].values()]
     command(out, "git-fetch", [*repo_git, "fetch", "--no-tags", "--depth=2", "--filter=blob:none", "origin",
-                               f"{ref}:{ref}"])
+                               *[f"{ref}:{ref}" for ref in refs]])
     command(out, "source-proof", [sys.executable, "-I", "-S", "-B", HERE / "verify-inputs.py", "--packet",
-                                  HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "source", "--repo", mirror, "--git", git,
-                                  "--family", family_id])
-    source = work / FAMILY
-    source.mkdir()
-    for path in family["owned_git_files"] | family["verified_shared_git_files"]:
-        raw = subprocess.check_output([*repo_git, "cat-file", "blob", f"{family['source']}:{path}"])
-        path = source / path
-        path.parent.mkdir(exist_ok=True, parents=True)
-        with path.open("xb") as output:
-            output.write(raw)
-    return source
+                                  HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "source", "--repo", mirror, "--git", git])
+    source_roots = {}
+    for name, family in packet["families"].items():
+        name = name.rsplit(".", 1)[1]
+        destination = work / name
+        destination.mkdir()
+        for path in family["owned_git_files"] | family["verified_shared_git_files"]:
+            raw = subprocess.check_output([*repo_git, "cat-file", "blob", f"{family['source']}:{path}"])
+            path = destination / path
+            path.parent.mkdir(exist_ok=True, parents=True)
+            with path.open("xb") as output:
+                output.write(raw)
+        source_roots[name] = destination
+    return source_roots
 
 
 def resolve_driver_linker(reported):
@@ -291,34 +292,34 @@ def verify_tools(packet, out):
     return compiler
 
 
-def probabilistic_parity(packet, compiler, out, work, source, python, stock, pybind, candidate):
-    include = subprocess.check_output([python, "-I", "-S", "-B", "-c", "import sysconfig; print(sysconfig.get_path('include'))"], text=True).strip()
-    failures = []
+def prepare_fixed(packet, plan, compiler, out, work, sources, python, stock, candidate):
     children_env = {**os.environ, "TMPDIR": str(work)}
     children_env.pop("GH_TOKEN", None)
-    leaf = source / "src" / (FAMILY + ".cpp")
-    binary = work / ("_" + FAMILY + "_private" + packet["runtime"]["ext_suffix"])
-    cpp = [compiler, *FLAGS, "-I" + str(source / "include")]
-    obj = work / (FAMILY + ".o")
-    command(out, FAMILY + "-leaf", [*cpp, "-c", leaf, "-o", obj], env=children_env)
-    command(out, FAMILY + "-link", [*cpp, "-I" + str(source / "src"), "-I" + include, "-I" + str(pybind),
-            "-shared", source / "src" / ("bind_" + FAMILY + ".cpp"), HERE / "storage_projection.cpp",
-            HERE / (FAMILY + "-bridge.cpp"), obj, "-o", binary], env=children_env)
-    exports = subprocess.check_output(["/usr/bin/readelf", "-hWs", binary], text=True)
-    assert "ELF64" in exports and "X86-64" in exports and re.search(r"\bPyInit__" + FAMILY + r"_private\b", exports)
-    write(out / (FAMILY + "-elf.json"), seal(binary))
-    assert sum(path.stat().st_size for path in work.iterdir() if path.is_file()) <= CAP
-    for mode in ("normal", "scalar"):
-        env = dict(children_env)
-        env.pop("SKIMAGEXX_DISABLE_SIMD", None)
-        if mode == "scalar":
-            env["SKIMAGEXX_DISABLE_SIMD"] = "1"
-        label = FAMILY + "-" + mode
-        if command(out, label, ["taskset", "-c", "0", python, "-I", "-S", "-B", HERE / "parity.py",
-                               FAMILY, mode, source, binary, stock, candidate, out / (label + "-cases.json")],
-                   env=env, check=False):
-            failures.append(label)
-    return failures
+    children_env.pop("SKIMAGEXX_DISABLE_SIMD", None)
+    products = {}
+    for family, records in plan["families"].items():
+        source = sources[family]
+        recipe = records["benchmark_recipe"]
+        assert seal(source / recipe["path"]) == seal_dict(recipe)
+        for stage in ("leaf", "link"):
+            template = records["argv"][stage]
+            assert template[:8] == [str(compiler), *FLAGS]
+            argv = [arg.replace("{FIXTURE}", str(work)).replace("{CARRIER}", str(HERE.parents[1])) for arg in template]
+            command(out, f"{family}-{stage}", argv, env=children_env)
+        binary = work / ("_" + family + "_private" + packet["runtime"]["ext_suffix"])
+        exports = subprocess.check_output(["/usr/bin/readelf", "-hWs", binary], text=True)
+        assert "ELF64" in exports and "X86-64" in exports and re.search(r"\bPyInit__" + family + r"_private\b", exports)
+        identity = seal(binary)
+        assert sum(path.stat().st_size for path in work.iterdir() if path.is_file()) <= CAP
+        label = family + "-fixed"
+        witness = out / (label + "-cases.json")
+        command(out, label, ["taskset", "-c", "0", python, "-I", "-S", "-B", HERE / "parity.py",
+                             family, "normal", source, binary, stock, candidate, witness], env=children_env)
+        assert seal(binary) == identity
+        products[family] = {"source": records["source"], "tree": records["tree"], "elf": {"name": binary.name, **identity},
+                            "fixed_cases": records["frozen_cases"], "witness": seal(witness),
+                            "leaf_command": seal(out / f"{family}-leaf.json"), "link_command": seal(out / f"{family}-link.json")}
+    return products
 
 
 def main():
@@ -326,11 +327,14 @@ def main():
     raw = (HERE / "bootstrap-v1.json").read_bytes()
     assert digest(raw) == BOOT
     packet = json.loads(raw)
+    plan_raw = (HERE / "speed-prep-v1.json").read_bytes()
+    assert digest(plan_raw) == PREP
+    plan = json.loads(plan_raw)
+    assert plan["prior_modern_admission_sha256"] == value["prior_modern_admission_sha256"]
     pins = json.loads((HERE / "carrier-inputs.json").read_bytes())
     for path, pin in pins.items():
         assert seal(HERE / path) == pin, path
     reused = json.loads((HERE / "v3-reuse-v1.json").read_bytes())
-    assert reused["root_admission_sha256"] == value["prior_root_admission_sha256"]
     workspace = Path(os.environ["GITHUB_WORKSPACE"]).resolve(strict=True)
     temp = Path(os.environ["RUNNER_TEMP"]).resolve(strict=True)
     assert temp != workspace and not temp.is_relative_to(workspace)
@@ -348,7 +352,7 @@ def main():
         with TemporaryDirectory(dir=temp, prefix="u182-hough-cp3138-") as fixture:
             work = Path(fixture)
             stage = "sources"
-            source = stage_source(packet, out, work)
+            sources = stage_source(packet, out, work)
             stage = "runtime"
             python = provision_python(packet, work)
             stage = "donor"
@@ -359,11 +363,27 @@ def main():
                     "--packet", HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "runtime", "--stock", stock,
                     "--pybind", pybind, "--candidate", candidate])
             assert json.loads((out / "runtime-proof.log").read_bytes()) == reused["runtime"]
-            write(out / "historical-v3-admission.json", reused)
-            stage = "probabilistic-parity"
+            stage = "fixed-preparation"
             assert shutil.disk_usage(work).free >= FLOOR
-            failures = probabilistic_parity(packet, compiler, out, work, source, python, stock, pybind, candidate)
-            assert not failures, failures
+            products = prepare_fixed(packet, plan, compiler, out, work, sources, python, stock, candidate)
+            stage = "transport"
+            manifest = {"authority": value, "authority_sha256": os.environ["HOUGH_AUTHORITY_SHA256"],
+                        "run": int(os.environ["GITHUB_RUN_ID"]), "products": products, "timing": False,
+                        "toolchain": seal(out / "toolchain.json"), "runtime": reused["runtime"],
+                        "actual_runtime_record": seal(out / "runtime-proof.log"),
+                        "source_proof": seal(out / "source-proof.log"),
+                        "donor_transfer": seal(out / "donor-transfer.json")}
+            assert set(products) == set(plan["families"]) and len(products) == 3
+            assert sum(row["elf"]["bytes"] for row in products.values()) <= plan["transport_size_limit_bytes"]
+            transport = workspace / "hough-component-transport"
+            transport.mkdir()
+            for record in products.values():
+                identity = record["elf"]
+                path = transport / identity["name"]
+                with path.open("xb") as output:
+                    output.write((work / identity["name"]).read_bytes())
+                assert seal(path) == seal_dict(identity)
+            write(transport / "prepared.json", manifest)
     except Exception as exc:
         write(out / "terminal.json", {"stage": stage, "exit": 1, "error": type(exc).__name__ + ": " + str(exc)})
         raise
