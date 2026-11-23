@@ -1,0 +1,46 @@
+{
+  "check-speed-source.py": {
+    "bytes": 5448,
+    "sha256": "be11b77e383f8495c61f19938a5c0ef65d7db97ce08b3601fa300fb6c9bde7c4"
+  },
+  "collect-speed.py": {
+    "bytes": 6625,
+    "sha256": "972a3240603f685bd63a7d8d42e06e3ab655b200e28471dfd308ea49916c5264"
+  },
+  "payload.json": {
+    "bytes": 1961,
+    "sha256": "762e6f9b953a6d7bc33047c7cf0dcf58eff62a38f7de1ede91ad4de61d3c37d7"
+  },
+  "process_guard.py": {
+    "bytes": 1018,
+    "sha256": "0d11f4bf254241bd9fc4a487bcccdce95e59f108f74f1d12852dbda73aeed96f"
+  },
+  "quiet-benchmark.py": {
+    "bytes": 17241,
+    "sha256": "f844dc58a33ca037c72cb68228204e3659fedca7887b9c196fb7d07970070cda"
+  },
+  "quiet-speed.py": {
+    "bytes": 3384,
+    "sha256": "5556d70882450efc55b9fb67829c38175457a55e35a6e3b3a0fd3e8a146fea35"
+  },
+  "sampler.py": {
+    "bytes": 9612,
+    "sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "scalar-admission.json": {
+    "bytes": 1078,
+    "sha256": "efa70b777050805e8b9bd38dda0e389f7822b384b78ed5d45fdeebd94bca7a34"
+  },
+  "speed-stage.py": {
+    "bytes": 8132,
+    "sha256": "98ddf64db8bcab4d5e5f9df7e5d743c7163dc54b5589e72236fa547edd1c26e6"
+  },
+  "threadpoolctl.py": {
+    "bytes": 50722,
+    "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+  },
+  "timing-providers.json": {
+    "bytes": 967,
+    "sha256": "2eb8e1ddbb26e6c78e6ba3c18292c52c1d55a4fd3cccd8b11b85fa64d99f4c01"
+  }
+}

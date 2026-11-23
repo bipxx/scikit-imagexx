@@ -1,0 +1,15 @@
+{
+  "skeletonize_python": "skimage/morphology/_skeletonize.py",
+  "skeletonize_compiled": "skimage/morphology/_skeletonize_various_cy.cpython-313-x86_64-linux-gnu.so",
+  "morphology_namespace": "skimage/morphology/__init__.py",
+  "edt_python": "scipy/ndimage/_morphology.py",
+  "edt_compiled": "scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+  "label_python": "scipy/ndimage/_measurements.py",
+  "label_compiled": "scipy/ndimage/_ni_label.cpython-313-x86_64-linux-gnu.so",
+  "rng_compiled": "numpy/random/_generator.cpython-313-x86_64-linux-gnu.so",
+  "pcg64_compiled": "numpy/random/_pcg64.cpython-313-x86_64-linux-gnu.so",
+  "seed_compiled": "numpy/random/bit_generator.cpython-313-x86_64-linux-gnu.so",
+  "rng_common": "numpy/random/_common.cpython-313-x86_64-linux-gnu.so",
+  "rng_bounded_integers": "numpy/random/_bounded_integers.cpython-313-x86_64-linux-gnu.so",
+  "array_compiled": "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so"
+}

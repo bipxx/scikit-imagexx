@@ -1,0 +1,29 @@
+{
+  "status": "passed exact private scalar and metadata-only ELF envelope",
+  "source": "47f6fa76db1b9cb4010ef008961f08f5be6922cf",
+  "tree": "e53fe2dd0990ccb14d8be8529b84feb221d9e2f7",
+  "run": 45108973523,
+  "job": 137476709784,
+  "carrier": "c4e00c30d01c1c7e130c2ddade417f50af488ea9",
+  "intake_sha256": "33a586ed2f26793e9fec389cc1b282b5bd5bf0f8f2c7289c80acf3724fe84068",
+  "exact_cases": 30,
+  "verified_files": 39,
+  "expected_immutable_files": 3981,
+  "actual_generated_wrappers": 11,
+  "raw_xml_sha256": "382fee23894a84447210e59d137ca00abe9f7d2e898f8f35b70b647fda9a0122",
+  "elf": {
+    "name": "_medial_axis_private.cpython-313-x86_64-linux-gnu.so",
+    "bytes": 296088,
+    "sha256": "6e90bca357eed139e9c71d9c27414e76d1dd2344833a514d46c5307f2055a060"
+  },
+  "envelope": {
+    "id": 14788827504,
+    "digest": "sha256:4bdca98f5b06f0bab90aaf29bcb0d40849a82cb7ab4d56a1ee48984d0f5d7dfa",
+    "size_in_bytes": 118251,
+    "expires_at": "2026-11-24T03:59:47Z",
+    "expired": false
+  },
+  "timing_authorized": false,
+  "archive_retained": false,
+  "elf_transferred": false
+}
