@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-v60.json'
+CONTEXT = 'coverage/contracts/vi-public-matmul-source-history-hull-fallback-v1.json'
 SELF_PIN_PATH = 'tools/mark_lbp_fp_context.py'
 PREDECESSOR = '2270b7fefc9a8e5cb3ba7fe51d2db5759c17634d'
 
@@ -32,7 +32,7 @@ def _context(root, context_sha256):
     }
     assert hashlib.sha256((root / history_parent['path']).read_bytes()).hexdigest() == history_parent['sha256']
     accepted = data['previous_candidate_history']
-    assert accepted == {'path': 'coverage/contracts/vi-public-matmul-source-history-v59.json', 'sha256': 'de2d02369ff83d661d7c3ada38ad67285d5df0006f2ea7e6d4da0ea1e8551b43'}
+    assert accepted == {'path': 'coverage/contracts/vi-public-matmul-source-history-v60.json', 'sha256': '7405938dad11335bca7a1ccb4a6c575efd1da2bfad0d0eae2db8686d24fe8ab6'}
     assert hashlib.sha256((root / accepted['path']).read_bytes()).hexdigest() == accepted['sha256']
     attached = data['attached_data_history']
     assert attached == {'path': 'coverage/contracts/vi-public-matmul-source-history-data-corrective-v1.json', 'sha256': 'ac01db4b694cddb780384558fd93b742d893e84842bfffddc46db5c286e89140'}

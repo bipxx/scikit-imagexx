@@ -285,7 +285,7 @@ def test_draw_exact_checker_reuses_frozen_words_and_rejects_regressions(api):
 
 
 def test_unported_namespace_interchangeability():
-    a = np.zeros((9, 11), dtype=bool)
+    a = np.zeros((9, 22), dtype=bool)[:, ::2]
     a[3:6, 4:7] = True
     with pytest.raises(NotImplementedError):
         xx.morphology.convex_hull_image(a)
