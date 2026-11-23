@@ -1,0 +1,79 @@
+{
+  "schema": "glcm-large-prefix-actual-count-finding-v1",
+  "status": "ALL8_PREFIX_EXITS_PASS_CAPTURE_GATE_BLOCKED_WRONG_COUNT_LITERAL",
+  "source": "dfd535e8c281118d54a436c06a917fb6dcc8f9d9",
+  "records": [
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/minimum-graycomatrix-cached/terminal.json",
+      "sha256": "59d8fcf3359c8e975f5963500a33f088a49f4cee488d4c34a2b8f94a6885e6f0",
+      "profile": "minimum",
+      "api": "graycomatrix",
+      "cache": "cached",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/minimum-graycomatrix-cold/terminal.json",
+      "sha256": "46290d6cd0ed252753eefd8c5470c1d7e4a3261c68abdd57cd0fd78596cc1fb5",
+      "profile": "minimum",
+      "api": "graycomatrix",
+      "cache": "cold",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/minimum-graycoprops-cached/terminal.json",
+      "sha256": "89208770428b4ba053070e89efa5fde8ddce8656586244a76d2dee5c97bd4645",
+      "profile": "minimum",
+      "api": "graycoprops",
+      "cache": "cached",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/minimum-graycoprops-cold/terminal.json",
+      "sha256": "8bb5505aee190cee218133e75afd2f387cf5b3f1d2e04d89211711fba9b39240",
+      "profile": "minimum",
+      "api": "graycoprops",
+      "cache": "cold",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/modern-graycomatrix-cached/terminal.json",
+      "sha256": "bcd20f1f463cb88b732e0653f90b7532c7c6d81b51907be29ed57ff1b9bedf1b",
+      "profile": "modern",
+      "api": "graycomatrix",
+      "cache": "cached",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/modern-graycomatrix-cold/terminal.json",
+      "sha256": "9b86b322704080471cb907099f0281b4e4d4fd6895f43ef465001bff0e893998",
+      "profile": "modern",
+      "api": "graycomatrix",
+      "cache": "cold",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/modern-graycoprops-cached/terminal.json",
+      "sha256": "106e0e1d1c4161e31612c539c8ee442c6881f910235b179076fa24b168c81c25",
+      "profile": "modern",
+      "api": "graycoprops",
+      "cache": "cached",
+      "factory_setups": 8
+    },
+    {
+      "path": "D:/Scratch/glcm-large-accuracy-reference-v2/prefixes/modern-graycoprops-cold/terminal.json",
+      "sha256": "defff19380f699bdfb4d1b5415199fb18ba22d4d279a45b4ccf51df258f1f142",
+      "profile": "modern",
+      "api": "graycoprops",
+      "cache": "cold",
+      "factory_setups": 8
+    }
+  ],
+  "actual_factories": 64,
+  "previous_authorized_upper_bound": 72,
+  "original_calls": 0,
+  "native_calls": 0,
+  "sampler_calls": 0,
+  "finding": "Capturevalidate_go requires9 setups per prefix; actual4descriptor+1observerrefusal+2typederror+1inertsuccess=8. Directrefusal passesNone andcreatesnoarrays, erroneously counted1 incontract. Source/inert tests manufactured9 andmissedactualcallgraph. No originalGO granted; no capture attempted.",
+  "correction": "Root owns minimalcount successor: cap/consumer8, accountingdirect0/total8-64, meaningfulpositive8/negative9 sourcecontrols and strictold inverses. Rerunaffectedsourceguards then actualprefix onchangedsource; oldprefixes preserved, neverrelabel capture-ready.",
+  "waste_review": "Eightactualsetup-onlyprocesses used0original/nativeimage calls. Preventableprospectivecallgraphmiscount discoveredbeforecapture. Prefer smallsourcecountcorrection+boundedchangedprefixchecks overnewhistoricalreuseprotocol."
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "glcm-prefix-factory-count-root-admission-v3",
+  "passed": true,
+  "status": "PASS_SCOPED_8_COUNT_CORRECTION_CURRENT_PREFIX_ONLY",
+  "source": "0b6faf4f95d1a1c58e93cb39b48e1bb7b1079560",
+  "controller_sha256": "bb9559b7a3d658816f7b5f3c9ac4a6182c69df98b55e68fc7632e4986aa4986d",
+  "profiles": [
+    "minimum",
+    "modern"
+  ],
+  "APIs": [
+    "feature.graycomatrix",
+    "feature.graycoprops"
+  ],
+  "case_ids": [
+    "graycomatrix/C/counts",
+    "graycomatrix/C/normalized",
+    "graycomatrix/F/counts",
+    "graycomatrix/F/normalized",
+    "graycoprops/C/counts",
+    "graycoprops/C/normalized",
+    "graycoprops/F/counts",
+    "graycoprops/F/normalized"
+  ],
+  "original_calls": 0,
+  "native_calls": 0,
+  "sampler_bodies": 0,
+  "prefix_processes_authorized": 8,
+  "factory_setups_each": 8,
+  "total_factory_budget": 64,
+  "created_utc": "2026-11-07T15:09:00.672186+00:00",
+  "deadline_utc": "2026-11-07T15:39:00.672186+00:00",
+  "independent_review": {
+    "path": "build/glcm-prefix-factory-count-independent-review-v3/review-v3.json",
+    "sha256": "9f5a150615f520b245a43d9d7439c492047aacf130108a18b5e1ee76e3068df9"
+  },
+  "root_review": "Minimalrootcount correction independentlyB9f5PASS:3sources/9proofs/69actualXML each; preciseinverseoldsource andpositive8/negative9. Actualpredecessor64setups/0original retained; sourceoldreadiness9/72 explicitlysuperseded. Descriptor/morphology/math/runtime/helper unchanged.",
+  "pending": "Eightcurrentprefix terminals/rootadmission beforeanyseparateminimum8originalGO; old188budget0, native/timing0.",
+  "waste_review": "Changedinputisactualcap/consumer/sourceidentity; boundedfreshprefixmatchesnewsource ratherthannewreuseprotocol. No numericaloriginal/benchmark/fullbuild/archive/core replay."
+}

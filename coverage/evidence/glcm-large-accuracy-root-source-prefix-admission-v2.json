@@ -1,0 +1,36 @@
+{
+  "schema": "glcm-large-accuracy-root-source-prefix-admission-v2",
+  "passed": true,
+  "status": "PASS_SCOPED_SOURCE_STORAGE_PREFIX_ONLY_ZERO_ORIGINAL",
+  "source": "dfd535e8c281118d54a436c06a917fb6dcc8f9d9",
+  "controller_sha256": "92e1b883145346ced11ed77c98a141bfce60eba33fc7a70894e2d1729593fbc4",
+  "profiles": [
+    "minimum",
+    "modern"
+  ],
+  "APIs": [
+    "feature.graycomatrix",
+    "feature.graycoprops"
+  ],
+  "case_ids": [
+    "graycomatrix/C/counts",
+    "graycomatrix/C/normalized",
+    "graycomatrix/F/counts",
+    "graycomatrix/F/normalized",
+    "graycoprops/C/counts",
+    "graycoprops/C/normalized",
+    "graycoprops/F/counts",
+    "graycoprops/F/normalized"
+  ],
+  "original_calls": 0,
+  "native_calls": 0,
+  "sampler_bodies": 0,
+  "actual_prefix_processes_authorized": 8,
+  "setup_factories_per_process": 9,
+  "total_factory_budget": 72,
+  "created_utc": "2026-11-07T14:52:24.992883+00:00",
+  "deadline_utc": "2026-11-07T15:22:24.992883+00:00",
+  "root_review": "Exact3current files/22proof hashes/66completeXML eachWindows and18bindingpins authenticated; Rfailed2688R1R2review andBdfd independentPASS retained. ReadactualDlocator normalization andvalidatedcodeidentityentrydelta. Bounded8recipes preservecases/work/storage, old188originalbudget0. Existingpinnedruntime-admission metadata matchesexactprofiles/upstream; no archive/core reauth or changedscience.",
+  "unmet": "Actual8prefixes then rootreview; separate minimum8originalcapture GO/rawadmission beforemodern8. Native/performance/release notauthorized.",
+  "waste_review": "Reused oldcontroller/helper/runtime andsourceproofs; no unchangedtests/original/largearchive/core replay. No newqueue/preflight framework."
+}

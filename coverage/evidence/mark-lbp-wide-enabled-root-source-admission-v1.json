@@ -1,0 +1,24 @@
+{
+  "schema": "mark-lbp-wide-enabled-root-source-admission-v1",
+  "status": "PASS_SCOPED_SOURCE_64_FILES_NOT_COMPLETE_READINESS",
+  "source": "93f67dd8737ed5223ac1d785f6c2d145a9177257",
+  "handoff": {
+    "path": "build/mark-wide-enabled-integration-v1/handoff-v1.json",
+    "sha256": "91bb5f49f4e570e1760231a4748bb3be55dfc1f031afe89eae59feb39e28aa77"
+  },
+  "independent_review": {
+    "path": "build/mark-wide-enabled-independent-review-v1/review-v1.json",
+    "sha256": "b284f5e6bca7df558f0c4f659c09ed38940795652e6850dc90598b259b0facd5"
+  },
+  "root_review": "Authenticated64current sourcefiles/72smallproofs/7MB bytes, actualfinal823XML perretainedPython andfailed416-12/809-11/812-6 attempts preserved. ReadsharedCMake strictfindflags, Linuxnewgenuine8rowgroup/source-builtF1 SDKlink andfixture/clientcollector; importedkernel/header/frontend/sdk sources matchalreadyindependentlyadmittedcomponents. No sourcecorrectionrequested. Actualworkflow169selectors/soletee/nofailfast separatelyparsed; affected823notcompletebarrier.",
+  "source_counts": {
+    "images": 281,
+    "functions": 284,
+    "product": 228,
+    "SDK": 108,
+    "families": 38,
+    "SDK_checks": 76
+  },
+  "pending": "Actualfull169completeworkflow command bothWindowsnormalplugins/conftest; privatefullLBPmodes/SDK/newgenuineMARK8 andexactsourcefourprofilequalification/currentboundoriginal1Tbenchmarks/main. Sourceadmissionnotrelease.",
+  "waste_review": "Reuse exact19components/32sourceinverse rows andactualaffectedguards; no scientific/fullbuild/helper/original/benchmark/archive/core replay. C sourcefailedattempts remainfailed; no partialunion substitution."
+}
