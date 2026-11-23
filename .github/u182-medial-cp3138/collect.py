@@ -35,6 +35,10 @@ def collect(reports, transport, plan=None, expected_nodes=None):
     assert pins["python"] == plan["runtime"]["version"] and pins["science_imports"] == 0
     assert pins["python_sha256"] == plan["runtime"]["executable_sha256"]
     assert set(pins["distributions"]) == set(plan["stock_distributions"])
+    layout = plan["pip_target_layout_v2"]
+    installer = read(reports / "installer-layout.json")
+    assert all(installer[key] == layout[key] for key in (
+        "version", "scheme", "scripts_record_prefix", "bundle_sha256", "source_sha256"))
     for name, served in pins["distributions"].items():
         wanted = plan["stock_distributions"][name]
         assert served["wheel_sha256"] == wanted["wheel_sha256"]
@@ -42,6 +46,11 @@ def collect(reports, transport, plan=None, expected_nodes=None):
         assert served["immutable_members"] == wanted["immutable_members"]
         assert served["immutable_digest"] == wanted["retained_immutable_digest"]
         assert len(served["wheel_record_sha256"]) == len(served["host_record_sha256"]) == 64
+        wrappers = served["generated_wrappers"]
+        assert set(wrappers) == {layout["scripts_record_prefix"] + script
+                                for script in wanted["generated_entry_points"]}
+        assert all(digest.startswith("sha256=") and len(digest) == 50 and int(size) > 0
+                   for digest, size in wrappers.values())
     assert len(pins["member_pins"]) == sum(item["immutable_members"] for item in pins["distributions"].values())
     source = read(reports / "source-proof.json")
     assert source == {"source": plan["source"], "tree": plan["tree"], "paths": len(plan["source_paths"])}
@@ -76,7 +85,8 @@ def collect(reports, transport, plan=None, expected_nodes=None):
     assert envelope["authority_sha256"] == authority["authority_sha256"]
     return {"source": source, "scalar": 30, "elf": envelope["elf"],
             "portable_sha256": seal(reports / "portable-installed.json")["sha256"],
-            "loaded_members": len(scalar["loaded"]), "prior_normal_replay": 0,
+            "loaded_members": len(scalar["loaded"]), "generated_wrappers": layout["generated_wrappers"],
+            "prior_normal_replay": 0,
             "stock_replay": 0, "sdk_replay": 0, "timing": 0}
 
 

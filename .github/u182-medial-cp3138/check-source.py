@@ -43,10 +43,15 @@ def synthetic_collector(driver, plan, historical):
         source = {key: plan[key] for key in ("source", "tree")}
         proof = {**source, "paths": len(plan["source_paths"])}
         save("source-proof", proof)
+        layout = plan["pip_target_layout_v2"]
+        save("installer-layout", layout)
         log = {name: {"wheel_sha256": pin["wheel_sha256"], "wheel_record_sha256": "b" * 64,
                       "retained_uv_record_sha256": pin["retained_uv_record_sha256"],
                       "host_record_sha256": "c" * 64, "immutable_members": pin["immutable_members"],
-                      "immutable_digest": pin["retained_immutable_digest"]}
+                      "immutable_digest": pin["retained_immutable_digest"],
+                      "generated_wrappers": {layout["scripts_record_prefix"] + key:
+                                             ["sha256=" + "a" * 43, "2"]
+                                             for key in pin["generated_entry_points"]}}
                for name, pin in plan["stock_distributions"].items()}
         members = {name: ["pseudo-digest", "0"] for name in plan["required_live_after_scalar"]}
         while len(members) < 3981:
@@ -78,6 +83,44 @@ def synthetic_collector(driver, plan, historical):
         rejected(lambda: collect(reports, payload, plan, historical["nodes"]))
 
 
+def wrapper_guard(portable):
+    names = portable["script_names"](
+        b"[console_scripts]\nimageio_download_bin = imageio.__main__:download_bin_main\n"
+        b"imageio_remove_bin = imageio.__main__:remove_bin_main\n")
+    assert names == ["imageio_download_bin", "imageio_remove_bin"]
+    with TemporaryDirectory(prefix="medial-wrapper-source-check-") as home:
+        site = Path(home).resolve()
+        scripts = site / "bin"
+        scripts.mkdir()
+        record = {}
+        for name in names:
+            path = scripts / name
+            path.write_bytes(b"synthetic installer-generated wrapper")
+            record["../../bin/" + name] = portable["file_pin"](path)
+        check = portable["check_target_wrappers"]
+        assert check(record, names, site, "imageio") == record
+        for rejected_record in (
+            {k.replace("../../bin/", "../../../bin/"): v for k, v in record.items()},
+            {**record, "../../bin/unexpected": next(iter(record.values()))},
+        ):
+            try:
+                check(rejected_record, names, site, "imageio")
+            except ValueError as exc:
+                assert "generated target wrappers differ" in str(exc)
+            else:
+                raise AssertionError("installer accepted an unauthorized path")
+        (scripts / names[0]).write_bytes(b"tampered wrapper")
+        try:
+            check(record, names, site, "imageio")
+        except ValueError as exc:
+            assert "generated target wrapper bytes differ" in str(exc)
+        else:
+            raise AssertionError("installer accepted changed wrapper bytes")
+        assert portable["record_delta"]({"ordinary.py": ["different"], "new.py": []},
+            {"ordinary.py": ["original"], "missing.py": []}) == {
+                "missing": ["missing.py"], "unexpected": ["new.py"], "changed": ["ordinary.py"]}
+
+
 def main():
     assert sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and not sys.flags.optimize
     git, repository = sys.argv[1:]
@@ -100,6 +143,9 @@ def main():
     for wanted in plan["stock_distributions"].values():
         result = wheels[wanted["wheel"]]
         assert (result["sha256"], result["bytes"]) == (wanted["wheel_sha256"], wanted["wheel_bytes"])
+    assert sum(len(spec["generated_entry_points"]) for spec in plan["stock_distributions"].values()) == 11
+    assert plan["pip_target_layout_v2"]["scripts_record_prefix"] == "../../bin/"
+    wrapper_guard(driver["PORTABLE"])
     rows = [json.loads(line) for line in (HERE / "linux-modern-local-cases-v1.jsonl").read_bytes().splitlines()]
     assert len(rows) == len({row["case_id"] for row in rows}) == 27
     assert len(historical["nodes"]) == len(set(historical["nodes"])) == 30

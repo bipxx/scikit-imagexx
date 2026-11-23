@@ -43,7 +43,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: u182-medial-scalar-reports-v1
+          name: u182-medial-scalar-reports-v2
           path: |
             medial-scalar-results/*.json
             medial-scalar-results/*.log
@@ -52,7 +52,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: u182-medial-scalar-elf-v1
+          name: u182-medial-scalar-elf-v2
           path: medial-scalar-transport/
           if-no-files-found: error
           retention-days: 1

@@ -1,5 +1,6 @@
 """Compare a genuine hosted wheel install to retained Medial Axis package bytes."""
 import csv
+from configparser import ConfigParser
 from hashlib import sha256
 from base64 import urlsafe_b64encode
 import io
@@ -57,10 +58,6 @@ def immutable_members(record, record_name, *, installed):
         if not installed and name == record_name:
             continue
         parts = PurePosixPath(name).parts
-        # Generated entry-point wrappers are outside the import provenance.
-        if installed and (parts[:4] == ("..", "..", "..", "bin") and len(parts) == 5
-                          or parts[:1] == ("bin",) and len(parts) == 2):
-            continue
         if not installed and len(parts) >= 3 and parts[0].endswith(".data"):
             if parts[1] == "scripts":
                 continue
@@ -70,6 +67,40 @@ def immutable_members(record, record_name, *, installed):
                 and pin[1].isdigit(), f"invalid immutable RECORD member: {name}")
         result[name] = pin
     return result
+
+
+def script_names(raw):
+    config = ConfigParser(interpolation=None)
+    config.optionxform = str
+    if raw is not None:
+        config.read_string(raw.decode("utf-8"))
+    names = sorted(name for section in ("console_scripts", "gui_scripts")
+                   if config.has_section(section) for name in config[section])
+    require(len(names) == len(set(names)) and all(name.isascii() and name not in {".", ".."}
+            and name and all(ch.isalnum() or ch in "._-" for ch in name) for name in names),
+            "unsafe or duplicate wheel entry point")
+    return names
+
+
+def check_target_wrappers(host_record, names, site, distribution):
+    """Observe pip's posix_home RECORD aliases and hash their relocated wrappers."""
+    prefix = "../../bin/"
+    expected = {prefix + name for name in names}
+    seen = {member for member in host_record if member.startswith(prefix)}
+    require(seen == expected, f"generated target wrappers differ: {distribution}; "
+            f"missing={sorted(expected - seen)[:8]}; unexpected={sorted(seen - expected)[:8]}")
+    for name in names:
+        wrapper = "bin/" + name
+        require(host_record[prefix + name] == file_pin(site_path(site, wrapper)),
+                f"generated target wrapper bytes differ: {distribution}/{name}")
+    return {member: host_record[member] for member in sorted(seen)}
+
+
+def record_delta(actual, expected):
+    return {"missing": sorted(expected.keys() - actual.keys())[:8],
+            "unexpected": sorted(actual.keys() - expected.keys())[:8],
+            "changed": sorted(name for name in actual.keys() & expected.keys()
+                              if actual[name] != expected[name])[:8]}
 
 
 def check_install(manifest, wheelhouse, site):
@@ -97,13 +128,20 @@ def check_install(manifest, wheelhouse, site):
                         for member, pin in packed.items() if member != record_name),
                     f"wheel member sizes changed: {name}")
             expected_members = immutable_members(packed, record_name, installed=False)
+            entry_point_file = record_name.removesuffix("RECORD") + "entry_points.txt"
+            names = script_names(archive.read(entry_point_file) if entry_point_file in packed else None)
+            require(names == spec["generated_entry_points"], f"wheel entry points changed: {name}")
         require(len(expected_members) == spec["immutable_members"]
                 and canonical_digest(expected_members) == spec["retained_immutable_digest"],
                 f"wheel differs from retained immutable members: {name}")
 
         live_record = site_path(site, record_name).read_bytes()
-        actual_members = immutable_members(rows(live_record), record_name, installed=True)
-        require(actual_members == expected_members, f"host immutable RECORD differs: {name}")
+        host_record = rows(live_record)
+        wrappers = check_target_wrappers(host_record, names, site, name)
+        installed = {member: pin for member, pin in host_record.items() if member not in wrappers}
+        actual_members = immutable_members(installed, record_name, installed=True)
+        require(actual_members == expected_members, f"host immutable RECORD differs: {name}; "
+                f"{record_delta(actual_members, expected_members)}")
         for member, pin in actual_members.items():
             require(file_pin(site_path(site, member)) == pin, f"host file differs: {member}")
             require(member not in all_members, f"overlapping distribution members: {member}")
@@ -115,6 +153,7 @@ def check_install(manifest, wheelhouse, site):
             "host_record_sha256": sha256(live_record).hexdigest(),
             "immutable_members": len(actual_members),
             "immutable_digest": spec["retained_immutable_digest"],
+            "generated_wrappers": wrappers,
         }
     for member, sha in manifest["selected_retained_live_files_sha256"].items():
         checksum = "sha256=" + urlsafe_b64encode(bytes.fromhex(sha)).decode().rstrip("=")

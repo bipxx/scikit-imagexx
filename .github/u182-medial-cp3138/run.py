@@ -1,11 +1,13 @@
 """Build one exact Medial Axis private component and verify its scalar pytest scope."""
 from datetime import datetime, timezone
+import ensurepip
 from hashlib import sha256
 import inspect
 from importlib import util
 import json
 import os
 from pathlib import Path
+import posixpath
 import runpy
 import shutil
 import subprocess
@@ -19,7 +21,7 @@ HERE = Path(__file__).resolve().parent
 FLOOR = 30 * 2**30
 CAP = 96 * 2**20
 PURPOSE = "medial-axis-modern-scalar-v1"
-REF = "refs/heads/diagnostics/u182-medial-cp3138-scalar-v1"
+REF = "refs/heads/diagnostics/u182-medial-cp3138-scalar-v2"
 REPOSITORY = "bipxx/scikit-imagexx"
 BOOT = runpy.run_path(str(HERE / "bootstrap.py"))
 PORTABLE = runpy.run_path(str(HERE / "portable_record.py"))
@@ -98,8 +100,25 @@ def runtime(packet, plan, pybind, donor, *, scalar):
 
 def stage_portable(packet, plan, out, wheels, stock, pybind, donor):
     include = runtime(packet, plan, pybind, donor, scalar=False)
+    layout = plan["pip_target_layout_v2"]
+    bundle = Path(ensurepip.__file__).parent / "_bundled" / layout["bundle"]
+    assert ensurepip.version() == layout["version"] and seal(bundle)["sha256"] == layout["bundle_sha256"]
+    installed_pip = stock.parent / "installer/lib/python3.13/site-packages"
+    installer_source = {name: seal(installed_pip / name)["sha256"] for name in layout["source_sha256"]}
+    assert installer_source == layout["source_sha256"]
+    scheme = sysconfig.get_preferred_scheme("home")
+    assert scheme == layout["scheme"]
+    base = "/__medial_target_scheme_proof"
+    paths = sysconfig.get_paths(scheme, vars={name: base for name in (
+        "base", "platbase", "installed_base", "installed_platbase", "prefix", "exec_prefix")})
+    prefix = posixpath.relpath(paths["scripts"], paths["purelib"]) + "/"
+    assert prefix == layout["scripts_record_prefix"] == "../../bin/"
+    write(out / "installer-layout.json", {"version": ensurepip.version(), "scheme": scheme,
+          "scripts_record_prefix": prefix, "bundle_sha256": seal(bundle)["sha256"],
+          "source_sha256": installer_source})
     installed, members = PORTABLE["check_install"](plan, wheels, stock)
     assert len(installed) == 13 and len(members) == 3981
+    assert sum(len(dist["generated_wrappers"]) for dist in installed.values()) == layout["generated_wrappers"]
     write(out / "portable-installed.json", {"distributions": installed, "member_pins": members,
           "python": sys.version, "python_sha256": seal(Path(sys.executable).resolve())["sha256"],
           "include": str(include), "science_imports": 0})

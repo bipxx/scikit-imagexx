@@ -51,7 +51,11 @@
       "record": "imageio-2.38.1.dist-info/RECORD",
       "retained_uv_record_sha256": "84d96facee32b22b94b076d21fbdffc279d170489f1f4b753648ecbc998a3134",
       "retained_immutable_digest": "a3ba9b1e71b871ca5596128b74d94bff2e2efb766c8a4914628f00f9a4cc4e9c",
-      "immutable_members": 64
+      "immutable_members": 64,
+      "generated_entry_points": [
+        "imageio_download_bin",
+        "imageio_remove_bin"
+      ]
     },
     "iniconfig": {
       "wheel": "iniconfig-2.3.1-py3-none-any.whl",
@@ -61,7 +65,8 @@
       "record": "iniconfig-2.3.1.dist-info/RECORD",
       "retained_uv_record_sha256": "0000f3396bc6bfd4ddf9c29d9a1f4c099b1b18479ef23a3a6548278c7cf9f48d",
       "retained_immutable_digest": "6753f2733ea430d0f4e40d22485c2dd972e71a3b78353a29fa4914ea1dab63bf",
-      "immutable_members": 9
+      "immutable_members": 9,
+      "generated_entry_points": []
     },
     "lazy_loader": {
       "wheel": "lazy_loader-0.6-py3-none-any.whl",
@@ -71,7 +76,8 @@
       "record": "lazy_loader-0.6.dist-info/RECORD",
       "retained_uv_record_sha256": "fe635a4b213c271fc498fecab243e34fc7f0a0c73326ff5a3accef2cf710aaf1",
       "retained_immutable_digest": "b6d53c879132e23478094ad18c2bf656cd7ca0fea67249668683bbf85a1f457c",
-      "immutable_members": 5
+      "immutable_members": 5,
+      "generated_entry_points": []
     },
     "networkx": {
       "wheel": "networkx-3.7-py3-none-any.whl",
@@ -81,7 +87,8 @@
       "record": "networkx-3.7.dist-info/RECORD",
       "retained_uv_record_sha256": "0403c7ac1516dc6dc03a4f0d8256c3b5d333c5721e6ab116c9f2b37fdeb6eb30",
       "retained_immutable_digest": "822cb962079d665e627df00f8cf1d5ef97dbbbe465fb67531bfabce23b11f137",
-      "immutable_members": 603
+      "immutable_members": 603,
+      "generated_entry_points": []
     },
     "numpy": {
       "wheel": "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
@@ -91,7 +98,11 @@
       "record": "numpy-2.5.4.dist-info/RECORD",
       "retained_uv_record_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
       "retained_immutable_digest": "890a4f19a0d560b67480a522cfea8b54a62ae9cdc383865c0e7a49c2efc5aec3",
-      "immutable_members": 925
+      "immutable_members": 925,
+      "generated_entry_points": [
+        "f2py",
+        "numpy-config"
+      ]
     },
     "packaging": {
       "wheel": "packaging-26.3-py3-none-any.whl",
@@ -101,7 +112,8 @@
       "record": "packaging-26.3.dist-info/RECORD",
       "retained_uv_record_sha256": "1b8655965b0d83e9a067fd7f84b977bd1e117e0fb9f2874b2572781bdc9e2147",
       "retained_immutable_digest": "4484fb8e3dd96fd47a23e6ca2786d2a8018e7d881f0c3f2c814962d300e2bb15",
-      "immutable_members": 28
+      "immutable_members": 28,
+      "generated_entry_points": []
     },
     "pillow": {
       "wheel": "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
@@ -111,7 +123,8 @@
       "record": "pillow-13.0.0.dist-info/RECORD",
       "retained_uv_record_sha256": "b43fb14ad2ede5115b1f8885d482592152f7478a86db61dde6bcaca770d0fcf9",
       "retained_immutable_digest": "897bf59b8bf51bb41c368bbe20e4c54f11ddb0d87c37ffe5a684873892f37cce",
-      "immutable_members": 138
+      "immutable_members": 138,
+      "generated_entry_points": []
     },
     "pluggy": {
       "wheel": "pluggy-1.7.0-py3-none-any.whl",
@@ -121,7 +134,8 @@
       "record": "pluggy-1.7.0.dist-info/RECORD",
       "retained_uv_record_sha256": "bab7152cdb6aaa818c2be8786237e032b04022f00e928d71e8dc732b768d6e6d",
       "retained_immutable_digest": "39eb713bb5574aed439ee294ebc64ed9a8966751a1f06444d097576647fd334d",
-      "immutable_members": 18
+      "immutable_members": 18,
+      "generated_entry_points": []
     },
     "pygments": {
       "wheel": "pygments-2.21.0-py3-none-any.whl",
@@ -131,7 +145,10 @@
       "record": "pygments-2.21.0.dist-info/RECORD",
       "retained_uv_record_sha256": "00b5decad0f3bbfc1de3bc553ea8f4777a47e1f3e13853a63f54a224c2dee350",
       "retained_immutable_digest": "2f1361386a15ff391d452636f1997be7eba3f789e3431506bf6616c84117869b",
-      "immutable_members": 348
+      "immutable_members": 348,
+      "generated_entry_points": [
+        "pygmentize"
+      ]
     },
     "pytest": {
       "wheel": "pytest-9.1.1-py3-none-any.whl",
@@ -141,7 +158,11 @@
       "record": "pytest-9.1.1.dist-info/RECORD",
       "retained_uv_record_sha256": "e77279aa96e7ac6ac5975f2c78be0945292b50a4625bc12f77c5d23f5af29daa",
       "retained_immutable_digest": "cc650d3eb4c7d1230e34e07bc89e2ee7705c8868ba81cd691a128f2a5a15fb17",
-      "immutable_members": 88
+      "immutable_members": 88,
+      "generated_entry_points": [
+        "py.test",
+        "pytest"
+      ]
     },
     "scikit-image": {
       "wheel": "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
@@ -151,7 +172,8 @@
       "record": "scikit_image-0.26.0.dist-info/RECORD",
       "retained_uv_record_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
       "retained_immutable_digest": "bb5e50d20e0f2bb27c8b829fe6c58404bc292a972476d977de10879814257680",
-      "immutable_members": 308
+      "immutable_members": 308,
+      "generated_entry_points": []
     },
     "scipy": {
       "wheel": "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
@@ -161,7 +183,8 @@
       "record": "scipy-1.18.1.dist-info/RECORD",
       "retained_uv_record_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
       "retained_immutable_digest": "77cdfdeb243813d409af77d5ee3c8e964567f660ca4cf8480c617fa902056560",
-      "immutable_members": 1431
+      "immutable_members": 1431,
+      "generated_entry_points": []
     },
     "tifffile": {
       "wheel": "tifffile-2026.10.15-py3-none-any.whl",
@@ -171,7 +194,13 @@
       "record": "tifffile-2026.10.15.dist-info/RECORD",
       "retained_uv_record_sha256": "949a4902722353714b1f3343b24ea375a3490ee10d51bf8a79ec3830046e0524",
       "retained_immutable_digest": "fdbdec7079478041b435dfab68424f830ecf5de62714ffd93f4b5776eaefba76",
-      "immutable_members": 16
+      "immutable_members": 16,
+      "generated_entry_points": [
+        "lsm2bin",
+        "tiff2fsspec",
+        "tiffcomment",
+        "tifffile"
+      ]
     }
   },
   "selected_retained_live_files_sha256": {
@@ -213,5 +242,18 @@
     "stock_rows": 27,
     "sdk_exit": 0
   },
-  "execution_authority": null
+  "execution_authority": null,
+  "pip_target_layout_v2": {
+    "version": "25.2",
+    "bundle": "pip-25.2-py3-none-any.whl",
+    "bundle_sha256": "6d67a2b4e7f14d8b31b8b52648866fa717f45a1eb70e83002f4331d07e953717",
+    "scheme": "posix_home",
+    "scripts_record_prefix": "../../bin/",
+    "source_sha256": {
+      "pip/_internal/commands/install.py": "0083be526e3d7b71aa30e9364a61c2b78e40d16d3e621297729af9a248c787cd",
+      "pip/_internal/operations/install/wheel.py": "f1a7a9c710059a7cd916d70c0affb52384ff99a12441de215d9ced616138c91d",
+      "pip/_internal/locations/_sysconfig.py": "3617048b5ff6e70f5c4d3707e11c8e8c3e141d6e888e4b34b8acb53cbd7f8fff"
+    },
+    "generated_wrappers": 11
+  }
 }
