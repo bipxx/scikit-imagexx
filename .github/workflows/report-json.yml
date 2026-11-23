@@ -21,7 +21,7 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $required = 32GB
+          $required = 44GB
           foreach ($path in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
             $drive = [System.IO.DriveInfo]::new([System.IO.Path]::GetPathRoot($path))
             Write-Output "$path free=$($drive.AvailableFreeSpace) required=$required"
@@ -39,7 +39,7 @@ jobs:
             .github/u182-source-proof
       - uses: actions/checkout@v4
         with:
-          ref: eddec69fa8bfb64811f465ae38368a70ce61add5
+          ref: a80be03438ee8d00c9a5ebcec2845f24e53e6f5b
           path: tested
           persist-credentials: false
       - uses: actions/setup-python@v5
@@ -52,7 +52,7 @@ jobs:
           $script = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-source-proof/run-source-barrier.py'
           $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
           $receipts = Join-Path $env:GITHUB_WORKSPACE 'receipts'
-          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current301-source-v2'
+          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current301-laplacian-source-v1'
           git -C $source fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $py = (Get-Command python -ErrorAction Stop).Source
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current301-exact-source-v2-${{ matrix.profile }}
+          name: current301-laplacian-exact-source-v1-${{ matrix.profile }}
           path: |
             receipts/*.json
             receipts/*.xml

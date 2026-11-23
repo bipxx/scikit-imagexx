@@ -1,7 +1,7 @@
 {
-  "source": "eddec69fa8bfb64811f465ae38368a70ce61add5",
-  "tree": "c7e9b04630329e72447028a6e85f9a77fdad4d4a",
-  "parent": "a82423a1c25e4cf7f2e1aaa16b6a2dd75ef1fe80",
+  "source": "a80be03438ee8d00c9a5ebcec2845f24e53e6f5b",
+  "tree": "00ae30c4c7d29d8d5013adc36e417ca0ae43b316",
+  "parent": "eddec69fa8bfb64811f465ae38368a70ce61add5",
   "workflow_sha256": "772089faf0c8abf79c4ed7d2c2542598e20b3dc3271898bb31d0b68ba6ea779b",
   "selectors": [
     "tests/test_public_qualification.py",
@@ -497,7 +497,7 @@
     "tests/test_matrix_transform_numpy124_skylakex_certificate.py": "13724b9bf22d3aeb4ce513aeefaa2166afda9df475552b0098d88de4d72a94db",
     "tests/test_next_util_benchmark_execution.py": "1e4e010980046aeca2b69de97b962baa26512ab079996584a85801209c9fb586",
     "tests/test_public_qualification.py": "ba9ada43a987f686f328101801916337c5d52834d45b12ec7ee1169ef0214537",
-    "tests/test_pyramid_generators_public.py": "eb87b9417586ce802835989a2c4b832a9e72d739403b4db71eef80ef17a5d2d7",
+    "tests/test_pyramid_generators_public.py": "459c56e1e96941a2a9346f20465d029889c7afb825a1adb9ca72a28323cb93df",
     "tests/test_pyramid_spatial_public.py": "5a62acc59e31cc1e5ad975302784ea928c8a0d5b88b8069f2084e2e96e1d7ee6",
     "tests/test_random_noise_public.py": "35cd8187d4b9a2aeff62ddd8e522fe6905a1a8a6a659085b81458926bed49c3f",
     "tests/test_random_shapes_public.py": "d45735dc1ea6de491231a5fc996499f7c7907fac1b053f28b7f78f36dce0f920",
@@ -561,7 +561,7 @@
     "tools/vi4_public_matmul_capture.py": "42077a1196e888567604f554861cfd2c72f26a13c4bcc9ad890ebbf839be0b07",
     "tools/vi_public_matmul_context.py": "66095c00e80349e82e720d71bbc1564dde4f93559a44f3e63bc2fb09aaac188f"
   },
-  "accepted_runner_template_sha256": "0e21870135a75a55b26e471f9ad8669eddb689e8aa201ccc1a979c3551b13b16",
-  "capacity_required_bytes_per_profile": 34359738368,
+  "accepted_runner_template_sha256": "855b2ac78c7516a9ce0cb5de917d67acaafb7e8bcd73ce4c8d872b0cead7a3b8",
+  "capacity_required_bytes_per_profile": 47244640256,
   "shipping_base": "94522169d6111a6dcf5f7b044d6d267773e27de6"
 }
