@@ -29,7 +29,7 @@ SCOPE = 'current306-windows-timing-host-preparation-v1'
 FOCUS = 'current306-windows-focused-receipts-v3'
 TRANSPORT = 'current306-windows-timing-transport-v3'
 FILE_PINS = {
-    'run.py':'2089cc51a9b73aaa847783ee924d9b04f64df7052f97096c0049b47a755ca2db',
+    'run.py':'33bb108831c6d3cdec224e9e1a50389da2c793c39d1948de89677c157ba636b6',
     'plan-v1.json':'cd0f2ef1f62d67561181ed3b7ff5ba62dd36a849fafe0fd7d778268d781adc31',
 }
 MEASUREMENT = '104ba954d9e9b0cc809a21b8d37f59599b29777d88a7f5b818f7ad5565d5c6b7'

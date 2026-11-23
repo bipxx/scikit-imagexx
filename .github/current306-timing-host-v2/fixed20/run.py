@@ -98,10 +98,12 @@ def source_entry(config, plan):
     assert git(command, 'rev-parse', '--show-toplevel').decode().strip().replace('\\', '/').lower() == source.as_posix().lower()
     assert git(command, 'rev-parse', 'HEAD', 'HEAD^{tree}', 'HEAD^').decode().splitlines() == [HEAD, TREE, PARENT]
     assert not git(command, 'status', '--porcelain=v1', '--untracked-files=all')
-    # Git may materialize Windows text as CRLF. The plan pins canonical source.
+    # The plan pins raw Git blobs. Normalize only the materialized comparison.
     for name, pin in plan['sources'].items():
-        data = (source / name).read_bytes()
-        assert sha256(data.replace(b'\r\n', b'\n')).hexdigest() == pin, name
+        raw = git(command, 'show', 'HEAD:' + name)
+        assert sha256(raw).hexdigest() == pin, name
+        checkout = (source / name).read_bytes()
+        assert checkout.replace(b'\r\n', b'\n') == raw.replace(b'\r\n', b'\n'), name
     return source
 
 

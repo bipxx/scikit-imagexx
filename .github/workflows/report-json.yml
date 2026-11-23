@@ -67,6 +67,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current306-windows-fixed20-measurement-v2
+          name: current306-windows-fixed20-measurement-v3
           path: timing-receipts/
           if-no-files-found: warn
