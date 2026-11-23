@@ -38,14 +38,22 @@ jobs:
         run: |
           set -euo pipefail
           /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/run.py
-          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/check-report.py .github/u182-circle-peaks-component-v1/manifest-v1.json .github/u182-circle-peaks-component-v1/frozen/linux-modern-rows-v1.jsonl circle-peaks-component-results/component > circle-peaks-component-results/collection.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: u182-circle-peaks-modern-component-v1
+          name: u182-circle-peaks-modern-component-v2
           path: |
             circle-peaks-component-results/*.json
             circle-peaks-component-results/*.log
             circle-peaks-component-results/component/*.json
             circle-peaks-component-results/component/*.log
           if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: u182-circle-peaks-modern-component-elf-v2
+          path: |
+            circle-peaks-component-transport/_hough_circle_peaks_private.cpython-313-x86_64-linux-gnu.so
+            circle-peaks-component-transport/prepared.json
+          if-no-files-found: error
+          retention-days: 1

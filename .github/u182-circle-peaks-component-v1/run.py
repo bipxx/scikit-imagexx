@@ -19,7 +19,7 @@ from zipfile import ZipFile
 
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
-REF = "refs/heads/diagnostics/u182-circle-peaks-modern-component-v1"
+REF = "refs/heads/diagnostics/u182-circle-peaks-modern-component-v2"
 FLOOR = 30 * 2**30
 
 
@@ -213,6 +213,58 @@ def authority(env, now):
     return grant
 
 
+def retain_for_timing(out, work, workspace, grant, plan):
+    """Retain the exact already-tested ELF after the existing full collector passes."""
+    frozen = HERE / "frozen/linux-modern-rows-v1.jsonl"
+    raw = frozen.read_bytes()
+    assert digest(raw) == plan["stock_rows_sha256"]
+    rows = [json.loads(line) for line in raw.splitlines()]
+    collector = runpy.run_path(str(HERE / "check-report.py"))
+    component = out / "component"
+    proof = collector["collect"](component, plan, rows)
+    assert proof["sdk_exits"] == [0, 0] and proof["stock_peak_calls"] == proof["timings"] == 0
+    assert {name: (mode["native"], mode["controlled_provider"]) for name, mode in proof["modes"].items()} == {
+        "normal": (19, 10), "scalar": (19, 10)}
+    name = "_hough_circle_peaks_private.cpython-313-x86_64-linux-gnu.so"
+    binary = work / "compiled" / name
+    assert binary.is_file() and not binary.is_symlink() and 0 < binary.stat().st_size <= 8 * 2**20
+    elf = binary.read_bytes()
+    assert elf[:4] == b"\x7fELF" and digest(elf) == proof["products"]["private"]
+    write(out / "collection.json", proof)
+    receipts = {}
+    for label in ("entry", "terminal", "products", "normal-rows", "scalar-rows", "sdk-link", "sdk"):
+        path = component / (label + ".json")
+        receipts[path.name] = seal(path)
+    assert receipts["sdk.json"]["sha256"] == proof["processes"]["sdk"]
+    assert receipts["sdk-link.json"]["sha256"] == proof["processes"]["sdk-link"]
+    assert receipts["normal-rows.json"]["sha256"] == proof["modes"]["normal"]["rows_sha256"]
+    assert receipts["scalar-rows.json"]["sha256"] == proof["modes"]["scalar"]["rows_sha256"]
+    entry = json.loads((component / "entry.json").read_bytes())
+    prepared = {
+        "scope": "exact-private-circle-peaks-linux-modern-leaf-for-later-quiet-timing",
+        "carrier": grant["carrier"], "manifest_sha256": grant["manifest_sha256"],
+        "source": plan["source"]["revision"], "tree": plan["source"]["tree"],
+        "runtime": plan["runtime"]["version"], "runtime_executable_sha256": plan["runtime"]["python_sha256"],
+        "stock_rows_sha256": plan["stock_rows_sha256"], "fixed": [
+            "peak-default-real", "peak-normalized-ranking", "peak-cross-radius-pruning", "peak-capped-equal"],
+        "provider_records": {key: {field: value[field] for field in ("sha256", "members")}
+                             for key, value in entry["provider_records"].items()},
+        "base_wheel_sha256": plan["base"]["wheel_sha256"],
+        "base_core_sha256": plan["base"]["members_sha256"][plan["base"]["core_member"]],
+        "static_sdk_dependency_sha256": plan["base"]["members_sha256"]["lib/libskimagexx.a"],
+        "leaf_sha256": proof["products"]["leaf"], "sdk_product_sha256": proof["products"]["sdk"],
+        "modes": proof["modes"], "sdk_exits": proof["sdk_exits"], "row_ids": plan["row_ids"],
+        "receipt_pins": receipts, "collection": seal(out / "collection.json"),
+        "elf": {"name": name, "bytes": len(elf), "sha256": digest(elf)},
+        "stock_peak_calls": 0, "timing_calls": 0,
+    }
+    target = workspace / "circle-peaks-component-transport"
+    target.mkdir()
+    with (target / name).open("xb") as stream:
+        stream.write(elf)
+    write(target / "prepared.json", prepared)
+
+
 def main():
     assert not sys.flags.optimize
     grant = authority(os.environ, datetime.now(timezone.utc))
@@ -258,6 +310,8 @@ def main():
             command(out, stage, ["/usr/bin/taskset", "-c", "0", python, "-I", "-S", "-B", *args,
                                  "--stock", stock, "--pybind", pybind, "--base", base,
                                  "--output", out / "component", "--scratch", work / "compiled"])
+            stage = "retain-verified-elf"
+            retain_for_timing(out, work, workspace, grant, json.loads(manifest.read_bytes()))
     except Exception as exc:
         write(out / "terminal.json", {"stage": stage, "exit": 1, "error": type(exc).__name__ + ": " + str(exc)})
         raise
