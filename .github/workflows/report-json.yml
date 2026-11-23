@@ -1,4 +1,4 @@
-name: Current308 affected source guards v2
+name: Current308 exact-source barrier
 on:
   workflow_dispatch:
 permissions:
@@ -45,14 +45,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13.14'
-      - name: Execute exact affected source guards
+      - name: Execute the complete source-only workflow command
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
           $script = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-source-proof/run-source-barrier.py'
           $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
           $receipts = Join-Path $env:GITHUB_WORKSPACE 'receipts'
-          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current308-affected-v2'
+          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current308-source-v2'
           git -C $source fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $py = (Get-Command python -ErrorAction Stop).Source
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current308-affected-source-v2-${{ matrix.profile }}
+          name: current308-exact-source-v2-${{ matrix.profile }}
           path: |
             receipts/*.json
             receipts/*.xml
