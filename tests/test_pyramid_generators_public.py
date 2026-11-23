@@ -1,5 +1,9 @@
 """Private and installed front-end checks against the authenticated stock capture."""
+from base64 import urlsafe_b64encode
+from hashlib import sha256
+from importlib.metadata import distribution
 import inspect
+from pathlib import Path
 import sys
 from types import ModuleType
 import warnings
@@ -50,17 +54,78 @@ def test_public_generator_export(name, strict):
     assert name in transform.__all__
 
 
-@pytest.mark.parametrize('recipe, reference', FROZEN, ids=[row['case'] for _, row in FROZEN])
-def test_frozen_pyramid_generator(recipe, reference, strict):
+def _same_host_minimum_laplacian(reference):
+    """Resolve only the stock rows whose residual words vary across minimum hosts."""
+    if (reference['case'] not in {
+        'laplacian-rgb-u8-reflect-three-reductions',
+        'laplacian-max-zero-unsigned-preserve',
+        'laplacian-generator-throw',
+    } or sys.platform != 'linux' or sys.version_info[:3] != (3, 11, 17)
+            or np.__version__ != '1.24.4'):
+        return None
+
+    import scipy
+    import skimage
+
+    if (scipy.__version__, skimage.__version__) != ('1.15.3', '0.26.0'):
+        return None
+
+    from numpy.core import _multiarray_umath
+    from scipy.ndimage import _filters, _interpolation, _nd_image, _ni_support
+    from skimage import transform as original
+    from skimage._shared import filters
+    from skimage.transform import _warps, pyramids
+    from skimage.util import dtype
+
+    # Authenticate the actual loaded stock modules against the witnessed wheel
+    # members and their installed RECORD, independent of CPU dispatch.
+    providers = {
+        'numpy': ((_multiarray_umath, 'db283346a443cde0c8cb4dcdde56490714d2c34e3ad16fe2c30ae8c20458fc86'),),
+        'scipy': (
+            (_filters, 'e821fbd5ae150dc9fdb616ae5a213504904e5416febcde421739f3fe52769c0c'),
+            (_interpolation, '6656f865125b4ceadfdb575e74edbc1874d70342a1f613020d605d1af45b728e'),
+            (_nd_image, '56d6740b800583fa54adba6594ef8562832f86d156435527c4a1ca8584653bbe'),
+            (_ni_support, 'c1e60b92002969fd161b9e1d92cc499c5118d93a024fd3b75cd3f8778a69a453'),
+        ),
+        'scikit-image': (
+            (pyramids, 'b3a784bae6957d3ee09b653ba0f63e21f2ab69d7aca15c1329c8c5a039047a65'),
+            (_warps, '3749a6db262c7091285daea455c655cfc228478de3eb7bd78c4d0e4564e2e09e'),
+            (filters, 'c906451edf7b3fc5f242e679a84915c414f5291497a1605b0507f63629924f42'),
+            (dtype, 'd4f99f88966e4d0dbbe80a3c0b8acb3890644cc5fbfb707ba9b5a90e9119e627'),
+        ),
+    }
+    for name, modules in providers.items():
+        dist = distribution(name)
+        records = {str(member): member for member in dist.files}
+        site = Path(dist.locate_file('')).resolve()
+        for module, digest in modules:
+            path = Path(module.__file__).resolve()
+            member = records[path.relative_to(site).as_posix()]
+            raw = path.read_bytes()
+            assert member.size == len(raw) and member.hash.mode == 'sha256'
+            assert member.hash.value == urlsafe_b64encode(bytes.fromhex(digest)).decode().rstrip('=')
+            assert sha256(raw).hexdigest() == digest
+    assert reference['api'] == 'pyramid_laplacian' and reference['native']
+    assert original.pyramid_laplacian is pyramids.pyramid_laplacian
+    assert inspect.getsourcefile(original.pyramid_laplacian) == pyramids.__file__
+    return original.pyramid_laplacian
+
+
+def _with_live_payload(frozen, live):
+    """Keep every array metadata field sourced from the frozen observation."""
+    assert frozen.keys() == live.keys()
+    return dict(frozen, **{key: live[key] for key in ('sha256', 'hex') if key in frozen})
+
+
+def _check_generator_trace(function, recipe, reference, native, *, stock=False, live_outputs=None, stock_code=None):
     image = make_image(np, recipe)
     assert snapshot(image) == reference['input']
-    function = getattr(transform, reference['api'])
     returned = []
-    native = (_core.gaussian_nd, _core.resize_zoom_typed)
-    assert all(inspect.isbuiltin(entry) for entry in native)
     visited = []
 
     def witness(frame, event, arg):
+        if event == 'call' and frame.f_code is stock_code:
+            raise AssertionError('the strict route entered the stock public generator')
         if event == 'c_return' and any(arg is entry for entry in native):
             visited.append(arg.__name__)
 
@@ -120,11 +185,41 @@ def test_frozen_pyramid_generator(recipe, reference, strict):
                 actual.update(state_after=inspect.getgeneratorstate(gen), input_after=snapshot(image),
                               warnings=[[note.category.__module__ + '.' + note.category.__qualname__, str(note.message)]
                                         for note in notices], compiled=list(visited))
-                assert actual == step
+                expected = dict(step, compiled=[]) if stock else step
+                if step['result'] == 'yield' and (stock or live_outputs is not None):
+                    assert actual['result'] == 'yield'
+                    if stock:
+                        live_array = actual['array']
+                    else:
+                        peer = live_outputs[len(returned) - 1]
+                        assert result.tobytes() == peer.tobytes()
+                        live_array = snapshot(peer)
+                    expected = dict(expected, array=_with_live_payload(step['array'], live_array))
+                assert actual == expected
     finally:
         sys.setprofile(old_profile)
     assert snapshot(image) == reference['final_input']
-    assert [snapshot(out) for out in returned] == reference['final_outputs']
+    expected_outputs = reference['final_outputs']
+    if stock or live_outputs is not None:
+        peers = returned if stock else live_outputs
+        expected_outputs = [_with_live_payload(frozen, snapshot(peer))
+                            for frozen, peer in zip(expected_outputs, peers, strict=True)]
+    assert [snapshot(out) for out in returned] == expected_outputs
+    return returned
+
+
+@pytest.mark.parametrize('recipe, reference', FROZEN, ids=[row['case'] for _, row in FROZEN])
+def test_frozen_pyramid_generator(recipe, reference, strict):
+    native = (_core.gaussian_nd, _core.resize_zoom_typed)
+    assert all(inspect.isbuiltin(entry) for entry in native)
+    function = getattr(transform, reference['api'])
+    stock = _same_host_minimum_laplacian(reference)
+    if stock is None:
+        _check_generator_trace(function, recipe, reference, native)
+    else:
+        live_outputs = _check_generator_trace(stock, recipe, reference, native, stock=True)
+        _check_generator_trace(function, recipe, reference, native, live_outputs=live_outputs,
+                               stock_code=stock.__code__)
 
 
 @pytest.mark.parametrize('name', ['pyramid_gaussian', 'pyramid_laplacian'])
