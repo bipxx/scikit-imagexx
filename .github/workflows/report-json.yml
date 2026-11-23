@@ -1,4 +1,4 @@
-name: Hough modern fixed preparation
+name: Hough modern isolated fixed speed
 on:
   workflow_dispatch:
     inputs:
@@ -12,7 +12,7 @@ permissions:
   contents: read
   actions: read
 jobs:
-  prepare:
+  timing:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -29,7 +29,7 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: .github/u182-hough-cp3138
-      - name: Prepare the three fixed-scope components
+      - name: Authenticate and stage the exact prepared transport
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -37,20 +37,28 @@ jobs:
           HOUGH_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
         run: |
           set -euo pipefail
-          /usr/bin/python3 -I -S -B .github/u182-hough-cp3138/run.py
-          /usr/bin/python3 -I -S -B .github/u182-hough-cp3138/collect.py hough-component-results hough-component-transport > hough-component-results/collection.json
+          status=0
+          /usr/bin/python3 -I -S -B .github/u182-hough-cp3138/stage.py || status=$?
+          if test -d hough-timing-stage; then
+            printf '%s\n' "$status" > hough-timing-stage/stage-process.exit
+          fi
+          exit "$status"
+      - name: Verify a quiet host and measure the twelve unchanged public cases
+        shell: bash
+        env:
+          HOUGH_AUTHORITY: ${{ inputs.authority }}
+          HOUGH_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -S -B .github/u182-hough-cp3138/quiet.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: u182-hough-modern-fixed-prep-reports-v1
+          name: u182-hough-modern-fixed-speed-v1
           path: |
-            hough-component-results/*.json
-            hough-component-results/*.log
+            hough-timing-stage/*.json
+            hough-timing-stage/*.log
+            hough-timing-stage/*.exit
+            hough-timing-results/*.json
+            hough-timing-results/*.jsonl
           if-no-files-found: warn
-      - uses: actions/upload-artifact@v4
-        if: success()
-        with:
-          name: u182-hough-modern-fixed-prep-elf-v1
-          path: hough-component-transport/
-          if-no-files-found: error
-          retention-days: 1

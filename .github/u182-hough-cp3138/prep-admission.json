@@ -1,0 +1,132 @@
+{
+  "status": "exact three modern prepared Hough ELF and 12 fixed witnesses independently verified",
+  "run": 45100183588,
+  "job": 137448986745,
+  "carrier": "502ed7830cf40392fdf593351b2ecfd287cecaea",
+  "intake_sha256": "24baa7746250d74ae946db8b2bd67a5bca10865eb909b1b5955b41ad6490f1a6",
+  "prior_modern_admission_sha256": "821418991253dcf6f8d3ac9e46325822cf95394675021bfa7697020aef155b7e",
+  "transport": {
+    "archive_retained": false,
+    "artifact_digest": "sha256:badc98cfbeb1918011d059b879e060249b747465e565df5515ac398b4cd7f9bc",
+    "artifact_id": 14785001997,
+    "artifact_name": "u182-hough-modern-fixed-prep-elf-v1",
+    "expires_at": "2026-11-24T02:30:08Z",
+    "members": {
+      "_hough_ellipse_private.cpython-313-x86_64-linux-gnu.so": {
+        "bytes": 300232,
+        "sha256": "456280447d82e013642bbba46fe59c8c4a0b7761f43ca8f9ba6469889d1d3e6c"
+      },
+      "_hough_line_private.cpython-313-x86_64-linux-gnu.so": {
+        "bytes": 296640,
+        "sha256": "d56a8daa19487d779261c7a1e29fb354031b8ae0419b3d6b165bfb15d0735b13"
+      },
+      "_probabilistic_hough_line_private.cpython-313-x86_64-linux-gnu.so": {
+        "bytes": 311728,
+        "sha256": "c5b26e614db7e9dc2a78fcc7ae7118b6f8d1ffe084ddd05dfa616685b816cc04"
+      },
+      "prepared.json": {
+        "bytes": 5720,
+        "sha256": "325d4742ffaeb86885bf68269dd57c05ccf91fec664fcc6d3e84c58346e7c662"
+      }
+    },
+    "verified_zip_bytes": 365547
+  },
+  "prepared_manifest_sha256": "325d4742ffaeb86885bf68269dd57c05ccf91fec664fcc6d3e84c58346e7c662",
+  "products": {
+    "hough_line": {
+      "elf": {
+        "name": "_hough_line_private.cpython-313-x86_64-linux-gnu.so",
+        "bytes": 296640,
+        "sha256": "d56a8daa19487d779261c7a1e29fb354031b8ae0419b3d6b165bfb15d0735b13"
+      },
+      "fixed_cases": [
+        {
+          "canonical_row_sha256": "1cf93c67baa9b29e772c16742e43f9d467a172ff4ca0a46583d73c9f8e6b1d56",
+          "id": "no-votes-default-64x96"
+        },
+        {
+          "canonical_row_sha256": "b1c02f042e4a7ebe1ca2917f2bdd8e543b642e4b4d628ec42a0d142f15bc6f5c",
+          "id": "linework-default-160x192"
+        },
+        {
+          "canonical_row_sha256": "6f4856eef3bcd82f860cfcd68cb461c1e6e2e75e5a32192e7cd0d3fc09bafa73",
+          "id": "sparse-custom-257"
+        },
+        {
+          "canonical_row_sha256": "af8c720103770963aa006750ca9f977ce63dde9b41d0d3b1870673426575e229",
+          "id": "dense-custom-91"
+        }
+      ],
+      "witness": {
+        "bytes": 1034,
+        "sha256": "053890202caf7224301cb53c502dad08fad0733c2f5f2f88f9806a716f55afe6"
+      },
+      "source": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1",
+      "tree": "e4beb81959d967ddfa84f49d12ecf244aee0748e"
+    },
+    "hough_ellipse": {
+      "elf": {
+        "name": "_hough_ellipse_private.cpython-313-x86_64-linux-gnu.so",
+        "bytes": 300232,
+        "sha256": "456280447d82e013642bbba46fe59c8c4a0b7761f43ca8f9ba6469889d1d3e6c"
+      },
+      "fixed_cases": [
+        {
+          "canonical_row_sha256": "36bb12720936481bce0eaa196afcdd68795910d4a64480f7d72b5b5825df77db",
+          "id": "documented-axis-ellipse"
+        },
+        {
+          "canonical_row_sha256": "9f527a664b3b93bb59c7183a7d8b3e9399db1eb09d21cb53b13966eab885920f",
+          "id": "asymmetric-binary-step"
+        },
+        {
+          "canonical_row_sha256": "6699b9c756fd9b706872272f4fe08fcb6138b78e9e9783004b2381cc90618950",
+          "id": "two-small-rings"
+        },
+        {
+          "canonical_row_sha256": "57cdd1d4472c4c234c0fdfa3e30124956123401b839725740d205fec0602e587",
+          "id": "clipped-sheared-ring"
+        }
+      ],
+      "witness": {
+        "bytes": 1036,
+        "sha256": "9db1a87b7d355fc84fed11532ca6900b30c534e44c2a94be452b27614ebb8dec"
+      },
+      "source": "ec6baf91152757be6d1c8b632defed07c37a2ee0",
+      "tree": "038f67c871a50e5668160eb514b3bd7da720bcbe"
+    },
+    "probabilistic_hough_line": {
+      "elf": {
+        "name": "_probabilistic_hough_line_private.cpython-313-x86_64-linux-gnu.so",
+        "bytes": 311728,
+        "sha256": "c5b26e614db7e9dc2a78fcc7ae7118b6f8d1ffe084ddd05dfa616685b816cc04"
+      },
+      "fixed_cases": [
+        {
+          "canonical_row_sha256": "d9f162e79c7dfba01d82b3fc46a497a0dd03e05f34e6042dabbcd40f0d2970d4",
+          "id": "default-cross-diagonal"
+        },
+        {
+          "canonical_row_sha256": "0ad11678b9c2a96b9a07f72df714ae543fb14d75ae68ba114e6d94e4cda17d64",
+          "id": "gapped-three-angles"
+        },
+        {
+          "canonical_row_sha256": "c95a48cb96389479dbd7e23e0d7c4273069965859a04ccd1dfeeaf676c49795a",
+          "id": "sparse-two-diagonals"
+        },
+        {
+          "canonical_row_sha256": "af205b33581dd5e493fef0623fe8c5b2d18d0b4c70d6c0ec3596f69ef8102f35",
+          "id": "dense-default-bands"
+        }
+      ],
+      "witness": {
+        "bytes": 1036,
+        "sha256": "620a0365b5fe3a07894d1a797237565e5f3496b1a5aa1ffa7a013c7d4dfa46bd"
+      },
+      "source": "de12294729f875559862a9c3a9afcf6061694f94",
+      "tree": "c27e1f7181e26b244b2e452f1e46af47ad3c7210"
+    }
+  },
+  "private_fixed_checks": 12,
+  "next_gate": "Fresh isolated timing host native entrant, exact runtime and unchanged sampler. All 12 ratios must meet stock speed under one worker."
+}
