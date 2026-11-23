@@ -1,0 +1,123 @@
+{
+  "donor": {
+    "full_qualification_artifact": 14763663715,
+    "full_qualification_outer_digest": "sha256:d3c679704c9154b2b87872d45e348cae993b33b2dfa33be27d711e1f58ae9e73",
+    "job": 137267840179,
+    "run": 45041856008,
+    "source": "817b6f82f47ce4cf4ef6656491f4d7b1fc40b346",
+    "core": {
+      "bytes": 8929992,
+      "member": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+      "sha256": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc"
+    },
+    "qualification_manifest": {
+      "bytes": 10176777,
+      "sha256": "ba60ecef03b4fedc7566d170009800a2a7e10cbf245afbc62da797e3b5264ba9"
+    },
+    "package_manifest": {
+      "bytes": 41849,
+      "sha256": "773c0d89d20cdba00040023ac31c3bcfa93371ee2aaa23ad5af8d9eaf5b79051"
+    },
+    "pybind_input": {
+      "bytes": 319402,
+      "full_qualification": "build-wheels/pybind11-3.1.0-py3-none-any.whl",
+      "sha256": "b8488090f8acffbcb6b5d6a85571a6827a0a2981ffb75e5a0b27b87c4a6b7dd0",
+      "stager_member": null
+    },
+    "wheel_inputs": {
+      "imageio-2.38.1-py3-none-any.whl": {
+        "bytes": 328389,
+        "full_qualification": "runtime-wheels/imageio-2.38.1-py3-none-any.whl",
+        "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9",
+        "stager": "wheels/imageio-2.38.1-py3-none-any.whl"
+      },
+      "lazy_loader-0.6-py3-none-any.whl": {
+        "bytes": 8791,
+        "full_qualification": "runtime-wheels/lazy_loader-0.6-py3-none-any.whl",
+        "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056",
+        "stager": "wheels/lazy_loader-0.6-py3-none-any.whl"
+      },
+      "networkx-3.7-py3-none-any.whl": {
+        "bytes": 2142205,
+        "full_qualification": "runtime-wheels/networkx-3.7-py3-none-any.whl",
+        "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0",
+        "stager": "wheels/networkx-3.7-py3-none-any.whl"
+      },
+      "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 16718044,
+        "full_qualification": "runtime-wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0",
+        "stager": "wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "packaging-26.3-py3-none-any.whl": {
+        "bytes": 129956,
+        "full_qualification": "runtime-wheels/packaging-26.3-py3-none-any.whl",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "stager": "wheels/packaging-26.3-py3-none-any.whl"
+      },
+      "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 7142544,
+        "full_qualification": "runtime-wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582",
+        "stager": "wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 13660939,
+        "full_qualification": "runtime-wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b",
+        "stager": "wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl": {
+        "bytes": 7893658,
+        "full_qualification": "product-wheels/scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl",
+        "sha256": "49dbc2ef88052cf28c2a5806ac9745a4aa40af5d9e0fb89a505da36b11247896",
+        "stager": "wheels/scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl"
+      },
+      "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 35312578,
+        "full_qualification": "runtime-wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9",
+        "stager": "wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "tifffile-2026.10.15-py3-none-any.whl": {
+        "bytes": 276988,
+        "full_qualification": "runtime-wheels/tifffile-2026.10.15-py3-none-any.whl",
+        "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b",
+        "stager": "wheels/tifffile-2026.10.15-py3-none-any.whl"
+      }
+    }
+  },
+  "transport": {
+    "exact_helper": {
+      "sha256": "5cb8da37a24e5ecf9a9657860768fed4a290e96e2591abfd14133d8a29007529",
+      "bytes": 1955
+    }
+  },
+  "runtime": {
+    "python_release_assets_metadata_only": [
+      {
+        "bytes": 33629731,
+        "id": 302742709,
+        "name": "cpython-3.13.8+20251010-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+        "sha256": "1ac8691d25271f99491e276d0564ccfc20b6650df0be053396af5a539698463e"
+      },
+      {
+        "bytes": 120370499,
+        "id": 302742704,
+        "name": "cpython-3.13.8+20251010-x86_64-unknown-linux-gnu-install_only.tar.gz",
+        "sha256": "12dd8995e8ec2df68cd1301b053f415c7884b8aae9d3459a2ac1448f781dbbbc"
+      }
+    ],
+    "executable_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
+    "version": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+    "thread_environment": [
+      "BLIS_NUM_THREADS",
+      "MKL_NUM_THREADS",
+      "NUMEXPR_NUM_THREADS",
+      "OMP_NUM_THREADS",
+      "OMP_THREAD_LIMIT",
+      "OPENBLAS_NUM_THREADS",
+      "VECLIB_MAXIMUM_THREADS"
+    ]
+  }
+}

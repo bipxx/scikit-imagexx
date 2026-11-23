@@ -1,22 +1,51 @@
-name: benchmark-report-json
+name: Circular Hough peaks modern private component and SDK
 on:
-  push:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
-  pull_request:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
   workflow_dispatch:
+    inputs:
+      authority:
+        required: true
+        type: string
+      authority_sha256:
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
 jobs:
-  json-syntax:
-    runs-on: ubuntu-latest
+  component:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      OMP_THREAD_LIMIT: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - run: python tools/check_report_json.py
+          persist-credentials: false
+          sparse-checkout: .github/u182-circle-peaks-component-v1
+      - name: Verify scope and run private component and SDK
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CIRCLE_COMPONENT_AUTHORITY: ${{ inputs.authority }}
+          CIRCLE_COMPONENT_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/run.py
+          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/check-report.py .github/u182-circle-peaks-component-v1/manifest-v1.json .github/u182-circle-peaks-component-v1/frozen/linux-modern-rows-v1.jsonl circle-peaks-component-results/component > circle-peaks-component-results/collection.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: u182-circle-peaks-modern-component-v1
+          path: |
+            circle-peaks-component-results/*.json
+            circle-peaks-component-results/*.log
+            circle-peaks-component-results/component/*.json
+            circle-peaks-component-results/component/*.log
+          if-no-files-found: warn
