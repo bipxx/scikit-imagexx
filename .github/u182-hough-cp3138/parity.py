@@ -1,5 +1,6 @@
 """Compare private component calls to admitted saved modern stock rows."""
 from hashlib import sha256
+from importlib import import_module
 from importlib.util import module_from_spec, spec_from_file_location
 import inspect
 import json
@@ -166,11 +167,14 @@ def main():
 
     assert np.__version__ == "2.5.4" and Path(np.__file__).resolve() == stock / "numpy/__init__.py"
     if name == "probabilistic_hough_line":
-        for key in ("_pcg64", "_generator", "bit_generator", "_common", "_bounded_integers"):
-            path = Path(sys.modules["numpy.random." + key].__file__).resolve()
+        random = import_module("numpy.random")
+        modules = {key: import_module("numpy.random." + key)
+                   for key in ("_pcg64", "_generator", "bit_generator", "_common", "_bounded_integers")}
+        for module in (random, *modules.values()):
+            path = Path(module.__file__).resolve()
             assert digest(path) == packet["runtime"]["providers"]["numpy"]["files_sha256"][path.relative_to(stock).as_posix()]
-        assert np.random.PCG64 is sys.modules["numpy.random._pcg64"].PCG64
-        assert np.random.default_rng is sys.modules["numpy.random._generator"].default_rng
+        assert np.random is random and random.PCG64 is modules["_pcg64"].PCG64
+        assert random.default_rng is modules["_generator"].default_rng
     core = packet["donor"]["core"]
     assert Path(_core.__file__).resolve() == candidate / core["member"] and digest(_core.__file__) == core["sha256"]
     assert xx.get_num_threads() == 1 and (mode != "scalar" or not xx.has_avx2())

@@ -22,6 +22,8 @@ from zipfile import ZipFile
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
 BOOT = "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
+PRIOR_ADMISSION = "8529d59841e44304ec8120d46ef6a9448fde0163449e88bb388de9ea7fe972c5"
+FAMILY = "probabilistic_hough_line"
 FLOOR = 30 * 2**30
 FLAGS = ["-std=c++17", "-O3", "-fPIC", "-fvisibility=hidden", "-fno-fast-math", "-ffp-contract=off", "-frounding-math"]
 CAP = 150 * 2**20
@@ -43,14 +45,14 @@ def write(path, value):
 
 def authority(env, now):
     assert env["GITHUB_ACTIONS"] == "true" and env["GITHUB_REPOSITORY"] == REPO
-    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-direct-v3"
+    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-direct-v4"
     assert env["GITHUB_EVENT_NAME"] == "workflow_dispatch"
     raw = env["HOUGH_AUTHORITY"].encode()
     assert len(raw) < 1024 and digest(raw) == env["HOUGH_AUTHORITY_SHA256"]
     value = json.loads(raw)
-    assert set(value) == {"carrier", "packet", "purpose", "deadline_utc"}
+    assert set(value) == {"carrier", "packet", "purpose", "deadline_utc", "prior_root_admission_sha256"}
     assert (value["carrier"], value["packet"]) == (env["GITHUB_SHA"], BOOT)
-    assert value["purpose"] in {"bootstrap", "components"}
+    assert (value["purpose"], value["prior_root_admission_sha256"]) == ("probabilistic-parity", PRIOR_ADMISSION)
     deadline = datetime.fromisoformat(value["deadline_utc"])
     assert 0 < (deadline - now).total_seconds() <= 5400
     return value
@@ -224,24 +226,23 @@ def stage_source(packet, out, work):
         ("remote.origin.promisor", "true"), ("remote.origin.partialclonefilter", "blob:none")
     ):
         command(out, "git-" + key.rsplit(".", 1)[-1], [*repo_git, "config", key, value])
-    refs = [row["ref"] for row in packet["families"].values()]
+    family_id = "transform." + FAMILY
+    family = packet["families"][family_id]
+    ref = family["ref"]
     command(out, "git-fetch", [*repo_git, "fetch", "--no-tags", "--depth=2", "--filter=blob:none", "origin",
-                               *[f"{ref}:{ref}" for ref in refs]])
+                               f"{ref}:{ref}"])
     command(out, "source-proof", [sys.executable, "-I", "-S", "-B", HERE / "verify-inputs.py", "--packet",
-                                  HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "source", "--repo", mirror, "--git", git])
-    source_roots = {}
-    for name, family in packet["families"].items():
-        name = name.rsplit(".", 1)[1]
-        destination = work / name
-        destination.mkdir()
-        for path in family["owned_git_files"] | family["verified_shared_git_files"]:
-            raw = subprocess.check_output([*repo_git, "cat-file", "blob", f"{family['source']}:{path}"])
-            path = destination / path
-            path.parent.mkdir(exist_ok=True, parents=True)
-            with path.open("xb") as output:
-                output.write(raw)
-        source_roots[name] = destination
-    return source_roots
+                                  HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "source", "--repo", mirror, "--git", git,
+                                  "--family", family_id])
+    source = work / FAMILY
+    source.mkdir()
+    for path in family["owned_git_files"] | family["verified_shared_git_files"]:
+        raw = subprocess.check_output([*repo_git, "cat-file", "blob", f"{family['source']}:{path}"])
+        path = source / path
+        path.parent.mkdir(exist_ok=True, parents=True)
+        with path.open("xb") as output:
+            output.write(raw)
+    return source
 
 
 def resolve_driver_linker(reported):
@@ -290,41 +291,33 @@ def verify_tools(packet, out):
     return compiler
 
 
-def components(packet, compiler, out, work, source_roots, python, stock, pybind, candidate):
+def probabilistic_parity(packet, compiler, out, work, source, python, stock, pybind, candidate):
     include = subprocess.check_output([python, "-I", "-S", "-B", "-c", "import sysconfig; print(sysconfig.get_path('include'))"], text=True).strip()
     failures = []
     children_env = {**os.environ, "TMPDIR": str(work)}
     children_env.pop("GH_TOKEN", None)
-    for name, source in source_roots.items():
-        try:
-            leaf = source / "src" / (name + ".cpp")
-            binary = work / ("_" + name + "_private" + packet["runtime"]["ext_suffix"])
-            cpp = [compiler, *FLAGS, "-I" + str(source / "include")]
-            obj = work / (name + ".o")
-            command(out, name + "-leaf", [*cpp, "-c", leaf, "-o", obj], env=children_env)
-            command(out, name + "-link", [*cpp, "-I" + str(source / "src"), "-I" + include, "-I" + str(pybind),
-                    "-shared", source / "src" / ("bind_" + name + ".cpp"), HERE / "storage_projection.cpp",
-                    HERE / (name + "-bridge.cpp"), obj, "-o", binary], env=children_env)
-            exports = subprocess.check_output(["/usr/bin/readelf", "-hWs", binary], text=True)
-            assert "ELF64" in exports and "X86-64" in exports and re.search(r"\bPyInit__" + name + r"_private\b", exports)
-            write(out / (name + "-elf.json"), seal(binary))
-            assert sum(path.stat().st_size for path in work.iterdir() if path.is_file()) <= CAP
-            program = work / (name + "-sdk")
-            command(out, name + "-sdk-link", [*cpp, source / "tests/cmake_consumer" / (name + "_consumer.cpp"), obj, "-o", program],
-                    env=children_env)
-            for mode in ("normal", "scalar"):
-                env = dict(children_env)
-                env.pop("SKIMAGEXX_DISABLE_SIMD", None)
-                if mode == "scalar":
-                    env["SKIMAGEXX_DISABLE_SIMD"] = "1"
-                if command(out, name + "-" + mode + "-sdk", ["taskset", "-c", "0", program], env=env, check=False):
-                    failures.append((name, mode, "sdk"))
-                if command(out, name + "-" + mode, ["taskset", "-c", "0", python, "-I", "-S", "-B", HERE / "parity.py",
-                           name, mode, source, binary, stock, candidate, out / (name + "-" + mode + "-cases.json")],
-                           env=env, check=False):
-                    failures.append((name, mode, "parity"))
-        except (RuntimeError, AssertionError, subprocess.CalledProcessError) as exc:
-            failures.append((name, "build/setup", str(exc)))
+    leaf = source / "src" / (FAMILY + ".cpp")
+    binary = work / ("_" + FAMILY + "_private" + packet["runtime"]["ext_suffix"])
+    cpp = [compiler, *FLAGS, "-I" + str(source / "include")]
+    obj = work / (FAMILY + ".o")
+    command(out, FAMILY + "-leaf", [*cpp, "-c", leaf, "-o", obj], env=children_env)
+    command(out, FAMILY + "-link", [*cpp, "-I" + str(source / "src"), "-I" + include, "-I" + str(pybind),
+            "-shared", source / "src" / ("bind_" + FAMILY + ".cpp"), HERE / "storage_projection.cpp",
+            HERE / (FAMILY + "-bridge.cpp"), obj, "-o", binary], env=children_env)
+    exports = subprocess.check_output(["/usr/bin/readelf", "-hWs", binary], text=True)
+    assert "ELF64" in exports and "X86-64" in exports and re.search(r"\bPyInit__" + FAMILY + r"_private\b", exports)
+    write(out / (FAMILY + "-elf.json"), seal(binary))
+    assert sum(path.stat().st_size for path in work.iterdir() if path.is_file()) <= CAP
+    for mode in ("normal", "scalar"):
+        env = dict(children_env)
+        env.pop("SKIMAGEXX_DISABLE_SIMD", None)
+        if mode == "scalar":
+            env["SKIMAGEXX_DISABLE_SIMD"] = "1"
+        label = FAMILY + "-" + mode
+        if command(out, label, ["taskset", "-c", "0", python, "-I", "-S", "-B", HERE / "parity.py",
+                               FAMILY, mode, source, binary, stock, candidate, out / (label + "-cases.json")],
+                   env=env, check=False):
+            failures.append(label)
     return failures
 
 
@@ -336,6 +329,8 @@ def main():
     pins = json.loads((HERE / "carrier-inputs.json").read_bytes())
     for path, pin in pins.items():
         assert seal(HERE / path) == pin, path
+    reused = json.loads((HERE / "v3-reuse-v1.json").read_bytes())
+    assert reused["root_admission_sha256"] == value["prior_root_admission_sha256"]
     workspace = Path(os.environ["GITHUB_WORKSPACE"]).resolve(strict=True)
     temp = Path(os.environ["RUNNER_TEMP"]).resolve(strict=True)
     assert temp != workspace and not temp.is_relative_to(workspace)
@@ -349,12 +344,11 @@ def main():
     assert 0 in os.sched_getaffinity(0)
     stage = "compiler-proof"
     try:
-        if value["purpose"] == "components":
-            compiler = verify_tools(packet, out)
+        compiler = verify_tools(packet, out)
         with TemporaryDirectory(dir=temp, prefix="u182-hough-cp3138-") as fixture:
             work = Path(fixture)
             stage = "sources"
-            sources = stage_source(packet, out, work)
+            source = stage_source(packet, out, work)
             stage = "runtime"
             python = provision_python(packet, work)
             stage = "donor"
@@ -364,11 +358,12 @@ def main():
             command(out, "runtime-proof", ["taskset", "-c", "0", python, "-I", "-S", "-B", HERE / "verify-inputs.py",
                     "--packet", HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "runtime", "--stock", stock,
                     "--pybind", pybind, "--candidate", candidate])
-            if value["purpose"] == "components":
-                stage = "components"
-                assert shutil.disk_usage(work).free >= FLOOR
-                failures = components(packet, compiler, out, work, sources, python, stock, pybind, candidate)
-                assert not failures, failures
+            assert json.loads((out / "runtime-proof.log").read_bytes()) == reused["runtime"]
+            write(out / "historical-v3-admission.json", reused)
+            stage = "probabilistic-parity"
+            assert shutil.disk_usage(work).free >= FLOOR
+            failures = probabilistic_parity(packet, compiler, out, work, source, python, stock, pybind, candidate)
+            assert not failures, failures
     except Exception as exc:
         write(out / "terminal.json", {"stage": stage, "exit": 1, "error": type(exc).__name__ + ": " + str(exc)})
         raise

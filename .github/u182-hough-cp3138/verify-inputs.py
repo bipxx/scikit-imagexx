@@ -17,27 +17,30 @@ def check(raw, pin):
     assert len(raw) == pin["bytes"] and sha256(raw).hexdigest() == pin["sha256"]
 
 
-def source_proof(packet, repo, git_path, windows_preflight):
+def source_proof(packet, repo, git_path, windows_preflight, family=None):
     assert git_path.is_absolute() and git_path.is_file() and repo.is_absolute() and repo.is_dir()
 
     def git(*args):
         return subprocess.check_output([git_path, "--no-optional-locks", "--no-replace-objects", "-C", repo, *args])
 
-    for name, family in packet["families"].items():
-        source = family["source"]
-        ref = family["existing_local_ref"] if windows_preflight else family["ref"]
+    selected = packet["families"] if family is None else {family: packet["families"][family]}
+    owned = 0
+    for name, records in selected.items():
+        source = records["source"]
+        ref = records["existing_local_ref"] if windows_preflight else records["ref"]
         assert git("rev-parse", "--verify", ref).decode().strip() == source, (name, ref)
-        assert git("rev-list", "--parents", "-n", "1", source).decode().split() == [source, family["published_parent"]]
-        assert git("rev-parse", f"{source}^{{tree}}").decode().strip() == family["tree"]
-        changed = git("diff-tree", "--no-commit-id", "--name-status", "-r", family["published_parent"], source)
-        expected = {"A\t" + path for path in family["owned_git_files"]}
+        assert git("rev-list", "--parents", "-n", "1", source).decode().split() == [source, records["published_parent"]]
+        assert git("rev-parse", f"{source}^{{tree}}").decode().strip() == records["tree"]
+        changed = git("diff-tree", "--no-commit-id", "--name-status", "-r", records["published_parent"], source)
+        expected = {"A\t" + path for path in records["owned_git_files"]}
         assert set(changed.decode().splitlines()) == expected
+        owned += len(expected)
         for paths in ("owned_git_files", "verified_shared_git_files"):
-            for path, pin in family[paths].items():
+            for path, pin in records[paths].items():
                 mode, kind, blob = git("ls-tree", source, "--", path).split(b"\t", 1)[0].decode().split()
                 assert (mode, kind, blob) == (pin["mode"], "blob", pin["git_blob"]), path
                 check(git("cat-file", "blob", f"{source}:{path}"), pin)
-    return {"families": len(packet["families"]), "owned_paths": 30, "windows_local_preflight": windows_preflight}
+    return {"families": len(selected), "owned_paths": owned, "windows_local_preflight": windows_preflight}
 
 
 def runtime_proof(packet, stock, pybind, candidate):
@@ -87,6 +90,7 @@ if __name__ == "__main__":
     source.add_argument("--repo", required=True, type=Path)
     source.add_argument("--git", required=True, type=Path)
     source.add_argument("--windows-preflight", action="store_true")
+    source.add_argument("--family", choices=("transform.probabilistic_hough_line",))
     runtime = modes.add_parser("runtime")
     for directory in ("stock", "pybind", "candidate"):
         runtime.add_argument(f"--{directory}", required=True, type=Path)
@@ -95,7 +99,7 @@ if __name__ == "__main__":
     assert sha256(raw).hexdigest() == args.packet_sha256
     packet = json.loads(raw)
     if args.mode == "source":
-        verdict = source_proof(packet, args.repo, args.git, args.windows_preflight)
+        verdict = source_proof(packet, args.repo, args.git, args.windows_preflight, args.family)
     else:
         verdict = runtime_proof(packet, args.stock, args.pybind, args.candidate)
     print(json.dumps(verdict, sort_keys=True))

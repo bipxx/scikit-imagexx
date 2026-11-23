@@ -1,0 +1,73 @@
+{
+  "artifact": 14783774169,
+  "artifact_digest": "sha256:414419eb87cebab0a572c4a2a771a9f76ef9a42479eae3006144bea2c999c586",
+  "carrier": "4518582525014419489ddbb20150d8ce61c68bdc",
+  "intake_sha256": "3ba75b08f5c263351336b34ef626d6b1cf591851b1cb6138ccc2aba210a6aede",
+  "job": 137440905629,
+  "parity": {
+    "hough_ellipse": {
+      "normal": {
+        "exit": 0,
+        "passed": 14,
+        "readback_sha256": "587222e62969d024b67712989043ddd5743ab4779c4a78af421076df5dc1aa5e"
+      },
+      "scalar": {
+        "exit": 0,
+        "passed": 14,
+        "readback_sha256": "43bbd3d8aff9bf2bdcdbab0ebee62dfd2be4b7591f9ba3aa89d7dacf0b36ecc2"
+      }
+    },
+    "hough_line": {
+      "normal": {
+        "exit": 0,
+        "passed": 23,
+        "readback_sha256": "65cd7e55ed26122d8070d92438af1ca4ceb1c6e284ee168818b476395d547502"
+      },
+      "scalar": {
+        "exit": 0,
+        "passed": 23,
+        "readback_sha256": "e76bb6809bdb308f0c53073f8361049d0bb01903cc10cf5806d6f8cff2bcca61"
+      }
+    },
+    "probabilistic_hough_line": {
+      "normal": {
+        "executed": 0,
+        "exit": 1,
+        "log_sha256": "8467321d50829c5dab14c59b4540d88786214ae05d105dcb53cb5143df86533a"
+      },
+      "scalar": {
+        "executed": 0,
+        "exit": 1,
+        "log_sha256": "8467321d50829c5dab14c59b4540d88786214ae05d105dcb53cb5143df86533a"
+      }
+    }
+  },
+  "prior_probabilistic_private_elf": {
+    "bytes": 311728,
+    "sha256": "6a8c2f8e07d9e5c033e84fbdac6e3bfaf06b8632656b04c3c7232d141b65046b"
+  },
+  "reuse_scope": "Line and ellipse private parity and six standalone SDK exits under the admitted unchanged source and runtime. Probabilistic parity remains unexecuted in v3 and is the only fresh scientific scope in v4.",
+  "root_admission_sha256": "8529d59841e44304ec8120d46ef6a9448fde0163449e88bb388de9ea7fe972c5",
+  "run": 45097633412,
+  "runtime": {
+    "donor_core": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc",
+    "runtime": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+    "science_imports": 0,
+    "selected_provider_members": 24
+  },
+  "sdk": {
+    "hough_ellipse": {
+      "normal": "dfcc07eed418f74dd3f54f480ccc8151a937755699e2c679b82f204fb13faf08",
+      "scalar": "dfcc07eed418f74dd3f54f480ccc8151a937755699e2c679b82f204fb13faf08"
+    },
+    "hough_line": {
+      "normal": "c63c178d7103dda878e2afebd8139673133481712e0f6ebb448674038dd1601b",
+      "scalar": "c63c178d7103dda878e2afebd8139673133481712e0f6ebb448674038dd1601b"
+    },
+    "probabilistic_hough_line": {
+      "normal": "a907dc67fe3346716937fe6760083814a0cb6e93b365d71b46c6936cc3472108",
+      "scalar": "a907dc67fe3346716937fe6760083814a0cb6e93b365d71b46c6936cc3472108"
+    }
+  },
+  "sources": 30
+}
