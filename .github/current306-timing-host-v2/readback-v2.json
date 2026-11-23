@@ -1,0 +1,420 @@
+{
+  "run": 45090847657,
+  "job": 137419805469,
+  "carrier": "dea051907025d8ecc92599a7f969fc5e1a0672b5",
+  "compact_artifact": 14780984345,
+  "compact_archive_digest": "sha256:ec61a53a51d3c7587cdd0db5b6ec398285e176c5e2d6e46d4b39ab7b45de71d6",
+  "wire_bytes": 1071714,
+  "expanded_bytes": 11271201,
+  "archives_retained": false,
+  "compact_file_sha256": {
+    "commands.json": "1480dfc28d940651429a8c4e498bfa2419ec7a0b8b72bc18d16bd036d7a8919f",
+    "entry.json": "c373abd2f5cf903114f43f30efa885e254bc34804755ab206a169417a706327a",
+    "install-candidate-for-offline-export.log": "4f88dafa3a6477226db3ec9af90a8e12c26dbed811757c4f90cb2d5e1551d128",
+    "measurement.json": "b9ae51dafb7392695bc1bf8a371c75d75537acc27a793d1b2fed9c1268948511",
+    "offline-freeze.log": "f5e866b985d9dface93f3b5bab375dafad8e6f6de22cfa78e64878a2c689cf3c",
+    "offline-verify.log": "48f379cc84e73e345c2729db31d501b615ccd767b8bcdfcca7c507e7d8430c86",
+    "prepare.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "producer-build-headers.json": "a875ba89e5aeaca03f9edbb74b69db448c353c4880910672756f5873c96d0a83",
+    "producer-build-headers.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "producer-build-identity.json": "486a1a52d5d9f8e12df7aae338a5c7270b602b8b7b2fb57fae40d0f4123b76c9",
+    "producer-build-whole-product.log": "ef9661a4b56c8797e2b2987f7c82bb18f8744329266ae6f17e5972f8cfbc53f8",
+    "producer-commands.json": "10b5d8fe4369ff873f2eeae03ed34f24f99d6bf15ac6c54c87685bff899e785c",
+    "producer-gather-build-identity-facts.log": "508d9eb5978c357d5f49cc090aae88808842517343ae1e9e4a0fe8a2f32a6837",
+    "producer-initial-public-admission.log": "fdb4b083e8628bddb1c41e924b90bec60d8c19a694ccb3b0f64094d022e40db0",
+    "producer-interpreter-provenance.json": "21c24f4865e0e65e4b94286dc882fece5e11e41001ca0cba730ff20596a97eeb",
+    "producer-native-build-properties.json": "0fc66ffad7b34766db3c8b2dde6833bc364a2a969e33fdc232bd1918538e5e75",
+    "producer-package.json": "9a76d6e07e1c5c0185c941b5aa7ff0bef8342978e31bad62ddf7057756518b94",
+    "producer-pinned-runtime-inputs.txt": "14f5d52ca61ffdce48dece5717b5c03acbdae23cdd6ea5ee7229fa48a8f252b5",
+    "producer-plan.json": "3136559445a30f1fcf61c740f0098c8966a0ff0f3e878d3eecc5927db2a11b8f",
+    "producer-sdk-build.log": "c6278fc6bfbc07f92f81d3f3a783113c464723465e6fde682c9ce8faef58b14d",
+    "producer-sdk-configure.log": "99dd8ba0d6f39f6d8404891d48987f351f6921e1940d162d77d2fda58e0715c7",
+    "producer-sdk-list.log": "7ebed4468d804a279aa35c02d6befb38cccbb2740ff37111d5688901eb921651",
+    "producer-sdk-normal.log": "f75d58e81d5a31d5eb7dc7a0c10b3c026a76a4ab935875b4fa2ffa2e29c5bc84",
+    "producer-sdk-scalar.log": "715f7be58886daaafde2aa7c29a03d4710f41ab0ea197a40e27f6d2c94bda67f",
+    "producer-sdk.json": "cd7f4a03f4e4a8ab8f488d4202b76f7f3aa3fb34b237516110cbc5092f5de20b",
+    "producer-state.json": "93045d99cb48331f5652106f7b6873d1841b98ee41d5dd94085cbe946de27ebc",
+    "producer-toolchain-cmake-capabilities.log": "4d3d1260e7d1c9814fcb56f5a736ecdb54e648f3c487bcb7c09db07347239418",
+    "producer-toolchain-visual-studio-instances.log": "92a310a2853b8ff90df4c4abba6937b8ee3d38be6a5832dd400b1429a6932520",
+    "producer-toolchain.json": "d6525fc2534f6ab6c970e9a7458475be8e26c65a7ec1e726dffb6f576314d7d5",
+    "producer-windows-sdk-selection.json": "d276606bc55eddcb50f10ada59faf04b3f3fe28a2a251d79266af9c27558d588",
+    "producer-windows-sdk-toolchain-verification.json": "f3b5892d3c9a40ba385316bbb64e55583bd828e64bc2b04b7574c731ddd4eda5",
+    "public-normal.json": "9eb2e3dc8222cbeefa0d9b217c2a09a48544b0877341f68b950575f55e46e175",
+    "public-normal.log": "1d0ce3f099241098463b72cf92d3a424dd45d6d6393677784841c17b0be56a42",
+    "public-normal.xml": "405c8e7e2230b6ce6035307b98ce226fd193f788f4dca0c7047d061431749582",
+    "public-scalar.json": "4831ccf823c9277ad148c3ad01ae24efca2f6653faa5826db9a7ce58e73b91e4",
+    "public-scalar.log": "1da3cece8908895dea11985f045095a4790dad4a1ad2ab20de1f461ba7dea024",
+    "public-scalar.xml": "0c8acb5cb97927dd0f0737c742c9598058f1f37759a709fc56c5e41733ec5d1f",
+    "runtime-lock.txt": "bce152c9a607b9ad0d801b01c5e3d8ffc9de7b562346a39405dad382bf663e1d",
+    "sdk-normal.xml": "79b685dc6718c05e1224c6664b591d8ec023317558306f7ee0cee2fbc833c748",
+    "sdk-scalar.xml": "6f0ac99116606a4c7daa21297771d1b435ba21df413d0d2abbc748153ba5138c",
+    "terminal.json": "bf2bb3b95f8ec0e66ba9215842651775c736b571b7964cacc5abf8861155fd43"
+  },
+  "transport_metadata_only": {
+    "id": 14781244347,
+    "name": "current306-windows-timing-transport-v3",
+    "digest": "sha256:c85de31089a30ddc74bbe6c5b5a0327b4ef0cbb295403e8e0176d726ae9f065a",
+    "size_in_bytes": 86463894,
+    "expired": false,
+    "expires_at": "2026-11-24T00:57:15Z"
+  },
+  "transport_downloaded": false,
+  "timing_authorized": false,
+  "status": "focused_windows_receipts_verified",
+  "outcome": {
+    "status": "focused_windows_receipts_verified",
+    "source": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
+    "tree": "2ab7c8bd13965df3d48e565b1c6b779739d0974c",
+    "profile": "windows",
+    "admitted_source_sha256": "dddc2f67d7a758f86af6131aa73f95b37da4a6c3bb59f0f608a02c6fb1bd714e",
+    "capacity_bytes": 234580115456,
+    "entry": {
+      "git": "C:\\Program Files\\Git\\bin\\git.exe",
+      "git_version": "git version 2.56.1.windows.1",
+      "python": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+      "executable": "C:\\hostedtoolcache\\windows\\Python\\3.13.16\\x64\\python.exe",
+      "executable_sha256": "31fe10b4ed82a2f960af0ef9931f46a4b84ff286f8b6ffd9dee098cf4f10f17f"
+    },
+    "product": {
+      "pins": {
+        "wheel": "69d3281d243b95cc9806e4a878bd359e28f2e2b480a76fb2635e2fa902bc5abe",
+        "core": "9b9bd89827ad8631a93ea2034806e31b74cd47af50bd5f090ce9fec0ecef320f",
+        "record": "2c91be85f12a6784335bc9cc717022dc42e707c0b25852c192804939bcea9d02"
+      },
+      "member_count": 282,
+      "sdk_member_count": 125
+    },
+    "normal": {
+      "total": 218,
+      "families": {
+        "tests/test_match_descriptors_public.py": 43,
+        "tests/test_thin_public.py": 21,
+        "tests/test_skeletonize_public.py": 24,
+        "tests/test_hough_circle_public.py": 22,
+        "tests/test_hough_line_peaks_public.py": 26
+      },
+      "generic": {
+        "registry": 2,
+        "public": 48,
+        "alias": 16,
+        "metadata": 16
+      },
+      "xml_sha256": "405c8e7e2230b6ce6035307b98ce226fd193f788f4dca0c7047d061431749582",
+      "original": {
+        "numpy": {
+          "version": "2.5.4",
+          "wheel_sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129",
+          "members": {
+            "numpy/__init__.py": "a6958cb364663b7acce81ccfd58eeb65a2b34d5376157f924777b97211a73be4",
+            "numpy/_core/_multiarray_umath.cp313-win_amd64.pyd": "f37332834048e3aef93a33ff53f558a319cad12009defb2231ee1ba4aa6105d8",
+            "numpy/fft/_pocketfft_umath.cp313-win_amd64.pyd": "5b497ecdaea98528ad53bf22e09b49631bd3a963660514a236ece6c82f46efe5",
+            "numpy/linalg/_umath_linalg.cp313-win_amd64.pyd": "2989647fd7df9ce56a0709542f3578d0ca0a5e4f7d83f81b033506c9fec6adc5",
+            "numpy/random/_bounded_integers.cp313-win_amd64.pyd": "a2ff00933e7a72477b6976d1629137c38b21c45571e678a4e10ac4284973873c",
+            "numpy/random/_common.cp313-win_amd64.pyd": "8c7350e399c5a4f89a52f77b4de6b591032573c4124a3397806b80626788bb96",
+            "numpy/random/_generator.cp313-win_amd64.pyd": "811961d6020ca40c28bcd62f7e1c0a29d389b5e1198a9a8e5a83ebc16aaba2dd",
+            "numpy/random/_mt19937.cp313-win_amd64.pyd": "ebc88f4759bd866e1c3832a73add6dd19ffd0714194ae2009611c20608cf9ece",
+            "numpy/random/_pcg64.cp313-win_amd64.pyd": "2e0b17dc778771432288cc92e260b066d0e96d2046c943ccfa10e73496c68e1e",
+            "numpy/random/_philox.cp313-win_amd64.pyd": "ca5626cbcd0c705b9710896ac448c5ae807540f4fb4a66c31751cff85776f641",
+            "numpy/random/_sfc64.cp313-win_amd64.pyd": "33210752124c94bd8aac7034c2ce417a1c80de1bb7d33aa759432748fe7699d8",
+            "numpy/random/bit_generator.cp313-win_amd64.pyd": "4cff629b98560b121b68393016f2e5f2de15c53a5eac036cc262cb154f7ab168",
+            "numpy/random/mtrand.cp313-win_amd64.pyd": "8055b3177e4a54dd08cb302fc7c600083b35934c0fa87002d5e3a2ea59e0caac",
+            "numpy.libs/libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll": "ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8",
+            "numpy.libs/msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll": "a4c2229bdc2a2a630acdc095b4d86008e5c3e3bc7773174354f3da4f5beb9cde"
+          }
+        },
+        "scipy": {
+          "version": "1.18.1",
+          "wheel_sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+          "members": {
+            "scipy/__init__.py": "a11ad8a1eaf423d32a0d3dd6c9be6c7be86068321f043dacd2d555a49418b92f",
+            "scipy/_cyutility.cp313-win_amd64.pyd": "8b346e8181299759328ea3bfdd63701618e709ac833cd28a30f25a0dd614832a",
+            "scipy/_lib/_ccallback_c.cp313-win_amd64.pyd": "0aa2ddbcc7aec96d3c9f288cd9cd7e209d30242421a05aa0cfad8265e75fc151",
+            "scipy/_lib/messagestream.cp313-win_amd64.pyd": "a79f964c8f83dd51b9113a2b7463e7c81d66b911b797bb2c1742cbfb5a15fdf2",
+            "scipy/linalg/_batched_linalg.cp313-win_amd64.pyd": "8f60612618d9801217189edca3d89a07a73422785e4cff608e5f5f1e2a3a0f68",
+            "scipy/linalg/_cythonized_array_utils.cp313-win_amd64.pyd": "ff5dacc666733ed61552d705753ffba6695862605d30983dcba03e74cffd9974",
+            "scipy/linalg/_decomp_update.cp313-win_amd64.pyd": "5b9179d071414d8de2063e473920aa4a06acbd4b24372432c134f6d23c649895",
+            "scipy/linalg/_fblas.cp313-win_amd64.pyd": "732e321069eea191f28cd10cc74dd66ab78162d15e930245bbf13d52a253ad2a",
+            "scipy/linalg/_flapack.cp313-win_amd64.pyd": "1f958d6bdb64156aeb3927144b8a7c98de5e34a080944e326f410eaddda0890a",
+            "scipy/linalg/_internal_matfuncs.cp313-win_amd64.pyd": "ceb1ff22d068586d34e82fa0a713394457aec312d8bd013051bdc8b6987b91fa",
+            "scipy/linalg/_linalg_pythran.cp313-win_amd64.pyd": "f3d075489facb09de13362444a78a768e2ff431dcf6b19fa20acd7cc3cac1fba",
+            "scipy/linalg/_solve_toeplitz.cp313-win_amd64.pyd": "50b177e19094986c48086c9afc9be1b7ebb3a97ea25d32d99c8038b26071421a",
+            "scipy/linalg/cython_blas.cp313-win_amd64.pyd": "d5631221e7a8bd0efaa1976329c799ea51e26c3769e95199f29e26a0f78da3bc",
+            "scipy/linalg/cython_lapack.cp313-win_amd64.pyd": "4a908257c4af7fd2c2382aeb07ea577cceaadcc442aab14b161e8eb3a40d6e24",
+            "scipy/ndimage/_nd_image.cp313-win_amd64.pyd": "6e08479ba26603611b7033e561a4569dd3a072b86c6bb6a8c802b9f2098c293e",
+            "scipy/ndimage/_ni_label.cp313-win_amd64.pyd": "f7dcb9219e6736ed8024103aaeb75e5254005ed526c9a9dac5b8c4d24f0c6d90",
+            "scipy/ndimage/_rank_filter_1d.cp313-win_amd64.pyd": "7ecf065302d894f39a7ef10768ab85ec1f3b6b3b248b1035bb8bbf1d66993cd5",
+            "scipy/sparse/_csparsetools.cp313-win_amd64.pyd": "20404bbaed6e4128002041a9d8ec6f9ee45e8a03b1b5e403047ace87579f3bf3",
+            "scipy/sparse/_sparsetools.cp313-win_amd64.pyd": "3f149545ce30a20dcd1732029338571d09338a1df6a13a0a19fc84308eef2c64",
+            "scipy/spatial/_ckdtree.cp313-win_amd64.pyd": "02eb0468e1dc75069eada1c6ff6e2fd9c564172491603968666803c13658b88b",
+            "scipy/spatial/_distance_pybind.cp313-win_amd64.pyd": "18050d3a0b6e928ed5950926e8af2959fad045d3aa29b22ea70139030edd8ca7",
+            "scipy/spatial/_distance_wrap.cp313-win_amd64.pyd": "6eca394eb1469deedfbe6d738523e7b09748cdcd5358fba977350e65479ee35b",
+            "scipy/spatial/_hausdorff.cp313-win_amd64.pyd": "68ff63bf07fe842b53be00ee579d8a16ffbcee96800057bd5f37890f3e86e66d",
+            "scipy/spatial/_qhull.cp313-win_amd64.pyd": "0f20275dfdac5e4c3a0dd73723d4e2ccb016565d53373bc6222af1be315cf315",
+            "scipy/spatial/_voronoi.cp313-win_amd64.pyd": "e984bc656b16bd34cd7c7ae4e6ab056cecae1dc4851828bd1a162f887db8b2b9",
+            "scipy/spatial/transform/_rigid_transform_cy.cp313-win_amd64.pyd": "635fb9a2db9a2fab3d5d3269133006b9138d0073d34999c080dd7d69e7a9f4cc",
+            "scipy/spatial/transform/_rotation_cy.cp313-win_amd64.pyd": "6eb4f1d45637a97007e8b1371f79960a83c0fbc8a278c9685d6d71561df98724",
+            "scipy/special/_comb.cp313-win_amd64.pyd": "f050f763b5bd85368a87fc695a6ad60053e81cc766eb0e598be62957ab8e2f6e",
+            "scipy/special/_ellip_harm_2.cp313-win_amd64.pyd": "eaa4835b70ef3bf7d7e03849e4168245ba6b09a1e4ad5f53d800f80ecf076e80",
+            "scipy/special/_gufuncs.cp313-win_amd64.pyd": "a365b43c8f618479e4f981f078acb4b406e2e144a1d7afe1656dfe6997eae977",
+            "scipy/special/_specfun.cp313-win_amd64.pyd": "3d527f044b4a1f977868f674215d0ea8de62a5341231879584a19f6aa4edc41b",
+            "scipy/special/_special_ufuncs.cp313-win_amd64.pyd": "f27a946e0c6c69c6d520bf40eb79b8946f45df6b455390d46ca83433330d6398",
+            "scipy/special/_ufuncs.cp313-win_amd64.pyd": "db6a864aeab955e7fe9f4e440e720532c0496b0df80d8ea176f459db0c069fa3",
+            "scipy/special/_ufuncs_cxx.cp313-win_amd64.pyd": "33cca140582085a7bc42f91f7f78a8d330574ac6121304423a2a64bb458eba12",
+            "scipy.libs/libscipy_openblas-197ee2fc9b4d071f7e048078cac74115.dll": "197ee2fc9b4d071f7e048078cac741151a6585d871061cf5f88c0c73e31963a5"
+          }
+        },
+        "scikit-image": {
+          "version": "0.26.0",
+          "wheel_sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+          "members": {
+            "skimage/__init__.py": "a8eeed181c8b033b0aa5248dc0f5740aa44879722ebd5d32c0a6ea9832ac1aeb",
+            "skimage/_shared/geometry.cp313-win_amd64.pyd": "a8caeeec2b9e2ca26da07ac3cf15f921184d4a9c7f79e0a1230d3ed22db5b1a1",
+            "skimage/draw/_draw.cp313-win_amd64.pyd": "554f9bad31f291c02cd4d0cf3a9c24242f6c4e9f6cd391ad0e7e64428dedaf8b",
+            "skimage/feature/match.py": "05494709bc0f948ef8304338b01202abd3796e04bc1c1930523ffcc0b9587325",
+            "skimage/filters/rank/bilateral_cy.cp313-win_amd64.pyd": "0235ccd395397db34ce916cb26ab7ef1be34a30c7b28a70778d4ec2db72d8f8b",
+            "skimage/filters/rank/core_cy.cp313-win_amd64.pyd": "b7bfc7822b9a30984434de90f9c6b5dc4c4606af7004ac25170802f9a8e5efe8",
+            "skimage/filters/rank/core_cy_3d.cp313-win_amd64.pyd": "a5c9c7f9962b24c0a39e6313d399e0c70d36bbe50d3fd48e5d1854f984be92b9",
+            "skimage/filters/rank/generic_cy.cp313-win_amd64.pyd": "a099e259cb6c8a553fa1c65bf57d23ef34a448f85aa620f63505576e1c06eaa0",
+            "skimage/filters/rank/percentile_cy.cp313-win_amd64.pyd": "80abfdf71b4b99201ef05d8dde50fa08a5540562604c272fd078530e23d9c66e",
+            "skimage/measure/_ccomp.cp313-win_amd64.pyd": "2c81f2271eaf636a43ced5fc40733c8bf26c46823607da8dc857c638cd0c4ce2",
+            "skimage/measure/_find_contours_cy.cp313-win_amd64.pyd": "253dea242f277c2ba0881069f2ac643f3e334d99b2113418108cde84ffc79d89",
+            "skimage/measure/_marching_cubes_lewiner_cy.cp313-win_amd64.pyd": "39f29eddf77e0857dcba615c00478cc243962999e6358cb4ff0107ed6c87b29a",
+            "skimage/measure/_moments_cy.cp313-win_amd64.pyd": "2849e33c0062fa2091de894b6c84cb1f0bb3bcd3308456bb0c2fce9af2de5804",
+            "skimage/measure/_pnpoly.cp313-win_amd64.pyd": "e433ea1c13e9f525a9eb8b537a6b41dc7ac990984ff67454a03b667e760a4b95",
+            "skimage/morphology/_convex_hull.cp313-win_amd64.pyd": "7fd720b828d34844be2d127ec49b342c681c611acd3e926cfed9321c0cf0a532",
+            "skimage/morphology/_extrema_cy.cp313-win_amd64.pyd": "5b7c4d3e038301fa98efbf83ba6c165f937abb794e442fdb1af42104a80b3386",
+            "skimage/morphology/_flood_fill_cy.cp313-win_amd64.pyd": "d846280dbf73e63efc53257788f785ea3b47c7dc89768f60cf70a1813342174e",
+            "skimage/morphology/_grayreconstruct.cp313-win_amd64.pyd": "4d9505af745104a2e814070d9d643052399d4acef49cb57d8ba8bba118ea1c68",
+            "skimage/morphology/_max_tree.cp313-win_amd64.pyd": "9a818964d2ed98b4e1bac5a2ca453ac6e3742db52a53e21857ffb1d107d97332",
+            "skimage/morphology/_misc_cy.cp313-win_amd64.pyd": "925e0fd01c4446b39866b194c92396b861c3ae7ef60cd5c109eb7f67625c221f",
+            "skimage/morphology/_skeletonize.py": "90ccca5327c613caeaea27f205b6d96178d27e9449c7d2eea93b837bd47af0ba",
+            "skimage/morphology/_skeletonize_lee_cy.cp313-win_amd64.pyd": "e279ac592c5698dab3a2b1e2316d0113f12ec56d2f88a1b402dd8294ca930c83",
+            "skimage/morphology/_skeletonize_various_cy.cp313-win_amd64.pyd": "c046b9a80f7fa65df32597f7e568bcd12542bd239438daacc74ea230640a5579",
+            "skimage/transform/_hough_transform.cp313-win_amd64.pyd": "0d94ffb31a207eb627fc4a78d34ca900ed754758c6ec0cc9750c487b69c1b186",
+            "skimage/transform/hough_transform.py": "3366764f565958ccc8cb01d4be0c1bbb452fc0e60f97cf66876f757e0eb18dac"
+          }
+        },
+        "pytest": {
+          "version": "9.1.1",
+          "wheel_sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "members": {
+            "pytest/__init__.py": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d"
+          }
+        }
+      },
+      "node_ids_sha256": "a9ab37663fd22eef03fad0704944f1f1e51d4e56a4a7b540630b1e562503ca43"
+    },
+    "scalar": {
+      "total": 218,
+      "families": {
+        "tests/test_match_descriptors_public.py": 43,
+        "tests/test_thin_public.py": 21,
+        "tests/test_skeletonize_public.py": 24,
+        "tests/test_hough_circle_public.py": 22,
+        "tests/test_hough_line_peaks_public.py": 26
+      },
+      "generic": {
+        "registry": 2,
+        "public": 48,
+        "alias": 16,
+        "metadata": 16
+      },
+      "xml_sha256": "0c8acb5cb97927dd0f0737c742c9598058f1f37759a709fc56c5e41733ec5d1f",
+      "original": {
+        "numpy": {
+          "version": "2.5.4",
+          "wheel_sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129",
+          "members": {
+            "numpy/__init__.py": "a6958cb364663b7acce81ccfd58eeb65a2b34d5376157f924777b97211a73be4",
+            "numpy/_core/_multiarray_umath.cp313-win_amd64.pyd": "f37332834048e3aef93a33ff53f558a319cad12009defb2231ee1ba4aa6105d8",
+            "numpy/fft/_pocketfft_umath.cp313-win_amd64.pyd": "5b497ecdaea98528ad53bf22e09b49631bd3a963660514a236ece6c82f46efe5",
+            "numpy/linalg/_umath_linalg.cp313-win_amd64.pyd": "2989647fd7df9ce56a0709542f3578d0ca0a5e4f7d83f81b033506c9fec6adc5",
+            "numpy/random/_bounded_integers.cp313-win_amd64.pyd": "a2ff00933e7a72477b6976d1629137c38b21c45571e678a4e10ac4284973873c",
+            "numpy/random/_common.cp313-win_amd64.pyd": "8c7350e399c5a4f89a52f77b4de6b591032573c4124a3397806b80626788bb96",
+            "numpy/random/_generator.cp313-win_amd64.pyd": "811961d6020ca40c28bcd62f7e1c0a29d389b5e1198a9a8e5a83ebc16aaba2dd",
+            "numpy/random/_mt19937.cp313-win_amd64.pyd": "ebc88f4759bd866e1c3832a73add6dd19ffd0714194ae2009611c20608cf9ece",
+            "numpy/random/_pcg64.cp313-win_amd64.pyd": "2e0b17dc778771432288cc92e260b066d0e96d2046c943ccfa10e73496c68e1e",
+            "numpy/random/_philox.cp313-win_amd64.pyd": "ca5626cbcd0c705b9710896ac448c5ae807540f4fb4a66c31751cff85776f641",
+            "numpy/random/_sfc64.cp313-win_amd64.pyd": "33210752124c94bd8aac7034c2ce417a1c80de1bb7d33aa759432748fe7699d8",
+            "numpy/random/bit_generator.cp313-win_amd64.pyd": "4cff629b98560b121b68393016f2e5f2de15c53a5eac036cc262cb154f7ab168",
+            "numpy/random/mtrand.cp313-win_amd64.pyd": "8055b3177e4a54dd08cb302fc7c600083b35934c0fa87002d5e3a2ea59e0caac",
+            "numpy.libs/libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll": "ed4f167a5330424524f45258e7ca2c8d7f03c0cba1f30ee4985553ac1f88ecf8",
+            "numpy.libs/msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll": "a4c2229bdc2a2a630acdc095b4d86008e5c3e3bc7773174354f3da4f5beb9cde"
+          }
+        },
+        "scipy": {
+          "version": "1.18.1",
+          "wheel_sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+          "members": {
+            "scipy/__init__.py": "a11ad8a1eaf423d32a0d3dd6c9be6c7be86068321f043dacd2d555a49418b92f",
+            "scipy/_cyutility.cp313-win_amd64.pyd": "8b346e8181299759328ea3bfdd63701618e709ac833cd28a30f25a0dd614832a",
+            "scipy/_lib/_ccallback_c.cp313-win_amd64.pyd": "0aa2ddbcc7aec96d3c9f288cd9cd7e209d30242421a05aa0cfad8265e75fc151",
+            "scipy/_lib/messagestream.cp313-win_amd64.pyd": "a79f964c8f83dd51b9113a2b7463e7c81d66b911b797bb2c1742cbfb5a15fdf2",
+            "scipy/linalg/_batched_linalg.cp313-win_amd64.pyd": "8f60612618d9801217189edca3d89a07a73422785e4cff608e5f5f1e2a3a0f68",
+            "scipy/linalg/_cythonized_array_utils.cp313-win_amd64.pyd": "ff5dacc666733ed61552d705753ffba6695862605d30983dcba03e74cffd9974",
+            "scipy/linalg/_decomp_update.cp313-win_amd64.pyd": "5b9179d071414d8de2063e473920aa4a06acbd4b24372432c134f6d23c649895",
+            "scipy/linalg/_fblas.cp313-win_amd64.pyd": "732e321069eea191f28cd10cc74dd66ab78162d15e930245bbf13d52a253ad2a",
+            "scipy/linalg/_flapack.cp313-win_amd64.pyd": "1f958d6bdb64156aeb3927144b8a7c98de5e34a080944e326f410eaddda0890a",
+            "scipy/linalg/_internal_matfuncs.cp313-win_amd64.pyd": "ceb1ff22d068586d34e82fa0a713394457aec312d8bd013051bdc8b6987b91fa",
+            "scipy/linalg/_linalg_pythran.cp313-win_amd64.pyd": "f3d075489facb09de13362444a78a768e2ff431dcf6b19fa20acd7cc3cac1fba",
+            "scipy/linalg/_solve_toeplitz.cp313-win_amd64.pyd": "50b177e19094986c48086c9afc9be1b7ebb3a97ea25d32d99c8038b26071421a",
+            "scipy/linalg/cython_blas.cp313-win_amd64.pyd": "d5631221e7a8bd0efaa1976329c799ea51e26c3769e95199f29e26a0f78da3bc",
+            "scipy/linalg/cython_lapack.cp313-win_amd64.pyd": "4a908257c4af7fd2c2382aeb07ea577cceaadcc442aab14b161e8eb3a40d6e24",
+            "scipy/ndimage/_nd_image.cp313-win_amd64.pyd": "6e08479ba26603611b7033e561a4569dd3a072b86c6bb6a8c802b9f2098c293e",
+            "scipy/ndimage/_ni_label.cp313-win_amd64.pyd": "f7dcb9219e6736ed8024103aaeb75e5254005ed526c9a9dac5b8c4d24f0c6d90",
+            "scipy/ndimage/_rank_filter_1d.cp313-win_amd64.pyd": "7ecf065302d894f39a7ef10768ab85ec1f3b6b3b248b1035bb8bbf1d66993cd5",
+            "scipy/sparse/_csparsetools.cp313-win_amd64.pyd": "20404bbaed6e4128002041a9d8ec6f9ee45e8a03b1b5e403047ace87579f3bf3",
+            "scipy/sparse/_sparsetools.cp313-win_amd64.pyd": "3f149545ce30a20dcd1732029338571d09338a1df6a13a0a19fc84308eef2c64",
+            "scipy/spatial/_ckdtree.cp313-win_amd64.pyd": "02eb0468e1dc75069eada1c6ff6e2fd9c564172491603968666803c13658b88b",
+            "scipy/spatial/_distance_pybind.cp313-win_amd64.pyd": "18050d3a0b6e928ed5950926e8af2959fad045d3aa29b22ea70139030edd8ca7",
+            "scipy/spatial/_distance_wrap.cp313-win_amd64.pyd": "6eca394eb1469deedfbe6d738523e7b09748cdcd5358fba977350e65479ee35b",
+            "scipy/spatial/_hausdorff.cp313-win_amd64.pyd": "68ff63bf07fe842b53be00ee579d8a16ffbcee96800057bd5f37890f3e86e66d",
+            "scipy/spatial/_qhull.cp313-win_amd64.pyd": "0f20275dfdac5e4c3a0dd73723d4e2ccb016565d53373bc6222af1be315cf315",
+            "scipy/spatial/_voronoi.cp313-win_amd64.pyd": "e984bc656b16bd34cd7c7ae4e6ab056cecae1dc4851828bd1a162f887db8b2b9",
+            "scipy/spatial/transform/_rigid_transform_cy.cp313-win_amd64.pyd": "635fb9a2db9a2fab3d5d3269133006b9138d0073d34999c080dd7d69e7a9f4cc",
+            "scipy/spatial/transform/_rotation_cy.cp313-win_amd64.pyd": "6eb4f1d45637a97007e8b1371f79960a83c0fbc8a278c9685d6d71561df98724",
+            "scipy/special/_comb.cp313-win_amd64.pyd": "f050f763b5bd85368a87fc695a6ad60053e81cc766eb0e598be62957ab8e2f6e",
+            "scipy/special/_ellip_harm_2.cp313-win_amd64.pyd": "eaa4835b70ef3bf7d7e03849e4168245ba6b09a1e4ad5f53d800f80ecf076e80",
+            "scipy/special/_gufuncs.cp313-win_amd64.pyd": "a365b43c8f618479e4f981f078acb4b406e2e144a1d7afe1656dfe6997eae977",
+            "scipy/special/_specfun.cp313-win_amd64.pyd": "3d527f044b4a1f977868f674215d0ea8de62a5341231879584a19f6aa4edc41b",
+            "scipy/special/_special_ufuncs.cp313-win_amd64.pyd": "f27a946e0c6c69c6d520bf40eb79b8946f45df6b455390d46ca83433330d6398",
+            "scipy/special/_ufuncs.cp313-win_amd64.pyd": "db6a864aeab955e7fe9f4e440e720532c0496b0df80d8ea176f459db0c069fa3",
+            "scipy/special/_ufuncs_cxx.cp313-win_amd64.pyd": "33cca140582085a7bc42f91f7f78a8d330574ac6121304423a2a64bb458eba12",
+            "scipy.libs/libscipy_openblas-197ee2fc9b4d071f7e048078cac74115.dll": "197ee2fc9b4d071f7e048078cac741151a6585d871061cf5f88c0c73e31963a5"
+          }
+        },
+        "scikit-image": {
+          "version": "0.26.0",
+          "wheel_sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+          "members": {
+            "skimage/__init__.py": "a8eeed181c8b033b0aa5248dc0f5740aa44879722ebd5d32c0a6ea9832ac1aeb",
+            "skimage/_shared/geometry.cp313-win_amd64.pyd": "a8caeeec2b9e2ca26da07ac3cf15f921184d4a9c7f79e0a1230d3ed22db5b1a1",
+            "skimage/draw/_draw.cp313-win_amd64.pyd": "554f9bad31f291c02cd4d0cf3a9c24242f6c4e9f6cd391ad0e7e64428dedaf8b",
+            "skimage/feature/match.py": "05494709bc0f948ef8304338b01202abd3796e04bc1c1930523ffcc0b9587325",
+            "skimage/filters/rank/bilateral_cy.cp313-win_amd64.pyd": "0235ccd395397db34ce916cb26ab7ef1be34a30c7b28a70778d4ec2db72d8f8b",
+            "skimage/filters/rank/core_cy.cp313-win_amd64.pyd": "b7bfc7822b9a30984434de90f9c6b5dc4c4606af7004ac25170802f9a8e5efe8",
+            "skimage/filters/rank/core_cy_3d.cp313-win_amd64.pyd": "a5c9c7f9962b24c0a39e6313d399e0c70d36bbe50d3fd48e5d1854f984be92b9",
+            "skimage/filters/rank/generic_cy.cp313-win_amd64.pyd": "a099e259cb6c8a553fa1c65bf57d23ef34a448f85aa620f63505576e1c06eaa0",
+            "skimage/filters/rank/percentile_cy.cp313-win_amd64.pyd": "80abfdf71b4b99201ef05d8dde50fa08a5540562604c272fd078530e23d9c66e",
+            "skimage/measure/_ccomp.cp313-win_amd64.pyd": "2c81f2271eaf636a43ced5fc40733c8bf26c46823607da8dc857c638cd0c4ce2",
+            "skimage/measure/_find_contours_cy.cp313-win_amd64.pyd": "253dea242f277c2ba0881069f2ac643f3e334d99b2113418108cde84ffc79d89",
+            "skimage/measure/_marching_cubes_lewiner_cy.cp313-win_amd64.pyd": "39f29eddf77e0857dcba615c00478cc243962999e6358cb4ff0107ed6c87b29a",
+            "skimage/measure/_moments_cy.cp313-win_amd64.pyd": "2849e33c0062fa2091de894b6c84cb1f0bb3bcd3308456bb0c2fce9af2de5804",
+            "skimage/measure/_pnpoly.cp313-win_amd64.pyd": "e433ea1c13e9f525a9eb8b537a6b41dc7ac990984ff67454a03b667e760a4b95",
+            "skimage/morphology/_convex_hull.cp313-win_amd64.pyd": "7fd720b828d34844be2d127ec49b342c681c611acd3e926cfed9321c0cf0a532",
+            "skimage/morphology/_extrema_cy.cp313-win_amd64.pyd": "5b7c4d3e038301fa98efbf83ba6c165f937abb794e442fdb1af42104a80b3386",
+            "skimage/morphology/_flood_fill_cy.cp313-win_amd64.pyd": "d846280dbf73e63efc53257788f785ea3b47c7dc89768f60cf70a1813342174e",
+            "skimage/morphology/_grayreconstruct.cp313-win_amd64.pyd": "4d9505af745104a2e814070d9d643052399d4acef49cb57d8ba8bba118ea1c68",
+            "skimage/morphology/_max_tree.cp313-win_amd64.pyd": "9a818964d2ed98b4e1bac5a2ca453ac6e3742db52a53e21857ffb1d107d97332",
+            "skimage/morphology/_misc_cy.cp313-win_amd64.pyd": "925e0fd01c4446b39866b194c92396b861c3ae7ef60cd5c109eb7f67625c221f",
+            "skimage/morphology/_skeletonize.py": "90ccca5327c613caeaea27f205b6d96178d27e9449c7d2eea93b837bd47af0ba",
+            "skimage/morphology/_skeletonize_lee_cy.cp313-win_amd64.pyd": "e279ac592c5698dab3a2b1e2316d0113f12ec56d2f88a1b402dd8294ca930c83",
+            "skimage/morphology/_skeletonize_various_cy.cp313-win_amd64.pyd": "c046b9a80f7fa65df32597f7e568bcd12542bd239438daacc74ea230640a5579",
+            "skimage/transform/_hough_transform.cp313-win_amd64.pyd": "0d94ffb31a207eb627fc4a78d34ca900ed754758c6ec0cc9750c487b69c1b186",
+            "skimage/transform/hough_transform.py": "3366764f565958ccc8cb01d4be0c1bbb452fc0e60f97cf66876f757e0eb18dac"
+          }
+        },
+        "pytest": {
+          "version": "9.1.1",
+          "wheel_sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "members": {
+            "pytest/__init__.py": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d"
+          }
+        }
+      },
+      "node_ids_sha256": "a9ab37663fd22eef03fad0704944f1f1e51d4e56a4a7b540630b1e562503ca43"
+    },
+    "sdk": {
+      "count": 10,
+      "modes": {
+        "normal": {
+          "tests": [
+            "installed_hough_circle_consumer",
+            "installed_hough_line_peaks_consumer",
+            "installed_match_descriptors_consumer",
+            "installed_skeletonize_consumer",
+            "installed_thin_consumer"
+          ],
+          "xml_sha256": "79b685dc6718c05e1224c6664b591d8ec023317558306f7ee0cee2fbc833c748"
+        },
+        "scalar": {
+          "tests": [
+            "installed_hough_circle_consumer",
+            "installed_hough_line_peaks_consumer",
+            "installed_match_descriptors_consumer",
+            "installed_skeletonize_consumer",
+            "installed_thin_consumer"
+          ],
+          "xml_sha256": "6f0ac99116606a4c7daa21297771d1b435ba21df413d0d2abbc748153ba5138c"
+        }
+      },
+      "toolchain": {
+        "generator": "Visual Studio 18 2026",
+        "instance": "C:/Program Files/Microsoft Visual Studio/18/Enterprise",
+        "architecture": "x64",
+        "compiler": "C:\\Program Files\\Microsoft Visual Studio\\18\\Enterprise\\VC\\Tools\\MSVC\\14.52.37025\\bin\\Hostx64\\x64\\cl.exe",
+        "compiler_version": "19.52.37029.0",
+        "toolset_version": "14.52.37025",
+        "host_architecture": "x64",
+        "platform_toolset": "v145",
+        "runtime": "MultiThreadedDLL",
+        "config": "Release",
+        "compiler_sha256": "87b094e4fb3c646247b8eb515b5daa4fd73f991fe7cc42e98c0c9e3d3805d6fb",
+        "evidence": {
+          "CMakeCache.txt": "9cf99c86fbb94ab79570a93ca1faec1db4e56dcafa17ebbeb9b4fa92eccc4433",
+          "CMakeFiles/4.4.4/CMakeCXXCompiler.cmake": "a4b1abc09961240ebbb884870e923c9df22da3eb5eed77cb7b1206cc10d8a75e",
+          "skimagexx.vcxproj": "70f4ebe1b21f1bdf961d535544b8d222fcb42e059ae3c555d58a16f955fbca4a"
+        }
+      },
+      "actual_sdk_toolchain": {
+        "generator": "Visual Studio 18 2026",
+        "instance": "C:\\Program Files\\Microsoft Visual Studio\\18\\Enterprise",
+        "architecture": "x64",
+        "compiler": "C:\\Program Files\\Microsoft Visual Studio\\18\\Enterprise\\VC\\Tools\\MSVC\\14.52.37025\\bin\\Hostx64\\x64\\cl.exe",
+        "compiler_version": "19.52.37029.0",
+        "toolset_version": "14.52.37025",
+        "host_architecture": "x64",
+        "platform_toolset": "v145",
+        "runtime": "MultiThreadedDLL",
+        "config": "Release",
+        "compiler_sha256": "87b094e4fb3c646247b8eb515b5daa4fd73f991fe7cc42e98c0c9e3d3805d6fb",
+        "evidence": {
+          "CMakeCache.txt": "af5cf54ed02e0b6faf12f2aab43acbc43b32d2a8576eff2ee2aa8245a82cdbd3",
+          "CMakeFiles/4.4.4/CMakeCXXCompiler.cmake": "a4b1abc09961240ebbb884870e923c9df22da3eb5eed77cb7b1206cc10d8a75e",
+          "match_descriptors_consumer.vcxproj": "ffb64cc3e4ff4aafd247b47b0849dcf6bcf7e232ba546f0fe950ed4fe91d01a7"
+        }
+      }
+    },
+    "producer_source_state_equal_to_offline": true,
+    "verified_wheel_archive_bytes": false,
+    "transport_members": {
+      "colorama-0.4.6-py2.py3-none-any.whl": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6",
+      "imageio-2.38.1-py3-none-any.whl": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9",
+      "iniconfig-2.3.1-py3-none-any.whl": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+      "lazy_loader-0.6-py3-none-any.whl": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056",
+      "networkx-3.7-py3-none-any.whl": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0",
+      "numpy-2.5.4-cp313-cp313-win_amd64.whl": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129",
+      "packaging-26.3-py3-none-any.whl": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "pillow-13.0.0-cp313-cp313-win_amd64.whl": "9dda0788a9932776a75d8bcc020076edc308ce2508b51f6739a45e3158b3fc42",
+      "pluggy-1.7.0-py3-none-any.whl": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+      "pygments-2.21.0-py3-none-any.whl": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+      "pytest-9.1.1-py3-none-any.whl": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+      "scikit_image-0.26.0-cp313-cp313-win_amd64.whl": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+      "scikit_imagexx-0.1.0-cp313-cp313-win_amd64.whl": "69d3281d243b95cc9806e4a878bd359e28f2e2b480a76fb2635e2fa902bc5abe",
+      "scipy-1.18.1-cp313-cp313-win_amd64.whl": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+      "tifffile-2026.10.15-py3-none-any.whl": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b"
+    },
+    "timing_authorized": false,
+    "whole_qualification": false
+  },
+  "adapter_recovery": {
+    "v1_reader_sha256": "a0f0fb96b22dcda672835e688a14a1e130d101803e7fda222ebcc2ad757a1be5",
+    "v1_readback_sha256": "011885f623a1cdb1859454367641b1d0a04d10c113b8f5b760d215b8c38ea904",
+    "cause": "V1 compared alternate separators of the same Windows Visual Studio installation path as raw text.",
+    "actual_selection_instance": "C:\\Program Files\\Microsoft Visual Studio\\18\\Enterprise",
+    "actual_producer_instance": "C:/Program Files/Microsoft Visual Studio/18/Enterprise",
+    "correction": "Only the installation path equality now uses PureWindowsPath, as the pinned producer does.",
+    "local_member_hashes_rechecked": 41,
+    "additional_artifact_wire_bytes": 0
+  }
+}

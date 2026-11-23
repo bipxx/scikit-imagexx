@@ -1,0 +1,118 @@
+{
+  "scope": "current306-windows-installed-fixed20-v3",
+  "source": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
+  "tree": "2ab7c8bd13965df3d48e565b1c6b779739d0974c",
+  "parent": "a80be03438ee8d00c9a5ebcec2845f24e53e6f5b",
+  "versions": {
+    "python": "3.13.16",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-image": "0.26.0"
+  },
+  "cases": {
+    "match_descriptors": [
+      "tiny-cross",
+      "mid-cross",
+      "dense-cross",
+      "short-threshold"
+    ],
+    "thin": [
+      "tiny-block",
+      "sparse-checkerboard",
+      "dense-rectangle",
+      "bounded-junctions"
+    ],
+    "skeletonize": [
+      "tiny-diamond",
+      "sparse-islands",
+      "dense-edged-rectangle",
+      "explicit-zhang-junctions"
+    ],
+    "hough_circle": [
+      "blank-three-radii",
+      "sparse-normalized",
+      "dense-unit-counts",
+      "full-output-sparse"
+    ],
+    "hough_line_peaks": [
+      "retained-cross-default",
+      "sparse-96x180",
+      "dense-noise-128x180",
+      "tied-plateaus-112x180-cap"
+    ]
+  },
+  "sources": {
+    "benchmarks/hough_circle.py": "42b0919fda1fd166b759e90b87d2846df7735f6c387e83178329de65b49fb998",
+    "benchmarks/hough_line_peaks.py": "f636d210015aa4c4d385f57a9af7ce3f3cf57651172b70c2a0d57e5eae69d41b",
+    "benchmarks/match_descriptors.py": "e322f65dd807c48d15081569b8b444469aea69a9a79c3f88aa09ba14738a4617",
+    "benchmarks/skeletonize.py": "8cc97511ebaf1ae221f595a615a4dcf27a2fcee3842f223bf9d7e0885007bfd5",
+    "benchmarks/thin.py": "5236c0213e04316ddbb701aa67f62a44260377ef1e7d97058e919d6a3ca7f1cd",
+    "coverage/contracts/hough-circle-reference-v1.json": "7c8f78e1ac86d316ca704f10d0da7722e026f5105d5e438ef37f589bc534a9a3",
+    "coverage/contracts/hough-line-peaks-reference-v1.json": "e0e9e5753977b710bce389db3d3297986fd84f0378a03a72be2a9067fb2ed00d",
+    "coverage/contracts/match-descriptors-v1.json": "607995987550f95490bedc141eb9e5edad25e02bf98ec8e698c97816995aa9e3",
+    "coverage/contracts/skeletonize-v1.json": "daaff8007e2a28a080d565e2b8b4641a926d08277ba699c2fd4484208aaa5e2a",
+    "coverage/contracts/thin-v1.json": "c20973ed4fe17562c7c42d69aa4ab8300e2dc16893c16330231ee9b7f2ff3215",
+    "include/skimagexx/hough_circle.hpp": "35d0d381cc66c58fad0f3972b22a6cf2d2c47fa9835b00a92e1f50cd354bda86",
+    "include/skimagexx/hough_line_peaks.hpp": "a555789cc3a93bca7d6821ef14c219c57f5901ea8bc47939a6802b6f5611c58b",
+    "include/skimagexx/match_descriptors.hpp": "b7ae6d702e2b9421ef0f76b0066f7aa4b82f511f0f55a80518f5a5c347e1903f",
+    "include/skimagexx/skeletonize.hpp": "e2470263683e08a73cda609305fa5900becdc2a23a8a67a316e24a70f32f32a2",
+    "include/skimagexx/thin.hpp": "c61c6046d761049d9119bd805853dda55c06b8d6083e006a5f929eae42b65f6a",
+    "python/skimagexx/__init__.py": "4987e9d1d2e348a8c1d5ac2bb8479f645da977a4c4fee9739aea2b90c9ed4c27",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+    "python/skimagexx/_expand_labels.py": "09b5a335b7779a90d0d1028438bd82b7bf7de4c1f01d49efb3df94bc209ef47c",
+    "python/skimagexx/_hough_circle.py": "7acf5ce61c4fc5ca1ec01f8ee38e375c4673f9797f8272f2e7d1f1fba028bbf9",
+    "python/skimagexx/_hough_line_peaks.py": "e40fb550df3ffcfea8cefdb7c03cdd1349dd19bbbc4350d7257503def06269c7",
+    "python/skimagexx/_match_descriptors.py": "bfdf5c3895c813a4bbd2a768ffdb6065cdd16a4fb8cd03a23a15fc0da660a8ff",
+    "python/skimagexx/_skeletonize.py": "6b24ad1d02ba2f349a662f7d7ba26dd07017f5cb43e6c164b85cde136144c69f",
+    "python/skimagexx/_thin.py": "e7392681269b90ed9aab4237d56c5a85fea237ec87276cc1e7aad6e8978af2ca",
+    "python/skimagexx/feature.py": "92496f1823c1eb9a50657f11f641c6295268bf64261e8dde435b6d4b5bc70049",
+    "python/skimagexx/morphology.py": "6c8463aeb7ec2584227d63bcd970639f76c8545bb5111d8be16bf0179529eb04",
+    "python/skimagexx/transform.py": "75109ae7604167626101fc3cf1f60f74f952f603c122ceb0e12226d00a89f97a",
+    "src/bind_hough_circle.cpp": "8617c2097505cf5ab6e9e56fa85aa2d41943630ce75860be01363855849a3ee3",
+    "src/bind_hough_line_peaks.cpp": "80da5fbbd193b54ff537aa0a8115d7479484f4f3f7d95f5d0543d9965799c099",
+    "src/bind_match_descriptors.cpp": "9984e0866e60f249e4a26124b6566bdddb7d92383b82ef8f46c4c7f770006b7f",
+    "src/bind_skeletonize.cpp": "38aff17cea45a03f95bc5ea56896ca1e378e30854891f1a0f763efafe7950efe",
+    "src/bind_thin.cpp": "2558aa038ba635f2dee7f8555b42503d6a7cd2b712fbb3f45645dd3312ae6564",
+    "src/hough_circle.cpp": "b7c3b52ca41ab089f5f96d5691ae7dfaaa4172ac3c77cf8a8bc82317e19381f6",
+    "src/hough_line_peaks.cpp": "0436beb85a62ef6f748287470a26c620523feebcd03544b39b5b919d0ce20fa3",
+    "src/match_descriptors.cpp": "8879953245b73efcb2fd54b1950c830eab1e5632ca03dd2ffcee4698c1c6917b",
+    "src/skeletonize.cpp": "acba2d6ae8364403735202451e78941462bb2d72b032fda98c840c552252c9d5",
+    "src/thin.cpp": "aa7953011d0c49a28b374734d87d5a0e680400307cb5293bd4f522e5366ad8ea",
+    "tests/cmake_consumer/hough_circle_consumer.cpp": "3e2d29fa7ecf66edf4e765e69814f161f870099bfbea4a1475b471d9415f4712",
+    "tests/cmake_consumer/hough_line_peaks_consumer.cpp": "d9a909edb575a35a1955b47cb5497ed9dc658228e93e8d6e2ace3ce32e7d006f",
+    "tests/cmake_consumer/match_descriptors_consumer.cpp": "67589abca099660887a0e0293a3cb78d3ebc1eb0fbe07ec165ca8958a46a0843",
+    "tests/cmake_consumer/skeletonize_consumer.cpp": "7b2901af1147dc5f7a1a1503571480213fec14cbf3326e9e6d09feb9323dda11",
+    "tests/cmake_consumer/thin_consumer.cpp": "a7cb6f4996d1fa67811315b1727cd2cb4ee37be9c21717a8ba07e4fc67a0b4d8",
+    "tests/fixtures/match_descriptors_reference_v1.py": "36e86613ba9a672f30a0a14f8e44acd377255cc6b02a54f412c9e77374d7f7fb",
+    "tests/fixtures/skeletonize_originals_v1.json": "1d7dc129321b5690b16ea6e4fb60d379c01688b295515522bf68ed7ef45b032e",
+    "tests/fixtures/thin_reference_v1.py": "81185e0dccaf070aa8438dffde0c49f42c8a576287a2f0c0ad5426aacad182d3",
+    "tests/hough_circle_reference.py": "8806e811b6014c57b58a064b1acc52ec2a43df55dc7f18100e0527929be7b203",
+    "tests/hough_line_peaks_reference.py": "6262c04b25b8a0488f123d80ebd436fa496e9017bbd5a21e1e1e658658dc4de8",
+    "tests/skeletonize_cases.py": "6502eea71ba013c4eb4a0b4439360c13a1b1668cc472b404dffaaa0e21f1309c",
+    "tests/test_hough_circle_public.py": "aa10b3985ec62702491fbfaa3077c6d0cce3f8808f2ae65dc591b07dd4e8e927",
+    "tests/test_hough_line_peaks_public.py": "0807fa679e43403909463a368f293024168e8b8ae7f5be58c8e6be162dce8dbe",
+    "tests/test_match_descriptors_public.py": "874c6af711e0947786495b7556b4c26501b01c1bb63be3976f5b07957be2d814",
+    "tests/test_skeletonize_public.py": "5609c8458cd44de05ec7a6e0e01831cdf97fb4ea795d196665e09da337c7f991",
+    "tests/test_thin_public.py": "c46bde10cbcab195201bcba8b5d6e438e7c2f45a0e0a3be4a8b3a1bdba0137d3",
+    "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+  },
+  "stock_wheels": {
+    "scikit-image": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+    "scipy": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+    "numpy": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129"
+  },
+  "installed_runner_handoff_sha256": "f552eff7bb9a80292776c8adf0f3d62cc7a31d50f02c7ca351b31a461ac135ae",
+  "hosted_producer_plan_sha256": "b4b419aa6b769d465dc39f6b57f933ce58fe3fd393e5854e8360967e4a096fed",
+  "protocol": {
+    "workers": 1,
+    "cpu": 0,
+    "warmup_ms": 250,
+    "batch_ms": 100,
+    "batches_per_side": 7,
+    "accepted_total": 280,
+    "minimum_each_speedup": 1.0
+  },
+  "source_repair_sha256": "0be49d1d27be15432337b269ded42921bb8c372425eea071bfd43abc8e1241d6",
+  "unchanged_recipe_evidence_sha256": "eb0ce41d7521726e464d3b740100ad950155ece5a25a56bdb7825589700832fe",
+  "comparison_baseline": "1fdc51e34bb8326671374aa7cda59be9389cb73c"
+}

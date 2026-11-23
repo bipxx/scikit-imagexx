@@ -1,0 +1,28 @@
+{
+  "status": "admitted exact Windows focused product and relocated SDK receipts; transport content and timing pending",
+  "source": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
+  "tree": "2ab7c8bd13965df3d48e565b1c6b779739d0974c",
+  "root_readback_sha256": "e5dac33ac9992f725782f55419d0835c82075f65d6d7d5be39e9b13bcabb89ad",
+  "producer_run": 45090847657,
+  "producer_job": 137419805469,
+  "public_passes": 436,
+  "SDK_passes": 10,
+  "product": {
+    "pins": {
+      "wheel": "69d3281d243b95cc9806e4a878bd359e28f2e2b480a76fb2635e2fa902bc5abe",
+      "core": "9b9bd89827ad8631a93ea2034806e31b74cd47af50bd5f090ce9fec0ecef320f",
+      "record": "2c91be85f12a6784335bc9cc717022dc42e707c0b25852c192804939bcea9d02"
+    },
+    "member_count": 282,
+    "sdk_member_count": 125
+  },
+  "transport": {
+    "id": 14781244347,
+    "name": "current306-windows-timing-transport-v3",
+    "digest": "sha256:c85de31089a30ddc74bbe6c5b5a0327b4ef0cbb295403e8e0176d726ae9f065a",
+    "size_in_bytes": 86463894,
+    "expired": false,
+    "expires_at": "2026-11-24T00:57:15Z"
+  },
+  "track": "v306 Windows focus only. Formal release still requires exact parent main delivery and fresh four-profile product."
+}

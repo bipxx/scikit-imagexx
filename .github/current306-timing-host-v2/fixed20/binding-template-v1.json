@@ -1,0 +1,122 @@
+{
+  "scope": "current306-windows-installed-fixed20-v3",
+  "source": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
+  "tree": "2ab7c8bd13965df3d48e565b1c6b779739d0974c",
+  "source_root": "<absolute exact clean source checkout>",
+  "git": {
+    "path": "<absolute native Windows git.exe>",
+    "sha256": "<actual SHA-256>"
+  },
+  "python": {
+    "path": "<absolute actual 3.13.16 Windows timing python.exe>",
+    "sha256": "<actual SHA-256>"
+  },
+  "python_dll": {
+    "path": "<absolute actual loaded python313.dll>",
+    "sha256": "<actual SHA-256>"
+  },
+  "producer": {
+    "path": "<absolute root-admitted current306 successor producer terminal receipt for 5b94b20d30e572164a6473c8bb029e18d4a7e706>",
+    "sha256": "<actual SHA-256>"
+  },
+  "focused_public": {
+    "path": "<absolute root-admitted current306 successor focused_public terminal receipt for 5b94b20d30e572164a6473c8bb029e18d4a7e706>",
+    "sha256": "<actual SHA-256>"
+  },
+  "relocated_sdk": {
+    "path": "<absolute root-admitted current306 successor relocated_sdk terminal receipt for 5b94b20d30e572164a6473c8bb029e18d4a7e706>",
+    "sha256": "<actual SHA-256>"
+  },
+  "candidate": {
+    "site": "<absolute isolated extracted candidate site>",
+    "distribution": "scikit-imagexx",
+    "version": "0.1.0",
+    "record": {
+      "path": "<absolute admitted installed RECORD>",
+      "sha256": "<actual SHA-256>"
+    },
+    "core": {
+      "path": "<absolute admitted installed x64 _core.pyd>",
+      "sha256": "<actual SHA-256>"
+    },
+    "wheel_tag": "cp313-cp313-win_amd64",
+    "wheel_sha256": "<producer verified wheel digest>",
+    "wheel_members": "<list of 282 canonical original wheel member names including RECORD>"
+  },
+  "stock": {
+    "scikit-image": {
+      "site": "<absolute stock-only site>",
+      "distribution": "scikit-image",
+      "version": "0.26.0",
+      "input_wheel_sha256": "ac529eb9dbd5954f9aaa2e3fe9a3fd9661bfe24e134c688587d811a0233127f1",
+      "record": {
+        "path": "<absolute scikit-image stock installed RECORD>",
+        "sha256": "<actual SHA-256>"
+      },
+      "modules": {
+        "skimage": "skimage/__init__.py",
+        "skimage.feature.match": "skimage/feature/match.py",
+        "skimage.feature.peak": "skimage/feature/peak.py",
+        "skimage.measure._label": "skimage/measure/_label.py",
+        "skimage.measure._regionprops": "skimage/measure/_regionprops.py",
+        "skimage.morphology._skeletonize": "skimage/morphology/_skeletonize.py",
+        "skimage.morphology._skeletonize_various_cy": "skimage/morphology/_skeletonize_various_cy.cp313-win_amd64.pyd",
+        "skimage.transform._hough_transform": "skimage/transform/_hough_transform.cp313-win_amd64.pyd",
+        "skimage.transform.hough_transform": "skimage/transform/hough_transform.py"
+      }
+    },
+    "scipy": {
+      "site": "<absolute stock-only site>",
+      "distribution": "scipy",
+      "version": "1.18.1",
+      "input_wheel_sha256": "559ed65f60c1af5a03f3912605a1b5114f522c7c32fb23c3376ae8f03219fe28",
+      "record": {
+        "path": "<absolute scipy stock installed RECORD>",
+        "sha256": "<actual SHA-256>"
+      },
+      "modules": {
+        "scipy": "scipy/__init__.py",
+        "scipy.ndimage._filters": "scipy/ndimage/_filters.py",
+        "scipy.ndimage._measurements": "scipy/ndimage/_measurements.py",
+        "scipy.ndimage._nd_image": "scipy/ndimage/_nd_image.cp313-win_amd64.pyd",
+        "scipy.ndimage._ni_label": "scipy/ndimage/_ni_label.cp313-win_amd64.pyd",
+        "scipy.spatial._distance_pybind": "scipy/spatial/_distance_pybind.cp313-win_amd64.pyd",
+        "scipy.spatial.distance": "scipy/spatial/distance.py"
+      },
+      "openblas_member": "scipy.libs/libscipy_openblas-197ee2fc9b4d071f7e048078cac74115.dll"
+    },
+    "numpy": {
+      "site": "<absolute stock-only site>",
+      "distribution": "numpy",
+      "version": "2.5.4",
+      "input_wheel_sha256": "8b4d2fd2d34e5f8c9235ee787de5631a37a28402b15cb80814df973d2be54129",
+      "record": {
+        "path": "<absolute numpy stock installed RECORD>",
+        "sha256": "<actual SHA-256>"
+      },
+      "modules": {
+        "numpy": "numpy/__init__.py",
+        "numpy._core._multiarray_umath": "numpy/_core/_multiarray_umath.cp313-win_amd64.pyd"
+      },
+      "openblas_member": "numpy.libs/libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll"
+    }
+  },
+  "threadpoolctl": {
+    "path": "<absolute stock site threadpoolctl.py>",
+    "sha256": "<actual SHA-256>"
+  },
+  "loaded_pools": [
+    {
+      "path": "<absolute genuine loaded NumPy OpenBLAS>",
+      "sha256": "<actual SHA-256>"
+    },
+    {
+      "path": "<absolute genuine loaded SciPy OpenBLAS>",
+      "sha256": "<actual SHA-256>"
+    },
+    {
+      "path": "<absolute genuine loaded MSVC OpenMP DLL; enumerate any additional actual pools>",
+      "sha256": "<actual SHA-256>"
+    }
+  ]
+}

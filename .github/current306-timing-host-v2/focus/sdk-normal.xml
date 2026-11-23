@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="5"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="0"
+	timestamp="2026-11-23T00:57:03"
+	>
+	<testcase name="installed_match_descriptors_consumer" classname="installed_match_descriptors_consumer" time="0.0097257" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="installed_thin_consumer" classname="installed_thin_consumer" time="0.008496" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="installed_skeletonize_consumer" classname="installed_skeletonize_consumer" time="0.0083636" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="installed_hough_circle_consumer" classname="installed_hough_circle_consumer" time="0.0091767" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="installed_hough_line_peaks_consumer" classname="installed_hough_line_peaks_consumer" time="0.0091127" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+</testsuite>

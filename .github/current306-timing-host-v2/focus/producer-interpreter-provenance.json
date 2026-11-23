@@ -1,0 +1,11 @@
+{
+  "base": {
+    "path": "C:\\hostedtoolcache\\windows\\Python\\3.13.16\\x64\\python.exe",
+    "sha256": "31fe10b4ed82a2f960af0ef9931f46a4b84ff286f8b6ffd9dee098cf4f10f17f",
+    "version": "3.13.16 (tags/v3.13.16:cbc944f, Sep 30 2026, 19:17:50) [MSC v.1944 64 bit (AMD64)]",
+    "major_minor": "3.13",
+    "cache_tag": "cpython-313",
+    "os_name": "nt"
+  },
+  "links": {}
+}
