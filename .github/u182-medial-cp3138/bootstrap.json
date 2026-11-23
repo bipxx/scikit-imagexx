@@ -1,0 +1,259 @@
+{
+  "donor": {
+    "admission": {
+      "bytes": 3730,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/whole-product-root-admission-v1.json",
+      "sha256": "5d9bf97a6c3db46d1c18d12805cb4d4c2ea3ffc1fe015aa1748483827a2eb40e"
+    },
+    "core": {
+      "bytes": 8929992,
+      "member": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+      "sha256": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc"
+    },
+    "full_qualification_artifact": 14763663715,
+    "full_qualification_outer_digest": "sha256:d3c679704c9154b2b87872d45e348cae993b33b2dfa33be27d711e1f58ae9e73",
+    "job": 137267840179,
+    "package_manifest": {
+      "bytes": 41849,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/modern/package.json",
+      "sha256": "773c0d89d20cdba00040023ac31c3bcfa93371ee2aaa23ad5af8d9eaf5b79051"
+    },
+    "package_members": 260,
+    "profile": "modern",
+    "pybind_input": {
+      "bytes": 319402,
+      "full_qualification": "build-wheels/pybind11-3.1.0-py3-none-any.whl",
+      "sha256": "b8488090f8acffbcb6b5d6a85571a6827a0a2981ffb75e5a0b27b87c4a6b7dd0",
+      "stager_member": null
+    },
+    "qualification_manifest": {
+      "bytes": 10176777,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/modern/manifest.json",
+      "sha256": "ba60ecef03b4fedc7566d170009800a2a7e10cbf245afbc62da797e3b5264ba9"
+    },
+    "qualified_interpreter": {
+      "cache_tag": "cpython-313",
+      "major_minor": "3.13",
+      "os_name": "posix",
+      "path": "/opt/hostedtoolcache/Python/3.13.16/x64/bin/python3.13",
+      "sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+      "version": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]"
+    },
+    "run": 45041856008,
+    "source": "817b6f82f47ce4cf4ef6656491f4d7b1fc40b346",
+    "stager_artifact": 14763653289,
+    "stager_manifest": {
+      "bytes": 514346,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/stager-modern/product.json",
+      "sha256": "407058f63e2944e086e89088270de007f4f1b1f87b2f2419257f06e40e1fb233"
+    },
+    "stager_outer_bytes": 359704220,
+    "stager_outer_digest": "sha256:9c315b6f4628f639e4e5a769fd46cb5228e3370a271cf6dd3281f9b99f8a9118",
+    "stager_readback": {
+      "bytes": 530,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/stager-modern/root-readback.json",
+      "sha256": "bca6fbd5957402c2ad0ce95447618fb0532776d7f3438c9afe17438fc5b1e2ac"
+    },
+    "stager_runtime": {
+      "bytes": 790887,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/stager-modern/runtime.json",
+      "sha256": "1f808b3ccc8d16300e1b7f83aa2bf8816a376460dac5231398876557e70bb2ee"
+    },
+    "wheel_input_bytes_excluding_pybind": 85285409,
+    "wheel_inputs": {
+      "imageio-2.38.1-py3-none-any.whl": {
+        "bytes": 328389,
+        "full_qualification": "runtime-wheels/imageio-2.38.1-py3-none-any.whl",
+        "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9",
+        "stager": "wheels/imageio-2.38.1-py3-none-any.whl"
+      },
+      "iniconfig-2.3.1-py3-none-any.whl": {
+        "bytes": 7552,
+        "full_qualification": "runtime-wheels/iniconfig-2.3.1-py3-none-any.whl",
+        "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+        "stager": "wheels/iniconfig-2.3.1-py3-none-any.whl"
+      },
+      "lazy_loader-0.6-py3-none-any.whl": {
+        "bytes": 8791,
+        "full_qualification": "runtime-wheels/lazy_loader-0.6-py3-none-any.whl",
+        "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056",
+        "stager": "wheels/lazy_loader-0.6-py3-none-any.whl"
+      },
+      "networkx-3.7-py3-none-any.whl": {
+        "bytes": 2142205,
+        "full_qualification": "runtime-wheels/networkx-3.7-py3-none-any.whl",
+        "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0",
+        "stager": "wheels/networkx-3.7-py3-none-any.whl"
+      },
+      "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 16718044,
+        "full_qualification": "runtime-wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0",
+        "stager": "wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "packaging-26.3-py3-none-any.whl": {
+        "bytes": 129956,
+        "full_qualification": "runtime-wheels/packaging-26.3-py3-none-any.whl",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "stager": "wheels/packaging-26.3-py3-none-any.whl"
+      },
+      "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 7142544,
+        "full_qualification": "runtime-wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582",
+        "stager": "wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "pluggy-1.7.0-py3-none-any.whl": {
+        "bytes": 27082,
+        "full_qualification": "runtime-wheels/pluggy-1.7.0-py3-none-any.whl",
+        "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+        "stager": "wheels/pluggy-1.7.0-py3-none-any.whl"
+      },
+      "pygments-2.21.0-py3-none-any.whl": {
+        "bytes": 1250147,
+        "full_qualification": "runtime-wheels/pygments-2.21.0-py3-none-any.whl",
+        "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+        "stager": "wheels/pygments-2.21.0-py3-none-any.whl"
+      },
+      "pytest-9.1.1-py3-none-any.whl": {
+        "bytes": 386536,
+        "full_qualification": "runtime-wheels/pytest-9.1.1-py3-none-any.whl",
+        "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+        "stager": "wheels/pytest-9.1.1-py3-none-any.whl"
+      },
+      "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 13660939,
+        "full_qualification": "runtime-wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b",
+        "stager": "wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl": {
+        "bytes": 7893658,
+        "full_qualification": "product-wheels/scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl",
+        "sha256": "49dbc2ef88052cf28c2a5806ac9745a4aa40af5d9e0fb89a505da36b11247896",
+        "stager": "wheels/scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl"
+      },
+      "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 35312578,
+        "full_qualification": "runtime-wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9",
+        "stager": "wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "tifffile-2026.10.15-py3-none-any.whl": {
+        "bytes": 276988,
+        "full_qualification": "runtime-wheels/tifffile-2026.10.15-py3-none-any.whl",
+        "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b",
+        "stager": "wheels/tifffile-2026.10.15-py3-none-any.whl"
+      }
+    }
+  },
+  "runtime": {
+    "version": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+    "executable_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
+    "ext_suffix": ".cpython-313-x86_64-linux-gnu.so",
+    "thread_environment": [
+      "BLIS_NUM_THREADS",
+      "MKL_NUM_THREADS",
+      "NUMEXPR_NUM_THREADS",
+      "OMP_NUM_THREADS",
+      "OMP_THREAD_LIMIT",
+      "OPENBLAS_NUM_THREADS",
+      "VECLIB_MAXIMUM_THREADS"
+    ],
+    "cpython_headers": {
+      "Python.h": {
+        "bytes": 4038,
+        "sha256": "0660af70363eeea689133b9ee0dc3b0cf3e4afc62eed177354d8f9b725fbc86a"
+      },
+      "pyconfig.h": {
+        "bytes": 58656,
+        "sha256": "57487e119ed8a23687a0c4688700bc0652c6a3f8e0ed22a3f9b5186f4f807c09"
+      }
+    },
+    "pybind_headers": {
+      "numpy.h": {
+        "bytes": 94985,
+        "sha256": "a9bba1f0976acd7e7597daef1abd398a1e0b81213747278cffef6b325979fee1"
+      },
+      "pybind11.h": {
+        "bytes": 181286,
+        "sha256": "ba323b835ef91eb85342057db2353cbac3da9040eac9f0b83891a3ce66911a75"
+      }
+    },
+    "compiler_reference": {
+      "cc1plus": {
+        "bytes": 32675168,
+        "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus",
+        "sha256": "840b332fb62ec6f694ac77d91fe69ef7f80b0d69512ed89374af0ee7a506255d"
+      },
+      "gnu": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "inputs": {
+        "/usr/bin/g++": {
+          "bytes": 1027128,
+          "path": "/usr/bin/g++",
+          "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769"
+        },
+        "/usr/bin/readelf": {
+          "bytes": 789280,
+          "path": "/usr/bin/readelf",
+          "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130"
+        }
+      },
+      "ld": {
+        "bytes": 1359128,
+        "path": "/usr/bin/ld",
+        "sha256": "e46a122cc3a29feba3b1d0fc2a274b6e46538be016ebe381370c0801bb98b0b8"
+      }
+    },
+    "hosted_binutils_v3": {
+      "intake_sha256": "90583ce013a91a74e6b93615dd6288834ab0e24e3a67954a69510c6eb9b1fdf3",
+      "ld": {
+        "bytes": 1359128,
+        "path": "/usr/bin/ld",
+        "sha256": "e9ceb054c12207970f2726dfc07e9a66b411602748628baf27399f02a9bbb31b"
+      },
+      "observed_artifact": 14783682858,
+      "observed_job": 137439026568,
+      "observed_run": 45097036061,
+      "profile": "ubuntu-24.04-actions-observed-binutils",
+      "readelf": {
+        "bytes": 789280,
+        "path": "/usr/bin/readelf",
+        "sha256": "64c58e15274bbbb5153f31078e455e9e77ee5f51489e709bba5bb788ce9df2b0"
+      },
+      "toolchain_receipt_sha256": "a0f7b7bce38287e97f166ca53a334d35e3e47cc90d180aaefff1c91b16795ca3"
+    },
+    "python_release_assets_metadata_only": [
+      {
+        "bytes": 33629731,
+        "id": 302742709,
+        "name": "cpython-3.13.8+20251010-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+        "sha256": "1ac8691d25271f99491e276d0564ccfc20b6650df0be053396af5a539698463e"
+      },
+      {
+        "bytes": 120370499,
+        "id": 302742704,
+        "name": "cpython-3.13.8+20251010-x86_64-unknown-linux-gnu-install_only.tar.gz",
+        "sha256": "12dd8995e8ec2df68cd1301b053f415c7884b8aae9d3459a2ac1448f781dbbbc"
+      }
+    ]
+  },
+  "transport": {
+    "checks": [
+      "Check artifact ID, exact run/source/branch/job success, name, nonexpired, listed digest and declared length. Do not send the token to the signed redirect host.",
+      "If authorized, prefer one full-artifact selected closure: prove exact unique manifest and package paths, each nested candidate/runtime/pybind filename and length against root's manifest, use ZipExtFile.open/read and 1 MiB chunks to SHA each whole selected member. No call to outer ZipFile.read for the SciPy wheel. Verify inner candidate wheel RECORD against all 260 package pins plus exact core.",
+      "Alternative requires root binding: read 14 stager wheels through exact admitted stager product/runtime seal plus the one pybind member from the full artifact. Stager itself never contains the pybind wheel.",
+      "Archive range response is required HTTP 206 with exact Content-Range and size. Keep inherited 32 MiB/request, 160 MiB aggregate caps. Discard transient archives after use, retain small readbacks and installed admissible inputs.",
+      "A selected transfer verifies all requested member hashes, not the whole outer digest; record whole outer as unverified. Live endpoint paths, expiry, content and capacity remain to be inspected by root before execution."
+    ],
+    "conservative_staging_peak_bytes": 2147483648,
+    "direct_component_scope_bytes": 157286400,
+    "exact_helper": {
+      "bytes": 9682,
+      "path": "build/evidence/u182-post-haar/current301-minimum-laplacian-fix-focus-v1/range_helper.py",
+      "sha256": "1a54751980e8d5c06e31c46891f5a6112b5a6f64a07f494497fe93b98e912475"
+    },
+    "reuse": "Use only the pinned RemoteZip and NoRedirect classes. Reuse prior selective fetch/extract pattern with authority and expected exact outer metadata. Do not use the helper's unrelated hardcoded main entry.",
+    "workspace_and_temp_minimum_bytes": 32212254720
+  }
+}

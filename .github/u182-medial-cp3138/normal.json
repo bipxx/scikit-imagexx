@@ -1,0 +1,13 @@
+{
+  "mode": "normal",
+  "passed": 30,
+  "exit": 0,
+  "avx2": true,
+  "source": "47f6fa76db1b9cb4010ef008961f08f5be6922cf",
+  "private_core_sha256": "71b76a874222f96f48f8ca277f58756261bab41d047501df4b272092612340bb",
+  "haar_core_sha256": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc",
+  "xml_sha256": "552ef6c1f79b77507b17588fade6fa724c30aa9c12787aa44a812e93675599d9",
+  "stock_replay": 0,
+  "timing": 0,
+  "scope": "private bindings overlay on genuine retained Haar"
+}

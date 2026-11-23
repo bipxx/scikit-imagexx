@@ -1,22 +1,58 @@
-name: benchmark-report-json
+name: Medial Axis CP313.8 scalar diagnostic
 on:
-  push:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
-  pull_request:
-    paths:
-      - 'benchmarks/*.json'
-      - 'tools/check_report_json.py'
-      - '.github/workflows/report-json.yml'
   workflow_dispatch:
+    inputs:
+      authority:
+        required: true
+        type: string
+      authority_sha256:
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
 jobs:
-  json-syntax:
-    runs-on: ubuntu-latest
+  component:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      OMP_THREAD_LIMIT: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - run: python tools/check_report_json.py
+          persist-credentials: false
+          sparse-checkout: .github/u182-medial-cp3138
+      - name: Verify the exact wheel and private Medial Axis scalar scope
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MEDIAL_AUTHORITY: ${{ inputs.authority }}
+          MEDIAL_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME LD_PRELOAD LD_AUDIT LD_LIBRARY_PATH
+          /usr/bin/python3 -I -S -B .github/u182-medial-cp3138/run.py
+          /usr/bin/python3 -I -S -B .github/u182-medial-cp3138/collect.py medial-scalar-results medial-scalar-transport > medial-scalar-results/collection.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: u182-medial-scalar-reports-v1
+          path: |
+            medial-scalar-results/*.json
+            medial-scalar-results/*.log
+            medial-scalar-results/*.xml
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: u182-medial-scalar-elf-v1
+          path: medial-scalar-transport/
+          if-no-files-found: error
+          retention-days: 1

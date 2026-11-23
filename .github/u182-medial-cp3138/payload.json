@@ -1,0 +1,62 @@
+{
+  "bootstrap.json": {
+    "bytes": 12737,
+    "sha256": "6eebae11f417cbd448371c0591f354fcb18ca8541ed4df513789f852beb25aee"
+  },
+  "bootstrap.py": {
+    "bytes": 11326,
+    "sha256": "db5ad88b4a172093c9e57a2611d93e2b85f2ac72f00462c7b0b2b565283872c0"
+  },
+  "check-source.py": {
+    "bytes": 7456,
+    "sha256": "3fd298fb5a354f6b70c1e06c3d34fd2953e14828a14b01a63104fec261003c56"
+  },
+  "collect.py": {
+    "bytes": 4912,
+    "sha256": "c466caf7d9a4023b88c229cbb9b8093106a3822bd2b859b0b311ea1e8dfdcc7e"
+  },
+  "historical-transport.json": {
+    "bytes": 1667,
+    "sha256": "2e3b97639accf72c775f205dcf1c5a2885e177c92a27d3fd6c0ddf2d5333618f"
+  },
+  "linux-modern-local-cases-v1.jsonl": {
+    "bytes": 84314,
+    "sha256": "18a2e8579999b33048c4d1c7b1db0a27bf55c5693ecb18b5ae0ea90e0d325152"
+  },
+  "normal.json": {
+    "bytes": 491,
+    "sha256": "d92fbde4544581f5ea7dea76d6c7d42636d8dabe6e1fd019b8ad3fe1ddc7a135"
+  },
+  "portable-pins-v1.json": {
+    "bytes": 12902,
+    "sha256": "182f4845ce9f17730edddc7531527589e78d4ff0e4a1d4d23f9019cda6ba3365"
+  },
+  "portable_record.py": {
+    "bytes": 7158,
+    "sha256": "0e3f063d316651584af76273b2f756dd1022e8b4124c35310693cc8ec3abc81f"
+  },
+  "predecessor.json": {
+    "bytes": 2311,
+    "sha256": "f3220e0bde6d567daf5923e82577bbeb0432e233ddf5dfb9af2c2bb29db1ae0e"
+  },
+  "private_bridge.cpp": {
+    "bytes": 156,
+    "sha256": "203532b3df622bceea7439c5a5e1b603d4016dae9b2397f9bce5c89742d48a9d"
+  },
+  "range_helper.py": {
+    "bytes": 9682,
+    "sha256": "1a54751980e8d5c06e31c46891f5a6112b5a6f64a07f494497fe93b98e912475"
+  },
+  "run.py": {
+    "bytes": 14123,
+    "sha256": "3c7e8ce94b448ad0441c1933deb284671253591c72391f4bbf6f0fe9cd674493"
+  },
+  "stock-comparison-v2.json": {
+    "bytes": 1131,
+    "sha256": "748b4041df346059ca4e1fd8180a358c7aa5526d05c59f4de0678086e09078c7"
+  },
+  "storage_projection.cpp": {
+    "bytes": 2719,
+    "sha256": "47121f59463ae73d9a51ae765909fb61998c5d746110fd34e325506e553e6ae4"
+  }
+}

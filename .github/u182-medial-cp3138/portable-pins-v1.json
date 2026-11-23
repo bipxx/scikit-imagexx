@@ -1,0 +1,217 @@
+{
+  "source": "47f6fa76db1b9cb4010ef008961f08f5be6922cf",
+  "tree": "e53fe2dd0990ccb14d8be8529b84feb221d9e2f7",
+  "direct_parent": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+  "owned_paths": {
+    "benchmarks/medial_axis.py": "09c8ab5e14f069c52a07620db65e97a281fe30ffce66ab18b8745f8da061d518",
+    "coverage/contracts/medial-axis-v1.json": "42d3218a1a182fe39359fec5193995dfa6334a2f1d1025a7851dc9f273c6bdbb",
+    "include/skimagexx/medial_axis.hpp": "a32ef51a5ee2ca5d25882e3944d4fcca7aad75ad8706bc3ae3e3c360cf25ddef",
+    "python/skimagexx/_medial_axis.py": "8aa4598f68e8f52e91a0163335df286ee3271d4529c29c26c482576585fbcc4c",
+    "src/bind_medial_axis.cpp": "ba0c59fc783432c8d97768ee28298d2ac78aa7de85026081d067a1dd6ba976c3",
+    "src/medial_axis.cpp": "c8e8ce69b5239f3144563f7c2006ed4a92c44d27a2473c5b8df55e716c18ebd2",
+    "tests/cmake_consumer/medial_axis_consumer.cpp": "7335afbe3c78f911fd1f2f6bfc1ddb1ab04322dd29329806523d55fd87e7a652",
+    "tests/fixtures/medial_axis_originals_v1.json": "952e27f23474acd7517c55b3cfd01163334958d74bcf18a00ebbaf38a2c54c40",
+    "tests/medial_axis_cases.py": "d374a5f1c3dd96c3d12fe56c38d75ea49dd21d6c244f189455ef312158ca80d3",
+    "tests/test_medial_axis_public.py": "92eab656db3ddf88090049cff73bbdcebf4036acab9cc683e052a7a29d0e7ef2"
+  },
+  "source_paths": {
+    "benchmarks/medial_axis.py": "09c8ab5e14f069c52a07620db65e97a281fe30ffce66ab18b8745f8da061d518",
+    "coverage/contracts/medial-axis-v1.json": "42d3218a1a182fe39359fec5193995dfa6334a2f1d1025a7851dc9f273c6bdbb",
+    "include/skimagexx/medial_axis.hpp": "a32ef51a5ee2ca5d25882e3944d4fcca7aad75ad8706bc3ae3e3c360cf25ddef",
+    "python/skimagexx/_medial_axis.py": "8aa4598f68e8f52e91a0163335df286ee3271d4529c29c26c482576585fbcc4c",
+    "src/bind_medial_axis.cpp": "ba0c59fc783432c8d97768ee28298d2ac78aa7de85026081d067a1dd6ba976c3",
+    "src/medial_axis.cpp": "c8e8ce69b5239f3144563f7c2006ed4a92c44d27a2473c5b8df55e716c18ebd2",
+    "tests/cmake_consumer/medial_axis_consumer.cpp": "7335afbe3c78f911fd1f2f6bfc1ddb1ab04322dd29329806523d55fd87e7a652",
+    "tests/fixtures/medial_axis_originals_v1.json": "952e27f23474acd7517c55b3cfd01163334958d74bcf18a00ebbaf38a2c54c40",
+    "tests/medial_axis_cases.py": "d374a5f1c3dd96c3d12fe56c38d75ea49dd21d6c244f189455ef312158ca80d3",
+    "tests/test_medial_axis_public.py": "92eab656db3ddf88090049cff73bbdcebf4036acab9cc683e052a7a29d0e7ef2",
+    "AGENTS.md": "bd8eb939a9478ca7f633982d15e3ac2b0033a66ef8019013891ca6f6cc01587e",
+    "python/skimagexx/_compat.py": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357",
+    "src/bind_fft.cpp": "2324b9f46762ea17c7e19087f1935fd9fef22475ae4b90be5764b5b27c3513de",
+    "src/bind_array_storage.hpp": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d"
+  },
+  "runtime": {
+    "version": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+    "executable_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
+    "extension_suffix": ".cpython-313-x86_64-linux-gnu.so"
+  },
+  "donor": {
+    "run": 45041856008,
+    "job": 137267840179,
+    "artifact": 14763663715,
+    "package_members": 260,
+    "core_sha256": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc"
+  },
+  "stock_distributions": {
+    "imageio": {
+      "wheel": "imageio-2.38.1-py3-none-any.whl",
+      "wheel_sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9",
+      "wheel_bytes": 328389,
+      "version": "2.38.1",
+      "record": "imageio-2.38.1.dist-info/RECORD",
+      "retained_uv_record_sha256": "84d96facee32b22b94b076d21fbdffc279d170489f1f4b753648ecbc998a3134",
+      "retained_immutable_digest": "a3ba9b1e71b871ca5596128b74d94bff2e2efb766c8a4914628f00f9a4cc4e9c",
+      "immutable_members": 64
+    },
+    "iniconfig": {
+      "wheel": "iniconfig-2.3.1-py3-none-any.whl",
+      "wheel_sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+      "wheel_bytes": 7552,
+      "version": "2.3.1",
+      "record": "iniconfig-2.3.1.dist-info/RECORD",
+      "retained_uv_record_sha256": "0000f3396bc6bfd4ddf9c29d9a1f4c099b1b18479ef23a3a6548278c7cf9f48d",
+      "retained_immutable_digest": "6753f2733ea430d0f4e40d22485c2dd972e71a3b78353a29fa4914ea1dab63bf",
+      "immutable_members": 9
+    },
+    "lazy_loader": {
+      "wheel": "lazy_loader-0.6-py3-none-any.whl",
+      "wheel_sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056",
+      "wheel_bytes": 8791,
+      "version": "0.6",
+      "record": "lazy_loader-0.6.dist-info/RECORD",
+      "retained_uv_record_sha256": "fe635a4b213c271fc498fecab243e34fc7f0a0c73326ff5a3accef2cf710aaf1",
+      "retained_immutable_digest": "b6d53c879132e23478094ad18c2bf656cd7ca0fea67249668683bbf85a1f457c",
+      "immutable_members": 5
+    },
+    "networkx": {
+      "wheel": "networkx-3.7-py3-none-any.whl",
+      "wheel_sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0",
+      "wheel_bytes": 2142205,
+      "version": "3.7",
+      "record": "networkx-3.7.dist-info/RECORD",
+      "retained_uv_record_sha256": "0403c7ac1516dc6dc03a4f0d8256c3b5d333c5721e6ab116c9f2b37fdeb6eb30",
+      "retained_immutable_digest": "822cb962079d665e627df00f8cf1d5ef97dbbbe465fb67531bfabce23b11f137",
+      "immutable_members": 603
+    },
+    "numpy": {
+      "wheel": "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "wheel_sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0",
+      "wheel_bytes": 16718044,
+      "version": "2.5.4",
+      "record": "numpy-2.5.4.dist-info/RECORD",
+      "retained_uv_record_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+      "retained_immutable_digest": "890a4f19a0d560b67480a522cfea8b54a62ae9cdc383865c0e7a49c2efc5aec3",
+      "immutable_members": 925
+    },
+    "packaging": {
+      "wheel": "packaging-26.3-py3-none-any.whl",
+      "wheel_sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "wheel_bytes": 129956,
+      "version": "26.3",
+      "record": "packaging-26.3.dist-info/RECORD",
+      "retained_uv_record_sha256": "1b8655965b0d83e9a067fd7f84b977bd1e117e0fb9f2874b2572781bdc9e2147",
+      "retained_immutable_digest": "4484fb8e3dd96fd47a23e6ca2786d2a8018e7d881f0c3f2c814962d300e2bb15",
+      "immutable_members": 28
+    },
+    "pillow": {
+      "wheel": "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "wheel_sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582",
+      "wheel_bytes": 7142544,
+      "version": "13.0.0",
+      "record": "pillow-13.0.0.dist-info/RECORD",
+      "retained_uv_record_sha256": "b43fb14ad2ede5115b1f8885d482592152f7478a86db61dde6bcaca770d0fcf9",
+      "retained_immutable_digest": "897bf59b8bf51bb41c368bbe20e4c54f11ddb0d87c37ffe5a684873892f37cce",
+      "immutable_members": 138
+    },
+    "pluggy": {
+      "wheel": "pluggy-1.7.0-py3-none-any.whl",
+      "wheel_sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+      "wheel_bytes": 27082,
+      "version": "1.7.0",
+      "record": "pluggy-1.7.0.dist-info/RECORD",
+      "retained_uv_record_sha256": "bab7152cdb6aaa818c2be8786237e032b04022f00e928d71e8dc732b768d6e6d",
+      "retained_immutable_digest": "39eb713bb5574aed439ee294ebc64ed9a8966751a1f06444d097576647fd334d",
+      "immutable_members": 18
+    },
+    "pygments": {
+      "wheel": "pygments-2.21.0-py3-none-any.whl",
+      "wheel_sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+      "wheel_bytes": 1250147,
+      "version": "2.21.0",
+      "record": "pygments-2.21.0.dist-info/RECORD",
+      "retained_uv_record_sha256": "00b5decad0f3bbfc1de3bc553ea8f4777a47e1f3e13853a63f54a224c2dee350",
+      "retained_immutable_digest": "2f1361386a15ff391d452636f1997be7eba3f789e3431506bf6616c84117869b",
+      "immutable_members": 348
+    },
+    "pytest": {
+      "wheel": "pytest-9.1.1-py3-none-any.whl",
+      "wheel_sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+      "wheel_bytes": 386536,
+      "version": "9.1.1",
+      "record": "pytest-9.1.1.dist-info/RECORD",
+      "retained_uv_record_sha256": "e77279aa96e7ac6ac5975f2c78be0945292b50a4625bc12f77c5d23f5af29daa",
+      "retained_immutable_digest": "cc650d3eb4c7d1230e34e07bc89e2ee7705c8868ba81cd691a128f2a5a15fb17",
+      "immutable_members": 88
+    },
+    "scikit-image": {
+      "wheel": "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "wheel_sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b",
+      "wheel_bytes": 13660939,
+      "version": "0.26.0",
+      "record": "scikit_image-0.26.0.dist-info/RECORD",
+      "retained_uv_record_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+      "retained_immutable_digest": "bb5e50d20e0f2bb27c8b829fe6c58404bc292a972476d977de10879814257680",
+      "immutable_members": 308
+    },
+    "scipy": {
+      "wheel": "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "wheel_sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9",
+      "wheel_bytes": 35312578,
+      "version": "1.18.1",
+      "record": "scipy-1.18.1.dist-info/RECORD",
+      "retained_uv_record_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+      "retained_immutable_digest": "77cdfdeb243813d409af77d5ee3c8e964567f660ca4cf8480c617fa902056560",
+      "immutable_members": 1431
+    },
+    "tifffile": {
+      "wheel": "tifffile-2026.10.15-py3-none-any.whl",
+      "wheel_sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b",
+      "wheel_bytes": 276988,
+      "version": "2026.10.15",
+      "record": "tifffile-2026.10.15.dist-info/RECORD",
+      "retained_uv_record_sha256": "949a4902722353714b1f3343b24ea375a3490ee10d51bf8a79ec3830046e0524",
+      "retained_immutable_digest": "fdbdec7079478041b435dfab68424f830ecf5de62714ffd93f4b5776eaefba76",
+      "immutable_members": 16
+    }
+  },
+  "selected_retained_live_files_sha256": {
+    "_pytest/config/__init__.py": "98b05c2c37d09e1d5c05975efc2d9af98d4aff6ea47de410a8e93956420873c1",
+    "numpy/__init__.py": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+    "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+    "numpy/random/_bounded_integers.cpython-313-x86_64-linux-gnu.so": "45ef8d6c1a65f9bf287190e2c0f5297ec6dfed9411ff942789fb27f82d5dfa05",
+    "numpy/random/_common.cpython-313-x86_64-linux-gnu.so": "2b01ada16f10eafd2ed578d1fd1cf637d476120f224d3846c882529f00b30892",
+    "numpy/random/_generator.cpython-313-x86_64-linux-gnu.so": "2a6dcb8d65ff603c7943b642e04a37356774a96dc32de3dc8b59171938408391",
+    "numpy/random/_pcg64.cpython-313-x86_64-linux-gnu.so": "1573dafacd3740c81255c3b22c9bb1cfe3cbe6d904f77801382ec19b2af74fc2",
+    "numpy/random/bit_generator.cpython-313-x86_64-linux-gnu.so": "30b89d04a78a753a0ff494324638e633e8b6111ab258123e4288114acaacefea",
+    "pytest/__init__.py": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+    "scipy/__init__.py": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76",
+    "scipy/ndimage/_measurements.py": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911",
+    "scipy/ndimage/_morphology.py": "5361c28977347a3bc4ba1240aea0b341a72a803498a5600506c9964a61eeb9ad",
+    "scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092",
+    "scipy/ndimage/_ni_label.cpython-313-x86_64-linux-gnu.so": "16f667276c477502c72fa24257c681d6ccddf2786a2b76f133f81a2c446918dc",
+    "skimage/__init__.py": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071",
+    "skimage/morphology/__init__.py": "b9caa6ea8bec604defc3770ba595c7a43a1d9d968db47befb60843d29f7c5922",
+    "skimage/morphology/_skeletonize.py": "9c39b408eb2c46584bf2d955dd9ee6656cf5928472701e3ef06f64393e9f62a7",
+    "skimage/morphology/_skeletonize_various_cy.cpython-313-x86_64-linux-gnu.so": "4bdc4f925239cff9145cd9ba67584557d854a8114c92010e7deda0f34c491e27"
+  },
+  "required_live_after_scalar": [
+    "pytest/__init__.py",
+    "_pytest/config/__init__.py",
+    "numpy/__init__.py",
+    "scipy/__init__.py",
+    "skimage/__init__.py",
+    "skimage/morphology/_skeletonize.py",
+    "skimage/morphology/_skeletonize_various_cy.cpython-313-x86_64-linux-gnu.so",
+    "scipy/ndimage/_morphology.py",
+    "scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so",
+    "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so",
+    "numpy/random/_generator.cpython-313-x86_64-linux-gnu.so",
+    "numpy/random/_pcg64.cpython-313-x86_64-linux-gnu.so"
+  ],
+  "historical_local_uv_scope": {
+    "admitted_normal": 30,
+    "stock_rows": 27,
+    "sdk_exit": 0
+  },
+  "execution_authority": null
+}

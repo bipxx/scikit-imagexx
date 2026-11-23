@@ -1,0 +1,29 @@
+{
+  "source": "47f6fa76db1b9cb4010ef008961f08f5be6922cf",
+  "tree": "e53fe2dd0990ccb14d8be8529b84feb221d9e2f7",
+  "profile": "linux-modern-local",
+  "stock_sha256": "37469a1f109af623385de9af7856eccd4239570cd41264bce1e4db6b263c89d9",
+  "journal_sha256": "18a2e8579999b33048c4d1c7b1db0a27bf55c5693ecb18b5ae0ea90e0d325152",
+  "calls": 27,
+  "stock_capture_process_exit": 1,
+  "comparison_exit": 0,
+  "compatibility_profile_overrides": {
+    "mask-shape-error": [
+      "message"
+    ],
+    "legacy-randomstate-error": [
+      "error",
+      "loop",
+      "message",
+      "skeleton",
+      "skeleton_shares_input",
+      "type"
+    ]
+  },
+  "modern_matches": "All 27 Windows rows, including two compatibility-only overrides",
+  "modern_native_rows": "Exact same native rows as minimum fixture. Common frozen tests are unchanged.",
+  "recipe_sha256": "90c37ec12aad0448a5625ad79503cc3af45212ddeea307ae08f62b904441c111",
+  "fixture_sha256": "952e27f23474acd7517c55b3cfd01163334958d74bcf18a00ebbaf38a2c54c40",
+  "original_capture_not_replayed": true,
+  "table_sha256": "71f28a6db665d55f029fb538f636d3f5b9911eeebcb42b6167a7a442f5262593"
+}
