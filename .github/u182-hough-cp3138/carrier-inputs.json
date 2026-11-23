@@ -1,0 +1,70 @@
+{
+  "bootstrap-v1.json": {
+    "bytes": 36704,
+    "sha256": "1069660c7a185703c4f75875ebdf865cbd32690ec50a3cc59d0a403e189dd703"
+  },
+  "collect.py": {
+    "bytes": 3537,
+    "sha256": "fabd735d5845749cd22adc71a698402c1a7a0fa1171d288b5e8b59474943036b"
+  },
+  "historical-transport.json": {
+    "bytes": 1667,
+    "sha256": "2e3b97639accf72c775f205dcf1c5a2885e177c92a27d3fd6c0ddf2d5333618f"
+  },
+  "hough_ellipse-bridge.cpp": {
+    "bytes": 471,
+    "sha256": "d467d885f50728ed9de7f52f1df9ef4fceec5910d344953e810d4255d65eba89"
+  },
+  "hough_ellipse-stock-0.jsonl": {
+    "bytes": 41016,
+    "sha256": "0d2ba0b822bf4354c2f37f02a84e16bf59fadc1ea9b3db5050d85accf6f47e49"
+  },
+  "hough_ellipse-stock-1.json": {
+    "bytes": 10772,
+    "sha256": "2bb5e68592f1ca2d46422587a788750e99bdfbc6a71810f0b7f8ddf563ccd3a1"
+  },
+  "hough_line-bridge.cpp": {
+    "bytes": 529,
+    "sha256": "506e38bf38b3783ddd2bbfeddfe48ee5f3949a4450115a95c5a161eb9ed1df94"
+  },
+  "hough_line-stock-0.json": {
+    "bytes": 256654,
+    "sha256": "9c7243a68e5f14ee803c5f2845fb1b346b22b34c11fb577d1f592378fea65e22"
+  },
+  "parity.py": {
+    "bytes": 9918,
+    "sha256": "4c440af1f12659102558f46590df1d6b9e3c849066900604c734df8aeaa2684f"
+  },
+  "probabilistic_hough_line-bridge.cpp": {
+    "bytes": 515,
+    "sha256": "439507f654dc5983916c8075d657301e88f7ffb0e18f1af0ddfd0589eaab804f"
+  },
+  "probabilistic_hough_line-stock-0.jsonl": {
+    "bytes": 37094,
+    "sha256": "47a8deb0cf8a164ae853a04ed88a3eae073e6801c1eafaec2f87a3b86cc670c4"
+  },
+  "probabilistic_hough_line-stock-1.json": {
+    "bytes": 11837,
+    "sha256": "e257ccecde10bd3a14f7d6d50039afd73b9b5932cae20d30d5390451c5ccaaef"
+  },
+  "probabilistic_hough_line-stock-2.json": {
+    "bytes": 3966,
+    "sha256": "6746fd8ae44b8dfed163b23e3047a603573383539bb9812b2de5d3ddb775f1b7"
+  },
+  "range_helper.py": {
+    "bytes": 9682,
+    "sha256": "1a54751980e8d5c06e31c46891f5a6112b5a6f64a07f494497fe93b98e912475"
+  },
+  "run.py": {
+    "bytes": 18165,
+    "sha256": "c561d1fdf6cc2f3c3b7980615a4ec1775db453f68996082ab2a06c88cf8b4198"
+  },
+  "storage_projection.cpp": {
+    "bytes": 2719,
+    "sha256": "47121f59463ae73d9a51ae765909fb61998c5d746110fd34e325506e553e6ae4"
+  },
+  "verify-inputs.py": {
+    "bytes": 5402,
+    "sha256": "af3fa8ed18a7adc7c8e7acb4339140544965145632441f26f7078e0790887331"
+  }
+}

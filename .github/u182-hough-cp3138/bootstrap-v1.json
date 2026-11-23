@@ -1,0 +1,742 @@
+{
+  "donor": {
+    "admission": {
+      "bytes": 3730,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/whole-product-root-admission-v1.json",
+      "sha256": "5d9bf97a6c3db46d1c18d12805cb4d4c2ea3ffc1fe015aa1748483827a2eb40e"
+    },
+    "core": {
+      "bytes": 8929992,
+      "member": "skimagexx/_core.cpython-313-x86_64-linux-gnu.so",
+      "sha256": "eab5279e9594484c0008233ec88013329ad40a3b15a301264810b2921f23cdcc"
+    },
+    "full_qualification_artifact": 14763663715,
+    "full_qualification_outer_digest": "sha256:d3c679704c9154b2b87872d45e348cae993b33b2dfa33be27d711e1f58ae9e73",
+    "job": 137267840179,
+    "package_manifest": {
+      "bytes": 41849,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/modern/package.json",
+      "sha256": "773c0d89d20cdba00040023ac31c3bcfa93371ee2aaa23ad5af8d9eaf5b79051"
+    },
+    "package_members": 260,
+    "profile": "modern",
+    "pybind_input": {
+      "bytes": 319402,
+      "full_qualification": "build-wheels/pybind11-3.1.0-py3-none-any.whl",
+      "sha256": "b8488090f8acffbcb6b5d6a85571a6827a0a2981ffb75e5a0b27b87c4a6b7dd0",
+      "stager_member": null
+    },
+    "qualification_manifest": {
+      "bytes": 10176777,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/modern/manifest.json",
+      "sha256": "ba60ecef03b4fedc7566d170009800a2a7e10cbf245afbc62da797e3b5264ba9"
+    },
+    "qualified_interpreter": {
+      "cache_tag": "cpython-313",
+      "major_minor": "3.13",
+      "os_name": "posix",
+      "path": "/opt/hostedtoolcache/Python/3.13.16/x64/bin/python3.13",
+      "sha256": "329d378575992732511d75b3bd675cb91b3c65f3082783cd97ccb14f0ecd5a74",
+      "version": "3.13.16 (main, Oct  1 2026, 02:37:54) [GCC 13.3.0]"
+    },
+    "run": 45041856008,
+    "source": "817b6f82f47ce4cf4ef6656491f4d7b1fc40b346",
+    "stager_artifact": 14763653289,
+    "stager_manifest": {
+      "bytes": 514346,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/stager-modern/product.json",
+      "sha256": "407058f63e2944e086e89088270de007f4f1b1f87b2f2419257f06e40e1fb233"
+    },
+    "stager_outer_bytes": 359704220,
+    "stager_outer_digest": "sha256:9c315b6f4628f639e4e5a769fd46cb5228e3370a271cf6dd3281f9b99f8a9118",
+    "stager_readback": {
+      "bytes": 530,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/stager-modern/root-readback.json",
+      "sha256": "bca6fbd5957402c2ad0ce95447618fb0532776d7f3438c9afe17438fc5b1e2ac"
+    },
+    "stager_runtime": {
+      "bytes": 790887,
+      "path": "build/evidence/u182-haar-features/hosted-45041856008/stager-modern/runtime.json",
+      "sha256": "1f808b3ccc8d16300e1b7f83aa2bf8816a376460dac5231398876557e70bb2ee"
+    },
+    "wheel_input_bytes_excluding_pybind": 85285409,
+    "wheel_inputs": {
+      "imageio-2.38.1-py3-none-any.whl": {
+        "bytes": 328389,
+        "full_qualification": "runtime-wheels/imageio-2.38.1-py3-none-any.whl",
+        "sha256": "36d23eb7423d2fb63f637098758edb3d2df3687f7125e0a5ce8596572022dcf9",
+        "stager": "wheels/imageio-2.38.1-py3-none-any.whl"
+      },
+      "iniconfig-2.3.1-py3-none-any.whl": {
+        "bytes": 7552,
+        "full_qualification": "runtime-wheels/iniconfig-2.3.1-py3-none-any.whl",
+        "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+        "stager": "wheels/iniconfig-2.3.1-py3-none-any.whl"
+      },
+      "lazy_loader-0.6-py3-none-any.whl": {
+        "bytes": 8791,
+        "full_qualification": "runtime-wheels/lazy_loader-0.6-py3-none-any.whl",
+        "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056",
+        "stager": "wheels/lazy_loader-0.6-py3-none-any.whl"
+      },
+      "networkx-3.7-py3-none-any.whl": {
+        "bytes": 2142205,
+        "full_qualification": "runtime-wheels/networkx-3.7-py3-none-any.whl",
+        "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0",
+        "stager": "wheels/networkx-3.7-py3-none-any.whl"
+      },
+      "numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 16718044,
+        "full_qualification": "runtime-wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "6ffa07666f8da0eef81d149934a626d0d95fbd6838432a33e66245423a9062c0",
+        "stager": "wheels/numpy-2.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "packaging-26.3-py3-none-any.whl": {
+        "bytes": 129956,
+        "full_qualification": "runtime-wheels/packaging-26.3-py3-none-any.whl",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "stager": "wheels/packaging-26.3-py3-none-any.whl"
+      },
+      "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 7142544,
+        "full_qualification": "runtime-wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582",
+        "stager": "wheels/pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "pluggy-1.7.0-py3-none-any.whl": {
+        "bytes": 27082,
+        "full_qualification": "runtime-wheels/pluggy-1.7.0-py3-none-any.whl",
+        "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+        "stager": "wheels/pluggy-1.7.0-py3-none-any.whl"
+      },
+      "pygments-2.21.0-py3-none-any.whl": {
+        "bytes": 1250147,
+        "full_qualification": "runtime-wheels/pygments-2.21.0-py3-none-any.whl",
+        "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+        "stager": "wheels/pygments-2.21.0-py3-none-any.whl"
+      },
+      "pytest-9.1.1-py3-none-any.whl": {
+        "bytes": 386536,
+        "full_qualification": "runtime-wheels/pytest-9.1.1-py3-none-any.whl",
+        "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+        "stager": "wheels/pytest-9.1.1-py3-none-any.whl"
+      },
+      "scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 13660939,
+        "full_qualification": "runtime-wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "b36ab5e778bf50af5ff386c3ac508027dc3aaeccf2161bdf96bde6848f44d21b",
+        "stager": "wheels/scikit_image-0.26.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl": {
+        "bytes": 7893658,
+        "full_qualification": "product-wheels/scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl",
+        "sha256": "49dbc2ef88052cf28c2a5806ac9745a4aa40af5d9e0fb89a505da36b11247896",
+        "stager": "wheels/scikit_imagexx-0.1.0-cp313-cp313-linux_x86_64.whl"
+      },
+      "scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 35312578,
+        "full_qualification": "runtime-wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "fdaf5ea890a6183d0565f51a61799d67081bd5b1cf03c5f4b3fd3732108625c9",
+        "stager": "wheels/scipy-1.18.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      },
+      "tifffile-2026.10.15-py3-none-any.whl": {
+        "bytes": 276988,
+        "full_qualification": "runtime-wheels/tifffile-2026.10.15-py3-none-any.whl",
+        "sha256": "3dcf6c56731a45c1f85c81e90dad922b0a380a2d639e77f71207e010f8ef0f7b",
+        "stager": "wheels/tifffile-2026.10.15-py3-none-any.whl"
+      }
+    }
+  },
+  "families": {
+    "transform.hough_ellipse": {
+      "bridge_and_projection_sources": {
+        "bridge": {
+          "bytes": 471,
+          "existing_local_git_object": false,
+          "path": "build/evidence/u182-hough-ellipse/component-v1/private_bridge.cpp",
+          "proposed_git_blob_if_added_unmodified": "d16703cecbffcb94c23ecdf84f986b9c8682c1ee",
+          "sha256": "d467d885f50728ed9de7f52f1df9ef4fceec5910d344953e810d4255d65eba89"
+        },
+        "storage_projection": {
+          "bytes": 2719,
+          "existing_local_git_object": false,
+          "path": "build/hough-ellipse-component-v1/minimum/storage_projection.cpp",
+          "proposed_git_blob_if_added_unmodified": "18a940c022b08f9a5462d0cb58c24353c5b12e2e",
+          "sha256": "47121f59463ae73d9a51ae765909fb61998c5d746110fd34e325506e553e6ae4"
+        }
+      },
+      "existing_local_ref": "refs/heads/coverage/u182-hough-ellipse",
+      "named_stock_rows": 14,
+      "owned_git_files": {
+        "benchmarks/hough_ellipse.py": {
+          "bytes": 800,
+          "git_blob": "01132933c8b4d388aec1746279683d71fdcd3125",
+          "mode": "100644",
+          "sha256": "1f7e4882dab3975e74fad0619db9eae88e80d8fc573daf1a657a52ef99f2c06a"
+        },
+        "coverage/contracts/hough-ellipse-reference-v1.jsonl": {
+          "bytes": 41016,
+          "git_blob": "a3193356390351a6cb66fdc3487df5f0d63c0872",
+          "mode": "100644",
+          "sha256": "0d2ba0b822bf4354c2f37f02a84e16bf59fadc1ea9b3db5050d85accf6f47e49"
+        },
+        "coverage/contracts/hough-ellipse.md": {
+          "bytes": 2067,
+          "git_blob": "fdeba180305b6659044f693eb2efb546642eaa30",
+          "mode": "100644",
+          "sha256": "27bd8501ca68c11c9102868bd29845396764771b16c31b70049f985c7d15246a"
+        },
+        "include/skimagexx/hough_ellipse.hpp": {
+          "bytes": 1167,
+          "git_blob": "0b1c48663c10940e616f70ef2534f6d7ae411d33",
+          "mode": "100644",
+          "sha256": "8891c9cc70c6f2b0da6f543d994556f267681c46d60534656f36b9001dc9974b"
+        },
+        "python/skimagexx/_hough_ellipse.py": {
+          "bytes": 1193,
+          "git_blob": "fc1898cfd5dd8b732243dc717734303581976d0c",
+          "mode": "100644",
+          "sha256": "72f78c2a9b3ca4b69cefdd374d30b74848c35867cd48657e0fd4bc31e6fbf70d"
+        },
+        "src/bind_hough_ellipse.cpp": {
+          "bytes": 2731,
+          "git_blob": "bf643c5423baf15ab90d684d2798c82303d592e4",
+          "mode": "100644",
+          "sha256": "e9d8a1dc16ea791bede91363dee14060eaa3280458faee7be0074387c04d88bc"
+        },
+        "src/hough_ellipse.cpp": {
+          "bytes": 5734,
+          "git_blob": "9a80725ea34f0d5369a129127e5d49e04fed356d",
+          "mode": "100644",
+          "sha256": "ee2811d8e6eb22c4941b4da8652510eba3b93727ac78ea94eb838489f314d582"
+        },
+        "tests/cmake_consumer/hough_ellipse_consumer.cpp": {
+          "bytes": 1491,
+          "git_blob": "9f53ccfa86754409cad06ceff3279818ca6b4216",
+          "mode": "100644",
+          "sha256": "2203c9c37b818b5b122306fedab393a9a051e5931e01295ed33648a7ed865f5f"
+        },
+        "tests/hough_ellipse_reference.py": {
+          "bytes": 2389,
+          "git_blob": "f0f3bbc8ff562e59e8e54bfc950d9c4b0d3657b6",
+          "mode": "100644",
+          "sha256": "9b24e3ca7d24f096067eebda3439782c67da2168f0ba9ff1b36fc41fa8f903b3"
+        },
+        "tests/test_hough_ellipse_public.py": {
+          "bytes": 832,
+          "git_blob": "66c5622326cc32f5fe6701bd70e7e26723707003",
+          "mode": "100644",
+          "sha256": "d045ccb0437bc3e6f014c6810f9f8e1e598ad35cbceb1c994c55a9b2043a087a"
+        }
+      },
+      "published_parent": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+      "ref": "refs/heads/diagnostics/u182-cp3138-source-hough-ellipse-v1",
+      "source": "ec6baf91152757be6d1c8b632defed07c37a2ee0",
+      "stock_entry": {
+        "bytes": 11103,
+        "path": "build/evidence/u182-post-haar/lookahead-hough-ellipse-modern-v1/entry-v1.json",
+        "sha256": "93592d057409be7e786e878e6884e61a2d2e89c151930c723d029e247afb97e7"
+      },
+      "stock_handoff": {
+        "bytes": 14503,
+        "path": "build/evidence/u182-post-haar/lookahead-hough-ellipse-modern-v1/handoff-v1.json",
+        "sha256": "de8260d9ccde27095f554eeae70d0ae4048118f7feccc2ceec12db0c8fd3f4af"
+      },
+      "stock_rows": [
+        {
+          "bytes": 41016,
+          "path": "build/evidence/u182-post-haar/lookahead-hough-ellipse-modern-v1/linux-modern-ellipse-rows-v1.jsonl",
+          "sha256": "0d2ba0b822bf4354c2f37f02a84e16bf59fadc1ea9b3db5050d85accf6f47e49"
+        },
+        {
+          "bytes": 14033,
+          "path": "build/evidence/u182-post-haar/lookahead-hough-ellipse-modern-v1/linux-modern-ellipse-terminal-v1.json",
+          "sha256": "535cee5217c1b5eac59bfa4775d06d9887716bf7f8df9eb80ddf9bbcbe29d704"
+        }
+      ],
+      "tree": "038f67c871a50e5668160eb514b3bd7da720bcbe",
+      "verified_shared_git_files": {
+        "python/skimagexx/_compat.py": {
+          "bytes": 4030,
+          "git_blob": "6242277800b4eeeeca0f2b1abf4a6558daa970ec",
+          "mode": "100644",
+          "sha256": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357"
+        },
+        "python/skimagexx/_expand_labels.py": {
+          "bytes": 1750,
+          "git_blob": "1fa2408ea3eb0d51f18cb302b93805517e0d67a2",
+          "mode": "100644",
+          "sha256": "09b5a335b7779a90d0d1028438bd82b7bf7de4c1f01d49efb3df94bc209ef47c"
+        },
+        "src/bind_array_storage.hpp": {
+          "bytes": 209,
+          "git_blob": "bb67057dc48b7c8f15b12fb520f7161c1300efc9",
+          "mode": "100644",
+          "sha256": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d"
+        },
+        "src/bind_fft.cpp": {
+          "bytes": 8787,
+          "git_blob": "020fd8eb5d147f11c5c13a36f90beb109fb8baef",
+          "mode": "100644",
+          "sha256": "2324b9f46762ea17c7e19087f1935fd9fef22475ae4b90be5764b5b27c3513de"
+        },
+        "tools/montage_sustained.py": {
+          "bytes": 9612,
+          "git_blob": "53b23ff4c03cbd957216e443ea962331fba9c437",
+          "mode": "100644",
+          "sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+        }
+      }
+    },
+    "transform.hough_line": {
+      "bridge_and_projection_sources": {
+        "bridge": {
+          "bytes": 529,
+          "existing_local_git_object": false,
+          "path": "build/evidence/u182-hough-line/component-v1/private_bridge.cpp",
+          "proposed_git_blob_if_added_unmodified": "b8f5b59aa1395ded792b31fc6215a46d096655db",
+          "sha256": "506e38bf38b3783ddd2bbfeddfe48ee5f3949a4450115a95c5a161eb9ed1df94"
+        },
+        "storage_projection": {
+          "bytes": 2719,
+          "existing_local_git_object": false,
+          "path": "build/hough-line-component-v1/minimum/storage_projection.cpp",
+          "proposed_git_blob_if_added_unmodified": "18a940c022b08f9a5462d0cb58c24353c5b12e2e",
+          "sha256": "47121f59463ae73d9a51ae765909fb61998c5d746110fd34e325506e553e6ae4"
+        }
+      },
+      "existing_local_ref": "refs/heads/coverage/u182-hough-line",
+      "named_stock_rows": 23,
+      "owned_git_files": {
+        "benchmarks/hough_line.py": {
+          "bytes": 1218,
+          "git_blob": "1f2f5b4855e787c6c4dc67f995f2b229ad84dc65",
+          "mode": "100644",
+          "sha256": "795efc14c5f954d5ba4eae3803199000c436c707850b7ee8602970fac54cf733"
+        },
+        "coverage/contracts/hough-line-reference-v1.json": {
+          "bytes": 62310,
+          "git_blob": "a66c40e0179a60cc64f89a89c83bc4ae16f09ab9",
+          "mode": "100644",
+          "sha256": "802444638219a1e4bd626e756d77f0e0e75769a72fee575e705478c255eca931"
+        },
+        "coverage/contracts/hough-line.md": {
+          "bytes": 3166,
+          "git_blob": "e4fa20ce01f2704b1714b4ff8f8a2873d8ebec27",
+          "mode": "100644",
+          "sha256": "9afc19fd6229643f96443225c1a1edaedb371510d788f1b62aa1a43472110a4a"
+        },
+        "include/skimagexx/hough_line.hpp": {
+          "bytes": 1184,
+          "git_blob": "7314262f05f737e419299fa9dd74ac2a8557e059",
+          "mode": "100644",
+          "sha256": "8a60b2d6954ac1e9ac5418b3a9caf64a6fcf57a911ddeeae420d50bef4e340ea"
+        },
+        "python/skimagexx/_hough_line.py": {
+          "bytes": 1781,
+          "git_blob": "b2b3e433437856962c5115cc3136b9cde5975595",
+          "mode": "100644",
+          "sha256": "7226300bba76804775b602ee27abc4216a3222af72567c074f405076563f1093"
+        },
+        "src/bind_hough_line.cpp": {
+          "bytes": 4146,
+          "git_blob": "f3eab210348b093a6eaf3d11533eebfc1a41417d",
+          "mode": "100644",
+          "sha256": "12aaa75980c9fb54928a78de11574ae3099124c4afa09b940631db800854cc9d"
+        },
+        "src/hough_line.cpp": {
+          "bytes": 3461,
+          "git_blob": "b06c8fbb2220912462c75f62d970fa0c21e7a760",
+          "mode": "100644",
+          "sha256": "badf006e158fbdda15ba92b589f10c55660f088ceede8a416b54a701998f71e0"
+        },
+        "tests/cmake_consumer/hough_line_consumer.cpp": {
+          "bytes": 2121,
+          "git_blob": "deb804e50e099b465d1bc997f670c9985e0a5d70",
+          "mode": "100644",
+          "sha256": "a03c5bea47c8cc2bbf3289db63ae4007f816d0d3742ec2e625dd5c9e9ebd3d04"
+        },
+        "tests/hough_line_reference.py": {
+          "bytes": 2958,
+          "git_blob": "f3feb675a53ab50433dab5a3dcd896e389a912cf",
+          "mode": "100644",
+          "sha256": "9b09bec445d11bf7b5abf879008171fc273b412be1650552f3819ae4a73fbea2"
+        },
+        "tests/test_hough_line_public.py": {
+          "bytes": 4948,
+          "git_blob": "8f58abd822d7fe37af14bca9f1562d782f49bac9",
+          "mode": "100644",
+          "sha256": "272cc0cbf82a5a16f84fa8af9cd83cb2d0021a80088718501d1969470e870d8a"
+        }
+      },
+      "published_parent": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+      "ref": "refs/heads/diagnostics/u182-cp3138-source-hough-line-v1",
+      "source": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1",
+      "stock_entry": {
+        "bytes": 3994,
+        "path": "build/evidence/u182-post-haar/lookahead-hough-line-modern-v1/entry-v2.json",
+        "sha256": "64fffb8f44d03968179495fb6f0746b8cb88718a6d47245b8bfd6a92863dc45c"
+      },
+      "stock_handoff": {
+        "bytes": 7542,
+        "path": "build/evidence/u182-post-haar/lookahead-hough-line-modern-v1/handoff-v1.json",
+        "sha256": "1e165cbb5dce5121da91297d9983a93e9c6288d83f74db0a03569e2db036068d"
+      },
+      "stock_rows": [
+        {
+          "bytes": 257718,
+          "path": "build/evidence/u182-post-haar/lookahead-hough-line-modern-v1/linux-modern-stock-v1.json",
+          "sha256": "1c061f8c5d027f06a1bef76cbb63ca2be7c9b296f9e5b9ebf0734502effa6257"
+        }
+      ],
+      "tree": "e4beb81959d967ddfa84f49d12ecf244aee0748e",
+      "verified_shared_git_files": {
+        "python/skimagexx/_compat.py": {
+          "bytes": 4030,
+          "git_blob": "6242277800b4eeeeca0f2b1abf4a6558daa970ec",
+          "mode": "100644",
+          "sha256": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357"
+        },
+        "src/bind_array_storage.hpp": {
+          "bytes": 209,
+          "git_blob": "bb67057dc48b7c8f15b12fb520f7161c1300efc9",
+          "mode": "100644",
+          "sha256": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d"
+        },
+        "src/bind_fft.cpp": {
+          "bytes": 8787,
+          "git_blob": "020fd8eb5d147f11c5c13a36f90beb109fb8baef",
+          "mode": "100644",
+          "sha256": "2324b9f46762ea17c7e19087f1935fd9fef22475ae4b90be5764b5b27c3513de"
+        },
+        "tools/montage_sustained.py": {
+          "bytes": 9612,
+          "git_blob": "53b23ff4c03cbd957216e443ea962331fba9c437",
+          "mode": "100644",
+          "sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+        }
+      }
+    },
+    "transform.probabilistic_hough_line": {
+      "bridge_and_projection_sources": {
+        "bridge": {
+          "bytes": 515,
+          "existing_local_git_object": false,
+          "path": "build/evidence/u182-probabilistic-hough-line/component-v1/private_bridge.cpp",
+          "proposed_git_blob_if_added_unmodified": "c04edd7e254748a975e596d2fb1b054f18f36a6c",
+          "sha256": "439507f654dc5983916c8075d657301e88f7ffb0e18f1af0ddfd0589eaab804f"
+        },
+        "storage_projection": {
+          "bytes": 2719,
+          "existing_local_git_object": false,
+          "path": "build/probabilistic-hough-line-component-v1/minimum/storage_projection.cpp",
+          "proposed_git_blob_if_added_unmodified": "18a940c022b08f9a5462d0cb58c24353c5b12e2e",
+          "sha256": "47121f59463ae73d9a51ae765909fb61998c5d746110fd34e325506e553e6ae4"
+        }
+      },
+      "existing_local_ref": "refs/heads/coverage/u182-probabilistic-hough-line",
+      "named_stock_rows": 18,
+      "owned_git_files": {
+        "benchmarks/probabilistic_hough_line.py": {
+          "bytes": 901,
+          "git_blob": "89d50cc47206b0c6361173ed647c8c48744cbf15",
+          "mode": "100644",
+          "sha256": "1aee1b3e2e52dffea0703d91165dae16e851926e790356e6b6ab7f56ce697c82"
+        },
+        "coverage/contracts/probabilistic-hough-line-reference-v1.jsonl": {
+          "bytes": 42048,
+          "git_blob": "204c5589094c1555569c3cb940cb342713dbc5f1",
+          "mode": "100644",
+          "sha256": "63f336bc2ac60043d8374f471251f01fcb879244520fc08bbf079d5ddb0890cc"
+        },
+        "coverage/contracts/probabilistic-hough-line.md": {
+          "bytes": 2332,
+          "git_blob": "57d9d21a05ebffeb6fbeaefe621dafb745f5348d",
+          "mode": "100644",
+          "sha256": "e90cdd3877ed3f4352841f4901eb11cbaf05fb92594c2b2258dcc94fbfdaa157"
+        },
+        "include/skimagexx/probabilistic_hough_line.hpp": {
+          "bytes": 1193,
+          "git_blob": "ba97ceecd8b5493baab40f67884b04dc89706832",
+          "mode": "100644",
+          "sha256": "186b4090d16bbfd110594913c936abaf05a0892a51a020cb6e7b895ffdacb5db"
+        },
+        "python/skimagexx/_probabilistic_hough_line.py": {
+          "bytes": 2522,
+          "git_blob": "85160da9139ce05b0bcd66b433ffba38dfe291b4",
+          "mode": "100644",
+          "sha256": "57d75e230ae73c47ab83cf226a9aac98cd87526e941207608efbef1c369669d2"
+        },
+        "src/bind_probabilistic_hough_line.cpp": {
+          "bytes": 4052,
+          "git_blob": "757775d27f2d9bb38372e20305e3efcbfab3c9b7",
+          "mode": "100644",
+          "sha256": "857e88d61f18ad779ac5170a69bc12a53c9750bb78545b9e8c704a3da512e9d8"
+        },
+        "src/probabilistic_hough_line.cpp": {
+          "bytes": 6772,
+          "git_blob": "2f17d0a9c2ab4967392f2cac695773fdfcc2cfc3",
+          "mode": "100644",
+          "sha256": "968baf8b7f20c5c0013d9120e7fb4d3669a57c777afbe0a6927e536a49c3d3a2"
+        },
+        "tests/cmake_consumer/probabilistic_hough_line_consumer.cpp": {
+          "bytes": 1908,
+          "git_blob": "600ffb060790e62a5bc800629dc7ad720cf6b4f0",
+          "mode": "100644",
+          "sha256": "4e2b4502a6b2352f88e2d7e25e0e4edc298bb122e5339d2d0ff9859f2254180f"
+        },
+        "tests/probabilistic_hough_line_reference.py": {
+          "bytes": 6234,
+          "git_blob": "1f6120d898c0b5687d468616d8dce519ee232e97",
+          "mode": "100644",
+          "sha256": "8253c1375d92f0e5ec7f444b0c94646d17209d3407b2a692c638620b4092b1ec"
+        },
+        "tests/test_probabilistic_hough_line_public.py": {
+          "bytes": 655,
+          "git_blob": "904630ee0a128ff7c187cc08d59a10a62d6bb61b",
+          "mode": "100644",
+          "sha256": "dd8293c7af6f1a4ebbcc7007eadcad935f5a1daf8d2c33cda86435d3dbe63edf"
+        }
+      },
+      "published_parent": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+      "ref": "refs/heads/diagnostics/u182-cp3138-source-probabilistic-hough-line-v1",
+      "source": "de12294729f875559862a9c3a9afcf6061694f94",
+      "stock_entry": {
+        "bytes": 13775,
+        "path": "build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/entry-v2.json",
+        "sha256": "e9fd2c8b382d022c530ed869ebe6158cbe1537dd65da21e55ebcd8956aa79d49"
+      },
+      "stock_handoff": {
+        "bytes": 11239,
+        "path": "build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/handoff-v1.json",
+        "sha256": "f0779cb7bbd639f38b2aafb08597f51e1bfd98b9f347af3198d569ec5a6f2e15"
+      },
+      "stock_rows": [
+        {
+          "bytes": 37094,
+          "path": "build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/linux-modern-stock-v1.jsonl",
+          "sha256": "47a8deb0cf8a164ae853a04ed88a3eae073e6801c1eafaec2f87a3b86cc670c4"
+        },
+        {
+          "bytes": 15999,
+          "path": "build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/linux-modern-terminal-v1.json",
+          "sha256": "9a1f03bb619d99560bfa0dcdcce56085964364a612a17fdac398499eb5a0dd58"
+        },
+        {
+          "bytes": 3966,
+          "path": "build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/linux-modern-intersection-v1.json",
+          "sha256": "6746fd8ae44b8dfed163b23e3047a603573383539bb9812b2de5d3ddb775f1b7"
+        }
+      ],
+      "tree": "c27e1f7181e26b244b2e452f1e46af47ad3c7210",
+      "verified_shared_git_files": {
+        "python/skimagexx/_compat.py": {
+          "bytes": 4030,
+          "git_blob": "6242277800b4eeeeca0f2b1abf4a6558daa970ec",
+          "mode": "100644",
+          "sha256": "e3d8893372d6f8fe511d5d3a9890b63bc01ab711ee1fa81bff48946ba847b357"
+        },
+        "python/skimagexx/_expand_labels.py": {
+          "bytes": 1750,
+          "git_blob": "1fa2408ea3eb0d51f18cb302b93805517e0d67a2",
+          "mode": "100644",
+          "sha256": "09b5a335b7779a90d0d1028438bd82b7bf7de4c1f01d49efb3df94bc209ef47c"
+        },
+        "src/bind_array_storage.hpp": {
+          "bytes": 209,
+          "git_blob": "bb67057dc48b7c8f15b12fb520f7161c1300efc9",
+          "mode": "100644",
+          "sha256": "8c812a866584f7a6292d42a5959c063e4fb14c8ac77821c6fddb2fa130927e0d"
+        },
+        "src/bind_fft.cpp": {
+          "bytes": 8787,
+          "git_blob": "020fd8eb5d147f11c5c13a36f90beb109fb8baef",
+          "mode": "100644",
+          "sha256": "2324b9f46762ea17c7e19087f1935fd9fef22475ae4b90be5764b5b27c3513de"
+        },
+        "tools/montage_sustained.py": {
+          "bytes": 9612,
+          "git_blob": "53b23ff4c03cbd957216e443ea962331fba9c437",
+          "mode": "100644",
+          "sha256": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
+        }
+      }
+    }
+  },
+  "inert_verifier": {
+    "bytes": 5402,
+    "path": "build/evidence/u182-post-haar/lookahead-hough-hosted-bootstrap-v1/verify-inputs.py",
+    "sha256": "af3fa8ed18a7adc7c8e7acb4339140544965145632441f26f7078e0790887331"
+  },
+  "pending": [
+    "Root scope and fresh host capacity/authority, checkout Git mirror with exact three branch refs already present, exact donor endpoint and runtime transport.",
+    "Root-attached hosted entry must establish separate candidate/stock roots, fully bind exact donor receipt and provider/wheel chain, verify actual compiler and auxiliaries, then use the read-only runtime subcommand before any science.",
+    "No workload runner, stock replay, private compile/SDK result, timing, or qualification authorized by this packet."
+  ],
+  "reuse_waste": "Used exact admitted source/stager/full product records, static read-only input verifier and existing RemoteZip. No endpoint calls, download, archive, source publication, new fixture or scientific execution.",
+  "runtime": {
+    "actual_host_gap": "Provision only a root-approved exact 20251010 install-only archive, verify full transport digest on exact official asset, then actual executable/ABI plus headers. Stripped asset equivalence and local GNU executable/library/tool versions on a fresh host remain unproven. A mismatching runtime or header fails closed before science.",
+    "compiler_reference": {
+      "cc1plus": {
+        "bytes": 32675168,
+        "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus",
+        "sha256": "840b332fb62ec6f694ac77d91fe69ef7f80b0d69512ed89374af0ee7a506255d"
+      },
+      "gnu": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "inputs": {
+        "/usr/bin/g++": {
+          "bytes": 1027128,
+          "path": "/usr/bin/g++",
+          "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769"
+        },
+        "/usr/bin/readelf": {
+          "bytes": 789280,
+          "path": "/usr/bin/readelf",
+          "sha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130"
+        }
+      },
+      "ld": {
+        "bytes": 1359128,
+        "path": "/usr/bin/ld",
+        "sha256": "e46a122cc3a29feba3b1d0fc2a274b6e46538be016ebe381370c0801bb98b0b8"
+      }
+    },
+    "cpython_headers": {
+      "Python.h": {
+        "bytes": 4038,
+        "sha256": "0660af70363eeea689133b9ee0dc3b0cf3e4afc62eed177354d8f9b725fbc86a"
+      },
+      "pyconfig.h": {
+        "bytes": 58656,
+        "sha256": "57487e119ed8a23687a0c4688700bc0652c6a3f8e0ed22a3f9b5186f4f807c09"
+      }
+    },
+    "executable_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
+    "ext_suffix": ".cpython-313-x86_64-linux-gnu.so",
+    "providers": {
+      "numpy": {
+        "files_sha256": {
+          "numpy/__init__.py": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+          "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+          "numpy/random/__init__.py": "585ce7b73b5454d6a25c2a50967f2dc322fc1d214d4bb5c0589949b105e06ea9",
+          "numpy/random/_bounded_integers.cpython-313-x86_64-linux-gnu.so": "45ef8d6c1a65f9bf287190e2c0f5297ec6dfed9411ff942789fb27f82d5dfa05",
+          "numpy/random/_common.cpython-313-x86_64-linux-gnu.so": "2b01ada16f10eafd2ed578d1fd1cf637d476120f224d3846c882529f00b30892",
+          "numpy/random/_generator.cpython-313-x86_64-linux-gnu.so": "2a6dcb8d65ff603c7943b642e04a37356774a96dc32de3dc8b59171938408391",
+          "numpy/random/_pcg64.cpython-313-x86_64-linux-gnu.so": "1573dafacd3740c81255c3b22c9bb1cfe3cbe6d904f77801382ec19b2af74fc2",
+          "numpy/random/bit_generator.cpython-313-x86_64-linux-gnu.so": "30b89d04a78a753a0ff494324638e633e8b6111ab258123e4288114acaacefea"
+        },
+        "retained_RECORD_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+        "version": "2.5.4"
+      },
+      "scikit_image": {
+        "files_sha256": {
+          "skimage/__init__.py": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071",
+          "skimage/draw/_draw.cpython-313-x86_64-linux-gnu.so": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4",
+          "skimage/draw/draw.py": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+          "skimage/feature/peak.py": "85bfb42d42ad7150f3eec68d5778ded7556a36d386cf7953e326b0d09767cdc3",
+          "skimage/measure/_label.py": "5a84738defe564b6e5074052a46b1be2b1e27d683d64ef6ed7d16e76afc798f5",
+          "skimage/measure/_regionprops.py": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+          "skimage/measure/_regionprops_utils.py": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21",
+          "skimage/morphology/_util.py": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7",
+          "skimage/transform/_hough_transform.cpython-313-x86_64-linux-gnu.so": "3d81a160bcad46a69edce38431cb4c5add65894c049d3e2ba3b163716d153e49",
+          "skimage/transform/hough_transform.py": "a4790f5ad1570e18b35a6d52828a3390124fe7f05acb9c6bd2ab05797c0ca198"
+        },
+        "retained_RECORD_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+        "version": "0.26.0"
+      },
+      "scipy": {
+        "files_sha256": {
+          "scipy/__init__.py": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76",
+          "scipy/ndimage/_filters.py": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223",
+          "scipy/ndimage/_measurements.py": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911",
+          "scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092",
+          "scipy/ndimage/_ni_label.cpython-313-x86_64-linux-gnu.so": "16f667276c477502c72fa24257c681d6ccddf2786a2b76f133f81a2c446918dc",
+          "scipy/spatial/_ckdtree.cpython-313-x86_64-linux-gnu.so": "912c98f19e3fafea9b29a5242f993f9bd1aae97d69ed0de179d680eecdd9eb00"
+        },
+        "retained_RECORD_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+        "version": "1.18.1"
+      }
+    },
+    "pybind_headers": {
+      "numpy.h": {
+        "bytes": 94985,
+        "sha256": "a9bba1f0976acd7e7597daef1abd398a1e0b81213747278cffef6b325979fee1"
+      },
+      "pybind11.h": {
+        "bytes": 181286,
+        "sha256": "ba323b835ef91eb85342057db2353cbac3da9040eac9f0b83891a3ce66911a75"
+      }
+    },
+    "python_release": "https://github.com/astral-sh/python-build-standalone/releases/tag/20251010",
+    "python_release_assets_metadata_only": [
+      {
+        "bytes": 33629731,
+        "id": 302742709,
+        "name": "cpython-3.13.8+20251010-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+        "sha256": "1ac8691d25271f99491e276d0564ccfc20b6650df0be053396af5a539698463e"
+      },
+      {
+        "bytes": 120370499,
+        "id": 302742704,
+        "name": "cpython-3.13.8+20251010-x86_64-unknown-linux-gnu-install_only.tar.gz",
+        "sha256": "12dd8995e8ec2df68cd1301b053f415c7884b8aae9d3459a2ac1448f781dbbbc"
+      }
+    ],
+    "retained_validation_reference": {
+      "entry": {
+        "bytes": 10224,
+        "path": "build/evidence/u182-hough-circle/modern-stock-v1/entry-v1.json",
+        "sha256": "85aa86bb887bdbb3c4e0b9087928e05aa0254b75649c4209d611fbaae72ec8d5"
+      },
+      "function": "verify",
+      "source": {
+        "bytes": 3734,
+        "path": "build/evidence/u182-hough-circle/modern-stock-v1/capture-modern-v1.py",
+        "sha256": "88206cbffd44cadad4731701729a2dbb41ce69ff1d61fd2232443f76441e8205"
+      }
+    },
+    "thread_environment": [
+      "BLIS_NUM_THREADS",
+      "MKL_NUM_THREADS",
+      "NUMEXPR_NUM_THREADS",
+      "OMP_NUM_THREADS",
+      "OMP_THREAD_LIMIT",
+      "OPENBLAS_NUM_THREADS",
+      "VECLIB_MAXIMUM_THREADS"
+    ],
+    "version": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]"
+  },
+  "source_evidence": {
+    "owned_git_files": 30,
+    "refs": 3,
+    "root_published_transfer": {
+      "bytes": 1347,
+      "path": "build/evidence/u182-post-haar/lookahead-hough-hosted-source-v1/root-source-transfer-v1.json",
+      "sha256": "8f2d59fdcdea2c00ba68e0e13084063bf3b12f1dac2e20e0d6cbd03a5c1651f9"
+    },
+    "source_transfer_packet": {
+      "bytes": 43513,
+      "path": "build/evidence/u182-post-haar/lookahead-hough-hosted-source-v1/handoff-v1.json",
+      "sha256": "cd58a75b90b6e0070d542175e698b6deb56986a116b17ef9d8dd043613ab0903"
+    }
+  },
+  "status": "static_read_only_bootstrap_ready_host_execution_pending",
+  "transport": {
+    "checks": [
+      "Check artifact ID, exact run/source/branch/job success, name, nonexpired, listed digest and declared length. Do not send the token to the signed redirect host.",
+      "If authorized, prefer one full-artifact selected closure: prove exact unique manifest and package paths, each nested candidate/runtime/pybind filename and length against root's manifest, use ZipExtFile.open/read and 1 MiB chunks to SHA each whole selected member. No call to outer ZipFile.read for the SciPy wheel. Verify inner candidate wheel RECORD against all 260 package pins plus exact core.",
+      "Alternative requires root binding: read 14 stager wheels through exact admitted stager product/runtime seal plus the one pybind member from the full artifact. Stager itself never contains the pybind wheel.",
+      "Archive range response is required HTTP 206 with exact Content-Range and size. Keep inherited 32 MiB/request, 160 MiB aggregate caps. Discard transient archives after use, retain small readbacks and installed admissible inputs.",
+      "A selected transfer verifies all requested member hashes, not the whole outer digest; record whole outer as unverified. Live endpoint paths, expiry, content and capacity remain to be inspected by root before execution."
+    ],
+    "conservative_staging_peak_bytes": 2147483648,
+    "direct_component_scope_bytes": 157286400,
+    "exact_helper": {
+      "bytes": 9682,
+      "path": "build/evidence/u182-post-haar/current301-minimum-laplacian-fix-focus-v1/range_helper.py",
+      "sha256": "1a54751980e8d5c06e31c46891f5a6112b5a6f64a07f494497fe93b98e912475"
+    },
+    "reuse": "Use only the pinned RemoteZip and NoRedirect classes. Reuse prior selective fetch/extract pattern with authority and expected exact outer metadata. Do not use the helper's unrelated hardcoded main entry.",
+    "workspace_and_temp_minimum_bytes": 32212254720
+  }
+}

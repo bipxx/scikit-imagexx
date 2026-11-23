@@ -1,0 +1,254 @@
+{
+  "identity": {
+    "profile": "linux-modern",
+    "source_base": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+    "tree": "80f83a7a74c699c977f008bce675073565231ea1",
+    "worktree_head": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1",
+    "native_git": [
+      null,
+      "--no-optional-locks",
+      "-C",
+      null
+    ],
+    "git_version": "git version 2.55.0.windows.3",
+    "versions": {
+      "python": "3.13.8",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit_image": "0.26.0"
+    },
+    "parent_stock_sha256": "216d5c8afb88e266d6e85ad9225902ddc7da804051141316c99d86cbd6ad2f01",
+    "parent_root_admission_sha256": "ea90e809472f79107ff8419ca9bafd7cbbcdbd8170155a355a5dc761c3107f2d",
+    "distributions": {
+      "scikit_image": {
+        "version": "0.26.0",
+        "record_sha256": "faaf2c9477fde2dae9788343751fcf9ec94f87d521896bc6566bf23819b244d5",
+        "files": {
+          "skimage/__init__.py": {
+            "bytes": 4107,
+            "sha256": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071",
+            "lf_sha256": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071"
+          },
+          "skimage/transform/hough_transform.py": {
+            "bytes": 15861,
+            "sha256": "a4790f5ad1570e18b35a6d52828a3390124fe7f05acb9c6bd2ab05797c0ca198",
+            "lf_sha256": "a4790f5ad1570e18b35a6d52828a3390124fe7f05acb9c6bd2ab05797c0ca198"
+          },
+          "skimage/transform/_hough_transform.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 314928,
+            "sha256": "3d81a160bcad46a69edce38431cb4c5add65894c049d3e2ba3b163716d153e49",
+            "lf_sha256": null
+          },
+          "skimage/feature/peak.py": {
+            "bytes": 14478,
+            "sha256": "85bfb42d42ad7150f3eec68d5778ded7556a36d386cf7953e326b0d09767cdc3",
+            "lf_sha256": "85bfb42d42ad7150f3eec68d5778ded7556a36d386cf7953e326b0d09767cdc3"
+          },
+          "skimage/measure/_label.py": {
+            "bytes": 3960,
+            "sha256": "5a84738defe564b6e5074052a46b1be2b1e27d683d64ef6ed7d16e76afc798f5",
+            "lf_sha256": "5a84738defe564b6e5074052a46b1be2b1e27d683d64ef6ed7d16e76afc798f5"
+          },
+          "skimage/measure/_regionprops.py": {
+            "bytes": 54319,
+            "sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007",
+            "lf_sha256": "dbf4e98dec91e319dacbd39373957d430006a1ee43f3cbb2421f2028343c3007"
+          },
+          "skimage/measure/_regionprops_utils.py": {
+            "bytes": 15999,
+            "sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21",
+            "lf_sha256": "b659f6b7d84b8ca5df77242ad33fa1d893d7e103e182c957cd7cb3016cd14f21"
+          },
+          "skimage/morphology/_util.py": {
+            "bytes": 12019,
+            "sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7",
+            "lf_sha256": "4c16daf63ded177b2b2feab9e1c3584d1698cb7ffcacfb83ef7bf5af58badef7"
+          },
+          "skimage/draw/draw.py": {
+            "sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49",
+            "bytes": 33590,
+            "lf_sha256": "fc2e5f3d5174770a667405f0c3baf6fdf5ffdf47efec85686d3af8bd1ae68f49"
+          },
+          "skimage/draw/_draw.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "ae81e3d9b252c264cac3236a22d96e7b5242d0f9819950dbe1f73464380869d4",
+            "bytes": 356776,
+            "lf_sha256": null
+          }
+        }
+      },
+      "scipy": {
+        "version": "1.18.1",
+        "record_sha256": "5e7bb60777de0efcf02c27173e3ae35eecf69eb7f840ef803d427c02592722f4",
+        "files": {
+          "scipy/__init__.py": {
+            "bytes": 4193,
+            "sha256": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76",
+            "lf_sha256": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76"
+          },
+          "scipy/ndimage/_filters.py": {
+            "bytes": 93373,
+            "sha256": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223",
+            "lf_sha256": "b90b80d80d038859966aad1b775431fec16f4d45b79150eb8ca385d769584223"
+          },
+          "scipy/ndimage/_measurements.py": {
+            "bytes": 56274,
+            "sha256": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911",
+            "lf_sha256": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911"
+          },
+          "scipy/ndimage/_nd_image.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 175576,
+            "sha256": "5ee4affd0a78e248e5b6b682154ee5a15b45002d1dcbe117e58f83631b662092",
+            "lf_sha256": null
+          },
+          "scipy/ndimage/_ni_label.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 224360,
+            "sha256": "16f667276c477502c72fa24257c681d6ccddf2786a2b76f133f81a2c446918dc",
+            "lf_sha256": null
+          },
+          "scipy/spatial/_ckdtree.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "912c98f19e3fafea9b29a5242f993f9bd1aae97d69ed0de179d680eecdd9eb00",
+            "bytes": 782320,
+            "lf_sha256": null
+          }
+        }
+      },
+      "numpy": {
+        "version": "2.5.4",
+        "record_sha256": "bae08f64ee6c09d0c6a3ba816b4c3aa34f721e8ec07dc57e414f18af20b1716d",
+        "files": {
+          "numpy/__init__.py": {
+            "bytes": 25220,
+            "sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+            "lf_sha256": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11"
+          },
+          "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so": {
+            "bytes": 10633113,
+            "sha256": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+            "lf_sha256": null
+          },
+          "numpy/random/__init__.py": {
+            "sha256": "585ce7b73b5454d6a25c2a50967f2dc322fc1d214d4bb5c0589949b105e06ea9",
+            "bytes": 7480
+          },
+          "numpy/random/_pcg64.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "1573dafacd3740c81255c3b22c9bb1cfe3cbe6d904f77801382ec19b2af74fc2",
+            "bytes": 155200
+          },
+          "numpy/random/_generator.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "2a6dcb8d65ff603c7943b642e04a37356774a96dc32de3dc8b59171938408391",
+            "bytes": 845872
+          },
+          "numpy/random/bit_generator.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "30b89d04a78a753a0ff494324638e633e8b6111ab258123e4288114acaacefea",
+            "bytes": 241128
+          },
+          "numpy/random/_bounded_integers.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "45ef8d6c1a65f9bf287190e2c0f5297ec6dfed9411ff942789fb27f82d5dfa05",
+            "bytes": 316800
+          },
+          "numpy/random/_common.cpython-313-x86_64-linux-gnu.so": {
+            "sha256": "2b01ada16f10eafd2ed578d1fd1cf637d476120f224d3846c882529f00b30892",
+            "bytes": 258824
+          }
+        }
+      }
+    },
+    "pools": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_THREAD_LIMIT": "1"
+    },
+    "cpu": 0,
+    "private_head": "c974133e1e1bc0984560722412fd7b18695c6cca",
+    "private_tree": "08c2c7024b2930056da844843a8548495ebbd575",
+    "private_parent": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1",
+    "launcher_sha256": "226d411c8e2673f25ae8664a3a0c1a877133a4416108ef613d73a91b4378dab2",
+    "stock_recipe_sha256": "8edb1d3ac6ab510739705a2e88c46108e0c55c9af269e57f32830f4d74de6cf3",
+    "stock_root_admission_sha256": "7627183cc3dcadf4ed1a309abbacd4ca4dfaf7318191ec9dc551b376f7438d2e",
+    "private_root_admission_sha256": "6a3766086eb21be492b033168098dff1089806e11337a8fc32c1e5ca23074686",
+    "explicit_linux_git": "git version 2.43.0",
+    "runtime_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
+    "runtime_version": "3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]",
+    "reused_input_profile": "linux-minimum",
+    "circle_git": [
+      null,
+      "--no-optional-locks",
+      "-C",
+      null
+    ],
+    "circle_source": "43d925b5652aa908ceee71b584f1c7ba0f831100",
+    "circle_tree": "c570ce9e56dc0e2b528662d82f1889318fcacaea",
+    "circle_parent": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+    "circle_capture_sha256": "88206cbffd44cadad4731701729a2dbb41ce69ff1d61fd2232443f76441e8205",
+    "circle_stock_observer_sha256": "13d6a77653ea2ead20f455322f9300d70c982b480f7c39334fc5a6839cdf9a92",
+    "probabilistic_git": [
+      null,
+      "--no-optional-locks",
+      "-C",
+      null
+    ],
+    "probabilistic_source": "de12294729f875559862a9c3a9afcf6061694f94",
+    "probabilistic_tree": "c27e1f7181e26b244b2e452f1e46af47ad3c7210",
+    "probabilistic_parent": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+    "probabilistic_launcher_sha256": "45ee76fe4b1a23473c268d01f80cd190d02d63f7448981dfedd015a2e93d4fa4",
+    "observation_ids": [
+      "first-theta-wins-tie",
+      "reordered-theta-wins-tie",
+      "same-seed-passed-generator",
+      "advanced-passed-generator",
+      "strided-image-and-theta",
+      "gap-exactly-two",
+      "gap-two-exceeds-one",
+      "component-length-inclusive",
+      "component-length-rejects-euclidean",
+      "empty-theta-positive-threshold",
+      "all-background-no-generator-draw",
+      "single-foreground-no-generator-draw",
+      "default-cross-diagonal",
+      "gapped-three-angles",
+      "sparse-two-diagonals",
+      "dense-default-bands",
+      "vertical-first",
+      "horizontal-first"
+    ],
+    "fixed": [
+      "default-cross-diagonal",
+      "gapped-three-angles",
+      "sparse-two-diagonals",
+      "dense-default-bands"
+    ],
+    "stock_v1_sha256": "900e3019c6ac75628ff879d122f9427fd05ceb61ed626a5e1ce8e607a097f1c3",
+    "stock_v2_sha256": "6df0afd0b517f854e723f812b806ccd5387907f133b2c415ee4a4b53ece7451f",
+    "witness_sha256": "3aad73a36514d013e48c1125eaf52fd9f5f71a08d1b3218c3dfee3a3704487e7",
+    "current_process_affinity": [
+      0
+    ]
+  },
+  "actual_loaded_sha256": {
+    "numpy/__init__.py": "09295a80660f17925ae23765ce8cbd7ff7ceae968d5f2f89349f1cb74c0b9e11",
+    "numpy/_core/_multiarray_umath.cpython-313-x86_64-linux-gnu.so": "405abe5c8f52c1d15b71bafbd155693237b6e1742bc598638b7fc0626bcc1576",
+    "skimage/__init__.py": "e620dbf41b92ba709cfa633c601b6316d5f02255fe80ee900a06636eab89d071",
+    "skimage/transform/hough_transform.py": "a4790f5ad1570e18b35a6d52828a3390124fe7f05acb9c6bd2ab05797c0ca198",
+    "skimage/transform/_hough_transform.cpython-313-x86_64-linux-gnu.so": "3d81a160bcad46a69edce38431cb4c5add65894c049d3e2ba3b163716d153e49",
+    "numpy/random/__init__.py": "585ce7b73b5454d6a25c2a50967f2dc322fc1d214d4bb5c0589949b105e06ea9",
+    "numpy/random/_pcg64.cpython-313-x86_64-linux-gnu.so": "1573dafacd3740c81255c3b22c9bb1cfe3cbe6d904f77801382ec19b2af74fc2",
+    "numpy/random/_generator.cpython-313-x86_64-linux-gnu.so": "2a6dcb8d65ff603c7943b642e04a37356774a96dc32de3dc8b59171938408391",
+    "numpy/random/bit_generator.cpython-313-x86_64-linux-gnu.so": "30b89d04a78a753a0ff494324638e633e8b6111ab258123e4288114acaacefea",
+    "numpy/random/_bounded_integers.cpython-313-x86_64-linux-gnu.so": "45ef8d6c1a65f9bf287190e2c0f5297ec6dfed9411ff942789fb27f82d5dfa05",
+    "numpy/random/_common.cpython-313-x86_64-linux-gnu.so": "2b01ada16f10eafd2ed578d1fd1cf637d476120f224d3846c882529f00b30892"
+  },
+  "signature": "(image, threshold=10, line_length=50, line_gap=10, theta=None, rng=None)",
+  "counts": {
+    "contract": 12,
+    "benchmark": 4
+  },
+  "public_stock_calls": 16,
+  "timing_calls": 0,
+  "candidate_calls": 0,
+  "rows_sha256": "47a8deb0cf8a164ae853a04ed88a3eae073e6801c1eafaec2f87a3b86cc670c4",
+  "pid": 63115
+}
