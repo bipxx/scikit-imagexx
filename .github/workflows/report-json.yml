@@ -1,4 +1,4 @@
-name: Circular Hough peaks modern private component and SDK
+name: Circular Hough peaks modern fixed speed
 on:
   workflow_dispatch:
     inputs:
@@ -12,7 +12,7 @@ permissions:
   contents: read
   actions: read
 jobs:
-  component:
+  timing:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -29,31 +29,36 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: .github/u182-circle-peaks-component-v1
-      - name: Verify scope and run private component and SDK
+      - name: Authenticate and stage the exact prepared transport
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          CIRCLE_COMPONENT_AUTHORITY: ${{ inputs.authority }}
-          CIRCLE_COMPONENT_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
+          CIRCLE_TIMING_AUTHORITY: ${{ inputs.authority }}
+          CIRCLE_TIMING_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
         run: |
           set -euo pipefail
-          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/run.py
+          status=0
+          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/stage-timing.py || status=$?
+          if test -d circle-timing-stage; then
+            printf '%s\n' "$status" > circle-timing-stage/stage-process.exit
+          fi
+          exit "$status"
+      - name: Verify a quiet host and measure the four unchanged public cases
+        shell: bash
+        env:
+          CIRCLE_TIMING_AUTHORITY: ${{ inputs.authority }}
+          CIRCLE_TIMING_AUTHORITY_SHA256: ${{ inputs.authority_sha256 }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I -S -B .github/u182-circle-peaks-component-v1/quiet.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: u182-circle-peaks-modern-component-v2
+          name: u182-circle-peaks-modern-fixed-speed-v1
           path: |
-            circle-peaks-component-results/*.json
-            circle-peaks-component-results/*.log
-            circle-peaks-component-results/component/*.json
-            circle-peaks-component-results/component/*.log
+            circle-timing-stage/*.json
+            circle-timing-stage/*.log
+            circle-timing-stage/*.exit
+            circle-timing-results/*.json
+            circle-timing-results/*.jsonl
           if-no-files-found: warn
-      - uses: actions/upload-artifact@v4
-        if: success()
-        with:
-          name: u182-circle-peaks-modern-component-elf-v2
-          path: |
-            circle-peaks-component-transport/_hough_circle_peaks_private.cpython-313-x86_64-linux-gnu.so
-            circle-peaks-component-transport/prepared.json
-          if-no-files-found: error
-          retention-days: 1
