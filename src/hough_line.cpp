@@ -68,7 +68,7 @@ void hough_line_into(const std::uint8_t* image, std::size_t image_count,
                 // The pinned rounding helper separately adjusts by half before truncating.
                 const double projection = cosines[angle] * double(column) + sines[angle] * double(row);
                 const double adjusted = projection > 0.0 ? projection + 0.5 : projection - 0.5;
-                const auto distance = std::size_t(offset + static_cast<int>(adjusted));
+                const auto distance = std::size_t(offset + static_cast<std::int64_t>(adjusted));
                 ++accumulator[distance * angles + angle];
             }
         }
