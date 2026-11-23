@@ -149,7 +149,7 @@ if __name__ == '__main__':
         print(json.dumps({'source': pins['source'], 'artifact': pins['artifact'], 'helper_sha256': HELPER_SHA}))
         raise SystemExit(0)
     assert sys.version_info[:3] == (3, 11, 17) and sys.flags.isolated and sys.dont_write_bytecode
-    runpy.run_path(str(HERE / 'run.py'))['authorize'](pins)
+    runpy.run_path(str(HERE / 'validate.py'))['authorize'](pins)
     assert args.destination and args.proof and not args.destination.exists() and not args.proof.exists()
     proof = download(pins, helper, args.destination)
     with args.proof.open('x', encoding='utf-8', newline='\n') as out:
