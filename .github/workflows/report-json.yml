@@ -1,42 +1,45 @@
-name: Current306 exact-source barrier
+name: Current306 Windows focused product v3 (optional)
 on:
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  source:
-    strategy:
-      fail-fast: false
-      matrix:
-        profile: [windows311, windows313]
+  windows-focus:
     runs-on: windows-latest
-    timeout-minutes: 45
+    timeout-minutes: 120
     env:
-      SOURCE_PROFILE: ${{ matrix.profile }}
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
-      UV_NO_CACHE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_CACHE_DIR: '1'
+      CMAKE_BUILD_PARALLEL_LEVEL: '2'
     steps:
-      - name: Verify runner scratch capacity
+      - name: Verify fresh host capacity
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $required = 44GB
           foreach ($path in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
             $drive = [System.IO.DriveInfo]::new([System.IO.Path]::GetPathRoot($path))
-            Write-Output "$path free=$($drive.AvailableFreeSpace) required=$required"
-            if ($drive.AvailableFreeSpace -lt $required) { throw 'Runner free capacity is below peak plus reserve' }
+            Write-Output "$path free=$($drive.AvailableFreeSpace) required=$(44GB)"
+            if ($drive.AvailableFreeSpace -lt 44GB) { throw 'Runner free capacity is below peak plus reserve' }
           }
-          git config --global core.autocrlf true
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          git config --global core.longpaths true
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/checkout@v4
         with:
           path: carrier
           persist-credentials: false
           sparse-checkout: |
-            .github/u182-source-proof
+            .github/u182-windows-focus
+      - name: Verify root-admitted complete source before provisioning
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $proof = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-windows-focus'
+          python -B (Join-Path $proof 'run.py') --preflight --manifest (Join-Path $proof 'source-manifest-306-v3.json') --complete-source-receipt (Join-Path $proof 'complete-source-root.json')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git config --global core.autocrlf true
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git config --global core.longpaths true
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/checkout@v4
         with:
           ref: 5b94b20d30e572164a6473c8bb029e18d4a7e706
@@ -44,45 +47,36 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13.14'
-      - name: Execute the complete source-only workflow command
+          python-version: '3.13.16'
+          architecture: x64
+      - name: Prepare genuine product and verify focused public and SDK scope
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $script = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-source-proof/run-source-barrier.py'
+          $proof = Join-Path $env:GITHUB_WORKSPACE 'carrier/.github/u182-windows-focus'
           $source = Join-Path $env:GITHUB_WORKSPACE 'tested'
-          $receipts = Join-Path $env:GITHUB_WORKSPACE 'receipts'
-          $fixture = Join-Path $env:RUNNER_TEMP 'u182-current306-source-v3'
-          git -C $source fetch --no-tags --depth=1 origin 4f69eba77a262056459eaab1e0a39e53610e9305
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $py = (Get-Command python -ErrorAction Stop).Source
-          if ($env:SOURCE_PROFILE -eq 'windows311') {
-            & $py -m pip install --disable-pip-version-check --no-cache-dir uv==0.12.5
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-            uv python install 3.11.11
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-            $py = (uv python find --managed-python 3.11.11)
-            if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $py)) { throw 'Cannot resolve Windows CPython 3.11.11' }
-          }
-          $environment = Join-Path $env:RUNNER_TEMP 'u182-source-venv'
-          & $py -m venv $environment
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $py = Join-Path $environment 'Scripts/python.exe'
-          & $py -m pip install --disable-pip-version-check --no-cache-dir pytest==9.1.1
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          & $py -B $script --profile $env:SOURCE_PROFILE --source $source --out $receipts --fixture $fixture
-          $outer = $LASTEXITCODE
-          if (Test-Path -LiteralPath $receipts) {
-            $outer | Set-Content -Encoding ascii (Join-Path $receipts 'pytest-process.exit')
-          }
-          exit $outer
+          $evidence = Join-Path $env:GITHUB_WORKSPACE 'windows-focus-receipts'
+          python -I -B (Join-Path $proof 'run.py') --source $source --manifest (Join-Path $proof 'source-manifest-306-v3.json') --complete-source-receipt (Join-Path $proof 'complete-source-root.json') --evidence $evidence
+          exit $LASTEXITCODE
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: current306-exact-source-v3-${{ matrix.profile }}
+          name: current306-windows-focused-receipts-v3
           path: |
-            receipts/*.json
-            receipts/*.xml
-            receipts/*.bin
-            receipts/*.exit
+            windows-focus-receipts/*.json
+            windows-focus-receipts/*.log
+            windows-focus-receipts/*.xml
+            windows-focus-receipts/*.txt
           if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: current306-windows-timing-transport-v3
+          path: |
+            tested/build/qp306/transport-wheels/*.whl
+            windows-focus-receipts/runtime-lock.txt
+            windows-focus-receipts/measurement.json
+            windows-focus-receipts/terminal.json
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
