@@ -1,4 +1,4 @@
-"""Authorized hosted Hough input and direct-component diagnostic."""
+"""Hosted exact Hough line wide-index construction and parity diagnostic."""
 from base64 import urlsafe_b64encode
 import csv
 from datetime import datetime, timezone
@@ -22,8 +22,8 @@ from zipfile import ZipFile
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
 BOOT = "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
-PRIOR_ADMISSION = "8529d59841e44304ec8120d46ef6a9448fde0163449e88bb388de9ea7fe972c5"
-FAMILY = "probabilistic_hough_line"
+VARIANT = "4233475355b2e4fd3adf4c5d0f91ad90d42db7a329f15ca2edb9d6bde0a3cded"
+FAMILY = "hough_line"
 FLOOR = 30 * 2**30
 FLAGS = ["-std=c++17", "-O3", "-fPIC", "-fvisibility=hidden", "-fno-fast-math", "-ffp-contract=off", "-frounding-math"]
 CAP = 150 * 2**20
@@ -45,14 +45,14 @@ def write(path, value):
 
 def authority(env, now):
     assert env["GITHUB_ACTIONS"] == "true" and env["GITHUB_REPOSITORY"] == REPO
-    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-direct-v4"
+    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-line-wide-component-v1"
     assert env["GITHUB_EVENT_NAME"] == "workflow_dispatch"
     raw = env["HOUGH_AUTHORITY"].encode()
     assert len(raw) < 1024 and digest(raw) == env["HOUGH_AUTHORITY_SHA256"]
     value = json.loads(raw)
-    assert set(value) == {"carrier", "packet", "purpose", "deadline_utc", "prior_root_admission_sha256"}
-    assert (value["carrier"], value["packet"]) == (env["GITHUB_SHA"], BOOT)
-    assert (value["purpose"], value["prior_root_admission_sha256"]) == ("probabilistic-parity", PRIOR_ADMISSION)
+    assert set(value) == {"carrier", "packet", "purpose", "deadline_utc", "variant"}
+    assert (value["carrier"], value["packet"], value["variant"]) == (env["GITHUB_SHA"], BOOT, VARIANT)
+    assert value["purpose"] == "hough-line-wide-modern-component"
     deadline = datetime.fromisoformat(value["deadline_utc"])
     assert 0 < (deadline - now).total_seconds() <= 5400
     return value
@@ -216,7 +216,31 @@ def install_sites(packet, wheels, package, python, out, work):
     return stock, pybind_site / "pybind11/include", candidate
 
 
-def stage_source(packet, out, work):
+def check_sources(packet, variant, repo, git, local_baseline):
+    family_id = "transform." + FAMILY
+    verifier = runpy.run_path(str(HERE / "verify-inputs.py"))["source_proof"]
+    result = verifier(packet, repo, Path(git), local_baseline, family_id)
+    assert result == {"families": 1, "owned_paths": 10, "windows_local_preflight": local_baseline}
+    args = [git, "--no-optional-locks", "--no-replace-objects", "-C", repo]
+
+    def read(*argv):
+        return subprocess.check_output([*args, *argv])
+
+    source = read("rev-parse", "--verify", variant["local_ref"]).decode().strip()
+    assert source == variant["source"]
+    assert read("rev-list", "--parents", "-n", "1", source).decode().split() == [source, variant["parent"]]
+    assert read("rev-parse", f"{source}^{{tree}}").decode().strip() == variant["tree"]
+    path = variant["sole_changed_source"]
+    assert read("diff-tree", "--no-commit-id", "--name-status", "-r", variant["parent"], source).decode().splitlines() == [f"M\t{path}"]
+    before = read("cat-file", "blob", f"{variant['parent']}:{path}")
+    wide = read("cat-file", "blob", f"{source}:{path}")
+    assert digest(before) == variant["old_source_sha256"] and digest(wide) == variant["new_source_sha256"]
+    old_line, new_line = (variant[key].encode() for key in ("old_line", "new_line"))
+    assert before.count(old_line) == 1 and before.replace(old_line, new_line) == wide
+    return read, before, wide
+
+
+def stage_source(packet, variant, out, work):
     mirror = work / "source.git"
     git = "/usr/bin/git"
     command(out, "git-init", [git, "init", "--bare", mirror])
@@ -228,21 +252,24 @@ def stage_source(packet, out, work):
         command(out, "git-" + key.rsplit(".", 1)[-1], [*repo_git, "config", key, value])
     family_id = "transform." + FAMILY
     family = packet["families"][family_id]
-    ref = family["ref"]
+    refs = (family["ref"], variant["local_ref"])
     command(out, "git-fetch", [*repo_git, "fetch", "--no-tags", "--depth=2", "--filter=blob:none", "origin",
-                               f"{ref}:{ref}"])
-    command(out, "source-proof", [sys.executable, "-I", "-S", "-B", HERE / "verify-inputs.py", "--packet",
-                                  HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "source", "--repo", mirror, "--git", git,
-                                  "--family", family_id])
+                               *[f"{ref}:{ref}" for ref in refs]])
+    read, before, wide = check_sources(packet, variant, mirror, git, False)
     source = work / FAMILY
     source.mkdir()
     for path in family["owned_git_files"] | family["verified_shared_git_files"]:
-        raw = subprocess.check_output([*repo_git, "cat-file", "blob", f"{family['source']}:{path}"])
+        raw = wide if path == variant["sole_changed_source"] else read("cat-file", "blob", f"{variant['source']}:{path}")
         path = source / path
         path.parent.mkdir(exist_ok=True, parents=True)
         with path.open("xb") as output:
             output.write(raw)
-    return source
+    baseline = work / "baseline-hough_line.cpp"
+    baseline.write_bytes(before)
+    write(out / "source-proof.json", {"before": variant["parent"], "wide": variant["source"], "tree": variant["tree"],
+                                     "file": variant["sole_changed_source"], "other_source_files_unchanged": True,
+                                     "before_sha256": digest(before), "wide_sha256": digest(wide)})
+    return source, baseline
 
 
 def resolve_driver_linker(reported):
@@ -291,7 +318,30 @@ def verify_tools(packet, out):
     return compiler
 
 
-def probabilistic_parity(packet, compiler, out, work, source, python, stock, pybind, candidate):
+def vote_conversion(assembly):
+    instructions = [fields[-1].strip() for line in assembly.splitlines() if len(fields := line.split("\t")) >= 3]
+    result = []
+    for start, text in enumerate(instructions):
+        if not text.startswith("cvttsd2si"):
+            continue
+        for end in range(start + 1, min(start + 5, len(instructions))):
+            if instructions[end].startswith("imul"):
+                result.append(instructions[start:end + 1])
+                break
+    return result
+
+
+def check_vote_paths(before, wide):
+    old, = vote_conversion(before)
+    new, = vote_conversion(wide)
+    for path in (old, new):
+        assert any(text.startswith(("add", "lea")) for text in path[1:-1]) and path[-1].startswith("imul")
+    assert old[0].endswith(",%eax") and any(text.startswith(("cltq", "cdqe", "movslq")) for text in old)
+    assert new[0].endswith(",%rax") and not any(text.startswith(("cltq", "cdqe", "movslq")) for text in new)
+    return {"before_vote_address_instructions": old, "wide_vote_address_instructions": new}
+
+
+def wide_parity(packet, compiler, out, work, source, baseline, python, stock, pybind, candidate):
     include = subprocess.check_output([python, "-I", "-S", "-B", "-c", "import sysconfig; print(sysconfig.get_path('include'))"], text=True).strip()
     failures = []
     children_env = {**os.environ, "TMPDIR": str(work)}
@@ -299,8 +349,17 @@ def probabilistic_parity(packet, compiler, out, work, source, python, stock, pyb
     leaf = source / "src" / (FAMILY + ".cpp")
     binary = work / ("_" + FAMILY + "_private" + packet["runtime"]["ext_suffix"])
     cpp = [compiler, *FLAGS, "-I" + str(source / "include")]
+    old_obj = work / "baseline-hough_line.o"
     obj = work / (FAMILY + ".o")
+    command(out, "baseline-leaf", [*cpp, "-c", baseline, "-o", old_obj], env=children_env)
     command(out, FAMILY + "-leaf", [*cpp, "-c", leaf, "-o", obj], env=children_env)
+    symbol = "_ZN9skimagexx15hough_line_intoEPKhmmmPKdS3_mPmm"
+    objdump = Path("/usr/bin/objdump")
+    version = subprocess.check_output([objdump, "--version"], text=True).splitlines()[0]
+    for label, path in (("baseline", old_obj), ("wide", obj)):
+        command(out, label + "-disassembly", [objdump, "-d", f"--disassemble={symbol}", path])
+    assembly = check_vote_paths((out / "baseline-disassembly.log").read_text(), (out / "wide-disassembly.log").read_text())
+    write(out / "instruction-proof.json", {"objdump": seal(objdump), "objdump_version": version, **assembly})
     command(out, FAMILY + "-link", [*cpp, "-I" + str(source / "src"), "-I" + include, "-I" + str(pybind),
             "-shared", source / "src" / ("bind_" + FAMILY + ".cpp"), HERE / "storage_projection.cpp",
             HERE / (FAMILY + "-bridge.cpp"), obj, "-o", binary], env=children_env)
@@ -318,7 +377,7 @@ def probabilistic_parity(packet, compiler, out, work, source, python, stock, pyb
                                FAMILY, mode, source, binary, stock, candidate, out / (label + "-cases.json")],
                    env=env, check=False):
             failures.append(label)
-    return failures
+    return failures, binary
 
 
 def main():
@@ -326,11 +385,13 @@ def main():
     raw = (HERE / "bootstrap-v1.json").read_bytes()
     assert digest(raw) == BOOT
     packet = json.loads(raw)
+    variant_raw = (HERE / "wide-line.json").read_bytes()
+    assert digest(variant_raw) == VARIANT
+    variant = json.loads(variant_raw)
     pins = json.loads((HERE / "carrier-inputs.json").read_bytes())
     for path, pin in pins.items():
         assert seal(HERE / path) == pin, path
     reused = json.loads((HERE / "v3-reuse-v1.json").read_bytes())
-    assert reused["root_admission_sha256"] == value["prior_root_admission_sha256"]
     workspace = Path(os.environ["GITHUB_WORKSPACE"]).resolve(strict=True)
     temp = Path(os.environ["RUNNER_TEMP"]).resolve(strict=True)
     assert temp != workspace and not temp.is_relative_to(workspace)
@@ -348,7 +409,7 @@ def main():
         with TemporaryDirectory(dir=temp, prefix="u182-hough-cp3138-") as fixture:
             work = Path(fixture)
             stage = "sources"
-            source = stage_source(packet, out, work)
+            source, baseline = stage_source(packet, variant, out, work)
             stage = "runtime"
             python = provision_python(packet, work)
             stage = "donor"
@@ -359,11 +420,22 @@ def main():
                     "--packet", HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "runtime", "--stock", stock,
                     "--pybind", pybind, "--candidate", candidate])
             assert json.loads((out / "runtime-proof.log").read_bytes()) == reused["runtime"]
-            write(out / "historical-v3-admission.json", reused)
-            stage = "probabilistic-parity"
+            stage = "wide-line-component"
             assert shutil.disk_usage(work).free >= FLOOR
-            failures = probabilistic_parity(packet, compiler, out, work, source, python, stock, pybind, candidate)
+            failures, binary = wide_parity(packet, compiler, out, work, source, baseline, python, stock, pybind, candidate)
             assert not failures, failures
+            stage = "transport"
+            transport = workspace / "hough-line-wide-transport"
+            transport.mkdir()
+            copied = transport / binary.name
+            with copied.open("xb") as output:
+                output.write(binary.read_bytes())
+            assert seal(copied) == seal(binary) and copied.stat().st_size < 2**20
+            write(transport / "line-wide.json", {"authority": value, "authority_sha256": os.environ["HOUGH_AUTHORITY_SHA256"],
+                                                "elf": {"name": binary.name, **seal(binary)}, "source": variant["source"],
+                                                "tree": variant["tree"], "no_timing": True,
+                                                "instruction_proof": seal(out / "instruction-proof.json"),
+                                                "modes": {mode: seal(out / f"hough_line-{mode}-cases.json") for mode in ("normal", "scalar")}})
     except Exception as exc:
         write(out / "terminal.json", {"stage": stage, "exit": 1, "error": type(exc).__name__ + ": " + str(exc)})
         raise

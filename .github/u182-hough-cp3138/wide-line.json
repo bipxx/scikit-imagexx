@@ -1,0 +1,16 @@
+{
+  "source": "76087cec5e8bc02fdb4ca7bd053153af3fc00599",
+  "tree": "4ebb44436d6a2c7b47b8d78d39ccecd302964c80",
+  "parent": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1",
+  "local_ref": "refs/heads/coverage/u182-hough-line-wide-bin-v1",
+  "sole_changed_source": "src/hough_line.cpp",
+  "old_source_sha256": "badf006e158fbdda15ba92b589f10c55660f088ceede8a416b54a701998f71e0",
+  "new_source_sha256": "c1ad16570ec6e8ddb717c1e6cb8de67bbc6db53d2e749e571ac78b57c82c06e2",
+  "exact_patch_sha256": "242fa34fc763d35e7c61c81e459f9536c4bf60c574335476ad78e156c0e7d550",
+  "old_line": "const auto distance = std::size_t(offset + static_cast<int>(adjusted));",
+  "new_line": "const auto distance = std::size_t(offset + static_cast<std::int64_t>(adjusted));",
+  "root_timing_admission_sha256": "664fe81c6e6f182a880f7c4c24617755fef9edb273f9fc7e17f2e68eca5b9fb1",
+  "prior_source_handoff_sha256": "d8e3c7a60c04a9aa90763c67233c7e73018a4d65f966a5abbd84a2335b34c181",
+  "purpose": "hough-line-wide-modern-component",
+  "prior_modern_admission_sha256": "821418991253dcf6f8d3ac9e46325822cf95394675021bfa7697020aef155b7e"
+}
