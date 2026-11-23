@@ -8,8 +8,8 @@ import sys
 import pytest
 
 ROOT=Path(__file__).resolve().parents[1]
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-post-haar-v8.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v8.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-post-haar-hull-v1.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-hull-v1.json'
 RUNNER='tools/vi4_public_matmul_capture.py'
 ADAPTER='benchmarks/vi_public_matmul_provider_execution_v2.py'
 CONSUMER='benchmarks/vi_public_matmul_provider_consumer_v2.py'
@@ -69,8 +69,11 @@ def test_unbound_current_route_exact_dependencies_and_caps():
     prior_post_haar_v5_capture=data('coverage/contracts/vi4-public-matmul-capture-post-haar-v5.json');prior_post_haar_v5_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v5.json')
     prior_post_haar_v6_capture=data('coverage/contracts/vi4-public-matmul-capture-post-haar-v6.json');prior_post_haar_v6_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v6.json')
     prior_post_haar_v7_capture=data('coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json');prior_post_haar_v7_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json')
-    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json').read_bytes()))
-    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json').read_bytes()))
+    prior_post_haar_v8_capture=data('coverage/contracts/vi4-public-matmul-capture-post-haar-v8.json');prior_post_haar_v8_provider=data('coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v8.json')
+    assert capture['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-post-haar-v8.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-post-haar-v8.json').read_bytes()))
+    assert provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v8.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v8.json').read_bytes()))
+    assert prior_post_haar_v8_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json').read_bytes()))
+    assert prior_post_haar_v8_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json').read_bytes()))
     assert prior_post_haar_v7_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-post-haar-v6.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-post-haar-v6.json').read_bytes()))
     assert prior_post_haar_v7_provider['source_binding']['metadata_predecessor_contract']==dict(path='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v6.json',raw_sha256=H((ROOT/'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v6.json').read_bytes()))
     assert prior_post_haar_v6_capture['capture']['source_binding_successor']['metadata_predecessor_context']==dict(path='coverage/contracts/vi4-public-matmul-capture-post-haar-v5.json',sha256=H((ROOT/'coverage/contracts/vi4-public-matmul-capture-post-haar-v5.json').read_bytes()))

@@ -1249,6 +1249,9 @@ DRAW_SOURCE_PATHS += ('benchmarks/convex_hull_image.py', 'benchmarks/convex_hull
 DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v20.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v20.json', 'coverage/contracts/speed-parity-current-source-v50.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v8.json', 'coverage/contracts/vi-public-matmul-source-history-v59.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v8.json')
 
 
+DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v51.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-hull-v1.json', 'coverage/contracts/vi-public-matmul-source-history-v60.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-hull-v1.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):

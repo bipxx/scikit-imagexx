@@ -532,6 +532,9 @@ def test_derived_default_preparation_metadata_and_copy_boundary(api, shape):
                      if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
                      and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
                      LEVEL_SET_FUNCTIONS=level_set_family(tree), PYRAMID_GENERATOR_FUNCTIONS=pyramid_generator_family(tree),
+                     HULL_FUNCTIONS=next(ast.literal_eval(node.value) for node in tree.body
+                         if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                         and target.id == 'HULL_FUNCTIONS' for target in node.targets)),
                      DERIVED_MOMENTS_FUNCTIONS=('measure.moments_normalized', 'measure.moments_hu'),
                      COORDS_MOMENTS_FUNCTIONS=coords_family,
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
@@ -568,6 +571,9 @@ def test_coordinate_default_preparation_uses_actual_points(api, shape):
                      if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name)
                      and t.id == 'DRAW_COORDINATE_FUNCTIONS' for t in n.targets)),
                      LEVEL_SET_FUNCTIONS=level_set_family(tree), PYRAMID_GENERATOR_FUNCTIONS=pyramid_generator_family(tree),
+                     HULL_FUNCTIONS=next(ast.literal_eval(node.value) for node in tree.body
+                         if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                         and target.id == 'HULL_FUNCTIONS' for target in node.targets)),
                      __builtins__={**vars(__import__('builtins')), '__import__': import_numpy})
     exec(compile(ast.Module(body=[family, function], type_ignores=[]), '<coordinate preparer>', 'exec'), namespace)
     (points,), options = namespace['default_call'](api, image)
