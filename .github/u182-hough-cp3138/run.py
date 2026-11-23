@@ -21,7 +21,7 @@ from zipfile import ZipFile
 
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
-BOOT = "1069660c7a185703c4f75875ebdf865cbd32690ec50a3cc59d0a403e189dd703"
+BOOT = "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
 FLOOR = 30 * 2**30
 FLAGS = ["-std=c++17", "-O3", "-fPIC", "-fvisibility=hidden", "-fno-fast-math", "-ffp-contract=off", "-frounding-math"]
 CAP = 150 * 2**20
@@ -43,7 +43,7 @@ def write(path, value):
 
 def authority(env, now):
     assert env["GITHUB_ACTIONS"] == "true" and env["GITHUB_REPOSITORY"] == REPO
-    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-direct-v1"
+    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-direct-v3"
     assert env["GITHUB_EVENT_NAME"] == "workflow_dispatch"
     raw = env["HOUGH_AUTHORITY"].encode()
     assert len(raw) < 1024 and digest(raw) == env["HOUGH_AUTHORITY_SHA256"]
@@ -244,23 +244,49 @@ def stage_source(packet, out, work):
     return source_roots
 
 
+def resolve_driver_linker(reported):
+    assert reported
+    path = Path(reported)
+    if not path.is_absolute():
+        located = shutil.which(reported)
+        assert located, "G++ driver linker could not be resolved"
+        path = Path(located)
+    assert path.is_file() and os.access(path, os.X_OK)
+    return path.resolve(strict=True)
+
+
 def verify_tools(packet, out):
     tools = packet["runtime"]["compiler_reference"]
+    hosted = packet["runtime"]["hosted_binutils_v3"]
     compiler = Path("/usr/bin/g++")
-    actual = {key: seal(Path(row["path"])) for key, row in tools["inputs"].items()
-              if key in {"/usr/bin/g++", "/usr/bin/readelf"}}
-    for key in ("cc1plus", "ld"):
-        row = tools[key]
-        actual[row["path"]] = seal(Path(row["path"]))
+    expected = {
+        str(compiler): tools["inputs"][str(compiler)],
+        tools["cc1plus"]["path"]: tools["cc1plus"],
+        hosted["readelf"]["path"]: hosted["readelf"],
+        hosted["ld"]["path"]: hosted["ld"],
+    }
+    actual = {path: seal(Path(path)) for path in expected}
     actual["version"] = subprocess.check_output([compiler, "--version"], text=True).splitlines()[0]
     cc1plus = subprocess.check_output([compiler, "-print-prog-name=cc1plus"], text=True).strip()
     actual["cc1plus"] = cc1plus
+    reported_ld = subprocess.check_output([compiler, "-print-prog-name=ld"], text=True).strip()
+    actual["driver_ld_reported"] = reported_ld
+    actual["hosted_binutils_profile"] = hosted["profile"]
+    actual["hosted_binutils_intake_sha256"] = hosted["intake_sha256"]
+    try:
+        driver_ld = resolve_driver_linker(reported_ld)
+    except (AssertionError, OSError) as error:
+        actual["driver_ld_error"] = str(error)
+        write(out / "toolchain.json", actual)
+        raise
+    actual["driver_ld_resolved"] = str(driver_ld)
+    actual["driver_ld_identity"] = seal(driver_ld)
     write(out / "toolchain.json", actual)
-    for key, pin in tools["inputs"].items():
-        if key in actual:
-            assert actual[key] == seal_dict(pin)
-    assert all(actual[tools[key]["path"]] == seal_dict(tools[key]) for key in ("cc1plus", "ld"))
+    for path, pin in expected.items():
+        assert actual[path] == seal_dict(pin), f"Tool bytes differ: {path}"
     assert actual["version"] == tools["gnu"] and Path(cc1plus).resolve() == Path(tools["cc1plus"]["path"]).resolve()
+    assert driver_ld.samefile(Path(hosted["ld"]["path"])) and actual["driver_ld_identity"] == seal_dict(hosted["ld"]), (
+        "Effective G++ driver linker differs from the admitted hosted ld")
     return compiler
 
 

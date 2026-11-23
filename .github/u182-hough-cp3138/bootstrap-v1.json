@@ -613,6 +613,24 @@
     },
     "executable_sha256": "8ec08abc187b7b6ad4239124c069fb44ebd330f394336c796ac9a30479e896e5",
     "ext_suffix": ".cpython-313-x86_64-linux-gnu.so",
+    "hosted_binutils_v3": {
+      "intake_sha256": "90583ce013a91a74e6b93615dd6288834ab0e24e3a67954a69510c6eb9b1fdf3",
+      "ld": {
+        "bytes": 1359128,
+        "path": "/usr/bin/ld",
+        "sha256": "e9ceb054c12207970f2726dfc07e9a66b411602748628baf27399f02a9bbb31b"
+      },
+      "observed_artifact": 14783682858,
+      "observed_job": 137439026568,
+      "observed_run": 45097036061,
+      "profile": "ubuntu-24.04-actions-observed-binutils",
+      "readelf": {
+        "bytes": 789280,
+        "path": "/usr/bin/readelf",
+        "sha256": "64c58e15274bbbb5153f31078e455e9e77ee5f51489e709bba5bb788ce9df2b0"
+      },
+      "toolchain_receipt_sha256": "a0f7b7bce38287e97f166ca53a334d35e3e47cc90d180aaefff1c91b16795ca3"
+    },
     "providers": {
       "numpy": {
         "files_sha256": {

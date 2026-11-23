@@ -1,7 +1,7 @@
 {
   "bootstrap-v1.json": {
-    "bytes": 36704,
-    "sha256": "1069660c7a185703c4f75875ebdf865cbd32690ec50a3cc59d0a403e189dd703"
+    "bytes": 37440,
+    "sha256": "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
   },
   "collect.py": {
     "bytes": 3537,
@@ -56,8 +56,8 @@
     "sha256": "1a54751980e8d5c06e31c46891f5a6112b5a6f64a07f494497fe93b98e912475"
   },
   "run.py": {
-    "bytes": 18165,
-    "sha256": "c561d1fdf6cc2f3c3b7980615a4ec1775db453f68996082ab2a06c88cf8b4198"
+    "bytes": 19275,
+    "sha256": "d4a9483c115259007f7cc60c2448eed5656392c756c5c0b16bde3bd3323e043c"
   },
   "storage_projection.cpp": {
     "bytes": 2719,
