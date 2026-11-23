@@ -11,9 +11,9 @@ import subprocess
 import sys
 import time
 
-SOURCE = 'fc9f029391f6943695f625fa64aa6673838ba8d9'
-TREE = 'b973122f4755aa1f5308ba755fe3b49ca9e6abb0'
-MANIFEST_PIN = 'd25ab5900596e00bf749478095fecd88f45ccf16885ee86afcd9ec877548ec07'
+SOURCE = 'e44a720dd2c84eedbd7e75641829c6c4f76d9a6c'
+TREE = 'c501bff41f16a4eecbde630a7d16bfa1884ceac8'
+MANIFEST_PIN = '16b56196ed1aadf5781f640394b91ea5e84f73ff26d73d54cdc8a2e0a0a42075'
 WORKFLOW = '.github/workflows/public-qualification.yml'
 VERSIONS = {'windows311': '3.11.11', 'windows313': '3.13.14'}
 
@@ -85,7 +85,7 @@ def main():
     def git(*args):
         return subprocess.check_output([native_git, '-C', str(source), *args])
 
-    manifest_path = Path(__file__).with_name('source-manifest-308-v1.json')
+    manifest_path = Path(__file__).with_name('source-manifest-308-affected-v2.json')
     require(digest(manifest_path) == MANIFEST_PIN, 'Frozen source manifest changed')
     manifest = json.loads(manifest_path.read_bytes())
     require(manifest['source'] == SOURCE and manifest['tree'] == TREE, 'Wrong manifest provenance')
@@ -99,7 +99,12 @@ def main():
     require(sha256(workflow).hexdigest() == manifest['workflow_sha256'], 'Raw qualification workflow changed')
     command, argv, selectors = workflow_arguments(workflow, 186)
     require(selectors == manifest['selectors'], 'Selector order differs')
-    actual, substitutions = report_arguments(argv, out)
+    targeted = manifest['affected_selectors']
+    require(len(targeted) == len(set(targeted)) == 19, 'Affected selector count differs')
+    require({name.split('::')[0] for name in targeted} <= set(selectors), 'Guard absent from full source scope')
+    # Keep original flags and location rewriting. Only intentionally target the affected guards in this carrier.
+    focused_argv = [word for word in argv if not word.startswith('tests/')] + targeted
+    actual, substitutions = report_arguments(focused_argv, out)
     fixture.mkdir(exist_ok=False)
     os.chdir(source)
     sys.path.insert(0, str(source))
@@ -119,7 +124,11 @@ def main():
 
     class Inventory:
         def pytest_collection_finish(self, session):
-            write(out / 'testIDs.json', [item.nodeid for item in session.items])
+            collected = [item.nodeid for item in session.items]
+            require(len(collected) == len(set(collected)), 'Duplicate collected nodes')
+            require(set(manifest['originally_failed_nodes']) <= set(collected), 'Previously failed node absent')
+            require({node.split('[', 1)[0] for node in collected} == set(targeted), 'Affected test functions differ')
+            write(out / 'testIDs.json', collected)
 
         def pytest_sessionfinish(self, session, exitstatus):
             write(out / 'plugins.json', [(name, getattr(plugin, '__file__', None))
@@ -131,7 +140,8 @@ def main():
                                  'workflow_argv': argv, 'argv': actual, 'selectors': selectors, 'selector_count': len(selectors),
                                  'report_path_substitutions_only': substitutions, 'normal_conftest': True,
                                  'plugin_autoload': True, 'no_failfast': True, 'fixture_root': str(fixture),
-                                 'manifest_sha256': MANIFEST_PIN, 'profile': cli.profile})
+                                 'manifest_sha256': MANIFEST_PIN, 'profile': cli.profile, 'scope': 'affected-only',
+                                 'affected_selectors': targeted, 'focused_workflow_argv': focused_argv})
     start = time.monotonic()
     code = int(pytest.main(actual, plugins=[Inventory()]))
     post = git('rev-parse', 'HEAD').decode().strip()
