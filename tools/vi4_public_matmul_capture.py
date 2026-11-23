@@ -10,8 +10,8 @@ import runpy
 import subprocess
 import sys
 
-CONTEXT='coverage/contracts/vi4-public-matmul-capture-post-haar-v4.json'
-PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v4.json'
+CONTEXT='coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json'
+PROVIDER='coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json'
 PROBE='tools/vi_first_cohort_probe.py'
 CODEC='tools/vi_cohort_value_diagnostic.py'
 EXECUTE='benchmarks/variation_of_information_execution.py'

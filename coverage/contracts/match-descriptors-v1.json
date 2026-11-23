@@ -1,0 +1,880 @@
+{
+  "api": "feature.match_descriptors",
+  "signature": "(descriptors1, descriptors2, metric=None, p=2, max_distance=inf, cross_check=True, max_ratio=1.0)",
+  "shipped_base": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+  "original_sources": {
+    "contract-v1.json": "f93bb6e88a3e83c07c8d65a7544b4987d2689461659d22917680d385ca1aa8af",
+    "root-reference-admission-v1.json": "06aaf57da16a62a5f497a552af5a26030b08566db8bc32ecbf3d80f41f5d52ae",
+    "windows-reference-v1.json": "84de3f738d735a0feeedb5e57fca765a8a92a73d0c76d10aa255d85ae912c785",
+    "linux-minimum-reference-v1.json": "77825e5d267e7e8dd0e4ad99de477e5584ba99d08b204c9d15a49964465b203b"
+  },
+  "scope": {
+    "inputs": "Exact plain native Boolean ndarray, nonempty 2D C-order span in bounded storage; canonical 0/1 bytes; equal width 1..256; left and right rows 1..1024.",
+    "options": "metric is None or exact str hamming; exact int p=2 and exact bool cross_check. Exact float max_distance is positive infinity or in [0,1]; exact float max_ratio in [0,1]. Active finite distance or ratio below 1 requires power-of-two width and round-to-nearest.",
+    "ordering": "First right and first left on equal counts. Ascending left indices. Apply mutual check, strict normalized distance, strict normalized ratio separately. The second right candidate may tie; replace zero runner-up by binary64 epsilon and use infinity on singleton right.",
+    "result": "Owning writable C-order native np.intp ndarray, shape (count,2), with the stock empty strides and no input alias.",
+    "fallback": "Other shapes, formats, ownership chains, noncanonical bytes, metrics, option protocols and numeric domains use configured compatibility.",
+    "execution": "Serial packed canonical-byte native Hamming, no full distance matrix or provider in the native route. Runtime and performance gates pending."
+  },
+  "fixture": "Independent PCG64 uint8 integers in [0,2) via default_rng(seed), first left then right, each byte-viewed as bool. Exact input hashes will be pinned by both originals.",
+  "fixed_cases": [
+    {
+      "id": "tiny-cross",
+      "left": [
+        8,
+        16
+      ],
+      "right": [
+        9,
+        16
+      ],
+      "seed": 911,
+      "kwargs": {}
+    },
+    {
+      "id": "mid-cross",
+      "left": [
+        96,
+        64
+      ],
+      "right": [
+        128,
+        64
+      ],
+      "seed": 912,
+      "kwargs": {}
+    },
+    {
+      "id": "dense-cross",
+      "left": [
+        384,
+        128
+      ],
+      "right": [
+        448,
+        128
+      ],
+      "seed": 913,
+      "kwargs": {}
+    },
+    {
+      "id": "short-threshold",
+      "left": [
+        117,
+        32
+      ],
+      "right": [
+        155,
+        32
+      ],
+      "seed": 914,
+      "kwargs": {
+        "cross_check": false,
+        "max_distance": 0.5,
+        "max_ratio": 0.875
+      }
+    }
+  ],
+  "native_controls": [
+    "mutual-first-ties",
+    "first-ties-no-cross",
+    "distance-equality",
+    "distance-next-up",
+    "distance-next-down",
+    "ratio-equality",
+    "ratio-next-up",
+    "ratio-next-down",
+    "zero-runner",
+    "only-right",
+    "ratio-zero",
+    "explicit-hamming"
+  ],
+  "observations": {
+    "tiny-cross": {
+      "input_raw_sha256": [
+        "f2f56112abeb08e89ba5b60d155cf341f417b7018bf7de816fa940c7b2c73dfa",
+        "1ecca6e520387c14175b2fabb545b9b84f62d4ccb17818a5c850697abd33cc0c"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          4,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": false,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "a9587eed226a47756d0d3240e8064e0f8884ff768523b6dd804862fd1a27a3b9"
+      }
+    },
+    "mid-cross": {
+      "input_raw_sha256": [
+        "81afe1ab7e1ab0c5b7d92fbd882387c8c58e5de7dcd2e393314fabe00c3d579c",
+        "9ad3adba01fa9849b5cc4df15a3350cdd5d5319506dd5f23b06b4d79d5c7afb5"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          52,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": false,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "f225ff2441e1e233920c5522dfc265bbf1740db7128b1a38828ca7d4d97d4fdf"
+      }
+    },
+    "dense-cross": {
+      "input_raw_sha256": [
+        "e459695d90b19fe30b9fd0b74b91e50bc9ff3944c6a972d3755992f424c93f13",
+        "09f78ba2496e8b402d28580c80a31fdcc40536b954625be0b45218dc24b5ea22"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          195,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": false,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "6a234d918ffeb489d9b0eb77783249149ee144fd08a40bcea820b7bf5050d375"
+      }
+    },
+    "short-threshold": {
+      "input_raw_sha256": [
+        "1fbc5f6c9067ed47e1052407c9e51a42e36446544f0881fd8b4440f33a047733",
+        "e79c26b471dc7bc2b99d7c65fcfe6ea1b3d264f4301d8406f9f47e1772fc4f0e"
+      ],
+      "warnings": [],
+      "options": {
+        "cross_check": false,
+        "max_distance": 0.5,
+        "max_ratio": 0.875
+      },
+      "output": {
+        "shape": [
+          23,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": false,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e2866d7fc327e2e534d06adc9582c6014bd789dc3a01842c9149c083e598e40e"
+      }
+    },
+    "mutual-first-ties": {
+      "input_raw_sha256": [
+        "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "first-ties-no-cross": {
+      "input_raw_sha256": [
+        "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+      ],
+      "warnings": [],
+      "options": {
+        "cross_check": false
+      },
+      "output": {
+        "shape": [
+          2,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": false,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "6cc4f0e930b34481d03a4134331852eaed66667e3b3d8605f7cd3777551d2b6f"
+      }
+    },
+    "distance-equality": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "max_distance": 0.25
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "distance-next-up": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "max_distance": 0.25000000000000006
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "distance-next-down": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "max_distance": 0.24999999999999997
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "ratio-equality": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.5
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "ratio-next-up": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.5000000000000001
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "ratio-next-down": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.49999999999999994
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "zero-runner": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.01
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "only-right": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.01
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "ratio-zero": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.0
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "explicit-hamming": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "metric": "hamming"
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "width-seven-distance": {
+      "input_raw_sha256": [
+        "837885c8f8091aeaeb9ec3c3f85a6ff470a415e610b8ba3e49f9b33c9cf9d619",
+        "2c05eb9686ac18fd102feb20b01b77a530217a4197f041bffa63e422093807f3"
+      ],
+      "warnings": [],
+      "options": {
+        "max_distance": 0.42857142857142855
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "width-seven-next-up": {
+      "input_raw_sha256": [
+        "837885c8f8091aeaeb9ec3c3f85a6ff470a415e610b8ba3e49f9b33c9cf9d619",
+        "2c05eb9686ac18fd102feb20b01b77a530217a4197f041bffa63e422093807f3"
+      ],
+      "warnings": [],
+      "options": {
+        "max_distance": 0.4285714285714286
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "width-seven-ratio": {
+      "input_raw_sha256": [
+        "837885c8f8091aeaeb9ec3c3f85a6ff470a415e610b8ba3e49f9b33c9cf9d619",
+        "2c05eb9686ac18fd102feb20b01b77a530217a4197f041bffa63e422093807f3"
+      ],
+      "warnings": [],
+      "options": {
+        "max_ratio": 0.6
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "foreign-bool-byte": {
+      "input_raw_sha256": [
+        "1751a7b31e5db1b030eb9819615379dd9771f0421f1d61e01b1e5a76d26fc2cf",
+        "13c9bc2b0e72517fd78ec576415b9f480e09de02f11d5dc0bf18d19868018fee"
+      ],
+      "warnings": [],
+      "options": {
+        "cross_check": false
+      },
+      "output": {
+        "shape": [
+          3,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": false,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "93af9093edc211a9a941bde5ef5640fd395604257f3d945f93c11ba9e918cc74"
+      }
+    },
+    "foreign-bool-byte-mutual": {
+      "input_raw_sha256": [
+        "1751a7b31e5db1b030eb9819615379dd9771f0421f1d61e01b1e5a76d26fc2cf",
+        "13c9bc2b0e72517fd78ec576415b9f480e09de02f11d5dc0bf18d19868018fee"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "mismatched-length": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "837885c8f8091aeaeb9ec3c3f85a6ff470a415e610b8ba3e49f9b33c9cf9d619"
+      ],
+      "warnings": [],
+      "options": {},
+      "error": {
+        "type": "ValueError",
+        "message": "Descriptor length must equal."
+      }
+    },
+    "empty-left-cross": {
+      "input_raw_sha256": [
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+      ],
+      "warnings": [],
+      "options": {},
+      "error": {
+        "type": "ValueError",
+        "message": "attempt to get argmin of an empty sequence"
+      }
+    },
+    "empty-left-no-cross": {
+      "input_raw_sha256": [
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+      ],
+      "warnings": [],
+      "options": {
+        "cross_check": false
+      },
+      "output": {
+        "shape": [
+          0,
+          2
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "empty-right": {
+      "input_raw_sha256": [
+        "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      ],
+      "warnings": [],
+      "options": {},
+      "error": {
+        "type": "ValueError",
+        "message": "attempt to get argmin of an empty sequence"
+      }
+    },
+    "strided": {
+      "input_raw_sha256": [
+        "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "fortran": {
+      "input_raw_sha256": [
+        "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "mixed-dtype": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {},
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "euclidean": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "metric": "euclidean"
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    },
+    "arbitrary-ignored-p": {
+      "input_raw_sha256": [
+        "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "9397b301a002eed7ff85623c632b03ba79ba69c530a7fd99ad55758e4d6a107f"
+      ],
+      "warnings": [],
+      "options": {
+        "p": null
+      },
+      "output": {
+        "shape": [
+          1,
+          2
+        ],
+        "strides": [
+          16,
+          8
+        ],
+        "dtype": "<i8",
+        "type": "numpy.ndarray",
+        "c": true,
+        "f": true,
+        "own": true,
+        "writeable": true,
+        "aligned": true,
+        "raw_sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    }
+  },
+  "one_worker_plan": {
+    "complete_public_call": true,
+    "warm_min_ms_per_side": 250,
+    "interleaved_accepted_min_ms": 100,
+    "accepted_rounds": 7,
+    "each_case_min_ratio": 1.0,
+    "method": "reuse retained adaptive sustained sampler. No timing in this lane."
+  }
+}

@@ -10,11 +10,14 @@ import subprocess
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v46.json'
-CONTEXT_SHA256 = 'd1425f8036e036ee8a8013e4528f26c6f3b7aff1e4e42da58344a56f9ec502cb'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v49.json'
+CONTEXT_SHA256 = '8fe45808f32ba2dd45eee1682442596ab2205294544883fbe4f70ff8204d213d'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
+CURRENT_FAMILY_RUNTIME = ('tests/test_match_descriptors_public.py', 'tests/test_thin_public.py',
+                          'tests/test_skeletonize_public.py', 'tests/test_hough_circle_public.py',
+                          'tests/test_hough_line_peaks_public.py')
 SOURCE = ('tests/test_draw_haar_like_feature_source.py', 'tests/test_haar_like_features_source.py')
 
 
@@ -82,7 +85,7 @@ def test_actual_source_command_preserves184_and_adds_only_haar_source_guards():
     selected = selectors(raw)
     assert len(selected) == len(set(selected)) == 186
     assert selected == value['previous_source_selectors'] + list(SOURCE)
-    assert not set(RUNTIME) & set(selected)
+    assert not set((*RUNTIME, *CURRENT_FAMILY_RUNTIME)) & set(selected)
 
 
 @pytest.mark.parametrize('profile', ('windows', 'minimum', 'modern', 'debug'))
@@ -90,14 +93,18 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v18.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v19.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
-    assert contract['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
+    previous = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v18.json').read_bytes())
+    assert previous['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
         'tests/test_order_angles_golden_ratio_integration.py', 'tests/test_pearson_public.py',
         'tests/test_order_angles_golden_ratio_public.py', 'tests/test_hausdorff_public.py',
         'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py', 'tests/test_binary_blobs_public.py',
         'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py', 'tests/test_draw_haar_like_feature_public.py', 'tests/test_haar_like_features_contract.py', 'tests/test_pyramid_spatial_public.py',
         'tests/test_pyramid_generators_public.py', 'tests/test_find_contours_public.py', 'tests/test_random_noise_public.py', 'tests/test_random_shapes_public.py']
+    assert contract['required_selectors'] == previous['required_selectors'] + list(CURRENT_FAMILY_RUNTIME)
+    actual_groups = q.applicable_public_groups(q.groups_for_source(ROOT), profile)
+    assert actual_groups['public-post203'][-5:] == tuple(Path(test).name for test in CURRENT_FAMILY_RUNTIME)
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
     assert groups['public-post203'] == ('retained',)
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)
@@ -115,6 +122,11 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
     value = data()
     q = load('tools/public_qualification.py')
     required = set(value['source_raw_sha256']) | set(RUNTIME) | set(SOURCE) | {CONTEXT}
+    required.update((*CURRENT_FAMILY_RUNTIME, 'coverage/contracts/current-public-qualification-v19.json',
+                     'tests/fixtures/match_descriptors_dtypes_v1.json', 'tests/fixtures/match_descriptors_reference_v1.py',
+                     'tests/fixtures/thin_reference_v1.py', 'tests/fixtures/skeletonize_originals_v1.json',
+                     'tests/skeletonize_cases.py', 'tests/hough_circle_reference.py', 'tests/hough_line_peaks_reference.py',
+                     'coverage/contracts/hough-circle-reference-v1.json', 'coverage/contracts/hough-line-peaks-reference-v1.json'))
     assert required <= set(q.DRAW_SOURCE_PATHS)
     # The qualifier archives the whole commit. The successor metadata and
     # merged tests are authenticated against that archive's inputs.
@@ -136,7 +148,7 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
 @pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
 def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
     value = data()
-    path = 'coverage/contracts/' + name + '-benchmark-execution-v18.json'
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v19.json'
     boundary = load('benchmarks/mark_boundaries_execution.py')
     current = boundary.current_context(ROOT, path)
     predecessor = current['speed_source_successor']['predecessor_context']
@@ -164,7 +176,7 @@ def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_read
 def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
     import test_mark_boundaries_benchmark_execution as factory
     monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
-    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v18.json')
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v19.json')
     binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
     boundary = load('benchmarks/mark_boundaries_execution.py')
     relative = path.relative_to(ROOT).as_posix()

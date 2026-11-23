@@ -14,6 +14,9 @@ target_sources(skimagexx PRIVATE src/structural_similarity.cpp src/local_extrema
     src/ellipsoid_stats.cpp src/expand_labels.cpp)
 target_sources(skimagexx PRIVATE src/draw_haar_like_feature.cpp src/haar_like_features.cpp)
 target_sources(skimagexx PRIVATE src/find_contours.cpp src/random_noise.cpp src/random_shapes.cpp)
+target_sources(skimagexx PRIVATE
+    src/match_descriptors.cpp src/thin.cpp src/skeletonize.cpp
+    src/hough_circle.cpp src/hough_line_peaks.cpp)
 target_sources(skimagexx PRIVATE src/compare_images.cpp)
 target_sources(skimagexx PRIVATE src/level_set.cpp)
 target_sources(skimagexx PRIVATE src/map_array.cpp)
@@ -176,6 +179,12 @@ if(MSVC)
         src/bind_draw_haar_like_feature.cpp src/bind_haar_like_features.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/find_contours.cpp src/random_noise.cpp src/random_shapes.cpp
         src/bind_find_contours.cpp src/bind_random_noise.cpp src/bind_random_shapes.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
+    set_source_files_properties(
+        src/match_descriptors.cpp src/thin.cpp src/skeletonize.cpp
+        src/hough_circle.cpp src/hough_line_peaks.cpp
+        src/bind_match_descriptors.cpp src/bind_thin.cpp src/bind_skeletonize.cpp
+        src/bind_hough_circle.cpp src/bind_hough_line_peaks.cpp
+        PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/order_angles_golden_ratio.cpp src/bind_order_angles_golden_ratio.cpp
         src/pearson.cpp src/bind_pearson.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
@@ -232,6 +241,12 @@ else()
         src/bind_draw_haar_like_feature.cpp src/bind_haar_like_features.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/find_contours.cpp src/random_noise.cpp src/random_shapes.cpp
         src/bind_find_contours.cpp src/bind_random_noise.cpp src/bind_random_shapes.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
+    set_source_files_properties(
+        src/match_descriptors.cpp src/thin.cpp src/skeletonize.cpp
+        src/hough_circle.cpp src/hough_line_peaks.cpp
+        src/bind_match_descriptors.cpp src/bind_thin.cpp src/bind_skeletonize.cpp
+        src/bind_hough_circle.cpp src/bind_hough_line_peaks.cpp
+        PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/order_angles_golden_ratio.cpp src/bind_order_angles_golden_ratio.cpp
         PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math;-fno-builtin-pow")
@@ -252,6 +267,9 @@ if(SKIMAGEXX_BUILD_PYTHON)
     target_sources(_core PRIVATE src/bind_normalized_mutual_information.cpp)
     target_sources(_core PRIVATE src/bind_draw_haar_like_feature.cpp src/bind_haar_like_features.cpp)
     target_sources(_core PRIVATE src/bind_find_contours.cpp src/bind_random_noise.cpp src/bind_random_shapes.cpp)
+    target_sources(_core PRIVATE
+        src/bind_match_descriptors.cpp src/bind_thin.cpp src/bind_skeletonize.cpp
+        src/bind_hough_circle.cpp src/bind_hough_line_peaks.cpp)
     target_sources(_core PRIVATE src/bind_structural_similarity.cpp src/bind_local_extrema.cpp
         src/bind_order_angles_golden_ratio.cpp src/bind_pearson.cpp src/bind_hausdorff.cpp
         src/bind_ellipsoid_stats.cpp src/bind_expand_labels.cpp)

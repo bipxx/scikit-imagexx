@@ -1,0 +1,1148 @@
+{
+  "api": "morphology.thin",
+  "signature": "(image, max_num_iter=None)",
+  "shipped_base": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+  "tree": "80f83a7a74c699c977f008bce675073565231ea1",
+  "source_contract": {
+    "kernel": [
+      [
+        8,
+        4,
+        2
+      ],
+      [
+        16,
+        0,
+        1
+      ],
+      [
+        32,
+        64,
+        128
+      ]
+    ],
+    "correlate": "SciPy ndi.correlate of uint8 skel with uint8 weights and uint8 output, origin 0, constant cval zero.",
+    "order": "G123 then G123P, each reading all preceding state before any same-subiteration deletions. No foreground changes other than clear. One full iteration is two subiterations.",
+    "convergence": "Stop after a full iteration with unchanged canonical foreground count. None or exact integer zero has no limit. Positive exact integers cap full iterations. Incompatibility preserves all other argument protocol.",
+    "scope": "Exact base ndarray, known C-span, native canonical Boolean bytes or uint8 normalized by nonzero, two nonempty axes up to 512 each. Python max_num_iter None or exact int 0..512. Equivalent and metadata-bearing descriptors of these floating-free pixel types require stock confirmation and retain only observed behavior."
+  },
+  "fixed_cases": [
+    {
+      "id": "tiny-block",
+      "shape": [
+        9,
+        11
+      ],
+      "recipe": "block",
+      "dtype": "bool",
+      "iterations": null
+    },
+    {
+      "id": "sparse-checkerboard",
+      "shape": [
+        384,
+        512
+      ],
+      "recipe": "checkerboard",
+      "dtype": "bool",
+      "iterations": null
+    },
+    {
+      "id": "dense-rectangle",
+      "shape": [
+        129,
+        163
+      ],
+      "recipe": "block",
+      "dtype": "bool",
+      "iterations": null
+    },
+    {
+      "id": "bounded-junctions",
+      "shape": [
+        256,
+        320
+      ],
+      "recipe": "junctions",
+      "dtype": "uint8",
+      "iterations": 3
+    }
+  ],
+  "recipe_definitions": {
+    "block": "Centered 3/4 rectangle plus a connected spur reaching top border.",
+    "checkerboard": "Foreground at alternating parity.",
+    "junctions": "Rows mod 17 < 5 or columns mod 23 < 7, nonzero uint8 value 1 + (r+9c) % 251."
+  },
+  "controls": [
+    "cap zero and phase caps one/two",
+    "negative/fractional integer protocol",
+    "zero field",
+    "edge-touching foreground",
+    "one-row and one-column",
+    "C read-only input",
+    "tagged Boolean and equivalent uint8 descriptor",
+    "strided and noncanonical Boolean",
+    "empty shape and rank error"
+  ],
+  "speed": {
+    "fixed_cases": 4,
+    "workers": 1,
+    "per_side_warmup_ms": 250,
+    "minimum_batch_ms": 100,
+    "accepted_rounds": 7,
+    "min_ratio_each": 1.0
+  },
+  "scope": "Exact private C canonical bool or uint8, output owning untagged bool. Full release gate pending.",
+  "original_receipts": {
+    "windows": "0b72020969a7b253394388df4fbcc688d4569bd97aceaec2da2b92bb8ca64ad5",
+    "minimum": "994495d6fc2270bbc5ce6d11e278ab35a2229e5fd65949464f3c4f53cb0c249d"
+  },
+  "lut_hashes": [
+    "c23e4f1e818583c83e6f1fd17b08d3492c0711e46449ea9ea8490fe5da342a2b",
+    "72d056f61b322a3ef24f9f2739a0f7ebb61f140514a9ed70ba111a4893a27526"
+  ],
+  "observations": {
+    "tiny-block": {
+      "id": "tiny-block",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 10,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "d82bc0bc32677c23fa52e11b0402c09ca62ce741fe362d14aacfd405f2ec0e6b"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "sparse-checkerboard": {
+      "id": "sparse-checkerboard",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          384,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "f7d3d079614cb8b0d3a7ef4ffcc79c4f01b5d7305728632deb04fae55a98dd94"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 2,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          384,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "f7d3d079614cb8b0d3a7ef4ffcc79c4f01b5d7305728632deb04fae55a98dd94"
+      },
+      "shares_input": false
+    },
+    "dense-rectangle": {
+      "id": "dense-rectangle",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          129,
+          163
+        ],
+        "strides": [
+          163,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "0a2cca8850b71da27cc59a694637b45bcf8a0734fe770edcb46e10b632bf9668"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 98,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          129,
+          163
+        ],
+        "strides": [
+          163,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "bedd2644c92db4969fb81df8f8f55ddd717be160d6864bbc007d741b4239ebef"
+      },
+      "shares_input": false
+    },
+    "bounded-junctions": {
+      "id": "bounded-junctions",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          256,
+          320
+        ],
+        "strides": [
+          320,
+          1
+        ],
+        "dtype": "|u1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "ff9d8763c3755d64c74a759a42824b45421fb6ddf5818b674dc0838badff2be5"
+      },
+      "iterations_limit": 3,
+      "reference_checked": true,
+      "correlate_calls": 6,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          256,
+          320
+        ],
+        "strides": [
+          320,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "a7f8d76f55a3880578834853b3fb45ebaa613adc4729affeb5b4eb61cb8fd94d"
+      },
+      "shares_input": false
+    },
+    "cap-0": {
+      "id": "cap-0",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": 0,
+      "reference_checked": true,
+      "correlate_calls": 10,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "d82bc0bc32677c23fa52e11b0402c09ca62ce741fe362d14aacfd405f2ec0e6b"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "cap-1": {
+      "id": "cap-1",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": 1,
+      "reference_checked": true,
+      "correlate_calls": 2,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "8bb1a3d7b247a56c05ff75cc4f41f9c0c14463978f03703b088949496cad7e7d"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000100000000000000010101010101010000000001010101010101000000000101010101010100000000010101010101010000000001010101010101000000000000000000000000000000000000000000000000"
+    },
+    "cap-2": {
+      "id": "cap-2",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": 2,
+      "reference_checked": true,
+      "correlate_calls": 4,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "cbbf13ba1188194bffec2409eeb252042bd353769acb6d72cd64a0267fd902f8"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000010000000000000000010101010100000000000001010101010000000000000101010101000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "negative-cap": {
+      "id": "negative-cap",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": -1,
+      "reference_checked": true,
+      "correlate_calls": 0,
+      "provider_contract": null,
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000001000000000000010101010101010101000001010101010101010100000101010101010101010000010101010101010101000001010101010101010100000101010101010101010000010101010101010101000000000000000000000000"
+    },
+    "fractional-cap": {
+      "id": "fractional-cap",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": 1.5,
+      "reference_checked": true,
+      "correlate_calls": 4,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "cbbf13ba1188194bffec2409eeb252042bd353769acb6d72cd64a0267fd902f8"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000010000000000000000010101010100000000000001010101010000000000000101010101000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "zero-field": {
+      "id": "zero-field",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "4b298058e1d5fd3f2fa20ead21773912a5dc38da3c0da0bbc7de1adfb6011f1c"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 2,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "4b298058e1d5fd3f2fa20ead21773912a5dc38da3c0da0bbc7de1adfb6011f1c"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "edge-full": {
+      "id": "edge-full",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          5,
+          8
+        ],
+        "strides": [
+          8,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2432dbb70926df292595fa1c2dee4933cf81130572a2e29a27256d3bdb8e07e5"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 6,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          5,
+          8
+        ],
+        "strides": [
+          8,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "c39613fd460c8dfdc74613546f8fc470efbac736303749a8d01b09393b33c218"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "00000000000000000000000000000000000001010101000000000000000000000000000000000000"
+    },
+    "one-row": {
+      "id": "one-row",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          1,
+          8
+        ],
+        "strides": [
+          8,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": true,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "04abc8821a06e5a30937967d11ad10221cb5ac3b5273e434f1284ee87129a061"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 2,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          1,
+          8
+        ],
+        "strides": [
+          8,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": true,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "04abc8821a06e5a30937967d11ad10221cb5ac3b5273e434f1284ee87129a061"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "0101010101010101"
+    },
+    "one-column": {
+      "id": "one-column",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          8,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": true,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "04abc8821a06e5a30937967d11ad10221cb5ac3b5273e434f1284ee87129a061"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 2,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          8,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": true,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "04abc8821a06e5a30937967d11ad10221cb5ac3b5273e434f1284ee87129a061"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "0101010101010101"
+    },
+    "readonly": {
+      "id": "readonly",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": false,
+        "base_type": "NoneType",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 10,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "d82bc0bc32677c23fa52e11b0402c09ca62ce741fe362d14aacfd405f2ec0e6b"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "tagged-bool": {
+      "id": "tagged-bool",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": {
+          "kind": "thin"
+        },
+        "c": true,
+        "f": false,
+        "owns": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 10,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "d82bc0bc32677c23fa52e11b0402c09ca62ce741fe362d14aacfd405f2ec0e6b"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "equivalent-u8": {
+      "id": "equivalent-u8",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|u1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 10,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          11
+        ],
+        "strides": [
+          11,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "d82bc0bc32677c23fa52e11b0402c09ca62ce741fe362d14aacfd405f2ec0e6b"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "strided": {
+      "id": "strided",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          6
+        ],
+        "strides": [
+          11,
+          2
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": false,
+        "f": false,
+        "owns": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "afbaaad5a12a09d55397c54e078b52a38b3e54d29c5d1c159820624ef09d9a8d"
+      },
+      "iterations_limit": null,
+      "reference_checked": true,
+      "correlate_calls": 6,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          9,
+          6
+        ],
+        "strides": [
+          6,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "747d2e01b1c576a65e450b79cf7ca83646cf33d13c0db3c4fdd9c693cff4eafc"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "000000000000000000000000000000000000000001000000000001000000000001000000000001000000000000000000000000000000"
+    },
+    "noncanonical-bool": {
+      "id": "noncanonical-bool",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "6e993e80ed60ef819467c55c00a267114f316644a3f2a40eb7ca3c7ee0ba98d8"
+      },
+      "iterations_limit": 1,
+      "reference_checked": false,
+      "correlate_calls": 2,
+      "provider_contract": [
+        "|u1",
+        "|u1",
+        "constant",
+        0
+      ],
+      "warnings": [],
+      "output": {
+        "type": "numpy.ndarray",
+        "shape": [
+          4,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": false,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "6476e075998cc7ea24b2ec9777f76125c7c6f39aeaff1e513bcf6a7001c0c8d3"
+      },
+      "shares_input": false,
+      "output_bytes_hex": "00000000000000000101010101000001010101000000000000000000"
+    },
+    "empty": {
+      "id": "empty",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          0,
+          4
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": true,
+        "owns": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "iterations_limit": null,
+      "reference_checked": false,
+      "correlate_calls": 0,
+      "provider_contract": null,
+      "warnings": [],
+      "error": "ValueError",
+      "message": "The parameter `image` cannot be an empty array"
+    },
+    "rank-one": {
+      "id": "rank-one",
+      "input": {
+        "type": "numpy.ndarray",
+        "shape": [
+          99
+        ],
+        "strides": [
+          1
+        ],
+        "dtype": "|b1",
+        "metadata": null,
+        "c": true,
+        "f": true,
+        "owns": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "69b0ffae54fefbdcbffa01204ba53dbb37189717f86e3487df869046f91e1534"
+      },
+      "iterations_limit": null,
+      "reference_checked": false,
+      "correlate_calls": 0,
+      "provider_contract": null,
+      "warnings": [],
+      "error": "ValueError",
+      "message": "The parameter `image` must be a 2-dimensional array"
+    }
+  }
+}

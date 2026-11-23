@@ -244,3 +244,7 @@ __all__ += ['order_angles_golden_ratio']
 from ._pyramid_generators import pyramid_gaussian, pyramid_laplacian
 
 __all__ += ['pyramid_gaussian', 'pyramid_laplacian']
+
+from ._hough_circle import hough_circle
+from ._hough_line_peaks import hough_line_peaks
+__all__ += ['hough_circle', 'hough_line_peaks']

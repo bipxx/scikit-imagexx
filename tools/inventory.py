@@ -24,6 +24,11 @@ for _names, _test, _benchmark in (
     (('measure.find_contours',), 'tests/test_find_contours_public.py', 'benchmarks/find_contours.py'),
     (('util.random_noise',), 'tests/test_random_noise_public.py', 'benchmarks/random_noise.py'),
     (('draw.random_shapes',), 'tests/test_random_shapes_public.py', 'benchmarks/random_shapes.py'),
+    (('feature.match_descriptors',), 'tests/test_match_descriptors_public.py', 'benchmarks/match_descriptors.py'),
+    (('morphology.thin',), 'tests/test_thin_public.py', 'benchmarks/thin.py'),
+    (('morphology.skeletonize',), 'tests/test_skeletonize_public.py', 'benchmarks/skeletonize.py'),
+    (('transform.hough_circle',), 'tests/test_hough_circle_public.py', 'benchmarks/hough_circle.py'),
+    (('transform.hough_line_peaks',), 'tests/test_hough_line_peaks_public.py', 'benchmarks/hough_line_peaks.py'),
     (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
@@ -133,6 +138,15 @@ for _names, _test, _benchmark in (
     for _name in _names:DEDICATED_EVIDENCE[_name]=(_test,_benchmark)
 
 
+BOUNDED_DEFAULT_INPUTS = {
+    'feature.match_descriptors': 'Two independent bounded C-order Boolean descriptor arrays, each with 1–1024 rows and a shared width of 1–256. Native ordered Hamming matches; equivalent and tagged descriptors preserve dispatch. Other metrics, layouts and parameter domains use compatibility.',
+    'morphology.thin': 'Bounded C-order 2D canonical Boolean or uint8 input with extents through 512. C++ owns ordered Guo–Hall subiterations. None or 0 converges, and a positive exact integer through 512 caps full iterations. Other layouts and protocols use compatibility.',
+    'morphology.skeletonize': 'Bounded C-order 2D canonical Boolean or uint8 input with extents through 512. C++ owns default and explicit Zhang. Explicit Lee and default 3D are compatibility routes.',
+    'transform.hough_circle': 'Bounded untagged C-order 2D Boolean or uint8 image with extents through 512 and ordered integer radii 0–64. C++ owns Bresenham votes and normalization; unsupported radii, tags and layouts use compatibility.',
+    'transform.hough_line_peaks': 'Bounded untagged C-order uint64 accumulator with fewer than 262144 cells and matching finite float64 angles and distances. C++ owns peak selection; NumPy provides capped ordering and coordinate gathers. Tagged carriers and unsupported requests use compatibility.',
+}
+
+
 def signature_of(value):
     try:
         signature=inspect.signature(value)
@@ -220,6 +234,8 @@ def inventory():
                 entries[-1]['default_input_kind'] = 'Bounded seeded Gaussian, speckle, salt-and-pepper and pepper routes. NumPy supplies conversion, RNG, range and clipping; C++ combines or replaces pixels. Other modes use compatibility.'
             elif path == 'draw.random_shapes':
                 entries[-1]['default_input_kind'] = 'The uint8 descriptor carries only image shape. NumPy supplies RNG and ordered metadata. Native raster and paint stages produce a uint8 image. Unsupported carriers and options use compatibility.'
+            elif path in BOUNDED_DEFAULT_INPUTS:
+                entries[-1]['default_input_kind'] = BOUNDED_DEFAULT_INPUTS[path]
             elif path in assets:
                 entries[-1].update(implementation='packaged-asset-partial', execution_kind='packaged-asset',
                                    parity_test=evidence[0], benchmark=evidence[1])

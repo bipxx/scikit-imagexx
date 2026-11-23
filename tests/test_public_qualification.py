@@ -2305,22 +2305,26 @@ def test_stale_declared_inventory_blocks_prepare_before_environment_or_download(
     assert not any((root / 'fresh' / name).exists() for name in ('build-env', 'runtime-env', 'build-wheels', 'runtime-wheels', 'native-build'))
 
 
+CURRENT_ADDED_FAMILIES = ('match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks')
+
+
 @pytest.fixture
 def current_metadata_artifact(tmp_path):
     """Inert independently enumerated package/install envelope; never imported."""
     import tomllib
     source = {name: (ROOT/name).read_bytes() for name in
-              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json','coverage/contracts/current-public-qualification-v9.json','coverage/contracts/current-public-qualification-v10.json','coverage/contracts/current-public-qualification-v11.json','coverage/contracts/current-public-qualification-v12.json','coverage/contracts/current-public-qualification-v13.json','coverage/contracts/current-public-qualification-v14.json','coverage/contracts/current-public-qualification-v15.json','coverage/contracts/current-public-qualification-v16.json','coverage/contracts/current-public-qualification-v17.json')}
+              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json','coverage/contracts/current-public-qualification-v9.json','coverage/contracts/current-public-qualification-v10.json','coverage/contracts/current-public-qualification-v11.json','coverage/contracts/current-public-qualification-v12.json','coverage/contracts/current-public-qualification-v13.json','coverage/contracts/current-public-qualification-v14.json','coverage/contracts/current-public-qualification-v15.json','coverage/contracts/current-public-qualification-v16.json','coverage/contracts/current-public-qualification-v17.json','coverage/contracts/current-public-qualification-v18.json')}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
                  'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','draw_haar_like_feature','haar_like_features',
-                 'find_contours','random_noise','random_shapes'):
+                 'find_contours','random_noise','random_shapes', *CURRENT_ADDED_FAMILIES):
         source['include/skimagexx/'+name+'.hpp'] = b'// inert header\n'
     for name in ('__init__','_tv_chambolle','_tv_bregman','_max_tree','_matrix_transform',
                  '_reconstruction','_h_extrema','_normalized_mutual_information','_draw_coordinates','_circle_perimeter','_line_aa','_regionprops_state','_circle_perimeter_aa','_line_nd','_draw_ellipsoid','_regionprops_state_class','_draw_ellipse_perimeter','_draw_polygon','draw','_bezier_curve','_draw_set_color','_find_boundaries','_join_segmentations','_crop','_regular_grid','_array_views','_slice_along_axes','_mark_boundaries','_draw_multiblock_lbp','_finite_radon','_variation_of_information','_flood_fill','_rolling_ball','_structural_similarity','_local_extrema','_order_angles_golden_ratio','_pearson','_hausdorff','_ellipsoid_stats','_expand_labels','_draw_haar_like_feature','_haar_like_features'):
         source['python/skimagexx/'+name+'.py'] = b'# inert module\n'
     source['python/skimagexx/_data_assets/chelsea.rgb'] = b'\x01\r\n\xff'
     for name in ('_pyramid_spatial.py', '_data_camera_coffee.py', '_pyramid_generators.py',
-                 '_find_contours.py', '_random_noise.py', '_random_shapes.py'):
+                 '_find_contours.py', '_random_noise.py', '_random_shapes.py',
+                 *(f'_{family}.py' for family in CURRENT_ADDED_FAMILIES)):
         source['python/skimagexx/' + name] = b'# inert module\n'
     for name in ('camera.gray', 'coffee.rgb', 'camera-coffee.RIGHTS.txt'):
         source['python/skimagexx/_data_assets/' + name] = b'\x02\r\n\xff'
@@ -2363,17 +2367,17 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,301)
+    result=q.plan(ROOT,profile,306)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current301' and result['registry']['image_count']==301
-    assert result['product_members']==272 and result['SDK_members']==120
+    assert result['product_scope']=='current306' and result['registry']['image_count']==306
+    assert result['product_members']==282 and result['SDK_members']==125
     assert set(result['registry']['packaged_assets']) == {
         'data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee',
         'data.grass', 'data.gravel', 'data.horse', 'data.text',
     }
     assert result['public_groups']['public-packaged-assets'] == q.PACKAGED_ASSET_TESTS
-    assert result['SDK_checks']==100 and 'current50 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==163
+    assert result['SDK_checks']==110 and 'current55 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==168
     assert {'test_pyramid_spatial_public.py', 'test_pyramid_generators_public.py', 'test_find_contours_public.py',
             'test_random_noise_public.py', 'test_random_shapes_public.py'} <= set(result['public_groups']['public-post203'])
     assert 'test_data_camera_coffee_public.py' in result['public_groups']['public-packaged-assets']
@@ -2384,12 +2388,23 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
         assert 'public-golden-angle-saved-linux' not in groups
     else:
         assert groups['public-golden-angle-saved-linux']==('test_order_angles_golden_ratio_public.py',)
-    assert q.CURRENT_SCOPE_CONTRACT=='coverage/contracts/current-public-qualification-v18.json'
-    selectors=q.current_contract(lambda name:(ROOT/name).read_bytes())['required_selectors']
-    previous=json.loads((ROOT/'coverage/contracts/current-public-qualification-v17.json').read_bytes())['required_selectors']
-    assert len(previous)==182 and len(selectors)==186
-    assert selectors==previous+['tests/test_pyramid_generators_public.py', 'tests/test_find_contours_public.py',
-                                 'tests/test_random_noise_public.py', 'tests/test_random_shapes_public.py']
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v19.json'
+    contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
+    predecessor = ROOT / 'coverage/contracts/current-public-qualification-v18.json'
+    raw = predecessor.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == '8bb5cae6130f55336deabff78249c60d6dd279d06a7d1292b9e68fd7877a2fe4'
+    previous = json.loads(raw)['required_selectors']
+    added = [f'test_{family}_public.py' for family in CURRENT_ADDED_FAMILIES]
+    selectors = contract['required_selectors']
+    assert len(previous) == 186 and len(selectors) == 191
+    assert selectors == previous + ['tests/' + name for name in added]
+    assert groups['public-post203'][-5:] == tuple(added)
+    assert contract['required_generic_selectors'] == {
+        'shared': ['tests/test_api.py', 'tests/test_dtype_metadata.py'],
+        'public-post203': ['tests/test_dtype_aliases.py'],
+    }
+    for group, tests in contract['required_generic_selectors'].items():
+        assert {Path(name).name for name in tests} <= set(groups[group])
     names=[p.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for p in (ROOT/prefix).rglob('*') if p.is_file()]
     layout=q.current_install_layout(lambda n:(ROOT/n).read_bytes(),names,profile)
@@ -2397,11 +2412,13 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
             'skimagexx/_find_contours.py', 'skimagexx/_random_noise.py', 'skimagexx/_random_shapes.py',
             'skimagexx/_data_assets/camera.gray', 'skimagexx/_data_assets/coffee.rgb',
             'skimagexx/_data_assets/camera-coffee.RIGHTS.txt'} <= set(layout['source_members'])
+    assert {f'skimagexx/_{family}.py' for family in CURRENT_ADDED_FAMILIES} <= set(layout['source_members'])
+    assert {f'include/skimagexx/{family}.hpp' for family in CURRENT_ADDED_FAMILIES} <= set(layout['SDK_members'])
     assert ('lib/skimagexx.lib' in layout['SDK_members']) == (profile=='windows')
     assert 'lib/cmake/skimagexx/skimagexxTargets-'+('debug' if profile=='debug' else 'release')+'.cmake' in layout['SDK_members']
 
 
-@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector','missing-intake-group','mixed-intake','missing-asset-group'))
+@pytest.mark.parametrize('fault',('unknown-api','missing-group','missing-selector','missing-intake-group','mixed-intake','missing-asset-group','missing-generic-selector'))
 def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypatch,fault):
     if fault=='unknown-api':
         registry=q.registry_expectation(ROOT)
@@ -2413,12 +2430,14 @@ def test_current_plan_blocks_unmapped_future_or_missing_contract_group(monkeypat
         elif fault=='missing-intake-group':groups.pop('public-polygon-intake')
         elif fault=='mixed-intake':groups['public-post203']+=('test_draw_polygon_benchmark_intake.py',)
         elif fault=='missing-asset-group':groups.pop('public-packaged-assets')
+        elif fault == 'missing-generic-selector':
+            groups['shared'] = tuple(name for name in groups['shared'] if name != 'test_dtype_metadata.py')
         else:groups['public-post203']=tuple(n for n in groups['public-post203'] if n!='test_compare_images_public.py')
         monkeypatch.setattr(q,'groups_for_source',lambda _:groups)
     assert any('current qualification readiness:' in b for b in q.plan(ROOT,'modern')['blockers'])
 
 
-@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','missing-cold-selector','missing-camera-selector','missing-contour-selector','wrong-scope'))
+@pytest.mark.parametrize('fault',('missing-api-map','missing-required-selector','missing-cold-selector','missing-camera-selector','missing-contour-selector','missing-hough-selector','missing-generic-selector','wrong-scope'))
 def test_current_contract_rejects_missing_api_or_selector(fault):
     data=json.loads((ROOT/q.CURRENT_SCOPE_CONTRACT).read_text())
     if fault=='missing-api-map':data['post203_contracts'].pop('util.compare_images')
@@ -2426,6 +2445,8 @@ def test_current_contract_rejects_missing_api_or_selector(fault):
     elif fault=='missing-cold-selector':data['required_selectors'].remove('tests/test_draw_polygon_benchmark_intake.py')
     elif fault=='missing-camera-selector':data['required_asset_selectors'].remove('tests/test_data_camera_coffee_public.py')
     elif fault=='missing-contour-selector':data['required_selectors'].remove('tests/test_find_contours_public.py')
+    elif fault=='missing-hough-selector':data['required_selectors'].remove('tests/test_hough_line_peaks_public.py')
+    elif fault=='missing-generic-selector':data['required_generic_selectors']['shared'].remove('tests/test_dtype_metadata.py')
     else:data['scope']='h_extrema23'
     with pytest.raises(q.QualificationError):q.current_contract(lambda n:json.dumps(data).encode() if n==q.CURRENT_SCOPE_CONTRACT else (ROOT/n).read_bytes())
 
@@ -2459,12 +2480,12 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current301' and result['record_verified']
+        assert result['product_scope']=='current306' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
 
-@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features','find_contours','random_noise','random_shapes'))
+@pytest.mark.parametrize('family',('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features','find_contours','random_noise','random_shapes', *CURRENT_ADDED_FAMILIES))
 @pytest.mark.parametrize('fault',('missing-target','missing-source'))
 def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,family,fault):
     if fault=='missing-target':
@@ -2473,14 +2494,14 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',301)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',306)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
-    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features','find_contours','random_noise','random_shapes') and len(q.FAMILIES)==23
-    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==50
-    plan=q.plan(ROOT,'modern',301)
-    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(120,50,100)
+    assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features','find_contours','random_noise','random_shapes', *CURRENT_ADDED_FAMILIES) and len(q.FAMILIES)==23
+    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==55
+    plan=q.plan(ROOT,'modern',306)
+    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(125,55,110)
     assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)
     without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}
     with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)
@@ -2952,7 +2973,7 @@ def test_coords_scaled_plan_requires_source_evidence(monkeypatch,missing):
     original=Path.is_file
     absent=ROOT/missing
     monkeypatch.setattr(Path,'is_file',lambda self:False if self==absent else original(self))
-    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',301)['blockers']
+    assert 'missing required drawing source: '+missing in q.plan(ROOT,'minimum',306)['blockers']
 
 
 @pytest.mark.parametrize('selector',(

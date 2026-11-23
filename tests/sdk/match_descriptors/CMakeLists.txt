@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.18)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    project(MatchDescriptorsClient LANGUAGES CXX)
+    find_package(skimagexx CONFIG REQUIRED)
+    enable_testing()
+endif()
+
+add_executable(match_descriptors_client ../../cmake_consumer/match_descriptors_consumer.cpp)
+target_compile_features(match_descriptors_client PRIVATE cxx_std_17)
+target_link_libraries(match_descriptors_client PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_match_descriptors_consumer COMMAND match_descriptors_client)

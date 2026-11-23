@@ -16,6 +16,7 @@ from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error, draw_polygon_default_error
 from skimagexx.coverage import PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, assert_default_parity, util_metadata_default_error
+from skimagexx.coverage import HOUGH_FUNCTIONS
 from skimagexx.coverage import set_color_default_result, set_color_default_error, label_pair_default_error, find_boundaries_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error, line_nd_default_error, ellipsoid_default_error
 
@@ -56,6 +57,25 @@ def comparison_error(actual,expected,rtol,atol):
     assert a.dtype==e.dtype and a.shape==e.shape
     np.testing.assert_allclose(a,e,rtol=rtol,atol=atol)
     return float(np.max(np.abs(a.astype(float)-e.astype(float)))) if a.size else 0.
+
+
+# Limits of the shared square defaults. Fixed family adapters keep their own recipes.
+BOUNDED_DEFAULT_SIZES = {
+    'feature.match_descriptors': (1, 256),
+    'morphology.thin': (1, 512),
+    'morphology.skeletonize': (1, 512),
+    'transform.hough_circle': (1, 512),
+    'transform.hough_line_peaks': (4, 511),
+}
+
+
+def bounded_default_reason(api, size, tagged):
+    minimum, maximum = BOUNDED_DEFAULT_SIZES[api]
+    if not minimum <= size <= maximum:
+        return f'Square size {size} is outside the bounded default ({minimum}–{maximum})'
+    if tagged and api in HOUGH_FUNCTIONS:
+        return 'Tagged Hough input requires compatibility'
+    return None
 
 
 def main():
@@ -168,6 +188,15 @@ def main():
         provider_frontiers['util.random_noise'] = 'Seeded Gaussian default. NumPy supplies conversion, RNG, range and clipping; C++ applies bounded pixel values.'
     if 'draw.random_shapes' in apis:
         provider_frontiers['draw.random_shapes'] = 'Shape-only carrier with NumPy RNG and ordered boxes; native raster and indexed paint.'
+    for api, frontier in (
+        ('feature.match_descriptors', 'Generic inputs are two independently allocated deterministic Boolean descriptor arrays. C++ owns ordered Hamming selection. Unsupported metrics and threshold domains use compatibility. The fixed adapter includes its own admitted threshold cases.'),
+        ('morphology.thin', 'C++ owns the ordered Guo–Hall subiterations; NumPy supplies ndarray storage. The generic input uses uncapped convergence and keeps the caller dtype and tags.'),
+        ('morphology.skeletonize', 'C++ owns ordered Zhang phases on bounded 2D input; NumPy supplies ndarray storage. The generic input uses the 2D default method. Lee and other layouts or methods use compatibility.'),
+        ('transform.hough_circle', 'C++ owns circle voting and normalization for ordered radii (0, 3, 5) in the generic default. NumPy supplies array storage. Fixed circle adapter separately covers unit counts and full-output geometry.'),
+        ('transform.hough_line_peaks', 'The generic fixture uses discrete uint64 peaks and coupled finite float64 angle/distance vectors. C++ owns peak selection; NumPy supplies coordinate gathers and capped ordering where active. Each public result tuple is checked before timing.'),
+    ):
+        if api in apis:
+            provider_frontiers[api] = frontier
     if 'measure.subdivide_polygon' in apis:
         provider_frontiers['measure.subdivide_polygon'] = ('Owned weighted B-spline convolution, interleave, closure and ordinary endpoint copies; '
             'NumPy input normalization and exceptional SciPy paths remain providers. Float64 is the actual default coordinate carrier, not all input dtype coverage.')
@@ -267,17 +296,43 @@ def main():
     fingerprint = source_fingerprint(root)
     results = []
     unassessed = []
+    default_dtypes = (np.uint8, np.float32, np.float64)
+    bounded_dtypes = tuple(dtype for dtype in (np.bool_, np.uint64)
+                           if any(np.dtype(dtype).name in native_dtypes(api)
+                                  for api in apis if api in BOUNDED_DEFAULT_SIZES))
     for size_index, size in enumerate(args.sizes):
-        for dtype in (np.uint8, np.float32, np.float64):
+        for dtype in (*default_dtypes, *bounded_dtypes):
+            case_apis = []
+            for api in apis:
+                if api not in BOUNDED_DEFAULT_SIZES:
+                    if dtype in default_dtypes:
+                        case_apis.append(api)
+                    continue
+                dtype_name = np.dtype(dtype).name
+                if dtype_name not in native_dtypes(api):
+                    continue
+                reason = bounded_default_reason(api, size, args.dtype_metadata)
+                if reason is None:
+                    case_apis.append(api)
+                else:
+                    unassessed.append({'api': api, 'size': size, 'dtype': dtype_name, 'reason': reason})
+            if not case_apis:
+                continue
             rng = np.random.default_rng(2026)
             gray = rng.integers(0, 256, (size, size), dtype=np.uint8)
-            rgb = rng.integers(0, 256, (size, size, 3), dtype=np.uint8)
-            if dtype != np.uint8:
+            rgb = rng.integers(0, 256, (size, size, 3), dtype=np.uint8) if dtype in default_dtypes else None
+            if dtype == np.bool_:
+                gray = gray >= 128
+            elif dtype == np.uint64:
+                gray = gray.astype(dtype)
+            elif dtype != np.uint8:
                 gray = (gray/255).astype(dtype); rgb = (rgb/255).astype(dtype)
             if args.dtype_metadata:
                 tagged=np.dtype(dtype,metadata={'units':'linear','source':'benchmark'})
-                gray=gray.view(tagged);rgb=rgb.view(tagged)
-            for api in apis:
+                gray=gray.view(tagged)
+                if rgb is not None:
+                    rgb=rgb.view(tagged)
+            for api in case_apis:
                 # Derived moments have fixed 4x4 inputs, independent of image size.
                 if api in DERIVED_MOMENTS_FUNCTIONS and size_index != 0:
                     continue
@@ -328,7 +383,10 @@ def main():
                     assert xx.get_num_threads() == threads
                     if consume:
                         actual = list(actual)
-                    if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
+                    if api in BOUNDED_DEFAULT_SIZES:
+                        assert_default_parity(api, np.dtype(dtype), actual, expected, image=call_args)
+                        error = 0.0
+                    elif api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
                         assert_default_parity(api, np.dtype(dtype), actual, expected, image=data)
                         error = 0.0
                     elif api=='segmentation.find_boundaries':
@@ -451,6 +509,9 @@ def main():
                                     **({'default_input_kind':'fixed-frozen-coordinate-row','coordinate_dtype':str(call_args[0].dtype),
                                         'coordinate_dimensions':int(max(call_args[0].size,call_args[1].size)),
                                         'carrier_pixels_consumed':False} if api=='draw.line_nd' else {}),
+                                    **({'input_arrays': [{'shape': list(value.shape), 'dtype': value.dtype.name}
+                                                         for value in call_args if isinstance(value, np.ndarray)]}
+                                       if api in BOUNDED_DEFAULT_SIZES else {}),
                                     'threads': threads, 'backend': backend, 'layout':'dtype-metadata' if args.dtype_metadata else 'standard',
                                     'output_dtype_metadata':dtype_metadata(actual), 'max_abs_error':
                                     error,

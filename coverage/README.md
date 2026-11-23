@@ -4,7 +4,7 @@ Reference: scikit-image 0.26.0.
 
 This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.
 
-477 public callable names inventoried in 20 modules; 296 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. Ten data APIs use packaged assets with compatibility handling for misses. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 306 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. 10 have packaged asset routes with compatibility handling for misses. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -99,14 +99,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `draw.ellipse` | native-partial | yes (partial input contract) | yes |
 | `draw.ellipse_perimeter` | native-partial | yes (partial input contract) | yes |
 | `draw.ellipsoid` | native-partial | yes (partial input contract) | yes |
-| `draw.ellipsoid_stats` | upstream-only | pending | pending |
+| `draw.ellipsoid_stats` | native-partial | yes (partial input contract) | yes |
 | `draw.line` | native-partial | yes (partial input contract) | yes |
 | `draw.line_aa` | native-partial | yes (partial input contract) | yes |
 | `draw.line_nd` | native-partial | yes (partial input contract) | yes |
 | `draw.polygon` | native-partial | yes (partial input contract) | yes |
 | `draw.polygon2mask` | native-partial | yes (partial input contract) | yes |
 | `draw.polygon_perimeter` | upstream-only | pending | pending |
-| `draw.random_shapes` | upstream-only | pending | pending |
+| `draw.random_shapes` | native-partial | yes (partial input contract) | yes |
 | `draw.rectangle` | native-partial | yes (partial input contract) | yes |
 | `draw.rectangle_perimeter` | upstream-only | pending | pending |
 | `draw.set_color` | native-partial | yes (partial input contract) | yes |
@@ -139,20 +139,20 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `feature.corner_shi_tomasi` | native-partial | yes (partial input contract) | yes |
 | `feature.corner_subpix` | upstream-only | pending | pending |
 | `feature.daisy` | upstream-only | pending | pending |
-| `feature.draw_haar_like_feature` | upstream-only | pending | pending |
-| `feature.draw_multiblock_lbp` | upstream-only | pending | pending |
+| `feature.draw_haar_like_feature` | native-partial | yes (partial input contract) | yes |
+| `feature.draw_multiblock_lbp` | native-partial | yes (partial input contract) | yes |
 | `feature.fisher_vector` | upstream-only | pending | pending |
 | `feature.graycomatrix` | upstream-only | pending | pending |
 | `feature.graycoprops` | upstream-only | pending | pending |
-| `feature.haar_like_feature` | upstream-only | pending | pending |
-| `feature.haar_like_feature_coord` | upstream-only | pending | pending |
+| `feature.haar_like_feature` | native-partial | yes (partial input contract) | yes |
+| `feature.haar_like_feature_coord` | native-partial | yes (partial input contract) | yes |
 | `feature.hessian_matrix` | native-partial | yes (partial input contract) | yes |
 | `feature.hessian_matrix_det` | native-partial | yes (partial input contract) | yes |
 | `feature.hessian_matrix_eigvals` | native-partial | yes (partial input contract) | yes |
 | `feature.hog` | upstream-only | pending | pending |
 | `feature.learn_gmm` | upstream-only | pending | pending |
 | `feature.local_binary_pattern` | upstream-only | pending | pending |
-| `feature.match_descriptors` | upstream-only | pending | pending |
+| `feature.match_descriptors` | native-partial | yes (partial input contract) | yes |
 | `feature.match_template` | upstream-only | pending | pending |
 | `feature.multiblock_lbp` | upstream-only | pending | pending |
 | `feature.multiscale_basic_features` | upstream-only | pending | pending |
@@ -301,7 +301,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.blur_effect` | native-partial | yes (partial input contract) | yes |
 | `measure.centroid` | native-partial | yes (partial input contract) | yes |
 | `measure.euler_number` | native-partial | yes (partial input contract) | yes |
-| `measure.find_contours` | upstream-only | pending | pending |
+| `measure.find_contours` | native-partial | yes (partial input contract) | yes |
 | `measure.grid_points_in_poly` | native-partial | yes (partial input contract) | yes |
 | `measure.inertia_tensor` | native-partial | yes (partial input contract) | yes |
 | `measure.inertia_tensor_eigvals` | native-partial | yes (partial input contract) | yes |
@@ -317,7 +317,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.moments_coords_central` | native-partial | yes (partial input contract) | yes |
 | `measure.moments_hu` | native-partial | yes (partial input contract) | yes |
 | `measure.moments_normalized` | native-partial | yes (partial input contract) | yes |
-| `measure.pearson_corr_coeff` | upstream-only | pending | pending |
+| `measure.pearson_corr_coeff` | native-partial | yes (partial input contract) | yes |
 | `measure.perimeter` | native-partial | yes (partial input contract) | yes |
 | `measure.perimeter_crofton` | native-partial | yes (partial input contract) | yes |
 | `measure.points_in_poly` | native-partial | yes (partial input contract) | yes |
@@ -329,14 +329,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `measure.subdivide_polygon` | native-partial | yes (partial input contract) | yes |
 | `metrics.adapted_rand_error` | native-partial | yes (partial input contract) | yes |
 | `metrics.contingency_table` | native-partial | yes (partial input contract) | yes |
-| `metrics.hausdorff_distance` | upstream-only | pending | pending |
-| `metrics.hausdorff_pair` | upstream-only | pending | pending |
+| `metrics.hausdorff_distance` | native-partial | yes (partial input contract) | yes |
+| `metrics.hausdorff_pair` | native-partial | yes (partial input contract) | yes |
 | `metrics.mean_squared_error` | native-partial | yes (partial input contract) | yes |
 | `metrics.normalized_mutual_information` | native-partial | yes (partial input contract) | yes |
 | `metrics.normalized_root_mse` | native-partial | yes (partial input contract) | yes |
 | `metrics.peak_signal_noise_ratio` | native-partial | yes (partial input contract) | yes |
-| `metrics.structural_similarity` | upstream-only | pending | pending |
-| `metrics.variation_of_information` | upstream-only | pending | pending |
+| `metrics.structural_similarity` | native-partial | yes (partial input contract) | yes |
+| `metrics.variation_of_information` | native-partial | yes (partial input contract) | yes |
 | `morphology.area_closing` | native-partial | yes (partial input contract) | yes |
 | `morphology.area_opening` | native-partial | yes (partial input contract) | yes |
 | `morphology.ball` | native-partial | yes (partial input contract) | yes |
@@ -355,8 +355,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.disk` | native-partial | yes (partial input contract) | yes |
 | `morphology.ellipse` | native-partial | yes (partial input contract) | yes |
 | `morphology.erosion` | native-partial | yes (partial input contract) | yes |
-| `morphology.flood` | upstream-only | pending | pending |
-| `morphology.flood_fill` | upstream-only | pending | pending |
+| `morphology.flood` | native-partial | yes (partial input contract) | yes |
+| `morphology.flood_fill` | native-partial | yes (partial input contract) | yes |
 | `morphology.footprint_from_sequence` | native-partial | yes (partial input contract) | yes |
 | `morphology.footprint_rectangle` | native-partial | yes (partial input contract) | yes |
 | `morphology.h_maxima` | native-partial | yes (partial input contract) | yes |
@@ -366,8 +366,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.isotropic_erosion` | upstream-only | pending | pending |
 | `morphology.isotropic_opening` | upstream-only | pending | pending |
 | `morphology.label` | native-partial | yes (partial input contract) | yes |
-| `morphology.local_maxima` | upstream-only | pending | pending |
-| `morphology.local_minima` | upstream-only | pending | pending |
+| `morphology.local_maxima` | native-partial | yes (partial input contract) | yes |
+| `morphology.local_minima` | native-partial | yes (partial input contract) | yes |
 | `morphology.max_tree` | native-partial | yes (partial input contract) | yes |
 | `morphology.max_tree_local_maxima` | native-partial | yes (partial input contract) | yes |
 | `morphology.medial_axis` | upstream-only | pending | pending |
@@ -380,9 +380,9 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.remove_objects_by_distance` | upstream-only | pending | pending |
 | `morphology.remove_small_holes` | native-partial | yes (partial input contract) | yes |
 | `morphology.remove_small_objects` | native-partial | yes (partial input contract) | yes |
-| `morphology.skeletonize` | upstream-only | pending | pending |
+| `morphology.skeletonize` | native-partial | yes (partial input contract) | yes |
 | `morphology.star` | native-partial | yes (partial input contract) | yes |
-| `morphology.thin` | upstream-only | pending | pending |
+| `morphology.thin` | native-partial | yes (partial input contract) | yes |
 | `morphology.white_tophat` | native-partial | yes (partial input contract) | yes |
 | `registration.optical_flow_ilk` | upstream-only | pending | pending |
 | `registration.optical_flow_tvl1` | upstream-only | pending | pending |
@@ -400,7 +400,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `restoration.estimate_sigma` | upstream-only | pending | pending |
 | `restoration.inpaint_biharmonic` | upstream-only | pending | pending |
 | `restoration.richardson_lucy` | upstream-only | pending | pending |
-| `restoration.rolling_ball` | upstream-only | pending | pending |
+| `restoration.rolling_ball` | native-partial | yes (partial input contract) | yes |
 | `restoration.unsupervised_wiener` | upstream-only | pending | pending |
 | `restoration.unwrap_phase` | upstream-only | pending | pending |
 | `restoration.wiener` | upstream-only | pending | pending |
@@ -409,14 +409,14 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `segmentation.checkerboard_level_set` | native-partial | yes (partial input contract) | yes |
 | `segmentation.clear_border` | native-partial | yes (partial input contract) | yes |
 | `segmentation.disk_level_set` | native-partial | yes (partial input contract) | yes |
-| `segmentation.expand_labels` | upstream-only | pending | pending |
+| `segmentation.expand_labels` | native-partial | yes (partial input contract) | yes |
 | `segmentation.felzenszwalb` | upstream-only | pending | pending |
 | `segmentation.find_boundaries` | native-partial | yes (partial input contract) | yes |
-| `segmentation.flood` | upstream-only | pending | pending |
-| `segmentation.flood_fill` | upstream-only | pending | pending |
+| `segmentation.flood` | native-partial | yes (partial input contract) | yes |
+| `segmentation.flood_fill` | native-partial | yes (partial input contract) | yes |
 | `segmentation.inverse_gaussian_gradient` | upstream-only | pending | pending |
 | `segmentation.join_segmentations` | native-partial | yes (partial input contract) | yes |
-| `segmentation.mark_boundaries` | upstream-only | pending | pending |
+| `segmentation.mark_boundaries` | native-partial | yes (partial input contract) | yes |
 | `segmentation.morphological_chan_vese` | upstream-only | pending | pending |
 | `segmentation.morphological_geodesic_active_contour` | upstream-only | pending | pending |
 | `segmentation.quickshift` | upstream-only | pending | pending |
@@ -435,23 +435,23 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.ThinPlateSplineTransform` | upstream-only | pending | pending |
 | `transform.downscale_local_mean` | native-partial | yes (partial input contract) | yes |
 | `transform.estimate_transform` | upstream-only | pending | pending |
-| `transform.frt2` | upstream-only | pending | pending |
-| `transform.hough_circle` | upstream-only | pending | pending |
+| `transform.frt2` | native-partial | yes (partial input contract) | yes |
+| `transform.hough_circle` | native-partial | yes (partial input contract) | yes |
 | `transform.hough_circle_peaks` | upstream-only | pending | pending |
 | `transform.hough_ellipse` | upstream-only | pending | pending |
 | `transform.hough_line` | upstream-only | pending | pending |
-| `transform.hough_line_peaks` | upstream-only | pending | pending |
-| `transform.ifrt2` | upstream-only | pending | pending |
+| `transform.hough_line_peaks` | native-partial | yes (partial input contract) | yes |
+| `transform.ifrt2` | native-partial | yes (partial input contract) | yes |
 | `transform.integral_image` | native-partial | yes (partial input contract) | yes |
 | `transform.integrate` | native-partial | yes (partial input contract) | yes |
 | `transform.iradon` | upstream-only | pending | pending |
 | `transform.iradon_sart` | upstream-only | pending | pending |
 | `transform.matrix_transform` | native-partial | yes (partial input contract) | yes |
-| `transform.order_angles_golden_ratio` | upstream-only | pending | pending |
+| `transform.order_angles_golden_ratio` | native-partial | yes (partial input contract) | yes |
 | `transform.probabilistic_hough_line` | upstream-only | pending | pending |
 | `transform.pyramid_expand` | native-partial | yes (partial input contract) | yes |
-| `transform.pyramid_gaussian` | upstream-only | pending | pending |
-| `transform.pyramid_laplacian` | upstream-only | pending | pending |
+| `transform.pyramid_gaussian` | native-partial | yes (partial input contract) | yes |
+| `transform.pyramid_laplacian` | native-partial | yes (partial input contract) | yes |
 | `transform.pyramid_reduce` | native-partial | yes (partial input contract) | yes |
 | `transform.radon` | upstream-only | pending | pending |
 | `transform.rescale` | native-partial | yes (partial input contract) | yes |
@@ -480,7 +480,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `util.lookfor` | upstream-only | pending | pending |
 | `util.map_array` | native-partial | yes (partial input contract) | yes |
 | `util.montage` | native-partial | yes (partial input contract) | yes |
-| `util.random_noise` | upstream-only | pending | pending |
+| `util.random_noise` | native-partial | yes (partial input contract) | yes |
 | `util.regular_grid` | native-partial | yes (partial input contract) | yes |
 | `util.regular_seeds` | native-partial | yes (partial input contract) | yes |
 | `util.slice_along_axes` | native-partial | yes (partial input contract) | yes |
@@ -523,7 +523,3 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.ThinPlateSplineTransform` | 5 | pending |
 | `util.FailedEstimationAccessError` | 13 | pending |
 | `util.PendingSkimage2Change` | 10 | pending |
-
-Historical private268 checkpoint (not current dispatch state): private cumulative crop/regular_grid integration adds source-bound binary/shape defaults and complete SDK calls through the existing component-consumer family. Current source-derived scope is268 image routes/271registered,212product members/100SDK members,32families64SDK checks. These counts are source closure only. Crop coercion, allocation/order/object metadata and grid scalar FP/nonvector/object partitions retain explicit providers; serial metadata and memcpy transport do not establish SIMD/parallel speed. Exact-source genuine ownership/hot-swap/global workers, exported SDK, Windows/default-int/libm/full API and one-thread public-original performance remain pending.
-
-Current delivered source (2026-11-06): main `ef465027` ships 271 partial image paths / 274 registered functions, 216 product members and 102 SDK members across 32 families. [Four-profile admission](evidence/join-util-views-whole-product-admission-v1.json) and [68-case public one-thread evidence](../benchmarks/join-util-views-minimum-initial-v1/README.md) pass within their scopes: 34 wins and 34 losses remain explicit. Full domains/classes/platforms/provider ownership and loss optimization remain open. See the [per-API checklist](COVERAGE_CHECKLIST.md).
