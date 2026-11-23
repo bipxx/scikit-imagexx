@@ -23,7 +23,7 @@ def current_capsule(tmp_path):
     names = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files'], text=True).splitlines()
     layout = q.current_install_layout(lambda n: (ROOT / n).read_bytes(), names, 'modern')
     # This capsule models current source install rules, not historical71 acceptance.
-    assert layout['SDK_count'] == 125
+    assert layout['SDK_count'] == 127
     assert 'include/skimagexx/structural_similarity.hpp' in layout['SDK_members']
     assert {'include/skimagexx/local_extrema.hpp', 'include/skimagexx/order_angles_golden_ratio.hpp',
             'include/skimagexx/pearson.hpp', 'include/skimagexx/hausdorff.hpp',
@@ -32,7 +32,9 @@ def current_capsule(tmp_path):
             'include/skimagexx/random_shapes.hpp'} <= set(layout['SDK_members'])
     assert {'include/skimagexx/match_descriptors.hpp', 'include/skimagexx/thin.hpp',
             'include/skimagexx/skeletonize.hpp', 'include/skimagexx/hough_circle.hpp',
-            'include/skimagexx/hough_line_peaks.hpp'} <= set(layout['SDK_members'])
+            'include/skimagexx/hough_line_peaks.hpp',
+            'include/skimagexx/convex_hull_image.hpp',
+            'include/skimagexx/convex_hull_object.hpp'} <= set(layout['SDK_members'])
     runtime = dict(source=dict(revision='a' * 40, files_sha256=dict.fromkeys(names, 'inert-authenticated-source')),
                    runtime=dict(sdk_sha256=dict.fromkeys(layout['SDK_members'], 'inert-authenticated-sdk')))
     marker = dict(schema='rank-corpus-sdk-scope-v1', scope=c.CURRENT_PRODUCT_SCOPE,

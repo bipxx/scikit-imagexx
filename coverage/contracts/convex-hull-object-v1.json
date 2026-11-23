@@ -1,0 +1,18 @@
+{
+  "api": "morphology.convex_hull_object",
+  "signature": "(image, *, connectivity=2)",
+  "reference": "scikit-image 0.26.0",
+  "dependency": "Exact admitted convex_hull_image 0baa6e76558d7a290bff0f9aa1d28f9378dd30ef (integer half-pixel geometry) and shipped components_label_bool_into",
+  "domain": "Plain NumPy C arrays with checked accessible storage, positive 2D extents up to 512, canonical binary bool/uint8 bytes, plain int connectivity 1/2. Combined crop areas are bounded by eight times the input area.",
+  "output": "Writeable owning C-order bool NumPy ndarray, plain dtype, no input alias. Empty foreground returns the all-False mask without warning. Separate component hulls can overlap and are ORed.",
+  "fallback": "Check ndim>2 before connectivity as stock does for plain arrays. Zero-size geometry, 1D, noncontiguous/protocol inputs, noncanonical or multilevel and other dtype/option domains use compatibility. Deliberately injected SciPy Qhull exception behavior is only reproduced when routed through upstream.",
+  "frozenCases": "tests/fixtures/convex_hull_object_026.json",
+  "benchmark": "benchmarks/convex_hull_object.py",
+  "sdk": "tests/cmake_consumer/convex_hull_object_consumer.cpp",
+  "stillRequired": [
+    "shared bindings/build/export",
+    "installed public/runtime and SDK matrices",
+    "complete provider parity for outside scopes",
+    "four fixed one-worker performance ratios per admitted profile"
+  ]
+}

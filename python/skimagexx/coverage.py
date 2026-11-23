@@ -21,7 +21,7 @@ NATIVE_FUNCTIONS = {
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
-                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize'),
+                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize','convex_hull_image','convex_hull_object'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -356,13 +356,14 @@ PYRAMID_FUNCTIONS = ('transform.pyramid_reduce', 'transform.pyramid_expand')
 PYRAMID_GENERATOR_FUNCTIONS = ('transform.pyramid_gaussian', 'transform.pyramid_laplacian')
 HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature', 'feature.haar_like_feature_coord')
 THINNING_FUNCTIONS = ('morphology.thin', 'morphology.skeletonize')
+HULL_FUNCTIONS = ('morphology.convex_hull_image', 'morphology.convex_hull_object')
 HOUGH_FUNCTIONS = ('transform.hough_circle', 'transform.hough_line_peaks')
 
 
 def native_dtypes(api):
     if api == 'feature.match_descriptors':
         return ('bool',)
-    if api in (*THINNING_FUNCTIONS, 'transform.hough_circle'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'transform.hough_circle'):
         return ('bool', 'uint8')
     if api == 'transform.hough_line_peaks':
         return ('uint64',)
@@ -454,6 +455,15 @@ def flood_fill_contract():
 
 
 def default_call(api, image):
+    if api in HULL_FUNCTIONS:
+        import numpy as np
+
+        # A connected L-shaped binary field keeps generic parity in native scope.
+        height, width = image.shape
+        field = np.zeros_like(image, order='C')
+        field[:(height + 1) // 2, :] = 1
+        field[:, :(width + 1) // 2] = 1
+        return (field,), {}
     if api == 'feature.match_descriptors':
         import numpy as np
 
@@ -1287,7 +1297,7 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
-    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
         import numpy as np
 
         if api == 'transform.hough_line_peaks':

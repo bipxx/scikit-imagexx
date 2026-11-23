@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.18)
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    project(ConvexHullImageClient LANGUAGES CXX)
+    find_package(skimagexx CONFIG REQUIRED)
+    enable_testing()
+endif()
+
+add_executable(convex_hull_image_client ../../cmake_consumer/convex_hull_image_consumer.cpp)
+target_compile_features(convex_hull_image_client PRIVATE cxx_std_17)
+target_link_libraries(convex_hull_image_client PRIVATE skimagexx::skimagexx)
+add_test(NAME installed_convex_hull_image_consumer COMMAND convex_hull_image_client)

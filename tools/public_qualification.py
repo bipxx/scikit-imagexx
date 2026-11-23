@@ -292,12 +292,13 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current306'
+CURRENT_PRODUCT_SCOPE = 'current308'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels', 'haar_like_feature_drawing', 'haar_like_features',
                             'find_contours', 'random_noise', 'random_shapes',
-                            'match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks')
-CURRENT_SDK_CLIENT_SCOPE = 'current55 required installed clients; current301 clients plus descriptor matching, thin, Zhang skeletonize, circle Hough and line peaks; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v19.json'
+                            'match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks',
+                            'convex_hull_image', 'convex_hull_object')
+CURRENT_SDK_CLIENT_SCOPE = 'current57 required installed clients; current306 clients plus planar and object convex hulls; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v20.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -686,6 +687,8 @@ POST203_TESTS += FOLLOWING_PUBLIC_TESTS
 NEXT_PUBLIC_TESTS = ('test_match_descriptors_public.py', 'test_thin_public.py', 'test_skeletonize_public.py',
                      'test_hough_circle_public.py', 'test_hough_line_peaks_public.py')
 POST203_TESTS += NEXT_PUBLIC_TESTS
+HULL_PUBLIC_TESTS = ('test_convex_hull_image_public.py', 'test_morphology_convex_hull_object.py')
+POST203_TESTS += HULL_PUBLIC_TESTS
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -1240,6 +1243,12 @@ DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v48.json',
 DRAW_SOURCE_PATHS += ('coverage/contracts/speed-parity-current-source-v49.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v7.json', 'coverage/contracts/vi-public-matmul-source-history-v58.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v7.json')
 
 
+DRAW_SOURCE_PATHS += ('benchmarks/convex_hull_image.py', 'benchmarks/convex_hull_object.py', 'coverage/contracts/convex-hull-image-v1.json', 'coverage/contracts/convex-hull-object-v1.json', 'coverage/contracts/current-public-qualification-v19.json', 'coverage/contracts/current-public-qualification-v20.json', 'include/skimagexx/convex_hull_image.hpp', 'include/skimagexx/convex_hull_object.hpp', 'python/skimagexx/_convex_hull_image.py', 'python/skimagexx/_convex_hull_object.py', 'src/bind_convex_hull_image.cpp', 'src/bind_convex_hull_object.cpp', 'src/convex_hull_image.cpp', 'src/convex_hull_object.cpp', 'tests/cmake_consumer/convex_hull_image_consumer.cpp', 'tests/cmake_consumer/convex_hull_object_consumer.cpp', 'tests/fixtures/convex_hull_image_v1.py', 'tests/fixtures/convex_hull_object_026.json', 'tests/sdk/convex_hull_image/CMakeLists.txt', 'tests/test_convex_hull_image_public.py', 'tests/test_morphology_convex_hull_object.py')
+
+
+DRAW_SOURCE_PATHS += ('coverage/contracts/draw-multiblock-lbp-benchmark-execution-v20.json', 'coverage/contracts/mark-boundaries-benchmark-execution-v20.json', 'coverage/contracts/speed-parity-current-source-v50.json', 'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-v8.json', 'coverage/contracts/vi-public-matmul-source-history-v59.json', 'coverage/contracts/vi4-public-matmul-capture-post-haar-v8.json')
+
+
 def environment(package=None, scalar=False):
     env = dict(os.environ)
     for key in list(env):
@@ -1494,26 +1503,23 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v18.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v19.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == '8bb5cae6130f55336deabff78249c60d6dd279d06a7d1292b9e68fd7877a2fe4', 'current301 qualification predecessor differs')
+    require(previous_digest == 'ab5babc24831a8687c96cbbb95916ab8739ea0da960f9fd53531b86bef745051', 'current306 qualification predecessor differs')
     previous = json.loads(previous_raw)
     routes = {
-        'feature.match_descriptors': 'tests/test_match_descriptors_public.py',
-        'morphology.thin': 'tests/test_thin_public.py',
-        'morphology.skeletonize': 'tests/test_skeletonize_public.py',
-        'transform.hough_circle': 'tests/test_hough_circle_public.py',
-        'transform.hough_line_peaks': 'tests/test_hough_line_peaks_public.py',
+        'morphology.convex_hull_image': 'tests/test_convex_hull_image_public.py',
+        'morphology.convex_hull_object': 'tests/test_morphology_convex_hull_object.py',
     }
-    families = ('match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks')
+    families = ('convex_hull_image', 'convex_hull_object')
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
         image_paths=sorted(previous['image_paths'] + list(routes)),
         post203_contracts={**previous['post203_contracts'], **routes},
-        required_selectors=previous['required_selectors'] + ['tests/' + name for name in NEXT_PUBLIC_TESTS],
+        required_selectors=previous['required_selectors'] + ['tests/' + name for name in HULL_PUBLIC_TESTS],
         SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
         required_client_families=[*previous['required_client_families'], *families],
         required_client_headers=previous['required_client_headers'] + [f'include/skimagexx/{name}.hpp' for name in families],
@@ -1615,6 +1621,9 @@ def current_install_layout(read_bytes, names, profile):
     require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
                 for name in ('match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks')),
             'current descriptors, thinning and Hough install closure absent')
+    require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
+                for name in ('convex_hull_image', 'convex_hull_object')),
+            'current convex hull install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

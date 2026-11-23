@@ -8,7 +8,7 @@ import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
-from skimagexx.coverage import HOUGH_FUNCTIONS, THINNING_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, THINNING_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 _UNTAGGED_ARRAY_APIS = {
@@ -28,7 +28,7 @@ def calls(api,dtype,monkeypatch):
     data=rng.integers(0,256,shape,dtype=np.uint8)
     if api == 'util.random_noise' and dtype == 'uint16':
         data = data.astype(np.uint16) * 257
-    elif api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == 'bool':
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == 'bool':
         data = data >= 128
     elif dtype!='uint8':
         data=(data/255).astype(dtype)
@@ -74,7 +74,7 @@ def calls(api,dtype,monkeypatch):
             )
     elif api == 'feature.match_descriptors':
         assert all(operand.dtype.metadata == tags for operand in arguments)
-    elif api in THINNING_FUNCTIONS:
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS):
         assert arguments[0].dtype.metadata == tags
     if untagged_arrays:
         # Preserve the tag boundary check and the native parity case for every advertised dtype.
@@ -120,7 +120,7 @@ def calls(api,dtype,monkeypatch):
         finally:
             xx.set_fallback_enabled(previous)
         return actual, reference(*arguments, **options), data
-    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
         with warnings.catch_warnings(record=True) as reference_notices:
             warnings.simplefilter('always')
             expected = reference(*arguments, **options)
@@ -140,7 +140,7 @@ def calls(api,dtype,monkeypatch):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
-    if api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
         assert_default_parity(api, np.dtype(dtype), actual, expected, image=image)
         return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):

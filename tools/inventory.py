@@ -27,6 +27,8 @@ for _names, _test, _benchmark in (
     (('feature.match_descriptors',), 'tests/test_match_descriptors_public.py', 'benchmarks/match_descriptors.py'),
     (('morphology.thin',), 'tests/test_thin_public.py', 'benchmarks/thin.py'),
     (('morphology.skeletonize',), 'tests/test_skeletonize_public.py', 'benchmarks/skeletonize.py'),
+    (('morphology.convex_hull_image',), 'tests/test_convex_hull_image_public.py', 'benchmarks/convex_hull_image.py'),
+    (('morphology.convex_hull_object',), 'tests/test_morphology_convex_hull_object.py', 'benchmarks/convex_hull_object.py'),
     (('transform.hough_circle',), 'tests/test_hough_circle_public.py', 'benchmarks/hough_circle.py'),
     (('transform.hough_line_peaks',), 'tests/test_hough_line_peaks_public.py', 'benchmarks/hough_line_peaks.py'),
     (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
@@ -142,6 +144,8 @@ BOUNDED_DEFAULT_INPUTS = {
     'feature.match_descriptors': 'Two independent bounded C-order Boolean descriptor arrays, each with 1–1024 rows and a shared width of 1–256. Native ordered Hamming matches; equivalent and tagged descriptors preserve dispatch. Other metrics, layouts and parameter domains use compatibility.',
     'morphology.thin': 'Bounded C-order 2D canonical Boolean or uint8 input with extents through 512. C++ owns ordered Guo–Hall subiterations. None or 0 converges, and a positive exact integer through 512 caps full iterations. Other layouts and protocols use compatibility.',
     'morphology.skeletonize': 'Bounded C-order 2D canonical Boolean or uint8 input with extents through 512. C++ owns default and explicit Zhang. Explicit Lee and default 3D are compatibility routes.',
+    'morphology.convex_hull_image': 'Bounded 2D C-contiguous Boolean and binary uint8 arrays. C++ owns planar hull geometry and rasterization. Out-of-scope inputs and tolerances use compatibility.',
+    'morphology.convex_hull_object': 'Bounded 2D C-contiguous Boolean and binary uint8 arrays, connectivity 1 or 2 and bounded total component crop work. C++ owns labeling and planar hull union. Out-of-scope cases use compatibility.',
     'transform.hough_circle': 'Bounded untagged C-order 2D Boolean or uint8 image with extents through 512 and ordered integer radii 0–64. C++ owns Bresenham votes and normalization; unsupported radii, tags and layouts use compatibility.',
     'transform.hough_line_peaks': 'Bounded untagged C-order uint64 accumulator with fewer than 262144 cells and matching finite float64 angles and distances. C++ owns peak selection; NumPy provides capped ordering and coordinate gathers. Tagged carriers and unsupported requests use compatibility.',
 }

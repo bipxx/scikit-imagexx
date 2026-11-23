@@ -27,8 +27,8 @@ def test_exact_correction_and_historical_source_projection():
 def test_actual_qualification_source_census_and_large_group(profile):
     spec=importlib.util.spec_from_file_location('_corrected_qualifier',ROOT/'tools/public_qualification.py')
     q=importlib.util.module_from_spec(spec);spec.loader.exec_module(q)
-    value=q.plan(ROOT,profile,306)
-    assert(value['registry']['image_count'],value['registry']['registered_count'],value['product_members'],value['SDK_members'],len(value['SDK_families']),value['SDK_checks'])==(306,309,282,125,55,110)
+    value=q.plan(ROOT,profile,308)
+    assert(value['registry']['image_count'],value['registry']['registered_count'],value['product_members'],value['SDK_members'],len(value['SDK_families']),value['SDK_checks'])==(308,311,286,127,57,114)
     group='public-VI-large-saved-linux'
     if profile=='windows':
         assert group not in value['public_groups']

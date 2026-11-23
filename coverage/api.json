@@ -6235,21 +6235,29 @@
       "api": "morphology.convex_hull_image",
       "kind": "callable",
       "signature": "(image, offset_coordinates=True, tolerance=1e-10, include_borders=True)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_convex_hull_image_public.py",
+      "benchmark": "benchmarks/convex_hull_image.py",
+      "default_input_kind": "Bounded 2D C-contiguous Boolean and binary uint8 arrays. C++ owns planar hull geometry and rasterization. Out-of-scope inputs and tolerances use compatibility."
     },
     {
       "api": "morphology.convex_hull_object",
       "kind": "callable",
       "signature": "(image, *, connectivity=2)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_morphology_convex_hull_object.py",
+      "benchmark": "benchmarks/convex_hull_object.py",
+      "default_input_kind": "Bounded 2D C-contiguous Boolean and binary uint8 arrays, connectivity 1 or 2 and bounded total component crop work. C++ owns labeling and planar hull union. Out-of-scope cases use compatibility."
     },
     {
       "api": "morphology.diameter_closing",

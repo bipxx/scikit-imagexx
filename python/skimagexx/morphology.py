@@ -175,3 +175,7 @@ __all__ += ['flood','flood_fill']
 from ._thin import thin
 from ._skeletonize import skeletonize
 __all__ += ['thin', 'skeletonize']
+
+from ._convex_hull_image import convex_hull_image
+from ._convex_hull_object import convex_hull_object
+__all__ += ['convex_hull_image', 'convex_hull_object']

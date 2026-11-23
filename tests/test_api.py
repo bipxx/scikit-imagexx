@@ -8,7 +8,7 @@ from skimage import filters as reference_filters, color as reference_color, util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
-from skimagexx.coverage import HOUGH_FUNCTIONS, THINNING_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, THINNING_FUNCTIONS
 from skimage import data as reference_data
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
@@ -47,6 +47,8 @@ _OWNED_ARRAY_ENTRIES = {
     'feature.match_descriptors': 'match_descriptors_bool',
     'morphology.thin': 'thin_binary',
     'morphology.skeletonize': 'skeletonize_zhang',
+    'morphology.convex_hull_image': 'convex_hull_image_binary',
+    'morphology.convex_hull_object': 'convex_hull_object_binary',
     'transform.hough_circle': 'hough_circle_accumulate',
     'transform.hough_line_peaks': 'hough_line_peak_indices',
 }
@@ -421,7 +423,7 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if api == 'util.random_noise' and dtype == np.uint16:
         a = a.astype(np.uint16) * 257
-    elif api in (*THINNING_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == np.bool_:
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS) and dtype == np.bool_:
         a = a >= 128
     elif dtype != np.uint8:
         a = (a/255).astype(dtype)

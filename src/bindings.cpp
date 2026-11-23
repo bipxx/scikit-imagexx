@@ -54,6 +54,8 @@ void bind_thin(pybind11::module_&);
 void bind_skeletonize(pybind11::module_&);
 void bind_hough_circle(pybind11::module_&);
 void bind_hough_line_peaks(pybind11::module_&);
+void bind_convex_hull_image(pybind11::module_&);
+void bind_convex_hull_object(pybind11::module_&);
 void bind_pearson(pybind11::module_&);
 void bind_hausdorff(pybind11::module_&);
 void bind_ellipsoid_stats(pybind11::module_&);
@@ -895,6 +897,8 @@ PYBIND11_MODULE(_core, m) {
     bind_skeletonize(m);
     bind_hough_circle(m);
     bind_hough_line_peaks(m);
+    bind_convex_hull_image(m);
+    bind_convex_hull_object(m);
     bind_pearson(m);
     bind_hausdorff(m);
     bind_ellipsoid_stats(m);

@@ -1,0 +1,1296 @@
+{
+  "signature": "(image, offset_coordinates=True, tolerance=1e-10, include_borders=True)",
+  "stock_handoff_sha256": "fcc28bd1bc54c05675864e93421d8e8ce5049295f4f959874c17a7bf951cac64",
+  "fixed_cases": [
+    {
+      "id": "tiny-concave",
+      "shape": [
+        13,
+        17
+      ],
+      "recipe": "concave",
+      "offset": true,
+      "borders": true
+    },
+    {
+      "id": "wide-sparse-extrema",
+      "shape": [
+        320,
+        512
+      ],
+      "recipe": "sparse",
+      "offset": true,
+      "borders": true
+    },
+    {
+      "id": "dense-frame",
+      "shape": [
+        192,
+        256
+      ],
+      "recipe": "frame",
+      "offset": true,
+      "borders": true
+    },
+    {
+      "id": "strict-centre-hull",
+      "shape": [
+        121,
+        173
+      ],
+      "recipe": "concave",
+      "offset": false,
+      "borders": false
+    }
+  ],
+  "method": {
+    "worker_count": 1,
+    "warmup_ms_per_side": 250,
+    "batch_ms_min": 100,
+    "accepted_pairs": 7,
+    "minimum_per_case_ratio": 1.0,
+    "call_boundary": "Complete public call including output allocation, no timing in this evidence."
+  },
+  "observations": {
+    "tiny-concave": {
+      "id": "tiny-concave",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": true,
+        "include_borders": true
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          13,
+          17
+        ],
+        "strides": [
+          17,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "70d5269b3475f40b7540ee4256ee56cdbc484378c15d268e9b508f07dea301d5"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 41,
+          "sha256": "f1c571497137da6cef0fa96bebcd93a4802252f4e89f8386c4bb17698a430322"
+        },
+        {
+          "stage": "qhull",
+          "count": 100,
+          "dtype": "<f8",
+          "points_sha256": "919dec02f01d606eb36923e6894657773ea939fa021582ca135e8f42b0d6012a",
+          "vertex_count": 9,
+          "vertex_points_sha256": "fa1923822596f9a4a5b25ea7df5869d6677cfe6dc9b484c3ff7243c301009738"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            127,
+            94,
+            0,
+            0
+          ],
+          "sha256": "6640c95d66fd1e0378371da4f8a1c3d40037ad927d04b1463d8d131ff150c9fc"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          13,
+          17
+        ],
+        "strides": [
+          17,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "6640c95d66fd1e0378371da4f8a1c3d40037ad927d04b1463d8d131ff150c9fc"
+      },
+      "shares_input": false,
+      "raw_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000101010101000000000000000000000000010101010101010101010100000000000001010101010101010101010101010000000101010101010101010101010101000000010101010101010101010101010000000001010101010101010101010101000000000101010101010101010101010000000000010101010101010101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "6640c95d66fd1e0378371da4f8a1c3d40037ad927d04b1463d8d131ff150c9fc"
+      }
+    },
+    "wide-sparse-extrema": {
+      "id": "wide-sparse-extrema",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": true,
+        "include_borders": true
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          320,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "e94f6cb0c726bd84741a53c5aec074bf1af4c7e49a88c5d0556afc838b15bac7"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 318,
+          "sha256": "82ecd92ab7cbd9865fe0b8c64c65aedf7bbd1b35e5e1ca8f6fae28917a11a081"
+        },
+        {
+          "stage": "qhull",
+          "count": 636,
+          "dtype": "<f8",
+          "points_sha256": "06bf7692b4775c6815dac5fffe9753e1e975c127e800fe6084fc614d2de85ad2",
+          "vertex_count": 18,
+          "vertex_points_sha256": "6a1e3e39e5e124ec674b8e3e93b9d40474cea459661aaa50cacf9cff527d69a0"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            11196,
+            152642,
+            0,
+            2
+          ],
+          "sha256": "0974f4f49a05ed8cbbb0054c059335792634330c0a4d083a2ccc536caea2cca3"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          320,
+          512
+        ],
+        "strides": [
+          512,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "d1a7e3132cf34a2c6d932f15476f42d00054c7f73b98bfea14520414b8502390"
+      },
+      "shares_input": false,
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "d1a7e3132cf34a2c6d932f15476f42d00054c7f73b98bfea14520414b8502390"
+      }
+    },
+    "dense-frame": {
+      "id": "dense-frame",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": true,
+        "include_borders": true
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          192,
+          256
+        ],
+        "strides": [
+          256,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "cfa57438fde2397a57bd9910dd0f7af9e8000ea086a9eb2c7dfd47826f84928b"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 774,
+          "sha256": "14db3ad131c6d601e5c7afee92ac3f63b3c2fa761150b4068b2ca7e4a6ecb8ad"
+        },
+        {
+          "stage": "qhull",
+          "count": 2313,
+          "dtype": "<f8",
+          "points_sha256": "a7a033ab35140d5f2a11d5ca9f232db2e937832f83f8c0692e0820719d0fc084",
+          "vertex_count": 9,
+          "vertex_points_sha256": "a50548d2b7324221a507bc70a8c85455c8c775a671266075ba760408841ef8ce"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            13432,
+            35720,
+            0,
+            0
+          ],
+          "sha256": "60044b0b2001b2497bd6102800d18423d41b140b3dc12509e9b1350d918896cb"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          192,
+          256
+        ],
+        "strides": [
+          256,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "60044b0b2001b2497bd6102800d18423d41b140b3dc12509e9b1350d918896cb"
+      },
+      "shares_input": false,
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "60044b0b2001b2497bd6102800d18423d41b140b3dc12509e9b1350d918896cb"
+      }
+    },
+    "strict-centre-hull": {
+      "id": "strict-centre-hull",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": false,
+        "include_borders": false
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          121,
+          173
+        ],
+        "strides": [
+          173,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2a02480ecbb9badca114b607f53d3685987faba4c1ff17989d76ff72249d937c"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 409,
+          "sha256": "272979aadd295f4ee391d75c782c7ea5e1fdc2821b2e42a3b0ebcab657d28da4"
+        },
+        {
+          "stage": "qhull",
+          "count": 403,
+          "dtype": "<i8",
+          "points_sha256": "101ac9f89f94456ba4dc511e6aaaf7659ab46beeec7a6bf13052b7e2260f168e",
+          "vertex_count": 5,
+          "vertex_points_sha256": "2b37da434a4b7a53884856f1bca368744be76ec23f541043aa9425e96af6f16a"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            11770,
+            8927,
+            5,
+            231
+          ],
+          "sha256": "2fc1d84fc727e4777903567ec24d251735cb51e9bdf90cfdbf5542402f005ae5"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          121,
+          173
+        ],
+        "strides": [
+          173,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "cdc3762623cafb00baa1f041c3b6e95624fbefdb7b5827906e9ea06a784bbece"
+      },
+      "shares_input": false,
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "cdc3762623cafb00baa1f041c3b6e95624fbefdb7b5827906e9ea06a784bbece"
+      }
+    },
+    "single-diamond": {
+      "id": "single-diamond",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "3e1d603d8b8b62893c2fcc97bd393307ba87e60c4f76127e7208171612de26cd"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 2,
+          "sha256": "01c84f606ffe38ee77bd47a06e5aaca8182c5ba6a3d4e6084c2ea05a0d7d4892"
+        },
+        {
+          "stage": "qhull",
+          "count": 4,
+          "dtype": "<f8",
+          "points_sha256": "7b5015556fded83cbb876b2a8259751c9bfdd935c5c2d5cf104e111b88d944c5",
+          "vertex_count": 4,
+          "vertex_points_sha256": "a2be34b4ea6dba3d9727aae1cd692340d70aeece704601ddca67a5088657c917"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            71,
+            1,
+            0,
+            0
+          ],
+          "sha256": "3e1d603d8b8b62893c2fcc97bd393307ba87e60c4f76127e7208171612de26cd"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "3e1d603d8b8b62893c2fcc97bd393307ba87e60c4f76127e7208171612de26cd"
+      },
+      "shares_input": false,
+      "raw_hex": "000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "3e1d603d8b8b62893c2fcc97bd393307ba87e60c4f76127e7208171612de26cd"
+      }
+    },
+    "single-no-offset": {
+      "id": "single-no-offset",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": false
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "3e1d603d8b8b62893c2fcc97bd393307ba87e60c4f76127e7208171612de26cd"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 2,
+          "sha256": "01c84f606ffe38ee77bd47a06e5aaca8182c5ba6a3d4e6084c2ea05a0d7d4892"
+        },
+        {
+          "stage": "qhull",
+          "count": 1,
+          "dtype": "<i8",
+          "points_sha256": "9d34149fbd1fe777eb238799054c8cbfbce372255f219f8740838def9bfd02db"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "834a709ba2534ebe3ee1397fd4f7bd288b2acc1d20a08d6c862dcd99b6f04400"
+      },
+      "shares_input": false,
+      "raw_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "line-diamond": {
+      "id": "line-diamond",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "5d879415e5527bc832d83fa94e3fd90295988fe45ee72552363714b16223fa64"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 7,
+          "sha256": "fbd67aeddaae03b70874881cdb54e40b1e0375e7dbe79e8444981f6573f0d94a"
+        },
+        {
+          "stage": "qhull",
+          "count": 16,
+          "dtype": "<f8",
+          "points_sha256": "02790a79159e257226fed577cf0d9e279c8f58332e0028eb1c1bfd65c0451d27",
+          "vertex_count": 6,
+          "vertex_points_sha256": "1c63917306a856b52e12958d2863e585c716cb6a48eeb7c22861958245f867fd"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            67,
+            5,
+            0,
+            0
+          ],
+          "sha256": "5d879415e5527bc832d83fa94e3fd90295988fe45ee72552363714b16223fa64"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "5d879415e5527bc832d83fa94e3fd90295988fe45ee72552363714b16223fa64"
+      },
+      "shares_input": false,
+      "raw_hex": "000000000000000000000000000000000000000000000000000000000001010101010000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "5d879415e5527bc832d83fa94e3fd90295988fe45ee72552363714b16223fa64"
+      }
+    },
+    "line-no-offset": {
+      "id": "line-no-offset",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": false
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "5d879415e5527bc832d83fa94e3fd90295988fe45ee72552363714b16223fa64"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 7,
+          "sha256": "fbd67aeddaae03b70874881cdb54e40b1e0375e7dbe79e8444981f6573f0d94a"
+        },
+        {
+          "stage": "qhull",
+          "count": 5,
+          "dtype": "<i8",
+          "points_sha256": "f6b42d3c76c99f99dd5e30f5df614ff0e2532da0c9deabd66218e8a646ea760a"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          8,
+          9
+        ],
+        "strides": [
+          9,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "834a709ba2534ebe3ee1397fd4f7bd288b2acc1d20a08d6c862dcd99b6f04400"
+      },
+      "shares_input": false,
+      "raw_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "triangle-include": {
+      "id": "triangle-include",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": false
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "0f6ad0935af524f398e7d1d5cae55acba8f7ebd336212082f47242aafb15203a"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 6,
+          "sha256": "fdd85c16797a7bfe71e5a484072e8e37348c9928e2a005ea0dba24aa04155382"
+        },
+        {
+          "stage": "qhull",
+          "count": 3,
+          "dtype": "<i8",
+          "points_sha256": "7abca9f8c3ec4ac231d5c3eb3bede6486379ee37b4c63a25c431e588d658782b",
+          "vertex_count": 3,
+          "vertex_points_sha256": "de8ec85eac50632f165bc65132e4792557bdac9a08c0a8eef3a04b70019cf18b"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            34,
+            3,
+            3,
+            9
+          ],
+          "sha256": "8a8ed6271d1d97d5bfb04a645f9e9b4c95849ad3c6d21b5ebbd94bea49486309"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000101010101000001010101000000010101000000000101000000000001000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      }
+    },
+    "triangle-exclude": {
+      "id": "triangle-exclude",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": false,
+        "include_borders": false
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "0f6ad0935af524f398e7d1d5cae55acba8f7ebd336212082f47242aafb15203a"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 6,
+          "sha256": "fdd85c16797a7bfe71e5a484072e8e37348c9928e2a005ea0dba24aa04155382"
+        },
+        {
+          "stage": "qhull",
+          "count": 3,
+          "dtype": "<i8",
+          "points_sha256": "7abca9f8c3ec4ac231d5c3eb3bede6486379ee37b4c63a25c431e588d658782b",
+          "vertex_count": 3,
+          "vertex_points_sha256": "de8ec85eac50632f165bc65132e4792557bdac9a08c0a8eef3a04b70019cf18b"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            34,
+            3,
+            3,
+            9
+          ],
+          "sha256": "8a8ed6271d1d97d5bfb04a645f9e9b4c95849ad3c6d21b5ebbd94bea49486309"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "902a3ea1c265eee661f820b6ee42c6d2f7b513297148ac32593d965f7ef9c346"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000000000000000000010100000000000100000000000000000000000000000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "902a3ea1c265eee661f820b6ee42c6d2f7b513297148ac32593d965f7ef9c346"
+      }
+    },
+    "triangle-tolerance-zero": {
+      "id": "triangle-tolerance-zero",
+      "api": "image",
+      "kwargs": {
+        "offset_coordinates": false,
+        "tolerance": 0.0
+      },
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "0f6ad0935af524f398e7d1d5cae55acba8f7ebd336212082f47242aafb15203a"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 6,
+          "sha256": "fdd85c16797a7bfe71e5a484072e8e37348c9928e2a005ea0dba24aa04155382"
+        },
+        {
+          "stage": "qhull",
+          "count": 3,
+          "dtype": "<i8",
+          "points_sha256": "7abca9f8c3ec4ac231d5c3eb3bede6486379ee37b4c63a25c431e588d658782b",
+          "vertex_count": 3,
+          "vertex_points_sha256": "de8ec85eac50632f165bc65132e4792557bdac9a08c0a8eef3a04b70019cf18b"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            34,
+            3,
+            3,
+            9
+          ],
+          "sha256": "8a8ed6271d1d97d5bfb04a645f9e9b4c95849ad3c6d21b5ebbd94bea49486309"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000101010101000001010101000000010101000000000101000000000001000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      }
+    },
+    "triangle-offset": {
+      "id": "triangle-offset",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "0f6ad0935af524f398e7d1d5cae55acba8f7ebd336212082f47242aafb15203a"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 6,
+          "sha256": "fdd85c16797a7bfe71e5a484072e8e37348c9928e2a005ea0dba24aa04155382"
+        },
+        {
+          "stage": "qhull",
+          "count": 12,
+          "dtype": "<f8",
+          "points_sha256": "601e2582f0f08d9e7528ac634aeac73a78d7c316390895a76e0839b5cbf260a1",
+          "vertex_count": 6,
+          "vertex_points_sha256": "252bcbfc3949fd2748d4e3b57b4cbe121a0da8a5d02edba2417218c4bf903793"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            34,
+            15,
+            0,
+            0
+          ],
+          "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000101010101000001010101000000010101000000000101000000000001000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      }
+    },
+    "array-zero": {
+      "id": "array-zero",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          5,
+          8
+        ],
+        "strides": [
+          8,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2c34ce1df23b838c5abf2a7f6437cca3d3067ed509ff25f11df6b11b582b51eb"
+      },
+      "provider": [],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          5,
+          8
+        ],
+        "strides": [
+          8,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2c34ce1df23b838c5abf2a7f6437cca3d3067ed509ff25f11df6b11b582b51eb"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "2c34ce1df23b838c5abf2a7f6437cca3d3067ed509ff25f11df6b11b582b51eb"
+      }
+    },
+    "shape-empty": {
+      "id": "shape-empty",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          0,
+          8
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "provider": [],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          0,
+          8
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "shares_input": false,
+      "raw_hex": "",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "strided": {
+      "id": "strided",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          4
+        ],
+        "strides": [
+          -7,
+          2
+        ],
+        "owns": false,
+        "c": false,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "3addfb141cd7c9c4c6543a82191a3707ac29c7a041217782e61d4d91c691aee8"
+      },
+      "provider": [],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          4
+        ],
+        "strides": [
+          4,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "3addfb141cd7c9c4c6543a82191a3707ac29c7a041217782e61d4d91c691aee8"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000000000000000000000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "3addfb141cd7c9c4c6543a82191a3707ac29c7a041217782e61d4d91c691aee8"
+      }
+    },
+    "tagged-bool": {
+      "id": "tagged-bool",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": {
+          "name": "hull"
+        },
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": false,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "ndarray",
+        "sha256": "0f6ad0935af524f398e7d1d5cae55acba8f7ebd336212082f47242aafb15203a"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 6,
+          "sha256": "fdd85c16797a7bfe71e5a484072e8e37348c9928e2a005ea0dba24aa04155382"
+        },
+        {
+          "stage": "qhull",
+          "count": 12,
+          "dtype": "<f8",
+          "points_sha256": "601e2582f0f08d9e7528ac634aeac73a78d7c316390895a76e0839b5cbf260a1",
+          "vertex_count": 6,
+          "vertex_points_sha256": "252bcbfc3949fd2748d4e3b57b4cbe121a0da8a5d02edba2417218c4bf903793"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            34,
+            15,
+            0,
+            0
+          ],
+          "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000101010101000001010101000000010101000000000101000000000001000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      }
+    },
+    "binary-uint8": {
+      "id": "binary-uint8",
+      "api": "image",
+      "kwargs": {},
+      "input": {
+        "type": "numpy.ndarray",
+        "dtype": "|u1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "0f6ad0935af524f398e7d1d5cae55acba8f7ebd336212082f47242aafb15203a"
+      },
+      "provider": [
+        {
+          "stage": "extrema",
+          "count": 6,
+          "sha256": "fdd85c16797a7bfe71e5a484072e8e37348c9928e2a005ea0dba24aa04155382"
+        },
+        {
+          "stage": "qhull",
+          "count": 12,
+          "dtype": "<f8",
+          "points_sha256": "601e2582f0f08d9e7528ac634aeac73a78d7c316390895a76e0839b5cbf260a1",
+          "vertex_count": 6,
+          "vertex_points_sha256": "252bcbfc3949fd2748d4e3b57b4cbe121a0da8a5d02edba2417218c4bf903793"
+        },
+        {
+          "stage": "poly",
+          "dtype": "|u1",
+          "counts": [
+            34,
+            15,
+            0,
+            0
+          ],
+          "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+        }
+      ],
+      "input_preserved": true,
+      "output": {
+        "type": "numpy.ndarray",
+        "dtype": "|b1",
+        "metadata": null,
+        "shape": [
+          7,
+          7
+        ],
+        "strides": [
+          7,
+          1
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "aligned": true,
+        "writeable": true,
+        "base_type": "NoneType",
+        "sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      },
+      "shares_input": false,
+      "raw_hex": "00000000000000000101010101000001010101000000010101000000000101000000000001000000000000000000000000",
+      "oracle": {
+        "equal": true,
+        "binary_sha256": "2b33a1df37c3636e6fd9c2770c02b643b3cff01ca6dfcbecf0bcbf442ce1084b"
+      }
+    }
+  }
+}

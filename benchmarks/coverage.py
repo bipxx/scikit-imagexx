@@ -64,6 +64,8 @@ BOUNDED_DEFAULT_SIZES = {
     'feature.match_descriptors': (1, 256),
     'morphology.thin': (1, 512),
     'morphology.skeletonize': (1, 512),
+    'morphology.convex_hull_image': (2, 512),
+    'morphology.convex_hull_object': (2, 512),
     'transform.hough_circle': (1, 512),
     'transform.hough_line_peaks': (4, 511),
 }
@@ -192,6 +194,8 @@ def main():
         ('feature.match_descriptors', 'Generic inputs are two independently allocated deterministic Boolean descriptor arrays. C++ owns ordered Hamming selection. Unsupported metrics and threshold domains use compatibility. The fixed adapter includes its own admitted threshold cases.'),
         ('morphology.thin', 'C++ owns the ordered Guo–Hall subiterations; NumPy supplies ndarray storage. The generic input uses uncapped convergence and keeps the caller dtype and tags.'),
         ('morphology.skeletonize', 'C++ owns ordered Zhang phases on bounded 2D input; NumPy supplies ndarray storage. The generic input uses the 2D default method. Lee and other layouts or methods use compatibility.'),
+        ('morphology.convex_hull_image', 'C++ owns the bounded planar integer hull and rasterization. The generic binary field uses the public defaults.'),
+        ('morphology.convex_hull_object', 'C++ owns connected labeling and bounded planar component hulls. The generic binary field uses the public defaults.'),
         ('transform.hough_circle', 'C++ owns circle voting and normalization for ordered radii (0, 3, 5) in the generic default. NumPy supplies array storage. Fixed circle adapter separately covers unit counts and full-output geometry.'),
         ('transform.hough_line_peaks', 'The generic fixture uses discrete uint64 peaks and coupled finite float64 angle/distance vectors. C++ owns peak selection; NumPy supplies coordinate gathers and capped ordering where active. Each public result tuple is checked before timing.'),
     ):

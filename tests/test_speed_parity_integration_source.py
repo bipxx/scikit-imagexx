@@ -10,8 +10,8 @@ import subprocess
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTEXT = 'coverage/contracts/speed-parity-current-source-v49.json'
-CONTEXT_SHA256 = '8fe45808f32ba2dd45eee1682442596ab2205294544883fbe4f70ff8204d213d'
+CONTEXT = 'coverage/contracts/speed-parity-current-source-v50.json'
+CONTEXT_SHA256 = '926d83c9c34d3d0f9d1d3a5060def6fedcdd7acf8a1fc7a8a6977a522544f094'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
@@ -93,7 +93,7 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
     value = data()
     q = load('tools/public_qualification.py')
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v19.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v20.json'
     prior = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v8.json').read_bytes())
     previous = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v18.json').read_bytes())
     assert previous['required_selectors'] == prior['required_selectors'] + list(RUNTIME) + ['tests/test_structural_similarity.py', 'tests/test_local_extrema_public.py',
@@ -102,9 +102,12 @@ def test_actual_qualification_adds_exact_runtime_groups_and_preserves_old(profil
         'tests/test_ellipsoid_stats_public.py', 'tests/test_expand_labels_public.py', 'tests/test_binary_blobs_public.py',
         'tests/test_gaussian_nd.py', 'tests/test_gaussian_family.py', 'tests/test_resize_gaussian_raw.py', 'tests/test_draw_haar_like_feature_public.py', 'tests/test_haar_like_features_contract.py', 'tests/test_pyramid_spatial_public.py',
         'tests/test_pyramid_generators_public.py', 'tests/test_find_contours_public.py', 'tests/test_random_noise_public.py', 'tests/test_random_shapes_public.py']
-    assert contract['required_selectors'] == previous['required_selectors'] + list(CURRENT_FAMILY_RUNTIME)
+    base = json.loads((ROOT / 'coverage/contracts/current-public-qualification-v19.json').read_bytes())
+    hull = ('tests/test_convex_hull_image_public.py', 'tests/test_morphology_convex_hull_object.py')
+    assert base['required_selectors'] == previous['required_selectors'] + list(CURRENT_FAMILY_RUNTIME)
+    assert contract['required_selectors'] == base['required_selectors'] + list(hull)
     actual_groups = q.applicable_public_groups(q.groups_for_source(ROOT), profile)
-    assert actual_groups['public-post203'][-5:] == tuple(Path(test).name for test in CURRENT_FAMILY_RUNTIME)
+    assert actual_groups['public-post203'][-7:] == tuple(Path(test).name for test in (*CURRENT_FAMILY_RUNTIME, *hull))
     groups = q.applicable_public_groups({'public-post203': ('retained',)}, profile)
     assert groups['public-post203'] == ('retained',)
     assert groups['public-mark-fast-paths'] == ('test_mark_boundaries_fast_paths.py',)
@@ -148,7 +151,7 @@ def test_collector_covers_every_current_input_and_installed_LBP_header():
 @pytest.mark.parametrize('name', ('mark-boundaries', 'draw-multiblock-lbp'))
 def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_reads(name):
     value = data()
-    path = 'coverage/contracts/' + name + '-benchmark-execution-v19.json'
+    path = 'coverage/contracts/' + name + '-benchmark-execution-v20.json'
     boundary = load('benchmarks/mark_boundaries_execution.py')
     current = boundary.current_context(ROOT, path)
     predecessor = current['speed_source_successor']['predecessor_context']
@@ -176,7 +179,7 @@ def test_current_benchmark_literals_refuse_old_pins_and_preserve_historical_read
 def test_current_benchmark_binding_requires_actual_current_bytes(tmp_path, monkeypatch, family, fault):
     import test_mark_boundaries_benchmark_execution as factory
     monkeypatch.setattr(factory, 'source_fixture_bytes', lambda name, context_path: (ROOT / name).read_bytes())
-    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v19.json')
+    path = ROOT / ('coverage/contracts/' + family + '-benchmark-execution-v20.json')
     binding_path, binding, contract = factory.synthetic(tmp_path, monkeypatch, context_path=path)
     boundary = load('benchmarks/mark_boundaries_execution.py')
     relative = path.relative_to(ROOT).as_posix()
