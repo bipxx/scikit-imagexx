@@ -1,4 +1,4 @@
-name: Hough modern isolated fixed speed
+name: Hough line wide isolated fixed speed
 on:
   workflow_dispatch:
     inputs:
@@ -43,7 +43,7 @@ jobs:
             printf '%s\n' "$status" > hough-timing-stage/stage-process.exit
           fi
           exit "$status"
-      - name: Verify a quiet host and measure the twelve unchanged public cases
+      - name: Verify a quiet host and measure the four unchanged line cases
         shell: bash
         env:
           HOUGH_AUTHORITY: ${{ inputs.authority }}
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: u182-hough-modern-fixed-speed-v1
+          name: u182-hough-line-wide-modern-fixed-speed-v1
           path: |
             hough-timing-stage/*.json
             hough-timing-stage/*.log

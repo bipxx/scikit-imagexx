@@ -1,0 +1,19 @@
+{
+  "run": 45103340585,
+  "job": 137458964604,
+  "artifact_id": 14786920524,
+  "artifact_name": "u182-hough-line-wide-elf-v1",
+  "artifact_digest": "sha256:d52854cc27333e0dcf057ce94239cefc934d70b01a3f0a7adc19ea8d9e88261d",
+  "verified_zip_bytes": 118064,
+  "expires_at": "2026-11-24T03:01:18Z",
+  "members": {
+    "_hough_line_private.cpython-313-x86_64-linux-gnu.so": {
+      "bytes": 296640,
+      "sha256": "f04a17635c2b47fb9f502e3cd0b92b37df13af9e6a51f79377ee83efb0b83b83"
+    },
+    "line-wide.json": {
+      "bytes": 1161,
+      "sha256": "fb4fe1e4223bb434b6573a8c022462cc2d960075d60d5c74a119829790dfd589"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "purpose": "hough-line-wide-modern-fixed-speed",
+  "families": {
+    "hough_line": {
+      "source": "76087cec5e8bc02fdb4ca7bd053153af3fc00599",
+      "tree": "4ebb44436d6a2c7b47b8d78d39ccecd302964c80",
+      "benchmark_recipe": {
+        "blob": "1f2f5b4855e787c6c4dc67f995f2b229ad84dc65",
+        "bytes": 1218,
+        "path": "benchmarks/hough_line.py",
+        "sha256": "795efc14c5f954d5ba4eae3803199000c436c707850b7ee8602970fac54cf733",
+        "source": "8d2acf8161e22dbdb1bbae1e03ef4c04b800ded1"
+      },
+      "frozen_cases": [
+        {
+          "canonical_row_sha256": "1cf93c67baa9b29e772c16742e43f9d467a172ff4ca0a46583d73c9f8e6b1d56",
+          "id": "no-votes-default-64x96"
+        },
+        {
+          "canonical_row_sha256": "b1c02f042e4a7ebe1ca2917f2bdd8e543b642e4b4d628ec42a0d142f15bc6f5c",
+          "id": "linework-default-160x192"
+        },
+        {
+          "canonical_row_sha256": "6f4856eef3bcd82f860cfcd68cb461c1e6e2e75e5a32192e7cd0d3fc09bafa73",
+          "id": "sparse-custom-257"
+        },
+        {
+          "canonical_row_sha256": "af8c720103770963aa006750ca9f977ce63dde9b41d0d3b1870673426575e229",
+          "id": "dense-custom-91"
+        }
+      ]
+    }
+  },
+  "prior_fixed": {
+    "run": 45101684310,
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "root_admission_sha256": "664fe81c6e6f182a880f7c4c24617755fef9edb273f9fc7e17f2e68eca5b9fb1",
+    "loss": {
+      "case": "dense-custom-91",
+      "family": "hough_line",
+      "reference_ms": 1.6430791126760564,
+      "candidate_ms": 1.6453980571428573,
+      "speedup": 0.9985906483499637
+    }
+  },
+  "hardware_rule": "Evaluate exact paired same-run results. Any prior-to-new speed attribution requires matched conditions and remains separate.",
+  "admitted_transport_sha256": "6f8a09ab439d215168ad2c6818b809685f38fac8ae9b6a5dda3848b9599f1ca5",
+  "wide_component_admission_sha256": "feb6438b619cfd8050dfdd0f637f3615b58e873849a43cb1c9c99ff4bb4c23b6"
+}

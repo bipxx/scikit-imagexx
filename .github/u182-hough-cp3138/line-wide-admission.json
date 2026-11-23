@@ -1,0 +1,55 @@
+{
+  "status": "admitted exact compiled vote-address change and 46 modern line checks, no speed outcome yet",
+  "run": 45103340585,
+  "job": 137458964604,
+  "source": "76087cec5e8bc02fdb4ca7bd053153af3fc00599",
+  "intake_sha256": "a79f944189b1bc875a6cff5ad901b7a4d679473903ee5751bd9b27e5f137e249",
+  "transport_artifact": 14786920524,
+  "verified": {
+    "elf": {
+      "bytes": 296640,
+      "name": "_hough_line_private.cpython-313-x86_64-linux-gnu.so",
+      "sha256": "f04a17635c2b47fb9f502e3cd0b92b37df13af9e6a51f79377ee83efb0b83b83"
+    },
+    "instruction_proof": {
+      "bytes": 442,
+      "sha256": "114292f5b44dd2db9cf625eb384a64b2bc70e50e18e28041308a42d541f3ae0c"
+    },
+    "modes": {
+      "normal": {
+        "cases": 23,
+        "native_hits": 12,
+        "sha256": "4c48b23f883818d000bf99f0284c4db0bc6c6accf1a49c06f233f84828c799a9"
+      },
+      "scalar": {
+        "cases": 23,
+        "native_hits": 12,
+        "sha256": "7146143e4bef259ceb7c1083de821972f402f1262c376795ed233577a5cc2842"
+      }
+    },
+    "sdk_replays": 0,
+    "source": "76087cec5e8bc02fdb4ca7bd053153af3fc00599",
+    "timing": false,
+    "transport": {
+      "_hough_line_private.cpython-313-x86_64-linux-gnu.so": {
+        "bytes": 296640,
+        "sha256": "f04a17635c2b47fb9f502e3cd0b92b37df13af9e6a51f79377ee83efb0b83b83"
+      },
+      "line-wide.json": {
+        "bytes": 1161,
+        "sha256": "fb4fe1e4223bb434b6573a8c022462cc2d960075d60d5c74a119829790dfd589"
+      }
+    }
+  },
+  "instruction_logs": {
+    "baseline": {
+      "bytes": 14969,
+      "sha256": "1c60aa56b9da61a8e51fdf2968762b4d38479671de5f3b89c9723e40eb8ddfba"
+    },
+    "wide": {
+      "bytes": 14923,
+      "sha256": "ed2efcb778f775bdeb9ac11ea2d4f678c5b86b79126f89355af1cf790b75553c"
+    }
+  },
+  "next_gate": "Isolated changed four-case modern public timing. Preserve all earlier loss evidence and confirm matching host/correctness; Windows and minimum revised scope remain pending."
+}

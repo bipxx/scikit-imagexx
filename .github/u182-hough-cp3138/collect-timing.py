@@ -58,17 +58,18 @@ def collect(stage, outputs):
     assert data["quiet"] == grant and data["authority_sha256"] == grant["authority_sha256"]
     method = data["method"]
     assert (method["threads"], method["samples_per_side"], method["min_sample_ms"], method["min_warmup_ms"], method["affinity"]) == (1, 7, 100, 250, [0])
-    plan = read(HERE / "speed-prep-v1.json")
-    prep = read(HERE / "prep-admission.json")
+    plan = read(HERE / "wide-speed-plan.json")
+    prep = read(HERE / "line-wide-admission.json")
+    assert data["prior_fixed"] == plan["prior_fixed"]
     fixed = [(family, row) for family, spec in plan["families"].items() for row in spec["frozen_cases"]]
     rows = data["results"]
-    assert len(rows) <= len(fixed) == 12
+    assert len(rows) <= len(fixed) == 4
     pairs = [(entry, item) for entry, item in enumerate(history) if item["event"] == "paired_exact_before_samples"]
     for index, (row, (family, expected)) in enumerate(zip(rows, fixed)):
         assert (row["family"], row["case_id"]) == (family, expected["id"])
         position, pair = pairs[index]
         assert pair == {"event": "paired_exact_before_samples", "family": family, "case_id": expected["id"],
-                        "private_sha256": prep["products"][family]["elf"]["sha256"], "native_hits": 1,
+                        "private_sha256": prep["verified"]["elf"]["sha256"], "native_hits": 1,
                         "saved_case_sha256": expected["canonical_row_sha256"]}
         batches = [(n, item) for n, item in enumerate(history) if item["event"] == "batch_after" and item["case_index"] == index]
         assert batches and position < batches[0][0]
@@ -82,7 +83,10 @@ def collect(stage, outputs):
                   report_sha256=sha256(report.read_bytes()).hexdigest(), journal_sha256=sha256(journal.read_bytes()).hexdigest(),
                   ratios=[{"family": row["family"], "case": row["case_id"], "speedup": row["speedup"],
                            "stock_ms": row["reference_ms"], "candidate_ms": row["cpp_ms"]} for row in rows])
-    result["complete"] = len(rows) == len(pairs) == 12 and accepted == 168 and not any(row["event"] == "failure" for row in history)
+    result["complete"] = len(rows) == len(pairs) == 4 and accepted == 56 and not any(row["event"] == "failure" for row in history)
+    result["actual_cpu"] = method["cpu"]
+    result["same_cpu_model_as_prior"] = method["cpu"] == plan["prior_fixed"]["cpu"]
+    result["prior_fixed"] = plan["prior_fixed"]
     result["losses"] = [row for row in result["ratios"] if row["speedup"] < 1.0]
     if result["complete"]:
         assert process["exit"] == (1 if result["losses"] else 0)

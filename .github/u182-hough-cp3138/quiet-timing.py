@@ -17,12 +17,11 @@ import warnings
 
 
 BOOT = "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
-PLAN = "8c9dd5b42d5bc88249794f1c7a2de229716ed5c916c8dbb2f35c5b21d81c5df4"
+PLAN = "d3e123b1b3c198315fc659e91bc7c5d980ddab929e712810858190dade3136cd"
 SAMPLER = "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d"
 POOLS = "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
 PORTABLE_LINE_STOCK = "9c7243a68e5f14ee803c5f2845fb1b346b22b34c11fb577d1f592378fea65e22"
-FAMILIES = {"hough_line": "hough_line_accumulate", "hough_ellipse": "hough_ellipse_bounded",
-            "probabilistic_hough_line": "probabilistic_hough_line_ordered"}
+FAMILIES = {"hough_line": "hough_line_accumulate"}
 
 
 def fingerprint(path):
@@ -59,7 +58,7 @@ def verify(args):
     assert not sys.flags.optimize and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode
     assert fingerprint(args.authority)["sha256"] == args.authority_sha256
     authority = read_json(args.authority)
-    assert authority["purpose"] == "hough-modern-private-fixed-speed"
+    assert authority["purpose"] == "hough-line-wide-modern-fixed-speed"
     assert authority["sampler_sha256"] == SAMPLER and authority["threadpoolctl_sha256"] == POOLS
     assert fingerprint(Path(__file__))["sha256"] == authority["timing_entry_sha256"]
     assert authority["bootstrap_sha256"] == BOOT and authority["fixed_case_plan_sha256"] == PLAN
@@ -85,16 +84,15 @@ def verify(args):
     manifest_path = readonly(binding["producer_manifest"])
     assert fingerprint(manifest_path)["sha256"] == authority["producer_manifest_sha256"]
     manifest = read_json(manifest_path)
-    assert manifest["authority"]["carrier"] == authority["producer_source"] and manifest["run"] == authority["transport"]["run"]
-    assert manifest["runtime"] == read_json(readonly(binding["runtime_proof"]))
-    assert manifest["runtime"]["selected_provider_members"] == 24 and manifest["timing"] is False
-    assert set(binding["families"]) == set(authority["elf_sha256"]) == set(manifest["products"]) == set(FAMILIES)
+    assert manifest["source"] == authority["producer_source"] and manifest["no_timing"]
+    runtime = read_json(readonly(binding["runtime_proof"]))
+    assert runtime == {"donor_core": boot["donor"]["core"]["sha256"], "runtime": boot["runtime"]["version"],
+                       "science_imports": 0, "selected_provider_members": 24}
+    assert set(binding["families"]) == set(authority["elf_sha256"]) == set(FAMILIES)
     for name, row in binding["families"].items():
-        product = manifest["products"][name]
-        assert product["elf"]["sha256"] == authority["elf_sha256"][name]
-        assert fingerprint(readonly(row["elf"])) == {key: product["elf"][key] for key in ("bytes", "sha256")}
-        assert (product["source"], product["tree"], product["fixed_cases"]) == (
-            plan["families"][name]["source"], plan["families"][name]["tree"], plan["families"][name]["frozen_cases"])
+        assert manifest["elf"]["sha256"] == authority["elf_sha256"][name]
+        assert fingerprint(readonly(row["elf"])) == {key: manifest["elf"][key] for key in ("bytes", "sha256")}
+        assert (manifest["source"], manifest["tree"]) == (plan["families"][name]["source"], plan["families"][name]["tree"])
         owned = boot["families"]["transform." + name]["owned_git_files"]
         source = Path(row["source_root"]).resolve(strict=True)
         contract, = [path for path in owned if path.startswith("coverage/contracts/") and path.endswith((".json", ".jsonl"))]
@@ -103,18 +101,10 @@ def verify(args):
             path = readonly(row[label])
             assert path.resolve() == source / relative and fingerprint(path)["sha256"] == owned[relative]["sha256"]
         assert owned["benchmarks/" + name + ".py"]["sha256"] == plan["families"][name]["benchmark_recipe"]["sha256"]
-        stock_pin = (PORTABLE_LINE_STOCK if name == "hough_line"
-                     else boot["families"]["transform." + name]["stock_rows"][0]["sha256"])
-        assert fingerprint(readonly(row["stock_rows"]))["sha256"] == stock_pin
+        assert fingerprint(readonly(row["stock_rows"]))["sha256"] == PORTABLE_LINE_STOCK
     assert fingerprint(readonly(binding["sampler"]))["sha256"] == SAMPLER
     assert fingerprint(readonly(binding["threadpoolctl"]))["sha256"] == POOLS
     return authority, binding, boot, plan, quiet
-
-
-def saved_cases(name, path):
-    if name == "hough_line":
-        return read_json(path)["future_benchmark_endpoints"]
-    return [row for raw in path.read_bytes().splitlines() if (row := json.loads(raw))["scope"] == "benchmark"]
 
 
 def input_state(inputs, options):
@@ -123,29 +113,17 @@ def input_state(inputs, options):
                                         sha256(value.tobytes()).hexdigest()) for value in arrays]
 
 
-def check_outcome(name, fixture, np, call, args, options, row):
-    if name == "probabilistic_hough_line":
-        case = (row["id"], args[0], options["theta"], options["rng"],
-                {key: val for key, val in options.items() if key not in {"theta", "rng"}}, row["scope"])
-        fixture.observe(lambda *_a, **_kw: call(), np, case, row)
-        return
+def check_outcome(fixture, np, call, args, options, row):
     image = args[0]
     snapshot = fixture.snapshot
-    if name == "hough_ellipse":
-        assert snapshot(image, content=True) == row["image"]
-    else:
-        assert snapshot(image) == row["image"]
-        theta = options.get("theta")
-        assert (None if theta is None else snapshot(theta)) == row["theta"]
+    assert snapshot(image) == row["image"]
+    theta = options.get("theta")
+    assert (None if theta is None else snapshot(theta)) == row["theta"]
     with warnings.catch_warnings(record=True) as notices:
         warnings.simplefilter("always")
         result = call()
     assert [[item.category.__module__, item.category.__name__, str(item.message)] for item in notices] == row["warnings"]
     saved = row["result"]
-    if name == "hough_ellipse":
-        assert fixture.result_record(np, result) == saved and bool(np.shares_memory(image, result)) is row["output_aliases_input"]
-        assert snapshot(image, content=True) == row["image"]
-        return
     assert type(result).__name__ == saved["container_type"]
     for array, section in zip(result, ("accumulator", "angles", "distances"), strict=True):
         assert snapshot(array) == saved[section]
@@ -173,7 +151,7 @@ def execute(args, authority, binding, boot, plan, quiet):
         from skimage import transform as stock_public
         from skimagexx import _core, transform
         original = import_module("skimage.transform.hough_transform")
-        for name in ("skimage.transform.hough_transform", "skimage.transform._hough_transform", "numpy", "numpy.random._pcg64"):
+        for name in ("skimage.transform.hough_transform", "skimage.transform._hough_transform", "numpy", "numpy._core._multiarray_umath"):
             module = import_module(name)
             path = Path(module.__file__).resolve()
             relative = path.relative_to(stock).as_posix()
@@ -204,7 +182,7 @@ def execute(args, authority, binding, boot, plan, quiet):
                 assert getattr(stock_public, name) is original_call
                 fixture = load("_u182_fixture_" + name, readonly(row["fixture"]))
                 recipe = load("_u182_recipe_" + name, readonly(row["recipe"]))
-                saved = saved_cases(name, readonly(row["stock_rows"]))
+                saved = read_json(readonly(row["stock_rows"]))["future_benchmark_endpoints"]
                 fixed = plan["families"][name]["frozen_cases"]
                 assert len(saved) == len(fixed) == 4
                 for case, expected, pin in zip(recipe.make_cases(), saved, fixed, strict=True):
@@ -222,13 +200,11 @@ def execute(args, authority, binding, boot, plan, quiet):
 
                     setattr(_core, symbol, witness)
                     try:
-                        check_outcome(name, fixture, np, current, inputs, options, expected)
+                        check_outcome(fixture, np, current, inputs, options, expected)
                     finally:
                         setattr(_core, symbol, native)
                     assert len(hits) == 1 and hits[0][0] is inputs[0]
-                    if name == "probabilistic_hough_line":
-                        assert sha256(hits[0][3].tobytes()).hexdigest() == expected["rng"]["shuffle_sha256"]
-                    check_outcome(name, fixture, np, ref, inputs, options, expected)
+                    check_outcome(fixture, np, ref, inputs, options, expected)
                     assert pools.threadpool_info() == active_pools
                     journal(log, {"event": "paired_exact_before_samples", "family": name, "case_id": label,
                                   "private_sha256": fingerprint(binary)["sha256"], "native_hits": 1, "saved_case_sha256": pin["canonical_row_sha256"]})
@@ -247,9 +223,9 @@ def execute(args, authority, binding, boot, plan, quiet):
         (output / "report.json").write_text(json.dumps({"method": {"threads": 1, "samples_per_side": 7, "min_sample_ms": 100,
                                                                       "min_warmup_ms": 250, "platform": platform.platform(),
                                                                       "cpu": cpu, "affinity": [0]},
-                                                      "authority_sha256": args.authority_sha256, "quiet": quiet, "results": results},
+                                                      "authority_sha256": args.authority_sha256, "quiet": quiet, "prior_fixed": plan["prior_fixed"], "results": results},
                                                      indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    assert len(results) == 12 and all(list(map(len, row["samples_ms"])) == [7, 7] for row in results)
+    assert len(results) == 4 and all(list(map(len, row["samples_ms"])) == [7, 7] for row in results)
     assert all(row["speedup"] >= 1.0 for row in results), "At least one fixed case is below parity speed"
 
 

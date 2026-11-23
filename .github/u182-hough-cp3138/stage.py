@@ -22,7 +22,8 @@ from zipfile import ZipFile
 HERE = Path(__file__).resolve().parent
 REPO = "bipxx/scikit-imagexx"
 BOOT = "cc4c9890b8a48baac2862a6dd5524a84d8e75607cf06d2eafe05c4721ca4a8c8"
-PREP_ADMISSION = "30b524ecd768653cab790a9be632ad367d11760a8ab1aebc2e799ce6fd4997b7"
+PREP_ADMISSION = "feb6438b619cfd8050dfdd0f637f3615b58e873849a43cb1c9c99ff4bb4c23b6"
+FAMILY = "hough_line"
 FLOOR = 30 * 2**30
 
 
@@ -198,7 +199,31 @@ def install_sites(packet, wheels, package, python, out, work):
     return stock, pybind_site / "pybind11/include", candidate
 
 
-def stage_source(packet, out, work):
+def check_sources(packet, variant, repo, git, local_baseline):
+    family_id = "transform." + FAMILY
+    verifier = runpy.run_path(str(HERE / "verify-inputs.py"))["source_proof"]
+    result = verifier(packet, repo, Path(git), local_baseline, family_id)
+    assert result == {"families": 1, "owned_paths": 10, "windows_local_preflight": local_baseline}
+    args = [git, "--no-optional-locks", "--no-replace-objects", "-C", repo]
+
+    def read(*argv):
+        return subprocess.check_output([*args, *argv])
+
+    source = read("rev-parse", "--verify", variant["local_ref"]).decode().strip()
+    assert source == variant["source"]
+    assert read("rev-list", "--parents", "-n", "1", source).decode().split() == [source, variant["parent"]]
+    assert read("rev-parse", f"{source}^{{tree}}").decode().strip() == variant["tree"]
+    path = variant["sole_changed_source"]
+    assert read("diff-tree", "--no-commit-id", "--name-status", "-r", variant["parent"], source).decode().splitlines() == [f"M\t{path}"]
+    before = read("cat-file", "blob", f"{variant['parent']}:{path}")
+    wide = read("cat-file", "blob", f"{source}:{path}")
+    assert digest(before) == variant["old_source_sha256"] and digest(wide) == variant["new_source_sha256"]
+    old_line, new_line = (variant[key].encode() for key in ("old_line", "new_line"))
+    assert before.count(old_line) == 1 and before.replace(old_line, new_line) == wide
+    return read, before, wide
+
+
+def stage_source(packet, variant, out, work):
     mirror = work / "source.git"
     git = "/usr/bin/git"
     command(out, "git-init", [git, "init", "--bare", mirror])
@@ -208,29 +233,29 @@ def stage_source(packet, out, work):
         ("remote.origin.promisor", "true"), ("remote.origin.partialclonefilter", "blob:none")
     ):
         command(out, "git-" + key.rsplit(".", 1)[-1], [*repo_git, "config", key, value])
-    refs = [row["ref"] for row in packet["families"].values()]
+    family_id = "transform." + FAMILY
+    family = packet["families"][family_id]
+    refs = (family["ref"], variant["local_ref"])
     command(out, "git-fetch", [*repo_git, "fetch", "--no-tags", "--depth=2", "--filter=blob:none", "origin",
                                *[f"{ref}:{ref}" for ref in refs]])
-    command(out, "source-proof", [sys.executable, "-I", "-S", "-B", HERE / "verify-inputs.py", "--packet",
-                                  HERE / "bootstrap-v1.json", "--packet-sha256", BOOT, "source", "--repo", mirror, "--git", git])
-    source_roots = {}
-    for name, family in packet["families"].items():
-        name = name.rsplit(".", 1)[1]
-        destination = work / name
-        destination.mkdir()
-        for path in family["owned_git_files"] | family["verified_shared_git_files"]:
-            raw = subprocess.check_output([*repo_git, "cat-file", "blob", f"{family['source']}:{path}"])
-            path = destination / path
-            path.parent.mkdir(exist_ok=True, parents=True)
-            with path.open("xb") as output:
-                output.write(raw)
-        source_roots[name] = destination
-    return source_roots
+    read, before, wide = check_sources(packet, variant, mirror, git, False)
+    source = work / FAMILY
+    source.mkdir()
+    for path in family["owned_git_files"] | family["verified_shared_git_files"]:
+        raw = wide if path == variant["sole_changed_source"] else read("cat-file", "blob", f"{variant['source']}:{path}")
+        path = source / path
+        path.parent.mkdir(exist_ok=True, parents=True)
+        with path.open("xb") as output:
+            output.write(raw)
+    write(out / "source-proof.json", {"before": variant["parent"], "wide": variant["source"], "tree": variant["tree"],
+                                     "file": variant["sole_changed_source"], "other_source_files_unchanged": True,
+                                     "before_sha256": digest(before), "wide_sha256": digest(wide)})
+    return source
 
 
 def authority(env, now):
     assert env["GITHUB_ACTIONS"] == "true" and env["GITHUB_REPOSITORY"] == REPO
-    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-cp3138-speed-v1"
+    assert env["GITHUB_REF"] == "refs/heads/diagnostics/u182-hough-line-wide-speed-v1"
     assert env["GITHUB_EVENT_NAME"] == "workflow_dispatch"
     raw = env["HOUGH_AUTHORITY"].encode()
     assert 0 < len(raw) <= 8192 and digest(raw) == env["HOUGH_AUTHORITY_SHA256"]
@@ -239,19 +264,25 @@ def authority(env, now):
                           "transport", "producer_manifest_sha256", "elf_sha256", "bootstrap_sha256",
                           "fixed_case_plan_sha256", "sampler_sha256", "threadpoolctl_sha256", "timing_entry_sha256"}
     assert (value["carrier"], value["purpose"], value["prep_admission_sha256"]) == (
-        env["GITHUB_SHA"], "hough-modern-private-fixed-speed", PREP_ADMISSION)
+        env["GITHUB_SHA"], "hough-line-wide-modern-fixed-speed", PREP_ADMISSION)
     deadline = datetime.fromisoformat(value["deadline_utc"])
     assert 0 < (deadline - now).total_seconds() <= 5400
-    admitted = (HERE / "prep-admission.json").read_bytes()
+    admitted = (HERE / "line-wide-admission.json").read_bytes()
     assert digest(admitted) == PREP_ADMISSION
     record = json.loads(admitted)
-    transport = {"run": record["run"], "job": record["job"], **record["transport"]}
+    transport_raw = (HERE / "wide-transport.json").read_bytes()
+    plan = json.loads((HERE / "wide-speed-plan.json").read_bytes())
+    assert digest(transport_raw) == plan["admitted_transport_sha256"]
+    assert plan["wide_component_admission_sha256"] == PREP_ADMISSION
+    transport = json.loads(transport_raw)
+    assert (transport["run"], transport["job"], transport["artifact_id"], transport["members"]) == (
+        record["run"], record["job"], record["transport_artifact"], record["verified"]["transport"])
     assert value["transport"] == transport and deadline < datetime.fromisoformat(transport["expires_at"])
-    assert value["producer_source"] == record["carrier"]
-    assert value["producer_manifest_sha256"] == record["prepared_manifest_sha256"]
-    assert value["elf_sha256"] == {name: row["elf"]["sha256"] for name, row in record["products"].items()}
+    assert value["producer_source"] == record["source"]
+    assert value["producer_manifest_sha256"] == transport["members"]["line-wide.json"]["sha256"]
+    assert value["elf_sha256"] == {FAMILY: record["verified"]["elf"]["sha256"]}
     for key, path in (
-        ("bootstrap_sha256", "bootstrap-v1.json"), ("fixed_case_plan_sha256", "speed-prep-v1.json"),
+        ("bootstrap_sha256", "bootstrap-v1.json"), ("fixed_case_plan_sha256", "wide-speed-plan.json"),
         ("sampler_sha256", "sampler.py"), ("threadpoolctl_sha256", "threadpoolctl.py"), ("timing_entry_sha256", "quiet-timing.py")
     ):
         assert value[key] == seal(HERE / path)["sha256"]
@@ -274,11 +305,11 @@ def prepared_transport(packet, grant, work, reports):
     actual = api(key)
     job = api(f"jobs/{expected['job']}")
     assert (job["id"], job["run_id"], job["head_sha"], job["status"], job["conclusion"]) == (
-        expected["job"], expected["run"], grant["producer_source"], "completed", "success")
+        expected["job"], expected["run"], "58894db60ba6a526fd379f1417d31dcc07574902", "completed", "success")
     assert (actual["id"], actual["name"], actual["expired"], actual["digest"], actual["expires_at"], actual["size_in_bytes"]) == (
         expected["artifact_id"], expected["artifact_name"], False, expected["artifact_digest"],
         expected["expires_at"], expected["verified_zip_bytes"])
-    assert (actual["workflow_run"]["id"], actual["workflow_run"]["head_sha"]) == (expected["run"], grant["producer_source"])
+    assert (actual["workflow_run"]["id"], actual["workflow_run"]["head_sha"]) == (expected["run"], job["head_sha"])
     helper = HERE / "range_helper.py"
     assert seal(helper) == seal_dict(packet["transport"]["exact_helper"])
     no_redirect = runpy.run_path(str(helper))["NoRedirect"]
@@ -302,7 +333,7 @@ def prepared_transport(packet, grant, work, reports):
     destination.mkdir()
     with ZipFile(BytesIO(raw)) as archive:
         infos = archive.infolist()
-        assert len(infos) == len(names) == 4 and {entry.filename for entry in infos} == set(names)
+        assert len(infos) == len(names) == 2 and {entry.filename for entry in infos} == set(names)
         assert sum(entry.file_size for entry in infos) <= 4 * 2**20
         for info in infos:
             label = info.filename
@@ -336,7 +367,8 @@ def entry():
     assert all(os.environ.get(key) == "1" for key in packet["runtime"]["thread_environment"])
     work = Path(mkdtemp(dir=temp, prefix="u182-hough-timing-v1-"))
     try:
-        sources = stage_source(packet, reports, work)
+        variant = json.loads((HERE / "wide-line.json").read_bytes())
+        source = stage_source(packet, variant, reports, work)
         transport = prepared_transport(packet, grant, work, reports)
         python = provision_python(packet, work)
         wheels, package = donor_inputs(packet, work, reports)
@@ -344,29 +376,27 @@ def entry():
         command(reports, "runtime-proof", ["taskset", "-c", "0", python, "-I", "-S", "-B",
                 HERE / "verify-inputs.py", "--packet", HERE / "bootstrap-v1.json", "--packet-sha256", BOOT,
                 "runtime", "--stock", stock, "--pybind", pybind, "--candidate", candidate])
-        manifest = json.loads((transport / "prepared.json").read_bytes())
+        manifest = json.loads((transport / "line-wide.json").read_bytes())
+        assert manifest["no_timing"] and (manifest["source"], manifest["tree"]) == (variant["source"], variant["tree"])
         runtime = reports / "runtime-proof.log"
-        assert json.loads(runtime.read_bytes()) == manifest["runtime"]
+        assert json.loads(runtime.read_bytes()) == json.loads((HERE / "v3-reuse-v1.json").read_bytes())["runtime"]
 
         def ref(path):
             return {"path": str(path), **seal(path)}
 
-        fixed = {}
-        for family, source in sources.items():
-            owned = packet["families"]["transform." + family]["owned_git_files"]
-            contract, = [path for path in owned if path.startswith("coverage/contracts/") and path.endswith((".json", ".jsonl"))]
-            suffix = ".json" if family == "hough_line" else ".jsonl"
-            fixed[family] = {"source_root": str(source), "elf": ref(transport / manifest["products"][family]["elf"]["name"]),
-                             "recipe": ref(source / "benchmarks" / (family + ".py")),
-                             "fixture": ref(source / "tests" / (family + "_reference.py")),
-                             "contract": ref(source / contract),
-                             "facade": ref(source / "python/skimagexx" / ("_" + family + ".py")),
-                             "stock_rows": ref(HERE / (family + "-stock-0" + suffix))}
+        owned = packet["families"]["transform." + FAMILY]["owned_git_files"]
+        contract, = [path for path in owned if path.startswith("coverage/contracts/") and path.endswith(".json")]
+        fixed = {"source_root": str(source), "elf": ref(transport / manifest["elf"]["name"]),
+                 "recipe": ref(source / "benchmarks/hough_line.py"),
+                 "fixture": ref(source / "tests/hough_line_reference.py"),
+                 "contract": ref(source / contract),
+                 "facade": ref(source / "python/skimagexx/_hough_line.py"),
+                 "stock_rows": ref(HERE / "hough_line-stock-0.json")}
         binding = {"authority_sha256": os.environ["HOUGH_AUTHORITY_SHA256"], "transport": grant["transport"],
-                   "bootstrap": ref(HERE / "bootstrap-v1.json"), "fixed_case_plan": ref(HERE / "speed-prep-v1.json"),
-                   "runtime_proof": ref(runtime), "producer_manifest": ref(transport / "prepared.json"),
+                   "bootstrap": ref(HERE / "bootstrap-v1.json"), "fixed_case_plan": ref(HERE / "wide-speed-plan.json"),
+                   "runtime_proof": ref(runtime), "producer_manifest": ref(transport / "line-wide.json"),
                    "sampler": ref(HERE / "sampler.py"), "threadpoolctl": ref(HERE / "threadpoolctl.py"),
-                   "candidate_site": str(candidate), "stock_site": str(stock), "families": fixed}
+                   "candidate_site": str(candidate), "stock_site": str(stock), "families": {FAMILY: fixed}}
         with (work / "authority.json").open("xb") as stream:
             stream.write(os.environ["HOUGH_AUTHORITY"].encode())
         write(work / "binding-draft.json", binding)
