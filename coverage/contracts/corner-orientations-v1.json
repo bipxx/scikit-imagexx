@@ -1,0 +1,37 @@
+{
+  "api": "feature.corner_orientations",
+  "signature": "(image, corners, mask)",
+  "reference": {
+    "version": "0.26.0",
+    "windows_sha256": "32307c299767da394fcb681205e631ab9c12c3c4097da2141b85a8f5d47cda61",
+    "minimum_sha256": "a56828109addffe39689aebb019781771c0929b83a548e3d80a0de6c653bdbea"
+  },
+  "domain": {
+    "image": "Plain native C-order 2D uint8 (readonly allowed), float32 (writable), or float64 (writable), extents >= 2, elements <= 4194304.",
+    "corners": "Plain native C-order writable 2D np.intp (K, 2), K <= 65536, all coordinates inside [radius, extent - radius).",
+    "mask": "Plain native C-order 2D uint8 or bool odd square (M, M), 1 <= M <= 63.",
+    "output": "1D writable ndarray over built-in memoryview (float64 for uint8/float64, float32 for float32), shape (K,), strides (itemsize,)."
+  },
+  "fixed_cases": [
+    {"id": "tiny-interior", "shape": [23, 29], "corners": 12, "mask": 3, "sparse": false,
+     "sha256": "4a387e09a33fa63843a352e68e28b4a7f3938df92f56aae435f1bb257d91a611"},
+    {"id": "large-sparse-corners", "shape": [768, 1024], "corners": 48, "mask": 3, "sparse": false,
+     "sha256": "8777d29682a3f95d483f270617156b7fa053b4a6cf0fb944bf1a97ecb60bf25b"},
+    {"id": "dense-corners", "shape": [192, 257], "corners": 512, "mask": 7, "sparse": false,
+     "sha256": "3569c4beb4a28a1a701b1a2144df37182ac419b5ee5a2b1dcc830737d868f140"},
+    {"id": "wide-sparse-mask", "shape": [384, 512], "corners": 768, "mask": 11, "sparse": true,
+     "sha256_windows": "6307dbda576fd39e981e02c7108848453026a1286fcaaaeb863e07f0c119eaa3",
+     "sha256_linux": "e8f4ddeb2b9c77f10b49f183609078751e83b8f35031329b49354fddfe1beb1e"}
+  ],
+  "controls": {
+    "zero-mask": {"shape": [12], "sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"},
+    "one-pixel-mask": {"shape": [12], "sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"},
+    "reordered-duplicate": {"shape": [4], "sha256": "1323d0e3adaf4b218f7c675753996d562b34d7204dd13898d3c55b0f5197d3e3"},
+    "empty-coordinates": {"shape": [0], "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "invalid-image-1d": {"error": ["ValueError", "The parameter `image` must be a 2-dimensional array"]}
+  },
+  "layout": {
+    "stock_exporter": "skimage.feature.corner_cy._memoryviewslice",
+    "approved_native_exporter": "numpy.ndarray"
+  }
+}

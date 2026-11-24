@@ -1,0 +1,36 @@
+{
+  "schema": "data-file-hash-contract-v1",
+  "api": "data.file_hash",
+  "signature": "(fname, alg='sha256')",
+  "reference": {
+    "version": "0.26.0",
+    "windows_sha256": "327eed2c2dd8b930bceec397c536bda2c23afdb6ebfe2ac7c11a9c5e005dab98",
+    "linux_sha256": "510c746c82d623965de728287ded8c6d6c2abdd8ff0cc2621ab4aaf5e817ba06",
+    "cases_each": 17
+  },
+  "provider": {
+    "pooch": "Direct import-time callable alias. The pinned Pooch 1.9.0 implementation provides the computation and its own algorithm validation; callable identity is part of this profile.",
+    "stdlib": "When the Pooch import raises ModuleNotFoundError, validate alg using hashlib.algorithms_available, construct a hashlib digest, and read binary chunks of 65536 bytes. Hashlib provides the digest computation. Built-in open supplies the path/descriptor protocol, including file-opening errors and ownership."
+  },
+  "contract": "No path coercion before algorithm validation. Keep str, bytes, pathlib and custom os.PathLike handling, default algorithm and exact exception behavior for the active supplier. Return Python lowercase hexadecimal str. Pooch and hashlib profile errors differ.",
+  "performance": {
+    "case_ids": [
+      "empty-default",
+      "small-str-sha256",
+      "chunk-boundary-bytes-sha512",
+      "large-path-sha256"
+    ],
+    "bytes": [
+      0,
+      21,
+      65537,
+      8388608
+    ],
+    "workers": 1,
+    "repeat": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms": 250,
+    "scope": "Open, read, digest and close local files with precreated fixed contents. Direct Pooch alias calls are identical code; record measured ratios without claiming speedup from noise."
+  },
+  "sdk": "Inapplicable to this provider-backed Python API."
+}

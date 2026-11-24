@@ -1,0 +1,24 @@
+{
+  "schema": "data-checkerboard-contract-v1",
+  "api": "data.checkerboard",
+  "signature": "()",
+  "reference": {
+    "version": "0.26.0",
+    "upstream_source": "data/chessboard_GRAY.png"
+  },
+  "representation": {
+    "shape": [200, 200],
+    "strides": [200, 1],
+    "dtype": "|u1",
+    "bytes": 40000,
+    "decoded_sha256": "60c868d760df4979a61102c3711c656dcc9380194e1df978e7fdc8a3355d3d45"
+  },
+  "implementation": "Pure-compute C++ RLE decode returning a fresh owning writable C-contiguous uint8 ndarray.",
+  "timing": {
+    "case_ids": ["default"],
+    "workers": 1,
+    "repeat": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms": 250
+  }
+}

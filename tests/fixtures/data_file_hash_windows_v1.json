@@ -1,0 +1,223 @@
+{
+  "source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+  "api": "data.file_hash",
+  "reference": "0.26.0",
+  "reference_scope": "Windows retained no-Pooch hashlib fallback",
+  "source_path": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Lib\\site-packages\\skimage\\data\\_fetchers.py",
+  "source_sha256": "b7cd4c45ef69dd74918b604418133a0a9da6d204248e38c5575b72f68e93485f",
+  "runtime": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Users\\HEQ\\Projects\\scikit-imagexx\\.venv\\Scripts\\python.exe",
+  "available_algorithms": [
+    "blake2b",
+    "blake2s",
+    "md5",
+    "md5-sha1",
+    "ripemd160",
+    "sha1",
+    "sha224",
+    "sha256",
+    "sha384",
+    "sha3_224",
+    "sha3_256",
+    "sha3_384",
+    "sha3_512",
+    "sha512",
+    "sha512_224",
+    "sha512_256",
+    "shake_128",
+    "shake_256",
+    "sm3"
+  ],
+  "inputs": {
+    "empty": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "small": {
+      "bytes": 21,
+      "sha256": "033ca0a34dffba734f0b3255e0861587793669485c45fa6b75f920fec6e37872"
+    },
+    "chunk-boundary": {
+      "bytes": 65537,
+      "sha256": "2deb0bd2129a9d3aed91e3cff58b3993752be549642890a3e853ec1065f9b617"
+    }
+  },
+  "outcomes": [
+    {
+      "id": "empty-default",
+      "file": "empty",
+      "path_kind": "path",
+      "algorithm": null,
+      "outcome": {
+        "type": "str",
+        "hexdigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "small-default",
+      "file": "small",
+      "path_kind": "str",
+      "algorithm": null,
+      "outcome": {
+        "type": "str",
+        "hexdigest": "033ca0a34dffba734f0b3255e0861587793669485c45fa6b75f920fec6e37872"
+      }
+    },
+    {
+      "id": "small-bytes-path",
+      "file": "small",
+      "path_kind": "bytes",
+      "algorithm": "sha256",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "033ca0a34dffba734f0b3255e0861587793669485c45fa6b75f920fec6e37872"
+      }
+    },
+    {
+      "id": "small-sha1",
+      "file": "small",
+      "path_kind": "str",
+      "algorithm": "sha1",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "c8c63c301a7ea65b8e2f221eb2df9a50625286bd"
+      }
+    },
+    {
+      "id": "small-sha512",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "sha512",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "3eba2dfe9c84ff6d60e7d56d7bd1f2524215f4fe62ef17b218d3c01e57e6ab27a32cf76b04c8214367be98ca5341b454d6789600ea929e83255d1b899fc671a9"
+      }
+    },
+    {
+      "id": "small-blake2b",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "blake2b",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "2cd0514a49d998a3ba014ffdb444ad634e3b1f53660ad52172c01afde5d5c47493f50d02ced2bee9bba4b633bd4c256dd2a31b455203b13dcf693aca8516243f"
+      }
+    },
+    {
+      "id": "chunk-boundary",
+      "file": "chunk-boundary",
+      "path_kind": "path",
+      "algorithm": "sha256",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "2deb0bd2129a9d3aed91e3cff58b3993752be549642890a3e853ec1065f9b617"
+      }
+    },
+    {
+      "id": "invalid-algorithm",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "not-a-hash",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'not-a-hash' not available in hashlib"
+      }
+    },
+    {
+      "id": "uppercase-algorithm",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "SHA256",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'SHA256' not available in hashlib"
+      }
+    },
+    {
+      "id": "shake-needs-length",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "shake_128",
+      "outcome": {
+        "type": "TypeError",
+        "message": "hexdigest() missing required argument 'length' (pos 1)"
+      }
+    },
+    {
+      "id": "explicit-none-algorithm",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "__none__",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'None' not available in hashlib"
+      }
+    },
+    {
+      "id": "invalid-list-algorithm",
+      "file": "small",
+      "path_kind": "path",
+      "algorithm": "__list__",
+      "outcome": {
+        "type": "TypeError",
+        "message": "unhashable type: 'list'"
+      }
+    },
+    {
+      "id": "missing-file",
+      "file": "missing",
+      "path_kind": "path",
+      "algorithm": null,
+      "outcome": {
+        "type": "FileNotFoundError",
+        "message": "[Errno 2] No such file or directory: '<fixture>\\\\missing.bin'",
+        "errno": 2,
+        "winerror": null
+      }
+    },
+    {
+      "id": "directory",
+      "file": "directory",
+      "path_kind": "path",
+      "algorithm": null,
+      "outcome": {
+        "type": "PermissionError",
+        "message": "[Errno 13] Permission denied: '<fixture>'",
+        "errno": 13,
+        "winerror": null
+      }
+    },
+    {
+      "id": "invalid-path",
+      "file": "small",
+      "path_kind": "invalid",
+      "algorithm": null,
+      "outcome": {
+        "type": "TypeError",
+        "message": "expected str, bytes or os.PathLike object, not object"
+      }
+    },
+    {
+      "id": "embedded-nul",
+      "file": "small",
+      "path_kind": "nul",
+      "algorithm": null,
+      "outcome": {
+        "type": "ValueError",
+        "message": "embedded null character"
+      }
+    },
+    {
+      "id": "invalid-algorithm-before-open",
+      "file": "missing",
+      "path_kind": "path",
+      "algorithm": "not-a-hash",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'not-a-hash' not available in hashlib"
+      }
+    }
+  ],
+  "disposition": "Pinned no-Pooch original observations; Pooch-present behavior, native/provider route, candidate parity and speed remain pending.",
+  "fixture_retained": false
+}

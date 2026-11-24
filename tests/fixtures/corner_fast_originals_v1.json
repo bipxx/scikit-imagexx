@@ -1,0 +1,1020 @@
+{
+  "u8-small-default": {
+    "native": true,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        48,
+        64
+      ],
+      "dtype": "|u1",
+      "strides": [
+        64,
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 3063,
+      "digest": "d792d606379dab3cbdfe18c0a598af0e358085c1fb5f0e530923bcdaeea188e1"
+    },
+    "output": {
+      "shape": [
+        48,
+        64
+      ],
+      "dtype": "<f8",
+      "strides": [
+        512,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 150,
+      "digest": "d14d52e4345d2409a194660a7222c19c97995f0f6ca6fda7989eff1147b98739"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "u8-gridded-n9": {
+    "native": true,
+    "recipe_options": {
+      "n": 9
+    },
+    "input": {
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "|u1",
+      "strides": [
+        512,
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 261155,
+      "digest": "5d2380b694eb265a725609bbf39f1494544d37febae7e75365127af139c370fb"
+    },
+    "output": {
+      "shape": [
+        512,
+        512
+      ],
+      "dtype": "<f8",
+      "strides": [
+        4096,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 37130,
+      "digest": "9956e0f355d6eb6a498a5a65e4b08b1f6d74dac9e6d45c195036ba0273cd1755"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "f32-textured-n12": {
+    "native": true,
+    "recipe_options": {
+      "threshold": 0.14
+    },
+    "input": {
+      "shape": [
+        192,
+        256
+      ],
+      "dtype": "<f4",
+      "strides": [
+        1024,
+        4
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49152,
+      "digest": "c9b76b31672715d37d49269c7cdb60e1f4131b3aa7fa4f33cd6ff99a36e55329"
+    },
+    "output": {
+      "shape": [
+        192,
+        256
+      ],
+      "dtype": "<f4",
+      "strides": [
+        1024,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 3109,
+      "digest": "0b2c43033c7df65673a644b506805909935eb22b5558a0cac0a822ece3c3ed36"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "f64-textured-n9": {
+    "native": true,
+    "recipe_options": {
+      "n": 9,
+      "threshold": 0.12
+    },
+    "input": {
+      "shape": [
+        288,
+        352
+      ],
+      "dtype": "<f8",
+      "strides": [
+        2816,
+        8
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 101376,
+      "digest": "8b249c4e8a80dbb5e940ac16e359ef28f7c8e2be12bef276ab2f6304f0a2007d"
+    },
+    "output": {
+      "shape": [
+        288,
+        352
+      ],
+      "dtype": "<f8",
+      "strides": [
+        2816,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 11371,
+      "digest": "27d01e4940d553ecd6423406c17fb27db9b30aea9950da4ec91249f825e5105b"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "f32-wrap-arc-score-order": {
+    "native": true,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "5f00ab6795df8b96cb82252cc3e9a7918ab6606054ebbc24e5b9f0042c526c0c"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 1,
+      "digest": "ed9637d5360186e23d5b309bcfd56b5880a036a2558d1e670e4fd346b9eb12b9"
+    },
+    "center_hex": "0x1.a4a0700000000p+2",
+    "zero_border": true,
+    "warnings": []
+  },
+  "f64-dark-eight": {
+    "native": true,
+    "recipe_options": {
+      "n": 8
+    },
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f8",
+      "strides": [
+        56,
+        8
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "82b76f2a0f0bee6808e3ef8345ec02df1bd6ac90b059305dd62455f184e3d03a"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f8",
+      "strides": [
+        56,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 1,
+      "digest": "cc38ac0698ef9213e5fdecab92517b20fc13379ec546ce56e4c8e652b8e1bb14"
+    },
+    "center_hex": "0x1.8f5c28f5c28f7p+1",
+    "zero_border": true,
+    "warnings": []
+  },
+  "f64-split-rejected": {
+    "native": true,
+    "recipe_options": {
+      "n": 5
+    },
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f8",
+      "strides": [
+        56,
+        8
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "0aa337bbb1e13acc1d9c910937d4b05b80abcb2fe715c3e98ac6c4422eec7d74"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f8",
+      "strides": [
+        56,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "3eefc4790b52024832ea4c03c6e7a781f3ef9416866a959b2777fce101ad9d61"
+    },
+    "center_hex": "0x0.0p+0",
+    "zero_border": true,
+    "warnings": []
+  },
+  "strict-equality": {
+    "native": true,
+    "recipe_options": {
+      "n": 1,
+      "threshold": 0.125
+    },
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "0c530056ab4e46b7a441b84a443915a3f4e40b2516696231e2767c96734cfadf"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "d904e1f1e028ba9058a128a6fd724f0f9892ae8fe49c8f7dc2613183f7f8bbca"
+    },
+    "center_hex": "0x0.0p+0",
+    "zero_border": true,
+    "warnings": []
+  },
+  "f32-nextafter-bright": {
+    "native": true,
+    "recipe_options": {
+      "n": 16,
+      "threshold": 0.125
+    },
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "866cf1c745a2bc7f8dbfed9b4b27c6dd5921bdaa8f8f6df07270eba5f309dda0"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 1,
+      "digest": "876c25821c4cf58600725e938e374b93cfa1c89fc0863699618a0d0334395743"
+    },
+    "center_hex": "0x1.0000040000000p+1",
+    "zero_border": true,
+    "warnings": []
+  },
+  "bright-at-n1": {
+    "native": true,
+    "recipe_options": {
+      "n": 1
+    },
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f8",
+      "strides": [
+        56,
+        8
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "7bbd9fe3b0bf77468a8011d4ce0d829febac6bdb7c1e4f3ace155f0cfc38881b"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f8",
+      "strides": [
+        56,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 1,
+      "digest": "fc4e777c75526464f0a3c08335919f19053e0df6a3d5acb8251d4cf23ccefaf5"
+    },
+    "center_hex": "0x1.8000000000000p-2",
+    "zero_border": true,
+    "warnings": []
+  },
+  "zero-threshold": {
+    "native": true,
+    "recipe_options": {
+      "n": 16,
+      "threshold": 0.0
+    },
+    "input": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 49,
+      "digest": "3ba940db70b56d67503a14823d74853ba15b14ebe2c8c256091fdb12302a96e5"
+    },
+    "output": {
+      "shape": [
+        7,
+        7
+      ],
+      "dtype": "<f4",
+      "strides": [
+        28,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 1,
+      "digest": "6a2c06014e22c2f2da3f02535bd3ddbd9c85980832806b5bc51c351141e5c732"
+    },
+    "center_hex": "0x1.0000000000000p+0",
+    "zero_border": true,
+    "warnings": []
+  },
+  "width-six": {
+    "native": true,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        11,
+        6
+      ],
+      "dtype": "|u1",
+      "strides": [
+        6,
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 65,
+      "digest": "8846da45fbdbdfeb8444f4f903a4006e6a3d3e7b796576fe539ac2c1942c1769"
+    },
+    "output": {
+      "shape": [
+        11,
+        6
+      ],
+      "dtype": "<f8",
+      "strides": [
+        48,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "8889eb3cdd3d0ac94711b47ce78b430d8e23a7b31ecc994c56d0c3310c87674a"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "height-six": {
+    "native": true,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        6,
+        11
+      ],
+      "dtype": "<f8",
+      "strides": [
+        88,
+        8
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 66,
+      "digest": "614efb172b11407535b0f3f27275147bc729628cee46a6ae3a12a7d0f8bf8ff7"
+    },
+    "output": {
+      "shape": [
+        6,
+        11
+      ],
+      "dtype": "<f8",
+      "strides": [
+        88,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "8889eb3cdd3d0ac94711b47ce78b430d8e23a7b31ecc994c56d0c3310c87674a"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "u8-offset-owner": {
+    "native": true,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        10,
+        15
+      ],
+      "dtype": "|u1",
+      "strides": [
+        15,
+        1
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "ndarray",
+      "nonzero": 150,
+      "digest": "1bae57697d248e57433523d0b930c7bcbd266c4e6f04f946d9e3c685db1977bf"
+    },
+    "output": {
+      "shape": [
+        10,
+        15
+      ],
+      "dtype": "<f8",
+      "strides": [
+        120,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 3,
+      "digest": "82354952f6b744fd544e9fd8acaa389a950efc1c09d2db93ab2f6ed2eee0b2c3"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "f32-offset-owner": {
+    "native": true,
+    "recipe_options": {
+      "n": 5
+    },
+    "input": {
+      "shape": [
+        12,
+        13
+      ],
+      "dtype": "<f4",
+      "strides": [
+        52,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "ndarray",
+      "nonzero": 156,
+      "digest": "fb8cf75d325a151dcb7fa82bedd6caa849aaad1e2941e8db8dd8af4ba8281a53"
+    },
+    "output": {
+      "shape": [
+        12,
+        13
+      ],
+      "dtype": "<f4",
+      "strides": [
+        52,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 8,
+      "digest": "a7d266ca7c93b567629c6bcaaf83271d47b26d910a8e92269be938f935b69764"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "u8-readonly": {
+    "native": true,
+    "recipe_options": {
+      "n": 7
+    },
+    "input": {
+      "shape": [
+        8,
+        8
+      ],
+      "dtype": "|u1",
+      "strides": [
+        8,
+        1
+      ],
+      "owns": true,
+      "writeable": false,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 63,
+      "digest": "94e85080cef52efe016e320e5ce0506a8920baa7fe1be63b18ef7f4ad423d75e"
+    },
+    "output": {
+      "shape": [
+        8,
+        8
+      ],
+      "dtype": "<f8",
+      "strides": [
+        64,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "f32-readonly-error": {
+    "native": false,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        8,
+        8
+      ],
+      "dtype": "<f4",
+      "strides": [
+        32,
+        4
+      ],
+      "owns": true,
+      "writeable": false,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 64,
+      "digest": "eab6b2196b4799be6c6d779acf0628d0f9b8616f3b6161f4887203556525dc92"
+    },
+    "error": [
+      "ValueError",
+      "buffer source array is read-only"
+    ],
+    "warnings": []
+  },
+  "squeezed-3d": {
+    "native": false,
+    "recipe_options": {
+      "n": 4
+    },
+    "input": {
+      "shape": [
+        1,
+        10,
+        11
+      ],
+      "dtype": "|u1",
+      "strides": [
+        0,
+        11,
+        1
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "ndarray",
+      "nonzero": 109,
+      "digest": "4e6f7c0c969c6359a503466a971ad94d7e37f61fed2ecf06952ba00a1469c10f"
+    },
+    "output": {
+      "shape": [
+        10,
+        11
+      ],
+      "dtype": "<f8",
+      "strides": [
+        88,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 12,
+      "digest": "29bd01d7e1b06e21229eb877a494ebcaf27e8cee872146a3dfb5c39baedea7f9"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "noncontiguous": {
+    "native": false,
+    "recipe_options": {
+      "n": 8
+    },
+    "input": {
+      "shape": [
+        13,
+        13
+      ],
+      "dtype": "<f4",
+      "strides": [
+        52,
+        -4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "ndarray",
+      "nonzero": 169,
+      "digest": "40cd48be46cc0ac44d4d7292ccbb086c139d2451c9babd8f9e62d28fc6e9de8b"
+    },
+    "output": {
+      "shape": [
+        13,
+        13
+      ],
+      "dtype": "<f4",
+      "strides": [
+        52,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "1bfedb90a487ecce837b77d13c349bf60548cc0326eba5435fd27c359231b6ca"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "ordinary-int16": {
+    "native": false,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<i2",
+      "strides": [
+        20,
+        2
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 99,
+      "digest": "adc69cbef71c3a99f9e13b886e543791df32ead5f04dcf6161a5ec52a5220f86"
+    },
+    "output": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<f8",
+      "strides": [
+        80,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "67042dfda5683aead81b6055d19c4dba238341f9dd82f49c0e7cc0c19c5f10d1"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "ordinary-f16": {
+    "native": false,
+    "recipe_options": {
+      "n": 4
+    },
+    "input": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<f2",
+      "strides": [
+        20,
+        2
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 100,
+      "digest": "913b4eb3daaa4b88ddb251a2df9cf95ed433a62a49d26242ce5eebd89c8689d9"
+    },
+    "output": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<f4",
+      "strides": [
+        40,
+        4
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 7,
+      "digest": "06fa84f60d49502480dfd0c73d079941f13f49c349a868e4c1a23af4c6ca8f4b"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "n-zero": {
+    "native": false,
+    "recipe_options": {
+      "n": 0
+    },
+    "input": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "|u1",
+      "strides": [
+        10,
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 99,
+      "digest": "bb80ebf1664653d65a50793945927026a1135d880db6c3246215644c0b00b901"
+    },
+    "output": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<f8",
+      "strides": [
+        80,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "67042dfda5683aead81b6055d19c4dba238341f9dd82f49c0e7cc0c19c5f10d1"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "n-too-large": {
+    "native": false,
+    "recipe_options": {
+      "n": 17
+    },
+    "input": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "|u1",
+      "strides": [
+        10,
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 99,
+      "digest": "bb80ebf1664653d65a50793945927026a1135d880db6c3246215644c0b00b901"
+    },
+    "output": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<f8",
+      "strides": [
+        80,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 0,
+      "digest": "67042dfda5683aead81b6055d19c4dba238341f9dd82f49c0e7cc0c19c5f10d1"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "negative-threshold": {
+    "native": false,
+    "recipe_options": {
+      "n": 9,
+      "threshold": -0.15
+    },
+    "input": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "|u1",
+      "strides": [
+        10,
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 99,
+      "digest": "bb80ebf1664653d65a50793945927026a1135d880db6c3246215644c0b00b901"
+    },
+    "output": {
+      "shape": [
+        10,
+        10
+      ],
+      "dtype": "<f8",
+      "strides": [
+        80,
+        8
+      ],
+      "owns": false,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "memoryview",
+      "nonzero": 5,
+      "digest": "30a55305cb03487d5e398b53d63b965ecaccacb12a9a877a213446f1eef45f0f"
+    },
+    "zero_border": true,
+    "warnings": []
+  },
+  "rank-one-error": {
+    "native": false,
+    "recipe_options": {},
+    "input": {
+      "shape": [
+        10
+      ],
+      "dtype": "|u1",
+      "strides": [
+        1
+      ],
+      "owns": true,
+      "writeable": true,
+      "type": "ndarray",
+      "base_type": "NoneType",
+      "nonzero": 0,
+      "digest": "01d448afd928065458cf670b60f5a594d735af0172c8d67f22a81680132681ca"
+    },
+    "error": [
+      "ValueError",
+      "The parameter `image` must be a 2-dimensional array"
+    ],
+    "warnings": []
+  }
+}

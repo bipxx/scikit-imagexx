@@ -1,0 +1,25 @@
+{
+  "schema": "data-shepp-logan-phantom-contract-v1",
+  "api": "data.shepp_logan_phantom",
+  "signature": "()",
+  "reference": {
+    "version": "0.26.0",
+    "upstream_source": "data/phantom.png",
+    "as_gray": true
+  },
+  "representation": {
+    "shape": [400, 400],
+    "strides": [3200, 8],
+    "dtype": "<f8",
+    "bytes": 1280000,
+    "decoded_sha256": "4889d43ab0cd41aba64d24362615316e308b4034576bc8837783cd478df3bbf6"
+  },
+  "implementation": "Pure-compute C++ RLE decode over exact IEEE-754 binary64 palette words returning a fresh owning writable C-contiguous float64 ndarray.",
+  "timing": {
+    "case_ids": ["default"],
+    "workers": 1,
+    "repeat": 7,
+    "minimum_batch_ms": 100,
+    "warmup_ms": 250
+  }
+}

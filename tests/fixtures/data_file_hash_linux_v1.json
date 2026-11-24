@@ -1,0 +1,167 @@
+{
+  "identity": {
+    "revision": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+    "python": "3.12.13 (main, Apr 14 2026, 14:29:00) [Clang 22.1.3 ]",
+    "executable": "/home/heq/.cache/napachan-spatial-audit-venv/bin/python",
+    "linux_git": "git version 2.43.0",
+    "windows_git": "git version 2.55.0.windows.3",
+    "packages": {
+      "scikit-image": "0.26.0",
+      "Pooch": "1.9.0"
+    },
+    "original": {
+      "path": "/home/heq/.cache/napachan-spatial-audit-venv/lib/python3.12/site-packages/skimage/data/_fetchers.py",
+      "sha256": "50e6234fa2170820eaf8d0f8f42b51905822afc3680a4f09113fa11d435f7fb4"
+    },
+    "provider": {
+      "path": "/home/heq/.cache/napachan-spatial-audit-venv/lib/python3.12/site-packages/pooch/hashes.py",
+      "sha256": "6f5229de41338245b5c94b37c2bed679bcaf3be31b467d450fc903e62836fcc3"
+    }
+  },
+  "reused_case_receipt_sha256": "327eed2c2dd8b930bceec397c536bda2c23afdb6ebfe2ac7c11a9c5e005dab98",
+  "available_algorithms": [
+    "ripemd160",
+    "sha1",
+    "sha512_256",
+    "sha3_224",
+    "sha384",
+    "md5",
+    "sha3_256",
+    "sha3_384",
+    "blake2s",
+    "shake_128",
+    "shake_256",
+    "sha512",
+    "sm3",
+    "sha224",
+    "blake2b",
+    "sha256",
+    "sha3_512",
+    "sha512_224",
+    "md5-sha1"
+  ],
+  "outcomes": [
+    {
+      "id": "empty-default",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "small-default",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "033ca0a34dffba734f0b3255e0861587793669485c45fa6b75f920fec6e37872"
+      }
+    },
+    {
+      "id": "small-bytes-path",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "033ca0a34dffba734f0b3255e0861587793669485c45fa6b75f920fec6e37872"
+      }
+    },
+    {
+      "id": "small-sha1",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "c8c63c301a7ea65b8e2f221eb2df9a50625286bd"
+      }
+    },
+    {
+      "id": "small-sha512",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "3eba2dfe9c84ff6d60e7d56d7bd1f2524215f4fe62ef17b218d3c01e57e6ab27a32cf76b04c8214367be98ca5341b454d6789600ea929e83255d1b899fc671a9"
+      }
+    },
+    {
+      "id": "small-blake2b",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "2cd0514a49d998a3ba014ffdb444ad634e3b1f53660ad52172c01afde5d5c47493f50d02ced2bee9bba4b633bd4c256dd2a31b455203b13dcf693aca8516243f"
+      }
+    },
+    {
+      "id": "chunk-boundary",
+      "outcome": {
+        "type": "str",
+        "hexdigest": "2deb0bd2129a9d3aed91e3cff58b3993752be549642890a3e853ec1065f9b617"
+      }
+    },
+    {
+      "id": "invalid-algorithm",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'not-a-hash' not available to the pooch library. Only the following algorithms are available ['ripemd160', 'sha1', 'sha512_256', 'sha3_224', 'sha384', 'md5', 'sha3_256', 'sha3_384', 'blake2s', 'shake_128', 'shake_256', 'sha512', 'sm3', 'sha224', 'blake2b', 'sha256', 'sha3_512', 'sha512_224', 'md5-sha1']."
+      }
+    },
+    {
+      "id": "uppercase-algorithm",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'SHA256' not available to the pooch library. Only the following algorithms are available ['ripemd160', 'sha1', 'sha512_256', 'sha3_224', 'sha384', 'md5', 'sha3_256', 'sha3_384', 'blake2s', 'shake_128', 'shake_256', 'sha512', 'sm3', 'sha224', 'blake2b', 'sha256', 'sha3_512', 'sha512_224', 'md5-sha1']."
+      }
+    },
+    {
+      "id": "shake-needs-length",
+      "outcome": {
+        "type": "TypeError",
+        "message": "hexdigest() missing required argument 'length' (pos 1)"
+      }
+    },
+    {
+      "id": "explicit-none-algorithm",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'None' not available to the pooch library. Only the following algorithms are available ['ripemd160', 'sha1', 'sha512_256', 'sha3_224', 'sha384', 'md5', 'sha3_256', 'sha3_384', 'blake2s', 'shake_128', 'shake_256', 'sha512', 'sm3', 'sha224', 'blake2b', 'sha256', 'sha3_512', 'sha512_224', 'md5-sha1']."
+      }
+    },
+    {
+      "id": "invalid-list-algorithm",
+      "outcome": {
+        "type": "TypeError",
+        "message": "unhashable type: 'list'"
+      }
+    },
+    {
+      "id": "missing-file",
+      "outcome": {
+        "type": "FileNotFoundError",
+        "message": "[Errno 2] No such file or directory: '<fixture>/missing.bin'",
+        "errno": 2
+      }
+    },
+    {
+      "id": "directory",
+      "outcome": {
+        "type": "IsADirectoryError",
+        "message": "[Errno 21] Is a directory: '<fixture>'",
+        "errno": 21
+      }
+    },
+    {
+      "id": "invalid-path",
+      "outcome": {
+        "type": "TypeError",
+        "message": "expected str, bytes or os.PathLike object, not object"
+      }
+    },
+    {
+      "id": "embedded-nul",
+      "outcome": {
+        "type": "ValueError",
+        "message": "embedded null byte"
+      }
+    },
+    {
+      "id": "invalid-algorithm-before-open",
+      "outcome": {
+        "type": "ValueError",
+        "message": "Algorithm 'not-a-hash' not available to the pooch library. Only the following algorithms are available ['ripemd160', 'sha1', 'sha512_256', 'sha3_224', 'sha384', 'md5', 'sha3_256', 'sha3_384', 'blake2s', 'shake_128', 'shake_256', 'sha512', 'sm3', 'sha224', 'blake2b', 'sha256', 'sha3_512', 'sha512_224', 'md5-sha1']."
+      }
+    }
+  ],
+  "fixture_retained": false
+}

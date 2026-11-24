@@ -1,0 +1,39 @@
+{
+  "api": "feature.corner_fast",
+  "scope": "Reference-only packet. The numeric prototype is unbuilt and this API remains upstream-only.",
+  "predecessor_source": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+  "original": {
+    "version": "0.26.0",
+    "tagged_kernel": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.26.0/src/skimage/feature/corner_cy.pyx",
+    "public_source_sha256": "1a795dd0a73ab6e28f5d2190fa3269472c8391025e8b223e77a6558fd1049d53",
+    "minimum_entry_sha256": "ebe76b4f99c64c58aefbc1351abd0794de6f3f5ca8688e7a3641e24f248c0495",
+    "modern_entry_sha256": "c670d89fffc94f0bbe4cf960c540c0eb743cb92496355ddab78160b7e7915b7e",
+    "fixture": "tests/fixtures/corner_fast_originals_v1.json",
+    "same_rows_sha256": "a047d510a508d0f32c5ce2e92510958a78c955d51aa1af5f6701dd7eb6aa545d",
+    "minimum_exporter_sha256": "ba725e26f7e716d932b116171a1fcbd274437dcf2f49701c432a4492bc5e0617",
+    "modern_exporter_sha256": "77a87e9b9fd60405154babee3c1aa97f4c8039937d83346bf910c2e9712a53b8"
+  },
+  "proposed_numeric_scope": {
+    "input": "Plain native-endian C-contiguous naturally aligned 2D uint8, float32, or float64 ndarray with bounded backing and both extents at least two, and at most 4194304 elements.",
+    "scalars": "Exact Python int n in [1,16] and finite exact Python float threshold in [0,256].",
+    "precision": "Round-to-nearest; uint8 is scaled by binary64 reciprocal times level. Floating inputs are finite in [-256,256]. Float32 keeps float32 boundary and response operations.",
+    "order": "Strict bright/dark comparisons and circular run; four cardinal samples for n>=12; on acceptance score all 16 samples in clockwise order from the positive column direction.",
+    "output": "Same shape with radius-three zero border. Writable ndarray with a memoryview base; uint8 and float64 return float64, float32 returns float32.",
+    "serial": true,
+    "normal_and_forced_scalar": "The same serial numeric leaf is proposed in both process modes.",
+    "compatibility": "Other values, protocols, shapes and layouts retain fallback; float32 and float64 require writable input, as the original memoryview consumer does."
+  },
+  "observed_parity_blocker": {
+    "stock": "result.base.obj is the live skimage.feature.corner_cy._memoryviewslice and its .base is the owning numpy.ndarray.",
+    "prototype": "A NumPy-backed memoryview exposes the owning ndarray directly as result.base.obj.",
+    "scope": "Observable difference also occurs on the ordinary 7x7 uint8 case in both retained stock profiles. The original type is private and is not exported as a module attribute.",
+    "disposition": "Exact native public ownership, hot-swap and release admission remain pending."
+  },
+  "timing": {
+    "case_ids": ["u8-small-default", "u8-gridded-n9", "f32-textured-n12", "f64-textured-n9"],
+    "boundary": "Whole public call including response allocation, output wrapping and uint8 normalization.",
+    "workers": 1,
+    "gate_minimum_ratio_for_each": 1,
+    "execution_authority": null
+  }
+}
