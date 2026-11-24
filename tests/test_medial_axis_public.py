@@ -63,8 +63,8 @@ def test_frozen_public_contract(api, name, image, mask, distances, rng, rng_labe
         seen = []
         value = object()
 
-        def provider(data, selected, return_distance, *, rng=None):
-            seen.append((data, selected, return_distance, rng))
+        def provider(data, mask=None, return_distance=False, *, rng=None):
+            seen.append((data, mask, return_distance, rng))
             return value
 
         monkeypatch.setattr(morphology, 'medial_axis', provider)
