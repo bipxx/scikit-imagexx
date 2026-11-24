@@ -1,0 +1,256 @@
+{
+  "schema": "gray-texture-native-component-v1",
+  "source_base": "56303cd06ab15b01ef914fdcd8e6cb58717086d7",
+  "scope": "PRIVATE_COMPONENT_NOT_GENUINE_OR_RELEASE",
+  "files": {
+    "include/skimagexx/gray_texture.hpp": "7bda6f236f40231c62e49e9b3c1059b677ecbdbf49863fee54d86cc155dee0cf",
+    "src/gray_texture.cpp": "3969c4d23b5de04e01dc12bdf8f2abc185e5503230ed1987c2e734fc65d7a8ed",
+    "src/bind_gray_texture.cpp": "0749a63ab3e6e31f6a8471094d67eeeb724604900136ca5360da5953e9908603",
+    "python/skimagexx/_gray_texture.py": "e28c2d793cbbee15b1a171e8c6a6c9f1e1e7c37668918a4008e788d85a9d2f79",
+    "tests/gray_texture_private_module.cpp": "239d8248b8593dc702f49e406f87d382901930c0b80fa193f215d288566a5a33",
+    "tests/test_gray_texture.cpp": "06ff7fd14d5fa2642ae24dafd6b546f76d7a991a77fb0d35fab20958349c4d3b",
+    "tests/test_gray_texture_public.py": "f9ca78a534a236573dd3b492cd0350e3cdb46c924ebbada120c3757bc8368552",
+    "tests/fixtures/gray_texture_saved_v1.hpp": "dd498ef1570330df40fd8fabaf6ea8dd3cf036e5e8bfb20f950aec84f49f8e55",
+    "tests/fixtures/gray_texture_original_v1.json": "cb8dac8505bebba62e49c5d660dfabe6d036d96b4f4a04f51dbfc0ca147dc4bb",
+    "benchmarks/gray_texture_native.py": "bdf4a191f5a6e1e9d30f089d7b59dd38d3738576c8d6836c891804c0e740dcbc"
+  },
+  "dependencies": {
+    "include/skimagexx/image.hpp": "b0e283e0dc73d5aeefb90151f25fbe8b603758db74841189b8a37500da24e093",
+    "src/execution.hpp": "d1ee8be746e64b7c68c472f56da6e0e7357a57a6222392f2c00bb387ef8f7d8d",
+    "src/half.hpp": "5006b0e96ba84139dcacb90400c0bf3271c981bb48006b33aedce5bfffdcb69f",
+    "tests/graycomatrix_graycoprops_contract.py": "813ad0a7b7c8873e18ae6740d73ce3f0fcf99468abe8ad414c368e3f981c036f",
+    "tests/graycomatrix_graycoprops_observer.py": "7b47baf97e0da5934388936ef8edfa087cc52d49a6cf909188d92611be0472f2",
+    "tests/graycomatrix_graycoprops_exception_codec.py": "db346790e5b47384dc82de692152214afdbab74060ebe6e538b54790349ad667",
+    "tests/crop_observer.py": "4612151aff7b113eca610c32acc2d7d7800bc2700f2e9f7879b36058394de1b3",
+    "tests/util_views_fenv.py": "275cfab25633b20489d1f173ac8fba16563ae8ffeed2e7f649d6e48338cef894",
+    "benchmarks/graycomatrix.py": "85eef795de3bba7834c749231626e19e55b359ed9d643d62138ab63e3fbc13d8",
+    "benchmarks/graycoprops.py": "2de170395343b54c558def605fc9584d405e9f0570bc8ecca825c006866d87d7",
+    "third_party/numpy-LICENSE.txt": "1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491",
+    "tests/crop_contract.py": "bce31ffa2aff2bd909687fdb6987677ae1f03f4fe7d1e94a02de7f51437fcfea",
+    "tests/draw_coordinates_observer.py": "0fd2c97082900a11fb534134efaa20ae69a89a6167fff434925f266555193549",
+    "tests/draw_coordinates_contract.py": "dba8ff672ce786b6bf4712d1628ab26fb8b16e9887c09a906045ce1aa2f70929",
+    "coverage/contracts/util-views-fenv-v1.json": "7b8e83d46f981be96090dacadf9a068739197748073ce083b0653673ad08dace",
+    "tests/util_views_fenv_restore.c": "97ff5740e8eb30c75b6e38729a6ada89ec47f8ac20fd0ceb172e06aeca9f2ae6",
+    "tests/fixtures/graycomatrix_graycoprops_sources_v1.json": "894b66095f8106a7571f672490d1ca3a9f0f907c03e29f9057cbe4ad9c23720b",
+    "coverage/contracts/graycomatrix-graycoprops-v1.json": "68d6ce9fc4f240a32ba0638d395fd8cdf4a40c5eee8aa580d60d68e56ee0f0c2"
+  },
+  "saved": {
+    "profiles": 2,
+    "recipes_per_profile": 94,
+    "strict_public_records_per_mode_workers_1_4": 376,
+    "SDK_distinct_numeric_returns": 63,
+    "SDK_excluded": [
+      "graycoprops/type-object"
+    ],
+    "missing_raw_fields_backfilled": false
+  },
+  "native_entries": {
+    "feature.graycomatrix": "graycomatrix_apply",
+    "feature.graycoprops": "graycoprops_apply"
+  },
+  "benchmark": {
+    "cases": [
+      {
+        "id": "graycomatrix/C/counts",
+        "api": "feature.graycomatrix",
+        "shape": [
+          257,
+          257
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "distances": [
+          1.0,
+          2.0
+        ],
+        "angles": [
+          0.0,
+          1.5707963267948966
+        ],
+        "options": {
+          "levels": 16,
+          "symmetric": false,
+          "normed": false
+        }
+      },
+      {
+        "id": "graycomatrix/C/normalized",
+        "api": "feature.graycomatrix",
+        "shape": [
+          257,
+          257
+        ],
+        "layout": "C",
+        "dtype": "uint8",
+        "distances": [
+          1.0,
+          2.0
+        ],
+        "angles": [
+          0.0,
+          1.5707963267948966
+        ],
+        "options": {
+          "levels": 16,
+          "symmetric": true,
+          "normed": true
+        }
+      },
+      {
+        "id": "graycomatrix/F/counts",
+        "api": "feature.graycomatrix",
+        "shape": [
+          257,
+          257
+        ],
+        "layout": "F",
+        "dtype": "uint8",
+        "distances": [
+          1.0,
+          2.0
+        ],
+        "angles": [
+          0.0,
+          1.5707963267948966
+        ],
+        "options": {
+          "levels": 16,
+          "symmetric": false,
+          "normed": false
+        }
+      },
+      {
+        "id": "graycomatrix/F/normalized",
+        "api": "feature.graycomatrix",
+        "shape": [
+          257,
+          257
+        ],
+        "layout": "F",
+        "dtype": "uint8",
+        "distances": [
+          1.0,
+          2.0
+        ],
+        "angles": [
+          0.0,
+          1.5707963267948966
+        ],
+        "options": {
+          "levels": 16,
+          "symmetric": true,
+          "normed": true
+        }
+      },
+      {
+        "id": "graycoprops/C/counts",
+        "api": "feature.graycoprops",
+        "shape": [
+          64,
+          64,
+          2,
+          2
+        ],
+        "layout": "C",
+        "dtype": "uint32",
+        "options": {
+          "prop": "contrast"
+        }
+      },
+      {
+        "id": "graycoprops/C/normalized",
+        "api": "feature.graycoprops",
+        "shape": [
+          64,
+          64,
+          2,
+          2
+        ],
+        "layout": "C",
+        "dtype": "uint32",
+        "options": {
+          "prop": "entropy"
+        }
+      },
+      {
+        "id": "graycoprops/F/counts",
+        "api": "feature.graycoprops",
+        "shape": [
+          64,
+          64,
+          2,
+          2
+        ],
+        "layout": "F",
+        "dtype": "uint32",
+        "options": {
+          "prop": "energy"
+        }
+      },
+      {
+        "id": "graycoprops/F/normalized",
+        "api": "feature.graycoprops",
+        "shape": [
+          64,
+          64,
+          2,
+          2
+        ],
+        "layout": "F",
+        "dtype": "uint32",
+        "options": {
+          "prop": "correlation"
+        }
+      }
+    ],
+    "method": {
+      "repeat": 7,
+      "target_ms": 100,
+      "warmup_min_ms": 250,
+      "workers": 1,
+      "retain_all_losses": true
+    },
+    "raw_samples": 112,
+    "warmup_groups": 16,
+    "status": "SOURCE_ONLY_EXECUTION_CONTROLLER_PENDING"
+  },
+  "authority": {
+    "producer": null,
+    "run": null,
+    "artifact": null,
+    "runtime": null,
+    "core": null,
+    "SDK": null,
+    "helper": null,
+    "root_admission": null,
+    "cohort_GO": null,
+    "measurement_GO": null,
+    "deadline": null
+  },
+  "ordered_serial": [
+    "histogram update source angle/distance/row/column order",
+    "property reductions and callback phases"
+  ],
+  "optional_parallel": [
+    "independent symmetry/copy spans only above existing partition threshold"
+  ],
+  "providers": {
+    "graycomatrix": [
+      "NumPy boundary coercions/extrema/signed-negative validation"
+    ],
+    "graycoprops": [
+      "NumPy astype float64",
+      "scalar-only NumPy error policy dispatch"
+    ]
+  },
+  "frontiers": [
+    "nonfinite/unsafe-wide offsets quarantined",
+    "unbounded levels/resource allocation not assessed",
+    "broader FP traps/rounding/FTZ/DAZ/signaling NaNs and policy operations outside retained cases",
+    "object/protocol conversion relies on declared NumPy boundary",
+    "GLIBC x86 old scalar log ABI pinned; other ISA/libm/Windows exact words unassessed",
+    "SDK has typed POD views and callback notices, not Python object/error/warning identity",
+    "genuine namespace/hotswap/exported whole SDK and four-profile qualification pending",
+    "one-thread original public benchmark measurement pending"
+  ]
+}

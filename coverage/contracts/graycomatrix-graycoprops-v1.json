@@ -1,0 +1,3062 @@
+{
+  "schema": "graycomatrix-graycoprops-source-first-v1",
+  "status": "SOURCE_ONLY_UNOBSERVED_PENDING_ROOT_SAFETY_AND_READINESS",
+  "APIs": [
+    "feature.graycomatrix",
+    "feature.graycoprops"
+  ],
+  "source_version": "0.26.0",
+  "source_fixture": {
+    "path": "tests/fixtures/graycomatrix_graycoprops_sources_v1.json",
+    "raw_sha256": "894b66095f8106a7571f672490d1ca3a9f0f907c03e29f9057cbe4ad9c23720b"
+  },
+  "signature": {
+    "graycomatrix": "(image, distances, angles, levels=None, symmetric=False, normed=False)",
+    "graycoprops": "(P, prop='contrast')"
+  },
+  "properties": [
+    "contrast",
+    "dissimilarity",
+    "homogeneity",
+    "energy",
+    "correlation",
+    "ASM",
+    "mean",
+    "variance",
+    "std",
+    "entropy"
+  ],
+  "recipes": [
+    {
+      "id": "graycomatrix/uint8",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/int8",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/uint16",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/int16",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/uint32",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/int32",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int32",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/uint64",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint64",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/int64",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int64",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-bool",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "bool",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-float16",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-float32",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-float64",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-complex64",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "complex64",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-complex128",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-object",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/type-U1",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "U1",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "validation/fused dtype error or cast protocol, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/default-u8",
+      "api": "feature.graycomatrix",
+      "shape": [
+        1,
+        1
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": null,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/default-i8",
+      "api": "feature.graycomatrix",
+      "shape": [
+        1,
+        1
+      ],
+      "dtype": "int8",
+      "layout": "C",
+      "levels": null,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/default-normalized",
+      "api": "feature.graycomatrix",
+      "shape": [
+        1,
+        1
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": null,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": true,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/layout-F",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "F",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/layout-transpose",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "transpose",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/layout-reverse",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "reverse",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/layout-zero",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "zero",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/readonly",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": true,
+      "input_kind": "array",
+      "source_partition": "nonconst Cython buffer request, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/metadata",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": true,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/swapped-u16",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": ">u2",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "non-native-endian fused buffer, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/image-list",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "list",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/flags-10",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": true,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/flags-01",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": true,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/flags-11",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": true,
+      "normed": true,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-zero",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        0.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-negative",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        -1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-half",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        0.5,
+        1.5
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-negative-half",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        -0.5,
+        -1.5
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-near-half",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        0.49999999999999994,
+        0.5000000000000001
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-axes",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0,
+        1.5707963267948966,
+        3.141592653589793,
+        -1.5707963267948966
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/offset-multi",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0,
+        2.0
+      ],
+      "angles": [
+        0.7853981633974483,
+        -0.7853981633974483
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "ordinary integer counts",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-rank1",
+      "api": "feature.graycomatrix",
+      "shape": [
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-rank3",
+      "api": "feature.graycomatrix",
+      "shape": [
+        1,
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-empty",
+      "api": "feature.graycomatrix",
+      "shape": [
+        0,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-negative-image",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "int16",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "negative",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-missing-levels",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint16",
+      "layout": "C",
+      "levels": null,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-zero-levels",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 0,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-negative-levels",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": -1,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-float-levels",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4.5,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-small-levels",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 2,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-distance-scalar",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED",
+      "distance_shape": []
+    },
+    {
+      "id": "graycomatrix/error-angle-rank2",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED",
+      "angle_shape": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "graycomatrix/error-distance-empty",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [],
+      "angles": [
+        0.0
+      ],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycomatrix/error-angle-empty",
+      "api": "feature.graycomatrix",
+      "shape": [
+        3,
+        4
+      ],
+      "dtype": "uint8",
+      "layout": "C",
+      "levels": 4,
+      "distances": [
+        1.0
+      ],
+      "angles": [],
+      "symmetric": false,
+      "normed": false,
+      "pattern": "ordinary",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/contrast",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/dissimilarity",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "dissimilarity",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/homogeneity",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "homogeneity",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/energy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "energy",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/correlation",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "correlation",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/ASM",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "ASM",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/mean",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "mean",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/variance",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "variance",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/std",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "std",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/entropy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "entropy",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/zero-contrast",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "zero",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/zero-correlation",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "correlation",
+      "pattern": "zero",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/zero-ASM",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "ASM",
+      "pattern": "zero",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/zero-entropy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "entropy",
+      "pattern": "zero",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/diagonal-correlation",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "correlation",
+      "pattern": "diagonal",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/diagonal-variance",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "variance",
+      "pattern": "diagonal",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/diagonal-std",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "std",
+      "pattern": "diagonal",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/diagonal-entropy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "entropy",
+      "pattern": "diagonal",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/type-float16",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float16",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "astypefloat64 conversion/warning/reduction, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/type-float32",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "astypefloat64 conversion/warning/reduction, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/type-float64",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "astypefloat64 conversion/warning/reduction, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/type-complex128",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "complex128",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "astypefloat64 conversion/warning/reduction, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/type-object",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "object",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "astypefloat64 conversion/warning/reduction, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/type->f8",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": ">f8",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "astypefloat64 conversion/warning/reduction, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/layout-F",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "F",
+      "prop": "correlation",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/layout-transpose",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "transpose",
+      "prop": "correlation",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/layout-reverse",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "reverse",
+      "prop": "correlation",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/layout-zero",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "zero",
+      "prop": "correlation",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/readonly",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": true,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/metadata",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": true,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "normalized property reduction",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/negative-entropy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "entropy",
+      "pattern": "negative",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "nonfinite/negative normalize+log/sqrt warning policy, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/negative-correlation",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "correlation",
+      "pattern": "negative",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "nonfinite/negative normalize+log/sqrt warning policy, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/nan-entropy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "entropy",
+      "pattern": "nan",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "nonfinite/negative normalize+log/sqrt warning policy, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/nan-correlation",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "correlation",
+      "pattern": "nan",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "nonfinite/negative normalize+log/sqrt warning policy, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/inf-entropy",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "entropy",
+      "pattern": "inf",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "nonfinite/negative normalize+log/sqrt warning policy, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/inf-correlation",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "float64",
+      "layout": "C",
+      "prop": "correlation",
+      "pattern": "inf",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "nonfinite/negative normalize+log/sqrt warning policy, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-rank3",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-nonsquare",
+      "api": "feature.graycoprops",
+      "shape": [
+        2,
+        3,
+        1,
+        1
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-empty-levels",
+      "api": "feature.graycoprops",
+      "shape": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-empty-distance",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        0,
+        1
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-empty-angle",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        1,
+        0
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-list",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "contrast",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "list",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-invalid-property",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": "CONTRAST",
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    },
+    {
+      "id": "graycoprops/error-none-property",
+      "api": "feature.graycoprops",
+      "shape": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "dtype": "uint32",
+      "layout": "C",
+      "prop": null,
+      "pattern": "asymmetric",
+      "metadata": false,
+      "readonly": false,
+      "input_kind": "array",
+      "source_partition": "source validation/property error ordering, outcome unobserved",
+      "prospective_observation": "UNOBSERVED"
+    }
+  ],
+  "bounds": {
+    "graycomatrix/uint8": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/int8": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/uint16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/int16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/uint32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/int32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/uint64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/int64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-bool": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-float16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-float32": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-float64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-complex64": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-complex128": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 5224,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-object": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/type-U1": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/default-u8": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_cells": 65536,
+      "pair_visit_ceiling": 1,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 2101312,
+      "work_unit_ceiling": 393219
+    },
+    "graycomatrix/default-i8": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_cells": 65536,
+      "pair_visit_ceiling": 1,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 2101312,
+      "work_unit_ceiling": 393219
+    },
+    "graycomatrix/default-normalized": {
+      "input_elements": 1,
+      "physical_elements": 1,
+      "output_cells": 65536,
+      "pair_visit_ceiling": 1,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 2101312,
+      "work_unit_ceiling": 393219
+    },
+    "graycomatrix/layout-F": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/layout-transpose": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/layout-reverse": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/layout-zero": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/readonly": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/metadata": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/swapped-u16": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/image-list": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/flags-10": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/flags-01": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/flags-11": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/offset-zero": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/offset-negative": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/offset-half": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 32,
+      "pair_visit_ceiling": 24,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 5472,
+      "work_unit_ceiling": 220
+    },
+    "graycomatrix/offset-negative-half": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 32,
+      "pair_visit_ceiling": 24,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 5472,
+      "work_unit_ceiling": 220
+    },
+    "graycomatrix/offset-near-half": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 32,
+      "pair_visit_ceiling": 24,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 5472,
+      "work_unit_ceiling": 220
+    },
+    "graycomatrix/offset-axes": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 64,
+      "pair_visit_ceiling": 48,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 6544,
+      "work_unit_ceiling": 440
+    },
+    "graycomatrix/offset-multi": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 64,
+      "pair_visit_ceiling": 48,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 6528,
+      "work_unit_ceiling": 440
+    },
+    "graycomatrix/error-rank1": {
+      "input_elements": 4,
+      "physical_elements": 4,
+      "output_cells": 16,
+      "pair_visit_ceiling": 4,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4744,
+      "work_unit_ceiling": 102
+    },
+    "graycomatrix/error-rank3": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-empty": {
+      "input_elements": 0,
+      "physical_elements": 0,
+      "output_cells": 16,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4648,
+      "work_unit_ceiling": 98
+    },
+    "graycomatrix/error-negative-image": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-missing-levels": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-zero-levels": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-negative-levels": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-float-levels": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-small-levels": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 4,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4552,
+      "work_unit_ceiling": 38
+    },
+    "graycomatrix/error-distance-scalar": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-angle-rank2": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 16,
+      "pair_visit_ceiling": 12,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4936,
+      "work_unit_ceiling": 110
+    },
+    "graycomatrix/error-distance-empty": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 0,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4400,
+      "work_unit_ceiling": 0
+    },
+    "graycomatrix/error-angle-empty": {
+      "input_elements": 12,
+      "physical_elements": 12,
+      "output_cells": 0,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 5,
+      "named_array_allowance_bytes": 4400,
+      "work_unit_ceiling": 0
+    },
+    "graycoprops/contrast": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/dissimilarity": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/homogeneity": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/energy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/correlation": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/ASM": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/mean": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/variance": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/std": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/entropy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/zero-contrast": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/zero-correlation": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/zero-ASM": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/zero-entropy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/diagonal-correlation": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/diagonal-variance": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/diagonal-std": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/diagonal-entropy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/type-float16": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/type-float32": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/type-float64": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/type-complex128": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/type-object": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/type->f8": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/layout-F": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/layout-transpose": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/layout-reverse": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/layout-zero": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/readonly": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/metadata": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/negative-entropy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/negative-correlation": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/nan-entropy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/nan-correlation": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/inf-entropy": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/inf-correlation": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/error-rank3": {
+      "input_elements": 18,
+      "physical_elements": 18,
+      "output_cells": 1,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 6816,
+      "work_unit_ceiling": 612
+    },
+    "graycoprops/error-nonsquare": {
+      "input_elements": 6,
+      "physical_elements": 6,
+      "output_cells": 1,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 5120,
+      "work_unit_ceiling": 208
+    },
+    "graycoprops/error-empty-levels": {
+      "input_elements": 0,
+      "physical_elements": 0,
+      "output_cells": 1,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 4224,
+      "work_unit_ceiling": 0
+    },
+    "graycoprops/error-empty-distance": {
+      "input_elements": 0,
+      "physical_elements": 0,
+      "output_cells": 0,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 4384,
+      "work_unit_ceiling": 36
+    },
+    "graycoprops/error-empty-angle": {
+      "input_elements": 0,
+      "physical_elements": 0,
+      "output_cells": 0,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 4384,
+      "work_unit_ceiling": 36
+    },
+    "graycoprops/error-list": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/error-invalid-property": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    },
+    "graycoprops/error-none-property": {
+      "input_elements": 36,
+      "physical_elements": 36,
+      "output_cells": 4,
+      "pair_visit_ceiling": 0,
+      "offset_abs_ceiling": 0,
+      "named_array_allowance_bytes": 9504,
+      "work_unit_ceiling": 1188
+    }
+  },
+  "recipe_counts": {
+    "feature.graycomatrix": 50,
+    "feature.graycoprops": 44
+  },
+  "actual_original_budget": 0,
+  "prospective_topcalls_per_profile": 94,
+  "observations": [],
+  "graycomatrix_contract": {
+    "validation_order": [
+      "check_nD(image,2),distances1,angles1: each helper np.asanyarray then empty before rank",
+      "image=np.ascontiguousarray; image.max before floating rejection",
+      "dtypefloating rejection then non8bitwithoutlevels then signednegativeany",
+      "levelsNone becomes256 foruint8/int8; image_max>=levels reject beforeoffset conversion/allocation",
+      "distances/angles contiguousfloat64; zeros(levels,levels,D,A) uint32 C; fusedCython inputbuffer request",
+      "_glcm_loop angle->distance->row->column, sourcecustomround(sin(angle)*distance),round(cos(angle)*distance)",
+      "symmetric P+P.transpose(1,0,2,3), then optionalastypefloat64/sumaxes(0,1) zero->1/inplacedivide"
+    ],
+    "types": "Only8 fused signed/unsignedinteger types in compiledloop. Bool/object/complex/swapped/readonly are explicit prospectivebuffer/validation partitions, not advertised accepted integerkernel domains. uint32counts incrementand symmetricaddition wrap; normalizedoutputfloat64. Arraymetadata/layout/base/ownership/errors mustbeobserved, neverinferredfromdtypealone.",
+    "rounding": "Sharedround helper is positive r+.5/otherwise r-.5 thenPy_ssize_t truncation: tiesawayfromzero, not Python/NumPy ties-even. sin/cos floating precision/order/ISA/FENV remainpinnedplatform gates. Sourceuses positive sin rowoffset; descriptiveabove-neighbor wording doesnotreplacecompiledloop.",
+    "protocol": "check_nD coercions and laterascontiguousarray/max/comparisons/flagtruth/Cythonbuffer requests are sourceordered. No mask/out/channel/workerkwargs inupstreamsignature; optionalglobalworkers onlyextensionstate future. Readonly/non-nativeendian errors/warnings remainunobserved."
+  },
+  "graycoprops_contract": {
+    "validation_order": [
+      "check_nD(P,4) emptybeforerank; then original P.shape (listcoercionhelperdoesnotreplaceoriginalP)",
+      "squarelevels, positiveD/A checks",
+      "P.astype(float64),sumaxes(0,1),zero sums->1,P/=sums BEFOREpropertyvalidation",
+      "sourceweights/propertybranch/correlationmasks/reductions"
+    ],
+    "normalization": "Alwayscopy/castfloat64 first, evenalready-normalized/integer/negative/complexinput. No source nonnegative/finite validation. Complexcast warning and subclass/metadata behaviorare NumPy providerdomains pendingruntimewitness.",
+    "formulas": "Ten case-sensitive properties including mean/variance/std/entropy. meanusesrowI only; variance/std useP*(I-mean)^2; entropy uses natural-logwhereP!=0/outzeros; correlation independentI/Jmeans, std_i/std_j threshold<1e-15 ->1 then maskedcov/(std_i*std_j). No genericmean/entropy replacement.",
+    "ordering": "Exact axis(0,1) NumPyreduction layout/profile/pairwise behavior and log/sqrt/multiply/add/divide casting/FP/warning/callback phases must bepreserved. Broadprovider/backend/Windows nonnearest/unmasked/subclass/objectbehavior isnotclosed bysmallsource recipes.",
+    "ownership": "InputP .astype returnsworkingstorage; outputshape(D,A); no source inplaceinputmutation intendedforordinaryarrays but subclasses/protocols/metadata/alias/base needactualobservation."
+  },
+  "safety": {
+    "max_input_elements": 36,
+    "max_physical_elements": 36,
+    "max_output_cells": 65536,
+    "max_pair_visits": 48,
+    "max_named_array_allowance_bytes": 2101312,
+    "max_work_units": 393219,
+    "model": "Conservative namednumericarray/storage/loop model, not processRSS/importallocatorpeak. Default256levels cases are1x1 withoneD/A; allotherlevels<=4,GMimage<=12pixels,propsP<=36elements; caller/source buffers includedconservatively. No original output iscomputed bybounds.",
+    "quarantine": [
+      "Nonfiniteorhuge offsets: customround casts toPy_ssize_t without checkedbounds; unsafe/unassessed, NEVERcapturewithoutnewsource safety",
+      "Unbounded levels/defaultmulti-plane256/highbitdepthmax, integeroverflow/hugehistcounts not smallcapture scope",
+      "Arbitraryobjectgraphs/protocolcallbacks/maskedarrays/structured/extendeddtypes and hostiletruth/shape/customiterators needboundedchangedcase proposal",
+      "UnmaskedFP/FTZ/DAZ/nondefaulttrap states needapprovedfull32controller/source witness, not normalization"
+    ]
+  },
+  "native_SDK_route": {
+    "status": "PROPOSAL_ONLY_NO_IMPLEMENTATION",
+    "reuse": [
+      "include/skimagexx/image.hpp PODstorageandtypedviews",
+      "include/skimagexx/convert.hpp/src/half.hpp conversiononlywhenexactsourcecast compatible",
+      "src/execution.hpp existingsoleoptionalprocessglobalbudgetdefault1",
+      "src/metrics.cpp andsrc/simd_metrics_avx2.cpp reductiongraph/SIMDonlyifactualsourceassociationmatches; oldVIlog/backendfrontiers reusednotreassessed"
+    ],
+    "complete_operations": [
+      "graycomatrix(ordinarytypedimageview,distances,angles,levels,symmetric,normed,workers=0) -> owninguint32countsorfloat64normalized4Dresult withshape; completecount+symmetrize+normalize operation, notstagesonly",
+      "graycoprops(typed4Dtensorview,propertyenum=contrast,workers=0) -> owningfloat64(D,A)result; completecast/normalize/propertyoperation; unsupported Pythonprotocol/error/type domains remainexplicit"
+    ],
+    "workers": "Captureexistingglobalbudgetoncepercomposition/default1; optionalindependent(D,A)planes whenlarge andsafe. Countrowsorderedserial; floatingreduction/policycallbacks sourceordered. No artificialtinyparallel ornewthreadpool.",
+    "SIMD": "Independent countcopy/cast/symmetrize orpropertyspans onlyif sourceorder preserved; no SIMDscatter histogramclaim orreassociatedsums. Scalar/disable/ASan+UBSan/worker1,4/installedSDK/MSVC/genuineproofs future.",
+    "frontiers": "NumPyexactreduction/log/sqrt/cast/FP andplatformscalarintp/libm remainexplicit. Natural-log entropy cannotinheritVIlog2/DDOT proof. No wholeprovideralgorithm passedoffasnative."
+  },
+  "gates": {
+    "passed": [
+      "Sourceinspection andboundedmetadatarecipes only"
+    ],
+    "pending": [
+      "Independentroot source/storage admission",
+      "Actualsource+wheel/RECORD/compiledorigin/runtime/FENV/typedobserver andrealcached/coldtarget+compiledproviderREQUESTreadiness",
+      "SeparateexplicitrootGO before94/profile prospective originaltopcalls; proposed188notauthorization",
+      "Savedrawindependentadmission thenownednative/public/fullnamedinstalledSDK/scalarSIMD/worker/nativeacceptance/genuinefourprofiles",
+      "Allocatedone-threadpublicoriginalbenchmarks andalllossrelease evidence"
+    ]
+  },
+  "budgets": {
+    "original": 0,
+    "native": 0,
+    "helper": 0,
+    "sampler": 0,
+    "capture": 0,
+    "build": 0,
+    "env": 0,
+    "package_download": 0,
+    "timing": 0,
+    "hosted": 0
+  },
+  "primary_source_exception": "Rootauthorizedread-onlyofficialv0.26.0 _texture.pyx plus directlyreferencedround/fusedtypeheaders only; recordexactbytes/tag/URL/license. No package/artifact/toolchainretrieval."
+}
