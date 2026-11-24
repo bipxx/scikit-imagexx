@@ -2,7 +2,7 @@
 
 This is the detailed completion view for the existing [execution plan](EXECUTION_PLAN.md) and [operational ledger](work_items.json). Those records still govern assignments, execution and evidence. This file adds no dispatch queue or permission to run work.
 
-Updated: 2026-11-23. Shipping classifications come from [api.json](api.json); per-key contract focus comes from [the implementation paths](API_IMPLEMENTATION_PATHS.json). The paths are proposals, not proof of completed coverage.
+Updated: 2026-11-24. Shipping classifications come from [api.json](api.json); per-key contract focus comes from [the implementation paths](API_IMPLEMENTATION_PATHS.json). The paths are proposals, not proof of completed coverage.
 
 Historical genuine speed result (`75b`, unshipped predecessor): [exact75b fixed24](evidence/speed-parity-genuine24-root-result-v1.json) passed output/FP/protocol and all4genuineprofiles/3stagers, but **fails the per-case speed gate**:20wins/4losses. Float32flood_fill C0.948235/F0.982839 and int64/uint64outer-find0.891151/0.845565 were the optimization gaps addressed by the delivered successor below; this batch is unshipped. No unchanged retiming. Native coverage counts/full-contract checkboxes remain unchanged.
 
@@ -37,9 +37,13 @@ The separate packed float32 Lab candidate b71bd4a2 passed 5,308 affected install
 
 ## Shipping snapshot
 
-### Latest verified checkpoint — 2026-11-22
+### Latest verified checkpoint — 2026-11-24
 
 This checkpoint and the linked terminal receipts take precedence over older dated progress notes below. Historical candidate descriptions remain evidence of their original scope, not current dispatch instructions. A passing diagnostic that does not reproduce an earlier failure leaves that failure unresolved.
+
+Main `1d9a0bbf` (`current312`) ships bounded native `transform.hough_circle_peaks`, `transform.hough_ellipse`, `transform.probabilistic_hough_line`, and `morphology.medial_axis`, bringing shipping inventory to **312 `native-partial`**, **10 `packaged-asset-partial`**, **5 `native-class-partial`**, **3 `metadata`**, **1 `exception-metadata-provider`**, and **146 `upstream-only`** APIs (closing 36 of the original 182 upstream-only gaps). Exact four-profile release qualification ([whole-product admission](../build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json), [run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252)) passed **1,008,468 public outcomes** and **488 installed SDK checks** (`122` per profile across `61` targets) plus 3 packaging stagers (`archive_retained: false`). Dual-Python exact-source barrier ([source readback](../build/evidence/u182-post-haar/current312-source-barrier-v4/complete-312-intake-readback-v4.json), [run 45340542569](https://github.com/bipxx/scikit-imagexx/actions/runs/45340542569)) passed `4824/4824` on `windows311` (`3.11.11`) and `windows313` (`3.13.14`). Hosted Windows focused parity/SDK and 16-case 1-worker timing ([focus & timing admission](../build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json), [run 45340574164](https://github.com/bipxx/scikit-imagexx/actions/runs/45340574164)) passed `150/150` public normal & scalar, `4/4` SDK normal & scalar, and **16/16** timing cases at **1.709×–157.942×** (`losses: []`, `pre/post CPU: 7%/2%`), resolving the earlier Candidate 3 (`e87df809`) `0.933×` loss on `dense-default-bands` (`45336457806`) to `8.171×` (`0.8261ms`); `medial_axis` modern quiet speed (`45110288114`) is separately admitted at `6.704×–14.550×`.
+
+### Historical checkpoint — 2026-11-22
 
 Prior main `94522169` shipped bounded `pyramid_reduce` and `pyramid_expand` plus packaged `camera` and `coffee`. That release left 162 upstream-only APIs. Exact release passed four profiles and three relocated products with 1,001,988 public outcomes and 376 SDK checks. [Verified main delivery](../build/evidence/u182-post-haar/hosted-current296-corrected-45070502340/root-main-delivery-v1.json) · [Whole-product evidence](../build/evidence/u182-post-haar/hosted-current296-corrected-45070502340/whole-product-root-admission-v1.json) · [Five-API qualification](https://github.com/bipxx/scikit-imagexx/actions/runs/45079540984)
 
@@ -3505,11 +3509,12 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-morphology-medial-axis"></a>
 - [ ] **`morphology.medial_axis`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W? B~ R~`; default dtype slice: `bool`.
+  - Shipped on `1d9a0bbf` within its bounded 2D topology domain (SciPy EDT and NumPy PCG64 providers preserved). Four-profile qualification [whole-product admission](../build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json) ([run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252)), Windows 1-worker timing `7.911×–19.001×` ([run 45340574164](../build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json)), and modern quiet speed `6.704×–14.550×` ([run 45110288114](../build/evidence/u182-post-haar/lookahead-morphology-v1/medial-modern-speed-v1/root-medial-speed-admission-v1.json)); `archive_retained: false`.
   - Signature: `(image, mask=None, return_distance=False, *, rng=None)`.
   - Required focus: RNG state, masked pixels, return_distance and tie order. Cases to close: symmetric shapes, holes and seeded ties.
   - Easiest remaining route: Distance transform then distance/cornerness/seeded-tie ordered topology thinning.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: [tests/test_medial_axis_public.py](../tests/test_medial_axis_public.py) · [benchmarks/medial_axis.py](../benchmarks/medial_axis.py).
 
 <a id="api-morphology-mirror-footprint"></a>
 - [ ] **`morphology.mirror_footprint`** — full contract closed.
@@ -4122,22 +4127,22 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-transform-hough-circle-peaks"></a>
 - [ ] **`transform.hough_circle_peaks`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
-  - All 29 modern original observations are admitted, including actual profile-specific peak order. The exact private modern candidate passed 29 checks per mode, including 19 native calls and ten controlled compatibility or validation routes. The standalone GNU SDK passed. After correcting a duplicate witness argument in the timing harness, all four modern fixed pairs passed at 8.688×–114.437× on the same tested ELF. Installed parity and release remain pending. [Fixed speed admission](../build/evidence/u182-post-haar/lookahead-hough-v1/circle-peaks-modern-timing-v1/successor-v2/actual-result-v1/root-circle-peaks-speed-admission-v1.json) [Private component admission](../build/evidence/u182-post-haar/lookahead-hough-v1/circle-peaks-modern-component-v1/carrier-v2/actual-result-v1/root-private-component-admission-v1.json) [Stock admission](../build/evidence/u182-post-haar/lookahead-hough-v1/circle-peaks-modern-hosted-stock-v1/carrier-v1/actual-result-v1/root-modern-stock-admission-v1.json)
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W? B~ R~`; default dtype slice: `float64`.
+  - Shipped on `1d9a0bbf` within its bounded 3D peak-selection domain. Four-profile qualification [whole-product admission](../build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json) ([run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252)) and Windows 1-worker timing `12.488×–157.942×` ([run 45340574164](../build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json)); modern fixed speed at `8.688×–114.437×` ([Fixed speed admission](../build/evidence/u182-post-haar/lookahead-hough-v1/circle-peaks-modern-timing-v1/successor-v2/actual-result-v1/root-circle-peaks-speed-admission-v1.json)); `archive_retained: false`.
   - Signature: `(hspaces, radii, min_xdistance=1, min_ydistance=1, threshold=None, num_peaks=inf, total_num_peaks=inf, normalize=False)`.
   - Required focus: normalize scoring, per-radius/total limits, x/y suppression ties. Cases to close: competing radii and equal peaks.
   - Easiest remaining route: Peak-suppress each circle accumulator then stable cross-radius selection.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
+  - Evidence locators: [tests/test_hough_circle_peaks_public.py](../tests/test_hough_circle_peaks_public.py) · [benchmarks/hough_circle_peaks.py](../benchmarks/hough_circle_peaks.py).
 
 <a id="api-transform-hough-ellipse"></a>
 - [ ] **`transform.hough_ellipse`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
-  - Private Linux modern passed 14 named checks in each dispatch mode, with scoped direct GNU SDK evidence. All four modern fixed public cases passed at 19.691×–22.657× stock. [Fixed speed admission](../build/evidence/u182-post-haar/lookahead-hough-modern-speed-timing-carrier-v1/actual-result-v1/root-fixed-speed-admission-v1.json) Installed coverage and release remain pending. [Private admission](../build/evidence/u182-post-haar/lookahead-hough-hosted-carrier-v4/actual-result-v1/root-modern-hough-admission-v1.json) [Timing run](https://github.com/bipxx/scikit-imagexx/actions/runs/45101684310)
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W? B~ R~`; default dtype slice: `bool, uint8`.
+  - Shipped on `1d9a0bbf` within its bounded 2D edge-mask domain. Four-profile qualification [whole-product admission](../build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json) ([run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252)), Windows 1-worker timing `23.279×–25.946×` ([run 45340574164](../build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json)), and modern fixed speed `19.691×–22.657×` ([Fixed speed admission](../build/evidence/u182-post-haar/lookahead-hough-modern-speed-timing-carrier-v1/actual-result-v1/root-fixed-speed-admission-v1.json)); `archive_retained: false`.
   - Signature: `(image, threshold=4, accuracy=1, min_size=4, max_size=None)`.
   - Required focus: accuracy bins, threshold, min/max size, output field order and ties. Cases to close: synthetic ellipses and dense edge clutter.
   - Easiest remaining route: Port triplet edge-point ellipse hypothesis/voting algorithm.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
-  - Fourteen modern stock outcomes and three histogram provider probes matched both retained older profiles. Next modern compiled normal/scalar parity and four fixed speed cases. [Modern stock receipt](../build/evidence/u182-post-haar/lookahead-hough-ellipse-modern-v1/handoff-v1.json)
+  - Evidence locators: [tests/test_hough_ellipse_public.py](../tests/test_hough_ellipse_public.py) · [benchmarks/hough_ellipse.py](../benchmarks/hough_ellipse.py).
+  - Fourteen modern stock outcomes and three histogram provider probes matched both retained older profiles. [Modern stock receipt](../build/evidence/u182-post-haar/lookahead-hough-ellipse-modern-v1/handoff-v1.json)
 
 <a id="api-transform-hough-line"></a>
 - [ ] **`transform.hough_line`** — full contract closed.
@@ -4225,13 +4230,13 @@ Each row below is a full-closure checkbox. Gate markers initially credit only wh
 
 <a id="api-transform-probabilistic-hough-line"></a>
 - [ ] **`transform.probabilistic_hough_line`** — full contract closed.
-  - Main: `upstream-only`; gate status `C? N? H? P? S? V? W? B? R?`; default dtype slice: `none registered`.
-  - Private Linux modern passed 18 named checks in each dispatch mode, with scoped direct GNU SDK evidence. All four modern fixed public cases passed at 1.046×–1.778× stock. [Fixed speed admission](../build/evidence/u182-post-haar/lookahead-hough-modern-speed-timing-carrier-v1/actual-result-v1/root-fixed-speed-admission-v1.json) Installed coverage and release remain pending. [Private admission](../build/evidence/u182-post-haar/lookahead-hough-hosted-carrier-v4/actual-result-v1/root-modern-hough-admission-v1.json) [Timing run](https://github.com/bipxx/scikit-imagexx/actions/runs/45101684310)
+  - Main: `native-partial`; gate status `C~ N~ H~ P~ S~ V~ W? B~ R~`; default dtype slice: `bool, uint8`.
+  - Shipped on `1d9a0bbf` within its bounded 2D edge-mask domain (compact `[angle, rho]` `int16` accumulator, batched vote removal, SSE2 2-wide projection). Four-profile qualification [whole-product admission](../build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json) ([run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252)) and Windows 1-worker timing `1.709×–8.171×` ([run 45340574164](../build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json)); prior `e87df809` `0.933×` loss on `dense-default-bands` (`45336457806`) retained as superseded history; modern fixed speed measured `1.046×–1.778×` ([Fixed speed admission](../build/evidence/u182-post-haar/lookahead-hough-modern-speed-timing-carrier-v1/actual-result-v1/root-fixed-speed-admission-v1.json)); `archive_retained: false`.
   - Signature: `(image, threshold=10, line_length=50, line_gap=10, theta=None, rng=None)`.
   - Required focus: RNG draw order, line_gap/length, threshold and endpoint order. Cases to close: crossing lines, gaps and fixed saved RNG state.
   - Easiest remaining route: Preserve seeded edge visitation, line votes, extension and pixel removal.
-  - Evidence locators: parity not registered in the shipping inventory; benchmark not registered in the shipping inventory.
-  - All 18 retained modern stock cases, including fixed endpoints and intersection order, match Windows and minimum. Five caller PCG64 states also matched. Modern native parity and fixed one-worker comparisons remain open. [Modern stock receipt](../build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/handoff-v1.json)
+  - Evidence locators: [tests/test_probabilistic_hough_line_public.py](../tests/test_probabilistic_hough_line_public.py) · [benchmarks/probabilistic_hough_line.py](../benchmarks/probabilistic_hough_line.py).
+  - All 18 retained modern stock cases, including fixed endpoints and intersection order, match Windows and minimum. Five caller PCG64 states also matched. [Modern stock receipt](../build/evidence/u182-post-haar/lookahead-probabilistic-hough-modern-v1/handoff-v1.json)
 
 <a id="api-transform-pyramid-expand"></a>
 - [ ] **`transform.pyramid_expand`** — full contract closed.
