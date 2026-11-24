@@ -335,9 +335,14 @@ add_executable(hough_circle_consumer hough_circle_consumer.cpp)
 add_executable(hough_line_peaks_consumer hough_line_peaks_consumer.cpp)
 add_executable(convex_hull_image_consumer convex_hull_image_consumer.cpp)
 add_executable(convex_hull_object_consumer convex_hull_object_consumer.cpp)
+add_executable(hough_circle_peaks_consumer hough_circle_peaks_consumer.cpp)
+add_executable(hough_ellipse_consumer hough_ellipse_consumer.cpp)
+add_executable(probabilistic_hough_line_consumer probabilistic_hough_line_consumer.cpp)
+add_executable(medial_axis_consumer medial_axis_consumer.cpp)
 foreach(consumer IN ITEMS
     match_descriptors_consumer thin_consumer skeletonize_consumer
     hough_circle_consumer hough_line_peaks_consumer
+    hough_circle_peaks_consumer hough_ellipse_consumer probabilistic_hough_line_consumer medial_axis_consumer
     convex_hull_image_consumer convex_hull_object_consumer)
     target_link_libraries(${consumer} PRIVATE skimagexx::skimagexx)
     if(MSVC)
@@ -353,3 +358,7 @@ add_test(NAME installed_hough_circle_consumer COMMAND hough_circle_consumer)
 add_test(NAME installed_hough_line_peaks_consumer COMMAND hough_line_peaks_consumer)
 add_test(NAME installed_convex_hull_image_consumer COMMAND convex_hull_image_consumer)
 add_test(NAME installed_convex_hull_object_consumer COMMAND convex_hull_object_consumer)
+add_test(NAME installed_hough_circle_peaks_consumer COMMAND hough_circle_peaks_consumer)
+add_test(NAME installed_hough_ellipse_consumer COMMAND hough_ellipse_consumer)
+add_test(NAME installed_probabilistic_hough_line_consumer COMMAND probabilistic_hough_line_consumer)
+add_test(NAME installed_medial_axis_consumer COMMAND medial_axis_consumer)

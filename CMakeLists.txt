@@ -17,6 +17,8 @@ target_sources(skimagexx PRIVATE src/find_contours.cpp src/random_noise.cpp src/
 target_sources(skimagexx PRIVATE
     src/match_descriptors.cpp src/thin.cpp src/skeletonize.cpp
     src/hough_circle.cpp src/hough_line_peaks.cpp
+    src/hough_circle_peaks.cpp src/hough_ellipse.cpp src/probabilistic_hough_line.cpp
+    src/medial_axis.cpp
     src/convex_hull_image.cpp src/convex_hull_object.cpp)
 target_sources(skimagexx PRIVATE src/compare_images.cpp)
 target_sources(skimagexx PRIVATE src/level_set.cpp)
@@ -183,9 +185,13 @@ if(MSVC)
     set_source_files_properties(
         src/match_descriptors.cpp src/thin.cpp src/skeletonize.cpp
         src/hough_circle.cpp src/hough_line_peaks.cpp
+        src/hough_circle_peaks.cpp src/hough_ellipse.cpp src/probabilistic_hough_line.cpp
+        src/medial_axis.cpp
         src/convex_hull_image.cpp src/convex_hull_object.cpp
         src/bind_match_descriptors.cpp src/bind_thin.cpp src/bind_skeletonize.cpp
         src/bind_hough_circle.cpp src/bind_hough_line_peaks.cpp
+        src/bind_hough_circle_peaks.cpp src/bind_hough_ellipse.cpp src/bind_probabilistic_hough_line.cpp
+        src/bind_medial_axis.cpp
         src/bind_convex_hull_image.cpp src/bind_convex_hull_object.cpp
         PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
@@ -247,9 +253,13 @@ else()
     set_source_files_properties(
         src/match_descriptors.cpp src/thin.cpp src/skeletonize.cpp
         src/hough_circle.cpp src/hough_line_peaks.cpp
+        src/hough_circle_peaks.cpp src/hough_ellipse.cpp src/probabilistic_hough_line.cpp
+        src/medial_axis.cpp
         src/convex_hull_image.cpp src/convex_hull_object.cpp
         src/bind_match_descriptors.cpp src/bind_thin.cpp src/bind_skeletonize.cpp
         src/bind_hough_circle.cpp src/bind_hough_line_peaks.cpp
+        src/bind_hough_circle_peaks.cpp src/bind_hough_ellipse.cpp src/bind_probabilistic_hough_line.cpp
+        src/bind_medial_axis.cpp
         src/bind_convex_hull_image.cpp src/bind_convex_hull_object.cpp
         PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
@@ -275,6 +285,8 @@ if(SKIMAGEXX_BUILD_PYTHON)
     target_sources(_core PRIVATE
         src/bind_match_descriptors.cpp src/bind_thin.cpp src/bind_skeletonize.cpp
         src/bind_hough_circle.cpp src/bind_hough_line_peaks.cpp
+        src/bind_hough_circle_peaks.cpp src/bind_hough_ellipse.cpp src/bind_probabilistic_hough_line.cpp
+        src/bind_medial_axis.cpp
         src/bind_convex_hull_image.cpp src/bind_convex_hull_object.cpp)
     target_sources(_core PRIVATE src/bind_structural_similarity.cpp src/bind_local_extrema.cpp
         src/bind_order_angles_golden_ratio.cpp src/bind_pearson.cpp src/bind_hausdorff.cpp

@@ -16,12 +16,12 @@ NATIVE_FUNCTIONS = {
     'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
     'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord','match_descriptors'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line_peaks'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line_peaks','hough_circle_peaks','hough_ellipse','probabilistic_hough_line'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
-                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize','convex_hull_image','convex_hull_object'),
+                   'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize','convex_hull_image','convex_hull_object','medial_axis'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -357,16 +357,25 @@ PYRAMID_GENERATOR_FUNCTIONS = ('transform.pyramid_gaussian', 'transform.pyramid_
 HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature', 'feature.haar_like_feature_coord')
 THINNING_FUNCTIONS = ('morphology.thin', 'morphology.skeletonize')
 HULL_FUNCTIONS = ('morphology.convex_hull_image', 'morphology.convex_hull_object')
-HOUGH_FUNCTIONS = ('transform.hough_circle', 'transform.hough_line_peaks')
+HOUGH_FUNCTIONS = (
+    'transform.hough_circle', 'transform.hough_line_peaks',
+    'transform.hough_circle_peaks', 'transform.hough_ellipse', 'transform.probabilistic_hough_line',
+)
+MEDIAL_FUNCTIONS = ('morphology.medial_axis',)
 
 
 def native_dtypes(api):
     if api == 'feature.match_descriptors':
         return ('bool',)
-    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'transform.hough_circle'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'transform.hough_circle',
+               'transform.hough_ellipse', 'transform.probabilistic_hough_line'):
         return ('bool', 'uint8')
+    if api in MEDIAL_FUNCTIONS:
+        return ('bool',)
     if api == 'transform.hough_line_peaks':
         return ('uint64',)
+    if api == 'transform.hough_circle_peaks':
+        return ('float64',)
     if api == 'util.random_noise':
         return ('uint8', 'uint16', 'float64')
     if api == 'draw.random_shapes':
@@ -486,6 +495,29 @@ def default_call(api, image):
         angles = np.linspace(-np.pi / 2, np.pi / 2, columns, endpoint=False, dtype=np.float64)
         distances = np.arange(rows, dtype=np.float64) - rows // 2
         return (votes, angles, distances), {'min_distance': 1, 'min_angle': 1, 'threshold': 0}
+    if api == 'transform.hough_circle_peaks':
+        import numpy as np
+
+        hspaces = np.empty((2, *image.shape), dtype=image.dtype)
+        hspaces[0] = image
+        hspaces[1] = image[::-1]
+        radii = np.array([3, 5], dtype=np.intp)
+        return (hspaces, radii), {'threshold': 0.0}
+    if api == 'transform.hough_ellipse':
+        import numpy as np
+
+        height, width = image.shape
+        field = np.zeros_like(image, order='C')
+        mr, mc = min(height, 11) // 2, min(width, 11) // 2
+        for dr, dc in ((-2, -1), (-2, 0), (-2, 1), (-1, -2), (-1, 2),
+                       (0, -2), (0, 2), (1, -2), (1, 2), (2, -1), (2, 0), (2, 1)):
+            if 0 <= mr + dr < height and 0 <= mc + dc < width:
+                field[mr + dr, mc + dc] = 1
+        return (field,), {'threshold': 2, 'accuracy': 1, 'min_size': 2, 'max_size': None}
+    if api == 'transform.probabilistic_hough_line':
+        return (image,), {'threshold': 3, 'line_length': 4, 'line_gap': 2, 'rng': 739}
+    if api == 'morphology.medial_axis':
+        return (image,), {'rng': 739}
     if api in PYRAMID_GENERATOR_FUNCTIONS:
         return (image,), {'max_layer': 2}
     if api == 'measure.find_contours':
@@ -1297,12 +1329,20 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
-    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, 'feature.match_descriptors'):
         import numpy as np
 
+        if api == 'transform.probabilistic_hough_line':
+            assert type(actual) is type(expected) is list
+            assert actual == expected
+            return
         if api == 'transform.hough_line_peaks':
             assert type(actual) is type(expected) is tuple
             assert len(actual) == len(expected) == 3
+            pairs = zip(actual, expected, strict=True)
+        elif api == 'transform.hough_circle_peaks':
+            assert type(actual) is type(expected) is tuple
+            assert len(actual) == len(expected) == 4
             pairs = zip(actual, expected, strict=True)
         else:
             pairs = ((actual, expected),)

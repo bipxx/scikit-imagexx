@@ -4,7 +4,7 @@ Reference: scikit-image 0.26.0.
 
 This generated table describes source declarations. See the [execution plan](EXECUTION_PLAN.md) for the exact qualified source, accepted evidence and remaining gates.
 
-477 public callable names inventoried in 20 modules; 308 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. 10 have packaged asset routes with compatibility handling for misses. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
+477 public callable names inventoried in 20 modules; 312 have partially native image implementations and 3 have metadata-only execution. 5 have separate partial native class/state implementations and 1 have exception metadata providers; these never increase image-kernel counts. 10 have packaged asset routes with compatibility handling for misses. Covered entries link to per-function test and benchmark files; these paths do not prove a passing contract or measured performance.
 
 An inventoried name is not evidence of parity. `upstream-only` entries have no native implementation, no dedicated parity test, and no native performance result. Modules outside this inventory remain unassessed. Native entries support a documented subset of input/options; unsupported calls can use explicit upstream fallback. Metadata entries return small values/arrays without running an image kernel. Identity-preserving conversion calls can return the input without processing pixels.
 
@@ -370,7 +370,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `morphology.local_minima` | native-partial | yes (partial input contract) | yes |
 | `morphology.max_tree` | native-partial | yes (partial input contract) | yes |
 | `morphology.max_tree_local_maxima` | native-partial | yes (partial input contract) | yes |
-| `morphology.medial_axis` | upstream-only | pending | pending |
+| `morphology.medial_axis` | native-partial | yes (partial input contract) | yes |
 | `morphology.mirror_footprint` | metadata | yes (partial input contract) | yes |
 | `morphology.octagon` | native-partial | yes (partial input contract) | yes |
 | `morphology.octahedron` | native-partial | yes (partial input contract) | yes |
@@ -437,8 +437,8 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.estimate_transform` | upstream-only | pending | pending |
 | `transform.frt2` | native-partial | yes (partial input contract) | yes |
 | `transform.hough_circle` | native-partial | yes (partial input contract) | yes |
-| `transform.hough_circle_peaks` | upstream-only | pending | pending |
-| `transform.hough_ellipse` | upstream-only | pending | pending |
+| `transform.hough_circle_peaks` | native-partial | yes (partial input contract) | yes |
+| `transform.hough_ellipse` | native-partial | yes (partial input contract) | yes |
 | `transform.hough_line` | upstream-only | pending | pending |
 | `transform.hough_line_peaks` | native-partial | yes (partial input contract) | yes |
 | `transform.ifrt2` | native-partial | yes (partial input contract) | yes |
@@ -448,7 +448,7 @@ An inventoried name is not evidence of parity. `upstream-only` entries have no n
 | `transform.iradon_sart` | upstream-only | pending | pending |
 | `transform.matrix_transform` | native-partial | yes (partial input contract) | yes |
 | `transform.order_angles_golden_ratio` | native-partial | yes (partial input contract) | yes |
-| `transform.probabilistic_hough_line` | upstream-only | pending | pending |
+| `transform.probabilistic_hough_line` | native-partial | yes (partial input contract) | yes |
 | `transform.pyramid_expand` | native-partial | yes (partial input contract) | yes |
 | `transform.pyramid_gaussian` | native-partial | yes (partial input contract) | yes |
 | `transform.pyramid_laplacian` | native-partial | yes (partial input contract) | yes |

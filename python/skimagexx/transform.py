@@ -248,3 +248,7 @@ __all__ += ['pyramid_gaussian', 'pyramid_laplacian']
 from ._hough_circle import hough_circle
 from ._hough_line_peaks import hough_line_peaks
 __all__ += ['hough_circle', 'hough_line_peaks']
+from ._hough_circle_peaks import hough_circle_peaks
+from ._hough_ellipse import hough_ellipse
+from ._probabilistic_hough_line import probabilistic_hough_line
+__all__ += ['hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line']

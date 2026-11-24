@@ -33,8 +33,22 @@ def test_missing_intake_refuses_before_runtime(monkeypatch):
 def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  import sys,types
  record=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v1.json').read_bytes())
- newest_raw=(c.ROOT/record['source']).read_bytes()
- newest_guard=Path(__file__).read_bytes()
+ newest312_raw=(c.ROOT/record['source']).read_bytes()
+ newest312_guard=Path(__file__).read_bytes()
+ v6=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v6.json').read_bytes())
+ assert v6['schema']=='finite-radon-public-exports-v6' and v6['original_calls']==0
+ assert v6['previous_record']=='coverage/contracts/finite-radon-public-exports-v5.json'
+ assert hashlib.sha256((c.ROOT/v6['previous_record']).read_bytes()).hexdigest()==v6['previous_record_raw_sha256']
+ assert hashlib.sha256(newest312_raw).hexdigest()==v6['current_raw_sha256']
+ assert hashlib.sha256(newest312_guard).hexdigest()==v6['guard_raw_sha256']
+ v6_suffix=v6['source_suffix'].encode()
+ assert v6_suffix and newest312_raw.endswith(v6_suffix) and newest312_raw.count(v6_suffix)==1
+ newest_raw=newest312_raw.removesuffix(v6_suffix)
+ newest_guard=newest312_guard
+ for edit in v6['guard_inverse']:
+  block=edit['current'].encode()
+  assert block and newest_guard.count(block)==1
+  newest_guard=newest_guard.replace(block,edit['previous'].encode(),1)
  v5=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v5.json').read_bytes())
  assert v5['schema']=='finite-radon-public-exports-v5' and v5['original_calls']==0
  assert v5['previous_record']=='coverage/contracts/finite-radon-public-exports-v4.json'
@@ -102,7 +116,7 @@ def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  provider.frt2=object();provider.ifrt2=object()
  monkeypatch.setitem(sys.modules,'skimagexx',parent)
  monkeypatch.setitem(sys.modules,'skimagexx._finite_radon',provider)
- for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True)):
+ for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True)):
   tree=ast.parse(text);declarations=[]
   for node in tree.body:
    if isinstance(node,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='__all__'for t in node.targets):declarations.append(node)

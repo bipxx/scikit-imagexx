@@ -6585,11 +6585,14 @@
       "api": "morphology.medial_axis",
       "kind": "callable",
       "signature": "(image, mask=None, return_distance=False, *, rng=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_medial_axis_public.py",
+      "benchmark": "benchmarks/medial_axis.py",
+      "default_input_kind": "Bounded untagged C-order 2D Boolean image (extents <= 192) with optional mask and explicit int/PCG64 rng. SciPy distance_transform_edt and NumPy permutation supply distance and tie priority; C++ owns ordered LUT topology thinning. Out-of-scope domains and tags use compatibility."
     },
     {
       "api": "morphology.mirror_footprint",
@@ -8692,21 +8695,28 @@
       "api": "transform.hough_circle_peaks",
       "kind": "callable",
       "signature": "(hspaces, radii, min_xdistance=1, min_ydistance=1, threshold=None, num_peaks=inf, total_num_peaks=inf, normalize=False)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hough_circle_peaks_public.py",
+      "benchmark": "benchmarks/hough_circle_peaks.py",
+      "default_input_kind": "Bounded untagged C-order 3D float64 accumulators (1..16 x 1..256 x 1..256) and matching finite 1D positive intp radii. C++ owns planar peak selection; NumPy sorting and optional SciPy cKDTree spatial suppression handle finish steps. Out-of-scope domains and tags use compatibility."
     },
     {
       "api": "transform.hough_ellipse",
       "kind": "callable",
       "signature": "(image, threshold=4, accuracy=1, min_size=4, max_size=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hough_ellipse_public.py",
+      "benchmark": "benchmarks/hough_ellipse.py",
+      "default_input_kind": "Bounded untagged C-order 2D Boolean or uint8 image (max extent <= 64) with bounded integer/accuracy/size options. C++ owns serial ellipse pair accumulation; unsupported arguments and tags use compatibility."
     },
     {
       "api": "transform.hough_line",
@@ -8837,11 +8847,15 @@
       "api": "transform.probabilistic_hough_line",
       "kind": "callable",
       "signature": "(image, threshold=10, line_length=50, line_gap=10, theta=None, rng=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_probabilistic_hough_line_public.py",
+      "benchmark": "benchmarks/probabilistic_hough_line.py",
+      "default_input_kind": "Bounded untagged C-order 2D Boolean or uint8 image (extents <= 256) with int/PCG64 rng and bounded theta/options. NumPy supplies angles and seeded shuffle permutation; C++ owns progressive line extraction. Tagged carriers and unsupported domains use compatibility."
     },
     {
       "api": "transform.pyramid_expand",

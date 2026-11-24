@@ -16,7 +16,7 @@ from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error, draw_polygon_default_error
 from skimagexx.coverage import PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, assert_default_parity, util_metadata_default_error
-from skimagexx.coverage import HOUGH_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, MEDIAL_FUNCTIONS
 from skimagexx.coverage import set_color_default_result, set_color_default_error, label_pair_default_error, find_boundaries_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error, line_nd_default_error, ellipsoid_default_error
 
@@ -68,6 +68,10 @@ BOUNDED_DEFAULT_SIZES = {
     'morphology.convex_hull_object': (2, 512),
     'transform.hough_circle': (1, 512),
     'transform.hough_line_peaks': (4, 511),
+    'transform.hough_circle_peaks': (4, 256),
+    'transform.hough_ellipse': (9, 64),
+    'transform.probabilistic_hough_line': (4, 256),
+    'morphology.medial_axis': (4, 192),
 }
 
 
@@ -75,8 +79,8 @@ def bounded_default_reason(api, size, tagged):
     minimum, maximum = BOUNDED_DEFAULT_SIZES[api]
     if not minimum <= size <= maximum:
         return f'Square size {size} is outside the bounded default ({minimum}–{maximum})'
-    if tagged and api in HOUGH_FUNCTIONS:
-        return 'Tagged Hough input requires compatibility'
+    if tagged and api in (*HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS):
+        return 'Tagged Hough or medial-axis input requires compatibility'
     return None
 
 
@@ -198,6 +202,10 @@ def main():
         ('morphology.convex_hull_object', 'C++ owns connected labeling and bounded planar component hulls. The generic binary field uses the public defaults.'),
         ('transform.hough_circle', 'C++ owns circle voting and normalization for ordered radii (0, 3, 5) in the generic default. NumPy supplies array storage. Fixed circle adapter separately covers unit counts and full-output geometry.'),
         ('transform.hough_line_peaks', 'The generic fixture uses discrete uint64 peaks and coupled finite float64 angle/distance vectors. C++ owns peak selection; NumPy supplies coordinate gathers and capped ordering where active. Each public result tuple is checked before timing.'),
+        ('transform.hough_circle_peaks', 'C++ owns bounded planar peak selection over 3D float64 accumulators; NumPy supplies ordering and SciPy cKDTree handles distance suppression. Tagged arrays and unsupported parameters use compatibility.'),
+        ('transform.hough_ellipse', 'C++ owns bounded 2D ellipse pair voting on compact images; out-of-scope geometry, options and tags use compatibility.'),
+        ('transform.probabilistic_hough_line', 'NumPy supplies angles and seeded shuffle permutations; C++ owns progressive line search on bounded 2D binary/uint8 images. Tagged arrays and unsupported options use compatibility.'),
+        ('morphology.medial_axis', 'SciPy distance_transform_edt and NumPy permutation supply distance and tie ordering; C++ owns bounded 2D LUT topology thinning. Tagged arrays and unsupported domains use compatibility.'),
     ):
         if api in apis:
             provider_frontiers[api] = frontier

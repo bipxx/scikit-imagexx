@@ -1,0 +1,19 @@
+{
+  "schema": "finite-radon-public-exports-v6",
+  "previous_record": "coverage/contracts/finite-radon-public-exports-v5.json",
+  "previous_record_raw_sha256": "443e4c27ec5a17cb4141ff80b2b3ad9725a11223f6b2347ac30994af910a2545",
+  "current_raw_sha256": "c7a599f3bbbad5da52bc16bb956f1544eb644d2dd1b639ebcdccf620953ac322",
+  "source_suffix": "from ._hough_circle_peaks import hough_circle_peaks\nfrom ._hough_ellipse import hough_ellipse\nfrom ._probabilistic_hough_line import probabilistic_hough_line\n__all__ += ['hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line']\n",
+  "guard_raw_sha256": "af1ad141f8d3afb55e71375a1d6592ee60b87f427f071462da5ef037d27466e1",
+  "guard_inverse": [
+    {
+      "current": " newest312_raw=(c.ROOT/record['source']).read_bytes()\n newest312_guard=Path(__file__).read_bytes()\n v6=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v6.json').read_bytes())\n assert v6['schema']=='finite-radon-public-exports-v6' and v6['original_calls']==0\n assert v6['previous_record']=='coverage/contracts/finite-radon-public-exports-v5.json'\n assert hashlib.sha256((c.ROOT/v6['previous_record']).read_bytes()).hexdigest()==v6['previous_record_raw_sha256']\n assert hashlib.sha256(newest312_raw).hexdigest()==v6['current_raw_sha256']\n assert hashlib.sha256(newest312_guard).hexdigest()==v6['guard_raw_sha256']\n v6_suffix=v6['source_suffix'].encode()\n assert v6_suffix and newest312_raw.endswith(v6_suffix) and newest312_raw.count(v6_suffix)==1\n newest_raw=newest312_raw.removesuffix(v6_suffix)\n newest_guard=newest312_guard\n for edit in v6['guard_inverse']:\n  block=edit['current'].encode()\n  assert block and newest_guard.count(block)==1\n  newest_guard=newest_guard.replace(block,edit['previous'].encode(),1)\n",
+      "previous": " newest_raw=(c.ROOT/record['source']).read_bytes()\n newest_guard=Path(__file__).read_bytes()\n"
+    },
+    {
+      "current": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True)):\n",
+      "previous": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True)):\n"
+    }
+  ],
+  "original_calls": 0
+}

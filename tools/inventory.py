@@ -31,6 +31,10 @@ for _names, _test, _benchmark in (
     (('morphology.convex_hull_object',), 'tests/test_morphology_convex_hull_object.py', 'benchmarks/convex_hull_object.py'),
     (('transform.hough_circle',), 'tests/test_hough_circle_public.py', 'benchmarks/hough_circle.py'),
     (('transform.hough_line_peaks',), 'tests/test_hough_line_peaks_public.py', 'benchmarks/hough_line_peaks.py'),
+    (('transform.hough_circle_peaks',), 'tests/test_hough_circle_peaks_public.py', 'benchmarks/hough_circle_peaks.py'),
+    (('transform.hough_ellipse',), 'tests/test_hough_ellipse_public.py', 'benchmarks/hough_ellipse.py'),
+    (('transform.probabilistic_hough_line',), 'tests/test_probabilistic_hough_line_public.py', 'benchmarks/probabilistic_hough_line.py'),
+    (('morphology.medial_axis',), 'tests/test_medial_axis_public.py', 'benchmarks/medial_axis.py'),
     (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
@@ -148,6 +152,10 @@ BOUNDED_DEFAULT_INPUTS = {
     'morphology.convex_hull_object': 'Bounded 2D C-contiguous Boolean and binary uint8 arrays, connectivity 1 or 2 and bounded total component crop work. C++ owns labeling and planar hull union. Out-of-scope cases use compatibility.',
     'transform.hough_circle': 'Bounded untagged C-order 2D Boolean or uint8 image with extents through 512 and ordered integer radii 0–64. C++ owns Bresenham votes and normalization; unsupported radii, tags and layouts use compatibility.',
     'transform.hough_line_peaks': 'Bounded untagged C-order uint64 accumulator with fewer than 262144 cells and matching finite float64 angles and distances. C++ owns peak selection; NumPy provides capped ordering and coordinate gathers. Tagged carriers and unsupported requests use compatibility.',
+    'transform.hough_circle_peaks': 'Bounded untagged C-order 3D float64 accumulators (1..16 x 1..256 x 1..256) and matching finite 1D positive intp radii. C++ owns planar peak selection; NumPy sorting and optional SciPy cKDTree spatial suppression handle finish steps. Out-of-scope domains and tags use compatibility.',
+    'transform.hough_ellipse': 'Bounded untagged C-order 2D Boolean or uint8 image (max extent <= 64) with bounded integer/accuracy/size options. C++ owns serial ellipse pair accumulation; unsupported arguments and tags use compatibility.',
+    'transform.probabilistic_hough_line': 'Bounded untagged C-order 2D Boolean or uint8 image (extents <= 256) with int/PCG64 rng and bounded theta/options. NumPy supplies angles and seeded shuffle permutation; C++ owns progressive line extraction. Tagged carriers and unsupported domains use compatibility.',
+    'morphology.medial_axis': 'Bounded untagged C-order 2D Boolean image (extents <= 192) with optional mask and explicit int/PCG64 rng. SciPy distance_transform_edt and NumPy permutation supply distance and tie priority; C++ owns ordered LUT topology thinning. Out-of-scope domains and tags use compatibility.',
 }
 
 

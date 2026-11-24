@@ -178,4 +178,5 @@ __all__ += ['thin', 'skeletonize']
 
 from ._convex_hull_image import convex_hull_image
 from ._convex_hull_object import convex_hull_object
-__all__ += ['convex_hull_image', 'convex_hull_object']
+from ._medial_axis import medial_axis
+__all__ += ['convex_hull_image', 'convex_hull_object', 'medial_axis']
