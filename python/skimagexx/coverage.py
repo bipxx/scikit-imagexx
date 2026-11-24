@@ -8,18 +8,19 @@ DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
     'data': ('binary_blobs',),
     'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color','random_shapes'),
-    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball'),
+    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball', 'denoise_bilateral'),
     'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','expand_labels'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('regionprops','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours'),
+    'measure': ('regionprops','regionprops_table','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
-    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord','match_descriptors'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line_peaks','hough_circle_peaks','hough_ellipse','probabilistic_hough_line'),
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','corner_moravec','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord','match_descriptors'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line','hough_line_peaks','hough_circle_peaks','hough_ellipse','probabilistic_hough_line'),
     'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
+                   'isotropic_erosion','isotropic_dilation','isotropic_opening','isotropic_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
                    'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize','convex_hull_image','convex_hull_object','medial_axis'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
@@ -358,20 +359,30 @@ HAAR_FUNCTIONS = ('feature.draw_haar_like_feature', 'feature.haar_like_feature',
 THINNING_FUNCTIONS = ('morphology.thin', 'morphology.skeletonize')
 HULL_FUNCTIONS = ('morphology.convex_hull_image', 'morphology.convex_hull_object')
 HOUGH_FUNCTIONS = (
-    'transform.hough_circle', 'transform.hough_line_peaks',
+    'transform.hough_circle', 'transform.hough_line', 'transform.hough_line_peaks',
     'transform.hough_circle_peaks', 'transform.hough_ellipse', 'transform.probabilistic_hough_line',
 )
 MEDIAL_FUNCTIONS = ('morphology.medial_axis',)
+ISOTROPIC_FUNCTIONS = (
+    'morphology.isotropic_erosion', 'morphology.isotropic_dilation',
+    'morphology.isotropic_opening', 'morphology.isotropic_closing',
+)
 
 
 def native_dtypes(api):
     if api == 'feature.match_descriptors':
         return ('bool',)
     if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'transform.hough_circle',
-               'transform.hough_ellipse', 'transform.probabilistic_hough_line'):
+               'transform.hough_line', 'transform.hough_ellipse', 'transform.probabilistic_hough_line'):
         return ('bool', 'uint8')
-    if api in MEDIAL_FUNCTIONS:
+    if api in (*MEDIAL_FUNCTIONS, *ISOTROPIC_FUNCTIONS):
         return ('bool',)
+    if api == 'feature.corner_moravec':
+        return ('uint8',)
+    if api == 'measure.regionprops_table':
+        return ('int32',)
+    if api == 'restoration.denoise_bilateral':
+        return ('float32', 'float64')
     if api == 'transform.hough_line_peaks':
         return ('uint64',)
     if api == 'transform.hough_circle_peaks':
@@ -524,6 +535,22 @@ def default_call(api, image):
         return (field,), {'threshold': 3, 'line_length': 4, 'line_gap': 2, 'rng': 739}
     if api == 'morphology.medial_axis':
         return (image,), {'rng': 739}
+    if api == 'transform.hough_line':
+        return (image,), {}
+    if api == 'restoration.denoise_bilateral':
+        return (image,), {'win_size': 5, 'sigma_color': 0.125, 'bins': 32}
+    if api == 'measure.regionprops_table':
+        import numpy as np
+
+        height, width = image.shape
+        field = np.zeros_like(image, order='C')
+        field[1:height // 2 + 1, 1:width // 2 + 1] = 1
+        field[height // 2:, width // 2:] = 2
+        return (field, None, ('label', 'bbox')), {}
+    if api.startswith('morphology.isotropic_'):
+        return (image, 3.0), {}
+    if api == 'feature.corner_moravec':
+        return (image, 1), {}
     if api in PYRAMID_GENERATOR_FUNCTIONS:
         return (image,), {'max_layer': 2}
     if api == 'measure.find_contours':
@@ -1335,14 +1362,20 @@ def util_views_default_error(actual,expected):
 
 
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
-    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS,
+               *ISOTROPIC_FUNCTIONS, 'feature.match_descriptors', 'feature.corner_moravec',
+               'measure.regionprops_table', 'restoration.denoise_bilateral'):
         import numpy as np
 
         if api == 'transform.probabilistic_hough_line':
             assert type(actual) is type(expected) is list
             assert actual == expected
             return
-        if api == 'transform.hough_line_peaks':
+        if api == 'measure.regionprops_table':
+            assert type(actual) is type(expected) is dict
+            assert list(actual) == list(expected)
+            pairs = [(actual[key], expected[key]) for key in expected]
+        elif api in ('transform.hough_line', 'transform.hough_line_peaks'):
             assert type(actual) is type(expected) is tuple
             assert len(actual) == len(expected) == 3
             pairs = zip(actual, expected, strict=True)
@@ -1356,9 +1389,14 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
         for value, reference in pairs:
             assert type(value) is type(reference) is np.ndarray
             assert value.shape == reference.shape and value.dtype == reference.dtype
-            assert value.dtype.metadata is reference.dtype.metadata is None
+            if api == 'restoration.denoise_bilateral':
+                assert value.dtype.metadata == reference.dtype.metadata
+            else:
+                assert value.dtype.metadata is reference.dtype.metadata is None
             assert value.strides == reference.strides
-            if api == 'transform.hough_circle_peaks':
+            if api in ('transform.hough_circle_peaks', 'transform.hough_line',
+                       'feature.corner_moravec', 'measure.regionprops_table',
+                       'restoration.denoise_bilateral'):
                 assert value.flags.owndata == reference.flags.owndata
                 assert type(value.base) is type(reference.base)
                 assert value.flags.c_contiguous == reference.flags.c_contiguous

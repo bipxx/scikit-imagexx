@@ -1,0 +1,6711 @@
+{
+  "version": {
+    "python": "3.13.14",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "original": "0.26.0"
+  },
+  "sources": {
+    "original": "f2675a3a426973aee06fbaa79e9d45e2ab7ee80677df00525dba0de789278085",
+    "scipy_wrapper": "acc30fc9bf11de6fef46353bb26dd0a86a3917945fd185a9a50534bde779d8ba",
+    "scipy_binary": "6e08479ba26603611b7033e561a4569dd3a072b86c6bb6a8c802b9f2098c293e",
+    "observer": "dc5bffd79bb54f6f37f1850eb082c82f627e001ae0cfc8504458d9516230e7f3",
+    "benchmark": "9c3f5382cef3f29ef1873ae8e2de32b67e2c51bd7637d24c3471f7978d4bd362"
+  },
+  "rows": [
+    {
+      "id": "erosion:threshold",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:sqrt-before",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:sqrt-exact",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000001000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:all-true",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000010101000101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:all-false",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:all-true-anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000010101000101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:all-false-volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          3,
+          4
+        ],
+        "strides": [
+          12,
+          4,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:large-radius",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000000010000000101010000000100000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000010000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000001000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:line",
+      "native": true,
+      "input": {
+        "shape": [
+          5
+        ],
+        "strides": [
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0001010100",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0001010100",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:negative",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:negative-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:positive-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:nan",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:negative-zero",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:out-alias",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:out-overlap",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000100000000010000000001000000000000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:out-disjoint",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:strided",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          -1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:fortran",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          5
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            5
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:numeric",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          10,
+          2
+        ],
+        "dtype": "<i2",
+        "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            10,
+            2
+          ],
+          "dtype": "<i2",
+          "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:dtype-out",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000001000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000001000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:out-stride",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:out-bad-shape",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "operands could not be broadcast together with shapes (5,5) () (4,3) "
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            3,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:out-readonly",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "output array is read-only"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": false
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:spacing-length",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "RuntimeError",
+          "sequence argument must have length equal to input rank"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:zero-spacing",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:radius-array",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:scalar",
+      "native": false,
+      "input": {
+        "shape": [],
+        "strides": [],
+        "dtype": "|b1",
+        "data": "01",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [],
+          "strides": [],
+          "dtype": "|b1",
+          "data": "01",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:empty",
+      "native": false,
+      "input": {
+        "shape": [
+          0,
+          4
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "|b1",
+        "data": "",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "erosion:rank-four",
+      "native": false,
+      "input": {
+        "shape": [
+          1,
+          1,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000010000000001000000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:threshold",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:sqrt-before",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:sqrt-exact",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:all-true",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:all-false",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101000000010000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:all-true-anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:all-false-volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          3,
+          4
+        ],
+        "strides": [
+          12,
+          4,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "010100000101000001000000010000000100000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:large-radius",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000001010100000101010000010101000001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:line",
+      "native": true,
+      "input": {
+        "shape": [
+          5
+        ],
+        "strides": [
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0001010100",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0001010100",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:negative",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:negative-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:positive-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:nan",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:negative-zero",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:out-alias",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:out-overlap",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000101010001010101010101010101010101010100010101",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:out-disjoint",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:strided",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          -1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:fortran",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          5
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            5
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:numeric",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          10,
+          2
+        ],
+        "dtype": "<i2",
+        "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            10,
+            2
+          ],
+          "dtype": "<i2",
+          "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:dtype-out",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000010000000100000001000000000000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000001000000010000000100000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000010000000100000001000000000000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000001000000010000000100000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:out-stride",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:out-bad-shape",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "operands could not be broadcast together with shapes (5,5) () (4,3) "
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            3,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:out-readonly",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "output array is read-only"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": false
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:spacing-length",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "RuntimeError",
+          "sequence argument must have length equal to input rank"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:zero-spacing",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:radius-array",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:scalar",
+      "native": false,
+      "input": {
+        "shape": [],
+        "strides": [],
+        "dtype": "|b1",
+        "data": "01",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [],
+          "strides": [],
+          "dtype": "|b1",
+          "data": "01",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:empty",
+      "native": false,
+      "input": {
+        "shape": [
+          0,
+          4
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "|b1",
+        "data": "",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "dilation:rank-four",
+      "native": false,
+      "input": {
+        "shape": [
+          1,
+          1,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000101010101010101010101010101010001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:threshold",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:sqrt-before",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:sqrt-exact",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000001010100000101010000010101000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:all-true",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:all-false",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101000000010000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:all-true-anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:all-false-volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          3,
+          4
+        ],
+        "strides": [
+          12,
+          4,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "010100000101000001000000010000000100000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:large-radius",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000010101000001010100000101010000000000000000000000000101010000010101000001010100000000000000000000000001010100000101010000010101000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:line",
+      "native": true,
+      "input": {
+        "shape": [
+          5
+        ],
+        "strides": [
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0001010100",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0001010100",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:negative",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:negative-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:positive-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:nan",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:negative-zero",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:out-alias",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:out-overlap",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000001000000010101000001010100000101010000000100",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:out-disjoint",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:strided",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          -1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:fortran",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          5
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            5
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:numeric",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          10,
+          2
+        ],
+        "dtype": "<i2",
+        "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            10,
+            2
+          ],
+          "dtype": "<i2",
+          "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:dtype-out",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000000000000100000000000000000000000000000001000000010000000100000000000000000000000100000001000000010000000000000000000000010000000100000001000000000000000000000000000000010000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000000000000100000000000000000000000000000001000000010000000100000000000000000000000100000001000000010000000000000000000000010000000100000001000000000000000000000000000000010000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:out-stride",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:out-bad-shape",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "operands could not be broadcast together with shapes (5,5) () (4,3) "
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            3,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:out-readonly",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "output array is read-only"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": false
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:spacing-length",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "RuntimeError",
+          "sequence argument must have length equal to input rank"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:zero-spacing",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010000000101000000010100000001010000000101000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:radius-array",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:scalar",
+      "native": false,
+      "input": {
+        "shape": [],
+        "strides": [],
+        "dtype": "|b1",
+        "data": "01",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [],
+          "strides": [],
+          "dtype": "|b1",
+          "data": "01",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:empty",
+      "native": false,
+      "input": {
+        "shape": [
+          0,
+          4
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "|b1",
+        "data": "",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "opening:rank-four",
+      "native": false,
+      "input": {
+        "shape": [
+          1,
+          1,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:threshold",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:sqrt-before",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:sqrt-exact",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:all-true",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000010101000101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:all-false",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:all-true-anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          4,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0101010101010101010101010101010101010101",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0000010101000101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            4,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:all-false-volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          3,
+          4
+        ],
+        "strides": [
+          12,
+          4,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            3,
+            4
+          ],
+          "strides": [
+            12,
+            4,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:large-radius",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:anisotropic",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00010101000001010100000101010000010101000001010100",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:volume",
+      "native": true,
+      "input": {
+        "shape": [
+          3,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000001010100010101010101010101010101010101010101010001010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            3,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000001000000010101000001010100000101010000000100000000010000000101010000010101000001010100000001000000000000000001010100010101010100010101000000000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:line",
+      "native": true,
+      "input": {
+        "shape": [
+          5
+        ],
+        "strides": [
+          1
+        ],
+        "dtype": "|b1",
+        "data": "0001010100",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0001010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "0001010100",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:negative",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:negative-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "01010101010101010101010101010101010101010101010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:positive-inf",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:nan",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:negative-zero",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:out-alias",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:out-overlap",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": true,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000001000000010101000101010101000101010000000100",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:out-disjoint",
+      "native": true,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:strided",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          -1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:fortran",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          1,
+          5
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            1,
+            5
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:numeric",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          10,
+          2
+        ],
+        "dtype": "<i2",
+        "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            10,
+            2
+          ],
+          "dtype": "<i2",
+          "data": "00000000feff000000000000fefffefffeff00000000fefffefffeff00000000fefffefffeff000000000000feff00000000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:dtype-out",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000000000000100000000000000000000000000000001000000010000000100000000000000010000000100000001000000010000000100000000000000010000000100000001000000000000000000000000000000010000000000000000000000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            20,
+            4
+          ],
+          "dtype": "<i4",
+          "data": "00000000000000000100000000000000000000000000000001000000010000000100000000000000010000000100000001000000010000000100000000000000010000000100000001000000000000000000000000000000010000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:out-stride",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": true,
+        "shares_input": false,
+        "owns": false,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            -1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:out-bad-shape",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "operands could not be broadcast together with shapes (5,5) () (4,3) "
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            3,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "000000000000000000000000",
+          "writeable": true
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:out-readonly",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "ValueError",
+          "output array is read-only"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000000000000000000000000000000000000000000000000",
+          "writeable": false
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:spacing-length",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "error": [
+          "builtins",
+          "RuntimeError",
+          "sequence argument must have length equal to input rank"
+        ],
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:zero-spacing",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000101010000010101000001010100000101010000010101",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:radius-array",
+      "native": false,
+      "input": {
+        "shape": [
+          5,
+          5
+        ],
+        "strides": [
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            5,
+            5
+          ],
+          "strides": [
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:scalar",
+      "native": false,
+      "input": {
+        "shape": [],
+        "strides": [],
+        "dtype": "|b1",
+        "data": "01",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1
+          ],
+          "strides": [
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [],
+          "strides": [],
+          "dtype": "|b1",
+          "data": "01",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:empty",
+      "native": false,
+      "input": {
+        "shape": [
+          0,
+          4
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "dtype": "|b1",
+        "data": "",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            0,
+            4
+          ],
+          "strides": [
+            0,
+            0
+          ],
+          "dtype": "|b1",
+          "data": "",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    },
+    {
+      "id": "closing:rank-four",
+      "native": false,
+      "input": {
+        "shape": [
+          1,
+          1,
+          5,
+          5
+        ],
+        "strides": [
+          25,
+          25,
+          5,
+          1
+        ],
+        "dtype": "|b1",
+        "data": "00000100000001010100000101010000010101000000010000",
+        "writeable": true
+      },
+      "result": {
+        "result": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100010101010100010101000000010000",
+          "writeable": true
+        },
+        "returns_out": false,
+        "shares_input": false,
+        "owns": true,
+        "image_after": {
+          "shape": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "strides": [
+            25,
+            25,
+            5,
+            1
+          ],
+          "dtype": "|b1",
+          "data": "00000100000001010100000101010000010101000000010000",
+          "writeable": true
+        },
+        "out_after": null,
+        "warnings": []
+      }
+    }
+  ],
+  "benchmark": [
+    {
+      "id": "erosion:boundary",
+      "input_sha256": "25c33d9c009f74643969575bbab6b0eb704adc7d77b2fb2c82d9370297ce82a6",
+      "output_sha256": "660b0fd63d20d0f2b3aa7179d51400a3f10089a6a065c32c03b34c99ccbe5074",
+      "strides": [
+        13,
+        1
+      ]
+    },
+    {
+      "id": "erosion:anisotropic",
+      "input_sha256": "902a7bdd9aa81f9382a18abc8887a7bba8b9e15d51185015438d4730be1d6ac2",
+      "output_sha256": "b49323c975ee3021dc384ab4b0cce647446364a16641c467b4bf1c35ff4ec0a1",
+      "strides": [
+        224,
+        1
+      ]
+    },
+    {
+      "id": "dilation:boundary",
+      "input_sha256": "25c33d9c009f74643969575bbab6b0eb704adc7d77b2fb2c82d9370297ce82a6",
+      "output_sha256": "230c3204bf79b0dfa02096bc7aa755be5efc4f6d7c6b41fd4a9b5c402b3935ad",
+      "strides": [
+        13,
+        1
+      ]
+    },
+    {
+      "id": "dilation:anisotropic",
+      "input_sha256": "902a7bdd9aa81f9382a18abc8887a7bba8b9e15d51185015438d4730be1d6ac2",
+      "output_sha256": "4182f5d008567877cef84e8051d893741107a9ba511e6e2064da8d2a73399dde",
+      "strides": [
+        224,
+        1
+      ]
+    },
+    {
+      "id": "opening:boundary",
+      "input_sha256": "25c33d9c009f74643969575bbab6b0eb704adc7d77b2fb2c82d9370297ce82a6",
+      "output_sha256": "5a3a72da9e9caaa33a72fad93b34099f5c721a984c9b89edd8a7656ba74d8009",
+      "strides": [
+        13,
+        1
+      ]
+    },
+    {
+      "id": "opening:anisotropic",
+      "input_sha256": "902a7bdd9aa81f9382a18abc8887a7bba8b9e15d51185015438d4730be1d6ac2",
+      "output_sha256": "5d21da1ff217b63f4d2cbe70b8a6625fcf96240117d0ec0a25054e4b8fe7b6a8",
+      "strides": [
+        224,
+        1
+      ]
+    },
+    {
+      "id": "closing:boundary",
+      "input_sha256": "25c33d9c009f74643969575bbab6b0eb704adc7d77b2fb2c82d9370297ce82a6",
+      "output_sha256": "8131b8e9e95e7051d4d07181522881c78a6d0da79217e9911840e66643c77d1e",
+      "strides": [
+        13,
+        1
+      ]
+    },
+    {
+      "id": "closing:anisotropic",
+      "input_sha256": "902a7bdd9aa81f9382a18abc8887a7bba8b9e15d51185015438d4730be1d6ac2",
+      "output_sha256": "f72aabf54630044442e7e725310abd37a1bd7dad30c7cdf3177a97ce7066e2d0",
+      "strides": [
+        224,
+        1
+      ]
+    }
+  ]
+}

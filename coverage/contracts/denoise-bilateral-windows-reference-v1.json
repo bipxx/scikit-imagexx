@@ -1,0 +1,1523 @@
+{
+  "profile": "windows",
+  "versions": [
+    "3.13.14",
+    "2.5.4",
+    "1.18.1",
+    "0.26.0"
+  ],
+  "sources": {
+    "skimage.restoration._denoise": "4684201541eb0d39b5de8efd48f67f352f4f6f3cac4bba643afe4533e76c879c",
+    "skimage.restoration._denoise_cy": "0136d13d55789de97b0cdc3df00c7d72334da56293d9461c7969017194539ea1",
+    "skimage._shared.utils": "4d46d199be4f83048f6bc4f540ca0c7941d64121407ec0de1fad04475d1c3c6d",
+    "skimage.util.dtype": "3d5bfb5388c980fa46d1283e4d60e10111c9a0f3189f24a0bca373dd668ff75c"
+  },
+  "observer_sha256": "65d6ac1c6ddb779a70442627154f92befdce99765650c601e21b8c6744b3a0ae",
+  "benchmark_sha256": "64f50d45dea9aad25d64a42fa90ced41e15ac81be337499c80d7bc808d3e4971",
+  "rows": [
+    {
+      "id": "float32-gray-default",
+      "native": true,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "73287bae5d88f253e87caa3a40c3ea3d08ca157a67491ad452ed1ab3ebe83100",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.04dc520000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "123b5e79ee948d29e87017861172d3020a99412e718473c3100ac542ba729250",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float32-gray-border",
+      "native": true,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "6da1b0e35b7028dce886171d0f033ab35a7879aa430e4d38a0c7042e53fa2aff",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 5,
+          "bins": 7,
+          "mode": "constant",
+          "cval": "0x1.c000000000000p-3",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.4000000000000p+0",
+          "color": "8acb4e135219cee5e8558cd1cbc1248f01cfe4a09f6086c8064f1507af11d798",
+          "spatial": "e5133eb60e16297e919a526a421b4e035dba63fb920cdea533c4db750110b2ba",
+          "spatial_count": 36
+        }
+      ]
+    },
+    {
+      "id": "float32-gray-impulse",
+      "native": true,
+      "input": {
+        "shape": [
+          7,
+          9
+        ],
+        "dtype": "<f4",
+        "strides": [
+          36,
+          4
+        ],
+        "data_sha256": "27c7f623736cc06017fec3c695830049aef0da8ec0b177a14d5aa440d142fb43",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          7,
+          9
+        ],
+        "dtype": "<f4",
+        "strides": [
+          36,
+          4
+        ],
+        "data_sha256": "14701b4a71a91d97b746740fa972b597632bc9764e0e985ce5c1615bb88a70d7",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "27c7f623736cc06017fec3c695830049aef0da8ec0b177a14d5aa440d142fb43",
+          "maximum": "0x1.8000000000000p-1",
+          "window": 15,
+          "bins": 32,
+          "mode": "constant",
+          "cval": "0x1.0000000000000p-3",
+          "sigma_color": "0x1.c28f5c28f5c29p-4",
+          "sigma_spatial": "0x1.2000000000000p+1",
+          "color": "bd86b14a77bb178369ae3547d59d30e0e4418bec66b59fc73bd1c7fd356eebb3",
+          "spatial": "2631496a46b4df1a49b34d1d2acdff03eb03b87058017c99f5f25708ea759fa5",
+          "spatial_count": 256
+        }
+      ]
+    },
+    {
+      "id": "float32-rgb-default",
+      "native": true,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "0f8d20e5b34dffb3169455907cfa27d84621aeb964a2c298f5114bc477be0989",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.447b8c0000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "ca95459a9b4f4c5c39b65997ab1aa16b10186ca429e1e496d0d5a860a66ab91d",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float32-rgb-odd-bins",
+      "native": true,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "c7369810fc8b8c138033c977eb3e3a63a8e4c8cb0e990d61c8a5fcaca1cfa455",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 5,
+          "bins": 7,
+          "mode": "constant",
+          "cval": "0x1.8000000000000p-1",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.4000000000000p+0",
+          "color": "48f3640820f8ccc7c5650c4492ce22b61175031d90c20bae83c126f47ff1e4b4",
+          "spatial": "e5133eb60e16297e919a526a421b4e035dba63fb920cdea533c4db750110b2ba",
+          "spatial_count": 36
+        }
+      ]
+    },
+    {
+      "id": "float32-rgb-three-bins-witness",
+      "native": true,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "6c81926eb5fbdd46dba74bbb880e819d9e96ac3f238b76c18b24cd20c7b828dd",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 5,
+          "bins": 4,
+          "mode": "constant",
+          "cval": "0x1.8000000000000p-1",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "f9e5827a64018ea1212536beb9a233d3ad47cc1f2f36ed5fb048e37d025dadf3",
+          "spatial": "f4f46751d29fdf6b06784085a454aa57076b5b7389b6b3a7fa8930490b60cbf6",
+          "spatial_count": 36
+        }
+      ]
+    },
+    {
+      "id": "float32-zero-total",
+      "native": true,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "ddccdf9521de646057a4328e36c896faaac6ec3cb4403f0b78dcc3e8bab7c7c2",
+        "owns": false,
+        "nan_count": 83
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 25,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.0000000000000p-8",
+          "sigma_spatial": "0x1.0000000000000p-2",
+          "color": "071481f3596aa9b9772ea4526527bae82373a138989cfdf6600dc0eca9a161f8",
+          "spatial": "99646fc81359be90f5efc68f977ef17a4ff1a2047aa69adb7f7cbdac85f41da7",
+          "spatial_count": 676
+        }
+      ]
+    },
+    {
+      "id": "float32-constant-identity",
+      "native": true,
+      "input": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f4",
+        "strides": [
+          32,
+          4
+        ],
+        "data_sha256": "048f68bac4fc601736e92e7d3bbe0de45289e31f20a54dd2b52e9a8cdc9d8253",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f4",
+        "strides": [
+          32,
+          4
+        ],
+        "data_sha256": "048f68bac4fc601736e92e7d3bbe0de45289e31f20a54dd2b52e9a8cdc9d8253",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": true,
+      "aliases": true,
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float32-constant-invalid-mode",
+      "native": false,
+      "input": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f4",
+        "strides": [
+          32,
+          4
+        ],
+        "data_sha256": "048f68bac4fc601736e92e7d3bbe0de45289e31f20a54dd2b52e9a8cdc9d8253",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f4",
+        "strides": [
+          32,
+          4
+        ],
+        "data_sha256": "048f68bac4fc601736e92e7d3bbe0de45289e31f20a54dd2b52e9a8cdc9d8253",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": true,
+      "aliases": true,
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float32-invalid-mode",
+      "native": false,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "Invalid mode specified.  Please use `constant`, `edge`, `wrap`, `symmetric` or `reflect`."
+      ],
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "bad",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.04dc520000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "123b5e79ee948d29e87017861172d3020a99412e718473c3100ac542ba729250",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float32-invalid-gray-rank",
+      "native": false,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          156,
+          12,
+          4
+        ],
+        "data_sha256": "1056e8bad71b0f8f83f9d14e5427b73c68ce79fbb7d9ef13bee68049aa3db89c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "Bilateral filter is not implemented for grayscale images of 3 or more dimensions, but input image has (9, 13, 3) shape. Use ``channel_axis=-1`` for 2D RGB images."
+      ],
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float32-invalid-channel-rank",
+      "native": false,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          4
+        ],
+        "data_sha256": "3b41d60af9de2a7f515205bc184af139254f2351f020bd8cdc05839095a4baf2",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "Use ``channel_axis=None`` for 2D grayscale images. The last axis of the input image must be multiple color channels not another spatial dimension."
+      ],
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float32-empty",
+      "native": false,
+      "input": {
+        "shape": [
+          0,
+          7
+        ],
+        "dtype": "<f4",
+        "strides": [
+          0,
+          0
+        ],
+        "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "zero-size array to reduction operation minimum which has no identity"
+      ],
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float32-safe-strided-gray",
+      "native": false,
+      "input": {
+        "shape": [
+          8,
+          6
+        ],
+        "dtype": "<f4",
+        "strides": [
+          44,
+          8
+        ],
+        "data_sha256": "2af6eb60ccae54032791dad3f901cab8eeca59a94ac0077dc80bc89d622430bd",
+        "owns": false,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          6
+        ],
+        "dtype": "<f4",
+        "strides": [
+          24,
+          4
+        ],
+        "data_sha256": "1b2ecbc8fcd3f5b2fead19bb21a1a251f3ac2b798fde7b9fc06a3c064bb5d5ce",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "2af6eb60ccae54032791dad3f901cab8eeca59a94ac0077dc80bc89d622430bd",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.0bc1fe0000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "24886893034de20d299ae522da853613f3b2db8a5a572b066b6d5efabbbbf9fb",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float64-gray-default",
+      "native": true,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "3eb64c6e07bd9b9c11d1fc5f3f4bbfa749fb1fe96e0b09ed610d6ecb9909bd19",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.04dc51c486c9ep-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "c74ef9429905cc5c5fdef17448642d6e7a116e999b13fbb6fab6e7d0be48c777",
+          "spatial": "a30d4199ede6235e79c702b6a8e18258ad4a136c5e71a264d115d5888641e765",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float64-gray-border",
+      "native": true,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "ef811e4d00f278960a97300eb2dcf9eb310da5705c979fef510c02917cb76c23",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 5,
+          "bins": 7,
+          "mode": "constant",
+          "cval": "0x1.c000000000000p-3",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.4000000000000p+0",
+          "color": "4a2f04bb22c65b56a4252599a52ed90be2aff8c41c1ed8a4c754036e93584e77",
+          "spatial": "1acf4dd6124f3bf043a394347d01a607fa932027c487771400bad995810f7743",
+          "spatial_count": 36
+        }
+      ]
+    },
+    {
+      "id": "float64-gray-impulse",
+      "native": true,
+      "input": {
+        "shape": [
+          7,
+          9
+        ],
+        "dtype": "<f8",
+        "strides": [
+          72,
+          8
+        ],
+        "data_sha256": "e909320cfaea0cc517f6d0c6413e942c3199e3b6156718824a269f348c357692",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          7,
+          9
+        ],
+        "dtype": "<f8",
+        "strides": [
+          72,
+          8
+        ],
+        "data_sha256": "6293be3d5d05be15cb3862478ba29398046480ffb0236635b3aa77888c6564ae",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "e909320cfaea0cc517f6d0c6413e942c3199e3b6156718824a269f348c357692",
+          "maximum": "0x1.8000000000000p-1",
+          "window": 15,
+          "bins": 32,
+          "mode": "constant",
+          "cval": "0x1.0000000000000p-3",
+          "sigma_color": "0x1.c28f5c28f5c29p-4",
+          "sigma_spatial": "0x1.2000000000000p+1",
+          "color": "4691f6f5f0e419dbd00f61d6bd63dbb1de4ba6f0927c2ee724ae5489a92fbb3f",
+          "spatial": "3d87516953e39b43e3901fce10a4c0a8aba8e9b512c870bf587492a0c4771e05",
+          "spatial_count": 256
+        }
+      ]
+    },
+    {
+      "id": "float64-rgb-default",
+      "native": true,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "123f33a32bc7fd23e4e5ab2c61c13109f39728a20cd821740a7b36936f1bde4a",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.447b8ce51d053p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "8f09738cec069323da2e593cba7e5c255f4a4d79196326c41a805c916c794dfc",
+          "spatial": "a30d4199ede6235e79c702b6a8e18258ad4a136c5e71a264d115d5888641e765",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float64-rgb-odd-bins",
+      "native": true,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "05792f7923ec5fb6158b64a35a9d9799749290a9800239087149ded065e34216",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 5,
+          "bins": 7,
+          "mode": "constant",
+          "cval": "0x1.8000000000000p-1",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.4000000000000p+0",
+          "color": "064b39a2264cb1626e91c03da99df7c414064d9d7f4d84d05b70a9366afcc231",
+          "spatial": "1acf4dd6124f3bf043a394347d01a607fa932027c487771400bad995810f7743",
+          "spatial_count": 36
+        }
+      ]
+    },
+    {
+      "id": "float64-rgb-three-bins-witness",
+      "native": true,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "b270351d2f905a7a7b06caf07a401df322633a2b59eef46b16448aba4aec87a8",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 5,
+          "bins": 4,
+          "mode": "constant",
+          "cval": "0x1.8000000000000p-1",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "34da8f83c624e0a7c959a3348ef62251358c277d6b85ebb4ae7d4e121cce6299",
+          "spatial": "74975b1de74c156339128e5a648be9aec854528643d57d1740e3e32a8f87387a",
+          "spatial_count": 36
+        }
+      ]
+    },
+    {
+      "id": "float64-zero-total",
+      "native": true,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "e2649c18c590a5a39058cace082f8c21c7771934afeb16b6819eddffa46d3184",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 25,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.0000000000000p-8",
+          "sigma_spatial": "0x1.0000000000000p-2",
+          "color": "27b395b2122575e7924e49c1ee4222b51305f225e76bf12336ffee196236adda",
+          "spatial": "25d75a6b763af363cd5da58199fba3a13abbd15c5691ff25c1d9f9cab78f75c2",
+          "spatial_count": 676
+        }
+      ]
+    },
+    {
+      "id": "float64-constant-identity",
+      "native": true,
+      "input": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f8",
+        "strides": [
+          64,
+          8
+        ],
+        "data_sha256": "699fcf550a89a53db83fa8e8dcf430446e2f3115b832765b54d10f65d2ec583b",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f8",
+        "strides": [
+          64,
+          8
+        ],
+        "data_sha256": "699fcf550a89a53db83fa8e8dcf430446e2f3115b832765b54d10f65d2ec583b",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": true,
+      "aliases": true,
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float64-constant-invalid-mode",
+      "native": false,
+      "input": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f8",
+        "strides": [
+          64,
+          8
+        ],
+        "data_sha256": "699fcf550a89a53db83fa8e8dcf430446e2f3115b832765b54d10f65d2ec583b",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          7,
+          8
+        ],
+        "dtype": "<f8",
+        "strides": [
+          64,
+          8
+        ],
+        "data_sha256": "699fcf550a89a53db83fa8e8dcf430446e2f3115b832765b54d10f65d2ec583b",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": true,
+      "aliases": true,
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float64-invalid-mode",
+      "native": false,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "Invalid mode specified.  Please use `constant`, `edge`, `wrap`, `symmetric` or `reflect`."
+      ],
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "bad",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.04dc51c486c9ep-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "c74ef9429905cc5c5fdef17448642d6e7a116e999b13fbb6fab6e7d0be48c777",
+          "spatial": "a30d4199ede6235e79c702b6a8e18258ad4a136c5e71a264d115d5888641e765",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "float64-invalid-gray-rank",
+      "native": false,
+      "input": {
+        "shape": [
+          9,
+          13,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          312,
+          24,
+          8
+        ],
+        "data_sha256": "0e735130a59f509c78d4232e470e0f71fb9cb031a1cd6438e4242475c750978c",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "Bilateral filter is not implemented for grayscale images of 3 or more dimensions, but input image has (9, 13, 3) shape. Use ``channel_axis=-1`` for 2D RGB images."
+      ],
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float64-invalid-channel-rank",
+      "native": false,
+      "input": {
+        "shape": [
+          8,
+          11
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          8
+        ],
+        "data_sha256": "a01cf3a78da836ea17bdfbb6dc4cd9dae1a6d9e7029b48259130c21da72ca21e",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "Use ``channel_axis=None`` for 2D grayscale images. The last axis of the input image must be multiple color channels not another spatial dimension."
+      ],
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float64-empty",
+      "native": false,
+      "input": {
+        "shape": [
+          0,
+          7
+        ],
+        "dtype": "<f8",
+        "strides": [
+          0,
+          0
+        ],
+        "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "owns": true,
+        "nan_count": 0
+      },
+      "error": [
+        "builtins",
+        "ValueError",
+        "zero-size array to reduction operation minimum which has no identity"
+      ],
+      "warnings": [],
+      "prepared": []
+    },
+    {
+      "id": "float64-safe-strided-gray",
+      "native": false,
+      "input": {
+        "shape": [
+          8,
+          6
+        ],
+        "dtype": "<f8",
+        "strides": [
+          88,
+          16
+        ],
+        "data_sha256": "44f839fd8dfb14bae3c7446023495e2b03dddcdc9d5f3c07a059fc4c0ba923d0",
+        "owns": false,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          8,
+          6
+        ],
+        "dtype": "<f8",
+        "strides": [
+          48,
+          8
+        ],
+        "data_sha256": "f3c4e545dd3df65d0635a134e895daacf2f3b0ad09f67bb08539a6ca1f5f8edf",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "44f839fd8dfb14bae3c7446023495e2b03dddcdc9d5f3c07a059fc4c0ba923d0",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.0bc1fd1236ee5p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "05f7442d149bfa1cd38282513c2e18cb93d48f22dc641863df97814f5c011cb4",
+          "spatial": "a30d4199ede6235e79c702b6a8e18258ad4a136c5e71a264d115d5888641e765",
+          "spatial_count": 64
+        }
+      ]
+    }
+  ],
+  "benchmark": [
+    {
+      "id": "small-gray",
+      "input": {
+        "shape": [
+          32,
+          48
+        ],
+        "dtype": "<f4",
+        "strides": [
+          192,
+          4
+        ],
+        "data_sha256": "a15f8a1753dd954d9ddbbdc55206f670903d8258febdaee07f9b4122e8780026",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          32,
+          48
+        ],
+        "dtype": "<f4",
+        "strides": [
+          192,
+          4
+        ],
+        "data_sha256": "e64d5712f9c9816cce12edd04eeae9e4e1a29737f4d78850f3d10f4fa2ac377a",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "a15f8a1753dd954d9ddbbdc55206f670903d8258febdaee07f9b4122e8780026",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.068b940000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "57452fb698dbc88f7ec06da68e093c44379a13c81a3821d35669a8d62faf9410",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "default-gray",
+      "input": {
+        "shape": [
+          96,
+          128
+        ],
+        "dtype": "<f4",
+        "strides": [
+          512,
+          4
+        ],
+        "data_sha256": "f8c7595ef9a3e27361c47763c73549cec1214942c05e1e2de821f49773355c3e",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          96,
+          128
+        ],
+        "dtype": "<f4",
+        "strides": [
+          512,
+          4
+        ],
+        "data_sha256": "3970cb920f4b39e4d9f184d6d7206f41e3f75a895f33d111b23bda788783d39a",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "f8c7595ef9a3e27361c47763c73549cec1214942c05e1e2de821f49773355c3e",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.06ee620000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "0dd0db27f80eb968f771bc5f004445f14eb8b7e1f557c706a84684e5ff6474da",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "wide-gray",
+      "input": {
+        "shape": [
+          160,
+          192
+        ],
+        "dtype": "<f8",
+        "strides": [
+          1536,
+          8
+        ],
+        "data_sha256": "ddfe1c0d623643f809ad455492318cd432bd5f22d603dfc853f0d2df10967182",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          160,
+          192
+        ],
+        "dtype": "<f8",
+        "strides": [
+          1536,
+          8
+        ],
+        "data_sha256": "d84509d401ca8d780ea268a6d82d70e8759c7674dd3e2cb9144c8da0b0510f20",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "ddfe1c0d623643f809ad455492318cd432bd5f22d603dfc853f0d2df10967182",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 15,
+          "bins": 64,
+          "mode": "constant",
+          "cval": "0x1.0000000000000p-3",
+          "sigma_color": "0x1.47ae147ae147bp-3",
+          "sigma_spatial": "0x1.2000000000000p+1",
+          "color": "1836ca71af5a8bc2c580960c0eea6711a29138fd3bfad8c64a06468821857d24",
+          "spatial": "3d87516953e39b43e3901fce10a4c0a8aba8e9b512c870bf587492a0c4771e05",
+          "spatial_count": 256
+        }
+      ]
+    },
+    {
+      "id": "default-rgb",
+      "input": {
+        "shape": [
+          96,
+          112,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          1344,
+          12,
+          4
+        ],
+        "data_sha256": "c6528c0ecfae0fdf7810b99f6e88bbb82961cf1575bc0bbe141cee103ebe7ab1",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          96,
+          112,
+          3
+        ],
+        "dtype": "<f4",
+        "strides": [
+          1344,
+          12,
+          4
+        ],
+        "data_sha256": "09739822b6725ce5caa82bbc6dc28c8be9b44e45e43cb64402cd302d196ab3b1",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "c6528c0ecfae0fdf7810b99f6e88bbb82961cf1575bc0bbe141cee103ebe7ab1",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 7,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.47bdf40000000p-3",
+          "sigma_spatial": "0x1.0000000000000p+0",
+          "color": "4af94be067709a5ae8bd7a0f7fdb98c067d9a14f915b091bb2a8e49d57f588f1",
+          "spatial": "26b01c4072a6631817993b6872fabefa3f96853cd29b51d8e91c4740a9ca2821",
+          "spatial_count": 64
+        }
+      ]
+    },
+    {
+      "id": "rgb-low-bins",
+      "input": {
+        "shape": [
+          128,
+          128,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          3072,
+          24,
+          8
+        ],
+        "data_sha256": "63766a6a68c76eb854d57c7423b5515eea3f4886e4fbf412bfdc8e724045b67f",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          128,
+          128,
+          3
+        ],
+        "dtype": "<f8",
+        "strides": [
+          3072,
+          24,
+          8
+        ],
+        "data_sha256": "4f5d7be84766f13bcaab1ab6ad172b9b88f6f6459d090b87f4766f0b43a058b8",
+        "owns": true,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "63766a6a68c76eb854d57c7423b5515eea3f4886e4fbf412bfdc8e724045b67f",
+          "maximum": "0x1.6800000000000p-1",
+          "window": 11,
+          "bins": 257,
+          "mode": "constant",
+          "cval": "0x1.0000000000000p-2",
+          "sigma_color": "0x1.0000000000000p-3",
+          "sigma_spatial": "0x1.8000000000000p+0",
+          "color": "c10a507cfb3b80fec5edb091b8e1af6e4b81e351088f0daa24ff4cf742d4924c",
+          "spatial": "b3a5383af489a169997d6bca0715e539a0acb36235dbbf4239e40273e10e80e9",
+          "spatial_count": 144
+        }
+      ]
+    },
+    {
+      "id": "wide-small",
+      "input": {
+        "shape": [
+          43,
+          59
+        ],
+        "dtype": "<f4",
+        "strides": [
+          236,
+          4
+        ],
+        "data_sha256": "17b3955dbe8af71138f30561b05874cc98c64b9786961d8bf4420da395660827",
+        "owns": true,
+        "nan_count": 0
+      },
+      "output": {
+        "shape": [
+          43,
+          59
+        ],
+        "dtype": "<f4",
+        "strides": [
+          236,
+          4
+        ],
+        "data_sha256": "24a79db41d57fa170d9283516535491bc991a8339bd88a337e11de9d98f7e5bb",
+        "owns": false,
+        "nan_count": 0
+      },
+      "identity": false,
+      "aliases": false,
+      "warnings": [],
+      "prepared": [
+        {
+          "field_sha256": "17b3955dbe8af71138f30561b05874cc98c64b9786961d8bf4420da395660827",
+          "maximum": "0x1.2800000000000p-1",
+          "window": 25,
+          "bins": 10000,
+          "mode": "constant",
+          "cval": "0x0.0p+0",
+          "sigma_color": "0x1.851eb851eb852p-3",
+          "sigma_spatial": "0x1.8000000000000p+1",
+          "color": "b8207e4beb87e523331e45d84ebf08a02a734506ab69e44374c4fd50c56e2876",
+          "spatial": "0676aede6237cb2c2812b3c4e352d5b5d2daa1d16277295c1f494798ea09fe67",
+          "spatial_count": 676
+        }
+      ]
+    }
+  ]
+}

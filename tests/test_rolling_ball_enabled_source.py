@@ -56,9 +56,9 @@ def test_shared_projection_refuses_changed_current_or_inverse(tmp_path,fault):
 
 @pytest.mark.parametrize('profile',('minimum','modern','debug','windows'))
 def test_actual_current_census_and_explicit_saved_platform(profile):
-    q=qualifier();p=q.plan(ROOT,profile,312)
+    q=qualifier();p=q.plan(ROOT,profile,320)
     assert not p['blockers'],p['blockers']
-    assert (p['registry']['image_count'],p['registry']['registered_count'],p['product_members'],p['SDK_members'],len(p['SDK_families']),p['SDK_checks'])==(312,315,294,131,61,122)
+    assert (p['registry']['image_count'],p['registry']['registered_count'],p['product_members'],p['SDK_members'],len(p['SDK_families']),p['SDK_checks'])==(320,323,304,136,66,132)
     assert 'test_rolling_ball_integration.py'in p['public_groups']['public-post203']
     group='public-rolling-ball-saved-linux'
     if profile=='windows':assert group not in p['public_groups']

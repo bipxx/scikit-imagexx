@@ -292,14 +292,15 @@ PRODUCT_SCOPE = 'h_extrema23'
 PRODUCT_MEMBERS = 120
 SDK_MEMBERS = 68
 # Historical envelopes above stay closed; current preparation selects this scope.
-CURRENT_PRODUCT_SCOPE = 'current312'
+CURRENT_PRODUCT_SCOPE = 'current320'
 CURRENT_FAMILIES = FAMILIES + ('colocalization', 'footprint_shapes', 'recent_primitives', 'draw_coordinates', 'circle_perimeter', 'line_nd', 'draw_ellipsoid', 'draw_ellipse_perimeter', 'label_pair_metrics', 'mark_boundaries', 'draw_multiblock_lbp', 'finite_radon', 'variation_of_information', 'flood_fill', 'rolling_ball', 'structural_similarity', 'local_extrema', 'order_angles_golden_ratio', 'pearson', 'hausdorff', 'ellipsoid_stats', 'expand_labels', 'haar_like_feature_drawing', 'haar_like_features',
                             'find_contours', 'random_noise', 'random_shapes',
                             'match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks',
                             'convex_hull_image', 'convex_hull_object',
-                            'hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line', 'medial_axis')
-CURRENT_SDK_CLIENT_SCOPE = 'current61 required installed clients; current308 clients plus circle Hough peaks, Hough ellipse, probabilistic Hough line and medial axis; source readiness is not qualification acceptance'
-CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v21.json'
+                            'hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line', 'medial_axis',
+                            'hough_line', 'denoise_bilateral', 'regionprops_table', 'isotropic_morphology', 'corner_moravec')
+CURRENT_SDK_CLIENT_SCOPE = 'current66 required installed clients; current312 clients plus Hough line, bilateral denoising, regionprops table, isotropic morphology and Moravec corner; source readiness is not qualification acceptance'
+CURRENT_SCOPE_CONTRACT = 'coverage/contracts/current-public-qualification-v22.json'
 VI_CURRENT_PROVIDER_ORDER = ('numpy.log2', 'numpy.matmul', 'numpy.log2', 'numpy.matmul')
 VI_CURRENT_PUBLIC_CASE_IDS = ["variation_of_information/perfect", "variation_of_information/split", "variation_of_information/merge-F", "variation_of_information/ignore", "variation_of_information/allignored", "variation_of_information/table-normalized", "variation_of_information/table-raw-counts", "variation_of_information/table-with-None-images"]
 VI_WINDOWS_FP_SCOPE = "Windows software/word contract only; no Linux FEnv32 or hardware-FP claim"
@@ -693,6 +694,10 @@ POST203_TESTS += HULL_PUBLIC_TESTS
 CURRENT312_PUBLIC_TESTS = ('test_hough_circle_peaks_public.py', 'test_hough_ellipse_public.py',
                            'test_probabilistic_hough_line_public.py', 'test_medial_axis_public.py')
 POST203_TESTS += CURRENT312_PUBLIC_TESTS
+CURRENT320_PUBLIC_TESTS = ('test_hough_line_public.py', 'test_denoise_bilateral_public.py',
+                           'test_regionprops_table_public.py', 'test_isotropic_morphology_public.py',
+                           'test_corner_moravec_public.py')
+POST203_TESTS += CURRENT320_PUBLIC_TESTS
 DRAW_SOURCE_PATHS += ('include/skimagexx/mark_boundaries.hpp','include/skimagexx/draw_multiblock_lbp.hpp','python/skimagexx/_mark_boundaries.py','python/skimagexx/_draw_multiblock_lbp.py','src/mark_boundaries.cpp','src/draw_multiblock_lbp.cpp','src/bind_mark_boundaries.cpp','src/bind_draw_multiblock_lbp.cpp','tests/test_mark_boundaries_public.py','tests/test_draw_multiblock_lbp_public.py','tests/fixtures/draw_multiblock_lbp_originals_v1.json','tests/fixtures/draw_multiblock_lbp_sdk_minimum_v1.hpp','tests/fixtures/draw_multiblock_lbp_sdk_modern_v1.hpp','tests/fixtures/mark_boundaries_native_saved_v1.hpp','coverage/contracts/mark-lbp-enabled-transports-v1.json')
 
 
@@ -1282,6 +1287,48 @@ DRAW_SOURCE_PATHS += (
     'tests/test_hough_circle_peaks_public.py', 'tests/test_hough_ellipse_public.py', 'tests/test_medial_axis_public.py', 'tests/test_probabilistic_hough_line_public.py',
 )
 
+DRAW_SOURCE_PATHS += (
+    'benchmarks/corner_moravec.py', 'benchmarks/denoise_bilateral.py', 'benchmarks/hough_line.py',
+    'benchmarks/isotropic_morphology.py', 'benchmarks/regionprops_table.py',
+    'coverage/contracts/current-public-qualification-v22.json',
+    'coverage/contracts/draw-multiblock-lbp-benchmark-execution-v22.json',
+    'coverage/contracts/finite-radon-public-exports-v7.json',
+    'coverage/contracts/mark-boundaries-benchmark-execution-v22.json',
+    'coverage/contracts/speed-parity-current-source-v53.json',
+    'coverage/contracts/vi-public-matmul-provider-benchmark-post-haar-current320-v1.json',
+    'coverage/contracts/vi-public-matmul-source-history-v62.json',
+    'coverage/contracts/vi4-public-matmul-capture-post-haar-current320-v1.json',
+    'coverage/contracts/corner-moravec-v1.json',
+    'coverage/contracts/denoise-bilateral-constant.md',
+    'coverage/contracts/denoise-bilateral-minimum-reference-v1.json',
+    'coverage/contracts/denoise-bilateral-windows-reference-v1.json',
+    'coverage/contracts/hough-line-reference-v1.json',
+    'coverage/contracts/hough-line.md',
+    'coverage/contracts/isotropic-morphology-reference-v1.json',
+    'coverage/contracts/isotropic-morphology.md',
+    'coverage/contracts/regionprops-table-v1.json',
+    'include/skimagexx/corner_moravec.hpp', 'include/skimagexx/denoise_bilateral.hpp',
+    'include/skimagexx/hough_line.hpp', 'include/skimagexx/isotropic_morphology.hpp',
+    'include/skimagexx/regionprops_table.hpp',
+    'python/skimagexx/_corner_moravec.py', 'python/skimagexx/_denoise_bilateral.py',
+    'python/skimagexx/_hough_line.py', 'python/skimagexx/_isotropic_morphology.py',
+    'python/skimagexx/_regionprops_table.py',
+    'src/bind_corner_moravec.cpp', 'src/bind_denoise_bilateral.cpp',
+    'src/bind_hough_line.cpp', 'src/bind_isotropic_morphology.cpp', 'src/bind_regionprops_table.cpp',
+    'src/corner_moravec.cpp', 'src/denoise_bilateral.cpp',
+    'src/hough_line.cpp', 'src/isotropic_morphology.cpp', 'src/regionprops_table.cpp',
+    'tests/cmake_consumer/corner_moravec_consumer.cpp', 'tests/cmake_consumer/denoise_bilateral_consumer.cpp',
+    'tests/cmake_consumer/hough_line_consumer.cpp', 'tests/cmake_consumer/isotropic_morphology_consumer.cpp',
+    'tests/cmake_consumer/regionprops_table_consumer.cpp',
+    'tests/denoise_bilateral_reference.py',
+    'tests/fixtures/corner_moravec_v1.py', 'tests/fixtures/denoise_bilateral_descriptors_v1.json',
+    'tests/fixtures/regionprops_table_v1.py',
+    'tests/hough_line_reference.py', 'tests/isotropic_morphology_reference.py',
+    'tests/test_corner_moravec_public.py', 'tests/test_denoise_bilateral_public.py',
+    'tests/test_hough_line_public.py', 'tests/test_isotropic_morphology_public.py',
+    'tests/test_regionprops_table_public.py',
+)
+
 
 def environment(package=None, scalar=False):
     env = dict(os.environ)
@@ -1537,25 +1584,29 @@ def plan(root, profile, expected=None):
 
 def current_contract(read_bytes):
     data = json.loads(read_bytes(CURRENT_SCOPE_CONTRACT))
-    previous_path = 'coverage/contracts/current-public-qualification-v20.json'
+    previous_path = 'coverage/contracts/current-public-qualification-v21.json'
     previous_raw = read_bytes(previous_path)
     previous_digest = hashlib.sha256(previous_raw).hexdigest()
-    require(previous_digest == '7a1d9332600d8cc72bb2b07aa42f6960cdf2a0705d2172c285142181a7d8b06d', 'current308 qualification predecessor differs')
+    require(previous_digest == '0ea203026349b76e674672fa125d925341e14415f8a10b8361f834f687d5f2cb', 'current312 qualification predecessor differs')
     previous = json.loads(previous_raw)
     routes = {
-        'transform.hough_circle_peaks': 'tests/test_hough_circle_peaks_public.py',
-        'transform.hough_ellipse': 'tests/test_hough_ellipse_public.py',
-        'transform.probabilistic_hough_line': 'tests/test_probabilistic_hough_line_public.py',
-        'morphology.medial_axis': 'tests/test_medial_axis_public.py',
+        'transform.hough_line': 'tests/test_hough_line_public.py',
+        'restoration.denoise_bilateral': 'tests/test_denoise_bilateral_public.py',
+        'measure.regionprops_table': 'tests/test_regionprops_table_public.py',
+        'morphology.isotropic_erosion': 'tests/test_isotropic_morphology_public.py',
+        'morphology.isotropic_dilation': 'tests/test_isotropic_morphology_public.py',
+        'morphology.isotropic_opening': 'tests/test_isotropic_morphology_public.py',
+        'morphology.isotropic_closing': 'tests/test_isotropic_morphology_public.py',
+        'feature.corner_moravec': 'tests/test_corner_moravec_public.py',
     }
-    families = ('hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line', 'medial_axis')
+    families = ('hough_line', 'denoise_bilateral', 'regionprops_table', 'isotropic_morphology', 'corner_moravec')
     expected = dict(
         previous,
         scope=CURRENT_PRODUCT_SCOPE,
         predecessor_contract=dict(path=previous_path, sha256=previous_digest),
         image_paths=sorted(previous['image_paths'] + list(routes)),
         post203_contracts={**previous['post203_contracts'], **routes},
-        required_selectors=previous['required_selectors'] + ['tests/' + name for name in CURRENT312_PUBLIC_TESTS],
+        required_selectors=previous['required_selectors'] + ['tests/' + name for name in CURRENT320_PUBLIC_TESTS],
         SDK_scope=CURRENT_SDK_CLIENT_SCOPE,
         required_client_families=[*previous['required_client_families'], *families],
         required_client_headers=previous['required_client_headers'] + [f'include/skimagexx/{name}.hpp' for name in families],
@@ -1663,6 +1714,9 @@ def current_install_layout(read_bytes, names, profile):
     require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
                 for name in ('hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line', 'medial_axis')),
             'current Hough peak/ellipse/line and medial axis install closure absent')
+    require(all(f'include/skimagexx/{name}.hpp' in headers and f'skimagexx/_{name}.py' in sources
+                for name in ('hough_line', 'denoise_bilateral', 'regionprops_table', 'isotropic_morphology', 'corner_moravec')),
+            'current Hough line, bilateral, regionprops table, isotropic morphology and Moravec install closure absent')
     sources.update(headers)
     sdk = set(headers)
     licenses = re.findall(r'install\(FILES\s+([^)]*?)\s+DESTINATION\s+\$\{CMAKE_INSTALL_DATADIR\}/licenses/scikit-imagexx(?:\s+RENAME\s+(\S+))?\s*\)', cmake)

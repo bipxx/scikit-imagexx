@@ -35,6 +35,13 @@ for _names, _test, _benchmark in (
     (('transform.hough_ellipse',), 'tests/test_hough_ellipse_public.py', 'benchmarks/hough_ellipse.py'),
     (('transform.probabilistic_hough_line',), 'tests/test_probabilistic_hough_line_public.py', 'benchmarks/probabilistic_hough_line.py'),
     (('morphology.medial_axis',), 'tests/test_medial_axis_public.py', 'benchmarks/medial_axis.py'),
+    (('transform.hough_line',), 'tests/test_hough_line_public.py', 'benchmarks/hough_line.py'),
+    (('restoration.denoise_bilateral',), 'tests/test_denoise_bilateral_public.py', 'benchmarks/denoise_bilateral.py'),
+    (('measure.regionprops_table',), 'tests/test_regionprops_table_public.py', 'benchmarks/regionprops_table.py'),
+    (('morphology.isotropic_erosion', 'morphology.isotropic_dilation',
+      'morphology.isotropic_opening', 'morphology.isotropic_closing'),
+     'tests/test_isotropic_morphology_public.py', 'benchmarks/isotropic_morphology.py'),
+    (('feature.corner_moravec',), 'tests/test_corner_moravec_public.py', 'benchmarks/corner_moravec.py'),
     (('data.clock', 'data.horse'), 'tests/test_data_clock_horse_public.py', 'benchmarks/data_clock_horse.py'),
     (('metrics.structural_similarity',), 'tests/test_structural_similarity.py', 'benchmarks/structural_similarity.py'),
     (('transform.order_angles_golden_ratio',), 'tests/test_order_angles_golden_ratio_integration.py', 'benchmarks/order_angles_golden_ratio_native.py'),
@@ -156,6 +163,14 @@ BOUNDED_DEFAULT_INPUTS = {
     'transform.hough_ellipse': 'Bounded untagged C-order 2D Boolean or uint8 image (max extent <= 64) with bounded integer/accuracy/size options. C++ owns serial ellipse pair accumulation; unsupported arguments and tags use compatibility.',
     'transform.probabilistic_hough_line': 'Bounded untagged C-order 2D Boolean or uint8 image (extents <= 256) with int/PCG64 rng and bounded theta/options. NumPy supplies angles and seeded shuffle permutation; C++ owns progressive line extraction. Tagged carriers and unsupported domains use compatibility.',
     'morphology.medial_axis': 'Bounded untagged C-order 2D Boolean image (extents <= 192) with optional mask and explicit int/PCG64 rng. SciPy distance_transform_edt and NumPy permutation supply distance and tie priority; C++ owns ordered LUT topology thinning. Out-of-scope domains and tags use compatibility.',
+    'transform.hough_line': 'Bounded untagged C-order 2D Boolean or uint8 image with extents <= 4096 and bounded float64 theta. NumPy supplies default/trigonometric angles and distances; C++ owns finite-theta checks and Hough voting. Tagged carriers and unsupported domains use compatibility.',
+    'restoration.denoise_bilateral': 'Bounded native C-order 2D or 3-channel float32/float64 image (2..512 spatial extents, range in [0, 1]) with constant border, preserving dtype metadata. NumPy supplies range/std checks and exponent LUTs; C++ owns bilateral accumulation. Out-of-scope domains use compatibility.',
+    'measure.regionprops_table': 'Bounded untagged C-order 2D int32 label image (extents <= 2048) with default intensity_image=None and properties=(label, bbox). C++ owns label bounding-box extraction. Custom properties, tags and other domains use compatibility.',
+    'morphology.isotropic_erosion': 'Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns Euclidean distance transform thresholding; tagged masks and unsupported domains use compatibility.',
+    'morphology.isotropic_dilation': 'Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns Euclidean distance transform thresholding; tagged masks and unsupported domains use compatibility.',
+    'morphology.isotropic_opening': 'Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns sequential Euclidean erosion/dilation; tagged masks and unsupported domains use compatibility.',
+    'morphology.isotropic_closing': 'Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns sequential Euclidean dilation/erosion; tagged masks and unsupported domains use compatibility.',
+    'feature.corner_moravec': 'Bounded untagged C-order 2D uint8 image with bounded integer window_size >= 1 and 2*window_size < min(shape). C++ owns rolling patch-SSD corner scoring returned via memoryview; tagged carriers and unsupported domains use compatibility.',
 }
 
 

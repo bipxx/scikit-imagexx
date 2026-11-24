@@ -7,7 +7,7 @@ import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
-from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, MEDIAL_FUNCTIONS, THINNING_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, ISOTROPIC_FUNCTIONS, MEDIAL_FUNCTIONS, THINNING_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 
@@ -32,7 +32,7 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
     rgb=rng.integers(0,256,(9,11,3),dtype=np.uint8)
     if api == 'util.random_noise' and dtype == 'uint16':
         gray = gray.astype(np.uint16) * 257
-    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS) and dtype == 'bool':
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, *ISOTROPIC_FUNCTIONS) and dtype == 'bool':
         gray = gray >= 128
     elif dtype!='uint8':
         gray=(gray/255).astype(dtype);rgb=(rgb/255).astype(dtype)
@@ -51,7 +51,9 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
         arguments = (arguments[0], *(vector.view(alias('float64')) for vector in arguments[1:]))
     elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'transform.hough_circle',
                  'transform.hough_circle_peaks', 'transform.hough_ellipse',
-                 'transform.probabilistic_hough_line', 'morphology.medial_axis'):
+                 'transform.probabilistic_hough_line', 'morphology.medial_axis',
+                 'transform.hough_line', 'restoration.denoise_bilateral',
+                 'measure.regionprops_table', *ISOTROPIC_FUNCTIONS, 'feature.corner_moravec'):
         assert arguments[0].dtype is descriptor
     if api == 'metrics.hausdorff_pair':
         arguments = tuple(mask.view(descriptor) for mask in arguments)
@@ -95,7 +97,9 @@ def test_every_native_default_accepts_equivalent_descriptor(api,dtype):
             assert all(type(point) is type(reference) is np.ndarray
                        for point, reference in zip(actual, expected))
         return
-    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, *ISOTROPIC_FUNCTIONS,
+               'feature.match_descriptors', 'feature.corner_moravec', 'measure.regionprops_table',
+               'restoration.denoise_bilateral'):
         assert_default_parity(api, np.dtype(dtype), actual, expected, image=arguments)
         return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):

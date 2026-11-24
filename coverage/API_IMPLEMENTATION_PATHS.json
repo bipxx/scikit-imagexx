@@ -3,7 +3,7 @@
   "artifact_kind": "planning-only-per-api-routes",
   "reference_version": "0.26.0",
   "source_inventory": "coverage/api.json",
-  "source_inventory_sha256": "49d84cb42d767b3369e769c86fd9582626569e5261f2ca49ce5cc6d7639f0f9c",
+  "source_inventory_sha256": "5eed28b92e2a86dc21d332b4c97ae703f1be287c2bdafc856e68c008b994873f",
   "accepted_baseline_context": "main 12fad34 at the historical planning review; authoritative classifications copied from api.json. Frozen checkpoints describe that review, not current execution state; consult work_items.json.",
   "scope_statement": "Exactly 477 inventoried public entries across 20 modules, plus a separate 29-class/284-static-member follow-up. Other namespaces, instance fields, runtime-generated attributes and future upstream additions remain outside the current static inventory; this is not an exhaustive entire-library completion claim.",
   "algorithm_count_note": "26 source-backed identity aliases are namespace routes, not additional algorithms. The remaining canonical routes also include wrappers/classes/assets and are not an algorithm-completion count.",
@@ -26,9 +26,9 @@
       "exception-metadata-provider": 1,
       "metadata": 3,
       "native-class-partial": 5,
-      "native-partial": 312,
+      "native-partial": 320,
       "packaged-asset-partial": 10,
-      "upstream-only": 146
+      "upstream-only": 138
     },
     "kinds": {
       "callable": 448,
@@ -5209,22 +5209,24 @@
       "api": "feature.corner_moravec",
       "kind": "callable",
       "signature": "(image, window_size=1)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "uint8"
+      ],
       "canonical_api": "feature.corner_moravec",
       "identity_alias": false,
       "family": "feature",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Sliding shifted-patch squared-difference minima",
+      "easiest_credible_path": "Audit/extend existing native implementation: Sliding shifted-patch squared-difference minima",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze synthetic junctions and constant/strided images against pinned upstream, including window border, shift set and accumulation dtype; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered window border, shift set and accumulation dtype. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "window border, shift set and accumulation dtype",
       "parity_cases_to_freeze": "synthetic junctions and constant/strided images",
       "numerical_policy": "Exact candidate/descriptor shape, mask, ordering, tie and RNG decisions; declared tolerance for response and normalized descriptor floats.",
@@ -5235,10 +5237,10 @@
         "kind": "compute",
         "specific_workload": "synthetic junctions and constant/strided images",
         "one_worker_recipe": "Blank/textured images, edge-heavy images, tiny and megapixel sizes, sparse/dense keypoints; report detect/extract/full pipeline separately.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/corner_moravec.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_corner_moravec_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -12798,15 +12800,17 @@
       "api": "measure.regionprops_table",
       "kind": "callable",
       "signature": "(label_image, intensity_image=None, properties=('label', 'bbox'), *, cache=True, separator='-', extra_properties=None, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "int32"
+      ],
       "canonical_api": "measure.regionprops_table",
       "identity_alias": false,
       "family": "component",
       "wave": "W2",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Reuse region objects/property kernels and flatten outputs into columns",
+      "easiest_credible_path": "Audit/extend existing native implementation: Reuse region objects/property kernels and flatten outputs into columns",
       "mandatory_route_dependencies": [
         "array",
         "components",
@@ -12816,7 +12820,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze all property shapes and empty/noncontiguous labels against pinned upstream, including separator, scalar/vector/object columns, empty labels and extra_properties; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered separator, scalar/vector/object columns, empty labels and extra_properties. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "separator, scalar/vector/object columns, empty labels and extra_properties",
       "parity_cases_to_freeze": "all property shapes and empty/noncontiguous labels",
       "numerical_policy": "Exact labels, background, connectivity, output dtype, integer counts, ties and aliasing.",
@@ -12827,10 +12831,10 @@
         "kind": "compute",
         "specific_workload": "all property shapes and empty/noncontiguous labels",
         "one_worker_recipe": "Sparse/dense/noisy labels, all-background/all-connected, large label IDs, 2D/3D and strided outputs.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/regionprops_table.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_regionprops_table_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -14318,22 +14322,24 @@
       "api": "morphology.isotropic_closing",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool"
+      ],
       "canonical_api": "morphology.isotropic_closing",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Compose exact-distance binary dilation then erosion",
+      "easiest_credible_path": "Audit/extend existing native implementation: Compose exact-distance binary dilation then erosion",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze large-radius masks and anisotropic spacing against pinned upstream, including radius inequality, spacing, border convention and out; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered radius inequality, spacing, border convention and out. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "radius inequality, spacing, border convention and out",
       "parity_cases_to_freeze": "large-radius masks and anisotropic spacing",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -14344,32 +14350,34 @@
         "kind": "compute",
         "specific_workload": "large-radius masks and anisotropic spacing",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/isotropic_morphology.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_isotropic_morphology_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "morphology.isotropic_dilation",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool"
+      ],
       "canonical_api": "morphology.isotropic_dilation",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Threshold distance transform of complement",
+      "easiest_credible_path": "Audit/extend existing native implementation: Threshold distance transform of complement",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze equidistant boundary pixels and large radii against pinned upstream, including radius equality, all-true/all-false input and spacing; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered radius equality, all-true/all-false input and spacing. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "radius equality, all-true/all-false input and spacing",
       "parity_cases_to_freeze": "equidistant boundary pixels and large radii",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -14380,32 +14388,34 @@
         "kind": "compute",
         "specific_workload": "equidistant boundary pixels and large radii",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/isotropic_morphology.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_isotropic_morphology_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "morphology.isotropic_erosion",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool"
+      ],
       "canonical_api": "morphology.isotropic_erosion",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Threshold foreground distance transform",
+      "easiest_credible_path": "Audit/extend existing native implementation: Threshold foreground distance transform",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze thin features and all-true images against pinned upstream, including strict versus nonstrict radius, outside-image convention and out; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered strict versus nonstrict radius, outside-image convention and out. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "strict versus nonstrict radius, outside-image convention and out",
       "parity_cases_to_freeze": "thin features and all-true images",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -14416,32 +14426,34 @@
         "kind": "compute",
         "specific_workload": "thin features and all-true images",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/isotropic_morphology.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_isotropic_morphology_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
       "api": "morphology.isotropic_opening",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool"
+      ],
       "canonical_api": "morphology.isotropic_opening",
       "identity_alias": false,
       "family": "distance",
       "wave": "W4",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Compose exact-distance erosion then dilation",
+      "easiest_credible_path": "Audit/extend existing native implementation: Compose exact-distance erosion then dilation",
       "mandatory_route_dependencies": [
         "array",
         "distance"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze sparse/small objects and large radii against pinned upstream, including intermediate border effects, radius and out; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered intermediate border effects, radius and out. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "intermediate border effects, radius and out",
       "parity_cases_to_freeze": "sparse/small objects and large radii",
       "numerical_policy": "Exact selected-site/tie and empty-set contracts; spacing-aware floating tolerance predeclared.",
@@ -14452,10 +14464,10 @@
         "kind": "compute",
         "specific_workload": "sparse/small objects and large radii",
         "one_worker_recipe": "Sparse/dense binary masks and point clouds, anisotropic 2D/3D grids, equidistant sites and large distances.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/isotropic_morphology.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_isotropic_morphology_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -15456,22 +15468,25 @@
       "api": "restoration.denoise_bilateral",
       "kind": "callable",
       "signature": "(image, win_size=None, sigma_color=None, sigma_spatial=1, bins=10000, mode='constant', cval=0, *, channel_axis=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
       "canonical_api": "restoration.denoise_bilateral",
       "identity_alias": false,
       "family": "stencil",
       "wave": "W2",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Spatial Gaussian times intensity-distance LUT, normalize local weighted sums",
+      "easiest_credible_path": "Audit/extend existing native implementation: Spatial Gaussian times intensity-distance LUT, normalize local weighted sums",
       "mandatory_route_dependencies": [
         "array",
         "neighborhood"
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze constant/edge/color images and wide windows against pinned upstream, including bins quantization, sigma_color default, channels, mode and zero weights; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered bins quantization, sigma_color default, channels, mode and zero weights. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "bins quantization, sigma_color default, channels, mode and zero weights",
       "parity_cases_to_freeze": "constant/edge/color images and wide windows",
       "numerical_policy": "Exact boundaries, footprint origins, dtype/out rules; freeze floating tolerance before comparison and retain strict scopes.",
@@ -15482,10 +15497,10 @@
         "kind": "compute",
         "specific_workload": "constant/edge/color images and wide windows",
         "one_worker_recipe": "2D/3D images with narrow/wide kernels, border-heavy tiny inputs, masks, channel axes and strided/output-buffer cases.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/denoise_bilateral.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_denoise_bilateral_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {
@@ -17395,15 +17410,18 @@
       "api": "transform.hough_line",
       "kind": "callable",
       "signature": "(image, theta=None)",
-      "current_implementation": "upstream-only",
-      "current_execution_kind": "upstream",
-      "current_native_default_case_dtypes": [],
+      "current_implementation": "native-partial",
+      "current_execution_kind": "native",
+      "current_native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
       "canonical_api": "transform.hough_line",
       "identity_alias": false,
       "family": "geometry",
       "wave": "W3",
       "next_increment_effort": "L",
-      "easiest_credible_path": "Vectorized rho computation per theta with exact integer accumulator votes",
+      "easiest_credible_path": "Audit/extend existing native implementation: Vectorized rho computation per theta with exact integer accumulator votes",
       "mandatory_route_dependencies": [
         "array",
         "geometry",
@@ -17411,7 +17429,7 @@
       ],
       "optional_route_dependencies": [],
       "optional_acceleration_dependency": "workers",
-      "next_concrete_action": "Freeze horizontal/diagonal lines at bin boundaries against pinned upstream, including theta order/range, rho rounding, accumulator shape and overflow; implement the stated scalar route using only its mandatory primitives, then qualify acceleration.",
+      "next_concrete_action": "Audit existing wrapper/kernel and recorded parity/benchmark references; extend uncovered theta order/range, rho rounding, accumulator shape and overflow. Select optimization from retained measured regressions; do not reimplement the accepted core.",
       "compatibility_hazards": "theta order/range, rho rounding, accumulator shape and overflow",
       "parity_cases_to_freeze": "horizontal/diagonal lines at bin boundaries",
       "numerical_policy": "Exact topology, connectivity, tie/ordering contracts; predeclare coordinate/solver tolerances separately.",
@@ -17422,10 +17440,10 @@
         "kind": "compute",
         "specific_workload": "horizontal/diagonal lines at bin boundaries",
         "one_worker_recipe": "Small degenerate and large structured/noisy 2D/3D geometry, open/closed boundaries and anisotropic spacing.",
-        "existing_inventory_reference": null
+        "existing_inventory_reference": "benchmarks/hough_line.py"
       },
       "native_provider_frontier": "Native C++ arithmetic target; Python retains documented array/protocol adaptation. Provider use is separately disclosed.",
-      "existing_inventory_parity_reference": null,
+      "existing_inventory_parity_reference": "tests/test_hough_line_public.py",
       "evidence_interpretation": "Inventory references locate existing scoped evidence; they do not prove this proposed expanded contract or benchmark passes."
     },
     {

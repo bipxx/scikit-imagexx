@@ -1823,11 +1823,14 @@
       "api": "feature.corner_moravec",
       "kind": "callable",
       "signature": "(image, window_size=1)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_corner_moravec_public.py",
+      "benchmark": "benchmarks/corner_moravec.py",
+      "default_input_kind": "Bounded untagged C-order 2D uint8 image with bounded integer window_size >= 1 and 2*window_size < min(shape). C++ owns rolling patch-SSD corner scoring returned via memoryview; tagged carriers and unsupported domains use compatibility."
     },
     {
       "api": "feature.corner_orientations",
@@ -5917,11 +5920,14 @@
       "api": "measure.regionprops_table",
       "kind": "callable",
       "signature": "(label_image, intensity_image=None, properties=('label', 'bbox'), *, cache=True, separator='-', extra_properties=None, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "int32"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_regionprops_table_public.py",
+      "benchmark": "benchmarks/regionprops_table.py",
+      "default_input_kind": "Bounded untagged C-order 2D int32 label image (extents <= 2048) with default intensity_image=None and properties=(label, bbox). C++ owns label bounding-box extraction. Custom properties, tags and other domains use compatibility."
     },
     {
       "api": "measure.shannon_entropy",
@@ -6463,41 +6469,53 @@
       "api": "morphology.isotropic_closing",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_isotropic_morphology_public.py",
+      "benchmark": "benchmarks/isotropic_morphology.py",
+      "default_input_kind": "Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns sequential Euclidean dilation/erosion; tagged masks and unsupported domains use compatibility."
     },
     {
       "api": "morphology.isotropic_dilation",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_isotropic_morphology_public.py",
+      "benchmark": "benchmarks/isotropic_morphology.py",
+      "default_input_kind": "Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns Euclidean distance transform thresholding; tagged masks and unsupported domains use compatibility."
     },
     {
       "api": "morphology.isotropic_erosion",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_isotropic_morphology_public.py",
+      "benchmark": "benchmarks/isotropic_morphology.py",
+      "default_input_kind": "Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns Euclidean distance transform thresholding; tagged masks and unsupported domains use compatibility."
     },
     {
       "api": "morphology.isotropic_opening",
       "kind": "callable",
       "signature": "(image, radius, out=None, spacing=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_isotropic_morphology_public.py",
+      "benchmark": "benchmarks/isotropic_morphology.py",
+      "default_input_kind": "Bounded untagged C-order 1D..3D Boolean mask with bounded finite radius and spacing. C++ owns sequential Euclidean erosion/dilation; tagged masks and unsupported domains use compatibility."
     },
     {
       "api": "morphology.label",
@@ -6834,11 +6852,15 @@
       "api": "restoration.denoise_bilateral",
       "kind": "callable",
       "signature": "(image, win_size=None, sigma_color=None, sigma_spatial=1, bins=10000, mode='constant', cval=0, *, channel_axis=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "float32",
+        "float64"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_denoise_bilateral_public.py",
+      "benchmark": "benchmarks/denoise_bilateral.py",
+      "default_input_kind": "Bounded native C-order 2D or 3-channel float32/float64 image (2..512 spatial extents, range in [0, 1]) with constant border, preserving dtype metadata. NumPy supplies range/std checks and exponent LUTs; C++ owns bilateral accumulation. Out-of-scope domains use compatibility."
     },
     {
       "api": "restoration.denoise_invariant",
@@ -8722,11 +8744,15 @@
       "api": "transform.hough_line",
       "kind": "callable",
       "signature": "(image, theta=None)",
-      "implementation": "upstream-only",
-      "native_default_case_dtypes": [],
-      "execution_kind": "upstream",
-      "parity_test": null,
-      "benchmark": null
+      "implementation": "native-partial",
+      "native_default_case_dtypes": [
+        "bool",
+        "uint8"
+      ],
+      "execution_kind": "native",
+      "parity_test": "tests/test_hough_line_public.py",
+      "benchmark": "benchmarks/hough_line.py",
+      "default_input_kind": "Bounded untagged C-order 2D Boolean or uint8 image with extents <= 4096 and bounded float64 theta. NumPy supplies default/trigonometric angles and distances; C++ owns finite-theta checks and Hough voting. Tagged carriers and unsupported domains use compatibility."
     },
     {
       "api": "transform.hough_line_peaks",

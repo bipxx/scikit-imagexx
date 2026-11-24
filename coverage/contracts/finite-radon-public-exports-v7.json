@@ -1,0 +1,19 @@
+{
+  "schema": "finite-radon-public-exports-v7",
+  "previous_record": "coverage/contracts/finite-radon-public-exports-v6.json",
+  "previous_record_raw_sha256": "9bb602cac8a5bfdba37034d660b3f70496c3130d86e7f081d1464e455c033a4b",
+  "current_raw_sha256": "cfb6cf9a97e17be5d20146b2841dc6249a94dc05d93b7dcac8b00ab20ebca4ff",
+  "source_suffix": "from ._hough_line import hough_line\n__all__ += ['hough_line']\n",
+  "guard_raw_sha256": "41c91619e89cf4e523b78c1c26a6adeb6d5c66d287d47e15e7af1194312fff8d",
+  "guard_inverse": [
+    {
+      "current": " newest320_raw=(c.ROOT/record['source']).read_bytes()\n newest320_guard=Path(__file__).read_bytes()\n v7=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v7.json').read_bytes())\n assert v7['schema']=='finite-radon-public-exports-v7' and v7['original_calls']==0\n assert v7['previous_record']=='coverage/contracts/finite-radon-public-exports-v6.json'\n assert hashlib.sha256((c.ROOT/v7['previous_record']).read_bytes()).hexdigest()==v7['previous_record_raw_sha256']\n assert hashlib.sha256(newest320_raw).hexdigest()==v7['current_raw_sha256']\n assert hashlib.sha256(newest320_guard).hexdigest()==v7['guard_raw_sha256']\n v7_suffix=v7['source_suffix'].encode()\n assert v7_suffix and newest320_raw.endswith(v7_suffix) and newest320_raw.count(v7_suffix)==1\n newest312_raw=newest320_raw.removesuffix(v7_suffix)\n newest312_guard=newest320_guard\n for edit in v7['guard_inverse']:\n  block=edit['current'].encode()\n  assert block and newest312_guard.count(block)==1\n  newest312_guard=newest312_guard.replace(block,edit['previous'].encode(),1)\n",
+      "previous": " newest312_raw=(c.ROOT/record['source']).read_bytes()\n newest312_guard=Path(__file__).read_bytes()\n"
+    },
+    {
+      "current": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True),(newest320_raw,True)):\n",
+      "previous": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True)):\n"
+    }
+  ],
+  "original_calls": 0
+}

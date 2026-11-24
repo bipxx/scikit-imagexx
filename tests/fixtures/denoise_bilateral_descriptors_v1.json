@@ -1,0 +1,317 @@
+{
+  "source": "badac388d463b6a7209d304600ec292ef21f0144",
+  "scope": "Identical 12-row original descriptor observations in retained Windows and WSL minimum profiles.",
+  "root_admission_sha256": "a2b8c1668b3acffb1845e6f797f13393ec56528c02f0f38867e010d978648b82",
+  "stock_sha256": {
+    "windows": "e3a656852ca34a267459b2c550a7867c455a25631c842bdfb0ba65f67279fbf8",
+    "minimum": "8fde5d38795fc939a6fa0fbccb93c01cc3193d6a4fb988d2d885760d101cd69d"
+  },
+  "rows": [
+    {
+      "dtype": "float32",
+      "channels": 1,
+      "case": "plain",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f4",
+      "result_sha256": "963d56043d4cf501aa372234cf02ef2ff5a603ba0a00f0da67fb6ca9f2999bad",
+      "shape": [
+        7,
+        9
+      ],
+      "strides": [
+        36,
+        4
+      ],
+      "owns": false,
+      "base_type": "ndarray",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float32",
+      "channels": 1,
+      "case": "equivalent",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f4",
+      "result_sha256": "963d56043d4cf501aa372234cf02ef2ff5a603ba0a00f0da67fb6ca9f2999bad",
+      "shape": [
+        7,
+        9
+      ],
+      "strides": [
+        36,
+        4
+      ],
+      "owns": false,
+      "base_type": "ndarray",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float32",
+      "channels": 1,
+      "case": "tagged",
+      "in_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "captures": [],
+      "status": "success",
+      "out_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "out_dtype": "<f4",
+      "result_sha256": "963d56043d4cf501aa372234cf02ef2ff5a603ba0a00f0da67fb6ca9f2999bad",
+      "shape": [
+        7,
+        9
+      ],
+      "strides": [
+        36,
+        4
+      ],
+      "owns": false,
+      "base_type": "ndarray",
+      "base_metadata": {
+        "units": "normalized",
+        "sample": 9
+      }
+    },
+    {
+      "dtype": "float32",
+      "channels": 3,
+      "case": "plain",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f4",
+      "result_sha256": "f07d327e9f535ee2866a659e6c8d4ee7df96848053e2d2e54f145dbebd42defd",
+      "shape": [
+        7,
+        9,
+        3
+      ],
+      "strides": [
+        108,
+        12,
+        4
+      ],
+      "owns": true,
+      "base_type": "NoneType",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float32",
+      "channels": 3,
+      "case": "equivalent",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f4",
+      "result_sha256": "f07d327e9f535ee2866a659e6c8d4ee7df96848053e2d2e54f145dbebd42defd",
+      "shape": [
+        7,
+        9,
+        3
+      ],
+      "strides": [
+        108,
+        12,
+        4
+      ],
+      "owns": true,
+      "base_type": "NoneType",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float32",
+      "channels": 3,
+      "case": "tagged",
+      "in_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "captures": [],
+      "status": "success",
+      "out_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "out_dtype": "<f4",
+      "result_sha256": "f07d327e9f535ee2866a659e6c8d4ee7df96848053e2d2e54f145dbebd42defd",
+      "shape": [
+        7,
+        9,
+        3
+      ],
+      "strides": [
+        108,
+        12,
+        4
+      ],
+      "owns": true,
+      "base_type": "NoneType",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float64",
+      "channels": 1,
+      "case": "plain",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f8",
+      "result_sha256": "0fd6edf55b4ac515cc2faaaefe6e460dac7fa0542a9a2817975b2bdb24ba4b23",
+      "shape": [
+        7,
+        9
+      ],
+      "strides": [
+        72,
+        8
+      ],
+      "owns": false,
+      "base_type": "ndarray",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float64",
+      "channels": 1,
+      "case": "equivalent",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f8",
+      "result_sha256": "0fd6edf55b4ac515cc2faaaefe6e460dac7fa0542a9a2817975b2bdb24ba4b23",
+      "shape": [
+        7,
+        9
+      ],
+      "strides": [
+        72,
+        8
+      ],
+      "owns": false,
+      "base_type": "ndarray",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float64",
+      "channels": 1,
+      "case": "tagged",
+      "in_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "captures": [],
+      "status": "success",
+      "out_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "out_dtype": "<f8",
+      "result_sha256": "0fd6edf55b4ac515cc2faaaefe6e460dac7fa0542a9a2817975b2bdb24ba4b23",
+      "shape": [
+        7,
+        9
+      ],
+      "strides": [
+        72,
+        8
+      ],
+      "owns": false,
+      "base_type": "ndarray",
+      "base_metadata": {
+        "units": "normalized",
+        "sample": 9
+      }
+    },
+    {
+      "dtype": "float64",
+      "channels": 3,
+      "case": "plain",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f8",
+      "result_sha256": "db3a76df0b999dbfd491c4644c64b29f1f7d9a41428b5342d48c11e5e16d97d4",
+      "shape": [
+        7,
+        9,
+        3
+      ],
+      "strides": [
+        216,
+        24,
+        8
+      ],
+      "owns": true,
+      "base_type": "NoneType",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float64",
+      "channels": 3,
+      "case": "equivalent",
+      "in_metadata": null,
+      "captures": [],
+      "status": "success",
+      "out_metadata": null,
+      "out_dtype": "<f8",
+      "result_sha256": "db3a76df0b999dbfd491c4644c64b29f1f7d9a41428b5342d48c11e5e16d97d4",
+      "shape": [
+        7,
+        9,
+        3
+      ],
+      "strides": [
+        216,
+        24,
+        8
+      ],
+      "owns": true,
+      "base_type": "NoneType",
+      "base_metadata": null
+    },
+    {
+      "dtype": "float64",
+      "channels": 3,
+      "case": "tagged",
+      "in_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "captures": [],
+      "status": "success",
+      "out_metadata": {
+        "units": "normalized",
+        "sample": 9
+      },
+      "out_dtype": "<f8",
+      "result_sha256": "db3a76df0b999dbfd491c4644c64b29f1f7d9a41428b5342d48c11e5e16d97d4",
+      "shape": [
+        7,
+        9,
+        3
+      ],
+      "strides": [
+        216,
+        24,
+        8
+      ],
+      "owns": true,
+      "base_type": "NoneType",
+      "base_metadata": null
+    }
+  ]
+}

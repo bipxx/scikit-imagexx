@@ -252,3 +252,5 @@ from ._hough_circle_peaks import hough_circle_peaks
 from ._hough_ellipse import hough_ellipse
 from ._probabilistic_hough_line import probabilistic_hough_line
 __all__ += ['hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line']
+from ._hough_line import hough_line
+__all__ += ['hough_line']

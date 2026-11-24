@@ -16,7 +16,7 @@ from skimagexx.coverage import euler_default_error, polygon_default_error, mesh_
 from skimagexx.coverage import native_functions, native_dtypes, execution_kind, needs_color_input, default_call, parity_tolerance, MOMENTS_FUNCTIONS, DERIVED_MOMENTS_FUNCTIONS, COORDS_MOMENTS_FUNCTIONS, moments_default_error, shannon_default_error, block_default_error, crofton_default_error, perimeter_default_error
 from skimagexx.coverage import montage_default_error, DRAW_COORDINATE_FUNCTIONS, draw_default_error, draw_polygon_default_error
 from skimagexx.coverage import PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, assert_default_parity, util_metadata_default_error
-from skimagexx.coverage import HOUGH_FUNCTIONS, MEDIAL_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, ISOTROPIC_FUNCTIONS, MEDIAL_FUNCTIONS
 from skimagexx.coverage import set_color_default_result, set_color_default_error, label_pair_default_error, find_boundaries_default_error
 from skimagexx.coverage import ROLLING_KERNEL_FUNCTIONS, rolling_kernel_default_error, approximate_polygon_default_error, subdivide_polygon_default_error, regionprops_default_error, line_nd_default_error, ellipsoid_default_error
 
@@ -49,6 +49,9 @@ def comparison_error(actual,expected,rtol,atol):
     if isinstance(expected,(tuple,list)):
         assert type(actual) is type(expected) and len(actual)==len(expected)
         return max((comparison_error(a,e,rtol,atol) for a,e in zip(actual,expected)),default=0.)
+    if isinstance(expected, dict):
+        assert type(actual) is type(expected) is dict and list(actual) == list(expected)
+        return max((comparison_error(actual[k], expected[k], rtol, atol) for k in expected), default=0.)
     if type(expected).__name__=='ArrayMap':
         assert type(actual).__name__==type(expected).__name__
         return max(comparison_error(getattr(actual,field),getattr(expected,field),rtol,atol)
@@ -72,6 +75,14 @@ BOUNDED_DEFAULT_SIZES = {
     'transform.hough_ellipse': (9, 64),
     'transform.probabilistic_hough_line': (4, 256),
     'morphology.medial_axis': (4, 192),
+    'transform.hough_line': (4, 512),
+    'restoration.denoise_bilateral': (4, 512),
+    'measure.regionprops_table': (4, 512),
+    'morphology.isotropic_erosion': (4, 512),
+    'morphology.isotropic_dilation': (4, 512),
+    'morphology.isotropic_opening': (4, 512),
+    'morphology.isotropic_closing': (4, 512),
+    'feature.corner_moravec': (5, 512),
 }
 
 
@@ -79,8 +90,9 @@ def bounded_default_reason(api, size, tagged):
     minimum, maximum = BOUNDED_DEFAULT_SIZES[api]
     if not minimum <= size <= maximum:
         return f'Square size {size} is outside the bounded default ({minimum}–{maximum})'
-    if tagged and api in (*HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS):
-        return 'Tagged Hough or medial-axis input requires compatibility'
+    if tagged and api in (*HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, *ISOTROPIC_FUNCTIONS,
+                           'feature.corner_moravec', 'measure.regionprops_table'):
+        return 'Tagged input requires compatibility'
     return None
 
 
@@ -206,6 +218,14 @@ def main():
         ('transform.hough_ellipse', 'C++ owns bounded 2D ellipse pair voting on compact images; out-of-scope geometry, options and tags use compatibility.'),
         ('transform.probabilistic_hough_line', 'NumPy supplies angles and seeded shuffle permutations; C++ owns progressive line search on bounded 2D binary/uint8 images. Tagged arrays and unsupported options use compatibility.'),
         ('morphology.medial_axis', 'SciPy distance_transform_edt and NumPy permutation supply distance and tie ordering; C++ owns bounded 2D LUT topology thinning. Tagged arrays and unsupported domains use compatibility.'),
+        ('transform.hough_line', 'NumPy supplies default angles, trig tables and distance vector; C++ owns bounded finite-theta checks and Hough voting on Boolean/uint8 images. Tagged arrays and unsupported domains use compatibility.'),
+        ('restoration.denoise_bilateral', 'NumPy supplies range/std validation and color/spatial Gaussian LUTs; C++ owns bounded constant-border bilateral accumulation preserving dtype metadata. Out-of-scope domains use compatibility.'),
+        ('measure.regionprops_table', 'C++ owns bounded 2D int32 label bounding-box extraction for default intensity_image=None and properties=(label, bbox). Tagged carriers and unsupported options use compatibility.'),
+        ('morphology.isotropic_erosion', 'C++ owns bounded Euclidean distance transform thresholding on Boolean masks. Tagged arrays and unsupported domains use compatibility.'),
+        ('morphology.isotropic_dilation', 'C++ owns bounded Euclidean distance transform thresholding on Boolean masks. Tagged arrays and unsupported domains use compatibility.'),
+        ('morphology.isotropic_opening', 'C++ owns sequential bounded isotropic erosion/dilation on Boolean masks. Tagged arrays and unsupported domains use compatibility.'),
+        ('morphology.isotropic_closing', 'C++ owns sequential bounded isotropic dilation/erosion on Boolean masks. Tagged arrays and unsupported domains use compatibility.'),
+        ('feature.corner_moravec', 'C++ owns bounded 2D uint8 rolling patch-SSD corner response returned via memoryview. Tagged carriers and unsupported domains use compatibility.'),
     ):
         if api in apis:
             provider_frontiers[api] = frontier

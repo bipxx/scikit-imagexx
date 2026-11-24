@@ -8,7 +8,7 @@ import pytest
 import skimagexx as xx
 from skimagexx.coverage import native_functions,native_dtypes,needs_color_input,default_call,assert_default_parity,DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
-from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, MEDIAL_FUNCTIONS, THINNING_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, ISOTROPIC_FUNCTIONS, MEDIAL_FUNCTIONS, THINNING_FUNCTIONS
 
 CASES=[(api,dtype) for api in native_functions() for dtype in native_dtypes(api)]
 _UNTAGGED_ARRAY_APIS = {
@@ -22,29 +22,38 @@ _UNTAGGED_ARRAY_APIS = {
 }
 
 
+_TAG_REJECT_NATIVE_FUNCTIONS = (
+    *HOUGH_FUNCTIONS,
+    *MEDIAL_FUNCTIONS,
+    *ISOTROPIC_FUNCTIONS,
+    'feature.corner_moravec',
+    'measure.regionprops_table',
+)
+
+
 def calls(api,dtype,monkeypatch):
     rng=np.random.default_rng(533)
     shape=(17,19,3) if needs_color_input(api) else (17,19)
     data=rng.integers(0,256,shape,dtype=np.uint8)
     if api == 'util.random_noise' and dtype == 'uint16':
         data = data.astype(np.uint16) * 257
-    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS) and dtype == 'bool':
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, *ISOTROPIC_FUNCTIONS) and dtype == 'bool':
         data = data >= 128
     elif dtype!='uint8':
         data=(data/255).astype(dtype)
     tags = {'units': 'linear', 'source': 'parity'}
     untagged_arrays = api in _UNTAGGED_ARRAY_APIS
-    if not untagged_arrays and api not in (*HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS):
+    if not untagged_arrays and api not in _TAG_REJECT_NATIVE_FUNCTIONS:
         data = data.astype(np.dtype(dtype, metadata=tags))
     arguments,options=default_call(api,data)
-    if not untagged_arrays and api not in (*HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS) and arguments and isinstance(arguments[0],np.ndarray):
+    if not untagged_arrays and api not in _TAG_REJECT_NATIVE_FUNCTIONS and arguments and isinstance(arguments[0],np.ndarray):
         first = arguments[0].view(np.dtype(arguments[0].dtype, metadata=tags))
         arguments=(first,*arguments[1:])
     module,name=api.rsplit('.',1)
     reference_module=importlib.import_module('skimage.'+module)
     reference=getattr(reference_module,name)
     native=getattr(importlib.import_module('skimagexx.'+module),name)
-    if api in (*HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS):
+    if api in _TAG_REJECT_NATIVE_FUNCTIONS:
         # Each array carrier has an independent native tag boundary.
         marker = object()
         for index, value in enumerate(arguments):
@@ -74,7 +83,7 @@ def calls(api,dtype,monkeypatch):
             )
     elif api == 'feature.match_descriptors':
         assert all(operand.dtype.metadata == tags for operand in arguments)
-    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS):
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'restoration.denoise_bilateral'):
         assert arguments[0].dtype.metadata == tags
     if untagged_arrays:
         # Preserve the tag boundary check and the native parity case for every advertised dtype.
@@ -120,7 +129,8 @@ def calls(api,dtype,monkeypatch):
         finally:
             xx.set_fallback_enabled(previous)
         return actual, reference(*arguments, **options), data
-    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *_TAG_REJECT_NATIVE_FUNCTIONS,
+               'feature.match_descriptors', 'restoration.denoise_bilateral'):
         with warnings.catch_warnings(record=True) as reference_notices:
             warnings.simplefilter('always')
             expected = reference(*arguments, **options)
@@ -140,7 +150,8 @@ def calls(api,dtype,monkeypatch):
 
 
 def compare(actual,expected,api,dtype,path='result',image=None):
-    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, 'feature.match_descriptors'):
+    if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *_TAG_REJECT_NATIVE_FUNCTIONS,
+               'feature.match_descriptors', 'restoration.denoise_bilateral'):
         assert_default_parity(api, np.dtype(dtype), actual, expected, image=image)
         return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):

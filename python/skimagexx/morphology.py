@@ -180,3 +180,10 @@ from ._convex_hull_image import convex_hull_image
 from ._convex_hull_object import convex_hull_object
 from ._medial_axis import medial_axis
 __all__ += ['convex_hull_image', 'convex_hull_object', 'medial_axis']
+from ._isotropic_morphology import (
+    isotropic_closing,
+    isotropic_dilation,
+    isotropic_erosion,
+    isotropic_opening,
+)
+__all__ += ['isotropic_erosion', 'isotropic_dilation', 'isotropic_opening', 'isotropic_closing']

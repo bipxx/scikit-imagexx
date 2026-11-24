@@ -271,3 +271,5 @@ __all__+=['hessian_matrix_det']
 
 from ._match_descriptors import match_descriptors
 __all__ += ['match_descriptors']
+from ._corner_moravec import corner_moravec
+__all__ += ['corner_moravec']

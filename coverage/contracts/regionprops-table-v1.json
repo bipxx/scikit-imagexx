@@ -1,0 +1,156 @@
+{
+  "api": "measure.regionprops_table",
+  "signature": "(label_image, intensity_image=None, properties=('label', 'bbox'), *, cache=True, separator='-', extra_properties=None, spacing=None)",
+  "reference_source": "9a30600e413fb090b22aa08a01778104e5c7cfb3",
+  "root_reference_admission_sha256": "d2140c473c11f5cbaacf826ad3730a43435d33f35baf20f0c578d21d9bee0d25",
+  "frozen_contract_sha256": "756bf3cef8f4882870837250bc2693ae8bde8af319dc2568fddd36e5c25f1075",
+  "reference_receipts_sha256": {
+    "windows": "ec5e522a6a8e451c30c2f3a026ca05fc9b4995ec908e2e2fb17a01f61b22fe41",
+    "linux-minimum": "44b789fbeebf1694f9592f306bbe1e120faf45ff668db667e56018b0bd1b070d"
+  },
+  "supported": {
+    "input": "exact ndarray, native int32, 2-D bounded positive extents <=1024, truly C-contiguous storage proven addressable, label IDs 0..4096",
+    "parameters": "stock defaults only including explicit literal defaults",
+    "positives": "same ID is one row even if disconnected, sorted labels with gaps, ignore 0; all-background table retained"
+  },
+  "fixed_one_worker_cases": [
+    {
+      "id": "all-background",
+      "shape": [
+        32,
+        32
+      ],
+      "recipe": "zeros"
+    },
+    {
+      "id": "dense-one-label",
+      "shape": [
+        256,
+        256
+      ],
+      "recipe": "all ID 1"
+    },
+    {
+      "id": "tiled-4096",
+      "shape": [
+        512,
+        512
+      ],
+      "recipe": "place row-major labels 1..4096 as 2x2 blocks at (8*r,8*c) for 0<=r,c<64"
+    },
+    {
+      "id": "fragmented",
+      "shape": [
+        1024,
+        1024
+      ],
+      "recipe": "flat index i: ID 1+i%4096, or 0 if i%8==0"
+    }
+  ],
+  "observations": {
+    "all-background": {
+      "input_sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "label_rows": 0,
+      "columns_sha256": {
+        "label": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bbox-0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bbox-1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bbox-2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bbox-3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "label_base_sha256": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8",
+      "bbox_base_sha256": "ce98ee78a2670379a345a9dce3b7716d65fc888b5e82e9ebe9ee57a186ea3ec6"
+    },
+    "dense-one-label": {
+      "input_sha256": "8c4045fe3994fef04a1027f14fbe51103c1191ebb523d23d908ee25ed416b1c0",
+      "label_rows": 1,
+      "columns_sha256": {
+        "label": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8",
+        "bbox-0": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "bbox-1": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "bbox-2": "2e22fd435060cd5d3cf5e3ef39f79e198b35bd2c4af31974db36601b3a2f4c91",
+        "bbox-3": "2e22fd435060cd5d3cf5e3ef39f79e198b35bd2c4af31974db36601b3a2f4c91"
+      },
+      "label_base_sha256": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8",
+      "bbox_base_sha256": "dc4231ebf01701ee76d338908f043a656345cf40063370d35057a4df22a7af23"
+    },
+    "tiled-4096": {
+      "input_sha256": "44fb17cefb63fe8e0c2274d22d034657ace7d87a45141fc7c54fab67ca16c3bd",
+      "label_rows": 4096,
+      "columns_sha256": {
+        "label": "040ee168517e5e406b3de1b12c34bdaf0bf154eba3e5ead4419676648f041559",
+        "bbox-0": "eb22dfd202ac821dcbbf3e40a5d81d10ff8f2e71c396c5f9b713e14f8bde9d94",
+        "bbox-1": "3a1e5fc3effdd6ed2770ed5297dfac85f584e06385658c8b905491637dadd6b5",
+        "bbox-2": "2d836819ac61a44857f8bc9763beec8f556635730e704d85be4d22bd04201cd9",
+        "bbox-3": "508c68b4553f0a0b02b46f10f7f99ef14987a0656da86952cb6bd80f36b212ad"
+      },
+      "label_base_sha256": "040ee168517e5e406b3de1b12c34bdaf0bf154eba3e5ead4419676648f041559",
+      "bbox_base_sha256": "cdaa8c161fa3b586f2c1f9716230f3ebc9a5464d482eb529a389b35ae801c60e"
+    },
+    "fragmented": {
+      "input_sha256": "64f3753ce8e229a7e9de4796fadfbab9712ce915f646ad4a3049ee2c7abf067d",
+      "label_rows": 3584,
+      "columns_sha256": {
+        "label": "6721cf3ecd64da6eca15e697257a627c12d9da8a0b3f5b4094797cdced1dfbcb",
+        "bbox-0": "2e5955f7c1ee3ce245329c3af8d60d83ec2d81e6db7868e7585a9778f1262add",
+        "bbox-1": "bf27f269d09dc356b1ea8bbe098a7281c9e6d497bd64e06030ddde0be4023bc1",
+        "bbox-2": "c05ab006be4c7c07c7e57480570162bd14a3ed81180df801191848b3cfc34597",
+        "bbox-3": "289a6d84632f3727bd086ad47f1c7f8f573edd8f9c1397bc10d628151b12b6b7"
+      },
+      "label_base_sha256": "6721cf3ecd64da6eca15e697257a627c12d9da8a0b3f5b4094797cdced1dfbcb",
+      "bbox_base_sha256": "8e03d4437bac005631b215b96a2e61e27287d7a8a4dfc8e10fcd585dd317f5c5"
+    },
+    "gapped-disconnected": {
+      "input_sha256": "a27b2ebf70eadc74eceada79893bb727825d7c93d4f8774b999b606cde9de56c",
+      "label_rows": 3,
+      "columns_sha256": {
+        "label": "5b9f94ae777aa3a7a0618c1050e8d30df8260a729dfa196ca26e71ce77d91173",
+        "bbox-0": "845c35898d2cf4c1a70d3ed5cc85ccc2366c5acbfbdb1d91829efee5a4f30394",
+        "bbox-1": "2d806c3c07145b3d72fd9285c44618c26e9ee3b5b3a8affad1b57e7850599999",
+        "bbox-2": "ac514ee8298c693624bdc26523c2434ac3626418c8dea6a552cd633deea10dbb",
+        "bbox-3": "7f18f3e60edd8b10cb7b4e8006c3ca52b325be2535c6d0ff02f832b8e18e4051"
+      },
+      "label_base_sha256": "5b9f94ae777aa3a7a0618c1050e8d30df8260a729dfa196ca26e71ce77d91173",
+      "bbox_base_sha256": "109b1087fe3a06dd9b9a7ccaabb6fa1f0ae526f88a8dfdbd1d28a889dc64d42c"
+    },
+    "one-pixel": {
+      "input_sha256": "2385b2772b668a99005ca6136ff00311e78c8c8a97b302c9548fe08fe808dd3d",
+      "label_rows": 1,
+      "columns_sha256": {
+        "label": "a02ae51509464de11084e34346a86574191b861de2cb5cf064661b459c9bc9e4",
+        "bbox-0": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "bbox-1": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "bbox-2": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8",
+        "bbox-3": "7c9fa136d4413fa6173637e883b6998d32e1d675f88cddff9dcbcf331820f4b8"
+      },
+      "label_base_sha256": "a02ae51509464de11084e34346a86574191b861de2cb5cf064661b459c9bc9e4",
+      "bbox_base_sha256": "b64c0d4ec2af5aba75d0e38754bd4da29669e6bd54220441f3710964fdb4ece3"
+    },
+    "high-only-gapped": {
+      "input_sha256": "c7c08f3281bf518ffdf277b769463ea7f0bb7f4415d13eb5a9e24563531c61bb",
+      "label_rows": 2,
+      "columns_sha256": {
+        "label": "1e3e50f3daf060aeda723e908a12bdb7696ae926c9e06ce8bf5057cafad10e7f",
+        "bbox-0": "4cbbd8ca5215b8d161aec181a74b694f4e24b001d5b081dc0030ed797a8973e0",
+        "bbox-1": "814dd7b9784d57c15b9c2972e9b4fd6cf7e164f8162a934bdb2452a413dab1f7",
+        "bbox-2": "66c313335fc249aefd7420b063da1bbd123fa61351b9517955aa2623eba94038",
+        "bbox-3": "fa7c63f601691b958793c6d5ebe2ec4456e1a35b2b448b4f3e55cd1f86787673"
+      },
+      "label_base_sha256": "1e3e50f3daf060aeda723e908a12bdb7696ae926c9e06ce8bf5057cafad10e7f",
+      "bbox_base_sha256": "be86a1f16f5a5c1957587af49996168fe5b0fc82dbdb45b93d4e830277a684df"
+    },
+    "read-only-view": {
+      "input_sha256": "a27b2ebf70eadc74eceada79893bb727825d7c93d4f8774b999b606cde9de56c",
+      "label_rows": 3,
+      "columns_sha256": {
+        "label": "5b9f94ae777aa3a7a0618c1050e8d30df8260a729dfa196ca26e71ce77d91173",
+        "bbox-0": "845c35898d2cf4c1a70d3ed5cc85ccc2366c5acbfbdb1d91829efee5a4f30394",
+        "bbox-1": "2d806c3c07145b3d72fd9285c44618c26e9ee3b5b3a8affad1b57e7850599999",
+        "bbox-2": "ac514ee8298c693624bdc26523c2434ac3626418c8dea6a552cd633deea10dbb",
+        "bbox-3": "7f18f3e60edd8b10cb7b4e8006c3ca52b325be2535c6d0ff02f832b8e18e4051"
+      },
+      "label_base_sha256": "5b9f94ae777aa3a7a0618c1050e8d30df8260a729dfa196ca26e71ce77d91173",
+      "bbox_base_sha256": "109b1087fe3a06dd9b9a7ccaabb6fa1f0ae526f88a8dfdbd1d28a889dc64d42c"
+    }
+  }
+}

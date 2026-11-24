@@ -91,3 +91,7 @@ __all__ += ['pearson_corr_coeff']
 from ._find_contours import find_contours
 
 __all__ += ['find_contours']
+
+from ._regionprops_table import regionprops_table
+
+__all__ += ['regionprops_table']

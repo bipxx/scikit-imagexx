@@ -8,7 +8,7 @@ from skimage import filters as reference_filters, color as reference_color, util
 import skimagexx as xx
 from skimagexx.coverage import native_functions, native_dtypes, needs_color_input, default_call, assert_default_parity, DERIVED_MOMENTS_FUNCTIONS,COORDS_MOMENTS_FUNCTIONS, native_classes, class_metadata_providers, LEVEL_SET_FUNCTIONS, LOCAL_EXTREMA_FUNCTIONS
 from skimagexx.coverage import HAAR_FUNCTIONS, PYRAMID_FUNCTIONS, PYRAMID_GENERATOR_FUNCTIONS, set_color_default_result
-from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, MEDIAL_FUNCTIONS, THINNING_FUNCTIONS
+from skimagexx.coverage import HOUGH_FUNCTIONS, HULL_FUNCTIONS, ISOTROPIC_FUNCTIONS, MEDIAL_FUNCTIONS, THINNING_FUNCTIONS
 from skimage import data as reference_data
 from skimage import draw as reference_draw
 from skimage import exposure as reference_exposure
@@ -55,6 +55,14 @@ _OWNED_ARRAY_ENTRIES = {
     'transform.hough_ellipse': 'hough_ellipse_bounded',
     'transform.probabilistic_hough_line': 'probabilistic_hough_line_ordered',
     'morphology.medial_axis': 'medial_axis_ordered',
+    'transform.hough_line': 'hough_line_accumulate',
+    'restoration.denoise_bilateral': 'denoise_bilateral_constant',
+    'measure.regionprops_table': 'regionprops_table_default',
+    'morphology.isotropic_erosion': 'isotropic_morphology_mask',
+    'morphology.isotropic_dilation': 'isotropic_morphology_mask',
+    'morphology.isotropic_opening': 'isotropic_morphology_mask',
+    'morphology.isotropic_closing': 'isotropic_morphology_mask',
+    'feature.corner_moravec': 'corner_moravec_u8',
 }
 
 # The original Bregman Cython helper has unchecked halo reads for small axes.
@@ -429,7 +437,7 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
     a = rng.integers(0, 256, (*shape, 3) if needs_color_input(api) else shape, dtype=np.uint8)
     if api == 'util.random_noise' and dtype == np.uint16:
         a = a.astype(np.uint16) * 257
-    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS) and dtype == np.bool_:
+    elif api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS, *ISOTROPIC_FUNCTIONS) and dtype == np.bool_:
         a = a >= 128
     elif dtype != np.uint8:
         a = (a/255).astype(dtype)
