@@ -1,0 +1,26 @@
+{
+  "api": "measure.LineModelND",
+  "reference": "scikit-image 0.26.0",
+  "members": [
+    "__init__",
+    "estimate",
+    "from_estimate",
+    "params",
+    "predict",
+    "predict_x",
+    "predict_y",
+    "residuals"
+  ],
+  "native": "Exactly two rows, 2D/3D plain native float64 owning C ndarray, aligned, integral bounded coordinates abs ≤2^20, nearest rounding. Negative zero, noncanonical and exceptional domains retain NumPy. Direction order follows the two input rows and normalized centered difference; repeated points keep zero direction.",
+  "native_prediction": "Plain aligned owning C float64 vector of 128 to 65536 coordinates with two- or three-coordinate owning float64 state, ordinary in-range integer axis or its negative equivalent, nearest rounding. Inputs are signed zero or finite magnitudes in [2^-128, 2^128], with nonzero selected direction. No intermediate exceptional values are possible. Preserve rounded subtract, divide, multiply and add separately; return a fresh writable C float64 owner. Aliases keep their dynamic predict dispatch and column views of the full owner.",
+  "provider": "Many-point fitting keeps NumPy SVD and the exact writable first row backed by Vh. Other fitting arithmetic, residuals and predictions outside the bounded owning routes remain NumPy. Optional canonical stock failure metadata is resolved lazily, with existing geometry standalone compatibility when stock is absent.",
+  "stock": "tests/fixtures/line_model_nd_026.json",
+  "sdk": "tests/cmake_consumer/line_model_nd_consumer.cpp",
+  "benchmark": "benchmarks/line_model_nd.py",
+  "release_gates": [
+    "shared registration and SDK install",
+    "exact installed public and provider matrix",
+    "one-worker public timing per measured method",
+    "unobserved class protocol and cross-implementation serialization"
+  ]
+}

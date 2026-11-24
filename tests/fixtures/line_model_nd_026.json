@@ -1,0 +1,2526 @@
+{
+  "source_pins": {
+    "windows-reference-v2.json": "c319bcdd8a0898d9592d13567e0c12bb576b93052fe65d8002603852494fc0dd",
+    "minimum-reference-v1.json": "94c767f7950960114af4563e3f992ff433531f841430e7ebd4eecfca206f7850"
+  },
+  "class_signature": "(origin, direction)",
+  "members": {
+    "__init__": {
+      "signature": "(self, origin, direction)",
+      "descriptor": "function"
+    },
+    "estimate": {
+      "signature": "(self, data)",
+      "descriptor": "function"
+    },
+    "from_estimate": {
+      "signature": "(data)",
+      "descriptor": "classmethod"
+    },
+    "params": {
+      "signature": null,
+      "descriptor": "property"
+    },
+    "predict": {
+      "signature": "(self, x, axis=0, params=<DEPRECATED>)",
+      "descriptor": "function"
+    },
+    "predict_x": {
+      "signature": "(self, y, params=<DEPRECATED>)",
+      "descriptor": "function"
+    },
+    "predict_y": {
+      "signature": "(self, x, params=<DEPRECATED>)",
+      "descriptor": "function"
+    },
+    "residuals": {
+      "signature": "(self, data, params=<DEPRECATED>)",
+      "descriptor": "function"
+    }
+  },
+  "common_rows": {
+    "constructor-copies": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000f03f00000000000000400000000000000840",
+            "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "0000000000000040000000000000f0bf000000000000e03f",
+            "sha256": "69b68314bf223ce9c4c12bc175228251b097c18469878fb6f01fbbbed5e29219"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000f03f00000000000000400000000000000840",
+          "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+        },
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "0000000000000040000000000000f0bf000000000000e03f",
+          "sha256": "69b68314bf223ce9c4c12bc175228251b097c18469878fb6f01fbbbed5e29219"
+        }
+      ],
+      "aliases": [
+        false,
+        false
+      ]
+    },
+    "params-identity": {
+      "result": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000f03f00000000000000400000000000000840",
+          "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+        },
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "0000000000000040000000000000f0bf000000000000e03f",
+          "sha256": "69b68314bf223ce9c4c12bc175228251b097c18469878fb6f01fbbbed5e29219"
+        }
+      ],
+      "warnings": [
+        [
+          "FutureWarning",
+          "`params` is deprecated since version 0.26 and will be removed in version 2.2. `params` attribute deprecated; use ``origin, direction`` attributes instead."
+        ]
+      ],
+      "inputs": [],
+      "same_members": [
+        true,
+        true
+      ],
+      "mutation_visible": true,
+      "input_untouched": true
+    },
+    "constructor-lists": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<i8",
+            "metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "01000000000000000200000000000000",
+            "sha256": "0c730b69905c5ef7a4ca5269f72365400bde2dd2c04eaf9bbb3d1c4a265a0131"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<i8",
+            "metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "03000000000000000400000000000000",
+            "sha256": "fd223b85f4dc20183fd595f90fc484d67a2242a9de5809cd3e844fa95954fc4a"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "constructor-mismatch": {
+      "error": "ValueError",
+      "message": "Direction vector should be same length as origin point.",
+      "warnings": [],
+      "inputs": []
+    },
+    "constructor-scalar": {
+      "error": "TypeError",
+      "message": "len() of unsized object",
+      "warnings": [],
+      "inputs": []
+    },
+    "blank": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": null,
+          "direction": null
+        }
+      },
+      "warnings": [
+        [
+          "FutureWarning",
+          "Calling ``LineModelND()`` (without arguments) has been deprecated since version 0.26 and will be removed in version 2.2; see help for ``LineModelND``."
+        ]
+      ],
+      "inputs": []
+    },
+    "blank-predict": {
+      "error": "ValueError",
+      "message": "`params` argument must be specified when applied to model initialized with ``LineModelND()``; Consider creating new LineModelND with suitable input arguments, or by using ``LineModelND.from_estimate``.",
+      "warnings": [],
+      "inputs": []
+    },
+    "blank-residuals": {
+      "error": "ValueError",
+      "message": "`params` argument must be specified when applied to model initialized with ``LineModelND()``; Consider creating new LineModelND with suitable input arguments, or by using ``LineModelND.from_estimate``.",
+      "warnings": [],
+      "inputs": []
+    },
+    "constructor-pickle-roundtrip": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000f03f00000000000000400000000000000840",
+            "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "0000000000000040000000000000f0bf000000000000e03f",
+            "sha256": "69b68314bf223ce9c4c12bc175228251b097c18469878fb6f01fbbbed5e29219"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-failure": {
+      "result": {
+        "type": "FailedEstimation",
+        "truth": false,
+        "message": "LineModelND: estimate under-determined",
+        "representation": "FailedEstimation('LineModelND: estimate under-determined')",
+        "canonical_type": true,
+        "access": [
+          "FailedEstimationAccessError",
+          "FailedEstimation has no attribute 'origin'. LineModelND: estimate under-determined\n\nHint: You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
+        ],
+        "call": [
+          "FailedEstimationAccessError",
+          "FailedEstimation is not callable. LineModelND: estimate under-determined\n\nHint: You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
+        ]
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": false,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": {
+            "type": "ndarray",
+            "shape": [
+              2,
+              3
+            ],
+            "strides": [
+              24,
+              8
+            ],
+            "owns": true,
+            "dtype": "<f8"
+          },
+          "bytes": "000000000000f03f00000000000000400000000000000840",
+          "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+        }
+      ]
+    },
+    "from-estimate-empty": {
+      "result": {
+        "type": "FailedEstimation",
+        "truth": false,
+        "message": "LineModelND: estimate under-determined",
+        "representation": "FailedEstimation('LineModelND: estimate under-determined')",
+        "canonical_type": true,
+        "access": [
+          "FailedEstimationAccessError",
+          "FailedEstimation has no attribute 'origin'. LineModelND: estimate under-determined\n\nHint: You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
+        ],
+        "call": [
+          "FailedEstimationAccessError",
+          "FailedEstimation is not callable. LineModelND: estimate under-determined\n\nHint: You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
+        ]
+      },
+      "warnings": [
+        [
+          "RuntimeWarning",
+          "Mean of empty slice"
+        ],
+        [
+          "RuntimeWarning",
+          "invalid value encountered in divide"
+        ]
+      ],
+      "inputs": []
+    },
+    "from-estimate-two": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000044000000000000010400000000000001640",
+            "sha256": "e05837d37de819d52777b20b401329b698b67467c889309cc6ecddc727940678"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "8f14ff7a2427db3f0a63ff51181ae23fcc3b7f669ea0e63f",
+            "sha256": "f2ccd3a089f6af9d67ce613dc10b447b5aea2fd081e04edd5c504609a00a26a8"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            2,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000f03f00000000000000400000000000000840000000000000104000000000000018400000000000002040",
+          "sha256": "c930847f5ffff0070a84a593935686322dbc656cf13466e4a5d5224a8d534db7"
+        }
+      ]
+    },
+    "from-estimate-reversed": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000044000000000000010400000000000001640",
+            "sha256": "e05837d37de819d52777b20b401329b698b67467c889309cc6ecddc727940678"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "8f14ff7a2427dbbf0a63ff51181ae2bfcc3b7f669ea0e6bf",
+            "sha256": "d4490d0da9da6994093976cc2966b3030e2119a570680eb2d7796b4cfd338dfe"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            2,
+            3
+          ],
+          "strides": [
+            -24,
+            8
+          ],
+          "owns": false,
+          "c": false,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": {
+            "type": "ndarray",
+            "shape": [
+              2,
+              3
+            ],
+            "strides": [
+              24,
+              8
+            ],
+            "owns": true,
+            "dtype": "<f8"
+          },
+          "bytes": "000000000000104000000000000018400000000000002040000000000000f03f00000000000000400000000000000840",
+          "sha256": "cf8436f1e60e9f6b2a8c105a409b783f615ee9e37b195686749bd48e8f93f25f"
+        }
+      ]
+    },
+    "from-estimate-f32": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              4
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "00002040000080400000b040",
+            "sha256": "05305ed287a8953b3cde81b1ac2dc7fb0ab9814c686d2afe2a1a2c5cbb8c1296"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f4",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              4
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "2439d93ec3d0103ff304353f",
+            "sha256": "e1b5a3cd6cfc2b4361305434a5a8ed124dfd98abd8e1c75db9c53bbedac455c6"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-i16": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000044000000000000010400000000000001640",
+            "sha256": "e05837d37de819d52777b20b401329b698b67467c889309cc6ecddc727940678"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "8f14ff7a2427db3f0a63ff51181ae23fcc3b7f669ea0e63f",
+            "sha256": "f2ccd3a089f6af9d67ce613dc10b447b5aea2fd081e04edd5c504609a00a26a8"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-tagged": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": {
+              "tag": "line"
+            },
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000044000000000000010400000000000001640",
+            "sha256": "e05837d37de819d52777b20b401329b698b67467c889309cc6ecddc727940678"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": {
+              "tag": "line"
+            },
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "8f14ff7a2427db3f0a63ff51181ae23fcc3b7f669ea0e63f",
+            "sha256": "f2ccd3a089f6af9d67ce613dc10b447b5aea2fd081e04edd5c504609a00a26a8"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": {
+            "tag": "line"
+          },
+          "shape": [
+            2,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": false,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": {
+            "type": "ndarray",
+            "shape": [
+              2,
+              3
+            ],
+            "strides": [
+              24,
+              8
+            ],
+            "owns": true,
+            "dtype": "<f8"
+          },
+          "bytes": "000000000000f03f00000000000000400000000000000840000000000000104000000000000018400000000000002040",
+          "sha256": "c930847f5ffff0070a84a593935686322dbc656cf13466e4a5d5224a8d534db7"
+        }
+      ]
+    },
+    "from-estimate-zero": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000f03f000000000000f03f000000000000f03f",
+            "sha256": "cc143326a2646c605ea66139d7b440df7cbde18c050f1f8cf4dd30f42cfe7123"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000000000000000000000000000000000000000",
+            "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-bad-rank": {
+      "error": "ValueError",
+      "message": "Input data must be at least 2D.",
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-bad-width": {
+      "error": "ValueError",
+      "message": "Input data must be at least 2D.",
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-svd": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000c0bf000000000010d0bf000000000060bf3f",
+            "sha256": "d07f72b300a1343149bf9e6febbdb8657c8f5a3e7f6a1c960aefd9ca72fc7478"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                3,
+                3
+              ],
+              "strides": [
+                24,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "c5a8ce29c820da3feb6bad3b1f21ea3f675fd2782b1fdabf",
+            "sha256": "a1584ff8ac3769a96b0005b211020ad4c878f963d2393bdd5371dff7e8c2e7a0"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            128,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": null,
+          "sha256": "b5b0221bf444cd71b59a54dfe47712051473fb2c183f2e13613a8dc15aa83fbc"
+        }
+      ]
+    },
+    "from-estimate-tied-svd": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "00000000000000000000000000000000",
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              2
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                2,
+                2
+              ],
+              "strides": [
+                16,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "000000000000f0bf0000000000000080",
+            "sha256": "b4b6790e9e98e912e85406c035afd8694e2ae138747d8fbcf23c2472c601bc83"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-svd-invalid": {
+      "error": "LinAlgError",
+      "message": "SVD did not converge",
+      "warnings": [],
+      "inputs": []
+    },
+    "from-estimate-subclass": {
+      "result": {
+        "type": "Subclass",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000044000000000000010400000000000001640",
+            "sha256": "e05837d37de819d52777b20b401329b698b67467c889309cc6ecddc727940678"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "8f14ff7a2427db3f0a63ff51181ae23fcc3b7f669ea0e63f",
+            "sha256": "f2ccd3a089f6af9d67ce613dc10b447b5aea2fd081e04edd5c504609a00a26a8"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "estimate-failure-keeps-state": {
+      "result": false,
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            1,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": false,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": {
+            "type": "ndarray",
+            "shape": [
+              2,
+              3
+            ],
+            "strides": [
+              24,
+              8
+            ],
+            "owns": true,
+            "dtype": "<f8"
+          },
+          "bytes": "000000000000f03f00000000000000400000000000000840",
+          "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+        }
+      ],
+      "identical_state_objects": [
+        true,
+        true
+      ],
+      "state": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000f03f00000000000000400000000000000840",
+            "sha256": "a68de4b5e96a60c8ceb3c7b7ef93461725bdbbff3516b136585a743b5c0ec664"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "0000000000000040000000000000f0bf000000000000e03f",
+            "sha256": "69b68314bf223ce9c4c12bc175228251b097c18469878fb6f01fbbbed5e29219"
+          }
+        }
+      }
+    },
+    "estimate-error-keeps-state": {
+      "error": "ValueError",
+      "message": "Input data must be at least 2D.",
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ]
+      ],
+      "inputs": [],
+      "identical_state_objects": [
+        true,
+        true
+      ]
+    },
+    "estimate-success-replaces-state": {
+      "result": true,
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            2,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000f03f00000000000000400000000000000840000000000000104000000000000018400000000000002040",
+          "sha256": "c930847f5ffff0070a84a593935686322dbc656cf13466e4a5d5224a8d534db7"
+        }
+      ],
+      "identical_state_objects": [
+        false,
+        false
+      ],
+      "state": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000044000000000000010400000000000001640",
+            "sha256": "e05837d37de819d52777b20b401329b698b67467c889309cc6ecddc727940678"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "8f14ff7a2427db3f0a63ff51181ae23fcc3b7f669ea0e63f",
+            "sha256": "f2ccd3a089f6af9d67ce613dc10b447b5aea2fd081e04edd5c504609a00a26a8"
+          }
+        }
+      }
+    },
+    "estimate-repeated-svd": {
+      "result": true,
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            128,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": null,
+          "sha256": "b5b0221bf444cd71b59a54dfe47712051473fb2c183f2e13613a8dc15aa83fbc"
+        }
+      ],
+      "identical_state_objects": [
+        false,
+        false
+      ],
+      "state": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000c0bf000000000010d0bf000000000060bf3f",
+            "sha256": "d07f72b300a1343149bf9e6febbdb8657c8f5a3e7f6a1c960aefd9ca72fc7478"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                3,
+                3
+              ],
+              "strides": [
+                24,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "c5a8ce29c820da3feb6bad3b1f21ea3f675fd2782b1fdabf",
+            "sha256": "a1584ff8ac3769a96b0005b211020ad4c878f963d2393bdd5371dff7e8c2e7a0"
+          }
+        }
+      }
+    },
+    "estimate-empty-keeps-state": {
+      "result": false,
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ],
+        [
+          "RuntimeWarning",
+          "Mean of empty slice"
+        ],
+        [
+          "RuntimeWarning",
+          "invalid value encountered in divide"
+        ]
+      ],
+      "inputs": [],
+      "state": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000c0bf000000000010d0bf000000000060bf3f",
+            "sha256": "d07f72b300a1343149bf9e6febbdb8657c8f5a3e7f6a1c960aefd9ca72fc7478"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                3,
+                3
+              ],
+              "strides": [
+                24,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "c5a8ce29c820da3feb6bad3b1f21ea3f675fd2782b1fdabf",
+            "sha256": "a1584ff8ac3769a96b0005b211020ad4c878f963d2393bdd5371dff7e8c2e7a0"
+          }
+        }
+      }
+    },
+    "residuals-nonunit": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          3
+        ],
+        "strides": [
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "cec21553c2b00940b0f396f35871314068744e17b23d2f40",
+        "sha256": "7423983caeba6fc88e19fbe133ef8387d297963d5562ff88f2ab5aa995a36300"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "00000000000000400000000000000840000000000000104000000000000008c000000000000014400000000000001c4000000000000014400000000000000000000000000000f0bf",
+          "sha256": "36f355c6da86d8b4abd3dca8660f7145ce9b35e19a928fda3287e9754f8bfbce"
+        }
+      ]
+    },
+    "residuals-strided": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          3
+        ],
+        "strides": [
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "68744e17b23d2f40b0f396f358713140cec21553c2b00940",
+        "sha256": "412c6cdeabc0b17b2830709d46175c21a5527f6e953e57163ef517835e14fba1"
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "residuals-empty": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          0
+        ],
+        "strides": [
+          0
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "residuals-bad-rank": {
+      "error": "ValueError",
+      "message": "Input data must be at least 2D.",
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.residuals`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "residuals-origin-dim": {
+      "error": "ValueError",
+      "message": "`origin` is 3D, but `data` is 2D",
+      "warnings": [],
+      "inputs": []
+    },
+    "residuals-deprecated": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          3
+        ],
+        "strides": [
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "18490f6289cd3b408039422edcc81440738a2e3e7f9e5640",
+        "sha256": "ffa89cfba069d9797a2f05e1e9e4324dc69b6078a2cc293710a4ebab8abc4465"
+      },
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.residuals`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "00000000000000400000000000000840000000000000104000000000000008c000000000000014400000000000001c4000000000000014400000000000000000000000000000f0bf",
+          "sha256": "36f355c6da86d8b4abd3dca8660f7145ce9b35e19a928fda3287e9754f8bfbce"
+        }
+      ]
+    },
+    "residuals-explicit-none": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          3
+        ],
+        "strides": [
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "cec21553c2b00940b0f396f35871314068744e17b23d2f40",
+        "sha256": "7423983caeba6fc88e19fbe133ef8387d297963d5562ff88f2ab5aa995a36300"
+      },
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.residuals`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            3,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "00000000000000400000000000000840000000000000104000000000000008c000000000000014400000000000001c4000000000000014400000000000000000000000000000f0bf",
+          "sha256": "36f355c6da86d8b4abd3dca8660f7145ce9b35e19a928fda3287e9754f8bfbce"
+        }
+      ]
+    },
+    "predict-default": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "000000000000c03f0000000000800340000000000040064000000000000000c00000000000000c4000000000000002400000000000000000000000000000044000000000000006400000000000001240000000000000d03f0000000000000f40",
+        "sha256": "2cbebcfd54dbcbf24a5388e19b45efc3104d1f385169c6192e30978d177a85b3"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-neg-axis": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "00000000000025c00000000000001f40000000000000c03f00000000000033c0000000000000284000000000000000c000000000000026c0000000000000204000000000000000000000000000001c40000000000000f0bf0000000000001240",
+        "sha256": "67fd8723cc22df0204ec1e57643a7d85a4b9d492e2344cefffad1c11bead5185"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-bad-axis": {
+      "error": "IndexError",
+      "message": "index 3 is out of bounds for axis 0 with size 3",
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-noninteger-axis": {
+      "error": "IndexError",
+      "message": "only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices",
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-zero-direction": {
+      "error": "ValueError",
+      "message": "Line parallel to axis 0",
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-scalar": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          3
+        ],
+        "strides": [
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "0000000000001040000000000000e03f0000000000000e40",
+        "sha256": "a12b29bdc62b6fc695abdfc8729cfce13e579df281cfc134b22ab50432c355e3"
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "predict-matrix": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          2,
+          2,
+          3
+        ],
+        "strides": [
+          48,
+          24,
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "000000000000c03f0000000000800340000000000040064000000000000000c00000000000000c4000000000000002400000000000000000000000000000044000000000000006400000000000001240000000000000d03f0000000000000f40",
+        "sha256": "2cbebcfd54dbcbf24a5388e19b45efc3104d1f385169c6192e30978d177a85b3"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            2,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "owns": false,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": {
+            "type": "ndarray",
+            "shape": [
+              4
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "dtype": "<f8"
+          },
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-empty": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          0,
+          3
+        ],
+        "strides": [
+          0,
+          0
+        ],
+        "owns": true,
+        "c": true,
+        "f": true,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "predict-list": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          2,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "000000000000f03f000000000000004000000000000008400000000000000040000000000000f83f0000000000000a40",
+        "sha256": "b7e6a718e003da400941faa60e60b6be51c3ae43e5847f7f744c31b271438902"
+      },
+      "warnings": [],
+      "inputs": []
+    },
+    "predict-invalid-params": {
+      "error": "ValueError",
+      "message": "Input `params` should be length 2",
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.predict`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-deprecated": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4,
+          3
+        ],
+        "strides": [
+          24,
+          8
+        ],
+        "owns": true,
+        "c": true,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": null,
+        "bytes": "000000000000c03f000000000000d03f000000000000d83f00000000000000c000000000000010c000000000000018c0000000000000000000000000000000000000000000000000000000000000124000000000000022400000000000002b40",
+        "sha256": "5f815e7adcd4b2a1bf4e4b5d3bb843b84b626f97155407e2859af29193f80b30"
+      },
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.predict`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-x": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4
+        ],
+        "strides": [
+          24
+        ],
+        "owns": false,
+        "c": false,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": {
+          "type": "ndarray",
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "dtype": "<f8"
+        },
+        "bytes": "00000000000013400000000000002240000000000000144000000000000010c0",
+        "sha256": "bb6c5ab1514a46f68f2ddc37d17d34f1a5fa37d7a5d57414b3b82c998110d406"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-y": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4
+        ],
+        "strides": [
+          24
+        ],
+        "owns": false,
+        "c": false,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": {
+          "type": "ndarray",
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "dtype": "<f8"
+        },
+        "bytes": "00000000008003400000000000000c400000000000000440000000000000d03f",
+        "sha256": "b8b21c90de3b9d23b612d09b44bd5a299816b91a0faaa79ffda1f212ef5e8287"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-x-matrix": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          2,
+          3
+        ],
+        "strides": [
+          48,
+          8
+        ],
+        "owns": false,
+        "c": false,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": {
+          "type": "ndarray",
+          "shape": [
+            2,
+            2,
+            3
+          ],
+          "strides": [
+            48,
+            24,
+            8
+          ],
+          "owns": true,
+          "dtype": "<f8"
+        },
+        "bytes": "0000000000001340000000000000c03f0000000000800f40000000000000144000000000000000000000000000001040",
+        "sha256": "9748663967a1c7e5ef52ba47abd3566bb180966e029fd8698b108df69815b239"
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            2,
+            2
+          ],
+          "strides": [
+            16,
+            8
+          ],
+          "owns": false,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": {
+            "type": "ndarray",
+            "shape": [
+              4
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "dtype": "<f8"
+          },
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-y-scalar": {
+      "error": "IndexError",
+      "message": "too many indices for array: array is 1-dimensional, but 2 were indexed",
+      "warnings": [],
+      "inputs": []
+    },
+    "predict-x-deprecated": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4
+        ],
+        "strides": [
+          24
+        ],
+        "owns": false,
+        "c": false,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": {
+          "type": "ndarray",
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "dtype": "<f8"
+        },
+        "bytes": "000000000000b03f000000000000f0bf00000000000000000000000000000240",
+        "sha256": "7e40e01107e302dafdaf58e09c08c9ab574d54832c3df1ab6630b6bd41083b25"
+      },
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.predict_x`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    },
+    "predict-y-explicit-none": {
+      "result": {
+        "type": "ndarray",
+        "dtype": "<f8",
+        "metadata": null,
+        "shape": [
+          4
+        ],
+        "strides": [
+          24
+        ],
+        "owns": false,
+        "c": false,
+        "f": false,
+        "align": true,
+        "write": true,
+        "base": {
+          "type": "ndarray",
+          "shape": [
+            4,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "dtype": "<f8"
+        },
+        "bytes": "00000000008003400000000000000c400000000000000440000000000000d03f",
+        "sha256": "b8b21c90de3b9d23b612d09b44bd5a299816b91a0faaa79ffda1f212ef5e8287"
+      },
+      "warnings": [
+        [
+          "FutureWarning",
+          "Parameter `params` is deprecated since version 0.26 and will be removed in 2.2 (or later). To avoid this warning, please do not use the parameter `params`. For more details, see the documentation of `LineModelND.predict_y`."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            4
+          ],
+          "strides": [
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": true,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": "000000000000c03f00000000000000c000000000000000000000000000001240",
+          "sha256": "9c19f1a68d9e7e747b9e5a1164ee0b74c83d3a5d4508805c98a9a190653fdc95"
+        }
+      ]
+    }
+  },
+  "minimum_delta": {
+    "from-estimate-empty": {
+      "result": {
+        "type": "FailedEstimation",
+        "truth": false,
+        "message": "LineModelND: estimate under-determined",
+        "representation": "FailedEstimation('LineModelND: estimate under-determined')",
+        "canonical_type": true,
+        "access": [
+          "FailedEstimationAccessError",
+          "FailedEstimation has no attribute 'origin'. LineModelND: estimate under-determined\n\nHint: You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
+        ],
+        "call": [
+          "FailedEstimationAccessError",
+          "FailedEstimation is not callable. LineModelND: estimate under-determined\n\nHint: You can check for a failed estimation by truth testing the returned object. For failed estimations, `bool(estimation_result)` will be `False`. E.g.\n\n    if not estimation_result:\n        raise RuntimeError(f'Failed estimation: {estimation_result}')"
+        ]
+      },
+      "warnings": [
+        [
+          "RuntimeWarning",
+          "Mean of empty slice."
+        ],
+        [
+          "RuntimeWarning",
+          "invalid value encountered in divide"
+        ]
+      ],
+      "inputs": []
+    },
+    "from-estimate-svd": {
+      "result": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000c0bf000000000010d0bf000000000060bf3f",
+            "sha256": "d07f72b300a1343149bf9e6febbdb8657c8f5a3e7f6a1c960aefd9ca72fc7478"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                3,
+                3
+              ],
+              "strides": [
+                24,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "c7a8ce29c820da3feb6bad3b1f21ea3f675fd2782b1fdabf",
+            "sha256": "a82bd783c8bc0bcd51fa02eb03584406ce3d120cf6ae1bd3384582bdb8033528"
+          }
+        }
+      },
+      "warnings": [],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            128,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": null,
+          "sha256": "b5b0221bf444cd71b59a54dfe47712051473fb2c183f2e13613a8dc15aa83fbc"
+        }
+      ]
+    },
+    "estimate-repeated-svd": {
+      "result": true,
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ]
+      ],
+      "inputs": [
+        {
+          "type": "ndarray",
+          "dtype": "<f8",
+          "metadata": null,
+          "shape": [
+            128,
+            3
+          ],
+          "strides": [
+            24,
+            8
+          ],
+          "owns": true,
+          "c": true,
+          "f": false,
+          "align": true,
+          "write": true,
+          "base": null,
+          "bytes": null,
+          "sha256": "b5b0221bf444cd71b59a54dfe47712051473fb2c183f2e13613a8dc15aa83fbc"
+        }
+      ],
+      "identical_state_objects": [
+        false,
+        false
+      ],
+      "state": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000c0bf000000000010d0bf000000000060bf3f",
+            "sha256": "d07f72b300a1343149bf9e6febbdb8657c8f5a3e7f6a1c960aefd9ca72fc7478"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                3,
+                3
+              ],
+              "strides": [
+                24,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "c7a8ce29c820da3feb6bad3b1f21ea3f675fd2782b1fdabf",
+            "sha256": "a82bd783c8bc0bcd51fa02eb03584406ce3d120cf6ae1bd3384582bdb8033528"
+          }
+        }
+      }
+    },
+    "estimate-empty-keeps-state": {
+      "result": false,
+      "warnings": [
+        [
+          "FutureWarning",
+          "`estimate` is deprecated since version 0.26 and will be removed in version 2.2. Please use `LineModelND.from_estimate` class constructor instead."
+        ],
+        [
+          "RuntimeWarning",
+          "Mean of empty slice."
+        ],
+        [
+          "RuntimeWarning",
+          "invalid value encountered in divide"
+        ]
+      ],
+      "inputs": [],
+      "state": {
+        "type": "LineModelND",
+        "state": {
+          "origin": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": true,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": null,
+            "bytes": "000000000000c0bf000000000010d0bf000000000060bf3f",
+            "sha256": "d07f72b300a1343149bf9e6febbdb8657c8f5a3e7f6a1c960aefd9ca72fc7478"
+          },
+          "direction": {
+            "type": "ndarray",
+            "dtype": "<f8",
+            "metadata": null,
+            "shape": [
+              3
+            ],
+            "strides": [
+              8
+            ],
+            "owns": false,
+            "c": true,
+            "f": true,
+            "align": true,
+            "write": true,
+            "base": {
+              "type": "ndarray",
+              "shape": [
+                3,
+                3
+              ],
+              "strides": [
+                24,
+                8
+              ],
+              "owns": true,
+              "dtype": "<f8"
+            },
+            "bytes": "c7a8ce29c820da3feb6bad3b1f21ea3f675fd2782b1fdabf",
+            "sha256": "a82bd783c8bc0bcd51fa02eb03584406ce3d120cf6ae1bd3384582bdb8033528"
+          }
+        }
+      }
+    }
+  }
+}
