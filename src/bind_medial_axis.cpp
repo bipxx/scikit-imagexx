@@ -24,7 +24,8 @@ bool bounded(const py::array& array) {
 }
 
 bool boolean_image(const py::array& array) {
-    return array.ndim() == 2 && array.dtype().is(py::dtype::of<bool>())
+    return array.ndim() == 2 && array.dtype().equal(py::dtype::of<bool>())
+        && array.dtype().attr("metadata").is_none()
         && (array.flags() & py::array::c_style)
         && array.shape(0) > 0 && array.shape(1) > 0
         && std::size_t(array.shape(0)) <= skimagexx::medial_axis_max_extent

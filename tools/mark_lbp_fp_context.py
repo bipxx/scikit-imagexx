@@ -4,7 +4,7 @@ from pathlib import Path
 CONTEXT='coverage/contracts/mark-lbp-fp-integration-v2.json'
 # Exact source-only successor before the immutable v2 historical guards.
 SOURCE_SUCCESSOR='coverage/contracts/mark-lbp-controller-source-successor-v1.json'
-VI_PUBLIC_MATMUL_CONTEXT_SHA256='ace16421ace496e554b72c8e0f4f9fe391e302b7f0dbacf907eb5cd54f800d2f'
+VI_PUBLIC_MATMUL_CONTEXT_SHA256='08ce786e165bd3bd1810d7490e6344d2f46a747c331432049a8b351866f71024'
 VI_PUBLIC_MATMUL_HELPER_SHA256='1742639e51f5d6d8822fbcfc4f5bf02b5903e3ff5cd590a7cf53762644598d82'
 CURRENT_VALIDATION_CONTEXT_SHA256='30e078cce3e012ce4cd5dbe29b3ef727fcc4aaf59413b0b7e22996b2b13303a5'
 CURRENT_VALIDATION_HELPER_SHA256='52d8eb80b2138d8d11fb8df7ef3b214c964faadc1bbf71419825d6ce0dc3d064'

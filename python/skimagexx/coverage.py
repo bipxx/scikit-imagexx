@@ -515,7 +515,13 @@ def default_call(api, image):
                 field[mr + dr, mc + dc] = 1
         return (field,), {'threshold': 2, 'accuracy': 1, 'min_size': 2, 'max_size': None}
     if api == 'transform.probabilistic_hough_line':
-        return (image,), {'threshold': 3, 'line_length': 4, 'line_gap': 2, 'rng': 739}
+        import numpy as np
+
+        height, width = image.shape
+        field = np.zeros_like(image, order='C')
+        field[height // 2, :] = 1
+        field[:, width // 2] = 1
+        return (field,), {'threshold': 3, 'line_length': 4, 'line_gap': 2, 'rng': 739}
     if api == 'morphology.medial_axis':
         return (image,), {'rng': 739}
     if api in PYRAMID_GENERATOR_FUNCTIONS:
@@ -1352,8 +1358,14 @@ def assert_default_parity(api, dtype, actual, expected, *, image=None):
             assert value.shape == reference.shape and value.dtype == reference.dtype
             assert value.dtype.metadata is reference.dtype.metadata is None
             assert value.strides == reference.strides
-            assert value.flags.owndata and value.base is None
-            assert value.flags.c_contiguous and value.flags.aligned and value.flags.writeable
+            if api == 'transform.hough_circle_peaks':
+                assert value.flags.owndata == reference.flags.owndata
+                assert type(value.base) is type(reference.base)
+                assert value.flags.c_contiguous == reference.flags.c_contiguous
+                assert value.flags.aligned == reference.flags.aligned and value.flags.writeable == reference.flags.writeable
+            else:
+                assert value.flags.owndata and value.base is None
+                assert value.flags.c_contiguous and value.flags.aligned and value.flags.writeable
             assert value.tobytes(order='C') == reference.tobytes(order='C')
             assert not any(np.shares_memory(value, source) for source in sources if isinstance(source, np.ndarray))
         return

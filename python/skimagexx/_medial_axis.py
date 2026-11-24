@@ -43,4 +43,4 @@ def medial_axis(image, mask=None, return_distance=False, *, rng=None):
                 if return_distance:
                     return skeleton, returned_distance
                 return skeleton
-    return fallback('morphology', 'medial_axis', image, mask, return_distance, rng=rng)
+    return fallback('morphology', 'medial_axis', image, mask=mask, return_distance=return_distance, rng=rng)
