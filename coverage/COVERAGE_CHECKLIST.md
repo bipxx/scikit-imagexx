@@ -2,7 +2,7 @@
 
 This is the detailed completion view for the existing [execution plan](EXECUTION_PLAN.md) and [operational ledger](work_items.json). Those records still govern assignments, execution and evidence. This file adds no dispatch queue or permission to run work.
 
-Updated: 2026-11-24. Shipping classifications come from [api.json](api.json); per-key contract focus comes from [the implementation paths](API_IMPLEMENTATION_PATHS.json). The paths are proposals, not proof of completed coverage.
+Updated: 2026-11-25. Shipping classifications come from [api.json](api.json); per-key contract focus comes from [the implementation paths](API_IMPLEMENTATION_PATHS.json). The paths are proposals, not proof of completed coverage.
 
 Historical genuine speed result (`75b`, unshipped predecessor): [exact75b fixed24](evidence/speed-parity-genuine24-root-result-v1.json) passed output/FP/protocol and all4genuineprofiles/3stagers, but **fails the per-case speed gate**:20wins/4losses. Float32flood_fill C0.948235/F0.982839 and int64/uint64outer-find0.891151/0.845565 were the optimization gaps addressed by the delivered successor below; this batch is unshipped. No unchanged retiming. Native coverage counts/full-contract checkboxes remain unchanged.
 
@@ -37,9 +37,13 @@ The separate packed float32 Lab candidate b71bd4a2 passed 5,308 affected install
 
 ## Shipping snapshot
 
-### Latest verified checkpoint — 2026-11-25 (`current408`, 477/477 shipped)
+### Latest verified checkpoint — 2026-11-25 (`opt-wave2-477`, 477/477 shipped)
 
 This checkpoint and the linked terminal receipts take precedence over older dated progress notes below. Historical candidate descriptions remain evidence of their original scope, not current dispatch instructions. A passing diagnostic that does not reproduce an earlier failure leaves that failure unresolved.
+
+Main `15a291dad7de274e2db6462a8bf862951a32ddd8` (`opt-wave2-477`, fast-forwarded onto `c4135c8d`) ships all `477/477` inventoried public APIs (`408` `native-partial`, `37` `packaged-asset-partial`, `27` `native-class-partial`, `3` `metadata`, `2` `exception-metadata-provider`, `0` `upstream-only`), removes 21 unreferenced `benchmarks/*.zip` archives (`-16.08 MiB`), and lands 11 optimization scopes reducing 1-thread slower APIs from `72` to `43`, lifting median speedup `2.387x -> 2.522x` and geomean `2.557x -> 2.996x` ([benchmark comparison](../build/evidence/u182-post-haar/opt-wave2-v1/benchmark-comparison.json)). Exact four-profile release qualification ([whole-product admission](../build/evidence/u182-post-haar/opt-wave2-v1/whole-product-root-admission-v1.json), [run 45644063673](https://github.com/bipxx/scikit-imagexx/actions/runs/45644063673)) passed all four hosted profiles (`modern` `15040224100`, `minimum` `15041374346`, `debug` `15042509785`, `windows` `15045015863`) with `0` failed commands, `896` installed SDK checks (`224` per profile across `112` families), `46,871` / `48,946` / `46,738` / `45,589` rehashed manifest records, and `archive_retained: false`.
+
+### Historical checkpoint — 2026-11-25 (`current408`, 477/477 baseline closure)
 
 Main `c4135c8d38603c1fc51f3d100431a754f9d6196f` (`current408`) ships **all `477/477` inventoried public APIs**: **`408` `native-partial`**, **`37` `packaged-asset-partial`**, **`27` `native-class-partial`**, **`3` `metadata`**, **`2` `exception-metadata-provider`**, and **`0` `upstream-only`** (across `448` callables, `29` classes, and `284` static member paths). Exact four-profile release qualification ([whole-product admission](../build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json), [run 45609669785](https://github.com/bipxx/scikit-imagexx/actions/runs/45609669785)) passed all four hosted profiles (`modern`, `minimum`, `debug`, `windows`) with `0` failed commands, **`896` installed SDK checks** (`224` per profile across `112` families), `46,869` / `48,944` / `46,738` / `45,588` rehashed manifest records, and `archive_retained: false`. Prior historical failed runs (`45557858466`, `45582555940`, `45596316544`) remain preserved in `build/evidence/u182-post-haar/current408-qualification-v1/`.
 
