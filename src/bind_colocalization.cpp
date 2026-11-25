@@ -15,6 +15,8 @@ std::array<std::uint64_t,3> coloc_intersection_strided(const ColocView&,const Co
     const ColocView*,unsigned);
 int coloc_finite_min_negative(const ColocView&);
 ColocScalar coloc_product_sum(const ColocView&,const ColocView*,ColocReductionPlan);
+int coloc_dense_manders(const ColocView&,const ColocView&,const ColocView*,ColocReductionPlan,
+                        bool,std::array<ColocScalar,3>&);
 }
 namespace {
 using Type=skimagexx::ColocType;
@@ -23,6 +25,10 @@ constexpr auto size_limit=std::size_t(std::numeric_limits<py::ssize_t>::max());
 std::size_t checked_product(std::size_t a,std::size_t b) {
     if(b && a>size_limit/b)throw py::value_error("colocalization allocation size overflows");
     return a*b;
+}
+std::optional<py::gil_scoped_release> release_large(py::ssize_t elements) {
+    if(elements>=4096)return std::optional<py::gil_scoped_release>(std::in_place);
+    return {};
 }
 
 // Direct ndarray C slots only: Python .base/.shape/.dtype properties are never
@@ -37,7 +43,13 @@ class Owner {
         PyObject* dtype;
         int flags;
         py::ssize_t item;
-        std::vector<py::ssize_t> shape,strides;
+        std::size_t rank;
+        std::array<py::ssize_t,8> local_shape{},local_strides{};
+        std::vector<py::ssize_t> large;
+        py::ssize_t* shape(){return large.empty() ? local_shape.data():large.data();}
+        py::ssize_t* strides(){return large.empty() ? local_strides.data():large.data()+rank;}
+        const py::ssize_t* shape()const{return large.empty() ? local_shape.data():large.data();}
+        const py::ssize_t* strides()const{return large.empty() ? local_strides.data():large.data()+rank;}
     };
     struct Lease {
         Py_buffer value{};
@@ -50,10 +62,11 @@ class Owner {
     std::size_t bytes_=0;
 
     static std::size_t count(const Stamp& stamp) {
-        for(auto length:stamp.shape)if(length<0)throw py::value_error("colocalization negative array extent");
-        if(std::find(stamp.shape.begin(),stamp.shape.end(),0)!=stamp.shape.end())return 0;
+        const auto* shape=stamp.shape();
+        for(std::size_t i=0;i<stamp.rank;++i)if(shape[i]<0)throw py::value_error("colocalization negative array extent");
+        if(std::find(shape,shape+stamp.rank,0)!=shape+stamp.rank)return 0;
         std::size_t result=1;
-        for(auto length:stamp.shape)result=checked_product(result,std::size_t(length));
+        for(std::size_t i=0;i<stamp.rank;++i)result=checked_product(result,std::size_t(shape[i]));
         return result;
     }
 public:
@@ -89,9 +102,13 @@ public:
             const auto* raw=py::detail::array_proxy(array.ptr());
             if(array.ndim()<0 || array.ndim()>py::ssize_t(skimagexx::colocalization_max_rank))
                 throw py::value_error("colocalization array rank exceeds bound");
-            Stamp stamp{array,raw->data,raw->base,reinterpret_cast<PyObject*>(raw->descr),raw->flags,array.itemsize(),{}, {}};
+            Stamp stamp{array,raw->data,raw->base,reinterpret_cast<PyObject*>(raw->descr),raw->flags,
+                        array.itemsize(),std::size_t(array.ndim()),{},{},{}};
             if(stamp.item<0)throw py::value_error("colocalization negative element size");
-            for(py::ssize_t axis=0;axis<array.ndim();++axis){stamp.shape.push_back(array.shape(axis));stamp.strides.push_back(array.strides(axis));}
+            if(stamp.rank>stamp.local_shape.size())stamp.large.resize(2*stamp.rank);
+            for(std::size_t axis=0;axis<stamp.rank;++axis) {
+                stamp.shape()[axis]=array.shape(axis);stamp.strides()[axis]=array.strides(axis);
+            }
             count(stamp);stamps_.push_back(std::move(stamp));
             if(raw->base){current=py::reinterpret_borrow<py::object>(raw->base);continue;}
             if(!(raw->flags&py::detail::npy_api::NPY_ARRAY_OWNDATA_) || !(raw->flags&(py::array::c_style|py::array::f_style)))
@@ -105,10 +122,10 @@ public:
         for(const auto& stamp:stamps_) {
             const auto* raw=py::detail::array_proxy(stamp.array.ptr());
             if(raw->data!=stamp.data || raw->base!=stamp.base || reinterpret_cast<PyObject*>(raw->descr)!=stamp.dtype ||
-                raw->flags!=stamp.flags || stamp.array.itemsize()!=stamp.item || stamp.array.ndim()!=py::ssize_t(stamp.shape.size()))
+                raw->flags!=stamp.flags || stamp.array.itemsize()!=stamp.item || stamp.array.ndim()!=py::ssize_t(stamp.rank))
                 throw py::value_error("colocalization owner metadata changed during the call");
             for(py::ssize_t axis=0;axis<stamp.array.ndim();++axis)
-                if(stamp.array.shape(axis)!=stamp.shape[std::size_t(axis)] || stamp.array.strides(axis)!=stamp.strides[std::size_t(axis)])
+                if(stamp.array.shape(axis)!=stamp.shape()[axis] || stamp.array.strides(axis)!=stamp.strides()[axis])
                     throw py::value_error("colocalization owner metadata changed during the call");
         }
     }
@@ -119,10 +136,10 @@ private:
         for(const auto& stamp:stamps_) {
             if(!count(stamp))continue;
             std::uintptr_t negative=0,positive=0;
-            for(std::size_t axis=0;axis<stamp.shape.size();++axis) {
-                const auto stride=stamp.strides[axis];
+            for(std::size_t axis=0;axis<stamp.rank;++axis) {
+                const auto stride=stamp.strides()[axis];
                 const auto magnitude=stride<0 ? std::uintptr_t(-(stride+1))+1:std::uintptr_t(stride);
-                const auto length=std::uintptr_t(stamp.shape[axis]-1);
+                const auto length=std::uintptr_t(stamp.shape()[axis]-1);
                 auto& extent=stride<0 ? negative:positive;
                 if(length && magnitude>(limit-extent)/length)throw py::value_error("colocalization byte extent overflows");
                 extent+=length*magnitude;
@@ -266,7 +283,7 @@ void bind_colocalization(py::module_& module) {
             std::optional<Input> roi;
             if(masked)roi.emplace(guards,selection,type(2));
             guards.check();
-            py::gil_scoped_release release;
+            auto release=release_large(a.size());
             counts=skimagexx::coloc_intersection_strided(first.value,second.value,
                 roi ? &roi->value:nullptr,integers);
         } catch(const py::value_error&) {
@@ -277,10 +294,59 @@ void bind_colocalization(py::module_& module) {
         if(counts[2])return py::none();
         return py::make_tuple(counts[0],counts[1]);
     },py::arg("image0").noconvert(),py::arg("image1").noconvert(),py::arg("mask"));
+    const auto bind_manders=[mmap_type](bool overlap) {
+        return [mmap_type,overlap](const py::array& a,const py::array& b,const py::object& mask,
+                                   int profile,std::size_t buffer_elements)->py::object {
+            const bool masked=!mask.is_none();
+            if(masked && !py::isinstance<py::array>(mask))return py::none();
+            const auto selection=masked ? py::reinterpret_borrow<py::array>(mask):a;
+            Type type,other;
+            if(!real_type(a,type) || (type!=Type::float32 && type!=Type::float64) ||
+                !real_type(b,other) || other!=(overlap ? type:Type::boolean) ||
+                (masked && selection.dtype().num()!=0))return py::none();
+            const auto plan=reduction(profile,buffer_elements);
+            Guards guards(mmap_type);
+            std::array<skimagexx::ColocScalar,3> values;
+            int status;
+            try {
+                Input first(guards,a,type),second(guards,b,other);
+                std::optional<Input> roi;
+                if(masked)roi.emplace(guards,selection,Type::boolean);
+                guards.check();
+                {
+                    auto release=release_large(a.size());
+                    status=skimagexx::coloc_dense_manders(first.value,second.value,
+                        roi ? &roi->value:nullptr,plan,overlap,values);
+                }
+                guards.check();
+            } catch(const py::value_error&) {
+                return py::none();
+            } catch(const skimagexx::ColocProviderRequired&) {
+                return py::none();
+            } catch(const std::invalid_argument&) {
+                // Direct private callers can supply mismatched shapes.
+                return py::none();
+            }
+            if(status==0)return py::none();
+            if(status==1)throw py::value_error(overlap ? "image0 contains negative values":"image contains negative values");
+            if(status==2)throw py::value_error("image1 contains negative values");
+            py::tuple result;
+            if(overlap)result=py::make_tuple(scalar(values[0]),scalar(values[1]),scalar(values[2]));
+            else result=py::make_tuple(scalar(values[0]),scalar(values[1]));
+            guards.check();
+            return result;
+        };
+    };
+    module.def("coloc_dense_manders_coloc",bind_manders(false),
+        py::arg("image0").noconvert(),py::arg("image1").noconvert(),py::arg("mask"),
+        py::arg("profile"),py::arg("buffer_elements"));
+    module.def("coloc_dense_manders_overlap",bind_manders(true),
+        py::arg("image0").noconvert(),py::arg("image1").noconvert(),py::arg("mask"),
+        py::arg("profile"),py::arg("buffer_elements"));
     module.def("coloc_binary",[](Guards& guards,py::array array)->py::object {
         guards.add(array);Type type;if(!real_type(array,type))return py::none();
         Input input(guards,array,type);skimagexx::ColocPredicate valid;
-        bool finite;guards.check();{py::gil_scoped_release release;
+        bool finite;guards.check();{auto release=release_large(array.size());
             finite=skimagexx::coloc_all_finite(input.value);
             if(finite)valid=skimagexx::coloc_binary_valid(input.value);
         }
@@ -288,23 +354,23 @@ void bind_colocalization(py::module_& module) {
         if(!valid.value)return py::make_tuple(false,py::none());
         const auto order=skimagexx::coloc_keep_order(input.value);
         auto result=output(guards,input,order,Type::boolean);const auto target=buffer(result);
-        guards.check();{py::gil_scoped_release release;skimagexx::coloc_binary_into(input.value,order,target);}
+        guards.check();{auto release=release_large(array.size());skimagexx::coloc_binary_into(input.value,order,target);}
         return py::make_tuple(true,result);
     },py::arg("guards"),py::arg("array").noconvert());
     module.def("coloc_count",[](Guards& guards,py::array array){
         Input input(guards,array,Type::boolean);
         if(array.dtype().kind()!='b' || array.itemsize()!=1)throw py::type_error("colocalization count requires bool");
-        std::uint64_t result;guards.check();{py::gil_scoped_release release;result=skimagexx::coloc_count_nonzero(input.value);}return result;
+        std::uint64_t result;guards.check();{auto release=release_large(array.size());result=skimagexx::coloc_count_nonzero(input.value);}return result;
     },py::arg("guards"),py::arg("array").noconvert());
     module.def("coloc_joint_count",[](Guards& guards,py::array a,py::array b){
         if(a.dtype().kind()!='b' || a.itemsize()!=1 || b.dtype().kind()!='b' || b.itemsize()!=1)throw py::type_error("colocalization joint count requires bool");
         Input first(guards,a,Type::boolean),second(guards,b,Type::boolean);
-        std::uint64_t result;guards.check();{py::gil_scoped_release release;result=skimagexx::coloc_joint_count(first.value,second.value);}return result;
+        std::uint64_t result;guards.check();{auto release=release_large(a.size());result=skimagexx::coloc_joint_count(first.value,second.value);}return result;
     },py::arg("guards"),py::arg("image0").noconvert(),py::arg("image1").noconvert());
     module.def("coloc_min_negative",[](Guards& guards,py::array array)->py::object {
         guards.add(array);Type type;if(!real_type(array,type))return py::none();
         Input input(guards,array,type);int result;
-        guards.check();{py::gil_scoped_release release;result=skimagexx::coloc_finite_min_negative(input.value);}
+        guards.check();{auto release=release_large(array.size());result=skimagexx::coloc_finite_min_negative(input.value);}
         if(result<0)return py::none();
         return py::bool_(result!=0);
     },py::arg("guards"),py::arg("array").noconvert());
@@ -312,18 +378,18 @@ void bind_colocalization(py::module_& module) {
         guards.add(array);guards.add(mask);Type type;if(!real_type(array,type))return py::none();
         if(mask.dtype().kind()!='b' || mask.itemsize()!=1)throw py::type_error("colocalization gather requires bool mask");
         Input input(guards,array,type),selection(guards,mask,Type::boolean);std::uint64_t selected;
-        guards.check();{py::gil_scoped_release release;selected=skimagexx::coloc_count_nonzero(selection.value);}
+        guards.check();{auto release=release_large(array.size());selected=skimagexx::coloc_count_nonzero(selection.value);}
         if(selected>size_limit)throw py::value_error("colocalization gather size overflows");
         py::array result(array.dtype(),std::vector<py::ssize_t>{py::ssize_t(selected)});
         guards.add(result);const auto target=buffer(result);guards.check();
-        {py::gil_scoped_release release;skimagexx::coloc_gather_into(input.value,selection.value,target,std::size_t(selected));}
+        {auto release=release_large(array.size());skimagexx::coloc_gather_into(input.value,selection.value,target,std::size_t(selected));}
         return result;
     },py::arg("guards"),py::arg("array").noconvert(),py::arg("mask").noconvert());
     module.def("coloc_sum",[](Guards& guards,py::array array,int profile,std::size_t buffer_elements)->py::object {
         guards.add(array);Type type;if(!real_type(array,type))return py::none();
         Input input(guards,array,type);const auto plan=reduction(profile,buffer_elements);
         skimagexx::ColocScalar result;guards.check();
-        try {py::gil_scoped_release release;result=skimagexx::coloc_sum(input.value,plan);}
+        try {auto release=release_large(array.size());result=skimagexx::coloc_sum(input.value,plan);}
         catch(const skimagexx::ColocProviderRequired&){return py::none();}
         auto boxed=scalar(result);guards.check();return py::make_tuple(boxed,result.fp_status);
     },py::arg("guards"),py::arg("array").noconvert(),py::arg("profile"),py::arg("buffer_elements"));
@@ -344,7 +410,7 @@ void bind_colocalization(py::module_& module) {
         skimagexx::ColocScalar result;
         guards.check();
         try {
-            py::gil_scoped_release release;
+            auto release=release_large(a.size());
             result=skimagexx::coloc_product_sum(first.value,other ? &other->value:nullptr,plan);
         } catch(const skimagexx::ColocProviderRequired&) {return py::none();}
         auto boxed=scalar(result);guards.check();return boxed;
@@ -361,7 +427,7 @@ void bind_colocalization(py::module_& module) {
         const auto order=other ? skimagexx::coloc_keep_order(first.value,other->value):skimagexx::coloc_keep_order(first.value);
         const auto result_type=other ? type:skimagexx::coloc_square_type(type);
         auto result=output(guards,first,order,result_type);const auto target=buffer(result);unsigned status=0;
-        guards.check();try {py::gil_scoped_release release;
+        guards.check();try {auto release=release_large(a.size());
             if(other)skimagexx::coloc_multiply_into(first.value,other->value,order,target,status);
             else skimagexx::coloc_square_into(first.value,order,target,status);
         }

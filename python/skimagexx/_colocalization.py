@@ -1,7 +1,7 @@
 """Owned colocalization array stages with literal 0.26 observable ordering.
 
 This private module is not public registration. Object/complex/mixed arithmetic,
-irregular floating reduction iterators and exceptional floating state are
+unsupported floating reduction iterators and exceptional floating state are
 explicit NumPy primitive providers, not native completion. The original three
 colocalization functions are never called. The process worker policy is shared
 with the sole installed/private core; this module does not create a worker pool.
@@ -17,7 +17,14 @@ from . import _core
 _PROFILES = {"1.24.4": 1, "2.5.4": 2}
 _PROFILE = _PROFILES.get(np.__version__, 0)
 _BOOL = np.dtype(bool)
+_FLOATS = (np.dtype(np.float32), np.dtype(np.float64))
 _ASARRAY = np.asarray if isinstance(np.asarray, BuiltinFunctionType) else None
+_GETERR = np.geterr
+_GETBUFSIZE = np.getbufsize
+_GETERRCALL = np.geterrcall
+_SUM = np.sum
+_SQUARE = np.square
+_MULTIPLY = np.multiply
 _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
           (4, "under", "underflow"), (8, "invalid", "invalid value"))
 
@@ -218,7 +225,28 @@ def intersection_coeff(image0_mask, image1_mask, mask=None):
     return context.provider(lambda a, b: a / b, nonzero_joint, nonzero_image0)
 
 
+def _dense_manders(image0, image1, mask, overlap):
+    if (not _PROFILE or np.asarray is not _ASARRAY or np.geterr is not _GETERR
+            or np.getbufsize is not _GETBUFSIZE or np.geterrcall is not _GETERRCALL
+            or np.sum is not _SUM or np.square is not _SQUARE or np.multiply is not _MULTIPLY
+            or type(image0) is not np.ndarray or type(image1) is not np.ndarray
+            or image0.dtype not in _FLOATS
+            or image1.dtype != (image0.dtype if overlap else _BOOL)
+            or image0.shape != image1.shape
+            or (mask is not None and (type(mask) is not np.ndarray
+                                      or mask.dtype != _BOOL or mask.shape != image0.shape))):
+        return None
+    if not all(method in ("ignore", "warn", "raise", "call") for method in np.geterr().values()):
+        return None
+    native = (_core.coloc_dense_manders_overlap if overlap else _core.coloc_dense_manders_coloc)
+    return native(image0, image1, mask, _PROFILE, np.getbufsize())
+
+
 def manders_coloc_coeff(image0, image1_mask, mask=None):
+    dense = _dense_manders(image0, image1_mask, mask, False)
+    if dense is not None:
+        total, joint = dense
+        return 0 if total == 0 else joint / total
     context = _Context()
     image0 = context.array(image0)
     image1_mask = context.binary(image1_mask, "image1_mask")
@@ -239,6 +267,10 @@ def manders_coloc_coeff(image0, image1_mask, mask=None):
 
 
 def manders_overlap_coeff(image0, image1, mask=None):
+    dense = _dense_manders(image0, image1, mask, True)
+    if dense is not None:
+        square0, square1, numerator = dense
+        return numerator / ((square0 * square1) ** 0.5)
     context = _Context()
     image0 = context.array(image0)
     image1 = context.array(image1)

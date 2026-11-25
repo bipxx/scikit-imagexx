@@ -27,6 +27,8 @@
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
 std::uint64_t coloc_bool_count(const unsigned char*,const unsigned char*,std::size_t);
+void coloc_manders_leaf(const unsigned char*,const unsigned char*,std::size_t,bool,double*,unsigned&);
+void coloc_manders_leaf(const unsigned char*,const unsigned char*,std::size_t,bool,float*,unsigned&);
 }
 #endif
 
@@ -234,6 +236,55 @@ struct ReadAccess {
                       :pointer(view,order,i);
     }
 };
+bool inner_contiguous(const ColocView& view,const ColocOrder& order) {
+    return !order.rank || view.strides.data[order.axes[0]]==std::ptrdiff_t(coloc_itemsize(view.type));
+}
+// The initial seek is per partition. Carrying to the next row uses only
+// outer-axis strides and never changes the order of the logical elements.
+template<std::size_t N> class Rows {
+    const ColocView& shape_;
+    const ColocOrder& order_;
+    const std::array<const ColocView*,N> views_;
+    std::array<std::size_t,colocalization_max_rank> coordinates_{};
+    std::array<const unsigned char*,N> row_{};
+    std::size_t width_, column_, remaining_;
+public:
+    Rows(const ColocView& shape,const ColocOrder& order,
+         std::array<const ColocView*,N> views,std::size_t begin,std::size_t end,bool dense=false)
+        :shape_(shape),order_(order),views_(views),
+         width_(dense ? end : order.rank ? shape.shape.data[order.axes[0]] : 1),
+         column_(begin ? begin%width_ : 0),remaining_(end-begin) {
+        auto index=begin-column_;
+        if(index)for(std::size_t k=0;k<order.rank;++k) {
+            const auto length=shape.shape.data[order.axes[k]];
+            coordinates_[k]=index%length;index/=length;
+        }
+        for(std::size_t j=0;j<N;++j)if(views_[j]) {
+            row_[j]=static_cast<const unsigned char*>(views_[j]->data);
+            if(begin!=column_)row_[j]+=offset(*views_[j],order,begin-column_);
+        }
+    }
+    std::size_t available()const {return std::min(width_-column_,remaining_);}
+    const unsigned char* data(std::size_t j,std::size_t item)const {
+        return row_[j] ? row_[j]+column_*item:nullptr;
+    }
+    void advance(std::size_t count) {
+        remaining_-=count;
+        column_+=count;
+        if(column_!=width_ || !remaining_)return;
+        column_=0;
+        for(std::size_t k=1;k<order_.rank;++k) {
+            const auto axis=order_.axes[k],length=shape_.shape.data[axis];
+            if(length==1)continue;
+            const bool carry=++coordinates_[k]==length;
+            const auto delta=carry ? -std::ptrdiff_t(length-1):1;
+            for(std::size_t j=0;j<N;++j)if(views_[j])
+                row_[j]+=delta*views_[j]->strides.data[axis];
+            if(!carry)return;
+            coordinates_[k]=0;
+        }
+    }
+};
 // Inputs to this internal ordering helper have already been validated.
 ColocOrder keep_order(const ColocView& v,const ColocView* other);
 template<class Body> ColocExecution partition(std::size_t n,const Body& body) {
@@ -249,20 +300,34 @@ std::uint64_t count_impl(const ColocView& a,const ColocView* b) {
     // Integer counts are independent of traversal order. A common KEEPORDER
     // also exposes dense F-order operands to the existing byte-count leaf.
     const auto order=keep_order(a,b);const int workers=detail::active_workers(n);
-    std::vector<std::uint64_t> counts(std::size_t(workers),0);
+    std::uint64_t single=0;
+    std::vector<std::uint64_t> counts(workers>1 ? std::size_t(workers):0,0);
     const ReadAccess first(a,order,n),second(b ? *b:a,order,n);
     const bool dense=first.affine && first.step==1 && (!b || (second.affine && second.step==1));
+    const bool rows=inner_contiguous(a,order) && (!b || inner_contiguous(*b,order));
+#ifdef SKIMAGEXX_AVX2
+    const bool avx2=has_avx2();
+#endif
     detail::partition(n,workers,[&](auto begin,auto end,auto id) {
         std::uint64_t value=0;
+        const auto scan=[&](const unsigned char* x,const unsigned char* y,std::size_t length) {
 #ifdef SKIMAGEXX_AVX2
-        if(dense && has_avx2())value=simd::coloc_bool_count(static_cast<const unsigned char*>(a.data)+begin,
-            b ? static_cast<const unsigned char*>(b->data)+begin:nullptr,end-begin);
-        else
+            if(avx2){value+=simd::coloc_bool_count(x,y,length);return;}
 #endif
-        for(auto i=begin;i<end;++i)value+=(*first[i]!=0) && (!b || *second[i]!=0);
-        counts[id]=value;
+            if(y)for(std::size_t i=0;i<length;++i)value+=(x[i]!=0) && (y[i]!=0);
+            else for(std::size_t i=0;i<length;++i)value+=x[i]!=0;
+        };
+        if(dense && begin<end)scan(first[begin],b ? second[begin]:nullptr,end-begin);
+        else if(rows && begin<end) {
+            Rows<2> row(a,order,{&a,b},begin,end);
+            while(const auto length=row.available()) {
+                scan(row.data(0,1),row.data(1,1),length);row.advance(length);
+            }
+        } else for(auto i=begin;i<end;++i)value+=(*first[i]!=0) && (!b || *second[i]!=0);
+        if(workers==1)single=value;else counts[id]=value;
     });
-    std::uint64_t result=0;for(auto value:counts)result+=value;return result;
+    for(auto value:counts)single+=value;
+    return single;
 }
 }
 
@@ -343,17 +408,25 @@ bool coloc_sum_supported(const ColocView& v,ColocReductionPlan plan) {
 }
 bool coloc_all_finite(const ColocView& v) {
     const auto n=coloc_validate(v);if(!floating(v.type))return true;
+    if(!n)return true;
     const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
-    if(v.type==Type::float32 && !v.swapped && input.affine && input.step==4) {
-        const auto* data=static_cast<const unsigned char*>(v.data);std::uint32_t nonfinite=0;
-        for(std::size_t i=0;i<n;++i) {
-            std::uint32_t word;std::memcpy(&word,data+4*i,4);
-            nonfinite|=(word&0x7f800000u)==0x7f800000u;
-        }
-        return nonfinite==0;
-    }
     const auto item=coloc_itemsize(v.type);
     const auto exponent=v.type==Type::float16 ? 0x7c00ULL:v.type==Type::float32 ? 0x7f800000ULL:0x7ff0000000000000ULL;
+    const auto scan=[&](const unsigned char* data,std::size_t length) {
+        if(!v.swapped && v.type==Type::float32)return dense_finite_min<std::uint32_t>(data,length,0x7f800000u)>=0;
+        if(!v.swapped && v.type==Type::float64)return dense_finite_min<std::uint64_t>(data,length,0x7ff0000000000000ULL)>=0;
+        for(std::size_t i=0;i<length;++i)if((bits(v,data+i*item,item)&exponent)==exponent)return false;
+        return true;
+    };
+    if(input.affine && input.step==std::ptrdiff_t(item))return scan(input[0],n);
+    if(inner_contiguous(v,order)) {
+        Rows<1> row(v,order,{&v},0,n);
+        while(const auto length=row.available()) {
+            if(!scan(row.data(0,item),length))return false;
+            row.advance(length);
+        }
+        return true;
+    }
     for(std::size_t i=0;i<n;++i)if((bits(v,input[i],item)&exponent)==exponent)return false;
     return true;
 }
@@ -490,7 +563,19 @@ IntersectionCounts coloc_intersection_strided(const ColocView& a,const ColocView
     const auto order=keep_order(a,&b);
     std::ptrdiff_t step0,step1,step_mask=0;
     if(!single_stride(a,order,step0) || !single_stride(b,order,step1) ||
-        (mask && !single_stride(*mask,order,step_mask)))return {0,0,1};
+        (mask && !single_stride(*mask,order,step_mask))) {
+        if(!inner_contiguous(a,order) || !inner_contiguous(b,order) ||
+            (mask && !inner_contiguous(*mask,order)))return {0,0,1};
+        IntersectionCounts counts{};
+        Rows<3> row(a,order,{&a,&b,mask},0,n);
+        while(const auto length=row.available()) {
+            const auto part=coloc_intersection_bytes(row.data(0,1),row.data(1,1),row.data(2,1),length,integer_inputs);
+            counts[0]+=part[0];counts[1]+=part[1];
+            if(part[2])return {0,0,1};
+            row.advance(length);
+        }
+        return counts;
+    }
     const auto* first=static_cast<const unsigned char*>(a.data);
     const auto* second=static_cast<const unsigned char*>(b.data);
     const auto* roi=mask ? static_cast<const unsigned char*>(mask->data):nullptr;
@@ -520,10 +605,20 @@ int coloc_finite_min_negative(const ColocView& v) {
     if(!n)throw std::invalid_argument("zero-size array to reduction operation minimum which has no identity");
     if(!v.swapped && (v.type==Type::float32 || v.type==Type::float64)) {
         const auto order=keep_order(v,nullptr);
+        const auto item=coloc_itemsize(v.type);
         std::ptrdiff_t step;
-        if(single_stride(v,order,step) && step==std::ptrdiff_t(coloc_itemsize(v.type))) {
-            if(v.type==Type::float32)return dense_finite_min<std::uint32_t>(v.data,n,0x7f800000u);
-            return dense_finite_min<std::uint64_t>(v.data,n,0x7ff0000000000000ULL);
+        const bool dense=single_stride(v,order,step) && step==std::ptrdiff_t(item);
+        if(dense || inner_contiguous(v,order)) {
+            Rows<1> row(v,order,{&v},0,n,dense);
+            int negative=0;
+            while(const auto length=row.available()) {
+                const auto* data=row.data(0,item);
+                const auto status=v.type==Type::float32 ? dense_finite_min<std::uint32_t>(data,length,0x7f800000u)
+                    :dense_finite_min<std::uint64_t>(data,length,0x7ff0000000000000ULL);
+                if(status<0)return -1;
+                negative|=status;row.advance(length);
+            }
+            return negative;
         }
     }
     if(!coloc_all_finite(v))return -1;
@@ -534,12 +629,19 @@ ColocPredicate coloc_min_negative(const ColocView& v) {
     bool negative=false,has_nan=false;const auto order=keep_order(v,nullptr);const ReadAccess input(v,order,n);
     const auto item=coloc_itemsize(v.type);
     const auto sign=std::uint64_t(1)<<(item*8-1);
-    const bool can_negative=floating(v.type) || signed_integer(v.type);
-    if(!can_negative)return {false,0};
-    for(std::size_t i=0;i<n;++i) {
-        const auto value=bits(v,input[i],item);has_nan|=nan(v.type,value);
-        if(can_negative)negative|=(value&sign) && !zero(v.type,value);
-    }
+    if(!floating(v.type) && !signed_integer(v.type))return {false,0};
+    const auto scan=[&](const unsigned char* data) {
+        const auto value=bits(v,data,item);has_nan|=nan(v.type,value);
+        negative|=(value&sign) && !zero(v.type,value);
+    };
+    if(inner_contiguous(v,order) && !input.affine) {
+        Rows<1> row(v,order,{&v},0,n);
+        while(const auto length=row.available()) {
+            const auto* data=row.data(0,item);
+            for(std::size_t i=0;i<length;++i)scan(data+i*item);
+            row.advance(length);
+        }
+    } else for(std::size_t i=0;i<n;++i)scan(input[i]);
     return {negative && !has_nan,0};
 }
 ColocExecution coloc_gather_into(const ColocView& v,const ColocView& mask_view,ColocBuffer out,std::size_t selected) {
@@ -641,6 +743,13 @@ ColocScalar coloc_sum(const ColocView& v,ColocReductionPlan plan) {
     result.fp_status=capture.flags();return result;
 }
 namespace {
+template<class T> ColocScalar packed_scalar(Type type,T value) {
+    ColocScalar result;result.type=type;
+    if constexpr(sizeof(T)==4) {
+        std::uint32_t raw;std::memcpy(&raw,&value,4);result.bits=raw;
+    } else std::memcpy(&result.bits,&value,8);
+    return result;
+}
 template<class T,class Step0,class Step1> ColocScalar product_sum(const ColocView& a,const ColocView* b,
     std::size_t n,std::size_t block,Step0 step0,Step1 step1) {
     const auto* first=static_cast<const unsigned char*>(a.data);
@@ -655,11 +764,7 @@ template<class T,class Step0,class Step1> ColocScalar product_sum(const ColocVie
     // If either original stage can signal, replay the two separate stages
     // so callbacks, warnings and nonfinite scalar payloads keep their order.
     if(capture.flags() || !std::isfinite(sum))throw ColocProviderRequired("colocalization product or sum requires separate stages");
-    ColocScalar result;result.type=a.type;
-    if constexpr(sizeof(T)==4) {
-        std::uint32_t raw;std::memcpy(&raw,&sum,4);result.bits=raw;
-    } else std::memcpy(&result.bits,&sum,8);
-    return result;
+    return packed_scalar(a.type,sum);
 }
 template<class T> ColocScalar product_sum(const ColocView& a,const ColocView* b,
     std::size_t n,std::size_t block,std::ptrdiff_t step0,std::ptrdiff_t step1) {
@@ -668,6 +773,44 @@ template<class T> ColocScalar product_sum(const ColocView& a,const ColocView* b,
     if(step0==sizeof(T) && step1==1)
         return product_sum<T,Dense,std::integral_constant<std::ptrdiff_t,1>>(a,b,n,block,Dense{},{});
     return product_sum<T,std::ptrdiff_t,std::ptrdiff_t>(a,b,n,block,step0,step1);
+}
+template<class T,bool Overlap>
+int manders(const ColocView&,const ColocView&,const ColocView*,const ColocOrder&,
+            std::size_t,std::size_t,std::size_t,bool,std::array<ColocScalar,3>&,
+            bool product_only=false);
+
+template<class T,bool Boolean> ColocScalar row_product_sum(const ColocView& a,const ColocView* b,
+    const ColocOrder& order,std::size_t n,std::size_t block) {
+#ifdef SKIMAGEXX_AVX2
+    if constexpr(Boolean) {
+        if(has_avx2()) {
+            std::array<ColocScalar,3> result;
+            if(manders<T,false>(a,*b,nullptr,order,n,n,block,false,result,true)==3)return result[1];
+        }
+    }
+#endif
+    constexpr auto second_item=Boolean ? 1:sizeof(T);
+    Rows<2> row(a,order,{&a,b},0,n);
+    const unsigned char* first=nullptr;
+    const unsigned char* second=nullptr;
+    std::size_t remaining=0;
+    Capture capture;
+    const auto sum=reduce_blocks<T>(n,block,[&](auto) {
+        if(!remaining) {
+            remaining=row.available();
+            first=row.data(0,sizeof(T));second=row.data(1,second_item);
+            row.advance(remaining);
+        }
+        const auto x=read<T>(first,false);
+        auto y=x;
+        if constexpr(Boolean)y=T(*second!=0);
+        else if(b)y=read<T>(second,false);
+        first+=sizeof(T);if(b)second+=second_item;--remaining;
+        return T(x*y);
+    });
+    if(capture.flags() || !std::isfinite(sum))
+        throw ColocProviderRequired("colocalization product or sum requires separate stages");
+    return packed_scalar(a.type,sum);
 }
 }
 // Private binding route. Both inputs follow the materialized product's
@@ -681,12 +824,188 @@ ColocScalar coloc_product_sum(const ColocView& a,const ColocView* b,ColocReducti
         throw ColocProviderRequired("colocalization product requires a native real dtype");
     const auto order=keep_order(a,b);
     std::ptrdiff_t step0,step1=std::ptrdiff_t(coloc_itemsize(a.type));
-    if(!single_stride(a,order,step0) || (b && !single_stride(*b,order,step1)))
-        throw ColocProviderRequired("colocalization product requires a shared affine order");
     fp_check();
     const auto block=plan.profile==ColocProfile::numpy_1244 ? plan.buffer_elements:n;
+    if(!single_stride(a,order,step0) || (b && !single_stride(*b,order,step1))) {
+        if(!inner_contiguous(a,order) || (b && !inner_contiguous(*b,order)))
+            throw ColocProviderRequired("colocalization product requires a shared affine or inner-contiguous order");
+        const bool boolean=b && b->type==Type::boolean;
+        if(a.type==Type::float32)
+            return boolean ? row_product_sum<float,true>(a,b,order,n,block):row_product_sum<float,false>(a,b,order,n,block);
+        return boolean ? row_product_sum<double,true>(a,b,order,n,block):row_product_sum<double,false>(a,b,order,n,block);
+    }
     if(a.type==Type::float32)return product_sum<float>(a,b,n,block,step0,step1);
     return product_sum<double>(a,b,n,block,step0,step1);
+}
+namespace {
+template<class T,bool Overlap,class Leaf>
+auto manders_pairwise(std::size_t n,const Leaf& leaf) -> std::array<T,Overlap ? 3:2> {
+    if(n<=128)return leaf(n);
+    const auto left=(n/2)&~std::size_t(7);
+    auto a=manders_pairwise<T,Overlap>(left,leaf);
+    const auto b=manders_pairwise<T,Overlap>(n-left,leaf);
+    for(std::size_t j=0;j<a.size();++j)a[j]+=b[j];
+    return a;
+}
+template<class T,bool Overlap>
+int manders(const ColocView& a,const ColocView& b,const ColocView* mask,
+            const ColocOrder& order,std::size_t n,std::size_t selected,
+            std::size_t block,bool dense,std::array<ColocScalar,3>& result,bool product_only) {
+    constexpr auto second_item=Overlap ? sizeof(T):1;
+    using Sums=std::array<T,Overlap ? 3:2>;
+    Rows<3> row(a,order,{&a,&b,mask},0,n,dense);
+    unsigned status=0;
+    Capture capture;
+#ifdef SKIMAGEXX_AVX2
+    const bool avx2=has_avx2();
+#endif
+    const auto leaf=[&](std::size_t length) {
+        std::array<unsigned char,128*sizeof(T)> first_buffer,second_buffer;
+        const auto* first=row.data(0,sizeof(T));
+        const auto* second=row.data(1,second_item);
+        if(!mask && row.available()>=length)row.advance(length);
+        else {
+            // Pack only leaves that cross a row boundary or need boolean
+            // selection. Excluded samples must never enter the reduction tree.
+            std::size_t copied=0;
+            while(copied<length) {
+                const auto run=row.available();
+                if(!run)throw ColocProviderRequired("colocalization selection count changed");
+                const auto* x=row.data(0,sizeof(T));
+                const auto* y=row.data(1,second_item);
+                const auto* roi=row.data(2,1);
+                if(roi) {
+                    std::size_t i=0;
+                    for(;i<run && copied<length;++i)if(roi[i]) {
+                        std::memcpy(first_buffer.data()+copied*sizeof(T),x+i*sizeof(T),sizeof(T));
+                        std::memcpy(second_buffer.data()+copied*second_item,y+i*second_item,second_item);
+                        ++copied;
+                    }
+                    row.advance(i);
+                } else {
+                    const auto take=std::min(run,length-copied);
+                    std::memcpy(first_buffer.data()+copied*sizeof(T),x,take*sizeof(T));
+                    std::memcpy(second_buffer.data()+copied*second_item,y,take*second_item);
+                    row.advance(take);copied+=take;
+                }
+            }
+            first=first_buffer.data();second=second_buffer.data();
+        }
+        const auto read_terms=[&](std::size_t i) -> Sums {
+            const T x=read<T>(first+i*sizeof(T),false);
+            status|=!std::isfinite(x) ? 1u:0u;
+            status|=x<T(0) ? 2u:0u;
+            if constexpr(Overlap) {
+                const T y=read<T>(second+i*sizeof(T),false);
+                status|=!std::isfinite(y) ? 1u:0u;
+                status|=y<T(0) ? 4u:0u;
+                return {T(x*x),T(y*y),T(x*y)};
+            } else return {x,T(x*T(second[i]!=0))};
+        };
+        const auto add_terms=[](Sums& sums,const Sums& terms) {
+            for(std::size_t j=0;j<sums.size();++j)sums[j]+=terms[j];
+        };
+        Sums sums;
+        std::size_t i=0;
+        if(length<8)sums.fill(-T(0));
+        else {
+            const auto full=length&~std::size_t(7);
+#ifdef SKIMAGEXX_AVX2
+            if(avx2)simd::coloc_manders_leaf(first,second,full,Overlap,sums.data(),status);
+            else
+#endif
+            {
+                Sums lanes[8];
+                for(std::size_t k=0;k<8;++k)lanes[k]=read_terms(k);
+                for(std::size_t j=8;j<full;j+=8)
+                    for(std::size_t k=0;k<8;++k)add_terms(lanes[k],read_terms(j+k));
+                for(std::size_t j=0;j<sums.size();++j)
+                    sums[j]=((lanes[0][j]+lanes[1][j])+(lanes[2][j]+lanes[3][j]))+
+                            ((lanes[4][j]+lanes[5][j])+(lanes[6][j]+lanes[7][j]));
+            }
+            i=full;
+        }
+        for(;i<length;++i)add_terms(sums,read_terms(i));
+        return sums;
+    };
+    Sums sums{};
+    while(selected) {
+        const auto take=std::min(block,selected);
+        const auto partial=manders_pairwise<T,Overlap>(take,leaf);
+        for(std::size_t j=0;j<sums.size();++j)sums[j]+=partial[j];
+        selected-=take;
+    }
+    if((status&1) || capture.flags())return 0;
+    if(product_only) {
+        if(!std::isfinite(sums[1]))return 0;
+        result[1]=packed_scalar(a.type,sums[1]);
+        return 3;
+    }
+    if(status&2)return 1;
+    if(status&4)return 2;
+    for(const auto sum:sums)if(!std::isfinite(sum))return 0;
+    // Scalar arithmetic stays in Python with its exact NumPy promotion and
+    // pow behavior. Only admit results for which it cannot call an error
+    // handler before the original method would have read the dot operands.
+    if constexpr(Overlap) {
+        const T product=sums[0]*sums[1];
+        if(!std::isnormal(product))return 0;
+        if(sums[2]!=T(0)) {
+            const T quotient=sums[2]/std::sqrt(product);
+            if(!(quotient>=2*std::numeric_limits<T>::min()) || !std::isfinite(quotient))return 0;
+        }
+    } else if(sums[0]!=T(0)) {
+        const T quotient=sums[1]/sums[0];
+        if(!std::isfinite(quotient))return 0;
+    }
+    if(capture.flags())return 0;
+    for(std::size_t j=0;j<sums.size();++j)result[j]=packed_scalar(a.type,sums[j]);
+    return 3;
+}
+}
+
+// Private fused route. Zero requests staged replay, including exceptional
+// arithmetic, empty selections, and incompatible NumPy traversal plans.
+int coloc_dense_manders(const ColocView& a,const ColocView& b,const ColocView* mask,
+                       ColocReductionPlan plan,bool overlap,std::array<ColocScalar,3>& result) {
+    const auto n=coloc_validate(a);
+    coloc_validate(b);shapes(a,b);
+    if(mask){coloc_validate(*mask);boolean_required(*mask);shapes(a,*mask);}
+    if(!n || !plan.buffer_elements || a.swapped || b.swapped ||
+        (a.type!=Type::float32 && a.type!=Type::float64) ||
+        b.type!=(overlap ? a.type:Type::boolean) || !coloc_fp_supported())return 0;
+    const auto order=mask ? c_order(a):keep_order(a,&b);
+    const auto same_order=[&](const ColocView& view) {
+        const auto own=keep_order(view,nullptr);
+        return std::equal(order.axes.begin(),order.axes.begin()+order.rank,own.axes.begin());
+    };
+    if(!mask && (!same_order(a) || (overlap && !same_order(b))))return 0;
+    const auto dense_in_order=[&](const ColocView& view) {
+        std::ptrdiff_t step;
+        return single_stride(view,order,step) && step==std::ptrdiff_t(coloc_itemsize(view.type));
+    };
+    const bool dense_a=dense_in_order(a);
+    const bool dense=dense_a && dense_in_order(b) && (!mask || dense_in_order(*mask));
+    if(!dense && (!inner_contiguous(a,order) || !inner_contiguous(b,order) ||
+                  (mask && !inner_contiguous(*mask,order))))return 0;
+    const auto item=coloc_itemsize(a.type);
+    if(!mask && !overlap) {
+        // NumPy can split an irregular input reduction at different
+        // boundaries from its contiguous, materialized product.
+        if(!dense_a && n>plan.buffer_elements)return 0;
+        if(reinterpret_cast<std::uintptr_t>(a.data)%item ||
+            std::any_of(a.strides.data,a.strides.data+a.strides.size,
+                        [&](auto step){return step%std::ptrdiff_t(item)!=0;}))return 0;
+    }
+    const auto selected=mask ? std::size_t(count_impl(*mask,nullptr)):n;
+    if(!selected)return 0;
+    if(selected==n)mask=nullptr;
+    const auto block=plan.profile==ColocProfile::numpy_1244 ? plan.buffer_elements:selected;
+    if(a.type==Type::float32)
+        return overlap ? manders<float,true>(a,b,mask,order,n,selected,block,dense,result)
+                       : manders<float,false>(a,b,mask,order,n,selected,block,dense,result);
+    return overlap ? manders<double,true>(a,b,mask,order,n,selected,block,dense,result)
+                   : manders<double,false>(a,b,mask,order,n,selected,block,dense,result);
 }
 namespace {
 ColocExecution product(const ColocView& a,const ColocView* b,const ColocOrder& order,ColocBuffer out,unsigned& flags) {
@@ -706,26 +1025,40 @@ ColocExecution product(const ColocView& a,const ColocView* b,const ColocOrder& o
     const auto second_item=b && b->type==Type::boolean ? std::size_t(1):item;
     const auto product_mask=low_bits_mask(item);
     Capture capture;
+    auto store=[&](std::size_t i,const unsigned char* first,const unsigned char* second) {
+        if(!floating(a.type)) {
+            auto x=bits(a,first,item);if(a.type==Type::boolean)x=x!=0;
+            auto y=b ? bits(*b,second,second_item):x;if(b && b->type==Type::boolean)y=y!=0;
+            const auto value=(x*y)&product_mask;
+            if(item==1)write<std::uint8_t>(out.data,i,std::uint8_t(value));
+            else if(item==2)write<std::uint16_t>(out.data,i,std::uint16_t(value));
+            else if(item==4)write<std::uint32_t>(out.data,i,std::uint32_t(value));
+            else write<std::uint64_t>(out.data,i,value);
+        } else if(a.type==Type::float64) {
+            const double x=read<double>(first,a.swapped),y=b ? (b->type==Type::boolean ? double(*second!=0):read<double>(second,b->swapped)):x;
+            write<double>(out.data,i,double(x*y));
+        } else {
+            const float x=a.type==Type::float32 ? read<float>(first,a.swapped):real<float>(a,first);
+            const float y=b ? (b->type==Type::boolean ? float(*second!=0):(b->type==Type::float32 ? read<float>(second,b->swapped):real<float>(*b,second))):x;
+            const float value=float(x*y);
+            if(a.type==Type::float16)write<std::uint16_t>(out.data,i,half(value));else write<float>(out.data,i,value);
+        }
+    };
+    const bool rows=(!first_input.affine || (b && !second_input.affine)) &&
+        inner_contiguous(a,order) && (!b || inner_contiguous(*b,order));
     auto body=[&](std::size_t begin,std::size_t end) {
-        for(auto i=begin;i<end;++i) {
-            const auto* first=first_input[i];const auto* second=b ? second_input[i]:first;
-            if(!floating(a.type)) {
-                auto x=bits(a,first,item);if(a.type==Type::boolean)x=x!=0;
-                auto y=b ? bits(*b,second,second_item):x;if(b && b->type==Type::boolean)y=y!=0;
-                const auto value=(x*y)&product_mask;
-                if(item==1)write<std::uint8_t>(out.data,i,std::uint8_t(value));
-                else if(item==2)write<std::uint16_t>(out.data,i,std::uint16_t(value));
-                else if(item==4)write<std::uint32_t>(out.data,i,std::uint32_t(value));
-                else write<std::uint64_t>(out.data,i,value);
-            } else if(a.type==Type::float64) {
-                const double x=read<double>(first,a.swapped),y=b ? (b->type==Type::boolean ? double(*second!=0):read<double>(second,b->swapped)):x;
-                write<double>(out.data,i,double(x*y));
-            } else {
-                const float x=a.type==Type::float32 ? read<float>(first,a.swapped):real<float>(a,first);
-                const float y=b ? (b->type==Type::boolean ? float(*second!=0):(b->type==Type::float32 ? read<float>(second,b->swapped):real<float>(*b,second))):x;
-                const float value=float(x*y);
-                if(a.type==Type::float16)write<std::uint16_t>(out.data,i,half(value));else write<float>(out.data,i,value);
+        if(rows && begin<end) {
+            Rows<2> row(a,order,{&a,b},begin,end);
+            while(const auto length=row.available()) {
+                const auto* first=row.data(0,item);
+                const auto* second=row.data(1,second_item);
+                for(std::size_t i=0;i<length;++i)
+                    store(begin+i,first+i*item,b ? second+i*second_item:first+i*item);
+                begin+=length;row.advance(length);
             }
+        } else for(auto i=begin;i<end;++i) {
+            const auto* first=first_input[i];
+            store(i,first,b ? second_input[i]:first);
         }
     };
     ColocExecution execution;
