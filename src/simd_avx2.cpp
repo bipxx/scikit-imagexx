@@ -6,8 +6,30 @@
 #include <type_traits>
 #include <algorithm>
 #include <limits>
+#include <iterator>
+#include <vector>
 
 namespace skimagexx::simd {
+bool gaussian_fold_safe(const double* input,std::size_t count) {
+    const double limit = std::numeric_limits<double>::max()/4;
+    std::int64_t limit_bits;
+    std::memcpy(&limit_bits,&limit,sizeof(limit_bits));
+    constexpr auto magnitude = std::numeric_limits<std::int64_t>::max();
+    const auto max_value = _mm256_set1_epi64x(limit_bits);
+    const auto mask = _mm256_set1_epi64x(magnitude);
+    std::size_t i = 0;
+    for (; i+4 <= count; i += 4) {
+        const auto bits = _mm256_castpd_si256(_mm256_loadu_pd(input+i));
+        const auto too_large = _mm256_cmpgt_epi64(_mm256_and_si256(bits,mask),max_value);
+        if (_mm256_movemask_pd(_mm256_castsi256_pd(too_large))) return false;
+    }
+    for (; i < count; ++i) {
+        std::int64_t bits;
+        std::memcpy(&bits,input+i,sizeof(bits));
+        if ((bits & magnitude) > limit_bits) return false;
+    }
+    return true;
+}
 bool gamma_simple(const float* p, float* out, std::size_t n, double exponent, double gain) {
     bool negative = false;
     std::size_t i = 0;
@@ -205,19 +227,48 @@ void store4(float* p, __m256d v) { _mm_storeu_ps(p,_mm256_cvtpd_ps(v)); }
 template<class Input, class Output>
 void convolve_impl(const Input* const* sources, Output* out, std::size_t n,
                    const double* kernel, std::size_t taps, double scale) {
-    std::size_t x = 0;
-    for (; x+8 <= n; x += 8) {
-        auto a = _mm256_setzero_pd(), b = _mm256_setzero_pd();
-        for (std::size_t k = 0; k < taps; ++k) {
-            const auto weight = _mm256_set1_pd(kernel[k]*scale);
-            a = _mm256_add_pd(a,_mm256_mul_pd(load4(sources[k]+x),weight));
-            b = _mm256_add_pd(b,_mm256_mul_pd(load4(sources[k]+x+4),weight));
+    std::vector<double> scaled;
+    if (scale != 1.0) {
+        scaled.resize(taps);
+        std::transform(kernel,kernel+taps,scaled.begin(),[scale](double v) { return v*scale; });
+        kernel = scaled.data();
+    }
+    const auto middle = taps/2;
+    const auto vector_rows = [&](auto symmetry) {
+        constexpr bool Symmetric = decltype(symmetry)::value;
+        const auto end = Symmetric ? middle : taps;
+        std::size_t x = 0;
+        for (; x+8 <= n; x += 8) {
+            auto a = _mm256_setzero_pd(), b = _mm256_setzero_pd();
+            if constexpr (Symmetric) {
+                const auto weight = _mm256_set1_pd(kernel[middle]);
+                a = _mm256_add_pd(a,_mm256_mul_pd(load4(sources[middle]+x),weight));
+                b = _mm256_add_pd(b,_mm256_mul_pd(load4(sources[middle]+x+4),weight));
+            }
+            for (std::size_t k = 0; k < end; ++k) {
+                const auto weight = _mm256_set1_pd(kernel[k]);
+                auto first = load4(sources[k]+x), second = load4(sources[k]+x+4);
+                if constexpr (Symmetric) {
+                    const auto* mirror = sources[taps-1-k]+x;
+                    first = _mm256_add_pd(first,load4(mirror));
+                    second = _mm256_add_pd(second,load4(mirror+4));
+                }
+                a = _mm256_add_pd(a,_mm256_mul_pd(first,weight));
+                b = _mm256_add_pd(b,_mm256_mul_pd(second,weight));
+            }
+            store4(out+x,a); store4(out+x+4,b);
         }
-        store4(out+x,a); store4(out+x+4,b);
+        return x;
+    };
+    std::size_t x = 0;
+    if (n >= 8) {
+        const bool symmetric = taps%2 != 0 &&
+            std::equal(kernel,kernel+middle,std::make_reverse_iterator(kernel+taps));
+        x = symmetric ? vector_rows(std::true_type{}) : vector_rows(std::false_type{});
     }
     for (; x < n; ++x) {
         double sum = 0;
-        for (std::size_t k = 0; k < taps; ++k) sum += double(sources[k][x])*(kernel[k]*scale);
+        for (std::size_t k = 0; k < taps; ++k) sum += double(sources[k][x])*kernel[k];
         out[x] = Output(sum);
     }
 }

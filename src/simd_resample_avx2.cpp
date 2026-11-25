@@ -3,6 +3,8 @@
 #include "resample_detail.hpp"
 #include <immintrin.h>
 #include "resize_cast.hpp"
+#include <algorithm>
+#include <array>
 #include <cstring>
 #include <type_traits>
 
@@ -82,58 +84,171 @@ template<class T,bool Boolean> void store(T* output,__m256d value) {
         }
     }
 }
+struct ColumnTap {
+    __m256i offset,valid;
+    __m256d weight;
+};
+
+ColumnTap column_tap(const detail::ZoomPoint* points,std::size_t lanes,int tap) {
+    // A short row fragment repeats its final valid lane. Only the requested
+    // results are stored, and no point from the next row is read.
+    const auto& a=points[0];
+    const auto& b=points[lanes>=2 ? 1 : 0];
+    const auto& c=points[lanes>=3 ? 2 : lanes-1];
+    const auto& d=points[lanes-1];
+    const auto offset=_mm256_setr_epi64x(a.offsets[tap],b.offsets[tap],c.offsets[tap],d.offsets[tap]);
+    return {offset,_mm256_cmpgt_epi64(offset,_mm256_set1_epi64x(-1)),
+        _mm256_setr_pd(a.weights[tap],b.weights[tap],c.weights[tap],d.weights[tap])};
+}
+
+template<class Output,bool Boolean,class Block>
+void sample_columns(const detail::ZoomPoint* points,Output* output,std::size_t width,Block block) {
+    for(;width>=4;width-=4,points+=4,output+=4)store<Output,Boolean>(output,block(points,4));
+    if(width) {
+        Output tail[4];
+        store<Output,Boolean>(tail,block(points,width));
+        std::memcpy(output,tail,width*sizeof(Output));
+    }
+}
+
+template<class Input,class Output,bool Boolean>
+void bilinear_row(const Input* input,Output* output,const detail::ZoomPoint& row,
+                  const detail::ZoomPoint* columns,std::size_t width,double cval) {
+    const auto* top=row.offsets[0]>=0 ? input+row.offsets[0] : nullptr;
+    const auto* bottom=row.offsets[1]>=0 ? input+row.offsets[1] : nullptr;
+    const auto top_weight=_mm256_set1_pd(row.weights[0]);
+    const auto bottom_weight=_mm256_set1_pd(row.weights[1]);
+    const auto fill=_mm256_set1_pd(cval);
+    sample_columns<Output,Boolean>(columns,output,width,[&](const auto* points,std::size_t lanes) {
+        const auto left=column_tap(points,lanes,0),right=column_tap(points,lanes,1);
+        const auto weighted=[&](const Input* source,const ColumnTap& column,__m256d row_weight) {
+            const auto value=source ? gather(source,column.offset,column.valid,cval) : fill;
+            return _mm256_mul_pd(_mm256_mul_pd(value,row_weight),column.weight);
+        };
+        // Keep the axis multiplication and corner addition in ndimage order.
+        auto total=_mm256_add_pd(_mm256_setzero_pd(),weighted(top,left,top_weight));
+        total=_mm256_add_pd(total,weighted(top,right,top_weight));
+        total=_mm256_add_pd(total,weighted(bottom,left,bottom_weight));
+        return _mm256_add_pd(total,weighted(bottom,right,bottom_weight));
+    });
+}
+
+template<class Input,class Output,bool Boolean>
+void sample_row(const Input* input,Output* output,const detail::ZoomPlan& plan,
+                const detail::ZoomPoint* const* row,const detail::ZoomPoint* columns,
+                std::size_t width,std::ptrdiff_t* row_offsets) {
+    const auto outer_rank=plan.axes.size()-1;
+    const auto taps_per_axis=std::size_t(plan.order+1);
+    const auto outer_corners=plan.corners/taps_per_axis;
+    __m256d row_weights[64][6];
+    if(plan.order)for(std::size_t axis=0;axis<outer_rank;++axis)
+        for(std::size_t tap=0;tap<taps_per_axis;++tap)
+            row_weights[axis][tap]=_mm256_set1_pd(row[axis]->weights[tap]);
+    const auto footprint_stride=(outer_rank+1)*taps_per_axis;
+    const auto* row_taps=plan.footprint.data();
+    for(std::size_t corner=0;corner<outer_corners;++corner,row_taps+=footprint_stride) {
+        auto& index=row_offsets[corner];
+        index=0;
+        for(std::size_t axis=0;axis<outer_rank;++axis) {
+            const auto offset=row[axis]->offsets[row_taps[axis]];
+            if(offset<0) {index=-1;break;}
+            index+=offset;
+        }
+    }
+    const auto fill=_mm256_set1_pd(plan.cval);
+    sample_columns<Output,Boolean>(columns,output,width,[&](const auto* points,std::size_t lanes) {
+        ColumnTap column[6];
+        for(std::size_t tap=0;tap<taps_per_axis;++tap)column[tap]=column_tap(points,lanes,int(tap));
+        auto total=_mm256_setzero_pd();
+        const auto* taps=plan.footprint.data();
+        for(std::size_t corner=0;corner<outer_corners;++corner,taps+=footprint_stride) {
+            const auto offset=row_offsets[corner];
+            const auto* source=offset>=0 ? input+offset : nullptr;
+            for(std::size_t tap=0;tap<taps_per_axis;++tap) {
+                auto value=source ? gather(source,column[tap].offset,column[tap].valid,plan.cval) : fill;
+                if(plan.order) {
+                    for(std::size_t axis=0;axis<outer_rank;++axis)
+                        value=_mm256_mul_pd(value,row_weights[axis][taps[axis]]);
+                    value=_mm256_mul_pd(value,column[tap].weight);
+                }
+                total=_mm256_add_pd(total,value);
+            }
+        }
+        return total;
+    });
+}
+
+template<class Input,class Output,bool Boolean>
+std::size_t sample_pairs(const Input* input,Output* output,const detail::ZoomPlan& plan,
+                         std::size_t begin,std::size_t end) {
+    // Profile sampling pairs one Y coordinate with one X coordinate per lane.
+    // Its private plan supplies exactly four pairs with unit strides.
+    if(end-begin<4)return begin;
+    auto total=_mm256_setzero_pd();
+    for(std::size_t corner=0;corner<plan.corners;++corner) {
+        const auto y=column_tap(plan.axes[0].data()+begin,4,plan.footprint[2*corner]);
+        const auto x=column_tap(plan.axes[1].data()+begin,4,plan.footprint[2*corner+1]);
+        auto value=gather(input,_mm256_add_epi64(y.offset,x.offset),
+                          _mm256_and_si256(y.valid,x.valid),plan.cval);
+        if(plan.order)value=_mm256_mul_pd(_mm256_mul_pd(value,y.weight),x.weight);
+        total=_mm256_add_pd(total,value);
+    }
+    store<Output,Boolean>(output+begin,total);
+    return begin+4;
+}
+
 template<class Input,class Output,bool Boolean=false>
 std::size_t sample(const Input* input,Output* output,const detail::ZoomPlan& plan,
-                        std::size_t begin,std::size_t end) {
-    // NumPy has at most 64 image axes. This fixed coordinate scratch stays on
-    // each worker stack and avoids allocations inside the parallel region.
-    if(plan.axes.size()>64)return begin;
+                   std::size_t begin,std::size_t end,std::ptrdiff_t* row_offsets) {
+    // NumPy has at most 64 image axes. Keep row coordinates on the stack.
     const auto rank=plan.axes.size();
-    const detail::ZoomPoint* points[64][4];
-    const auto zero=_mm256_setzero_si256();
-    for(;end-begin>=4;begin+=4) {
-        for(std::size_t axis=0;axis<rank;++axis)for(std::size_t lane=0;lane<4;++lane)
-            points[axis][lane]=&plan.axes[axis][((begin+lane)/plan.output_strides[axis])%plan.axes[axis].size()];
-        auto total=_mm256_setzero_pd();
-        for(std::size_t corner=0;corner<plan.corners;++corner) {
-            const auto* taps=plan.footprint.data()+corner*rank;
-            auto index=zero,valid=_mm256_cmpeq_epi64(zero,zero);
-            for(std::size_t axis=0;axis<rank;++axis) {
-                const auto tap=taps[axis];
-                const auto offsets=_mm256_set_epi64x(points[axis][3]->offsets[tap],points[axis][2]->offsets[tap],
-                    points[axis][1]->offsets[tap],points[axis][0]->offsets[tap]);
-                const auto positive=_mm256_cmpgt_epi64(offsets,_mm256_set1_epi64x(-1));
-                valid=_mm256_and_si256(valid,positive);
-                index=_mm256_add_epi64(index,_mm256_and_si256(offsets,positive));
-            }
-            auto coefficient=gather(input,index,valid,plan.cval);
-            if(plan.order)for(std::size_t axis=0;axis<rank;++axis) {
-                const auto tap=taps[axis];
-                const auto weights=_mm256_set_pd(points[axis][3]->weights[tap],points[axis][2]->weights[tap],
-                    points[axis][1]->weights[tap],points[axis][0]->weights[tap]);
-                coefficient=_mm256_mul_pd(coefficient,weights);
-            }
-            total=_mm256_add_pd(total,coefficient);
+    if(rank==0 || rank>64)return begin;
+    const auto width=plan.axes.back().size();
+    if(width<2)return begin;
+    if(rank==2 && plan.output_strides.front()==1)
+        return sample_pairs<Input,Output,Boolean>(input,output,plan,begin,end);
+    const bool bilinear=plan.order==1 && rank==2;
+    const detail::ZoomPoint* row[64];
+    for(auto column=begin%width;begin<end;column=0) {
+        const auto span=std::min(width-column,end-begin);
+        const auto* columns=plan.axes.back().data()+column;
+        if(bilinear) {
+            const auto& point=plan.axes.front()[begin/width];
+            bilinear_row<Input,Output,Boolean>(input,output+begin,point,columns,span,plan.cval);
+        } else {
+            for(std::size_t axis=0;axis+1<rank;++axis)
+                row[axis]=&plan.axes[axis][(begin/plan.output_strides[axis])%plan.axes[axis].size()];
+            sample_row<Input,Output,Boolean>(input,output+begin,plan,row,columns,span,row_offsets);
         }
-        store<Output,Boolean>(output+begin,total);
+        begin+=span;
     }
     return begin;
 }
 } // namespace
-std::size_t zoom_sample_typed(const void* input,void* output,const detail::ZoomPlan& plan,
-                             std::size_t begin,std::size_t end,PixelType source,PixelType target) {
+std::size_t zoom_grid_sample_typed(const void* input,void* output,const detail::ZoomPlan& plan,
+                                  std::size_t begin,std::size_t end,PixelType source,PixelType target,
+                                  std::ptrdiff_t* row_offsets) {
     if(source==PixelType::float64 && target==PixelType::float32)
-        return sample(static_cast<const double*>(input),static_cast<float*>(output),plan,begin,end);
+        return sample(static_cast<const double*>(input),static_cast<float*>(output),plan,begin,end,row_offsets);
     if(source!=target)return begin;
     switch(source) {
-        case PixelType::boolean:return sample<std::uint8_t,std::uint8_t,true>(static_cast<const std::uint8_t*>(input),static_cast<std::uint8_t*>(output),plan,begin,end);
-        #define SAMPLE(tag,T) case PixelType::tag:return sample(static_cast<const T*>(input),static_cast<T*>(output),plan,begin,end);
+        case PixelType::boolean:return sample<std::uint8_t,std::uint8_t,true>(static_cast<const std::uint8_t*>(input),static_cast<std::uint8_t*>(output),plan,begin,end,row_offsets);
+        #define SAMPLE(tag,T) case PixelType::tag:return sample(static_cast<const T*>(input),static_cast<T*>(output),plan,begin,end,row_offsets);
         SAMPLE(uint8,std::uint8_t) SAMPLE(int8,std::int8_t) SAMPLE(uint16,std::uint16_t) SAMPLE(int16,std::int16_t)
         SAMPLE(uint32,std::uint32_t) SAMPLE(int32,std::int32_t) SAMPLE(uint64,std::uint64_t) SAMPLE(int64,std::int64_t)
         SAMPLE(float32,float) SAMPLE(float64,double)
         #undef SAMPLE
     }
     return begin;
+}
+std::size_t zoom_sample_typed(const void* input,void* output,const detail::ZoomPlan& plan,
+                             std::size_t begin,std::size_t end,PixelType source,PixelType target) {
+    std::array<std::ptrdiff_t,128> local;
+    const auto outer_corners=plan.corners/std::size_t(plan.order+1);
+    std::vector<std::ptrdiff_t> scratch;
+    if(outer_corners>local.size())scratch.resize(outer_corners);
+    return zoom_grid_sample_typed(input,output,plan,begin,end,source,target,
+                                 scratch.empty() ? local.data() : scratch.data());
 }
 std::size_t zoom_sample(const double* input,double* output,const detail::ZoomPlan& plan,
                         std::size_t begin,std::size_t end) {

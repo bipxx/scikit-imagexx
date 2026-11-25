@@ -13,6 +13,9 @@
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
+#ifdef SKIMAGEXX_AVX2
+#include <immintrin.h>
+#endif
 
 namespace skimagexx {
 namespace {
@@ -201,17 +204,192 @@ void rows(WarpShape s, Body body) {
         });
 }
 
+#ifdef SKIMAGEXX_AVX2
+template<class T> struct AffineVector;
+template<> struct AffineVector<float> { using Type = __m256; };
+template<> struct AffineVector<double> { using Type = __m256d; };
+
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma warning(push)
+#pragma warning(disable: 4752)
+#pragma float_control(precise, on, push)
+#pragma fp_contract(off)
+#define WARP_AVX_ENTRY __declspec(noinline)
+#define WARP_AVX_INLINE __forceinline
+#elif defined(__clang__)
+#define WARP_AVX_ENTRY __attribute__((target("avx2"), noinline))
+#define WARP_AVX_INLINE __attribute__((target("avx2"), always_inline)) inline
+#else
+#define WARP_AVX_ENTRY __attribute__((target("avx2"), optimize("fp-contract=off"), noinline))
+#define WARP_AVX_INLINE __attribute__((target("avx2"), optimize("fp-contract=off"), always_inline)) inline
+#endif
+
+WARP_AVX_INLINE __m128 bilinear_vertical(__m128 top, __m128 bottom, __m128 dy,
+                                        __m128 one_minus_dy) {
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+    // The scalar float path rounds each horizontal blend to float and
+    // carries out the vertical blend in double.
+    return _mm256_cvtpd_ps(_mm256_add_pd(
+        _mm256_mul_pd(_mm256_cvtps_pd(one_minus_dy), _mm256_cvtps_pd(top)),
+        _mm256_mul_pd(_mm256_cvtps_pd(dy), _mm256_cvtps_pd(bottom))));
+}
+
+template<bool Gray, class T>
+WARP_AVX_ENTRY std::size_t affine_row_avx2(const Sampler<T>& sampler, const Matrix<T>& matrix,
+                                         std::size_t row, std::size_t width, T* output) {
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+    constexpr bool single = std::is_same_v<T, float>;
+    constexpr std::size_t lanes = single ? 8 : 4;
+    using Vector = typename AffineVector<T>::Type;
+    const auto& p = matrix.p;
+    const T row_x = p[1] * T(row), row_y = p[4] * T(row);
+    Vector slope_x, slope_y, offset_x, offset_y, shift_x, shift_y, one;
+    if constexpr (single) {
+        slope_x = _mm256_set1_ps(p[0]); slope_y = _mm256_set1_ps(p[3]);
+        offset_x = _mm256_set1_ps(row_x); offset_y = _mm256_set1_ps(row_y);
+        shift_x = _mm256_set1_ps(p[2]); shift_y = _mm256_set1_ps(p[5]);
+        one = _mm256_set1_ps(1);
+    } else {
+        slope_x = _mm256_set1_pd(p[0]); slope_y = _mm256_set1_pd(p[3]);
+        offset_x = _mm256_set1_pd(row_x); offset_y = _mm256_set1_pd(row_y);
+        shift_x = _mm256_set1_pd(p[2]); shift_y = _mm256_set1_pd(p[5]);
+        one = _mm256_set1_pd(1);
+    }
+    const auto zero = _mm256_setzero_si256();
+    const auto last_col = _mm256_set1_epi32(int(sampler.shape.cols - 1));
+    const auto last_row = _mm256_set1_epi32(int(sampler.shape.rows - 1));
+    const auto channels = Gray ? std::size_t(1) : sampler.shape.channels;
+    const auto pixel_stride = _mm256_set1_epi32(int(channels));
+    const auto row_stride = _mm256_set1_epi32(int(sampler.shape.cols * channels));
+    const bool nearest = sampler.border == GaussianBorder::nearest;
+    const auto step = _mm256_set1_epi32(int(lanes));
+    auto columns = _mm256_setr_epi32(0, 1, 2, 3, 4, 5, 6, 7);
+    std::size_t c = 0;
+    for (; c + lanes <= width; c += lanes, columns = _mm256_add_epi32(columns, step)) {
+        // Step the integer output coordinates. Keep the original affine
+        // operation order so rounding cannot accumulate across the row.
+        Vector x, y, dx, dy, left_weight, top_weight;
+        __m256i left, right, top, bottom;
+        if constexpr (single) {
+            const auto cx = _mm256_cvtepi32_ps(columns);
+            x = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(slope_x, cx), offset_x), shift_x);
+            y = _mm256_add_ps(_mm256_add_ps(_mm256_mul_ps(slope_y, cx), offset_y), shift_y);
+            left = _mm256_cvttps_epi32(_mm256_floor_ps(x));
+            right = _mm256_cvttps_epi32(_mm256_ceil_ps(x));
+            top = _mm256_cvttps_epi32(_mm256_floor_ps(y));
+            bottom = _mm256_cvttps_epi32(_mm256_ceil_ps(y));
+            dx = _mm256_sub_ps(x, _mm256_cvtepi32_ps(left));
+            dy = _mm256_sub_ps(y, _mm256_cvtepi32_ps(top));
+            left_weight = _mm256_sub_ps(one, dx);
+            top_weight = _mm256_sub_ps(one, dy);
+        } else {
+            const auto cx = _mm256_cvtepi32_pd(_mm256_castsi256_si128(columns));
+            x = _mm256_add_pd(_mm256_add_pd(_mm256_mul_pd(slope_x, cx), offset_x), shift_x);
+            y = _mm256_add_pd(_mm256_add_pd(_mm256_mul_pd(slope_y, cx), offset_y), shift_y);
+            left = _mm256_zextsi128_si256(_mm256_cvttpd_epi32(_mm256_floor_pd(x)));
+            right = _mm256_zextsi128_si256(_mm256_cvttpd_epi32(_mm256_ceil_pd(x)));
+            top = _mm256_zextsi128_si256(_mm256_cvttpd_epi32(_mm256_floor_pd(y)));
+            bottom = _mm256_zextsi128_si256(_mm256_cvttpd_epi32(_mm256_ceil_pd(y)));
+            dx = _mm256_sub_pd(x, _mm256_cvtepi32_pd(_mm256_castsi256_si128(left)));
+            dy = _mm256_sub_pd(y, _mm256_cvtepi32_pd(_mm256_castsi256_si128(top)));
+            left_weight = _mm256_sub_pd(one, dx);
+            top_weight = _mm256_sub_pd(one, dy);
+        }
+        if (nearest) {
+            left = _mm256_min_epi32(last_col, _mm256_max_epi32(zero, left));
+            right = _mm256_min_epi32(last_col, _mm256_max_epi32(zero, right));
+            top = _mm256_min_epi32(last_row, _mm256_max_epi32(zero, top));
+            bottom = _mm256_min_epi32(last_row, _mm256_max_epi32(zero, bottom));
+        } else {
+            const auto outside = _mm256_or_si256(
+                _mm256_or_si256(_mm256_cmpgt_epi32(zero, left), _mm256_cmpgt_epi32(right, last_col)),
+                _mm256_or_si256(_mm256_cmpgt_epi32(zero, top), _mm256_cmpgt_epi32(bottom, last_row)));
+            if (!_mm256_testz_si256(outside, outside)) {
+                T xs[lanes], ys[lanes];
+                if constexpr (single) {
+                    _mm256_storeu_ps(xs, x); _mm256_storeu_ps(ys, y);
+                } else {
+                    _mm256_storeu_pd(xs, x); _mm256_storeu_pd(ys, y);
+                }
+                for (std::size_t lane = 0; lane < lanes; ++lane)
+                    fast_pixel<1, Gray>(sampler, xs[lane], ys[lane], output + (c + lane) * channels);
+                continue;
+            }
+        }
+        if constexpr (!Gray) {
+            left = _mm256_mullo_epi32(left, pixel_stride);
+            right = _mm256_mullo_epi32(right, pixel_stride);
+        }
+        top = _mm256_mullo_epi32(top, row_stride);
+        bottom = _mm256_mullo_epi32(bottom, row_stride);
+        const auto tl = _mm256_add_epi32(top, left), tr = _mm256_add_epi32(top, right);
+        const auto bl = _mm256_add_epi32(bottom, left), br = _mm256_add_epi32(bottom, right);
+        for (std::size_t k = 0; k < channels; ++k) {
+            const T* source = sampler.input + k;
+            T scratch[lanes];
+            T* dest = Gray ? output + c : scratch;
+            if constexpr (single) {
+                const auto a = _mm256_add_ps(_mm256_mul_ps(left_weight, _mm256_i32gather_ps(source, tl, 4)),
+                                             _mm256_mul_ps(dx, _mm256_i32gather_ps(source, tr, 4)));
+                const auto b = _mm256_add_ps(_mm256_mul_ps(left_weight, _mm256_i32gather_ps(source, bl, 4)),
+                                             _mm256_mul_ps(dx, _mm256_i32gather_ps(source, br, 4)));
+                _mm_storeu_ps(dest, bilinear_vertical(_mm256_castps256_ps128(a), _mm256_castps256_ps128(b),
+                    _mm256_castps256_ps128(dy), _mm256_castps256_ps128(top_weight)));
+                _mm_storeu_ps(dest + 4, bilinear_vertical(_mm256_extractf128_ps(a, 1), _mm256_extractf128_ps(b, 1),
+                    _mm256_extractf128_ps(dy, 1), _mm256_extractf128_ps(top_weight, 1)));
+            } else {
+                const auto a = _mm256_add_pd(
+                    _mm256_mul_pd(left_weight, _mm256_i32gather_pd(source, _mm256_castsi256_si128(tl), 8)),
+                    _mm256_mul_pd(dx, _mm256_i32gather_pd(source, _mm256_castsi256_si128(tr), 8)));
+                const auto b = _mm256_add_pd(
+                    _mm256_mul_pd(left_weight, _mm256_i32gather_pd(source, _mm256_castsi256_si128(bl), 8)),
+                    _mm256_mul_pd(dx, _mm256_i32gather_pd(source, _mm256_castsi256_si128(br), 8)));
+                _mm256_storeu_pd(dest, _mm256_add_pd(_mm256_mul_pd(top_weight, a), _mm256_mul_pd(dy, b)));
+            }
+            if constexpr (!Gray)
+                for (std::size_t lane = 0; lane < lanes; ++lane)
+                    output[(c + lane) * channels + k] = scratch[lane];
+        }
+    }
+    _mm256_zeroupper();
+    return c;
+}
+
+#undef WARP_AVX_ENTRY
+#undef WARP_AVX_INLINE
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma float_control(pop)
+#pragma warning(pop)
+#endif
+#endif
+
 template<int Order, class T>
 bool fast(const T* input, T* output, WarpShape source, WarpShape target,
           const WarpMap& map, const WarpOptions& options) {
     const Matrix<T> matrix(map);
     if (!matrix.bounded(target)) return false;
     const Sampler<T> sampler{input, source, options.border, T(options.cval)};
+#ifdef SKIMAGEXX_AVX2
+    constexpr auto gather_limit = std::size_t(std::numeric_limits<int>::max());
+    constexpr std::size_t lanes = std::is_same_v<T, float> ? 8 : 4;
+    const bool vectorized = Order == 1 && !matrix.projective &&
+                            target.cols >= lanes && target.cols <= gather_limit &&
+                            count(source) <= gather_limit && has_avx2();
+#endif
     const auto run = [&](auto gray) {
         const auto channels = decltype(gray)::value ? std::size_t(1) : target.channels;
         rows(target, [&](std::size_t r) {
             T* dest = output + r * target.cols * channels;
-            for (std::size_t c = 0; c < target.cols; ++c, dest += channels) {
+            std::size_t c = 0;
+#ifdef SKIMAGEXX_AVX2
+            if (vectorized)
+                c = affine_row_avx2<decltype(gray)::value>(sampler, matrix, r, target.cols, dest);
+#endif
+            for (dest += c * channels; c < target.cols; ++c, dest += channels) {
                 const auto xy = matrix(T(c), T(r));
                 fast_pixel<Order, decltype(gray)::value>(sampler, xy[0], xy[1], dest);
             }

@@ -8,6 +8,13 @@
 #include <numeric>
 
 namespace skimagexx {
+#ifdef SKIMAGEXX_AVX2
+namespace simd {
+void morphology_column_block(const void* input, void* output, std::size_t length,
+    std::size_t step, const std::size_t* rows, std::size_t window, void* suffix,
+    PixelType type, bool erode, double fill);
+}
+#endif
 namespace {
 using Mode = MorphologyMode;
 using Op = MorphologyOp;
@@ -172,14 +179,48 @@ template<class Input,class Output> void rectangular_axis(const Input* source, Ou
     const auto strides=strides_for(shape);
     const auto length=shape[axis], step=strides[axis];
     const auto n=shape[0]*strides[0], lines=n/length, window=std::size_t(high-low+1), extended=length+window-1;
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorized=has_avx2();
+#else
+    (void)type;
+#endif
     const auto run=[&](auto sample) {
     using Work=decltype(sample);
     const auto fill=detail::morphology_cast<Work>(cval);
-    detail::partition(lines,workers,[&](auto begin,auto end,auto) {
+    std::size_t vector_columns=0;
+#ifdef SKIMAGEXX_AVX2
+    if constexpr (std::is_same_v<Work,Input> && std::is_same_v<Work,Output>) {
+        constexpr std::size_t lanes=32/sizeof(Work);
+        if (vectorized && step>=lanes && extended<=std::numeric_limits<std::size_t>::max()/32) {
+            const auto groups=step/lanes;
+            vector_columns=groups*lanes;
+            // Each trailing-axis block shares the same extended row mapping.
+            std::vector<std::size_t> rows(extended);
+            for (std::size_t j=0;j<extended;++j) {
+                std::size_t mapped;
+                rows[j]=map_index(std::ptrdiff_t(j),low,length,mode,mapped)
+                    ? mapped*step : std::numeric_limits<std::size_t>::max();
+            }
+            const auto tiles=(lines/step)*groups;
+            const auto scratch_count=std::min(tiles,std::size_t(workers));
+            std::vector<std::unique_ptr<Work[]>> scratch(scratch_count);
+            for (auto& buffer : scratch) buffer.reset(new Work[extended*lanes]);
+            detail::partition(tiles,int(scratch_count),[&](auto begin,auto end,auto worker) {
+                for (auto tile=begin;tile<end;++tile) {
+                    const auto base=(tile/groups)*length*step+(tile%groups)*lanes;
+                    simd::morphology_column_block(source+base,output+base,length,step,rows.data(),
+                        window,scratch[worker].get(),type,erode,double(fill));
+                }
+            });
+        }
+    }
+#endif
+    const auto tail=step-vector_columns;
+    if (!tail) return;
+    detail::partition((lines/step)*tail,workers,[&](auto begin,auto end,auto) {
         std::unique_ptr<Work[]> values(new Work[extended]), prefix(new Work[extended]), suffix(new Work[extended]);
         for (auto line=begin;line<end;++line) {
-            auto remaining=line; std::size_t base=0;
-            for (std::size_t d=shape.size();d-->0;) if (d!=axis) { base+=(remaining%shape[d])*strides[d]; remaining/=shape[d]; }
+            const auto base=(line/tail)*length*step+vector_columns+line%tail;
             for (std::size_t j=0;j<extended;++j) {
                 const auto position=std::ptrdiff_t(j)+low;
                 if (position>=0 && std::size_t(position)<length) values[j]=Work(source[base+std::size_t(position)*step]);
@@ -198,13 +239,11 @@ template<class Input,class Output> void rectangular_axis(const Input* source, Ou
             std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
             if constexpr (std::is_same_v<Work,Output>) {
-                if (step==1 && has_avx2()) {
+                if (step==1 && vectorized) {
                     const void* pointers[]={suffix.get(),prefix.get()+window-1};
                     done=simd::morphology_line(pointers,2,output+base,length,type,erode,0,false);
                 }
             }
-#else
-            (void)type;
 #endif
             for (auto j=done;j<length;++j) {
                 const auto value=detail::extrema(suffix[j],prefix[j+window-1],erode);

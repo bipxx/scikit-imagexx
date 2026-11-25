@@ -72,25 +72,75 @@ template<class T> __m256i integer_extrema(__m256i a,__m256i b,bool erode) {
         return _mm256_blendv_epi8(a,b,select);
     }
 }
+template<class T> auto load(const T* p) {
+    if constexpr (std::is_same_v<T,float>) return _mm256_loadu_ps(p);
+    else if constexpr (std::is_same_v<T,double>) return _mm256_loadu_pd(p);
+    else return _mm256_loadu_si256(reinterpret_cast<const __m256i*>(p));
+}
+template<class T,class Vector> void store(T* p,Vector value) {
+    if constexpr (std::is_same_v<T,float>) _mm256_storeu_ps(p,value);
+    else if constexpr (std::is_same_v<T,double>) _mm256_storeu_pd(p,value);
+    else _mm256_storeu_si256(reinterpret_cast<__m256i*>(p),value);
+}
+template<class T,class Vector> Vector vector_extrema(Vector a,Vector b,bool erode) {
+    // MIN/MAX return their second operand on a tie. Keep the accumulator's
+    // sign when comparing equal zeros, as the scalar reduction does.
+    if constexpr (std::is_same_v<T,float>) return erode ? _mm256_min_ps(b,a) : _mm256_max_ps(b,a);
+    else if constexpr (std::is_same_v<T,double>) return erode ? _mm256_min_pd(b,a) : _mm256_max_pd(b,a);
+    else return integer_extrema<T>(a,b,erode);
+}
+template<class T,bool Erode> void column_block(const void* input,void* output,std::size_t length,
+    std::size_t step,const std::size_t* rows,std::size_t window,void* scratch,double fill) {
+    constexpr std::size_t lanes=32/sizeof(T);
+    const auto* source=static_cast<const T*>(input);
+    auto* out=static_cast<T*>(output);
+    auto* suffix=static_cast<T*>(scratch);
+    alignas(32) T constants[lanes];
+    std::fill_n(constants,lanes,detail::morphology_cast<T>(fill));
+    const auto constant=load(constants);
+    const auto sample=[&](std::size_t j) {
+        const auto row=rows[j];
+        return row==std::numeric_limits<std::size_t>::max() ? constant : load(source+row);
+    };
+    const auto extended=length+window-1;
+    for (std::size_t block=0;block<extended;block+=window) {
+        const auto stop=std::min(extended,block+window);
+        auto backward=sample(stop-1);
+        store(suffix+(stop-1)*lanes,backward);
+        for (auto j=stop-1;j>block;--j) {
+            backward=vector_extrema<T>(backward,sample(j-1),Erode);
+            store(suffix+(j-1)*lanes,backward);
+        }
+
+        // The suffix for each output is in this block or the previous one.
+        // Combine it as the prefix scan advances, without a prefix buffer.
+        auto prefix=sample(block);
+        auto j=block;
+        for (;j<window-1;++j) prefix=vector_extrema<T>(prefix,sample(j+1),Erode);
+        for (;;) {
+            const auto row=j-(window-1);
+            store(out+row*step,vector_extrema<T>(load(suffix+row*lanes),prefix,Erode));
+            if (++j==stop) break;
+            prefix=vector_extrema<T>(prefix,sample(j),Erode);
+        }
+    }
+}
 template<class T> std::size_t line(const void* const* pointers,std::size_t count,void* output,std::size_t n,bool erode,double fill,bool binary) {
     constexpr std::size_t lanes=32/sizeof(T);
     auto* out=static_cast<T*>(output); const T constant=detail::morphology_cast<T>(fill);
     std::size_t i=0;
     for (;i+lanes<=n;i+=lanes) {
-        if constexpr (std::is_same_v<T,float>) {
-            auto value=pointers[0] ? _mm256_loadu_ps(static_cast<const T*>(pointers[0])+i) : _mm256_set1_ps(constant);
+        if constexpr (std::is_floating_point_v<T>) {
+            const auto fill_vector=[&] {
+                if constexpr (std::is_same_v<T,float>) return _mm256_set1_ps(constant);
+                else return _mm256_set1_pd(constant);
+            }();
+            auto value=pointers[0] ? load(static_cast<const T*>(pointers[0])+i) : fill_vector;
             for (std::size_t k=1;k<count;++k) {
-                const auto b=pointers[k] ? _mm256_loadu_ps(static_cast<const T*>(pointers[k])+i) : _mm256_set1_ps(constant);
-                value=_mm256_blendv_ps(value,b,erode ? _mm256_cmp_ps(b,value,_CMP_LT_OQ) : _mm256_cmp_ps(b,value,_CMP_GT_OQ));
+                const auto b=pointers[k] ? load(static_cast<const T*>(pointers[k])+i) : fill_vector;
+                value=vector_extrema<T>(value,b,erode);
             }
-            _mm256_storeu_ps(out+i,value);
-        } else if constexpr (std::is_same_v<T,double>) {
-            auto value=pointers[0] ? _mm256_loadu_pd(static_cast<const T*>(pointers[0])+i) : _mm256_set1_pd(constant);
-            for (std::size_t k=1;k<count;++k) {
-                const auto b=pointers[k] ? _mm256_loadu_pd(static_cast<const T*>(pointers[k])+i) : _mm256_set1_pd(constant);
-                value=_mm256_blendv_pd(value,b,erode ? _mm256_cmp_pd(b,value,_CMP_LT_OQ) : _mm256_cmp_pd(b,value,_CMP_GT_OQ));
-            }
-            _mm256_storeu_pd(out+i,value);
+            store(out+i,value);
         } else {
             alignas(32) T repeated[lanes]; std::fill(repeated,repeated+lanes,constant);
             const auto c=_mm256_load_si256(reinterpret_cast<const __m256i*>(repeated));
@@ -113,6 +163,22 @@ template<class T> std::size_t line(const void* const* pointers,std::size_t count
     }
     return i;
 }
+}
+void morphology_column_block(const void* input,void* output,std::size_t length,std::size_t step,
+    const std::size_t* rows,std::size_t window,void* suffix,PixelType type,bool erode,double fill) {
+    const auto run=[&](auto value) {
+        using T=decltype(value);
+        if (erode) column_block<T,true>(input,output,length,step,rows,window,suffix,fill);
+        else column_block<T,false>(input,output,length,step,rows,window,suffix,fill);
+    };
+#define MORPH(KIND,TYPE) case PixelType::KIND: run(TYPE{}); break
+    switch (type) {
+        MORPH(boolean,std::uint8_t); MORPH(uint8,std::uint8_t); MORPH(int8,std::int8_t);
+        MORPH(uint16,std::uint16_t); MORPH(int16,std::int16_t); MORPH(uint32,std::uint32_t);
+        MORPH(int32,std::int32_t); MORPH(float32,float); MORPH(float64,double);
+        case PixelType::uint64: case PixelType::int64: break; // Wide-integer scans use a double buffer.
+    }
+#undef MORPH
 }
 std::size_t morphology_difference(const void* left,const void* right,void* output,std::size_t n,PixelType type,bool& invalid,bool& overflow) {
     if (type==PixelType::float32 || type==PixelType::float64) {

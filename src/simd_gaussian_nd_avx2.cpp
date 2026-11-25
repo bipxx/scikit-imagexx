@@ -91,13 +91,17 @@ template<class T> std::size_t raw_rows(const void* const* left,const void* const
     }
     return i;
 }
-__m256d load(const void* data,std::size_t offset,bool single) {
-    if(single)return _mm256_cvtps_pd(_mm_loadu_ps(static_cast<const float*>(data)+offset));
-    return _mm256_loadu_pd(static_cast<const double*>(data)+offset);
+template<bool Single> __m256d load(const void* data,std::size_t offset) {
+    if constexpr(Single)return _mm256_cvtps_pd(_mm_loadu_ps(static_cast<const float*>(data)+offset));
+    else return _mm256_loadu_pd(static_cast<const double*>(data)+offset);
+}
+template<bool Single> void store(void* data,std::size_t offset,__m256d value) {
+    if constexpr(Single)_mm_storeu_ps(static_cast<float*>(data)+offset,_mm256_cvtpd_ps(value));
+    else _mm256_storeu_pd(static_cast<double*>(data)+offset,value);
 }
 void store(void* data,std::size_t offset,bool single,__m256d value) {
-    if(single)_mm_storeu_ps(static_cast<float*>(data)+offset,_mm256_cvtpd_ps(value));
-    else _mm256_storeu_pd(static_cast<double*>(data)+offset,value);
+    if(single)store<true>(data,offset,value);
+    else store<false>(data,offset,value);
 }
 }
 std::size_t gaussian_prepare(const void* input,double* output,std::size_t count,PixelType type,bool preserve) {
@@ -120,29 +124,66 @@ std::size_t gaussian_raw_rows(const void* const* left,const void* const* right,c
         default:return 0;
     }
 }
-std::size_t gaussian_rows(const void* const* left,const void* const* right,const void* center,void* output,
-    std::size_t count,std::size_t radius,const double* weights,double center_weight,double cval,bool input_single,bool output_single) {
+namespace {
+struct FourTaps { __m256d a,b,c,d; };
+
+template<bool InputSingle,bool OutputSingle,bool Interior>
+std::size_t gaussian_rows_impl(const void* const* left,const void* const* right,const void* center,void* output,
+    std::size_t count,std::size_t radius,const double* weights,double center_weight,double cval) {
     const auto middle=_mm256_set1_pd(center_weight),constant=_mm256_set1_pd(cval);std::size_t x=0;
+    const auto tap=[&](const void* row,std::size_t offset) {
+        if constexpr(Interior)return load<InputSingle>(row,offset);
+        else return row ? load<InputSingle>(row,offset) : constant;
+    };
+    const auto block=[&](const void* row,std::size_t offset) -> FourTaps {
+        if constexpr(!Interior) {
+            if(!row)return {constant,constant,constant,constant};
+        }
+        return {load<InputSingle>(row,offset),load<InputSingle>(row,offset+4),
+                load<InputSingle>(row,offset+8),load<InputSingle>(row,offset+12)};
+    };
     for(;x+16<=count;x+=16) {
-        auto a=_mm256_mul_pd(load(center,x,input_single),middle),b=_mm256_mul_pd(load(center,x+4,input_single),middle);
-        auto c=_mm256_mul_pd(load(center,x+8,input_single),middle),d=_mm256_mul_pd(load(center,x+12,input_single),middle);
+        auto a=_mm256_mul_pd(load<InputSingle>(center,x),middle),b=_mm256_mul_pd(load<InputSingle>(center,x+4),middle);
+        auto c=_mm256_mul_pd(load<InputSingle>(center,x+8),middle),d=_mm256_mul_pd(load<InputSingle>(center,x+12),middle);
         for(std::size_t j=0;j<radius;++j) {
             const auto weight=_mm256_set1_pd(weights[j]);
-            auto pair=[&](std::size_t offset){return _mm256_add_pd(left[j] ? load(left[j],offset,input_single) : constant,right[j] ? load(right[j],offset,input_single) : constant);};
-            a=_mm256_add_pd(a,_mm256_mul_pd(pair(x),weight));b=_mm256_add_pd(b,_mm256_mul_pd(pair(x+4),weight));
-            c=_mm256_add_pd(c,_mm256_mul_pd(pair(x+8),weight));d=_mm256_add_pd(d,_mm256_mul_pd(pair(x+12),weight));
+            const auto l=block(left[j],x),r=block(right[j],x);
+            a=_mm256_add_pd(a,_mm256_mul_pd(_mm256_add_pd(l.a,r.a),weight));
+            b=_mm256_add_pd(b,_mm256_mul_pd(_mm256_add_pd(l.b,r.b),weight));
+            c=_mm256_add_pd(c,_mm256_mul_pd(_mm256_add_pd(l.c,r.c),weight));
+            d=_mm256_add_pd(d,_mm256_mul_pd(_mm256_add_pd(l.d,r.d),weight));
         }
-        store(output,x,output_single,a);store(output,x+4,output_single,b);store(output,x+8,output_single,c);store(output,x+12,output_single,d);
+        store<OutputSingle>(output,x,a);store<OutputSingle>(output,x+4,b);
+        store<OutputSingle>(output,x+8,c);store<OutputSingle>(output,x+12,d);
     }
     for(;x+4<=count;x+=4) {
-        auto sum=_mm256_mul_pd(load(center,x,input_single),middle);
+        auto sum=_mm256_mul_pd(load<InputSingle>(center,x),middle);
         for(std::size_t j=0;j<radius;++j) {
-            const auto first=left[j] ? load(left[j],x,input_single) : constant,second=right[j] ? load(right[j],x,input_single) : constant;
+            const auto first=tap(left[j],x),second=tap(right[j],x);
             sum=_mm256_add_pd(sum,_mm256_mul_pd(_mm256_add_pd(first,second),_mm256_set1_pd(weights[j])));
         }
-        store(output,x,output_single,sum);
+        store<OutputSingle>(output,x,sum);
     }
     return x;
+}
+}
+std::size_t gaussian_rows(const void* const* left,const void* const* right,const void* center,void* output,
+    std::size_t count,std::size_t radius,const double* weights,double center_weight,double cval,
+    bool input_single,bool output_single,bool interior) {
+    const auto run=[&](auto input_kind,auto output_kind) {
+        constexpr bool InputSingle=decltype(input_kind)::value,OutputSingle=decltype(output_kind)::value;
+        if(interior)return gaussian_rows_impl<InputSingle,OutputSingle,true>(
+            left,right,center,output,count,radius,weights,center_weight,cval);
+        return gaussian_rows_impl<InputSingle,OutputSingle,false>(
+            left,right,center,output,count,radius,weights,center_weight,cval);
+    };
+    if(input_single)return output_single ? run(std::true_type{},std::true_type{}) : run(std::true_type{},std::false_type{});
+    return output_single ? run(std::false_type{},std::true_type{}) : run(std::false_type{},std::false_type{});
+}
+std::size_t gaussian_rows(const void* const* left,const void* const* right,const void* center,void* output,
+    std::size_t count,std::size_t radius,const double* weights,double center_weight,double cval,
+    bool input_single,bool output_single) {
+    return gaussian_rows(left,right,center,output,count,radius,weights,center_weight,cval,input_single,output_single,false);
 }
 namespace {
 __m256d clip_double(__m256d value,double lower) {

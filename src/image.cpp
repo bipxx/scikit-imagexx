@@ -17,6 +17,12 @@
 #include <intrin.h>
 #endif
 
+#ifdef SKIMAGEXX_AVX2
+namespace skimagexx::simd {
+bool gaussian_fold_safe(const double*,std::size_t);
+}
+#endif
+
 namespace skimagexx {
 namespace {
 std::atomic<int> workers{1};
@@ -63,15 +69,15 @@ void gray_impl(const Input* rgb, Output* result, std::size_t h, std::size_t w) {
 // Accumulators remain in registers across taps. uint8 conversion is fused.
 template<class Input, class Output>
 void convolve(const Input* const* sources, Output* output, std::size_t n,
-              const double* kernel, std::size_t taps, double scale, bool vectorized) {
+              const double* kernel, std::size_t taps, bool vectorized) {
 #ifdef SKIMAGEXX_AVX2
-    if (vectorized) { simd::convolve(sources,output,n,kernel,taps,scale); return; }
+    if (vectorized) { simd::convolve(sources,output,n,kernel,taps,1.0); return; }
 #else
     (void)vectorized;
 #endif
     for (std::size_t x = 0; x < n; ++x) {
         double sum = 0;
-        for (std::size_t k = 0; k < taps; ++k) sum += double(sources[k][x])*(kernel[k]*scale);
+        for (std::size_t k = 0; k < taps; ++k) sum += double(sources[k][x])*kernel[k];
         output[x] = Output(sum);
     }
 }
@@ -103,15 +109,29 @@ void gaussian_impl(const Input* image, Output* result, std::size_t h, std::size_
         sum += v;
     }
     for (auto& v : kernel) v /= sum;
+    std::vector<double> scaled;
+    if (scale != 1.0) {
+        scaled.resize(taps);
+        std::transform(kernel.begin(),kernel.end(),scaled.begin(),[scale](double v) { return v*scale; });
+    }
+    const auto* vertical_kernel = scaled.empty() ? kernel.data() : scaled.data();
     // Every pixel is assigned before use; no redundant zero initialization.
     std::unique_ptr<Output[]> temp(new Output[count]);
     const bool vectorized = has_avx2();
+    bool fold = vectorized;
+#ifdef SKIMAGEXX_AVX2
+    if constexpr (std::is_same_v<Input,double>) {
+        // Keep ordered products when adding an unweighted pair could overflow.
+        // Leave headroom for both passes and avoid evaluating NaNs here.
+        if (fold && w >= 8) fold = simd::gaussian_fold_safe(image,count);
+    }
+#endif
     partition(h,threads,[&](auto begin, auto end, auto) {
         std::vector<const Input*> sources(taps);
         for (auto y = begin; y < end; ++y) {
             for (std::ptrdiff_t k = -radius; k <= radius; ++k)
                 sources[static_cast<std::size_t>(k+radius)] = image+boundary(static_cast<std::ptrdiff_t>(y)+k,h,border)*w;
-            convolve(sources.data(),temp.get()+y*w,w,kernel.data(),taps,scale,vectorized);
+            convolve(sources.data(),temp.get()+y*w,w,vertical_kernel,taps,fold);
         }
     });
     const auto left = std::min(static_cast<std::size_t>(radius),w);
@@ -124,7 +144,7 @@ void gaussian_impl(const Input* image, Output* result, std::size_t h, std::size_
             if (left < right) {
                 for (std::ptrdiff_t k = -radius; k <= radius; ++k)
                     sources[static_cast<std::size_t>(k+radius)] = row+static_cast<std::ptrdiff_t>(left)+k;
-                convolve(sources.data(),output+left,right-left,kernel.data(),taps,1.0,vectorized);
+                convolve(sources.data(),output+left,right-left,kernel.data(),taps,fold);
             }
             auto border_pixel = [&](std::size_t x) {
                 double value = 0;
@@ -206,7 +226,7 @@ void set_num_threads(int count) {
 #endif
     workers.store(count);
 }
-int get_num_threads() { return workers.load(); }
+int get_num_threads() { return workers.load(std::memory_order_relaxed); }
 bool has_avx2() {
     static const bool available = [] {
 #ifdef _MSC_VER
@@ -278,17 +298,21 @@ template<class T> void invert_into(const T* p, T* out, std::size_t h, std::size_
 template<class T> double threshold_mean(const T* p, std::size_t h, std::size_t w) {
     const auto n = checked_size(p,h,w);
     const int threads = active_workers(n);
-    std::vector<double> partials(static_cast<std::size_t>(threads));
     const bool vectorized = has_avx2();
-    partition(n,threads,[&](auto begin, auto end, auto id) {
+    const auto block_sum = [&](std::size_t begin, std::size_t end) {
 #ifdef SKIMAGEXX_AVX2
-        if (vectorized) { partials[id] = simd::sum(p+begin,end-begin); return; }
+        if (vectorized) return simd::sum(p+begin,end-begin);
 #else
         (void)vectorized;
 #endif
         double sum = 0;
         for (auto i = begin; i < end; ++i) sum += double(p[i]);
-        partials[id] = sum;
+        return sum;
+    };
+    if (threads == 1) return (0.0 + block_sum(0,n))/double(n);
+    std::vector<double> partials(static_cast<std::size_t>(threads));
+    partition(n,threads,[&](auto begin, auto end, auto id) {
+        partials[id] = block_sum(begin,end);
     });
     double sum = 0;
     for (auto v : partials) sum += v;
@@ -314,25 +338,24 @@ template<class T> std::pair<double,double> intensity_bounds(const T* p, std::siz
     const auto n = checked_size(p,h,w);
     const int threads = active_workers(n);
     const double inf = std::numeric_limits<double>::infinity();
-    std::vector<std::pair<double,double>> partials(static_cast<std::size_t>(threads),{inf,-inf});
+    using Bounds = std::pair<double,double>;
     const bool vectorized = has_avx2();
-    partition(n,threads,[&](auto begin, auto end, auto id) {
+    const auto block_bounds = [&](std::size_t begin, std::size_t end) -> Bounds {
         double low = inf, high = -inf;
 #ifdef SKIMAGEXX_AVX2
-        if (vectorized) { simd::bounds(p+begin,end-begin,low,high); partials[id] = {low,high}; return; }
+        if (vectorized) { simd::bounds(p+begin,end-begin,low,high); return {low,high}; }
 #else
         (void)vectorized;
 #endif
         if constexpr (std::is_same_v<T,std::uint8_t>) {
-            if (begin == end) return;
+            if (begin == end) return {low,high};
             std::uint8_t byte_low = std::numeric_limits<std::uint8_t>::max(), byte_high = 0;
             for (auto i = begin; i < end; ++i) {
                 const auto value = p[i];
                 byte_low = std::min(byte_low,value);
                 byte_high = std::max(byte_high,value);
             }
-            partials[id] = {double(byte_low),double(byte_high)};
-            return;
+            return {double(byte_low),double(byte_high)};
         }
         if constexpr (std::is_same_v<T,float>) {
             // Two consecutive runs allow independent comparisons. Merge the
@@ -357,8 +380,7 @@ template<class T> std::pair<double,double> intensity_bounds(const T* p, std::siz
                 }
             }
             if (ordered) {
-                partials[id] = {std::min(left_low,right_low),std::max(left_high,right_high)};
-                return;
+                return {std::min(left_low,right_low),std::max(left_high,right_high)};
             }
             // Retain the original ordered double scan for NaN exception behavior.
         }
@@ -369,7 +391,12 @@ template<class T> std::pair<double,double> intensity_bounds(const T* p, std::siz
             low = std::min(low,value); high = std::max(high,value);
         }
         if (nan) low = high = std::numeric_limits<double>::quiet_NaN();
-        partials[id] = {low,high};
+        return {low,high};
+    };
+    if (threads == 1) return block_bounds(0,n);
+    std::vector<Bounds> partials(static_cast<std::size_t>(threads),{inf,-inf});
+    partition(n,threads,[&](auto begin, auto end, auto id) {
+        partials[id] = block_bounds(begin,end);
     });
     double low = inf, high = -inf;
     for (const auto& item : partials) {
@@ -488,15 +515,19 @@ template<class T> void exposure_into(const T* p, T* out, std::size_t h, std::siz
         });
     } else {
         std::atomic<bool> negative{false};
+#ifdef SKIMAGEXX_AVX2
+        const bool vectorized = has_avx2();
+        const bool simple_gamma = transform == ExposureTransform::gamma &&
+            (parameter == 0 || parameter == 0.5 || parameter == 1 || parameter == 2);
+#endif
         partition(n,threads,[&](auto begin, auto end, auto) {
 #ifdef SKIMAGEXX_AVX2
-            if (has_avx2() && transform == ExposureTransform::gamma &&
-                (parameter == 0 || parameter == 0.5 || parameter == 1 || parameter == 2)) {
+            if (vectorized && simple_gamma) {
                 if (simd::gamma_simple(p+begin,out+begin,end-begin,parameter,gain))
                     negative.store(true,std::memory_order_relaxed);
                 return;
             }
-            if (has_avx2()) {
+            if (vectorized) {
                 if (simd::exposure(p+begin,out+begin,end-begin,static_cast<int>(transform),parameter,gain,inverse))
                     negative.store(true,std::memory_order_relaxed);
                 return;

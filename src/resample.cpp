@@ -6,10 +6,18 @@
 #include "execution.hpp"
 #include "resize_cast.hpp"
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstring>
 #include <limits>
 #include <stdexcept>
+
+#ifdef SKIMAGEXX_AVX2
+namespace skimagexx::simd {
+std::size_t zoom_grid_sample_typed(const void*,void*,const detail::ZoomPlan&,
+                                  std::size_t,std::size_t,PixelType,PixelType,std::ptrdiff_t*);
+}
+#endif
 
 namespace skimagexx::detail {
 namespace {
@@ -116,8 +124,8 @@ ZoomPlan make_plan(const std::vector<std::size_t>& input,
     return plan;
 }
 template<class Input> double sample(const Input* input,const ZoomPlan& plan,
-              const std::vector<const ZoomPoint*>& points) {
-    double total=0.;const auto rank=points.size();
+              const ZoomPoint* const* points) {
+    double total=0.;const auto rank=plan.axes.size();
     for(std::size_t corner=0;corner<plan.corners;++corner) {
         const auto* taps=plan.footprint.data()+corner*rank;
         std::ptrdiff_t index=0;bool outside=false;
@@ -155,18 +163,39 @@ template<class Input> void pad_into(const Input* input,double* output,const std:
 template<class Input,class Output,bool Boolean=false> void sample_into(const Input* input,Output* output,
                         PixelType source,PixelType target,const ZoomPlan& plan,const ZoomOptions& options) {
     const auto threads=active_workers(plan.count);
-    std::vector<std::vector<const ZoomPoint*>> scratch(std::size_t(threads),
-        std::vector<const ZoomPoint*>(plan.axes.size()));
+    const auto rank=plan.axes.size();
+    const auto width=plan.axes.back().size();
+    std::array<const ZoomPoint*,64> local;
+    std::vector<const ZoomPoint*> scratch;
+    if(threads>1 || rank>local.size())scratch.resize(std::size_t(threads)*rank);
     (void)source;(void)target;
+    #ifdef SKIMAGEXX_AVX2
+    const bool vectorized=options.allow_simd && has_avx2();
+    const auto outer_corners=plan.corners/std::size_t(plan.order+1);
+    std::vector<std::ptrdiff_t> row_offsets;
+    if(vectorized && width>=2 && rank<=64 && outer_corners>128) {
+        if(outer_corners>row_offsets.max_size()/std::size_t(threads))
+            throw std::length_error("zoom row scratch exceeds addressable storage");
+        row_offsets.resize(std::size_t(threads)*outer_corners);
+    }
+    #endif
     partition(plan.count,threads,[&](std::size_t begin,std::size_t end,std::size_t worker) {
         #ifdef SKIMAGEXX_AVX2
-        if(options.allow_simd && has_avx2())begin=simd::zoom_sample_typed(input,output,plan,begin,end,source,target);
+        if(vectorized) {
+            std::array<std::ptrdiff_t,128> local_offsets;
+            auto* offsets=row_offsets.empty() ? local_offsets.data() : row_offsets.data()+worker*outer_corners;
+            begin=simd::zoom_grid_sample_typed(input,output,plan,begin,end,source,target,offsets);
+        }
         #endif
-        auto& points=scratch[worker];
-        for(auto i=begin;i<end;++i) {
-            for(std::size_t axis=0;axis<points.size();++axis)
-                points[axis]=&plan.axes[axis][(i/plan.output_strides[axis])%plan.axes[axis].size()];
-            output[i]=resize_sample_cast<Output,Boolean>(sample(input,plan,points));
+        auto* points=scratch.empty() ? local.data() : scratch.data()+worker*rank;
+        for(auto column=begin%width;begin<end;column=0) {
+            const auto row_end=begin+std::min(width-column,end-begin);
+            for(std::size_t axis=0;axis+1<rank;++axis)
+                points[axis]=&plan.axes[axis][(begin/plan.output_strides[axis])%plan.axes[axis].size()];
+            for(;begin<row_end;++begin,++column) {
+                points[rank-1]=&plan.axes.back()[column];
+                output[begin]=resize_sample_cast<Output,Boolean>(sample(input,plan,points));
+            }
         }
     });
 }
@@ -301,7 +330,7 @@ template<class T,bool Boolean=false>bool profile(const ProfileInput& input,const
 #endif
             for(;done<lanes;++done){
                 current[0]=&plan.axes[0][done];current[1]=&plan.axes[1][done];
-                output[i+done]=resize_sample_cast<T,Boolean>(sample(data,plan,current));
+                output[i+done]=resize_sample_cast<T,Boolean>(sample(data,plan,current.data()));
             }
             i+=lanes;
         }

@@ -392,7 +392,11 @@ void spline_filter_into(const double* input,double* output,
     int npoles=0;double poles[MAX_SPLINE_FILTER_POLES];
     get_filter_poles(order,&npoles,poles);
     const int threads=active_workers(count);
+#ifdef SKIMAGEXX_AVX2
+    const bool use_simd = allow_simd && has_avx2();
+#else
     (void)allow_simd;
+#endif
     std::size_t inner=count;
     for(auto length:shape) {
         inner/=length;
@@ -400,7 +404,32 @@ void spline_filter_into(const double* input,double* output,
         const auto blocks=count/(length*inner);
         bool vectorized=false;
         #ifdef SKIMAGEXX_AVX2
-        vectorized=allow_simd && has_avx2() && inner>=4;
+        if (use_simd && inner == 1 && blocks >= 4) {
+            const auto groups = blocks / 4;
+            const auto workers = std::min<std::size_t>(threads, groups);
+            // Interleave four independent contiguous lines so each coefficient
+            // in the recurrence can be loaded with a single vector load.
+            std::vector<double> packed(workers * 4 * length);
+            partition(groups, int(workers), [&](std::size_t begin, std::size_t end,
+                                               std::size_t worker) {
+                auto* temp = packed.data() + worker * 4 * length;
+                for (auto group = begin; group < end; ++group) {
+                    auto* lines = output + group * 4 * length;
+                    for (std::size_t k = 0; k < length; ++k)
+                        for (std::size_t lane = 0; lane < 4; ++lane)
+                            temp[k * 4 + lane] = lines[lane * length + k];
+                    simd::spline_filter_four(temp, length, 4, poles, npoles, mode, legacy_reflect);
+                    for (std::size_t k = 0; k < length; ++k)
+                        for (std::size_t lane = 0; lane < 4; ++lane)
+                            lines[lane * length + k] = temp[k * 4 + lane];
+                }
+            });
+            for (auto line = groups * 4; line < blocks; ++line)
+                apply_filter(output + line * length, static_cast<npy_intp>(length),
+                             poles, npoles, border, legacy_reflect);
+            continue;
+        }
+        vectorized=use_simd && inner>=4;
         if(vectorized) {
             const auto groups=inner/4;
             partition(blocks*groups,threads,[&](std::size_t begin,std::size_t end,std::size_t) {

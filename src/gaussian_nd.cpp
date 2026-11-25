@@ -12,6 +12,12 @@
 #include <memory>
 #include <stdexcept>
 #include <type_traits>
+#ifdef SKIMAGEXX_AVX2
+namespace skimagexx::simd {
+std::size_t gaussian_rows(const void* const*,const void* const*,const void*,void*,
+    std::size_t,std::size_t,const double*,double,double,bool,bool,bool);
+}
+#endif
 namespace skimagexx {
 namespace {
 std::ptrdiff_t index_at(std::ptrdiff_t x,std::size_t length,GaussianBorder mode) {
@@ -32,9 +38,12 @@ std::size_t elements(const std::vector<std::size_t>& shape,std::size_t bytes) {
     return count;
 }
 template<class T,bool Boolean=false> void prepare(const T* input,double* output,std::size_t count,bool preserve,int workers) {
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorized=has_avx2();
+#endif
     detail::partition(count,workers,[&](auto begin,auto end,auto) {
 #ifdef SKIMAGEXX_AVX2
-        if(has_avx2())begin+=simd::gaussian_prepare(input+begin,output+begin,end-begin,
+        if(vectorized)begin+=simd::gaussian_prepare(input+begin,output+begin,end-begin,
             Boolean ? PixelType::boolean : sizeof(T)==1 ? (std::is_signed_v<T> ? PixelType::int8 : PixelType::uint8) :
             sizeof(T)==2 ? (std::is_signed_v<T> ? PixelType::int16 : PixelType::uint16) :
             sizeof(T)==4 ? (std::is_signed_v<T> ? PixelType::int32 : PixelType::uint32) :
@@ -78,6 +87,9 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
            (pass.border==GaussianBorder::nearest || pass.border==GaussianBorder::wrap))
             edge_taps=row_edge_taps(length,radius,pass.border);
     }
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorized=has_avx2();
+#endif
     detail::partition(count,workers,[&](auto begin,auto end,auto) {
         std::vector<const void*> left(radius),right(radius);
         while(begin<end) {
@@ -122,7 +134,7 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                         left[j]=input+position-(radius-j);right[j]=input+position+(radius-j);
                     }
 #ifdef SKIMAGEXX_AVX2
-                    if(has_avx2()) {
+                    if(vectorized) {
                         if constexpr(std::is_integral_v<Output>)position+=simd::gaussian_raw_rows(left.data(),right.data(),input+position,output+position,vector_end-position,
                             radius,pass.weights.data(),center_weight,pass.cval,
                             sizeof(Output)==1 ? (std::is_signed_v<Output> ? PixelType::int8 : PixelType::uint8) :
@@ -130,7 +142,7 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                             sizeof(Output)==4 ? (std::is_signed_v<Output> ? PixelType::int32 : PixelType::uint32) :
                             std::is_signed_v<Output> ? PixelType::int64 : PixelType::uint64);
                         else position+=simd::gaussian_rows(left.data(),right.data(),input+position,output+position,vector_end-position,
-                            radius,pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>);
+                            radius,pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>,true);
                     }
 #endif
                     for(;position<vector_end;++position)scalar(position);
@@ -162,7 +174,7 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                 }
                 std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-                if(has_avx2()) {
+                if(vectorized) {
                     if constexpr(std::is_integral_v<Output>)done=simd::gaussian_raw_rows(left.data(),right.data(),input+begin,output+begin,span,radius,
                         pass.weights.data(),center_weight,pass.cval,
                         sizeof(Output)==1 ? (std::is_signed_v<Output> ? PixelType::int8 : PixelType::uint8) :
@@ -170,7 +182,8 @@ template<class Input,class Output> void convolve(const Input* input,Output* outp
                         sizeof(Output)==4 ? (std::is_signed_v<Output> ? PixelType::int32 : PixelType::uint32) :
                         std::is_signed_v<Output> ? PixelType::int64 : PixelType::uint64);
                     else done=simd::gaussian_rows(left.data(),right.data(),input+begin,output+begin,span,radius,
-                        pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>);
+                        pass.weights.data(),center_weight,pass.cval,std::is_same_v<Input,float>,std::is_same_v<Output,float>,
+                        interior || pass.border!=GaussianBorder::constant);
                 }
 #endif
                 for(auto i=done;i<span;++i)scalar(begin+i);
@@ -262,18 +275,24 @@ void gaussian_raw_into(const void* input,void* output,PixelType type,
 } // namespace detail
 namespace {
 template<class T> void difference(const T* first,const T* second,T* output,std::size_t count) {
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorized=has_avx2();
+#endif
     detail::partition(count,detail::active_workers(count),[&](std::size_t begin,std::size_t end,auto) {
 #ifdef SKIMAGEXX_AVX2
-        if(has_avx2())begin+=simd::gaussian_difference(first+begin,second+begin,output+begin,end-begin,std::is_same_v<T,float>);
+        if(vectorized)begin+=simd::gaussian_difference(first+begin,second+begin,output+begin,end-begin,std::is_same_v<T,float>);
 #endif
         for(auto i=begin;i<end;++i)output[i]=T(first[i]-second[i]);
     });
 }
 template<class Input,class Output> void sharpen(const Input* image,const Input* blur,Output* output,std::size_t count,
     double amount,bool wide,bool clip,double lower) {
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorized=has_avx2();
+#endif
     detail::partition(count,detail::active_workers(count),[&](std::size_t begin,std::size_t end,auto) {
 #ifdef SKIMAGEXX_AVX2
-        if(has_avx2())begin+=simd::gaussian_unsharp(image+begin,blur+begin,output+begin,end-begin,
+        if(vectorized)begin+=simd::gaussian_unsharp(image+begin,blur+begin,output+begin,end-begin,
             std::is_same_v<Input,float>,std::is_same_v<Output,float>,amount,wide,clip,lower);
 #endif
         for(auto i=begin;i<end;++i) {
