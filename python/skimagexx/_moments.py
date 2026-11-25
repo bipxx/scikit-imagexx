@@ -23,6 +23,7 @@ from . import _core
 
 _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
           (4, "under", "underflow"), (8, "invalid", "invalid value"))
+_FLOAT_TYPES = {"e": np.float32, "f": np.float32, "d": np.float64}
 # Detect the installed source route before any test traps. This inspects only
 # implementation metadata; neither einsum nor bmm_einsum is ever called.
 _EINSUM_SOURCE = import_module("numpy._core.einsumfunc" if hasattr(np, "_core")
@@ -34,7 +35,7 @@ def _supported_float_type(dtype):
     dtype = np.dtype(dtype)
     if dtype.kind == "c":
         raise ValueError("complex valued input is not supported")
-    return {"e": np.float32, "f": np.float32, "d": np.float64}.get(dtype.char, np.float64)
+    return _FLOAT_TYPES.get(dtype.char, np.float64)
 
 
 def _check_array(value):

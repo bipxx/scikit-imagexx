@@ -26,10 +26,10 @@ def montage(arr_in, fill='mean', rescale_intensity=False, grid_shape=None,
     # scikit-image0.26 _montage.py, BSD-3-Clause; see the retained upstream
     # license in third_party/scikit-image-LICENSE.txt. Preserve provider order:
     # rescaling can mutate the caller before a later fill or copy failure.
-    if channel_axis is not None:
+    if type(arr_in) is not np.ndarray:
         arr_in = np.asarray(arr_in)
-    else:
-        arr_in = np.asarray(arr_in)[..., np.newaxis]
+    if channel_axis is None:
+        arr_in = arr_in[..., np.newaxis]
     if arr_in.ndim != 4:
         raise ValueError(
             'Input array has to be 3-dimensional for grayscale '

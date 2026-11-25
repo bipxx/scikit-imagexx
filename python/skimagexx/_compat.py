@@ -1,9 +1,13 @@
 """Explicit fallback policy. Native coverage is deliberately distinct from API availability."""
 import importlib
 import warnings
-from functools import lru_cache
+from functools import lru_cache, wraps
+from types import FunctionType, ModuleType
+
+import numpy as np
 
 _fallback_enabled = True
+_NATIVE_DTYPES = (np.uint8, np.float32, np.float64)
 
 
 class FallbackWarning(RuntimeWarning):
@@ -33,16 +37,18 @@ def fallback(module, name, *args, **kwargs):
 @lru_cache(maxsize=1)
 def _native_aliases():
     """Map pinned upstream function identities to their native public wrappers."""
-    from .coverage import native_functions
+    from .coverage import NATIVE_FUNCTIONS
+
     aliases = {}
-    for api in native_functions():
-        module, name = api.rsplit('.', 1)
+    for module, names in NATIVE_FUNCTIONS.items():
         native_namespace = importlib.import_module(f'{__package__}.{module}')
         original_namespace = importlib.import_module(f'skimage.{module}')
-        original = getattr(original_namespace, name, None)
-        native = vars(native_namespace).get(name)
-        if original is not None and native is not None:
-            aliases.setdefault(original, {})[name] = native
+        native_members = vars(native_namespace)
+        for name in names:
+            original = getattr(original_namespace, name, None)
+            native = native_members.get(name)
+            if original is not None and native is not None:
+                aliases.setdefault(original, {})[name] = native
     return aliases
 
 
@@ -53,9 +59,7 @@ def module_attribute(module, name):
     # Public submodules use the same policy-aware namespace as nested imports.
     # Classes and constants retain their original identity. Functions
     # are wrapped so strict mode cannot silently execute an upstream algorithm.
-    import inspect
-    import functools
-    if inspect.ismodule(original) and original.__name__.startswith('skimage.'):
+    if isinstance(original, ModuleType) and original.__name__.startswith('skimage.'):
         relative = original.__name__.split('.', 1)[1]
         if not any(part.startswith('_') for part in relative.split('.')):
             target = f'{__package__}.{relative}'
@@ -64,12 +68,13 @@ def module_attribute(module, name):
             except ModuleNotFoundError as error:
                 if error.name is None or not (target == error.name or target.startswith(error.name + '.')):
                     raise
-    if inspect.isfunction(original):
+    if isinstance(original, FunctionType):
         if '.' in module:
             aliases = _native_aliases().get(original)
             if aliases:
-                return aliases.get(name, next(iter(aliases.values())))
-        @functools.wraps(original)
+                native = aliases.get(name)
+                return native if native is not None else next(iter(aliases.values()))
+        @wraps(original)
         def call(*args, **kwargs):
             return fallback(module, name, *args, **kwargs)
         return call
@@ -80,15 +85,13 @@ def module_attribute(module, name):
 
 
 def native_image(image, rgb=False):
-    import numpy as np
-    return (isinstance(image, np.ndarray) and image.dtype in (np.uint8, np.float32, np.float64)
+    return (isinstance(image, np.ndarray) and image.dtype in _NATIVE_DTYPES
             and image.ndim == (3 if rgb else 2) and all(image.shape)
             and (not rgb or image.shape[-1] == 3))
 
 
 def native_array(image):
-    import numpy as np
-    return isinstance(image, np.ndarray) and image.dtype in (np.uint8, np.float32, np.float64) and image.size > 0
+    return isinstance(image, np.ndarray) and image.dtype in _NATIVE_DTYPES and image.size > 0
 
 
 

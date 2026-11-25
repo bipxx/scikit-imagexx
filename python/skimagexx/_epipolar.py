@@ -9,6 +9,8 @@ from skimage.transform import (
 from . import _core
 from ._compat import fallback
 
+_SCALING_MODES = {"rms": 0, "mrs": 1, "raw": 2}
+
 
 def _reference(model, name):
     cls = _Essential if isinstance(model, _Essential) else _Fundamental
@@ -46,11 +48,13 @@ class FundamentalMatrixTransform(_Fundamental):
 
     def _setup_constraint_matrix(self, src, dst):
         scaling = self.scaling
-        modes = {"rms": 0, "mrs": 1, "raw": 2}
-        if type(scaling) is str and scaling.lower() in modes:
-            src = np.asarray(src)
-            dst = np.asarray(dst)
-            result = _core.epipolar_constraints(src, dst, modes[scaling.lower()])
+        mode = _SCALING_MODES.get(scaling.lower()) if type(scaling) is str else None
+        if mode is not None:
+            if type(src) is not np.ndarray:
+                src = np.asarray(src)
+            if type(dst) is not np.ndarray:
+                dst = np.asarray(dst)
+            result = _core.epipolar_constraints(src, dst, mode)
             if result is not None:
                 equations, src_matrix, dst_matrix = result
                 _, singular, vt = np.linalg.svd(equations, full_matrices=equations.shape[0] < 9)

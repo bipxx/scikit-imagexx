@@ -120,7 +120,7 @@ def octagon(m, n, dtype=np.uint8, *, decomposition=None):
             return ((octagon(m, n, dtype=dtype, decomposition=None), 1),)
         if m == 0: m, n = 2, n-1
         sequence = []
-        if m > 1: sequence += list(_rectangle_sequence(m, dtype))
+        if m > 1: sequence.extend(_rectangle_sequence(m, dtype))
         if n > 0:
             # Source diamond constructs from a BOOLEAN comparison, important
             # for S/U conversion (True/False rather than numeric0/1 strings).
@@ -168,19 +168,18 @@ def footprint_from_sequence(footprints):
         fp, nreps = footprints[0]
         shape[d] = fp.shape[d]+(nreps-1)*(fp.shape[d]-1)
         for fp, nreps in footprints[1:]: shape[d] += nreps*(fp.shape[d]-1)
-    image = np.zeros(tuple(shape), dtype=bool)
+    image = np.zeros(shape, dtype=bool)
     image[tuple(s//2 for s in shape)] = 1
     out = np.empty_like(image)
     prepared = []
     for fp, repeats in footprints:
         _check(fp)
-        array = np.asarray(fp)
+        array = fp if type(fp) is np.ndarray else np.asarray(fp)
         padding = [(1, 0) if s % 2 == 0 else (0, 0) for s in array.shape]
         padded = np.pad(array, padding)
-        mirrored = padded[(slice(None, None, -1),)*array.ndim]
-        # scipy.grey_dilation mirrors once more before the actual dilation.
-        # The core accepts source-relative offsets, so use padded coordinates.
-        prepared.append((np.ascontiguousarray(mirrored[(slice(None, None, -1),)*array.ndim], dtype=bool), repeats))
+        # The core accepts source-relative offsets, so the two SciPy-side
+        # reflections cancel and the padded footprint can be used directly.
+        prepared.append((np.ascontiguousarray(padded, dtype=bool), repeats))
     fp, count = prepared[0]
     _core.footprint_shapes_dilate(image, fp, out)
     for _ in range(1, count): _core.footprint_shapes_dilate(out.copy(), fp, out)

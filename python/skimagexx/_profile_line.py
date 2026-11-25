@@ -9,6 +9,8 @@ from scipy import ndimage as ndi
 
 from . import _core
 
+_MODE_ALIASES = {'constant': 'grid-constant', 'wrap': 'grid-wrap'}
+
 
 def _validate_interpolation_order(image_dtype, order):
     if order is None:
@@ -79,7 +81,7 @@ def profile_line(image, src, dst, linewidth=1, order=None, mode='reflect',
                  cval=0.0, *, reduce_func=np.mean):
     """Return a profile with owned ordinary order-0/1 plane sampling."""
     order = _validate_interpolation_order(image.dtype, order)
-    mode = {'constant': 'grid-constant', 'wrap': 'grid-wrap'}.get(mode, mode)
+    mode = _MODE_ALIASES.get(mode, mode)
     perp_lines = _line_profile_coordinates(src, dst, linewidth=linewidth)
     workers = _core.get_num_threads()
     if image.ndim == 3:

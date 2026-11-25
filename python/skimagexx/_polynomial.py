@@ -28,9 +28,12 @@ class PolynomialTransform(_Polynomial):
 
     def _estimate(self, src, dst, order=2, weights=None):
         if type(order) is int and 0 <= order <= 5:
-            src = np.asarray(src)
-            dst = np.asarray(dst)
-            weights = None if weights is None else np.asarray(weights)
+            if type(src) is not np.ndarray:
+                src = np.asarray(src)
+            if type(dst) is not np.ndarray:
+                dst = np.asarray(dst)
+            if weights is not None and type(weights) is not np.ndarray:
+                weights = np.asarray(weights)
             equations = _core.polynomial_constraints(src, dst, order, weights)
             if equations is not None:
                 rows, columns = equations.shape

@@ -1,4 +1,6 @@
 """Native kernels and explicit scikit-image compatibility dispatch."""
+from importlib import import_module as _import_module
+
 from ._core import set_num_threads, get_num_threads, has_avx2
 from ._compat import set_fallback_enabled, FallbackWarning
 from ._namespace import install as _install_namespaces
@@ -21,8 +23,7 @@ __all__ += list(_COMPAT_MODULES)
 
 def __getattr__(name):
     if name in _COMPAT_MODULES:
-        import importlib
-        module = importlib.import_module(f'{__name__}.{name}')
+        module = _import_module(f'{__name__}.{name}')
         globals()[name] = module
         return module
     raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
