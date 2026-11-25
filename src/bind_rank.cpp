@@ -22,7 +22,7 @@ bool plain_array(const py::array& a) {
     return Py_TYPE(a.ptr())==py::detail::npy_api::get().PyArray_Type_;
 }
 bool ready_input(const py::array& a,const py::dtype& dtype) {
-    constexpr int flags=py::array::c_style | py::detail::npy_api::NPY_ARRAY_ALIGNED_;
+    constexpr int flags=int(py::array::c_style) | int(py::detail::npy_api::NPY_ARRAY_ALIGNED_);
     return (a.flags()&flags)==flags && native_dtype(dtype) && plain_array(a);
 }
 bool shares_memory(const py::module_& numpy,const py::array& a,const py::array& b) {

@@ -14,6 +14,13 @@
 #include <intrin.h>
 #endif
 namespace skimagexx {
+#ifdef SKIMAGEXX_AVX2
+namespace simd {
+std::size_t rank_histogram_normalized_i32(const std::int32_t*,void*,std::size_t,double,bool);
+std::size_t rank_equalize_3x3_u8(const std::uint8_t*,const std::uint8_t*,std::ptrdiff_t,
+                               std::uint8_t*,std::size_t,const std::uint8_t*);
+}
+#endif
 namespace {
 unsigned first(std::uint64_t word) {
 #ifdef _MSC_VER
@@ -50,6 +57,24 @@ Plan plan(const RankView& v) {
     }
     return result;
 }
+// The numerator is at most 255 * 255, even when the center is outside
+// the window's range. With a 16-bit shift, the product fits in uint32_t
+// and rounding the reciprocal down misses by at most one.
+constexpr unsigned autolevel_shift=16;
+constexpr auto autolevel_multipliers=[] {
+    std::array<std::uint32_t,256> mul{};
+    for(unsigned span=1;span<mul.size();++span)
+        mul[span]=(std::uint32_t{1}<<autolevel_shift)/span;
+    return mul;
+}();
+
+std::int64_t autolevel_byte(std::int64_t delta,unsigned span) {
+    const auto numerator=255u*std::uint32_t(delta<0 ? -delta:delta);
+    const auto estimate=(numerator*autolevel_multipliers[span])>>autolevel_shift;
+    const auto quotient=std::int64_t(estimate+(numerator-estimate*span>=span));
+    return delta<0 ? -quotient:quotient;
+}
+
 struct Histogram {
     std::size_t limit;
     std::vector<std::int64_t> counts;
@@ -218,7 +243,12 @@ struct Histogram {
         const bool strict=op!=RankOperation::gradient_percentile;
         const auto low=std::int64_t(crossing(p0*double(pop),strict)),high=std::int64_t(crossing((1.-p1)*double(pop),strict,true));
         if(op==RankOperation::gradient_percentile)return high-low;
-        if(op==RankOperation::autolevel_percentile)return high>low ? std::int64_t(limit-1)*(std::min(std::max(low,center),high)-low)/(high-low):high-low;
+        if(op==RankOperation::autolevel_percentile) {
+            if(high<=low)return high-low;
+            const auto delta=std::clamp(center,low,high)-low;
+            if(limit==256)return autolevel_byte(delta,unsigned(high-low));
+            return std::int64_t(limit-1)*delta/(high-low);
+        }
         return high-center<center-low ? high:low;
     }
     template<class F> void occupied(F visit)const {
@@ -462,7 +492,9 @@ template<class T,bool Prefix=false,bool CountsOnly=false> void process(const Ran
                     if(op==RankOperation::autolevel) {
                         // Signed integer division truncates toward zero even
                         // for floating outputs. Integer stores wrap separately.
-                        emit(high>low ? std::int64_t(v.bins-1)*(g-low)/(high-low):std::int64_t{0});
+                        if(high<=low)emit(std::int64_t{0});
+                        else if(v.bins==256)emit(autolevel_byte(g-low,unsigned(high-low)));
+                        else emit(std::int64_t(v.bins-1)*(g-low)/(high-low));
                     } else emit(hist.pop ? (high-g<g-low ? high:low):std::int64_t{0});
                 }
             }
@@ -547,29 +579,41 @@ bool independent_stores(const RankView& v,std::size_t pixel_bytes=0) {
     }
     return true;
 }
-// A zero-based order statistic and the count/weight strictly below its bin.
-// Updates at the current bin are reflected in counts; only earlier bins
-// change the prefix. Seeking starts from the previous crossing.
+// The cursor tracks the count and optional weight strictly below its bin.
+// Updates preserve that prefix even if the current bin becomes empty.
 struct QuantileCursor {
     unsigned bin=0;
     std::uint32_t below=0;
     std::int64_t weight=0;
 
-    template<bool Weighted> void seek(const std::uint32_t* counts,std::uint32_t rank) {
-        while(below>rank) {
-            --bin;
-            below-=counts[bin];
-            if constexpr(Weighted)weight-=std::int64_t(bin)*counts[bin];
-        }
-        while(below+counts[bin]<=rank) {
-            below+=counts[bin];
-            if constexpr(Weighted)weight+=std::int64_t(bin)*counts[bin];
-            ++bin;
+    template<bool Weighted>
+    void seek(const std::uint32_t* counts,const std::uint64_t* bits,std::uint32_t rank) {
+        if(below>rank) {
+            unsigned block=bin/64;
+            auto word=bits[block]&((std::uint64_t{1}<<(bin%64))-1);
+            do {
+                while(!word)word=bits[--block];
+                const auto offset=last(word);
+                word^=std::uint64_t{1}<<offset;
+                bin=block*64+offset;
+                below-=counts[bin];
+                if constexpr(Weighted)weight-=std::int64_t(bin)*counts[bin];
+            } while(below>rank);
+        } else if(below+counts[bin]<=rank) {
+            unsigned block=bin/64;
+            auto word=bits[block]&(~std::uint64_t{1}<<(bin%64));
+            do {
+                below+=counts[bin];
+                if constexpr(Weighted)weight+=std::int64_t(bin)*counts[bin];
+                while(!word)word=bits[++block];
+                bin=block*64+first(word);
+                word&=word-1;
+            } while(below+counts[bin]<=rank);
         }
     }
 };
 
-template<RankOperation Op> struct ByteHistogram {
+template<RankOperation Op,bool WideEqualize=false> struct ByteHistogram {
     using R=RankOperation;
     static constexpr bool selected=Op==R::mean_percentile || Op==R::pop_percentile ||
         Op==R::sum_percentile || Op==R::subtract_mean_percentile;
@@ -582,11 +626,13 @@ template<RankOperation Op> struct ByteHistogram {
         Op==R::threshold || Op==R::subtract_mean || Op==R::otsu;
     static constexpr bool occupied=!quantile && !bilateral && Op!=R::equalize && !(
         Op==R::mean || Op==R::sum || Op==R::pop || Op==R::threshold || Op==R::subtract_mean);
+    static constexpr unsigned block_size=Op==R::equalize ? 16:64;
     static constexpr bool blocks=Op==R::equalize || bilateral;
+    using BlockCount=std::conditional_t<Op==R::equalize && !WideEqualize,std::uint16_t,std::uint32_t>;
     static constexpr bool bins_needed=occupied || blocks || quantile;
     std::array<std::uint32_t,bins_needed ? 256:0> counts{};
-    std::array<std::uint64_t,occupied ? 4:0> bits{};
-    std::array<std::uint32_t,blocks ? 4:0> populations{};
+    std::array<std::uint64_t,occupied || quantile ? 4:0> bits{};
+    std::array<BlockCount,blocks ? 256/block_size:0> populations{};
     std::array<std::int64_t,bilateral && weighted ? 4:0> weights{};
     std::array<QuantileCursor,two_cursors ? 2:quantile ? 1:0> cursors{};
     std::uint32_t pop=0;
@@ -596,12 +642,12 @@ template<RankOperation Op> struct ByteHistogram {
         constexpr int delta=Add ? 1:-1;
         if constexpr(sum_needed)sum+=std::int64_t(value)*delta;
         if constexpr(bins_needed)counts[value]+=delta;
-        if constexpr(occupied) {
+        if constexpr(occupied || quantile) {
             const auto bit=std::uint64_t{1}<<(value%64);
             if constexpr(Add)bits[value/64]|=bit;
             else if(!counts[value])bits[value/64]&=~bit;
         }
-        if constexpr(blocks)populations[value/64]+=delta;
+        if constexpr(blocks)populations[value/block_size]+=delta;
         if constexpr(bilateral && weighted)weights[value/64]+=std::int64_t(value)*delta;
         for(auto& cursor:cursors) {
             const auto change=delta*int(value<cursor.bin);
@@ -641,12 +687,12 @@ template<RankOperation Op> struct ByteHistogram {
     }
     Histogram::Aggregate prefix(unsigned end) const {
         Histogram::Aggregate result;
-        const auto blocks_end=end/64;
+        const auto blocks_end=end/block_size;
         for(unsigned block=0;block<blocks_end;++block) {
             result.count+=populations[block];
             if constexpr(weighted)result.weighted+=weights[block];
         }
-        for(unsigned bin=blocks_end*64;bin<end;++bin) {
+        for(unsigned bin=blocks_end*block_size;bin<end;++bin) {
             result.count+=counts[bin];
             if constexpr(weighted)result.weighted+=std::int64_t(bin)*counts[bin];
         }
@@ -668,14 +714,22 @@ template<RankOperation Op> struct ByteHistogram {
     std::int64_t crossing(unsigned cursor,std::int64_t rank,std::uint32_t population) {
         if(rank<0)return 0;
         if(rank>=population)return Op==R::gradient_percentile && cursor==1 ? 255:0;
-        cursors[cursor].template seek<false>(counts.data(),std::uint32_t(rank));
+        if(rank==0)return minimum();
+        if(rank==population-1)return maximum();
+        cursors[cursor].template seek<false>(counts.data(),bits.data(),std::uint32_t(rank));
         return cursors[cursor].bin;
     }
     Histogram::Aggregate membership(unsigned cursor,std::int64_t rank,std::uint32_t population) {
-        if(rank<0)return {};
+        if(rank<=0)return {};
         if(rank>=population)return {population,sum};
+        if(rank==population-1) {
+            const auto bin=maximum();
+            const auto count=counts[bin];
+            if constexpr(weighted)return {population-count,sum-std::int64_t(bin)*count};
+            else return {population-count,0};
+        }
         auto& current=cursors[cursor];
-        current.template seek<weighted>(counts.data(),std::uint32_t(rank));
+        current.template seek<weighted>(counts.data(),bits.data(),std::uint32_t(rank));
         return {current.below,current.weight};
     }
 
@@ -755,30 +809,55 @@ template<RankOperation Op> struct ByteHistogram {
                 if constexpr(quantile){lo=crossing(0,rank[0],population);hi=crossing(1,rank[1],population);}
                 else {lo=minimum();hi=maximum();}
                 if constexpr(Op==R::gradient || Op==R::gradient_percentile)return hi-lo;
-                else if constexpr(Op==R::autolevel)return hi>lo ? 255*(g-lo)/(hi-lo):0;
+                else if constexpr(Op==R::autolevel)return hi>lo ? autolevel_byte(g-lo,unsigned(hi-lo)):0;
                 else if constexpr(Op==R::autolevel_percentile)
-                    return hi>lo ? 255*(std::min(std::max(lo,g),hi)-lo)/(hi-lo):hi-lo;
+                    return hi>lo ? autolevel_byte(std::clamp(g,lo,hi)-lo,unsigned(hi-lo)):hi-lo;
                 else return hi-g<g-lo ? hi:lo;
             }
         }
     }
 };
 
+struct ByteVectorHistogram {
+    std::uint32_t pop=0;
+    const std::size_t depth;
+    alignas(64) std::int32_t counts[256];
+
+    explicit ByteVectorHistogram(std::size_t depth):depth(depth) {
+        std::fill_n(counts,depth,0);
+    }
+    template<bool Add> void update(unsigned value) {
+        if(value<depth)counts[value]+=Add ? 1:-1;
+    }
+    static std::array<std::int64_t,2> ranks(std::uint32_t,double,double) {return {};}
+};
+
 struct BytePlan {
     std::vector<std::ptrdiff_t> enter,leave;
+    std::vector<std::uint8_t> equalize_lut;
     std::uint32_t population=0;
+    std::size_t depth=0;
 };
-BytePlan byte_plan(const RankView& v,const Plan& prepared,RankOperation op) {
+BytePlan byte_plan(const RankView& v,const Plan& prepared,RankOperation op,std::size_t depth=0) {
     BytePlan result;
-    if(op==RankOperation::windowed_histogram || v.uint16 || v.mask || v.serial_alias || v.bins!=256 ||
+    if(v.uint16 || v.mask || v.serial_alias ||
+       (depth ? depth>256:v.bins!=256) ||
        v.shape[0]!=1 || v.footprint_shape[0]!=1 ||
-       v.footprint_shape[1]>v.shape[1] || v.footprint_shape[2]>v.shape[2] ||
+       (!depth && (v.footprint_shape[1]>v.shape[1] || v.footprint_shape[2]>v.shape[2])) ||
        v.footprint_shape[1]*v.footprint_shape[2]>std::size_t(std::numeric_limits<std::int32_t>::max()) ||
        !independent_stores(v))return result;
     const auto pixels=v.shape[1]*v.shape[2],footprint=v.footprint_shape[1]*v.footprint_shape[2];
-    if(overlaps(v,v.image,pixels) || overlaps(v,v.footprint,footprint))return result;
+    const auto width=pixel_size(v.output_type)*std::max(std::size_t{1},depth);
+    if(overlaps(v,v.image,pixels,width) || overlaps(v,v.footprint,footprint,width))return result;
     for(const auto& run:prepared.initial)result.population+=std::uint32_t(run.count);
     if(!result.population)return result;
+    result.depth=depth;
+    if(op==RankOperation::equalize && v.output_type==PixelType::uint8) {
+        result.equalize_lut.resize(std::size_t(result.population)+1);
+        for(std::size_t count=0;count<result.equalize_lut.size();++count)
+            result.equalize_lut[count]=std::uint8_t(double(255*std::uint64_t(count))/double(result.population));
+    }
+    if(v.footprint_shape[1]>v.shape[1] || v.footprint_shape[2]>v.shape[2])return result;
     const auto stride=std::ptrdiff_t(v.shape[2]);
     // Each horizontal run contributes one entering and one leaving endpoint.
     // Express both relative to the new center for an eastward step.
@@ -787,16 +866,29 @@ BytePlan byte_plan(const RankView& v,const Plan& prepared,RankOperation op) {
     return result;
 }
 
-template<RankOperation Op>
+template<RankOperation Op,class O,bool WideEqualize=false,bool Constant=false>
 void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,std::size_t begin,std::size_t end,
                    const std::vector<double>& logarithms,double p0,double p1,std::ptrdiff_t s0,std::ptrdiff_t s1) {
     if(begin==end)return;
-    ByteHistogram<Op> hist;
+    using R=RankOperation;
+    constexpr bool vector=Op==R::windowed_histogram;
+    auto hist=[&] {
+        if constexpr(vector)return ByteVectorHistogram(fast.depth);
+        else return ByteHistogram<Op,WideEqualize>{};
+    }();
     const auto* image=static_cast<const std::uint8_t*>(v.image);
     const auto rows=std::ptrdiff_t(v.shape[1]),cols=std::ptrdiff_t(v.shape[2]);
     const auto top=v.center[1],bottom=rows-std::ptrdiff_t(v.footprint_shape[1])+top+1;
     const auto left=v.center[2],right=cols-std::ptrdiff_t(v.footprint_shape[2])+left;
     const auto fixed=hist.ranks(fast.population,p0,p1);
+    const double inv_pop=vector ? 1./double(fast.population):0.;
+#ifdef SKIMAGEXX_AVX2
+    const bool simd_vector=vector && std::is_floating_point_v<O> && fast.depth>=4 && has_avx2();
+#endif
+    const auto* const enter=fast.enter.data();
+    const auto* const leave=fast.leave.data();
+    const auto* const equalize_lut=fast.equalize_lut.empty() ? nullptr:fast.equalize_lut.data();
+    const auto endpoints=fast.enter.size();
     auto r=std::ptrdiff_t(begin),c=std::ptrdiff_t{0};
     const auto clipped=[&](auto add,const std::vector<Run>& runs,int dy,int dx) {
         for(const auto& run:runs) {
@@ -806,21 +898,34 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
             const auto hi=std::min(std::ptrdiff_t(run.count),cols-col);
             if(lo>=hi)continue;
             hist.pop+=add ? std::uint32_t(hi-lo):-std::uint32_t(hi-lo);
-            if constexpr(Op!=RankOperation::pop)
+            if constexpr(Op!=R::pop && !Constant)
                 for(auto i=lo;i<hi;++i)hist.template update<add.value>(image[row*cols+(col+i)]);
         }
     };
     constexpr std::true_type add{};
     constexpr std::false_type remove{};
-    const auto write=[&](auto interior,auto population,const auto& ranks) {
+    const auto write=[&](auto interior,std::uint32_t population,const auto& ranks) {
         auto* out=static_cast<unsigned char*>(v.output)+r*v.output_strides[1]+c*v.output_strides[2];
-        const auto value=hist.template value<interior.value>(population,image[r*cols+c],ranks,logarithms,s0,s1);
-        switch(v.output_type) {
-            case PixelType::boolean:case PixelType::uint8:store<std::uint8_t>(out,value);break;
-            case PixelType::uint16:store<std::uint16_t>(out,value);break;
-            case PixelType::float32:store<float>(out,value);break;
-            case PixelType::float64:store<double>(out,value);break;
-            default:break;
+        if constexpr(vector) {
+            const double scale=interior.value ? inv_pop:population ? 1./double(population):0.;
+            std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+            if constexpr(std::is_floating_point_v<O>)
+                if(simd_vector)i=simd::rank_histogram_normalized_i32(hist.counts,out,fast.depth,scale,sizeof(O)==4);
+#endif
+            for(;i<fast.depth;++i)store<O>(out+i*sizeof(O),double(hist.counts[i])*scale);
+        } else if constexpr(Constant) {
+            // These endpoint ranks apply to every nonempty clipped window.
+            store<O>(out,population ? 255:0);
+        } else {
+            const auto g=image[r*cols+c];
+            if constexpr(interior.value && Op==R::equalize && std::is_same_v<O,std::uint8_t>) {
+                if(equalize_lut) {
+                    store<O>(out,equalize_lut[hist.prefix(unsigned(g)+1).count]);
+                    return;
+                }
+            }
+            store<O>(out,hist.template value<interior.value>(population,g,ranks,logarithms,s0,s1));
         }
     };
     const auto edge=[&](){write(remove,hist.pop,hist.ranks(hist.pop,p0,p1));};
@@ -828,20 +933,30 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
         constexpr int step=east.value ? 1:-1;
         const auto stop=east ? cols:-1;
         const auto first=east ? left+1:right-1,last=east ? right:left;
+        const auto* entering=east ? enter:leave;
+        const auto* leaving=east ? leave:enter;
+        const auto depart=[&] {clipped(remove,east ? prepared.leave[2]:prepared.enter[2],0,-step);};
+        const auto arrive=[&] {clipped(add,east ? prepared.enter[2]:prepared.leave[2],0,0);};
         const auto move=[&]() {
-            clipped(add,east ? prepared.enter[2]:prepared.leave[2],0,0);
-            clipped(remove,east ? prepared.leave[2]:prepared.enter[2],0,-step);
+            // Remove first for signed counts so they only represent one window.
+            if constexpr(vector){depart();arrive();}
+            else {arrive();depart();}
             edge();
         };
         c+=step;
         if(r>=top && r<bottom && right>left) {
             for(;c!=first;c+=step)move();
             for(;east ? c<=last:c>=last;c+=step) {
-                if constexpr(Op!=RankOperation::pop) {
+                if constexpr(Op!=R::pop && !Constant) {
                     const auto* center=image+r*cols+c+(east ? 0:1);
-                    for(std::size_t i=0;i<fast.enter.size();++i) {
-                        hist.template update<true>(center[(east ? fast.enter:fast.leave)[i]]);
-                        hist.template update<false>(center[(east ? fast.leave:fast.enter)[i]]);
+                    for(std::size_t i=0;i<endpoints;++i) {
+                        if constexpr(vector) {
+                            hist.template update<false>(center[leaving[i]]);
+                            hist.template update<true>(center[entering[i]]);
+                        } else {
+                            hist.template update<true>(center[entering[i]]);
+                            hist.template update<false>(center[leaving[i]]);
+                        }
                     }
                 }
                 write(add,fast.population,fixed);
@@ -855,34 +970,106 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
         edge();
         if(east)sweep(add);else sweep(remove);
         if(++r>=std::ptrdiff_t(end))break;
+        if constexpr(vector)clipped(remove,prepared.leave[1],-1,0);
         clipped(add,prepared.enter[1],0,0);
-        clipped(remove,prepared.leave[1],-1,0);
+        if constexpr(!vector)clipped(remove,prepared.leave[1],-1,0);
+    }
+}
+
+template<class O>
+void byte_dispatch_output(const RankView& v,RankOperation op,const Plan& prepared,const BytePlan& fast,
+                   std::size_t begin,std::size_t end,const std::vector<double>& logs={},
+                   double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
+    switch(op) {
+#define BYTE_CASE(name) case RankOperation::name: return process_bytes<RankOperation::name,O>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        BYTE_CASE(minimum) BYTE_CASE(maximum) BYTE_CASE(mean) BYTE_CASE(sum) BYTE_CASE(pop)
+        BYTE_CASE(gradient) BYTE_CASE(median) BYTE_CASE(modal) BYTE_CASE(entropy) BYTE_CASE(autolevel)
+        BYTE_CASE(enhance_contrast) BYTE_CASE(threshold) BYTE_CASE(geometric_mean)
+        BYTE_CASE(noise_filter) BYTE_CASE(subtract_mean) BYTE_CASE(autolevel_percentile)
+        BYTE_CASE(enhance_contrast_percentile) BYTE_CASE(mean_percentile)
+        BYTE_CASE(pop_percentile) BYTE_CASE(subtract_mean_percentile)
+        BYTE_CASE(sum_percentile) BYTE_CASE(percentile) BYTE_CASE(mean_bilateral)
+        BYTE_CASE(pop_bilateral) BYTE_CASE(sum_bilateral) BYTE_CASE(otsu) BYTE_CASE(majority)
+        BYTE_CASE(windowed_histogram)
+#undef BYTE_CASE
+        case RankOperation::gradient_percentile: {
+            constexpr auto gradient=RankOperation::gradient_percentile;
+            const auto fixed=ByteHistogram<gradient>::ranks(fast.population,p0,p1);
+            if(fixed[0]<0 && fixed[1]>=fast.population)
+                return process_bytes<gradient,O,false,true>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+            return process_bytes<gradient,O>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        }
+        case RankOperation::threshold_percentile: {
+            constexpr auto threshold=RankOperation::threshold_percentile;
+            const auto fixed=ByteHistogram<threshold>::ranks(fast.population,p0,p1);
+            if(fixed[0]<0)
+                return process_bytes<threshold,O,false,true>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+            return process_bytes<threshold,O>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        }
+        case RankOperation::equalize:
+            if(fast.population>std::numeric_limits<std::uint16_t>::max())
+                return process_bytes<RankOperation::equalize,O,true>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+            return process_bytes<RankOperation::equalize,O>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
     }
 }
 
 void byte_dispatch(const RankView& v,RankOperation op,const Plan& prepared,const BytePlan& fast,
                    std::size_t begin,std::size_t end,const std::vector<double>& logs={},
                    double p0=0.,double p1=1.,std::ptrdiff_t s0=0,std::ptrdiff_t s1=0) {
-    switch(op) {
-#define BYTE_CASE(name) case RankOperation::name: return process_bytes<RankOperation::name>(v,prepared,fast,begin,end,logs,p0,p1,s0,s1);
-        BYTE_CASE(minimum) BYTE_CASE(maximum) BYTE_CASE(mean) BYTE_CASE(sum) BYTE_CASE(pop)
-        BYTE_CASE(gradient) BYTE_CASE(median) BYTE_CASE(modal) BYTE_CASE(entropy) BYTE_CASE(autolevel)
-        BYTE_CASE(equalize) BYTE_CASE(enhance_contrast) BYTE_CASE(threshold) BYTE_CASE(geometric_mean)
-        BYTE_CASE(noise_filter) BYTE_CASE(subtract_mean) BYTE_CASE(autolevel_percentile)
-        BYTE_CASE(enhance_contrast_percentile) BYTE_CASE(gradient_percentile) BYTE_CASE(mean_percentile)
-        BYTE_CASE(pop_percentile) BYTE_CASE(subtract_mean_percentile) BYTE_CASE(threshold_percentile)
-        BYTE_CASE(sum_percentile) BYTE_CASE(percentile) BYTE_CASE(mean_bilateral)
-        BYTE_CASE(pop_bilateral) BYTE_CASE(sum_bilateral) BYTE_CASE(otsu) BYTE_CASE(majority)
-#undef BYTE_CASE
-        case RankOperation::windowed_histogram:break;
+    switch(v.output_type) {
+        case PixelType::boolean:case PixelType::uint8:
+            return byte_dispatch_output<std::uint8_t>(v,op,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        case PixelType::uint16:
+            return byte_dispatch_output<std::uint16_t>(v,op,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        case PixelType::float32:
+            return byte_dispatch_output<float>(v,op,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        case PixelType::float64:
+            return byte_dispatch_output<double>(v,op,prepared,fast,begin,end,logs,p0,p1,s0,s1);
+        default:break;
     }
 }
+
+#ifdef SKIMAGEXX_AVX2
+void equalize_3x3_bytes(const RankView& v,const std::uint8_t* lut,std::size_t begin,std::size_t end) {
+    const auto* image=static_cast<const std::uint8_t*>(v.image);
+    const auto rows=std::ptrdiff_t(v.shape[1]),cols=std::ptrdiff_t(v.shape[2]);
+    const auto left=v.center[2],right=cols-3+left+1;
+    for(auto r=std::ptrdiff_t(begin);r<std::ptrdiff_t(end);++r) {
+        const auto top=r-v.center[1],bottom=top+3;
+        const auto y0=std::max(std::ptrdiff_t{0},top),y1=std::min(rows,bottom);
+        const auto* row=image+r*cols;
+        auto* out=static_cast<std::uint8_t*>(v.output)+r*v.output_strides[1];
+        const auto scalar=[&](std::ptrdiff_t first,std::ptrdiff_t last) {
+            for(auto c=first;c<last;++c) {
+                const auto x0=std::max(std::ptrdiff_t{0},c-left),x1=std::min(cols,c-left+3);
+                unsigned count=0;
+                for(auto y=y0;y<y1;++y)for(auto x=x0;x<x1;++x)count+=image[y*cols+x]<=row[c];
+                const auto population=(x1-x0)*(y1-y0);
+                out[c]=population==9 ? lut[count]:std::uint8_t(double(255*count)/double(population));
+            }
+        };
+        if(top>=0 && bottom<=rows) {
+            scalar(0,left);
+            const auto done=simd::rank_equalize_3x3_u8(image+top*cols,row+left,cols,out+left,right-left,lut);
+            scalar(left+std::ptrdiff_t(done),cols);
+        } else scalar(0,cols);
+    }
+}
+#endif
 
 void run(const RankView& view,RankOperation operation) {
     const auto prepared=plan(view);const auto rows=view.shape[0]*view.shape[1];
     const auto fast=byte_plan(view,prepared,operation);
     const auto workers=view.serial_alias || !independent_stores(view) ? 1:detail::active_workers(rows*view.shape[2]);
+#ifdef SKIMAGEXX_AVX2
+    const bool simd_equalize=fast.population==9 && !fast.equalize_lut.empty() &&
+        view.footprint_shape[1]==3 && view.footprint_shape[2]==3 &&
+        view.shape[2]>=34 && view.output_strides[2]==1 && has_avx2();
+#endif
     const auto run=[&](auto begin,auto end){
+#ifdef SKIMAGEXX_AVX2
+        if(simd_equalize)return equalize_3x3_bytes(view,fast.equalize_lut.data(),begin,end);
+#endif
         if(fast.population)return byte_dispatch(view,operation,prepared,fast,begin,end);
         if(operation==RankOperation::equalize) {
             if(view.uint16)process<std::uint16_t,true>(view,operation,prepared,begin,end);else process<std::uint8_t,true>(view,operation,prepared,begin,end);
@@ -913,10 +1100,9 @@ std::vector<double> statistics_validate(const RankView& v,RankOperation op,std::
     // Cache log only for globally occupied values; each output still accumulates
     // in ascending-bin order. No reassociation/incremental floating reduction.
     std::vector<std::uint8_t> seen(logarithms.empty() ? 0:v.bins,0);
-    // New percentile entries can certify a full typed histogram range without
-    // warming the entire input a second time. Existing R4 validation/log order
-    // stays unchanged; narrower u16 capacities still require a prewrite scan.
-    if(int(op)>=17 && v.bins>=(v.uint16 ? 65536u:256u))return logarithms;
+    // A full typed range needs no bounds scan unless we also collect logs.
+    if((!v.uint16 && v.bins>=256 && op!=RankOperation::geometric_mean) ||
+       (int(op)>=17 && v.bins==65536))return logarithms;
     const auto* image=static_cast<const unsigned char*>(v.image);
     for(std::size_t i=0;i<pixels;++i){std::uint16_t value;if(v.uint16)std::memcpy(&value,image+2*i,2);else value=image[i];if(value>=v.bins)throw std::invalid_argument("rank image exceeded histogram bounds");if(!seen.empty())seen[value]=1;}
     for(std::size_t i=0;i<seen.size();++i)if(seen[i])logarithms[i]=std::log(double(i+1));
@@ -924,7 +1110,7 @@ std::vector<double> statistics_validate(const RankView& v,RankOperation op,std::
 }
 void statistics_run(const RankView& view,RankOperation operation,std::size_t depth) {
     const auto logarithms=statistics_validate(view,operation,depth);const auto prepared=plan(view);
-    const auto fast=byte_plan(view,prepared,operation);
+    const auto fast=byte_plan(view,prepared,operation,depth);
     const auto rows=view.shape[0]*view.shape[1];
     const auto invoke=[&](std::size_t begin,std::size_t end,bool check){
         if(!check && fast.population)return byte_dispatch(view,operation,prepared,fast,begin,end,logarithms);

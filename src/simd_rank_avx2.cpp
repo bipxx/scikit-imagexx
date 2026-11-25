@@ -50,6 +50,34 @@ std::size_t rank_histogram_normalized(const std::int64_t* counts,void* output,st
     }
     return i;
 }
+std::size_t rank_histogram_normalized_i32(const std::int32_t* counts,void* output,std::size_t count,double scale,bool narrow) {
+    const auto factor=_mm256_set1_pd(scale);
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto integers=_mm_loadu_si128(reinterpret_cast<const __m128i*>(counts+i));
+        const auto values=_mm256_mul_pd(_mm256_cvtepi32_pd(integers),factor);
+        if(narrow)_mm_storeu_ps(static_cast<float*>(output)+i,_mm256_cvtpd_ps(values));
+        else _mm256_storeu_pd(static_cast<double*>(output)+i,values);
+    }
+    return i;
+}
+std::size_t rank_equalize_3x3_u8(const std::uint8_t* window,const std::uint8_t* centers,std::ptrdiff_t stride,
+                               std::uint8_t* output,std::size_t count,const std::uint8_t* lut) {
+    const auto table=_mm256_broadcastsi128_si256(
+        _mm_setr_epi8(lut[0],lut[1],lut[2],lut[3],lut[4],lut[5],lut[6],lut[7],lut[8],lut[9],0,0,0,0,0,0));
+    std::size_t i=0;
+    for(;i+32<=count;i+=32) {
+        const auto center=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(centers+i));
+        auto prefix=_mm256_setzero_si256();
+        for(int y=0;y<3;++y)for(int x=0;x<3;++x) {
+            const auto sample=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(window+y*stride+i+x));
+            const auto le=_mm256_cmpeq_epi8(_mm256_max_epu8(sample,center),center);
+            prefix=_mm256_sub_epi8(prefix,le);
+        }
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),_mm256_shuffle_epi8(table,prefix));
+    }
+    return i;
+}
 std::int64_t rank_count_prefix(const std::int64_t* data,std::size_t count) {
     auto sums=_mm256_setzero_si256();std::size_t i=0;
     for(;i+4<=count;i+=4)sums=_mm256_add_epi64(sums,_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i)));
