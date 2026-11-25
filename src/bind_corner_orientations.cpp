@@ -1,10 +1,7 @@
 #include <skimagexx/corner_orientations.hpp>
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
-
-#include <vector>
+#include "bind_helpers.hpp"
 
 namespace py = pybind11;
 
@@ -69,7 +66,7 @@ py::object run_orientations(const py::array& image, const py::array& corners,
     const py::array& mask, OrientImageKind expected_kind, py::ssize_t rows,
     py::ssize_t columns, py::ssize_t num_corners, py::ssize_t mask_extent,
     Fn&& fn) {
-    py::array_t<OutputT> owner(std::vector<py::ssize_t>{num_corners});
+    auto owner = skimagexx::bindings::empty_c_array<OutputT>({num_corners});
     if (image_kind(image) != expected_kind || !valid_corners(corners) || !valid_mask(mask)
         || image.shape(0) != rows || image.shape(1) != columns
         || corners.shape(0) != num_corners || mask.shape(0) != mask_extent) {

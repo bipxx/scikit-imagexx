@@ -1,9 +1,8 @@
 #include "skimagexx/corner_response.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 #include <array>
 #include <algorithm>
-#include <vector>
+#include <utility>
 namespace py=pybind11;
 void bind_corner_response(py::module_& module){
     module.def("corner_response",[](py::list fields,int method,double parameter,bool wide)->py::object{
@@ -21,9 +20,15 @@ void bind_corner_response(py::module_& module){
             pointers[f]=prepared[f].data();
         }
         const auto dtype=single && !wide ? py::dtype::of<float>() : py::dtype::of<double>();
-        const std::vector<py::ssize_t> shape(first.shape(),first.shape()+first.ndim());
-        py::array output(dtype,shape),second;void* extra=nullptr;
-        if(method==3){second=py::array(dtype,shape);extra=second.mutable_data();}
+        const auto rank = static_cast<int>(first.ndim());
+        auto output = skimagexx::bindings::empty_c_array(dtype, first.shape(), rank);
+        py::object second;
+        void* extra = nullptr;
+        if (method == 3) {
+            auto array = skimagexx::bindings::empty_c_array(dtype, output.shape(), rank);
+            extra = array.mutable_data();
+            second = std::move(array);
+        }
         bool valid;
         {py::gil_scoped_release release;valid=skimagexx::corner_response_into(pointers.data(),output.mutable_data(),extra,std::size_t(first.size()),single,static_cast<skimagexx::CornerResponse>(method),parameter,wide);}
         if(!valid)return py::none();

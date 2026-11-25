@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 #include <cstdint>
@@ -16,7 +15,7 @@ void bind_hough_circle_peaks(py::module_& module) {
     }, py::arg("radii").noconvert());
     module.def("hough_circle_peak_indices", [ndarray](const py::array& votes, int min_xdistance,
                int min_ydistance, std::optional<double> threshold) -> py::object {
-        if (!py::type::of(votes).is(ndarray) || votes.ndim() != 3 || !(votes.flags() & py::array::c_style) ||
+        if (!py::type::handle_of(votes).is(ndarray) || votes.ndim() != 3 || !(votes.flags() & py::array::c_style) ||
             !votes.attr("flags").attr("aligned").cast<bool>() || !votes.dtype().attr("metadata").is_none() ||
             !votes.dtype().equal(py::dtype::of<double>()) || votes.shape(0) < 1 || votes.shape(0) > 16 ||
             votes.shape(1) < 1 || votes.shape(1) > 256 || votes.shape(2) < 1 || votes.shape(2) > 256)

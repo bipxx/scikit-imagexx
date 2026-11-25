@@ -1,11 +1,9 @@
 #include <skimagexx/corner_fast.hpp>
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <cmath>
-#include <vector>
 
 namespace py = pybind11;
 
@@ -39,7 +37,7 @@ FastKind fast_kind(const py::array& image) {
 template <typename OutputT, typename Fn>
 py::object run_fast(const py::array& image, FastKind expected_kind,
     py::ssize_t rows, py::ssize_t columns, Fn&& fn) {
-    py::array_t<OutputT> owner(std::vector<py::ssize_t>{rows, columns});
+    auto owner = skimagexx::bindings::empty_c_array<OutputT>({rows, columns});
     if (fast_kind(image) != expected_kind || image.shape(0) != rows
         || image.shape(1) != columns) {
         return py::none();

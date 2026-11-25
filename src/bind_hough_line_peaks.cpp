@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 #include <algorithm>
@@ -15,7 +14,7 @@ namespace {
 
 template<class T>
 void check_array(const py::array& value, const py::object& ndarray, int rank) {
-    if (!py::type::of(value).is(ndarray) || value.ndim() != rank ||
+    if (!py::type::handle_of(value).is(ndarray) || value.ndim() != rank ||
         !value.dtype().equal(py::dtype::of<T>()) || !(value.flags() & py::array::c_style) ||
         reinterpret_cast<std::uintptr_t>(value.data()) % alignof(T))
         throw py::value_error("hough_line_peaks requires aligned native C-order arrays");

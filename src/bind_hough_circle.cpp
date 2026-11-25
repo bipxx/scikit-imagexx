@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 #include <cfenv>
@@ -13,7 +12,7 @@ void bind_hough_circle(py::module_& module) {
     const py::object ndarray = py::module_::import("numpy").attr("ndarray");
     module.def("hough_circle_accumulate", [ndarray](const py::array& image, const std::vector<int>& radii,
                bool normalize, bool full_output) -> py::object {
-        if (!py::type::of(image).is(ndarray) || image.ndim() != 2 || !(image.flags() & py::array::c_style) ||
+        if (!py::type::handle_of(image).is(ndarray) || image.ndim() != 2 || !(image.flags() & py::array::c_style) ||
             (!image.dtype().equal(py::dtype::of<bool>()) && !image.dtype().equal(py::dtype::of<std::uint8_t>())))
             throw py::value_error("hough_circle requires an ordinary C-order Boolean or uint8 image");
         const auto height = image.shape(0), width = image.shape(1);

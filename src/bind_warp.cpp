@@ -1,5 +1,6 @@
 #include "skimagexx/warp.hpp"
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 #include <pybind11/stl.h>
 #include <algorithm>
 #include <cmath>
@@ -71,12 +72,12 @@ py::object sample(const py::array& image, std::array<py::ssize_t, 2> dimensions,
         }
         homogeneous = static_cast<const double*>(h.data());
     }
-    std::vector<py::ssize_t> shape{dimensions[0], dimensions[1]};
-    if (image.ndim() == 3) shape.push_back(channels);
+    const py::ssize_t shape[]{dimensions[0], dimensions[1], channels};
+    const int rank = image.ndim() == 3 ? 3 : 2;
     const auto out_dtype = type == PixelType::uint8 && order != 0 ? py::dtype::of<double>() : dtype;
     if (dimensions[0] > PY_SSIZE_T_MAX / out_dtype.itemsize() / dimensions[1] / channels)
         return py::none();
-    py::array output(out_dtype, shape);
+    auto output = bindings::empty_c_array(out_dtype, shape, rank);
     const auto* input_data = image.data();
     auto* out_data = output.mutable_data();
     bool done;
@@ -98,9 +99,11 @@ py::object coords(const std::vector<py::ssize_t>& dimensions,
     const bool color = dimensions.size() == 3;
     const WarpShape shape{std::size_t(dimensions[0]), std::size_t(dimensions[1]),
                           color ? std::size_t(dimensions[2]) : 1};
-    auto output_shape = dimensions;
-    output_shape.insert(output_shape.begin(), py::ssize_t(dimensions.size()));
-    py::array output(single ? py::dtype::of<float>() : py::dtype::of<double>(), output_shape);
+    const py::ssize_t output_shape[]{py::ssize_t(dimensions.size()), dimensions[0],
+                                     dimensions[1], color ? dimensions[2] : 1};
+    auto output = bindings::empty_c_array(
+        single ? py::dtype::of<float>() : py::dtype::of<double>(), output_shape,
+        static_cast<int>(dimensions.size()) + 1);
     void* data = output.mutable_data();
     bool done;
     {

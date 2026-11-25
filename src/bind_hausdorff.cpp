@@ -1,8 +1,6 @@
 #include "skimagexx/hausdorff.hpp"
 #include "bind_array_storage.hpp"
-
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 namespace py = pybind11;
 
@@ -24,14 +22,14 @@ skimagexx::HausdorffMask mask(const py::array& array) {
 py::array pair_point(const skimagexx::HausdorffResult& result,
                      std::size_t side, py::ssize_t rank) {
     const auto count = static_cast<py::ssize_t>(result.count[side]);
-    py::array_t<py::ssize_t> coordinates(py::array::ShapeContainer{rank, count});
+    auto coordinates = skimagexx::bindings::empty_c_array<py::ssize_t>({rank, count});
     auto* data = coordinates.mutable_data();
     for (py::ssize_t axis = 0; axis < rank; ++axis)
         for (py::ssize_t i = 0; i < count; ++i)
             data[axis * count + i] = result.points[side][i][axis];
-    return py::array(coordinates.dtype(), py::array::ShapeContainer{rank},
-                     py::array::StridesContainer{count * py::ssize_t(sizeof(py::ssize_t))},
-                     data + result.attaining[side], coordinates);
+    return skimagexx::bindings::array_view(
+        coordinates, {rank}, {count * py::ssize_t(sizeof(py::ssize_t))},
+        data + result.attaining[side]);
 }
 
 } // namespace
@@ -52,6 +50,6 @@ void bind_hausdorff(py::module_& module) {
         }
         if (!result.count[0] && !result.count[1]) return py::int_(0);
         if (!both_nonempty) return py::float_(result.distance);
-        return py::module_::import("numpy").attr("float64")(result.distance);
+        return py::dtype::of<double>().attr("type")(result.distance);
     }, py::arg("image0").noconvert(), py::arg("image1").noconvert(), py::arg("mode"));
 }

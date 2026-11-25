@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 
 #include <cfenv>
 #include <cmath>
@@ -13,7 +12,7 @@ namespace py = pybind11;
 namespace {
 
 void check_theta(const py::array& theta, const py::object& ndarray) {
-    if (!py::type::of(theta).is(ndarray) || theta.ndim() != 1 ||
+    if (!py::type::handle_of(theta).is(ndarray) || theta.ndim() != 1 ||
         !theta.dtype().equal(py::dtype::of<double>()))
         throw py::value_error("hough_line requires ordinary float64 theta storage");
     skimagexx::bindings::check_array_storage(theta);
@@ -53,7 +52,7 @@ void bind_hough_line(py::module_& module) {
                const py::array& theta) {
         if (std::fegetround() != FE_TONEAREST)
             throw py::value_error("hough_line requires round-to-nearest");
-        if (!py::type::of(image).is(ndarray) || image.ndim() != 2 || !aligned_c(image, 1) ||
+        if (!py::type::handle_of(image).is(ndarray) || image.ndim() != 2 || !aligned_c(image, 1) ||
             (!image.dtype().equal(py::dtype::of<bool>()) &&
              !image.dtype().equal(py::dtype::of<std::uint8_t>())))
             throw py::value_error("hough_line requires an ordinary C-order Boolean or uint8 image");

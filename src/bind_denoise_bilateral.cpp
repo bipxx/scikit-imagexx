@@ -1,11 +1,9 @@
 #include "skimagexx/denoise_bilateral.hpp"
 #include "bind_array_storage.hpp"
 
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <cfenv>
-#include <vector>
 
 namespace py = pybind11;
 
@@ -18,8 +16,8 @@ bool contiguous_aligned(const py::array& array) {
 template<class T>
 py::array bilateral(const py::array& image, double maximum, std::size_t window, double cval,
                     const py::array& color, const py::array& spatial) {
-    const std::vector<py::ssize_t> shape(image.shape(), image.shape() + 3);
-    py::array result(image.dtype(), shape);
+    const py::ssize_t shape[]{image.shape(0), image.shape(1), image.shape(2)};
+    auto result = skimagexx::bindings::empty_c_array(image.dtype(), shape, 3);
     const auto* input = static_cast<const T*>(image.data());
     const auto* color_lut = static_cast<const T*>(color.data());
     const auto* spatial_lut = static_cast<const T*>(spatial.data());

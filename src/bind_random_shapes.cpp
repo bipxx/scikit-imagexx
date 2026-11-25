@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 
 #include <array>
 
@@ -23,8 +22,11 @@ skimagexx::RandomShapeIndexView index_view(const py::array& values) {
 void bind_random_shapes(py::module_& module) {
     const py::object ndarray = py::module_::import("numpy").attr("ndarray");
     const auto ordinary = [ndarray](const py::array& array, int ndim, const py::dtype& dtype) {
-        return py::type::of(array).is(ndarray) && array.ndim() == ndim && array.dtype().equal(dtype) &&
-            array.dtype().attr("metadata").is_none() && array.attr("flags").attr("aligned").cast<bool>();
+        if (!py::type::handle_of(array).is(ndarray) || array.ndim() != ndim)
+            return false;
+        const auto descriptor = array.dtype();
+        return descriptor.equal(dtype) && descriptor.attr("metadata").is_none() &&
+            array.attr("flags").attr("aligned").cast<bool>();
     };
     module.def("random_shapes_paint", [ordinary](py::array image, py::array occupied, const py::array& rows,
                const py::array& columns, const py::array& color, bool allow_overlap) {

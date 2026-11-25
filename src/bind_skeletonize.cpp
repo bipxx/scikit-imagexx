@@ -1,8 +1,7 @@
 #include "skeletonize_internal.hpp"
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 namespace py = pybind11;
 
@@ -62,7 +61,7 @@ py::object skeletonize(const py::handle& input, const py::handle& method) {
         throw py::value_error(noncanonical);
     }
 
-    py::array_t<bool> output(std::vector<py::ssize_t>{image.shape(0), image.shape(1)});
+    auto output = skimagexx::bindings::empty_c_array<bool>({image.shape(0), image.shape(1)});
     static_assert(sizeof(bool) == 1);
     skimagexx::detail::copy_skeletonize_zhang_rows(
         padded, rows, cols, reinterpret_cast<std::uint8_t*>(output.mutable_data()));

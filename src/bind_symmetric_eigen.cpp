@@ -1,14 +1,13 @@
 #include "skimagexx/symmetric_eigen.hpp"
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 #include <cstdint>
+#include <utility>
 #include <vector>
 #include <algorithm>
 
 namespace py=pybind11;
 void bind_symmetric_eigen(py::module_& m) {
-    m.def("symmetric_eigenvalues",[](py::object elements,bool legacy_scalars)->py::object {
-        const auto np=py::module_::import("numpy");
+    m.def("symmetric_eigenvalues",[np=py::module_::import("numpy")](py::object elements,bool legacy_scalars)->py::object {
         const auto array_type=np.attr("ndarray"),memmap_type=np.attr("memmap");
         const auto float32_type=np.attr("float32"),float64_type=np.attr("float64");
         const auto array_like=[&](py::handle x){const auto t=py::type::of(x);return t.is(array_type) || t.is(memmap_type);};
@@ -55,7 +54,7 @@ void bind_symmetric_eigen(py::module_& m) {
             if(!dtype.attr("isnative").cast<bool>())dtype=py::reinterpret_borrow<py::dtype>(dtype.attr("newbyteorder")("="));
             auto out_shape=shape;
             if(pair)out_shape.insert(out_shape.begin(),py::ssize_t(dimension));else out_shape.push_back(py::ssize_t(dimension));
-            py::array output(dtype,out_shape);
+            py::array output(dtype,std::move(out_shape));
             std::vector<py::array_t<T,py::array::c_style|py::array::forcecast>> prepared;prepared.reserve(count);
             std::vector<const void*> fields;fields.reserve(count);
             for(auto& input:raw){
@@ -75,7 +74,7 @@ void bind_symmetric_eigen(py::module_& m) {
             std::vector<py::ssize_t> strides{ -output.strides(output.ndim()-1) };
             for(py::ssize_t axis=0;axis<first.ndim();++axis)strides.push_back(output.strides(axis));
             const auto* start=static_cast<const char*>(output.data())+(dimension-1)*std::size_t(output.strides(output.ndim()-1));
-            return py::array(dtype,leading_shape,strides,start,output);
+            return py::array(dtype,std::move(leading_shape),std::move(strides),start,output);
         };
         return single ? execute(float{}) : execute(double{});
     });

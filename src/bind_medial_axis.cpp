@@ -1,8 +1,7 @@
 #include "skimagexx/medial_axis.hpp"
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <cstring>
 
@@ -52,7 +51,7 @@ py::object prepare(const py::handle& input, const py::handle& mask) {
         }
         mask_data = static_cast<const std::uint8_t*>(array.data());
     }
-    py::array_t<bool> prepared(std::vector<py::ssize_t>{image.shape(0), image.shape(1)});
+    auto prepared = skimagexx::bindings::empty_c_array<bool>({image.shape(0), image.shape(1)});
     static_assert(sizeof(bool) == 1);
     auto* output = reinterpret_cast<std::uint8_t*>(prepared.mutable_data());
     const auto* data = static_cast<const std::uint8_t*>(image.data());
@@ -95,7 +94,7 @@ py::array_t<bool> ordered(const py::handle& input, const py::handle& field, cons
             std::size_t(image.shape(0)), std::size_t(image.shape(1)), result)) {
         throw py::value_error("medial_axis requires finite distances and unique foreground priorities");
     }
-    py::array_t<bool> output(std::vector<py::ssize_t>{image.shape(0), image.shape(1)});
+    auto output = skimagexx::bindings::empty_c_array<bool>({image.shape(0), image.shape(1)});
     std::memcpy(output.mutable_data(), result.data(), result.size());
     return output;
 }

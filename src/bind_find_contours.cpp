@@ -1,8 +1,7 @@
 #include "skimagexx/find_contours.hpp"
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <cstring>
 #include <optional>
@@ -120,7 +119,8 @@ py::object find_contours(const py::handle& input, const py::handle& level, const
     py::list output(result.size());
     for (std::size_t i = 0; i < result.size(); ++i) {
         const auto& contour = result[i];
-        py::array_t<double> array(std::vector<py::ssize_t>{static_cast<py::ssize_t>(contour.size()), 2});
+        auto array = skimagexx::bindings::empty_c_array<double>({
+            static_cast<py::ssize_t>(contour.size()), 2});
         std::memcpy(array.mutable_data(), contour.data(), contour.size() * sizeof(skimagexx::ContourPoint));
         output[i] = std::move(array);
     }

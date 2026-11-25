@@ -1,8 +1,7 @@
 #include "skimagexx/restoration_denoise.hpp"
 
 #include "bind_array_storage.hpp"
-
-#include <pybind11/numpy.h>
+#include "bind_helpers.hpp"
 
 #include <cmath>
 #include <cstdint>
@@ -66,7 +65,7 @@ bool valid_rank(const py::array& image, int rank, int min_rank, int max_rank) {
 
 template<class T, class Function>
 py::object array_result(const py::array& image, Function compute) {
-    py::array_t<T> output(std::vector<py::ssize_t>{image.shape(), image.shape() + image.ndim()});
+    auto output = skimagexx::bindings::empty_c_array<T>(image.shape(), static_cast<int>(image.ndim()));
     auto* data = output.mutable_data();
     bool ok;
     {

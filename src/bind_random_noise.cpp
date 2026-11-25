@@ -1,11 +1,8 @@
 #include "skimagexx/random_noise.hpp"
 #include "bind_array_storage.hpp"
-
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <cfenv>
-#include <vector>
 
 namespace py = pybind11;
 
@@ -20,8 +17,7 @@ void check_buffer(const py::array& array) {
 }
 
 py::array_t<double> make_output(const py::array& image) {
-    return py::array_t<double>(py::array::ShapeContainer(
-        std::vector<py::ssize_t>(image.shape(), image.shape() + image.ndim())));
+    return skimagexx::bindings::empty_c_array<double>(image.shape(), static_cast<int>(image.ndim()));
 }
 
 skimagexx::RandomNoiseDraw prepare_draw(const py::object& input, double probability, const py::array& image) {

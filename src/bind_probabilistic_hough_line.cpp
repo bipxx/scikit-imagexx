@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 
 #include <cfenv>
 
@@ -11,7 +10,7 @@ namespace py = pybind11;
 void bind_probabilistic_hough_line(py::module_& module) {
     const py::object ndarray = py::module_::import("numpy").attr("ndarray");
     const auto ordinary = [ndarray](const py::array& value, int ndim) {
-        return py::type::of(value).is(ndarray) && value.ndim() == ndim && (value.flags() & py::array::c_style) &&
+        return py::type::handle_of(value).is(ndarray) && value.ndim() == ndim && (value.flags() & py::array::c_style) &&
                value.attr("flags").attr("aligned").cast<bool>() && value.dtype().attr("metadata").is_none();
     };
     module.def("probabilistic_hough_foreground", [ordinary](const py::array& image) -> py::object {

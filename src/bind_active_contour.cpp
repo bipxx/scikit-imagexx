@@ -1,8 +1,7 @@
 #include "skimagexx/active_contour.hpp"
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <algorithm>
 #include <cstdint>
@@ -110,7 +109,7 @@ py::object run(const py::array& image, const py::array& snake, std::size_t chann
     if (!supported) {
         return py::none();
     }
-    py::array_t<Work> output(std::vector<py::ssize_t>{static_cast<py::ssize_t>(points), 2});
+    auto output = skimagexx::bindings::empty_c_array<Work>({static_cast<py::ssize_t>(points), 2});
     std::memcpy(output.mutable_data(), fitted.data(), fitted.size() * sizeof(Work));
     return output;
 }

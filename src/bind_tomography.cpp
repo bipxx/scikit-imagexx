@@ -1,8 +1,7 @@
 #include <skimagexx/tomography.hpp>
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include "bind_helpers.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -61,7 +60,7 @@ py::object forward(const py::array& a, const py::array& coordinates, bool circle
     const int rows = int(a.shape(0)), columns = int(a.shape(1));
     const int angles = int(coordinates.shape(1));
     const int size = radon_detector_size(rows, columns, circle);
-    py::array_t<T> output(std::vector<py::ssize_t>{size, angles});
+    auto output = bindings::empty_c_array<T>({size, angles});
     auto* out = output.mutable_data();
     const auto* input = data<T>(a);
     const auto* values = data<double>(coordinates);
@@ -96,7 +95,7 @@ py::object inverse(const py::array& a, const py::array& coordinates, int size, T
     if (coordinates.shape(1) != angles || size < 1 || size > max_extent
         || (interpolation == TomographyInterpolation::cubic
             && radon_detector_size(detectors, detectors, !circle) < 4)) return py::none();
-    py::array_t<T> output(std::vector<py::ssize_t>{size, size});
+    auto output = bindings::empty_c_array<T>({size, size});
     auto* out = output.mutable_data();
     const auto* input = data<T>(a);
     const auto* values = data<double>(coordinates);
@@ -138,12 +137,12 @@ py::object sart(const py::array& a, const py::array& theta, const py::array& shi
         if (!valid<T>(image, 2) || image.shape(0) != size || image.shape(1) != size) return py::none();
         storage(image);
     } else {
-        image = py::array_t<T>(std::vector<py::ssize_t>{size, size});
+        image = bindings::empty_c_array<T>({size, size});
     }
     py::array_t<T> clipped;
     T* final_image = nullptr;
     if (has_clip) {
-        clipped = py::array_t<T>(std::vector<py::ssize_t>{size, size});
+        clipped = bindings::empty_c_array<T>({size, size});
         final_image = clipped.mutable_data();
     }
     auto* estimate = static_cast<T*>(image.mutable_data());

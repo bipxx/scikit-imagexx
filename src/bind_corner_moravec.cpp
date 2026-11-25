@@ -1,10 +1,7 @@
 #include <skimagexx/corner_moravec.hpp>
 
 #include "bind_array_storage.hpp"
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
-
-#include <vector>
+#include "bind_helpers.hpp"
 
 namespace py = pybind11;
 
@@ -38,7 +35,7 @@ py::object make_response(const py::handle& input, const py::handle& radius) {
         return py::none();
     }
 
-    py::array_t<double> owner(std::vector<py::ssize_t>{rows, columns});
+    auto owner = skimagexx::bindings::empty_c_array<double>({rows, columns});
     // NumPy allocated the output. Check the input's current descriptor and
     // contiguous backing before borrowing its bytes for the native scan.
     if (!byte_image(image) || image.shape(0) != rows || image.shape(1) != columns) {

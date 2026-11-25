@@ -2,7 +2,6 @@
 #include "bind_array_storage.hpp"
 
 #include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
 
 #include <cstdint>
 
@@ -13,7 +12,7 @@ void bind_resize_local_mean(py::module_& module) {
     const py::object ndarray = py::module_::import("numpy").attr("ndarray");
     module.def("resize_local_mean_bounded", [ndarray](const py::array& image, int rows, int columns,
                bool preserve_range) -> py::object {
-        if (!py::type::of(image).is(ndarray) || image.ndim() != 2 || !(image.flags() & py::array::c_style) ||
+        if (!py::type::handle_of(image).is(ndarray) || image.ndim() != 2 || !(image.flags() & py::array::c_style) ||
             !image.attr("flags").attr("aligned").cast<bool>() || !image.dtype().attr("metadata").is_none() ||
             image.shape(0) < 16 || image.shape(0) > 2048 || image.shape(1) < 16 || image.shape(1) > 2048 ||
             rows < 1 || rows > image.shape(0) || columns < 1 || columns > image.shape(1))
