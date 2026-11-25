@@ -72,6 +72,28 @@ template<class T> void r2c_full(const std::vector<std::size_t>& shape, const std
     if (!input || !output) throw std::invalid_argument("FFT null buffer");
     const auto scale=forward ? T(1) : T(1.L/static_cast<long double>(l.transform_size));
     POCKETFFT_NAMESPACE::r2c(shape,l.real,l.full_complex,axes,forward,input,output,scale,std::size_t(workers));
+    if (shape.size() == 2 && axes.back() == 1) {
+        const auto rows = shape[0], cols = shape[1];
+        const auto interior = (cols - 1) / 2;
+        for (std::size_t row = 0; row < rows; ++row) {
+            const auto reflected = axes.size() == 2 && row != 0 ? rows - row : row;
+            const auto* src = output + row * cols;
+            auto* dst = output + reflected * cols;
+            // Boundary columns may alias another row's source. Keep the
+            // same row order and conjugate each boundary even at self-pairs.
+            dst[0] = std::conj(src[0]);
+            std::size_t col = 1;
+            for (; col + 3 <= interior; col += 4) {
+                dst[cols - col] = std::conj(src[col]);
+                dst[cols - col - 1] = std::conj(src[col + 1]);
+                dst[cols - col - 2] = std::conj(src[col + 2]);
+                dst[cols - col - 3] = std::conj(src[col + 3]);
+            }
+            for (; col <= interior; ++col) dst[cols - col] = std::conj(src[col]);
+            if (cols % 2 == 0) dst[cols / 2] = std::conj(src[cols / 2]);
+        }
+        return;
+    }
     // SciPy c2c_sym_internal: preserve its complete serial iteration order,
     // including self-conjugate/boundary planes and every transformed axis.
     POCKETFFT_NAMESPACE::detail::ndarr<std::complex<T>> values(output,shape,l.full_complex);

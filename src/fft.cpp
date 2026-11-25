@@ -1,6 +1,25 @@
 #include "skimagexx/image.hpp"
+#include <cstdlib>
+
+namespace skimagexx::detail {
+static bool fft_baseline_simd_enabled() {
+    static const bool enabled = [] {
+#ifdef _MSC_VER
+        char* value = nullptr;
+        std::size_t length = 0;
+        const bool disabled = _dupenv_s(&value, &length, "SKIMAGEXX_DISABLE_SIMD") == 0 && value != nullptr;
+        std::free(value);
+        return !disabled;
+#else
+        return std::getenv("SKIMAGEXX_DISABLE_SIMD") == nullptr;
+#endif
+    }();
+    return enabled;
+}
+}
+
 #define POCKETFFT_NAMESPACE pocketfft_scalar
-#define POCKETFFT_NO_VECTORS 1
+#define POCKETFFT_SIMD_ENABLED() ::skimagexx::detail::fft_baseline_simd_enabled()
 #define FFT_LEAF fft_scalar
 #include "fft_impl.hpp"
 

@@ -1,6 +1,4 @@
-"""Bounded native Moravec responses with a local NumPy-backed memoryview."""
-
-import numpy as np
+"""Bounded native Moravec responses backed by NumPy-owned storage."""
 
 from . import _core
 from ._compat import fallback
@@ -11,4 +9,4 @@ def corner_moravec(image, window_size=1):
     owner = _core.corner_moravec_u8(image, window_size)
     if owner is None:
         return fallback('feature', 'corner_moravec', image, window_size)
-    return np.asarray(memoryview(owner))
+    return owner

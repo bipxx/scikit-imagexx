@@ -63,8 +63,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <algorithm>
 #include <limits>
 #if defined(__AVX2__) && defined(_MSC_VER) && !defined(__clang__) && !defined(POCKETFFT_NO_VECTORS)
-#include <immintrin.h>
 #define POCKETFFT_MSVC_AVX2
+#endif
+#if defined(__AVX2__) && !defined(__AVX512F__) && !defined(POCKETFFT_NO_VECTORS)
+#define POCKETFFT_AVX2_TILES
+#endif
+#if defined(POCKETFFT_MSVC_AVX2) || defined(POCKETFFT_AVX2_TILES)
+#include <immintrin.h>
 #endif
 #if defined(_MSC_VER) && defined(_M_X64)
 #include <cfenv>
@@ -2897,7 +2902,7 @@ template<typename T0> class T_dcst4
 // multi-D infrastructure
 //
 
-template<typename T> std::shared_ptr<T> get_plan(size_t length)
+template<typename T> std::shared_ptr<T> get_shared_plan(size_t length)
   {
 #if POCKETFFT_CACHE_SIZE==0
   return std::make_shared<T>(length);
@@ -2946,6 +2951,26 @@ template<typename T> std::shared_ptr<T> get_plan(size_t length)
   cache[lru] = plan;
   last_access[lru] = ++access_counter;
   }
+  return plan;
+#endif
+  }
+
+template<typename T> std::shared_ptr<T> get_plan(size_t length)
+  {
+#if POCKETFFT_CACHE_SIZE==0
+  return get_shared_plan<T>(length);
+#else
+  static thread_local std::array<std::shared_ptr<T>, 4> recent;
+  for (size_t i=0; i<recent.size(); ++i)
+    if (recent[i] && recent[i]->length()==length)
+      {
+      if (i!=0)
+        std::rotate(recent.begin(), recent.begin()+i, recent.begin()+i+1);
+      return recent.front();
+      }
+  auto plan = get_shared_plan<T>(length);
+  std::move_backward(recent.begin(), recent.end()-1, recent.end());
+  recent.front() = plan;
   return plan;
 #endif
   }
@@ -3214,19 +3239,219 @@ template<> struct VTYPE<long double>
   };
 #endif
 
+#if defined(POCKETFFT_AVX2_TILES) && !defined(POCKETFFT_NO_VECTORS)
+template<typename T> struct avx2_tile;
+
+template<> struct avx2_tile<double>
+  {
+  using reg = __m256d;
+  static reg load(const double *p) { return _mm256_loadu_pd(p); }
+  static void store(double *p, reg v) { _mm256_storeu_pd(p, v); }
+
+  static void transpose(reg (&v)[4])
+    {
+    const auto a = _mm256_unpacklo_pd(v[0], v[1]);
+    const auto b = _mm256_unpackhi_pd(v[0], v[1]);
+    const auto c = _mm256_unpacklo_pd(v[2], v[3]);
+    const auto d = _mm256_unpackhi_pd(v[2], v[3]);
+    v[0] = _mm256_permute2f128_pd(a, c, 0x20);
+    v[1] = _mm256_permute2f128_pd(b, d, 0x20);
+    v[2] = _mm256_permute2f128_pd(a, c, 0x31);
+    v[3] = _mm256_permute2f128_pd(b, d, 0x31);
+    }
+
+  static void load_complex(const cmplx<double> *p, reg &r, reg &i)
+    {
+    const auto lo = load(&p[0].r);
+    const auto hi = load(&p[2].r);
+    const auto a = _mm256_permute2f128_pd(lo, hi, 0x20);
+    const auto b = _mm256_permute2f128_pd(lo, hi, 0x31);
+    r = _mm256_unpacklo_pd(a, b);
+    i = _mm256_unpackhi_pd(a, b);
+    }
+
+  static void store_complex(cmplx<double> *p, reg r, reg i)
+    {
+    const auto a = _mm256_unpacklo_pd(r, i);
+    const auto b = _mm256_unpackhi_pd(r, i);
+    store(&p[0].r, _mm256_permute2f128_pd(a, b, 0x20));
+    store(&p[2].r, _mm256_permute2f128_pd(a, b, 0x31));
+    }
+  };
+
+template<> struct avx2_tile<float>
+  {
+  using reg = __m256;
+  static reg load(const float *p) { return _mm256_loadu_ps(p); }
+  static void store(float *p, reg v) { _mm256_storeu_ps(p, v); }
+
+  static void transpose(reg (&v)[8])
+    {
+    const auto a0 = _mm256_unpacklo_ps(v[0], v[1]);
+    const auto a1 = _mm256_unpackhi_ps(v[0], v[1]);
+    const auto a2 = _mm256_unpacklo_ps(v[2], v[3]);
+    const auto a3 = _mm256_unpackhi_ps(v[2], v[3]);
+    const auto a4 = _mm256_unpacklo_ps(v[4], v[5]);
+    const auto a5 = _mm256_unpackhi_ps(v[4], v[5]);
+    const auto a6 = _mm256_unpacklo_ps(v[6], v[7]);
+    const auto a7 = _mm256_unpackhi_ps(v[6], v[7]);
+    const auto b0 = _mm256_shuffle_ps(a0, a2, 0x44);
+    const auto b1 = _mm256_shuffle_ps(a0, a2, 0xEE);
+    const auto b2 = _mm256_shuffle_ps(a1, a3, 0x44);
+    const auto b3 = _mm256_shuffle_ps(a1, a3, 0xEE);
+    const auto b4 = _mm256_shuffle_ps(a4, a6, 0x44);
+    const auto b5 = _mm256_shuffle_ps(a4, a6, 0xEE);
+    const auto b6 = _mm256_shuffle_ps(a5, a7, 0x44);
+    const auto b7 = _mm256_shuffle_ps(a5, a7, 0xEE);
+    v[0] = _mm256_permute2f128_ps(b0, b4, 0x20);
+    v[1] = _mm256_permute2f128_ps(b1, b5, 0x20);
+    v[2] = _mm256_permute2f128_ps(b2, b6, 0x20);
+    v[3] = _mm256_permute2f128_ps(b3, b7, 0x20);
+    v[4] = _mm256_permute2f128_ps(b0, b4, 0x31);
+    v[5] = _mm256_permute2f128_ps(b1, b5, 0x31);
+    v[6] = _mm256_permute2f128_ps(b2, b6, 0x31);
+    v[7] = _mm256_permute2f128_ps(b3, b7, 0x31);
+    }
+
+  static void load_complex(const cmplx<float> *p, reg &r, reg &i)
+    {
+    const auto lo = load(&p[0].r);
+    const auto hi = load(&p[4].r);
+    const auto a = _mm256_permute2f128_ps(lo, hi, 0x20);
+    const auto b = _mm256_permute2f128_ps(lo, hi, 0x31);
+    r = _mm256_shuffle_ps(a, b, 0x88);
+    i = _mm256_shuffle_ps(a, b, 0xDD);
+    }
+
+  static void store_complex(cmplx<float> *p, reg r, reg i)
+    {
+    const auto a = _mm256_unpacklo_ps(r, i);
+    const auto b = _mm256_unpackhi_ps(r, i);
+    store(&p[0].r, _mm256_permute2f128_ps(a, b, 0x20));
+    store(&p[4].r, _mm256_permute2f128_ps(a, b, 0x31));
+    }
+  };
+
+template<typename T> typename avx2_tile<T>::reg native_reg(vtype_t<T> value)
+  {
+#ifdef POCKETFFT_MSVC_AVX2
+  return value.native;
+#else
+  return value;
+#endif
+  }
+
+// Read complete frequency tiles and leave DC, Nyquist, and short tails to the
+// caller. Each register delivered to consume holds one frequency across rows.
+template<typename T, size_t vlen, typename Consume>
+size_t load_complex_tiles(const multi_iter<vlen> &it, const cndarr<cmplx<T>> &src,
+  size_t first, size_t end, const Consume &consume)
+  {
+  if (it.stride_in()!=sizeof(cmplx<T>) || end-first<vlen) return first;
+  using tile = avx2_tile<T>;
+  const cmplx<T> *rows[vlen];
+  for (size_t j=0; j<vlen; ++j)
+    rows[j] = &src[it.iofs(j,0)];
+  for (; end-first>=vlen; first+=vlen)
+    {
+    typename tile::reg real[vlen], imag[vlen];
+    for (size_t j=0; j<vlen; ++j)
+      tile::load_complex(rows[j]+first, real[j], imag[j]);
+    tile::transpose(real);
+    tile::transpose(imag);
+    for (size_t j=0; j<vlen; ++j)
+      consume(first+j, vtype_t<T>(real[j]), vtype_t<T>(imag[j]));
+    }
+  return first;
+  }
+
+template<typename T, size_t vlen, typename Produce>
+size_t store_complex_tiles(const multi_iter<vlen> &it, ndarr<cmplx<T>> &dst,
+  size_t first, size_t end, const Produce &produce)
+  {
+  if (it.stride_out()!=sizeof(cmplx<T>) || end-first<vlen) return first;
+  using tile = avx2_tile<T>;
+  cmplx<T> *rows[vlen];
+  for (size_t j=0; j<vlen; ++j)
+    rows[j] = &dst[it.oofs(j,0)];
+  for (; end-first>=vlen; first+=vlen)
+    {
+    typename tile::reg real[vlen], imag[vlen];
+    for (size_t j=0; j<vlen; ++j)
+      {
+      const auto value = produce(first+j);
+      real[j] = native_reg<T>(value.r);
+      imag[j] = native_reg<T>(value.i);
+      }
+    tile::transpose(real);
+    tile::transpose(imag);
+    for (size_t j=0; j<vlen; ++j)
+      tile::store_complex(rows[j]+first, real[j], imag[j]);
+    }
+  return first;
+  }
+#endif
+
 // The worker's line buffer and FFT scratch use the same lane width. Scalar
 // tails reuse both regions after the worker has finished its vector batches.
 class fft_workspace
   {
+  struct scratch_cache
+    {
+    std::unique_ptr<void, decltype(&aligned_dealloc)> storage{nullptr, &aligned_dealloc};
+    size_t capacity = 0;
+    bool in_use = false;
+    };
+
   size_t line_bytes;
-  arr<char> storage;
+  arr<char> temporary;
+  scratch_cache *cache = nullptr;
+  char *buffer;
 
   public:
     fft_workspace(size_t len, size_t scratch_size, size_t elemsize, size_t lanes)
-      : line_bytes(len*elemsize*lanes), storage(line_bytes+scratch_size*elemsize*lanes) {}
-    char *data() { return storage.data(); }
-    char *scratch() { return storage.data()+line_bytes; }
+      : line_bytes(len*elemsize*lanes)
+      {
+      // Retain one small workspace per worker. Large or nested calls keep
+      // their own buffer for the duration of the call.
+      constexpr size_t cache_limit = 256*1024;
+      const auto bytes = line_bytes+scratch_size*elemsize*lanes;
+      if (bytes<=cache_limit)
+        {
+        static thread_local scratch_cache scratch;
+        if (!scratch.in_use)
+          {
+          if (scratch.capacity<bytes)
+            {
+            scratch.storage.reset(aligned_alloc(64, bytes));
+            scratch.capacity = bytes;
+            }
+          scratch.in_use = true;
+          cache = &scratch;
+          buffer = static_cast<char *>(scratch.storage.get());
+          return;
+          }
+        }
+      temporary.resize(bytes);
+      buffer = temporary.data();
+      }
+    fft_workspace(const fft_workspace &) = delete;
+    fft_workspace &operator=(const fft_workspace &) = delete;
+    ~fft_workspace() { if (cache) cache->in_use = false; }
+    char *data() { return buffer; }
+    char *scratch() { return buffer+line_bytes; }
   };
+
+inline bool fft_simd_enabled()
+  {
+#if defined(POCKETFFT_NO_VECTORS)
+  return false;
+#elif defined(POCKETFFT_SIMD_ENABLED)
+  return POCKETFFT_SIMD_ENABLED();
+#else
+  return true;
+#endif
+  }
 
 // DCT/DST plans own their existing per-call temporaries.
 template<typename Plan> size_t fft_scratch_size(const Plan &) { return 0; }
@@ -3236,7 +3461,13 @@ template<typename T> size_t fft_scratch_size(const pocketfft_r<T> &plan) { retur
 template <typename T, size_t vlen> void copy_input(const multi_iter<vlen> &it,
   const cndarr<cmplx<T>> &src, cmplx<vtype_t<T>> *POCKETFFT_RESTRICT dst)
   {
-  for (size_t i=0; i<it.length_in(); ++i)
+  size_t i=0;
+#if defined(POCKETFFT_AVX2_TILES) && !defined(POCKETFFT_NO_VECTORS)
+  i = load_complex_tiles(it, src, i, it.length_in(),
+    [dst](size_t index, vtype_t<T> real, vtype_t<T> imag)
+      { dst[index].Set(real, imag); });
+#endif
+  for (; i<it.length_in(); ++i)
     for (size_t j=0; j<vlen; ++j)
       {
       dst[i].r[j] = src[it.iofs(j,i)].r;
@@ -3247,7 +3478,26 @@ template <typename T, size_t vlen> void copy_input(const multi_iter<vlen> &it,
 template <typename T, size_t vlen> void copy_input(const multi_iter<vlen> &it,
   const cndarr<T> &src, vtype_t<T> *POCKETFFT_RESTRICT dst)
   {
-  for (size_t i=0; i<it.length_in(); ++i)
+  size_t i=0;
+#if defined(POCKETFFT_AVX2_TILES) && !defined(POCKETFFT_NO_VECTORS)
+  if (it.stride_in()==sizeof(T) && it.length_in()>=vlen)
+    {
+    using tile = avx2_tile<T>;
+    const T *rows[vlen];
+    for (size_t j=0; j<vlen; ++j)
+      rows[j] = &src[it.iofs(j,0)];
+    for (; it.length_in()-i>=vlen; i+=vlen)
+      {
+      typename tile::reg values[vlen];
+      for (size_t j=0; j<vlen; ++j)
+        values[j] = tile::load(rows[j]+i);
+      tile::transpose(values);
+      for (size_t j=0; j<vlen; ++j)
+        dst[i+j] = vtype_t<T>(values[j]);
+      }
+    }
+#endif
+  for (; i<it.length_in(); ++i)
     for (size_t j=0; j<vlen; ++j)
       dst[i][j] = src[it.iofs(j,i)];
   }
@@ -3263,7 +3513,12 @@ template <typename T, size_t vlen> void copy_input(const multi_iter<vlen> &it,
 template<typename T, size_t vlen> void copy_output(const multi_iter<vlen> &it,
   const cmplx<vtype_t<T>> *POCKETFFT_RESTRICT src, ndarr<cmplx<T>> &dst)
   {
-  for (size_t i=0; i<it.length_out(); ++i)
+  size_t i=0;
+#if defined(POCKETFFT_AVX2_TILES) && !defined(POCKETFFT_NO_VECTORS)
+  i = store_complex_tiles(it, dst, i, it.length_out(),
+    [src](size_t index) { return src[index]; });
+#endif
+  for (; i<it.length_out(); ++i)
     for (size_t j=0; j<vlen; ++j)
       dst[it.oofs(j,i)].Set(src[i].r[j],src[i].i[j]);
   }
@@ -3271,7 +3526,26 @@ template<typename T, size_t vlen> void copy_output(const multi_iter<vlen> &it,
 template<typename T, size_t vlen> void copy_output(const multi_iter<vlen> &it,
   const vtype_t<T> *POCKETFFT_RESTRICT src, ndarr<T> &dst)
   {
-  for (size_t i=0; i<it.length_out(); ++i)
+  size_t i=0;
+#if defined(POCKETFFT_AVX2_TILES) && !defined(POCKETFFT_NO_VECTORS)
+  if (it.stride_out()==sizeof(T) && it.length_out()>=vlen)
+    {
+    using tile = avx2_tile<T>;
+    T *rows[vlen];
+    for (size_t j=0; j<vlen; ++j)
+      rows[j] = &dst[it.oofs(j,0)];
+    for (; it.length_out()-i>=vlen; i+=vlen)
+      {
+      typename tile::reg values[vlen];
+      for (size_t j=0; j<vlen; ++j)
+        values[j] = native_reg<T>(src[i+j]);
+      tile::transpose(values);
+      for (size_t j=0; j<vlen; ++j)
+        tile::store(rows[j]+i, values[j]);
+      }
+    }
+#endif
+  for (; i<it.length_out(); ++i)
     for (size_t j=0; j<vlen; ++j)
       dst[it.oofs(j,i)] = src[i][j];
   }
@@ -3295,6 +3569,7 @@ POCKETFFT_NOINLINE void general_nd(const cndarr<T> &in, ndarr<T> &out,
   const bool allow_inplace=true)
   {
   std::shared_ptr<Tplan> plan;
+  const bool vectorize = fft_simd_enabled();
 
   for (size_t iax=0; iax<axes.size(); ++iax)
     {
@@ -3303,16 +3578,16 @@ POCKETFFT_NOINLINE void general_nd(const cndarr<T> &in, ndarr<T> &out,
       plan = get_plan<Tplan>(len);
 
     threading::thread_map(
-      util::thread_count(nthreads, in.shape(), axes[iax], VLEN<T>::val),
+      util::thread_count(nthreads, in.shape(), axes[iax], vectorize ? VLEN<T>::val : 1),
       [&] {
         constexpr auto vlen = VLEN<T0>::val;
         const auto &tin(iax==0? in : out);
         multi_iter<vlen> it(tin, out, axes[iax]);
         fft_workspace storage(len, fft_scratch_size(*plan), sizeof(T),
-          it.remaining()>=vlen ? vlen : 1);
+          vectorize && it.remaining()>=vlen ? vlen : 1);
 #ifndef POCKETFFT_NO_VECTORS
         if constexpr (vlen>1)
-          while (it.remaining()>=vlen)
+          while (vectorize && it.remaining()>=vlen)
             {
             it.advance(vlen);
             auto tdatav = reinterpret_cast<add_vec_t<T> *>(storage.data());
@@ -3410,16 +3685,17 @@ template<typename T> POCKETFFT_NOINLINE void general_r2c(
   {
   auto plan = get_plan<pocketfft_r<T>>(in.shape(axis));
   size_t len=in.shape(axis);
+  const bool vectorize = fft_simd_enabled();
   threading::thread_map(
-    util::thread_count(nthreads, in.shape(), axis, VLEN<T>::val),
+    util::thread_count(nthreads, in.shape(), axis, vectorize ? VLEN<T>::val : 1),
     [&] {
     constexpr auto vlen = VLEN<T>::val;
     multi_iter<vlen> it(in, out, axis);
     fft_workspace storage(len, plan->scratch_size(), sizeof(T),
-      it.remaining()>=vlen ? vlen : 1);
+      vectorize && it.remaining()>=vlen ? vlen : 1);
 #ifndef POCKETFFT_NO_VECTORS
     if constexpr (vlen>1)
-      while (it.remaining()>=vlen)
+      while (vectorize && it.remaining()>=vlen)
         {
         it.advance(vlen);
         auto tdatav = reinterpret_cast<vtype_t<T> *>(storage.data());
@@ -3427,7 +3703,16 @@ template<typename T> POCKETFFT_NOINLINE void general_r2c(
         plan->exec(tdatav, fct, true, reinterpret_cast<vtype_t<T> *>(storage.scratch()));
         for (size_t j=0; j<vlen; ++j)
           out[it.oofs(j,0)].Set(tdatav[0][j]);
-        size_t i=1, ii=1;
+        size_t ii=1;
+#if defined(POCKETFFT_AVX2_TILES)
+        ii = store_complex_tiles(it, out, ii, 1+(len-1)/2,
+          [tdatav, forward](size_t k)
+            {
+            const auto imag = tdatav[2*k];
+            return cmplx<vtype_t<T>>(tdatav[2*k-1], forward ? imag : -imag);
+            });
+#endif
+        size_t i=2*ii-1;
         if (forward)
           for (; i<len-1; i+=2, ++ii)
             for (size_t j=0; j<vlen; ++j)
@@ -3466,23 +3751,33 @@ template<typename T> POCKETFFT_NOINLINE void general_c2r(
   {
   auto plan = get_plan<pocketfft_r<T>>(out.shape(axis));
   size_t len=out.shape(axis);
+  const bool vectorize = fft_simd_enabled();
   threading::thread_map(
-    util::thread_count(nthreads, in.shape(), axis, VLEN<T>::val),
+    util::thread_count(nthreads, in.shape(), axis, vectorize ? VLEN<T>::val : 1),
     [&] {
       constexpr auto vlen = VLEN<T>::val;
       multi_iter<vlen> it(in, out, axis);
       fft_workspace storage(len, plan->scratch_size(), sizeof(T),
-        it.remaining()>=vlen ? vlen : 1);
+        vectorize && it.remaining()>=vlen ? vlen : 1);
 #ifndef POCKETFFT_NO_VECTORS
       if constexpr (vlen>1)
-        while (it.remaining()>=vlen)
+        while (vectorize && it.remaining()>=vlen)
           {
           it.advance(vlen);
           auto tdatav = reinterpret_cast<vtype_t<T> *>(storage.data());
           for (size_t j=0; j<vlen; ++j)
             tdatav[0][j]=in[it.iofs(j,0)].r;
           {
-          size_t i=1, ii=1;
+          size_t ii=1;
+#if defined(POCKETFFT_AVX2_TILES)
+          ii = load_complex_tiles(it, in, ii, 1+(len-1)/2,
+            [tdatav, forward](size_t k, vtype_t<T> real, vtype_t<T> imag)
+              {
+              tdatav[2*k-1] = real;
+              tdatav[2*k] = forward ? -imag : imag;
+              });
+#endif
+          size_t i=2*ii-1;
           if (forward)
             for (; i<len-1; i+=2, ++ii)
               for (size_t j=0; j<vlen; ++j)

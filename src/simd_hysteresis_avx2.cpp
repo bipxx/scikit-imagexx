@@ -1,9 +1,19 @@
 #include "simd.hpp"
+#include <array>
 #include <immintrin.h>
 #include <type_traits>
 #include <cstring>
 namespace skimagexx::simd {
 namespace {
+constexpr auto byte_masks = [] {
+    std::array<std::uint32_t, 16> masks{};
+    for (std::uint32_t bits = 0; bits < masks.size(); ++bits) {
+        masks[bits] = (bits & 1) | ((bits & 2) << 7) |
+                      ((bits & 4) << 14) | ((bits & 8) << 21);
+    }
+    return masks;
+}();
+
 template<class T> std::size_t integers(const void* a,const void* b,void* output,std::size_t count,std::ptrdiff_t ap,std::ptrdiff_t bp,bool minimum,bool logical) {
     const auto* x=static_cast<const T*>(a);const auto* y=static_cast<const T*>(b);constexpr auto lanes=32/sizeof(T);
     auto scalar=[](T value){
@@ -28,6 +38,15 @@ template<class T> std::size_t integers(const void* a,const void* b,void* output,
     }return i;
 }
 }
+std::uint64_t hysteresis_pack64(const std::uint8_t* input) {
+    const auto zero = _mm256_setzero_si256();
+    const auto lo = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(input));
+    const auto hi = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(input + 32));
+    const auto lo_zero = std::uint32_t(_mm256_movemask_epi8(_mm256_cmpeq_epi8(lo, zero)));
+    const auto hi_zero = std::uint32_t(_mm256_movemask_epi8(_mm256_cmpeq_epi8(hi, zero)));
+    return ~(std::uint64_t(lo_zero) | (std::uint64_t(hi_zero) << 32));
+}
+
 std::size_t hysteresis_map(const void* a,const void* b,void* output,std::size_t count,PixelType type,
     std::ptrdiff_t ap,std::ptrdiff_t bp,bool minimum) {
     std::size_t i=0;
@@ -38,10 +57,15 @@ std::size_t hysteresis_map(const void* a,const void* b,void* output,std::size_t 
             else {const auto bits=_mm256_movemask_ps(_mm256_cmp_ps(av,bv,_CMP_GT_OQ));for(int k=0;k<8;++k)static_cast<std::uint8_t*>(output)[i+k]=(bits>>k)&1;}
         }
     } else if(type==PixelType::float64) {
+        if (count < 4) return 0;
         const auto* x=static_cast<const double*>(a);const auto* y=static_cast<const double*>(b);
-        for(;i+4<=count;i+=4){const auto av=ap ? _mm256_loadu_pd(x+i) : _mm256_set1_pd(x[0]),bv=bp ? _mm256_loadu_pd(y+i) : _mm256_set1_pd(y[0]);
+        const auto broadcast = bp ? _mm256_setzero_pd() : _mm256_set1_pd(y[0]);
+        for(;i+4<=count;i+=4){const auto av=ap ? _mm256_loadu_pd(x+i) : _mm256_set1_pd(x[0]),bv=bp ? _mm256_loadu_pd(y+i) : broadcast;
             if(minimum)_mm256_storeu_pd(static_cast<double*>(output)+i,_mm256_blendv_pd(_mm256_min_pd(av,bv),av,_mm256_cmp_pd(av,av,_CMP_UNORD_Q)));
-            else {const auto bits=_mm256_movemask_pd(_mm256_cmp_pd(av,bv,_CMP_GT_OQ));for(int k=0;k<4;++k)static_cast<std::uint8_t*>(output)[i+k]=(bits>>k)&1;}
+            else {
+                const auto bits = _mm256_movemask_pd(_mm256_cmp_pd(av,bv,_CMP_GT_OQ));
+                std::memcpy(static_cast<std::uint8_t*>(output) + i, &byte_masks[bits], 4);
+            }
         }
     } else {
         switch(type) {
