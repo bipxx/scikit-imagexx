@@ -1,14 +1,55 @@
-"""Drive a fixed repeatable Matplotlib selection sequence on the Agg backend."""
+"""Record threshold panels or drive scripted selections on the Agg backend."""
 
 from contextlib import contextmanager, ExitStack
+from types import SimpleNamespace
 from unittest.mock import patch
 
-from matplotlib import pyplot as plt, widgets
-from matplotlib.backend_bases import MouseEvent
+import numpy as np
+
+
+class PanelAxis:
+    transAxes = object()
+
+    def __init__(self):
+        self.images = []
+        self.texts = []
+        self.axison = True
+        self.title = ""
+
+    def imshow(self, array, *, cmap):
+        assert cmap == "gray"
+        self.images.append(SimpleNamespace(get_array=lambda: array))
+
+    def set_title(self, title):
+        self.title = title
+
+    def get_title(self):
+        return self.title
+
+    def text(self, x, y, message, *, ha, va, transform):
+        assert (x, y, ha, va, transform) == (0.5, 0.5, "center", "center", self.transAxes)
+        self.texts.append(SimpleNamespace(get_text=lambda: message))
+
+    def axis(self, setting):
+        assert setting == "off"
+        self.axison = False
+
+
+def panel_pyplot():
+    def subplots(rows, cols, *, figsize, sharex, sharey):
+        assert (rows, cols, sharex, sharey) == (4, 2, True, True)
+        fig = SimpleNamespace(get_size_inches=lambda: figsize, tight_layout=lambda: None)
+        axes = np.array([PanelAxis() for _ in range(rows * cols)]).reshape(rows, cols)
+        return fig, axes
+
+    return SimpleNamespace(subplots=subplots, cm=SimpleNamespace(gray="gray"))
 
 
 @contextmanager
 def selections(mode, polygons, *, undo=False):
+    from matplotlib import pyplot as plt, widgets
+    from matplotlib.backend_bases import MouseEvent
+
     callbacks = []
 
     class ScriptedLasso:

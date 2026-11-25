@@ -1,16 +1,15 @@
 import inspect
+import sys
+from importlib.util import find_spec
+from types import SimpleNamespace
 
-import matplotlib
 import numpy as np
 import pytest
 
 from skimage import filters as original_filters, future as original_future
 import skimagexx
 from skimagexx import filters, future
-from fixtures.future_filters_gui import selections
-
-matplotlib.use("Agg")
-from matplotlib import pyplot as plt
+from fixtures.future_filters_gui import panel_pyplot, selections
 
 
 @pytest.fixture(autouse=True)
@@ -19,8 +18,29 @@ def strict_native():
     try:
         yield
     finally:
-        plt.close("all")
         skimagexx.set_fallback_enabled(previous)
+
+
+@pytest.fixture
+def pyplot():
+    try:
+        spec = find_spec("matplotlib")
+    except ModuleNotFoundError:
+        # An import-masking finder can raise instead of returning no spec.
+        spec = None
+    if spec is None:
+        yield None
+        return
+
+    import matplotlib
+
+    matplotlib.use("Agg")
+    from matplotlib import pyplot as plt
+
+    try:
+        yield plt
+    finally:
+        plt.close("all")
 
 
 class Recorder:
@@ -166,13 +186,27 @@ def test_predict_errors(kind):
     np.ones((8, 8), dtype=np.uint8),
     np.random.default_rng(22).integers(0, 256, size=(67, 59), dtype=np.uint8),
 ])
-def test_threshold_panel(image, capsys):
+def test_threshold_panel(image, capsys, monkeypatch, pyplot):
+    if pyplot is None:
+        from skimage.exposure import histogram
+        from skimagexx import _trainable_segmenter
+
+        monkeypatch.setitem(sys.modules, "matplotlib",
+                            SimpleNamespace(__version__="3.3", pyplot=panel_pyplot()))
+        counts, centers = _trainable_segmenter._core_family.threshold_panel_histogram(image)
+        expected_counts, expected_centers = histogram(image.ravel(), source_range="image")
+        np.testing.assert_array_equal(counts, expected_counts)
+        np.testing.assert_array_equal(centers, expected_centers)
+
     assert inspect.signature(filters.try_all_threshold) == inspect.signature(original_filters.try_all_threshold)
     expected_fig, expected = original_filters.try_all_threshold(image, figsize=(7, 5))
     expected_stdout = capsys.readouterr().out
     actual_fig, actual = filters.try_all_threshold(image, figsize=(7, 5))
     assert capsys.readouterr().out == expected_stdout
     np.testing.assert_array_equal(actual_fig.get_size_inches(), expected_fig.get_size_inches())
+    assert [axis.get_title() for axis in actual] == [
+        "Original", "Isodata", "Li", "Mean", "Minimum", "Otsu", "Triangle", "Yen",
+    ]
     for a, b in zip(actual, expected, strict=True):
         assert a.get_title() == b.get_title()
         assert a.axison == b.axison
@@ -184,13 +218,30 @@ def test_threshold_panel(image, capsys):
 
 @pytest.mark.parametrize("mode", ["polygon", "lasso"])
 @pytest.mark.parametrize("return_all,undo", [(False, False), (True, False), (False, True)])
-def test_selection_overlap(mode, return_all, undo):
+def test_selection_overlap(mode, return_all, undo, pyplot):
     vertices = [
         [(1, 1), (16, 1), (16, 10), (1, 10)],
         [(5.25, 3), (18, 4.5), (13.75, 15), (8, 13)],
     ]
     name = f"manual_{mode}_segmentation"
     image = np.zeros((17, 20, 3), dtype=np.uint8)
+    if pyplot is None:
+        from skimage.draw import polygon
+        from skimagexx._trainable_segmenter import _selection_labels
+
+        shape = image.shape[:2]
+        selected = vertices[:-1] if undo else vertices
+        if return_all:
+            with pytest.raises(TypeError, match="sequence"):
+                _selection_labels(selected, shape, return_all=True)
+            return
+        expected = np.zeros(shape, dtype=int)
+        for label, region in enumerate(selected, start=1):
+            columns, rows = zip(*region)
+            expected[polygon(rows, columns, shape=shape)] = label
+        check_array(_selection_labels(selected, shape, return_all=False), expected)
+        return
+
     with selections(mode, vertices, undo=undo):
         if return_all:
             with pytest.raises(TypeError, match="sequence") as expected_error:
@@ -206,9 +257,18 @@ def test_selection_overlap(mode, return_all, undo):
 
 
 @pytest.mark.parametrize("mode", ["polygon", "lasso"])
-def test_selection_without_regions(mode):
+def test_selection_without_regions(mode, pyplot):
     name = f"manual_{mode}_segmentation"
     image = np.zeros((6, 8), dtype=np.float32)
+    if pyplot is None:
+        from skimagexx._trainable_segmenter import _selection_labels
+
+        check_array(_selection_labels([], image.shape, return_all=False),
+                    np.broadcast_to(0, image.shape))
+        with pytest.raises(TypeError, match="sequence"):
+            _selection_labels([], image.shape, return_all=True)
+        return
+
     with selections(mode, []):
         check_array(getattr(future, name)(image), getattr(original_future, name)(image))
         with pytest.raises(TypeError, match="sequence") as expected_error:
@@ -218,3 +278,28 @@ def test_selection_without_regions(mode):
         assert str(actual_error.value) == str(expected_error.value)
     with pytest.raises(ValueError, match="Only 2D grayscale or RGB"):
         getattr(future, name)(np.zeros(8))
+
+
+@pytest.mark.parametrize("namespace,original,name", [
+    (filters, original_filters, "try_all_threshold"),
+    (future, original_future, "manual_polygon_segmentation"),
+    (future, original_future, "manual_lasso_segmentation"),
+])
+def test_missing_matplotlib(namespace, original, name, monkeypatch):
+    monkeypatch.setitem(sys.modules, "matplotlib", None)
+    image = np.zeros((6, 8), dtype=np.uint8)
+    function = getattr(namespace, name)
+    with pytest.raises(NotImplementedError, match=name):
+        function(image)
+
+    with pytest.raises(ImportError) as expected:
+        getattr(original, name)(image)
+    previous = skimagexx.set_fallback_enabled(True)
+    try:
+        with pytest.warns(skimagexx.FallbackWarning, match=name):
+            with pytest.raises(ImportError) as actual:
+                function(image)
+        assert type(actual.value) is type(expected.value)
+        assert actual.value.args == expected.value.args
+    finally:
+        skimagexx.set_fallback_enabled(previous)
