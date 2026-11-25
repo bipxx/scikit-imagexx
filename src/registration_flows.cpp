@@ -85,12 +85,15 @@ void warp(const T* image, const T* flow, T* output, Shape shape,
     const auto count = shape.count();
     detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
         for (auto y = begin; y < end; ++y) {
+            const auto* vertical = flow + y * shape.width;
+            const auto* horizontal = vertical + count;
+            auto* row = output + y * shape.width;
+            const auto row_coordinate = T(y);
             for (std::size_t x = 0; x < shape.width; ++x) {
-                const auto index = y * shape.width + x;
-                const auto dy = double(T(y) + flow[index]);
-                const auto dx = double(T(x) + flow[count + index]);
+                const auto dy = double(row_coordinate + vertical[x]);
+                const auto dx = double(T(x) + horizontal[x]);
                 if (!std::isfinite(dy) || !std::isfinite(dx)) {
-                    output[index] = std::numeric_limits<T>::quiet_NaN();
+                    row[x] = std::numeric_limits<T>::quiet_NaN();
                     continue;
                 }
                 const auto v = edge_point(dy, shape.height - 1);
@@ -102,7 +105,7 @@ void warp(const T* image, const T* flow, T* output, Shape shape,
                 value += double(top[u.hi]) * v.low_weight * u.high_weight;
                 value += double(bottom[u.lo]) * v.high_weight * u.low_weight;
                 value += double(bottom[u.hi]) * v.high_weight * u.high_weight;
-                output[index] = std::clamp(T(value), range.first, range.second);
+                row[x] = std::clamp(T(value), range.first, range.second);
             }
         }
     });
@@ -312,10 +315,11 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
 
 template<class T>
 std::vector<T> reduce_image(const T* image, Shape input, Shape output,
-                            const std::vector<GaussianPass>& passes) {
-    std::vector<T> smoothed(input.count()), reduced(output.count());
-    gaussian_nd_into(image, smoothed.data(), pixel_type<T>, pixel_type<T>, input.axes(), passes);
-    detail::zoom_typed_into(smoothed.data(), reduced.data(), pixel_type<T>, input.axes(), output.axes(), {});
+                            const std::vector<GaussianPass>& passes, std::vector<T>& smoothed) {
+    std::vector<T> reduced(output.count());
+    const auto input_axes = input.axes();
+    gaussian_nd_into(image, smoothed.data(), pixel_type<T>, pixel_type<T>, input_axes, passes);
+    detail::zoom_typed_into(smoothed.data(), reduced.data(), pixel_type<T>, input_axes, output.axes(), {});
     const auto extrema = std::minmax_element(smoothed.begin(), smoothed.end());
     for (auto& value : reduced) value = std::clamp(value, *extrema.first, *extrema.second);
     return reduced;
@@ -330,14 +334,19 @@ void expand_flow(const T* source, T* target, Shape from, Shape to, int workers) 
     std::vector<std::size_t> columns(to.width);
     for (std::size_t x = 0; x < to.width; ++x)
         columns[x] = static_cast<std::size_t>(double(x) * x_ratio + 0.5);
+    const auto* source_horizontal = source + from.count();
+    auto* target_horizontal = target + to.count();
     detail::partition(to.height, workers, [&](auto begin, auto end, auto) {
         for (auto y = begin; y < end; ++y) {
             const auto row = static_cast<std::size_t>(double(y) * y_ratio + 0.5);
+            const auto* input_y = source + row * from.width;
+            const auto* input_x = source_horizontal + row * from.width;
+            auto* output_y = target + y * to.width;
+            auto* output_x = target_horizontal + y * to.width;
             for (std::size_t x = 0; x < to.width; ++x) {
-                const auto input = row * from.width + columns[x];
-                const auto output = y * to.width + x;
-                target[output] = source[input] * y_scale;
-                target[to.count() + output] = source[from.count() + input] * x_scale;
+                const auto column = columns[x];
+                output_y[x] = input_y[column] * y_scale;
+                output_x[x] = input_x[column] * x_scale;
             }
         }
     });
@@ -358,8 +367,9 @@ bool coarse_to_fine(const T* reference, const T* moving, T* output, Shape shape,
         const auto passes = gaussian_passes(2.0 / 3.0, GaussianBorder::reflect);
         for (int level = 1; level < 10 && std::min(current.height, current.width) > 32; ++level) {
             const Shape next{(current.height + 1) / 2, (current.width + 1) / 2};
-            auto ref_reduced = reduce_image(previous_reference, current, next, passes);
-            auto moving_reduced = reduce_image(previous_moving, current, next, passes);
+            std::vector<T> smoothed(current.count());
+            auto ref_reduced = reduce_image(previous_reference, current, next, passes, smoothed);
+            auto moving_reduced = reduce_image(previous_moving, current, next, passes, smoothed);
             pyramid.push_back({next, std::move(ref_reduced), std::move(moving_reduced)});
             previous_reference = pyramid.back().reference.data();
             previous_moving = pyramid.back().moving.data();

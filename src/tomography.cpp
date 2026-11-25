@@ -9,6 +9,7 @@
 #include <cmath>
 #include <complex>
 #include <cstdint>
+#include <memory>
 #include <type_traits>
 #include <vector>
 
@@ -74,6 +75,7 @@ std::vector<double> frequency_filter(std::size_t size, TomographyFilter filter) 
     }
     std::vector<std::complex<double>> spectrum(result.size());
     detail::fft_r2c({size}, {0}, impulse.data(), spectrum.data(), 1);
+    const double cosine_step = 2 * pi / double(size - 1);
     for (std::size_t i = 0; i < result.size(); ++i) {
         const double omega = pi * double(i) / double(size);
         const auto shifted = (i + size / 2) % size;
@@ -87,9 +89,8 @@ std::vector<double> frequency_filter(std::size_t size, TomographyFilter filter) 
             // The real part of the full inverse FFT averages the two weights
             // on each conjugate pair. A real FFT needs that average up front.
             const auto opposite = (size / 2 + size - i) % size;
-            const double step = 2 * pi / double(size - 1);
-            const double mean_cosine = (std::cos(step * double(shifted)) +
-                                        std::cos(step * double(opposite))) / 2;
+            const double mean_cosine = (std::cos(cosine_step * double(shifted)) +
+                                        std::cos(cosine_step * double(opposite))) / 2;
             window = filter == TomographyFilter::hamming
                 ? 0.54 - 0.46 * mean_cosine : 0.5 - 0.5 * mean_cosine;
             break;
@@ -103,7 +104,7 @@ std::vector<double> frequency_filter(std::size_t size, TomographyFilter filter) 
 
 template<class T>
 std::vector<double> filtered_projections(const T* data, int detectors, int angles,
-                                         int padded, TomographyFilter filter) {
+                                         int padded, TomographyFilter filter, int workers) {
     const int offset = padded / 2 - detectors / 2;
     std::size_t size = 64;
     while (size < 2 * std::size_t(padded)) size *= 2;
@@ -116,20 +117,27 @@ std::vector<double> filtered_projections(const T* data, int detectors, int angle
         for (int r = 0; r < detectors; ++r) column[r] = data[std::size_t(r) * angles + k];
     }
     std::vector<std::complex<double>> spectrum(std::size_t(angles) * bins);
+    const auto apply_response = [&](const auto* input) {
+        for (int k = 0; k < angles; ++k) {
+            const auto base = std::size_t(k) * bins;
+            for (std::size_t f = 0; f < bins; ++f) {
+                auto value = std::complex<double>(input[base + f]);
+                value *= response[f];
+                spectrum[base + f] = value;
+            }
+        }
+    };
     if constexpr (std::is_same_v<T, double>) {
-        detail::fft_r2c(shape, axes, spatial.data(), spectrum.data(), 1);
+        detail::fft_r2c(shape, axes, spatial.data(), spectrum.data(), workers);
+        apply_response(spectrum.data());
     } else {
         std::vector<std::complex<T>> single(spectrum.size());
-        detail::fft_r2c(shape, axes, spatial.data(), single.data(), 1);
-        std::copy(single.begin(), single.end(), spectrum.begin());
-    }
-    for (int k = 0; k < angles; ++k) {
-        auto* column = spectrum.data() + std::size_t(k) * bins;
-        for (std::size_t f = 0; f < bins; ++f) column[f] *= response[f];
+        detail::fft_r2c(shape, axes, spatial.data(), single.data(), workers);
+        apply_response(single.data());
     }
     // Keep a compact prefix after inversion, one contiguous detector array per angle.
     std::vector<double> inverse(std::size_t(angles) * size);
-    detail::fft_c2r(shape, axes, spectrum.data(), inverse.data(), 1);
+    detail::fft_c2r(shape, axes, spectrum.data(), inverse.data(), workers);
     for (int k = 1; k < angles; ++k) {
         std::copy_n(inverse.data() + std::size_t(k) * size, padded,
                     inverse.data() + std::size_t(k) * padded);
@@ -173,54 +181,72 @@ std::vector<CubicSegment> cubic_segments(const std::vector<double>& projections,
 
 template<TomographyInterpolation interpolation, class T>
 void backproject(const std::vector<double>& projections, int detectors, int angles,
-                 const double* cosines, const double* sines, int size, bool circle, T* image) {
+                 const double* cosines, const double* sines, int size, bool circle, T* image,
+                 int workers) {
     std::vector<CubicSegment> segments;
     if constexpr (interpolation == TomographyInterpolation::cubic) {
         segments = cubic_segments(projections, detectors, angles);
     }
     const int radius = size / 2, center = detectors / 2;
     const double lower = -center, upper = detectors - 1 - center;
-    const auto count = std::size_t(size) * size;
-    std::fill_n(image, count, T(0));
-    detail::partition(std::size_t(size), detail::active_workers(count * angles),
-        [&](std::size_t begin, std::size_t end, std::size_t) {
+    const T scale = T(2.0 * angles);
+    const auto radius_squared = std::int64_t(radius) * radius;
+    // Keep strips of the output in cache while accumulating angles in their
+    // original order. Reuse the column coordinates for all rows of a strip.
+    constexpr std::size_t strip_height = 16;
+    const auto strips = (std::size_t(size) + strip_height - 1) / strip_height;
+    const int strip_workers = static_cast<int>(std::min(strips, std::size_t(workers)));
+    const std::unique_ptr<double[]> horizontal(new double[std::size_t(strip_workers) * size]);
+    detail::partition(strips, strip_workers, [&](std::size_t begin, std::size_t end, std::size_t worker) {
+        auto* column_coordinates = horizontal.get() + worker * size;
+        for (auto strip = begin; strip < end; ++strip) {
+            const auto first = strip * strip_height;
+            const auto last = std::min(first + strip_height, std::size_t(size));
+            std::fill_n(image + first * size, (last - first) * size, T(0));
             for (int k = 0; k < angles; ++k) {
                 const auto* col = projections.data() + std::size_t(k) * detectors;
+                const CubicSegment* segment = nullptr;
+                if constexpr (interpolation == TomographyInterpolation::cubic) {
+                    segment = segments.data() + std::size_t(k) * (detectors - 1);
+                }
                 const double cosine = cosines[k], sine = sines[k];
-                for (auto r = begin; r < end; ++r) {
+                for (int c = 0; c < size; ++c) column_coordinates[c] = double(c - radius) * cosine;
+                for (auto r = first; r < last; ++r) {
                     const double vertical = (double(r) - radius) * sine;
                     auto* row = image + r * size;
-                    for (int x = -radius; x < size - radius; ++x) {
-                        const double t = double(x) * cosine - vertical;
+                    for (int c = 0; c < size; ++c) {
+                        const double t = column_coordinates[c] - vertical;
                         if (t < lower || t > upper) continue;
                         const int left = floor_index(t);
                         const int i = left + center;
-                        const double fraction = t - left;
                         double value;
                         if constexpr (interpolation == TomographyInterpolation::nearest) {
                             value = col[i + (t > double(left) + 0.5)];
                         } else if (i == detectors - 1) {
                             value = col[i];
                         } else if constexpr (interpolation == TomographyInterpolation::cubic) {
-                            const auto& p = segments[std::size_t(k) * (detectors - 1) + i];
+                            const auto& p = segment[i];
+                            const double fraction = t - left;
                             value = p.value + fraction * (p.slope + fraction * (p.quadratic + fraction * p.cubic));
                         } else {
+                            const double fraction = t - left;
                             value = col[i] + fraction * (col[i + 1] - col[i]);
                         }
-                        row[x + radius] = T(double(row[x + radius]) + value);
+                        row[c] = T(double(row[c]) + value);
                     }
                 }
             }
-            for (auto r = begin; r < end; ++r) {
+            for (auto r = first; r < last; ++r) {
                 const std::int64_t y = std::int64_t(r) - radius;
+                auto* row = image + r * size;
                 for (int c = 0; c < size; ++c) {
                     const std::int64_t x = c - radius;
-                    auto& value = image[r * size + c];
-                    value = circle && x * x + y * y > std::int64_t(radius) * radius
-                        ? T(0) : (value * T(pi)) / T(2.0 * angles);
+                    row[c] = circle && x * x + y * y > radius_squared
+                        ? T(0) : (row[c] * T(pi)) / scale;
                 }
             }
-        });
+        }
+    });
 }
 
 template<class T> struct RaySample {
@@ -229,29 +255,66 @@ template<class T> struct RaySample {
     bool has_top, has_left, has_bottom, has_right;
 };
 
+template<class T> struct RayChord {
+    T position, half_length;
+    int steps;
+};
+
 template<class T>
-void project_ray(const T* image, T* update, int size, double cosine, double sine,
-                 T ray_position, T projection, std::vector<RaySample<T>>& samples,
-                 std::vector<std::vector<T>>& windows) {
-    const T center = T(size / 2), radius = T(size / 2 - 1);
+RayChord<T> ray_chord(T ray_position, T center, T radius) {
     const T t = ray_position - center;
     const T length_squared = radius * radius - t * t;
-    if (!(length_squared > T(0))) return;
+    if (!(length_squared > T(0))) return {t, T(0), 0};
     const T half_length = T(std::sqrt(double(length_squared)));
-    const int steps = 2 * static_cast<int>(std::ceil(2 * double(half_length)));
+    return {t, half_length, 2 * static_cast<int>(std::ceil(2 * double(half_length)))};
+}
+
+template<class T>
+std::vector<T> ray_windows(const T* shifts, int angles, int detectors, T center, T radius,
+                           std::vector<std::size_t>& offsets) {
+    std::vector<T> distinct;
+    distinct.reserve(angles);
+    for (int k = 0; k < angles; ++k) {
+        if (std::isfinite(shifts[k])) distinct.push_back(shifts[k]);
+    }
+    std::sort(distinct.begin(), distinct.end());
+    const auto end = std::unique(distinct.begin(), distinct.end());
+    // Mark the window sizes used by the projections, then replace those marks
+    // with offsets into one allocation. Zero-step chords have no window.
+    for (auto shift = distinct.begin(); shift != end; ++shift) {
+        for (int detector = 0; detector < detectors; ++detector) {
+            const auto chord = ray_chord(T(detector) + *shift, center, radius);
+            offsets[std::size_t(chord.steps) / 2] = 1;
+        }
+    }
+    std::size_t count = 0;
+    for (std::size_t i = 1; i < offsets.size(); ++i) {
+        if (offsets[i]) count += 2 * i + 1;
+    }
+    std::vector<T> windows;
+    windows.reserve(count);
+    const T beta = T(0.46164);
+    for (std::size_t i = 1; i < offsets.size(); ++i) {
+        if (!offsets[i]) continue;
+        offsets[i] = windows.size();
+        const int steps = static_cast<int>(2 * i);
+        for (int k = 0; k <= steps; ++k) {
+            windows.push_back(T((T(1) - beta) - beta * std::cos(2 * pi * k / (steps - 1))));
+        }
+    }
+    return windows;
+}
+
+template<class T>
+void project_ray(const T* image, T* update, int size, double cosine, double sine,
+                 const RayChord<T>& chord, T projection, RaySample<T>* samples,
+                 const T* window) {
+    const T center = T(size / 2), t = chord.position, half_length = chord.half_length;
+    const int steps = chord.steps;
     const T ds = (T(2) * half_length) / T(steps);
     const T dx = T(-ds * cosine), dy = T(-ds * sine);
     const T x0 = T(half_length * cosine - t * sine);
     const T y0 = T(half_length * sine + t * cosine);
-    auto& window = windows[std::size_t(steps) / 2];
-    if (window.empty()) {
-        window.resize(std::size_t(steps) + 1);
-        const T beta = T(0.46164);
-        for (int k = 0; k <= steps; ++k) {
-            window[k] = T((T(1) - beta) - beta * std::cos(2 * pi * k / (steps - 1)));
-        }
-    }
-    samples.clear();
     T total = 0, norm = 0;
     const auto accumulate = [&](std::size_t index, T weight) {
         total += weight * image[index];
@@ -264,7 +327,7 @@ void project_ray(const T* image, T* update, int size, double cosine, double sine
         const int i = static_cast<int>(row), j = static_cast<int>(col);
         const T di = row - T(i), dj = col - T(j);
         const auto base = std::size_t(i) * size + j;
-        samples.push_back({base, di, dj, i > 0, j > 0, i < size - 1, j < size - 1});
+        samples[k] = {base, di, dj, i > 0, j > 0, i < size - 1, j < size - 1};
         if (i > 0 && j > 0) accumulate(base, T((1.0 - di) * (1.0 - dj) * ds));
         if (i > 0 && j < size - 1) accumulate(base + 1, T((1.0 - di) * dj * ds));
         if (i < size - 1 && j > 0) accumulate(base + size, di * (T(1) - dj) * ds);
@@ -356,16 +419,17 @@ void iradon_into(const T* sinogram, int detectors, int angles, const double* cos
                  const double* sines, int size, TomographyFilter filter,
                  TomographyInterpolation interpolation, bool circle, T* image) {
     const int padded = radon_detector_size(detectors, detectors, !circle);
-    const auto projections = filtered_projections(sinogram, detectors, angles, padded, filter);
+    const int workers = detail::active_workers(std::max(std::size_t(padded), std::size_t(size) * size) * angles);
+    const auto projections = filtered_projections(sinogram, detectors, angles, padded, filter, workers);
     switch (interpolation) {
     case TomographyInterpolation::linear:
-        backproject<TomographyInterpolation::linear>(projections, padded, angles, cosines, sines, size, circle, image);
+        backproject<TomographyInterpolation::linear>(projections, padded, angles, cosines, sines, size, circle, image, workers);
         break;
     case TomographyInterpolation::nearest:
-        backproject<TomographyInterpolation::nearest>(projections, padded, angles, cosines, sines, size, circle, image);
+        backproject<TomographyInterpolation::nearest>(projections, padded, angles, cosines, sines, size, circle, image, workers);
         break;
     case TomographyInterpolation::cubic:
-        backproject<TomographyInterpolation::cubic>(projections, padded, angles, cosines, sines, size, circle, image);
+        backproject<TomographyInterpolation::cubic>(projections, padded, angles, cosines, sines, size, circle, image, workers);
         break;
     }
 }
@@ -380,16 +444,28 @@ void iradon_sart_into(const T* sinogram, int detectors, int angles, const T* the
     const auto order = order_angles_golden_ratio(view, weak_scalars
         ? GoldenScalarPolicy::weak_input : GoldenScalarPolicy::wide);
     std::vector<T> update(count);
-    std::vector<RaySample<T>> samples;
-    samples.reserve(std::size_t(detectors) * 2 + 1);
-    std::vector<std::vector<T>> windows(std::size_t(detectors) + 1);
+    const std::unique_ptr<RaySample<T>[]> samples(new RaySample<T>[std::size_t(detectors) * 2 + 1]);
+    std::vector<std::size_t> window_offsets(std::size_t(detectors) + 1);
+    const T center = T(detectors / 2), radius = T(detectors / 2 - 1);
+    const auto windows = ray_windows(shifts, angles, detectors, center, radius, window_offsets);
+    std::vector<RayChord<T>> chords(detectors);
+    const T* previous_shift = nullptr;
     for (const auto k : order) {
         const T radians = T(theta[k] / 180.0 * pi);
         const double cosine = std::cos(double(radians)), sine = std::sin(double(radians));
+        if (!previous_shift || *previous_shift != shifts[k]) {
+            for (int detector = 0; detector < detectors; ++detector) {
+                chords[detector] = ray_chord(T(detector) + shifts[k], center, radius);
+            }
+            previous_shift = shifts + k;
+        }
         std::fill(update.begin(), update.end(), T(0));
         for (int detector = 0; detector < detectors; ++detector) {
-            project_ray(image, update.data(), detectors, cosine, sine, T(detector) + shifts[k],
-                        sinogram[std::size_t(detector) * angles + k], samples, windows);
+            const auto& chord = chords[detector];
+            if (!chord.steps) continue;
+            const auto* window = windows.data() + window_offsets[std::size_t(chord.steps) / 2];
+            project_ray(image, update.data(), detectors, cosine, sine, chord,
+                        sinogram[std::size_t(detector) * angles + k], samples.get(), window);
         }
         for (std::size_t i = 0; i < count; ++i) image[i] += relaxation * update[i];
         if (clip) {

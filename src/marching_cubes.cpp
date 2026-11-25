@@ -1738,9 +1738,11 @@ Triangulation select_tiling(const double* v, int index, bool classic) {
 // are valid for one slab only. Vertices retain first-encounter order.
 class Slab {
 public:
-    Slab(std::size_t nx, std::size_t ny, std::size_t step, MarchingCubesMesh& mesh)
-        : nx_(nx), step_(step), mesh_(mesh), low_(nx * ny * 4, -1),
-          high_(nx * ny * 4, -1) {}
+    Slab(std::size_t width, std::size_t height, std::size_t step, MarchingCubesMesh& mesh)
+        : step_(step), mesh_(mesh),
+          edge_offsets_{0, 4, 3 * width, 1, 0, 4, 3 * width, 1,
+                        2, 5, 3 * width + 5, 3 * width + 2},
+          low_(width * height * 3, -1), high_(width * height * 3, -1) {}
 
     void advance() {
         low_.swap(high_);
@@ -1748,7 +1750,7 @@ public:
     }
 
     void append(const double* v, Triangulation tiling, std::size_t x, std::size_t y,
-                std::size_t z) {
+                std::size_t z, std::size_t slab_base) {
         const auto limits = std::minmax_element(v, v + 8);
         const auto range = static_cast<float>(*limits.second - *limits.first);
         double weights[8];
@@ -1765,13 +1767,16 @@ public:
             gradients[i][2] = v[zlow] - v[zlow | 4];
         }
         std::array<float, 3> center_gradient{};
+        std::int32_t center_index = -1;
         const std::array<std::size_t, 3> origin{x, y, z};
-        const auto base = y * nx_ + x;
+        auto* low = low_.data() + slab_base;
+        auto* high = high_.data() + slab_base;
         for (int triangle = 0; triangle < tiling.triangles; ++triangle) {
             std::array<std::int32_t, 3> face{};
             for (int corner = 0; corner < 3; ++corner) {
                 const int edge = tiling.edges[triangle * 3 + corner];
-                auto& index = vertex_index(edge, base);
+                auto& index = edge == 12 ? center_index
+                    : (edge >= 4 && edge < 8 ? high : low)[edge_offsets_[edge]];
                 if (edge == 12) {
                     if (index < 0) {
                         std::array<double, 3> sums{}, gradient{};
@@ -1816,18 +1821,6 @@ public:
     }
 
 private:
-    std::int32_t& vertex_index(int edge, std::size_t base) {
-        if (edge == 12) return low_[4 * base + 3];
-        const auto down = step_ * nx_;
-        if (edge >= 8) {
-            const std::size_t offsets[]{0, step_, step_ + down, down};
-            return low_[4 * (base + offsets[edge - 8]) + 2];
-        }
-        auto& plane = edge < 4 ? low_ : high_;
-        const std::size_t offsets[]{0, 4 * step_ + 1, 4 * down, 1};
-        return plane[4 * base + offsets[edge % 4]];
-    }
-
     std::int32_t add_vertex(const std::array<std::size_t, 3>& origin,
                             const std::array<double, 3>& sums, double total) {
         if (mesh_.vertices.size() >= static_cast<std::size_t>(INT32_MAX)) {
@@ -1845,8 +1838,9 @@ private:
         return index;
     }
 
-    std::size_t nx_, step_;
+    std::size_t step_;
     MarchingCubesMesh& mesh_;
+    const std::array<std::size_t, 12> edge_offsets_;
     std::vector<std::int32_t> low_, high_;
 };
 
@@ -1865,17 +1859,22 @@ MarchingCubesMesh marching_cubes(const float* volume, std::array<std::size_t, 3>
     }
     MarchingCubesMesh mesh;
     if (step >= std::min({nx, ny, nz})) return mesh;
-    Slab slab(nx, ny, step, mesh);
+    // The edge cache only needs the sampled lattice and three outgoing
+    // edges per point. Extra center vertices belong to a single cell.
+    const auto slab_width = (nx - 1) / step + 1;
+    const auto slab_height = (ny - 1) / step + 1;
+    Slab slab(slab_width, slab_height, step, mesh);
     const auto dy = nx * step, dz = nx * ny * step;
     const std::size_t offsets[]{0, step, dy + step, dy, dz, dz + step, dz + dy + step, dz + dy};
     for (std::size_t z = 0; z < nz - step; z += step) {
-        slab.advance();
-        for (std::size_t y = 0; y < ny - step; y += step) {
+        if (z) slab.advance();
+        std::size_t slab_row = 0;
+        for (std::size_t y = 0; y < ny - step; y += step, slab_row += 3 * slab_width) {
             const auto row = (z * ny + y) * nx;
-            for (std::size_t x = 0; x < nx - step; x += step) {
-                const auto pos = row + x;
-                if (mask && !mask[pos + offsets[6]]) continue;
-                const auto* cell = volume + pos;
+            auto slab_base = slab_row;
+            for (std::size_t x = 0; x < nx - step; x += step, slab_base += 3) {
+                if (mask && !mask[row + x + offsets[6]]) continue;
+                const auto* cell = volume + row + x;
                 int index = 0;
                 for (int i = 0; i < 8; ++i) {
                     index |= static_cast<int>(cell[offsets[i]] > level) << i;
@@ -1884,7 +1883,7 @@ MarchingCubesMesh marching_cubes(const float* volume, std::array<std::size_t, 3>
                 double v[8];
                 for (int i = 0; i < 8; ++i) v[i] = cell[offsets[i]] - level;
                 const auto triangles = select_tiling(v, index, classic);
-                slab.append(v, triangles, x, y, z);
+                slab.append(v, triangles, x, y, z, slab_base);
             }
         }
     }

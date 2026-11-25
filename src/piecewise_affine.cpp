@@ -1,10 +1,10 @@
 #include "skimagexx/piecewise_affine.hpp"
 #include "execution.hpp"
 
+#include <algorithm>
 #include <atomic>
 #include <cmath>
 #include <limits>
-#include <map>
 #include <utility>
 
 namespace skimagexx {
@@ -57,9 +57,15 @@ bool triangulate(const double* src, Index count, std::vector<PiecewiseSimplex>& 
     // Bowyer-Watson insertion. The enclosing triangle is discarded before
     // checking the resulting planar mesh for ambiguous incircle predicates.
     points.insert(points.end(), {{-64, -32}, {65, -32}, {0.5, 64}});
+    // A planar triangulation inside the enclosing triangle adds two faces
+    // per insertion. Reuse flat edge storage across insertion cavities.
+    const auto triangle_capacity = 2 * std::size_t(count) + 1;
+    triangles.reserve(triangle_capacity);
+    std::vector<std::pair<Index, Index>> edges;
+    edges.reserve(3 * triangle_capacity);
     triangles.push_back({count, count + 1, count + 2});
     for (Index point = 0; point < count; ++point) {
-        std::map<std::pair<Index, Index>, int> edges;
+        edges.clear();
         auto kept = triangles.begin();
         for (const auto tri : triangles) {
             if (in_circle(points[tri[0]], points[tri[1]], points[tri[2]], points[point]) <= 0) {
@@ -68,13 +74,19 @@ bool triangulate(const double* src, Index count, std::vector<PiecewiseSimplex>& 
             }
             for (std::size_t k = 0; k < 3; ++k) {
                 const auto ends = std::minmax(tri[k], tri[(k + 1) % 3]);
-                ++edges[{ends.first, ends.second}];
+                edges.emplace_back(ends.first, ends.second);
             }
         }
         triangles.erase(kept, triangles.end());
-        for (const auto& [edge, number] : edges) {
-            if (number != 1) continue;
-            const auto [a, b] = edge;
+        // Lexicographic order preserves the triangle order of the edge map.
+        std::sort(edges.begin(), edges.end());
+        for (auto first = edges.begin(); first != edges.end();) {
+            const auto [a, b] = *first;
+            auto next = first + 1;
+            while (next != edges.end() && *next == *first) ++next;
+            const bool boundary = next == first + 1;
+            first = next;
+            if (!boundary) continue;
             const double direction = orient(points[a], points[b], points[point]);
             if (direction > 0) triangles.push_back({a, b, point});
             if (direction < 0) triangles.push_back({b, a, point});
@@ -156,17 +168,19 @@ bool piecewise_affine_apply(const PiecewiseTriangle* triangles, const PiecewiseM
         (rows && (!coords || !output))) return false;
     for (std::size_t i = 0; i < simplex_count; ++i)
         if (!bounded(triangles[i].data(), 6, 1e18) || !bounded(matrices[i].data(), 9, 1e18)) return false;
+    if (!rows) return true;
     std::atomic<bool> supported{true};
     const auto workload = rows * std::min(simplex_count, std::size_t(16));
     detail::partition(rows, detail::active_workers(workload), [&](auto begin, auto end, auto) {
         constexpr double tolerance = 100 * std::numeric_limits<double>::epsilon();
-        for (auto row = begin; row < end; ++row) {
-            const double x = coords[2 * row], y = coords[2 * row + 1];
+        const auto* coord = coords + 2 * begin;
+        auto* out = output + 2 * begin;
+        for (auto row = begin; row < end; ++row, coord += 2, out += 2) {
+            const double x = coord[0], y = coord[1];
             if (!std::isfinite(x) || !std::isfinite(y) || std::abs(x) > 1e12 || std::abs(y) > 1e12) {
                 supported.store(false, std::memory_order_relaxed);
                 return;
             }
-            double* out = output + row * 2;
             out[0] = out[1] = -1;
             for (std::size_t index = 0; index < simplex_count; ++index) {
                 const auto& t = triangles[index];

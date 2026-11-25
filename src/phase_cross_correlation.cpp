@@ -7,6 +7,7 @@
 #include <array>
 #include <cmath>
 #include <limits>
+#include <memory>
 #include <vector>
 
 namespace skimagexx {
@@ -88,15 +89,25 @@ std::complex<T> dft_dot(const std::complex<T>* kernel, const std::complex<T>* va
 
 template<class T>
 std::complex<T> refine_peak(const std::complex<T>* spectrum, std::size_t height,
-                            std::size_t width, int factor, std::array<T, 2>& shift) {
+                            std::size_t width, int factor, std::array<T, 2>& shift,
+                            bool packed) {
     const auto region = static_cast<std::size_t>((3 * factor + 1) / 2);
     const auto kernels_x = dft_kernel(width, region, factor, shift[1]);
     const auto kernels_y = dft_kernel(height, region, factor, shift[0]);
     // Contract the contiguous frequency axis first. The intermediate is
     // transposed so each second contraction also reads contiguous values.
     std::vector<std::complex<T>> intermediate(region * height);
+    const auto stride = packed ? width / 2 + 1 : width;
+    std::vector<std::complex<T>> unpacked_row(packed && stride < width ? width : 0);
     for (std::size_t y = 0; y < height; ++y) {
-        const auto* row = spectrum + y * width;
+        const auto* row = spectrum + y * stride;
+        if (!unpacked_row.empty()) {
+            const auto* opposite = spectrum + (y == 0 ? 0 : height - y) * stride;
+            std::copy_n(row, stride, unpacked_row.data());
+            for (auto x = stride; x < width; ++x)
+                unpacked_row[x] = std::conj(opposite[width - x]);
+            row = unpacked_row.data();
+        }
         for (std::size_t x = 0; x < region; ++x) {
             const auto* kernel = kernels_x.data() + x * width;
             intermediate[x * height + y] = dft_dot(kernel, row, width);
@@ -105,12 +116,18 @@ std::complex<T> refine_peak(const std::complex<T>* spectrum, std::size_t height,
     std::array<std::size_t, 2> best{};
     std::complex<T> peak{};
     T best_magnitude = T(-1);
+    T best_power = T(-1);
     for (std::size_t y = 0; y < region; ++y) {
         const auto* kernel = kernels_y.data() + y * height;
         for (std::size_t x = 0; x < region; ++x) {
             const auto* column = intermediate.data() + x * height;
             const auto sum = dft_dot(kernel, column, height);
-            const T magnitude = std::sqrt(power(sum));
+            const T squared = power(sum);
+            if (!(squared > best_power)) continue;
+            best_power = squared;
+            // Preserve first-index ties when distinct powers round to the
+            // same magnitude in the working dtype.
+            const T magnitude = std::sqrt(squared);
             if (magnitude > best_magnitude) {
                 best_magnitude = magnitude;
                 best = {y, x};
@@ -161,9 +178,10 @@ std::complex<T> cross_power(std::complex<T> a, std::complex<T> b, bool normalize
 template<class T>
 bool correlate(const std::complex<T>* reference, const std::complex<T>* moving,
                const std::vector<std::size_t>& shape, int workers, PhaseCorrelationOptions options,
-               std::complex<T>* spectrum, PhaseCorrelationResult<T>& result, bool packed = false) {
+               PhaseCorrelationResult<T>& result, std::complex<T>* packed_spectrum = nullptr) {
     const std::size_t size = shape[0] * shape[1];
     const auto half = shape[1] / 2 + 1;
+    const bool packed = packed_spectrum != nullptr;
     const bool refine = options.upsample_factor > 1;
     const T divisor = refine ? T(1) : static_cast<T>(size);
     const auto energy = [&](const std::complex<T>* input) {
@@ -178,23 +196,37 @@ bool correlate(const std::complex<T>* reference, const std::complex<T>* moving,
 
     std::size_t index = 0;
     std::complex<T> peak{};
+    std::vector<std::complex<T>> full_spectrum;
+    const auto* spectrum = packed_spectrum;
     if (packed) {
         for (std::size_t i = 0; i < shape[0] * half; ++i)
-            spectrum[i] = cross_power(reference[i], moving[i], options.normalize_phase);
-        std::vector<T> correlation(size);
-        detail::fft_c2r(shape, {0, 1}, spectrum, correlation.data(), workers);
-        for (std::size_t i = 1; i < size; ++i)
-            if (std::abs(correlation[i]) > std::abs(correlation[index]))
+            packed_spectrum[i] = cross_power(reference[i], moving[i], options.normalize_phase);
+        // The inverse FFT writes every sample before the peak scan reads it.
+        std::unique_ptr<T[]> correlation(new T[size]);
+        detail::fft_c2r(shape, {0, 1}, spectrum, correlation.get(), workers);
+        T best_magnitude = std::abs(correlation[0]);
+        for (std::size_t i = 1; i < size; ++i) {
+            const T magnitude = std::abs(correlation[i]);
+            if (magnitude > best_magnitude) {
+                best_magnitude = magnitude;
                 index = i;
+            }
+        }
         peak = {correlation[index], T(0)};
     } else {
+        full_spectrum.reserve(size);
         for (std::size_t i = 0; i < size; ++i)
-            spectrum[i] = cross_power(reference[i], moving[i], options.normalize_phase);
+            full_spectrum.push_back(cross_power(reference[i], moving[i], options.normalize_phase));
+        spectrum = full_spectrum.data();
         std::vector<std::complex<T>> correlation(size);
         detail::fft_c2c(shape, {0, 1}, spectrum, correlation.data(), false, workers);
         T best_magnitude = T(-1);
+        T best_power = T(-1);
         for (std::size_t i = 0; i < size; ++i) {
-            const T magnitude = std::sqrt(power(correlation[i]));
+            const T squared = power(correlation[i]);
+            if (!(squared > best_power)) continue;
+            best_power = squared;
+            const T magnitude = std::sqrt(squared);
             if (magnitude > best_magnitude) {
                 best_magnitude = magnitude;
                 index = i;
@@ -205,20 +237,8 @@ bool correlate(const std::complex<T>* reference, const std::complex<T>* moving,
 
     std::array<T, 2> shift{signed_shift<T>(index / shape[1], shape[0]),
                            signed_shift<T>(index % shape[1], shape[1])};
-    if (refine) {
-        if (!packed) {
-            peak = refine_peak(spectrum, shape[0], shape[1], options.upsample_factor, shift);
-        } else {
-            std::vector<std::complex<T>> full(size);
-            for (std::size_t y = 0; y < shape[0]; ++y) {
-                const auto opposite_y = y == 0 ? 0 : shape[0] - y;
-                std::copy_n(spectrum + y * half, half, full.data() + y * shape[1]);
-                for (std::size_t x = half; x < shape[1]; ++x)
-                    full[y * shape[1] + x] = std::conj(spectrum[opposite_y * half + shape[1] - x]);
-            }
-            peak = refine_peak(full.data(), shape[0], shape[1], options.upsample_factor, shift);
-        }
-    }
+    if (refine)
+        peak = refine_peak(spectrum, shape[0], shape[1], options.upsample_factor, shift, packed);
     // A real inverse cannot recover the side of the branch cut chosen by
     // the small imaginary component of a complex inverse.
     if (packed && std::signbit(peak.real())) return false;
@@ -346,7 +366,7 @@ bool phase_cross_correlation(
     std::vector<std::complex<T>> moving_spectrum(packed_size);
     detail::fft_r2c(shape, axes, moving, moving_spectrum.data(), workers);
     return correlate(reference_spectrum.data(), moving_spectrum.data(), shape, workers, options,
-                     moving_spectrum.data(), result, true);
+                     result, moving_spectrum.data());
 }
 
 template<class T>
@@ -358,9 +378,7 @@ bool phase_cross_correlation_fourier(
     if (options.normalize_phase && exact_phase_ramp(reference, moving, height, width,
                                                     options.upsample_factor, result))
         return true;
-    std::vector<std::complex<T>> spectrum(height * width);
-    return correlate(reference, moving, {height, width}, get_num_threads(),
-                     options, spectrum.data(), result);
+    return correlate(reference, moving, {height, width}, get_num_threads(), options, result);
 }
 
 template bool phase_cross_correlation(

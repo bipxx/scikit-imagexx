@@ -15,6 +15,9 @@ struct Pixel {
     int column;
 };
 
+constexpr int max_circle_radius = 64;
+constexpr std::size_t max_circle_taps = 8 * (max_circle_radius + 1);
+
 template<class T>
 std::uintptr_t span_end(const T* data, std::size_t count) {
     const auto begin = reinterpret_cast<std::uintptr_t>(data);
@@ -32,7 +35,7 @@ std::optional<HoughCirclePlane> hough_circle_plane(int height, int width,
     int max_radius = 0;
     std::size_t visits = 0;
     for (int radius : radii) {
-        if (radius < 0 || radius > 64)
+        if (radius < 0 || radius > max_circle_radius)
             return std::nullopt;
         max_radius = std::max(max_radius, radius);
         visits += 8 * std::size_t(radius + 1);
@@ -62,21 +65,32 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
 
     std::vector<Pixel> nonzero;
     for (int row = 0; row < height; ++row) {
+        const auto* image_row = image + row * width;
         for (int col = 0; col < width; ++col) {
-            if (image[row * width + col])
+            if (image_row[col])
                 nonzero.push_back({row, col});
         }
     }
-    std::fill_n(output, output_count, 0.0);
-    if (nonzero.empty())
+    if (nonzero.empty()) {
+        std::fill_n(output, output_count, 0.0);
         return;
+    }
 
     const int pitch = plane->width;
     const int area = plane->height * pitch;
-    std::array<std::intptr_t, 520> rows, columns;
-    std::array<int, 520> shifts;
+    std::array<const double*, max_circle_radius + 1> completed{};
+    std::array<std::intptr_t, max_circle_taps> rows, columns;
+    std::array<int, max_circle_taps> shifts;
     for (std::size_t i = 0; i < radii.size(); ++i) {
         const int radius = radii[i];
+        auto* layer = output + i * area;
+        if (completed[radius]) {
+            std::copy_n(completed[radius], area, layer);
+            continue;
+        }
+        completed[radius] = layer;
+        std::fill_n(layer, area, 0.0);
+
         detail::CirclePerimeter circle;
         if (!detail::prepare_circle_perimeter({0, 0, radius}, circle))
             throw std::logic_error("bounded hough_circle perimeter was refused");
@@ -85,19 +99,19 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
         for (std::size_t k = 0; k < taps; ++k)
             shifts[k] = int(rows[k]) * pitch + int(columns[k]);
         const double increment = normalize ? 1.0 / double(taps) : 1.0;
-        auto* layer = output + i * area;
         for (const auto& pixel : nonzero) {
-            if (plane->padding || (pixel.row >= radius && pixel.row < height - radius &&
-                                   pixel.column >= radius && pixel.column < width - radius)) {
-                auto* center = layer + (pixel.row + plane->padding) * pitch + pixel.column + plane->padding;
+            auto* center = layer + (pixel.row + plane->padding) * pitch + pixel.column + plane->padding;
+            if (plane->padding ||
+                (pixel.row >= radius && pixel.row < height - radius &&
+                 pixel.column >= radius && pixel.column < width - radius)) {
                 for (std::size_t k = 0; k < taps; ++k)
                     center[shifts[k]] += increment;
             } else {
                 for (std::size_t k = 0; k < taps; ++k) {
                     const int row = pixel.row + int(rows[k]);
                     const int col = pixel.column + int(columns[k]);
-                    if (row >= 0 && row < height && col >= 0 && col < width)
-                        layer[row * pitch + col] += increment;
+                    if (unsigned(row) < unsigned(height) && unsigned(col) < unsigned(width))
+                        center[shifts[k]] += increment;
                 }
             }
         }
