@@ -33,7 +33,7 @@ def _native_dense(value):
     return np.require(value, requirements=['C', 'A'])
 
 
-def _spectrum_inputs(image, psf, reg, is_real):
+def _spectrum_inputs(image, psf, reg, is_real, *, fuse_laplacian=False):
     if (is_real is not True or not _plain_numeric(image) or image.dtype.kind == 'c'
             or not _plain_numeric(psf) or image.ndim == 0 or not all(image.shape)
             or psf.ndim != image.ndim or not all(psf.shape)):
@@ -52,7 +52,8 @@ def _spectrum_inputs(image, psf, reg, is_real):
     dtype = _float_dtype(image)
     prepared = _native_dense(image.astype(dtype, copy=False))
     if reg is None:
-        regularizer = _core.restoration_extra_laplacian(shape, dtype is np.float32)
+        regularizer = (None if fuse_laplacian else
+                       _core.restoration_extra_laplacian(shape, dtype is np.float32))
     elif reg.dtype.kind == 'c':
         regularizer = _native_dense(reg.real.astype(dtype, copy=False))
     else:
@@ -69,7 +70,7 @@ def _spectrum_inputs(image, psf, reg, is_real):
 def wiener(image, psf, balance, reg=None, is_real=True, clip=True):
     """Restore a degraded image by Wiener–Hunt deconvolution."""
     if type(balance) in (int, float, np.float32, np.float64) and type(clip) is bool:
-        inputs = _spectrum_inputs(image, psf, reg, is_real)
+        inputs = _spectrum_inputs(image, psf, reg, is_real, fuse_laplacian=True)
         if inputs is not None and (inputs[0].dtype == np.float64
                                    or type(balance) is not np.float64):
             result = _core.restoration_extra_wiener(*inputs, balance, clip)
@@ -79,12 +80,48 @@ def wiener(image, psf, balance, reg=None, is_real=True, clip=True):
                     is_real=is_real, clip=clip)
 
 
-def _quad_norm(value):
-    # Keep upstream's shape heuristic and NumPy reduction order for RNG scales.
-    if value.shape[-1] == value.shape[-2]:
-        return np.sum(np.sum(np.abs(value) ** 2, axis=-1), axis=-1)
-    return (2 * np.sum(np.sum(np.abs(value) ** 2, axis=-1), axis=-1)
-            - np.sum(np.abs(value[..., 0]) ** 2, axis=-1))
+class _GibbsWorkspace:
+    def __init__(self, data):
+        shape = data.shape
+        dtype = data.real.dtype
+        self.sample = np.empty_like(data)
+        self.residuals = np.empty((2, *shape), dtype=data.dtype)
+        self.normals = np.empty((2, *shape), dtype=np.float64)
+        self.real, self.imag = self.normals
+        self.squared = np.empty((2, *shape), dtype=dtype)
+        self.rows = np.empty((2, shape[0]), dtype=dtype)
+        self.norms = np.empty(2, dtype=dtype)
+        self.first_column = np.empty(2, dtype=dtype)
+        self.total = np.zeros_like(data)
+        self.difference = np.empty_like(data)
+        self.mean = np.empty_like(data)
+        self.magnitude = self.squared[0]
+
+    def residual_norms(self):
+        # Keep upstream's two axis reductions and its half-spectrum heuristic.
+        np.absolute(self.residuals, out=self.squared)
+        np.square(self.squared, out=self.squared)
+        np.sum(self.squared, axis=-1, out=self.rows)
+        np.sum(self.rows, axis=-1, out=self.norms)
+        if self.sample.shape[0] != self.sample.shape[1]:
+            self.rows[:] = self.squared[..., 0]
+            np.sum(self.rows, axis=-1, out=self.first_column)
+            return (2 * self.norms[0] - self.first_column[0],
+                    2 * self.norms[1] - self.first_column[1])
+        return self.norms
+
+    def accumulate(self, count):
+        if count == 1:
+            np.add(self.total, self.sample, out=self.total)
+            return np.nan
+        np.divide(self.total, count - 1, out=self.difference)
+        np.add(self.total, self.sample, out=self.total)
+        np.divide(self.total, count, out=self.mean)
+        np.subtract(self.mean, self.difference, out=self.difference)
+        np.absolute(self.difference, out=self.magnitude)
+        change = self.magnitude.sum()
+        np.absolute(self.total, out=self.magnitude)
+        return change / self.magnitude.sum() / count
 
 
 def unsupervised_wiener(
@@ -112,39 +149,37 @@ def unsupervised_wiener(
     if inputs is None:
         return original()
     image, transfer, regularizer = inputs
-    from scipy.fft import irfft2, rfft2
-
-    data = rfft2(image, norm='ortho')
+    data = _core.restoration_extra_gibbs_forward(image)
     power = np.abs(transfer) ** 2
     reg_power = regularizer ** 2
-    if (not np.isfinite(data).all() or not np.isfinite(power + reg_power).all()
-            or np.any((power + reg_power) == 0)):
+    initial_precision = power + reg_power
+    if (not np.isfinite(data).all() or not np.isfinite(initial_precision).all()
+            or np.any(initial_precision == 0)):
         return original()
-    conjugate = np.conj(transfer)
     generator = np.random.default_rng(rng)
+    workspace = _GibbsWorkspace(data)
+    draw_normal = generator.standard_normal
+    draw_gamma = generator.gamma
+    sample = _core.restoration_extra_gibbs_step
+    noise_shape, prior_shape = image.size / 2, (image.size - 1) / 2
     noise, prior = [1], [1]
-    previous = current = np.zeros(transfer.shape, dtype=image.dtype)
     delta = np.nan
     for iteration in range(maximum):
-        precision = noise[-1] * power + prior[-1] * reg_power
-        real = generator.standard_normal(data.shape)
-        imag = generator.standard_normal(data.shape)
-        sample = _core.restoration_extra_gibbs_sample(
-            data, noise[-1] * conjugate, precision, real, imag
-        )
-        noise.append(generator.gamma(image.size / 2, 2 / _quad_norm(data - sample * transfer)))
-        prior.append(generator.gamma((image.size - 1) / 2, 2 / _quad_norm(sample * regularizer)))
+        # Keep the reference's float64 fills and noise-before-prior gamma draws.
+        draw_normal(out=workspace.real)
+        draw_normal(out=workspace.imag)
+        sample(data, transfer, regularizer, power, reg_power, noise[-1], prior[-1],
+               workspace.normals, workspace.sample, workspace.residuals)
+        noise_norm, prior_norm = workspace.residual_norms()
+        noise.append(draw_gamma(noise_shape, 2 / noise_norm))
+        prior.append(draw_gamma(prior_shape, 2 / prior_norm))
         count = iteration - burnin
         if count > 0:
-            current = previous + sample
-        if count > 1:
-            delta = np.sum(np.abs(current / count - previous / (count - 1))) / np.sum(
-                np.abs(current)
-            ) / count
-        previous = current
+            delta = workspace.accumulate(count)
         if iteration > minimum and delta < threshold:
             break
-    result = irfft2(current / count, s=image.shape, norm='ortho')
+    np.divide(workspace.total, count, out=workspace.total)
+    result = _core.restoration_extra_gibbs_inverse(workspace.total, image.shape)
     if clip:
         np.clip(result, -1, 1, out=result)
     return result, {'noise': noise, 'prior': prior}

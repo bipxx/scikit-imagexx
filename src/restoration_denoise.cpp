@@ -9,6 +9,7 @@
 #include <complex>
 #include <cstring>
 #include <limits>
+#include <memory>
 #include <numeric>
 #include <type_traits>
 #include <utility>
@@ -53,7 +54,8 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
     const auto count = static_cast<std::size_t>(plane) * pz;
     if constexpr (FixedChannels != 0) channels = FixedChannels;
     std::vector<double> padded(count * channels);
-    std::vector<double> sums(count);
+    // Each shift overwrites its entire overlapping prefix-sum region before use.
+    std::unique_ptr<double[]> sums(new double[count]);
     std::vector<double> weights(count);
     std::vector<double> accum(count * channels);
     std::vector<int> reflected_x(px);
@@ -524,7 +526,8 @@ bool richardson_lucy(const T* image, const T* psf, T* out, std::size_t rows, std
     const auto real_size = height * width;
     const auto spectrum_size = height * (width / 2 + 1);
     const int workers = detail::active_workers(real_size);
-    std::vector<T> real(real_size), convolved(real_size);
+    std::vector<T> real(real_size);
+    std::unique_ptr<T[]> convolved(new T[real_size]);
     std::array<std::vector<std::complex<T>>, 2> kernels{
         std::vector<std::complex<T>>(spectrum_size), std::vector<std::complex<T>>(spectrum_size)};
     std::vector<std::complex<T>> spectrum(spectrum_size);
@@ -538,7 +541,7 @@ bool richardson_lucy(const T* image, const T* psf, T* out, std::size_t rows, std
     auto convolve = [&](std::size_t kernel) {
         detail::fft_r2c(shape, axes, real.data(), spectrum.data(), workers);
         for (std::size_t i = 0; i < spectrum_size; ++i) spectrum[i] *= kernels[kernel][i];
-        detail::fft_c2r(shape, axes, spectrum.data(), convolved.data(), workers);
+        detail::fft_c2r(shape, axes, spectrum.data(), convolved.get(), workers);
     };
     std::fill(real.begin(), real.end(), T(0));
     for (int i = 0; i < iterations; ++i) {

@@ -32,6 +32,38 @@ RestorationShape element_strides(const RestorationShape& shape) {
         strides[axis - 1] = strides[axis] * shape[axis];
     return strides;
 }
+double laplacian_value(std::size_t frequency, std::size_t extent) {
+    constexpr double pi = 3.1415926535897932384626433832795;
+    const auto sine = std::sin(pi * double(frequency) / double(extent));
+    return 4 * sine * sine;
+}
+
+template<class Visit>
+bool visit_laplacian(const RestorationShape& shape, std::size_t count, Visit visit) {
+    const auto width = shape.back() / 2 + 1;
+    std::vector<double> last(width);
+    for (std::size_t j = 0; j < width; ++j)
+        last[j] = laplacian_value(j, shape.back());
+    auto spectrum = shape;
+    spectrum.back() = width;
+    const auto strides = element_strides(spectrum);
+    std::vector<std::vector<double>> eigenvalues(shape.size() - 1);
+    for (std::size_t axis = 0; axis < eigenvalues.size(); ++axis) {
+        auto& values = eigenvalues[axis];
+        const auto extent = shape[axis];
+        values.resize(extent);
+        for (std::size_t j = 0; j < extent; ++j)
+            values[j] = laplacian_value(std::min(j, extent - j), extent);
+    }
+    for (std::size_t i = 0; i < count; i += width) {
+        double offset = 0;
+        for (std::size_t axis = 0; axis < eigenvalues.size(); ++axis)
+            offset += eigenvalues[axis][i / strides[axis] % spectrum[axis]];
+        for (std::size_t j = 0; j < width; ++j)
+            if (!visit(i + j, offset + last[j])) return false;
+    }
+    return true;
+}
 } // namespace
 
 template<class T>
@@ -65,36 +97,13 @@ void restoration_transfer(const T* kernel, const RestorationShape& kernel_shape,
 
 template<class T>
 void restoration_laplacian(const RestorationShape& shape, T* output) {
-    size_of(shape);
+    const auto size = size_of(shape);
     if (!output) throw std::invalid_argument("null restoration Laplacian buffer");
-    auto spectrum = shape;
-    spectrum.back() = shape.back() / 2 + 1;
-    const auto strides = element_strides(spectrum);
-    // The Fourier eigenvalue of each axis's centered second difference.
-    constexpr double pi = 3.1415926535897932384626433832795;
-    std::vector<double> last(spectrum.back());
-    for (std::size_t j = 0; j < last.size(); ++j) {
-        const auto sine = std::sin(pi * double(j) / double(shape.back()));
-        last[j] = 4 * sine * sine;
-    }
-    std::vector<std::vector<double>> eigenvalues(shape.size() - 1);
-    for (std::size_t axis = 0; axis + 1 < shape.size(); ++axis) {
-        auto& values = eigenvalues[axis];
-        values.resize(shape[axis]);
-        for (std::size_t j = 0; j < values.size(); ++j) {
-            const auto sine = std::sin(pi * double(std::min(j, shape[axis] - j)) /
-                                       double(shape[axis]));
-            values[j] = 4 * sine * sine;
-        }
-    }
-    const auto size = size_of(spectrum);
-    for (std::size_t i = 0; i < size; i += last.size()) {
-        double offset = 0;
-        for (std::size_t axis = 0; axis < eigenvalues.size(); ++axis)
-            offset += eigenvalues[axis][i / strides[axis] % spectrum[axis]];
-        for (std::size_t j = 0; j < last.size(); ++j)
-            output[i + j] = T(offset + last[j]);
-    }
+    visit_laplacian(shape, size / shape.back() * (shape.back() / 2 + 1),
+                    [output](std::size_t i, double value) {
+        output[i] = T(value);
+        return true;
+    });
 }
 
 template<class T>
@@ -102,20 +111,28 @@ bool restoration_wiener(const T* image, const RestorationShape& shape,
                         const std::complex<T>* transfer, const T* reg,
                         T balance, bool clip, T* output, int workers) {
     const auto size = size_of(shape);
-    if (!image || !output || !transfer || !reg)
+    if (!image || !output || !transfer)
         throw std::invalid_argument("null restoration Wiener buffer");
     const auto count = size / shape.back() * (shape.back() / 2 + 1);
     std::vector<std::complex<T>> data(count);
     const auto axes = axes_of(shape);
     detail::fft_r2c(shape, axes, image, data.data(), workers);
-    for (std::size_t i = 0; i < count; ++i) {
+    const auto apply = [&](std::size_t i, T regularizer) {
         const T re = transfer[i].real(), im = transfer[i].imag();
-        const T denominator = (re * re + im * im) + balance * (reg[i] * reg[i]);
+        const T denominator = (re * re + im * im) + balance * (regularizer * regularizer);
         if (denominator == 0 || !std::isfinite(denominator)) return false;
         const T fr = re / denominator, fi = -im / denominator;
         const auto value = data[i];
         data[i] = {fr * value.real() - fi * value.imag(), fr * value.imag() + fi * value.real()};
-        if (!std::isfinite(data[i].real()) || !std::isfinite(data[i].imag())) return false;
+        return std::isfinite(data[i].real()) && std::isfinite(data[i].imag());
+    };
+    if (reg) {
+        for (std::size_t i = 0; i < count; ++i)
+            if (!apply(i, reg[i])) return false;
+    } else if (!visit_laplacian(shape, count, [&](std::size_t i, double value) {
+        return apply(i, T(value));
+    })) {
+        return false;
     }
     detail::fft_c2r(shape, axes, data.data(), output, workers);
     if (clip) {
@@ -142,6 +159,48 @@ void restoration_gibbs_sample(const std::complex<T>* data,
         output[i] = {(fr * re - fi * im) + scale * T(normal_real[i]),
                      (fr * im + fi * re) + scale * T(normal_imag[i])};
     }
+}
+
+template<class T>
+void restoration_gibbs_step(const std::complex<T>* data, const std::complex<T>* transfer,
+                             const T* reg, const T* power, const T* reg_power,
+                             T noise, T prior, const double* normals, std::size_t count,
+                             std::complex<T>* sample, std::complex<T>* residuals) {
+    if (!data || !transfer || !reg || !power || !reg_power || !normals || !sample || !residuals)
+        throw std::invalid_argument("null restoration Gibbs buffer");
+    for (std::size_t i = 0; i < count; ++i) {
+        const T precision = noise * power[i] + prior * reg_power[i];
+        const T reciprocal = T(1) / precision;
+        const T hr = transfer[i].real(), hi = transfer[i].imag();
+        const T fr = (noise * hr) * reciprocal;
+        const T fi = (noise * -hi) * reciprocal;
+        const T re = data[i].real(), im = data[i].imag();
+        const T scale = std::sqrt(T(0.5) / precision);
+        const T sr = (fr * re - fi * im) + scale * T(normals[i]);
+        const T si = (fr * im + fi * re) + scale * T(normals[count + i]);
+        sample[i] = {sr, si};
+        residuals[i] = {re - (sr * hr - si * hi), im - (sr * hi + si * hr)};
+        residuals[count + i] = {sr * reg[i], si * reg[i]};
+    }
+}
+
+template<class T>
+void restoration_gibbs_forward(const T* image, const RestorationShape& shape,
+                               std::complex<T>* data, int workers) {
+    const auto size = size_of(shape);
+    const auto count = size / shape.back() * (shape.back() / 2 + 1);
+    detail::fft_r2c(shape, axes_of(shape), image, data, workers);
+    const auto scale = T(1 / std::sqrt(double(size)));
+    for (std::size_t i = 0; i < count; ++i) data[i] *= scale;
+}
+
+template<class T>
+void restoration_gibbs_inverse(const std::complex<T>* data, const RestorationShape& shape,
+                               T* output, int workers) {
+    const auto size = size_of(shape);
+    detail::fft_c2r(shape, axes_of(shape), data, output, workers);
+    const auto scale = T(std::sqrt(double(size)));
+    for (std::size_t i = 0; i < size; ++i) output[i] *= scale;
 }
 
 template<class T>
@@ -218,6 +277,9 @@ void restoration_roll(const T* image, const RestorationShape& shape,
     template void restoration_laplacian(const RestorationShape&, T*); \
     template bool restoration_wiener(const T*, const RestorationShape&, const std::complex<T>*, const T*, T, bool, T*, int); \
     template void restoration_gibbs_sample(const std::complex<T>*, const std::complex<T>*, const T*, const double*, const double*, std::size_t, std::complex<T>*); \
+    template void restoration_gibbs_step(const std::complex<T>*, const std::complex<T>*, const T*, const T*, const T*, T, T, const double*, std::size_t, std::complex<T>*, std::complex<T>*); \
+    template void restoration_gibbs_forward(const T*, const RestorationShape&, std::complex<T>*, int); \
+    template void restoration_gibbs_inverse(const std::complex<T>*, const RestorationShape&, T*, int); \
     template void restoration_interpolate(const T*, const RestorationShape&, std::size_t, T*); \
     template void restoration_roll(const T*, const RestorationShape&, const RestorationShape&, T*, bool)
 INSTANTIATE(float);

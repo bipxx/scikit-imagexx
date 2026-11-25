@@ -16,30 +16,31 @@ void evaluate(const T* image, std::size_t height, std::size_t width,
     const auto* center = image + (row * width + col) * Channels;
     std::array<T, Channels> sums{};
     T total = 0;
+    const auto color_weight = [&](const T* neighbor) {
+        T squared = 0;
+        for (std::size_t channel = 0; channel < Channels; ++channel) {
+            const T difference = center[channel] - (neighbor ? neighbor[channel] : cval);
+            squared += difference * difference;
+        }
+        const T distance = static_cast<T>(std::sqrt(static_cast<double>(squared)));
+        // Clamp before truncation, including for a NaN outside the prepared contract.
+        const auto bin = static_cast<std::size_t>(std::min(last_bin, distance * scale));
+        return color[bin];
+    };
+    T border_color = 0;
+    if constexpr (!Interior) border_color = color_weight(nullptr);
     for (std::size_t kr = 0; kr < window; ++kr) {
         const auto r = static_cast<std::ptrdiff_t>(row + kr) - reach;
+        const T* line = nullptr;
+        if (Interior || (r >= 0 && static_cast<std::size_t>(r) < height))
+            line = image + static_cast<std::size_t>(r) * width * Channels;
         for (std::size_t kc = 0; kc < window; ++kc) {
             const auto c = static_cast<std::ptrdiff_t>(col + kc) - reach;
-            const bool inside = Interior || (r >= 0 && c >= 0 &&
-                static_cast<std::size_t>(r) < height && static_cast<std::size_t>(c) < width);
-            const auto* neighbor = inside ? image +
-                (static_cast<std::size_t>(r) * width + static_cast<std::size_t>(c)) * Channels : nullptr;
-            std::array<T, Channels> values;
-            T squared = 0;
-            for (std::size_t channel = 0; channel < Channels; ++channel) {
-                const auto value = inside ? neighbor[channel] : cval;
-                values[channel] = value;
-                const T difference = center[channel] - value;
-                squared += difference * difference;
-            }
-            const T distance = static_cast<T>(std::sqrt(static_cast<double>(squared)));
-            // Finite nonnegative distances give the same truncation after an
-            // upper clamp. Clamping before conversion also bounds a NaN index
-            // if a caller violates the prepared finite-input contract.
-            const auto bin = static_cast<std::size_t>(std::min(last_bin, distance * scale));
-            const T weight = spatial[kr * window + kc] * color[bin];
+            const bool inside = Interior || (line && c >= 0 && static_cast<std::size_t>(c) < width);
+            const auto* neighbor = inside ? line + static_cast<std::size_t>(c) * Channels : nullptr;
+            const T weight = *spatial++ * (inside ? color_weight(neighbor) : border_color);
             for (std::size_t channel = 0; channel < Channels; ++channel)
-                sums[channel] += values[channel] * weight;
+                sums[channel] += (inside ? neighbor[channel] : cval) * weight;
             total += weight;
         }
     }
