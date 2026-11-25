@@ -830,9 +830,9 @@ def test_actual_nmi_pins_and_closed_scope_match_qualification(nmi_source_records
                     and t.id == 'NMI_IMPORTED_SOURCE_PINS' for t in node.targets)]
     assert declarations == [p.NMI_IMPORTED_SOURCE_PINS] and len(declarations[0]) == 8
     scope = p.qualification_scope(ROOT)
-    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current320', 304, 136, 66)
+    assert (scope['name'], scope['members'], scope['sdk'], len(scope['families'])) == ('current408', 403, 182, 112)
     # Historical literal envelopes remain independently closed.
-    historical_text=text.replace("CURRENT_PRODUCT_SCOPE = 'current320'\n",'')
+    historical_text=text.replace("CURRENT_PRODUCT_SCOPE = 'current408'\n",'')
     assert historical_text!=text
     legacy=p.qualification_scope_text(historical_text)
     assert (legacy['name'],legacy['members'],legacy['sdk'])==('h_extrema23',120,68)
@@ -947,9 +947,9 @@ def test_h203_stager_rejects_incomplete_combined_scope(synthetic,fault):
 @pytest.mark.parametrize('profile',('windows','modern','minimum'))
 def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile):
     scope=p.qualification_scope(ROOT,profile)
-    assert scope['name']=='current320' and scope['members']==304 and scope['sdk']==136
-    assert scope['image_count']==320 and scope['metadata_count']==3 and len(scope['functions'])==323
-    assert len(scope['families'])==66 and 'current66 required' in scope['SDK_client_scope']
+    assert scope['name']=='current408' and scope['members']==403 and scope['sdk']==182
+    assert scope['image_count']==408 and scope['metadata_count']==3 and len(scope['functions'])==411
+    assert len(scope['families'])==112 and 'current112 required' in scope['SDK_client_scope']
     assert ('lib/skimagexx.lib' in scope['SDK_members']) == (profile=='windows')
     text=(ROOT/'tools/public_qualification.py').read_text()
     with pytest.raises(RuntimeError,match='authenticated install closure'):p.qualification_scope_text(text)
@@ -958,8 +958,8 @@ def test_current_stager_scope_uses_source_closure_and_exact253_registry(profile)
 @pytest.mark.parametrize('stale_scope', ('current247', 'current301'))
 def test_current_stager_rejects_old_scope_claim_with_current253_source(stale_scope):
     text = (ROOT / 'tools/public_qualification.py').read_text(encoding='utf-8')
-    assert p.CURRENT_PRODUCT_SCOPE == 'current320'
-    stale = text.replace("CURRENT_PRODUCT_SCOPE = 'current320'", f"CURRENT_PRODUCT_SCOPE = '{stale_scope}'", 1)
+    assert p.CURRENT_PRODUCT_SCOPE == 'current408'
+    stale = text.replace("CURRENT_PRODUCT_SCOPE = 'current408'", f"CURRENT_PRODUCT_SCOPE = '{stale_scope}'", 1)
     assert stale!=text
     names=[f.relative_to(ROOT).as_posix() for prefix in ('python/skimagexx','include')
            for f in (ROOT/prefix).rglob('*') if f.is_file()]

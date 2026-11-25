@@ -748,251 +748,7 @@ def flood_fill_contract():
         gaps='Bool tolerance source-limit frontier, non-POD/protocol/extended types, Windows-original/fullFP/genuine/performance remain pending')
 
 
-def _final477_default_call(api, image):
-    import numpy as np
-    from pathlib import Path
-    if api in ('data.checkerboard', 'data.shepp_logan_phantom'):
-        return (), {}
-    if api == 'data.file_hash':
-        return (str(Path(__file__).resolve()),), {}
-    if api == 'draw.polygon_perimeter':
-        return ([1, 1, max(2, image.shape[0] - 2)], [1, max(2, image.shape[1] - 2), 2]), {'shape': image.shape, 'clip': True}
-    if api == 'draw.rectangle_perimeter':
-        return ((1, 1),), {'extent': (max(1, image.shape[0] - 2), max(1, image.shape[1] - 2)), 'shape': image.shape}
-    if api == 'feature.corner_fast':
-        return (image,), {'n': 9, 'threshold': 0.08 if image.dtype.kind == 'f' else 10.0}
-    if api == 'feature.corner_orientations':
-        corners = np.array([[min(3, image.shape[0] - 1), min(3, image.shape[1] - 1)]], dtype=np.intp)
-        return (image, corners, np.ones((3, 3), dtype=bool)), {}
-    if api == 'feature.graycomatrix':
-        return (image, [1], [0.0]), {'levels': 256}
-    if api == 'feature.graycoprops':
-        glcm = np.ones((4, 4, 1, 1), dtype=np.float64)
-        return (glcm, 'contrast'), {}
-    if api == 'feature.canny':
-        return (image,), {'sigma': 1.0}
-    if api in ('feature.peak_local_max', 'feature.corner_peaks'):
-        return (image,), {'min_distance': 2}
-    if api == 'feature.corner_subpix':
-        corners = np.array([[image.shape[0] // 2, image.shape[1] // 2]], dtype=np.intp)
-        return (image, corners), {'window_size': 5}
-    if api == 'feature.blob_dog':
-        return (image,), {'max_sigma': 4.0}
-    if api == 'feature.blob_log':
-        return (image,), {'max_sigma': 4.0, 'num_sigma': 3}
-    if api == 'feature.blob_doh':
-        return (image,), {'max_sigma': 2.0, 'num_sigma': 3, 'threshold': 0.05}
-    if api == 'feature.hog':
-        return (image,), {'pixels_per_cell': (4, 4), 'cells_per_block': (2, 2)}
-    if api == 'feature.daisy':
-        return (image,), {'step': 4, 'radius': 4, 'rings': 2, 'histograms': 4, 'orientations': 4}
-    if api == 'feature.local_binary_pattern':
-        return (image, 8, 1), {}
-    if api == 'feature.multiblock_lbp':
-        return (image.astype(np.uint64, copy=False), 1, 1, 2, 2), {}
-    if api == 'feature.match_template':
-        return (image, image[:min(3, image.shape[0]), :min(3, image.shape[1])].copy()), {}
-    if api == 'feature.multiscale_basic_features':
-        return (image,), {'sigma_min': 0.5, 'sigma_max': 2.0, 'num_sigma': 2}
-    if api == 'feature.plot_matched_features':
-        class _DummyAx:
-            def __init__(self):
-                self.calls = []
-            def scatter(self, *a, **k): self.calls.append(('scatter', len(a), sorted(k.keys())))
-            def imshow(self, *a, **k): self.calls.append(('imshow', a[0].shape))
-            def axis(self, *a, **k): self.calls.append(('axis', a))
-            def plot(self, *a, **k): self.calls.append(('plot', len(a)))
-        pts = np.array([[1, 2], [3, 4]], dtype=np.intp)
-        return (image, image), {'keypoints0': pts, 'keypoints1': pts, 'matches': np.array([[0, 0], [1, 1]]), 'ax': _DummyAx()}
-    if api in ('feature.fisher_vector', 'feature.learn_gmm'):
-        rng = np.random.default_rng(7)
-        desc = rng.normal(size=(24, 4))
-        if api == 'feature.learn_gmm':
-            return (desc,), {'n_modes': 2, 'gm_args': {'covariance_type': 'diag', 'random_state': 0}}
-        try:
-            from sklearn.mixture import GaussianMixture
-            gmm = GaussianMixture(n_components=2, covariance_type='diag', random_state=0).fit(desc)
-        except ImportError:
-            gmm = None
-        return (desc, gmm), {}
-    if api == 'filters.try_all_threshold':
-        return (image,), {'figsize': (6, 4), 'verbose': False}
-    if api in ('future.manual_polygon_segmentation', 'future.manual_lasso_segmentation'):
-        return (image,), {}
-    if api in ('future.fit_segmenter', 'future.predict_segmenter'):
-        class _RecClf:
-            def __init__(self): self.data = None; self.labels = None
-            def fit(self, X, y): self.data = X; self.labels = y
-            def predict(self, X): return (X[:, 0] > 0.5).astype(np.int64)
-        feats = np.arange(image.size * 2, dtype=np.float64).reshape(*image.shape[:2], 2)
-        if api == 'future.fit_segmenter':
-            labels = np.ones(image.shape[:2], dtype=np.int32)
-            return (labels, feats, _RecClf()), {}
-        clf = _RecClf()
-        return (feats, clf), {}
-    if api.startswith('graph.'):
-        h, w = image.shape[:2]
-        costs = np.ones((h, w), dtype=np.float64) + 0.1 * np.asarray(image, dtype=np.float64)
-        rgb_costs = np.stack((costs, costs, costs), axis=-1)
-        labels = np.zeros((h, w), dtype=np.int32)
-        labels[:h // 2, :] = 1
-        labels[h // 2:, w // 2:] = 2
-        if api == 'graph.route_through_array':
-            return (costs, (0, 0), (h - 1, w - 1)), {}
-        if api in ('graph.shortest_path', 'graph.pixel_graph'):
-            return (costs,), {}
-        from . import graph as gmod
-        rag = gmod.rag_mean_color(rgb_costs, labels)
-        if api == 'graph.rag_mean_color':
-            return (rgb_costs, labels), {}
-        if api == 'graph.rag_boundary':
-            return (labels, costs), {}
-        if api == 'graph.central_pixel':
-            from scipy import sparse
-            matrix = np.zeros((15, 15), dtype=np.float32)
-            for i in range(14):
-                matrix[i, i + 1] = 1
-            return (sparse.csr_array(matrix),), {'nodes': np.arange(15), 'shape': (3, 5)}
-        if api == 'graph.cut_threshold':
-            return (labels, rag, 0.5), {'in_place': False}
-        if api == 'graph.cut_normalized':
-            return (labels, rag), {'in_place': False, 'rng': 739}
-        if api == 'graph.merge_hierarchical':
-            return (labels, rag, 0.5, True, False, lambda g, s, d: {}, lambda g, s, d, n: {'weight': g[s][n].get('weight', 1.0)}), {}
-        if api == 'graph.show_rag':
-            return (labels, rag, rgb_costs), {}
-    if api.startswith('io.'):
-        import skimage
-        cam = str(Path(skimage.__file__).resolve().parent / 'data' / 'camera.png')
-        if api == 'io.concatenate_images':
-            return ([image, image[::-1].copy()],), {}
-        if api == 'io.imread':
-            return (cam,), {}
-        if api == 'io.imread_collection':
-            return ([cam],), {}
-        if api == 'io.imread_collection_wrapper':
-            from . import io as iomod
-            return (iomod.imread,), {}
-        if api == 'io.push':
-            return (image,), {}
-        if api == 'io.pop':
-            return (), {}
-        if api == 'io.imsave':
-            return ('_unused.png', np.zeros((4, 4), dtype=np.uint8)), {}
-        if api in ('io.load_sift', 'io.load_surf'):
-            return ('_unused.key',), {}
-    if api == 'measure.marching_cubes':
-        zz, yy, xx_g = np.mgrid[:8, :8, :8]
-        vol = (xx_g - 3.5) ** 2 + (yy - 3.5) ** 2 + (zz - 3.5) ** 2
-        return (vol, 5.0), {}
-    if api == 'measure.ransac':
-        from .measure import LineModelND
-        pts = np.column_stack([np.arange(12, dtype=np.float64), 2.0 * np.arange(12, dtype=np.float64) + 1.0])
-        return (pts, LineModelND, 2, 0.5), {'rng': 739, 'max_trials': 20}
-    if api == 'morphology.remove_objects_by_distance':
-        labels = np.zeros(image.shape[:2], dtype=image.dtype)
-        labels[1, 1] = 1
-        labels[image.shape[0] - 2, image.shape[1] - 2] = 2
-        return (labels, 2), {}
-    if api == 'registration.phase_cross_correlation':
-        return (image, image), {}
-    if api in ('registration.optical_flow_ilk', 'registration.optical_flow_tvl1'):
-        opts = {'num_warp': 2} if api.endswith('ilk') else {'num_warp': 2, 'num_iter': 3}
-        return (image, image), opts
-    if api.startswith('restoration.'):
-        from .restoration import denoise_tv_chambolle
-        if api == 'restoration.denoise_nl_means':
-            return (image,), {'patch_size': 3, 'patch_distance': 3}
-        if api == 'restoration.denoise_wavelet':
-            return (image,), {'wavelet': 'haar', 'wavelet_levels': 1}
-        if api == 'restoration.estimate_sigma':
-            return (image,), {}
-        if api == 'restoration.inpaint_biharmonic':
-            mask = np.zeros(image.shape[:2], dtype=bool)
-            mask[image.shape[0] // 2, image.shape[1] // 2] = True
-            return (image, mask), {}
-        if api == 'restoration.unwrap_phase':
-            return (image,), {}
-        if api == 'restoration.richardson_lucy':
-            return (image.astype(np.float64, copy=False), np.ones((3, 3), dtype=np.float64) / 9.0), {'num_iter': 3}
-        if api == 'restoration.wiener':
-            return (image, np.ones((3, 3), dtype=np.float64) / 9.0, 0.1), {}
-        if api == 'restoration.unsupervised_wiener':
-            return (image, np.ones((3, 3), dtype=np.float64) / 9.0), {'rng': 739}
-        if api == 'restoration.denoise_invariant':
-            return (image, denoise_tv_chambolle), {'stride': 2, 'denoiser_kwargs': {'weight': 0.1}}
-        if api == 'restoration.calibrate_denoiser':
-            return (image, denoise_tv_chambolle, {'weight': [0.1, 0.2]}), {'stride': 2}
-        if api == 'restoration.cycle_spin':
-            return (image, denoise_tv_chambolle, 1), {'func_kw': {'weight': 0.1}}
-    if api.startswith('segmentation.'):
-        if api == 'segmentation.slic':
-            return (image,), {'n_segments': 6, 'max_num_iter': 3}
-        if api == 'segmentation.watershed':
-            markers = np.zeros(image.shape[:2], dtype=np.int32)
-            markers[1, 1] = 1
-            markers[-2, -2] = 2
-            return (image, markers), {}
-        if api == 'segmentation.felzenszwalb':
-            return (image,), {'scale': 10, 'sigma': 0.5, 'min_size': 5}
-        if api == 'segmentation.quickshift':
-            return (image,), {'kernel_size': 3, 'max_dist': 5, 'convert2lab': False}
-        if api == 'segmentation.random_walker':
-            labels = np.zeros(image.shape[:2], dtype=np.int32)
-            labels[0, 0] = 1
-            labels[-1, -1] = 2
-            return (image, labels), {'mode': 'cg_j'}
-        if api == 'segmentation.active_contour':
-            h, w = image.shape[:2]
-            t = np.linspace(0, 2 * np.pi, 16, endpoint=False)
-            snake = np.column_stack([h / 2 + (h / 4) * np.sin(t), w / 2 + (w / 4) * np.cos(t)])
-            return (image, snake), {'max_num_iter': 10}
-        if api == 'segmentation.chan_vese':
-            return (image,), {'max_num_iter': 8}
-        if api == 'segmentation.inverse_gaussian_gradient':
-            return (image,), {}
-        if api in ('segmentation.morphological_chan_vese', 'segmentation.morphological_geodesic_active_contour'):
-            return (image, 4), {}
-    if api == 'transform.resize_local_mean':
-        h, w = image.shape[:2]
-        tiled = np.empty((2 * h, 2 * w), dtype=image.dtype)
-        tiled[:h, :w] = image
-        tiled[:h, w:] = image
-        tiled[h:, :w] = image
-        tiled[h:, w:] = image
-        return (tiled, (h, w)), {}
-    if api == 'transform.warp':
-        return (image, np.eye(3, dtype=np.float64)), {}
-    if api == 'transform.warp_coords':
-        from .transform import AffineTransform
-        return (AffineTransform(), image.shape[:2]), {}
-    if api == 'transform.rotate':
-        return (image, 15.0), {}
-    if api == 'transform.swirl':
-        return (image,), {'radius': 5.0}
-    if api == 'transform.warp_polar':
-        return (image,), {}
-    if api == 'transform.estimate_transform':
-        src = np.array([[0., 0.], [10., 0.], [0., 10.]], dtype=np.float64)
-        dst = np.array([[1., 2.], [11., 3.], [2., 12.]], dtype=np.float64)
-        return ('affine', src, dst), {}
-    if api == 'transform.radon':
-        sq = image[:min(image.shape), :min(image.shape)].copy()
-        return (sq,), {'theta': np.linspace(0., 180., 6, endpoint=False)}
-    if api in ('transform.iradon', 'transform.iradon_sart'):
-        sino = np.ones((min(image.shape), 6), dtype=np.float64)
-        return (sino, np.linspace(0., 180., 6, endpoint=False)), {}
-    if api == 'util.apply_parallel':
-        return (np.negative, image), {'chunks': image.shape}
-    if api == 'util.lookfor':
-        return ('sobel',), {}
-    return None
-
-
 def default_call(api, image):
-    custom = _final477_default_call(api, image)
-    if custom is not None:
-        return custom
     if api in HULL_FUNCTIONS:
         import numpy as np
 
@@ -1377,6 +1133,282 @@ def default_call(api, image):
         from ._stain_matrices import MATRICES
         matrix=MATRICES['hed_from_rgb' if api.endswith('separate_stains') else 'rgb_from_hed']
         return (image,matrix), {}
+    def _final477_default_call():
+        if api in ('data.checkerboard', 'data.shepp_logan_phantom'):
+            return (), {}
+        if api == 'data.file_hash':
+            from pathlib import Path
+            return (str(Path(__file__).resolve()),), {}
+        if api == 'draw.polygon_perimeter':
+            return ([1, 1, max(2, image.shape[0] - 2)], [1, max(2, image.shape[1] - 2), 2]), {'shape': image.shape, 'clip': True}
+        if api == 'draw.rectangle_perimeter':
+            return ((1, 1),), {'extent': (max(1, image.shape[0] - 2), max(1, image.shape[1] - 2)), 'shape': image.shape}
+        if api == 'feature.corner_fast':
+            return (image,), {'n': 9, 'threshold': 0.08 if image.dtype.kind == 'f' else 10.0}
+        if api == 'feature.corner_orientations':
+            import numpy as np
+            corners = np.array([[min(3, image.shape[0] - 1), min(3, image.shape[1] - 1)]], dtype=np.intp)
+            return (image, corners, np.ones((3, 3), dtype=bool)), {}
+        if api == 'feature.graycomatrix':
+            return (image, [1], [0.0]), {'levels': 256}
+        if api == 'feature.graycoprops':
+            import numpy as np
+            glcm = np.ones((4, 4, 1, 1), dtype=np.float64)
+            return (glcm, 'contrast'), {}
+        if api == 'feature.canny':
+            return (image,), {'sigma': 1.0}
+        if api in ('feature.peak_local_max', 'feature.corner_peaks'):
+            return (image,), {'min_distance': 2}
+        if api == 'feature.corner_subpix':
+            import numpy as np
+            corners = np.array([[image.shape[0] // 2, image.shape[1] // 2]], dtype=np.intp)
+            return (image, corners), {'window_size': 5}
+        if api == 'feature.blob_dog':
+            return (image,), {'max_sigma': 4.0}
+        if api == 'feature.blob_log':
+            return (image,), {'max_sigma': 4.0, 'num_sigma': 3}
+        if api == 'feature.blob_doh':
+            return (image,), {'max_sigma': 2.0, 'num_sigma': 3, 'threshold': 0.05}
+        if api == 'feature.hog':
+            return (image,), {'pixels_per_cell': (4, 4), 'cells_per_block': (2, 2)}
+        if api == 'feature.daisy':
+            return (image,), {'step': 4, 'radius': 4, 'rings': 2, 'histograms': 4, 'orientations': 4}
+        if api == 'feature.local_binary_pattern':
+            return (image, 8, 1), {}
+        if api == 'feature.multiblock_lbp':
+            import numpy as np
+            return (image.astype(np.uint64, copy=False), 1, 1, 2, 2), {}
+        if api == 'feature.match_template':
+            return (image, image[:min(3, image.shape[0]), :min(3, image.shape[1])].copy()), {}
+        if api == 'feature.multiscale_basic_features':
+            return (image,), {'sigma_min': 0.5, 'sigma_max': 2.0, 'num_sigma': 2}
+        if api == 'feature.plot_matched_features':
+            import numpy as np
+            class _DummyAx:
+                def __init__(self):
+                    self.calls = []
+                def scatter(self, *a, **k): self.calls.append(('scatter', len(a), sorted(k.keys())))
+                def imshow(self, *a, **k): self.calls.append(('imshow', a[0].shape))
+                def axis(self, *a, **k): self.calls.append(('axis', a))
+                def plot(self, *a, **k): self.calls.append(('plot', len(a)))
+            pts = np.array([[1, 2], [3, 4]], dtype=np.intp)
+            return (image, image), {'keypoints0': pts, 'keypoints1': pts, 'matches': np.array([[0, 0], [1, 1]]), 'ax': _DummyAx()}
+        if api in ('feature.fisher_vector', 'feature.learn_gmm'):
+            import numpy as np
+            rng = np.random.default_rng(7)
+            desc = rng.normal(size=(24, 4))
+            if api == 'feature.learn_gmm':
+                return (desc,), {'n_modes': 2, 'gm_args': {'covariance_type': 'diag', 'random_state': 0}}
+            try:
+                from sklearn.mixture import GaussianMixture
+                gmm = GaussianMixture(n_components=2, covariance_type='diag', random_state=0).fit(desc)
+            except ImportError:
+                gmm = None
+            return (desc, gmm), {}
+        if api == 'filters.try_all_threshold':
+            return (image,), {'figsize': (6, 4), 'verbose': False}
+        if api in ('future.manual_polygon_segmentation', 'future.manual_lasso_segmentation'):
+            return (image,), {}
+        if api in ('future.fit_segmenter', 'future.predict_segmenter'):
+            import numpy as np
+            class _RecClf:
+                def __init__(self): self.data = None; self.labels = None
+                def fit(self, X, y): self.data = X; self.labels = y
+                def predict(self, X): return (X[:, 0] > 0.5).astype(np.int64)
+            feats = np.arange(image.size * 2, dtype=np.float64).reshape(*image.shape[:2], 2)
+            if api == 'future.fit_segmenter':
+                labels = np.ones(image.shape[:2], dtype=np.int32)
+                return (labels, feats, _RecClf()), {}
+            clf = _RecClf()
+            return (feats, clf), {}
+        if api.startswith('graph.'):
+            import numpy as np
+            h, w = image.shape[:2]
+            costs = np.ones((h, w), dtype=np.float64) + 0.1 * np.asarray(image, dtype=np.float64)
+            rgb_costs = np.stack((costs, costs, costs), axis=-1)
+            labels = np.zeros((h, w), dtype=np.int32)
+            labels[:h // 2, :] = 1
+            labels[h // 2:, w // 2:] = 2
+            if api == 'graph.route_through_array':
+                return (costs, (0, 0), (h - 1, w - 1)), {}
+            if api in ('graph.shortest_path', 'graph.pixel_graph'):
+                return (costs,), {}
+            from . import graph as gmod
+            rag = gmod.rag_mean_color(rgb_costs, labels)
+            if api == 'graph.rag_mean_color':
+                return (rgb_costs, labels), {}
+            if api == 'graph.rag_boundary':
+                return (labels, costs), {}
+            if api == 'graph.central_pixel':
+                from scipy import sparse
+                matrix = np.zeros((15, 15), dtype=np.float32)
+                for i in range(14):
+                    matrix[i, i + 1] = 1
+                return (sparse.csr_array(matrix),), {'nodes': np.arange(15), 'shape': (3, 5)}
+            if api == 'graph.cut_threshold':
+                return (labels, rag, 0.5), {'in_place': False}
+            if api == 'graph.cut_normalized':
+                return (labels, rag), {'in_place': False, 'rng': 739}
+            if api == 'graph.merge_hierarchical':
+                return (labels, rag, 0.5, True, False, lambda g, s, d: {}, lambda g, s, d, n: {'weight': g[s][n].get('weight', 1.0)}), {}
+            if api == 'graph.show_rag':
+                return (labels, rag, rgb_costs), {}
+        if api.startswith('io.'):
+            from pathlib import Path
+            import numpy as np
+            import skimage
+            cam = str(Path(skimage.__file__).resolve().parent / 'data' / 'camera.png')
+            if api == 'io.concatenate_images':
+                return ([image, image[::-1].copy()],), {}
+            if api == 'io.imread':
+                return (cam,), {}
+            if api == 'io.imread_collection':
+                return ([cam],), {}
+            if api == 'io.imread_collection_wrapper':
+                from . import io as iomod
+                return (iomod.imread,), {}
+            if api == 'io.push':
+                return (image,), {}
+            if api == 'io.pop':
+                return (), {}
+            if api == 'io.imsave':
+                return ('_unused.png', np.zeros((4, 4), dtype=np.uint8)), {}
+            if api in ('io.load_sift', 'io.load_surf'):
+                return ('_unused.key',), {}
+        if api == 'measure.marching_cubes':
+            import numpy as np
+            zz, yy, xx_g = np.mgrid[:8, :8, :8]
+            vol = (xx_g - 3.5) ** 2 + (yy - 3.5) ** 2 + (zz - 3.5) ** 2
+            return (vol, 5.0), {}
+        if api == 'measure.ransac':
+            import numpy as np
+            from .measure import LineModelND
+            pts = np.column_stack([np.arange(12, dtype=np.float64), 2.0 * np.arange(12, dtype=np.float64) + 1.0])
+            return (pts, LineModelND, 2, 0.5), {'rng': 739, 'max_trials': 20}
+        if api == 'morphology.remove_objects_by_distance':
+            import numpy as np
+            labels = np.zeros(image.shape[:2], dtype=image.dtype)
+            labels[1, 1] = 1
+            labels[image.shape[0] - 2, image.shape[1] - 2] = 2
+            return (labels, 2), {}
+        if api == 'registration.phase_cross_correlation':
+            return (image, image), {}
+        if api in ('registration.optical_flow_ilk', 'registration.optical_flow_tvl1'):
+            opts = {'num_warp': 2} if api.endswith('ilk') else {'num_warp': 2, 'num_iter': 3}
+            return (image, image), opts
+        if api.startswith('restoration.') and api in (
+            'restoration.denoise_nl_means', 'restoration.denoise_wavelet',
+            'restoration.estimate_sigma', 'restoration.inpaint_biharmonic',
+            'restoration.unwrap_phase', 'restoration.richardson_lucy',
+            'restoration.wiener', 'restoration.unsupervised_wiener',
+            'restoration.denoise_invariant', 'restoration.calibrate_denoiser',
+            'restoration.cycle_spin',
+        ):
+            import numpy as np
+            from .restoration import denoise_tv_chambolle
+            if api == 'restoration.denoise_nl_means':
+                return (image,), {'patch_size': 3, 'patch_distance': 3}
+            if api == 'restoration.denoise_wavelet':
+                return (image,), {'wavelet': 'haar', 'wavelet_levels': 1}
+            if api == 'restoration.estimate_sigma':
+                return (image,), {}
+            if api == 'restoration.inpaint_biharmonic':
+                mask = np.zeros(image.shape[:2], dtype=bool)
+                mask[image.shape[0] // 2, image.shape[1] // 2] = True
+                return (image, mask), {}
+            if api == 'restoration.unwrap_phase':
+                return (image,), {}
+            if api == 'restoration.richardson_lucy':
+                return (image.astype(np.float64, copy=False), np.ones((3, 3), dtype=np.float64) / 9.0), {'num_iter': 3}
+            if api == 'restoration.wiener':
+                return (image, np.ones((3, 3), dtype=np.float64) / 9.0, 0.1), {}
+            if api == 'restoration.unsupervised_wiener':
+                return (image, np.ones((3, 3), dtype=np.float64) / 9.0), {'rng': 739}
+            if api == 'restoration.denoise_invariant':
+                return (image, denoise_tv_chambolle), {'stride': 2, 'denoiser_kwargs': {'weight': 0.1}}
+            if api == 'restoration.calibrate_denoiser':
+                return (image, denoise_tv_chambolle, {'weight': [0.1, 0.2]}), {'stride': 2}
+            if api == 'restoration.cycle_spin':
+                return (image, denoise_tv_chambolle, 1), {'func_kw': {'weight': 0.1}}
+        if api.startswith('segmentation.') and api in (
+            'segmentation.slic', 'segmentation.watershed', 'segmentation.felzenszwalb',
+            'segmentation.quickshift', 'segmentation.random_walker',
+            'segmentation.active_contour', 'segmentation.chan_vese',
+            'segmentation.inverse_gaussian_gradient',
+            'segmentation.morphological_chan_vese',
+            'segmentation.morphological_geodesic_active_contour',
+        ):
+            import numpy as np
+            if api == 'segmentation.slic':
+                return (image,), {'n_segments': 6, 'max_num_iter': 3}
+            if api == 'segmentation.watershed':
+                markers = np.zeros(image.shape[:2], dtype=np.int32)
+                markers[1, 1] = 1
+                markers[-2, -2] = 2
+                return (image, markers), {}
+            if api == 'segmentation.felzenszwalb':
+                return (image,), {'scale': 10, 'sigma': 0.5, 'min_size': 5}
+            if api == 'segmentation.quickshift':
+                return (image,), {'kernel_size': 3, 'max_dist': 5, 'convert2lab': False}
+            if api == 'segmentation.random_walker':
+                labels = np.zeros(image.shape[:2], dtype=np.int32)
+                labels[0, 0] = 1
+                labels[-1, -1] = 2
+                return (image, labels), {'mode': 'cg_j'}
+            if api == 'segmentation.active_contour':
+                h, w = image.shape[:2]
+                t = np.linspace(0, 2 * np.pi, 16, endpoint=False)
+                snake = np.column_stack([h / 2 + (h / 4) * np.sin(t), w / 2 + (w / 4) * np.cos(t)])
+                return (image, snake), {'max_num_iter': 10}
+            if api == 'segmentation.chan_vese':
+                return (image,), {'max_num_iter': 8}
+            if api == 'segmentation.inverse_gaussian_gradient':
+                return (image,), {}
+            if api in ('segmentation.morphological_chan_vese', 'segmentation.morphological_geodesic_active_contour'):
+                return (image, 4), {}
+        if api == 'transform.resize_local_mean':
+            import numpy as np
+            h, w = image.shape[:2]
+            tiled = np.empty((2 * h, 2 * w), dtype=image.dtype)
+            tiled[:h, :w] = image
+            tiled[:h, w:] = image
+            tiled[h:, :w] = image
+            tiled[h:, w:] = image
+            return (tiled, (h, w)), {}
+        if api == 'transform.warp':
+            import numpy as np
+            return (image, np.eye(3, dtype=np.float64)), {}
+        if api == 'transform.warp_coords':
+            from .transform import AffineTransform
+            return (AffineTransform(), image.shape[:2]), {}
+        if api == 'transform.rotate':
+            return (image, 15.0), {}
+        if api == 'transform.swirl':
+            return (image,), {'radius': 5.0}
+        if api == 'transform.warp_polar':
+            return (image,), {}
+        if api == 'transform.estimate_transform':
+            import numpy as np
+            src = np.array([[0., 0.], [10., 0.], [0., 10.]], dtype=np.float64)
+            dst = np.array([[1., 2.], [11., 3.], [2., 12.]], dtype=np.float64)
+            return ('affine', src, dst), {}
+        if api == 'transform.radon':
+            import numpy as np
+            sq = image[:min(image.shape), :min(image.shape)].copy()
+            return (sq,), {'theta': np.linspace(0., 180., 6, endpoint=False)}
+        if api in ('transform.iradon', 'transform.iradon_sart'):
+            import numpy as np
+            sino = np.ones((min(image.shape), 6), dtype=np.float64)
+            return (sino, np.linspace(0., 180., 6, endpoint=False)), {}
+        if api == 'util.apply_parallel':
+            import numpy as np
+            return (np.negative, image), {'chunks': image.shape}
+        if api == 'util.lookfor':
+            return ('sobel',), {}
+        return None
+    custom = _final477_default_call()
+    if custom is not None:
+        return custom
     return (image,), {}
 
 

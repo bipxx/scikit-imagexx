@@ -48,10 +48,10 @@ def test_join_binary_registry_default_and_exact_checker_source():
 
 @pytest.mark.parametrize('profile',('minimum','modern','windows','debug'))
 def test_join_current_closed_source_plan_and_collector(profile):
-    q=load('join_source_qualification_'+profile,'tools/public_qualification.py');plan=q.plan(ROOT,profile,320)
+    q=load('join_source_qualification_'+profile,'tools/public_qualification.py');plan=q.plan(ROOT,profile,408)
     assert not plan['blockers']and plan['readiness_only']
-    assert (plan['registry']['image_count'],plan['registry']['registered_count'])==(320,323)
-    assert (plan['product_scope'],plan['product_members'],plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==('current320',304,136,66,132)
+    assert (plan['registry']['image_count'],plan['registry']['registered_count'])==(408,411)
+    assert (plan['product_scope'],plan['product_members'],plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==('current408',403,182,112,224)
     required={'test_join_segmentations_public.py','test_join_segmentations_integration.py','test_join_segmentations_native_contract.py','test_join_segmentations_benchmark.py'}
     assert required<=set(plan['public_groups']['public-post203'])
     current=q.current_contract(lambda name:(ROOT/name).read_bytes())

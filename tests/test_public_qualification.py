@@ -2305,7 +2305,9 @@ def test_stale_declared_inventory_blocks_prepare_before_environment_or_download(
     assert not any((root / 'fresh' / name).exists() for name in ('build-env', 'runtime-env', 'build-wheels', 'runtime-wheels', 'native-build'))
 
 
-CURRENT_ADDED_FAMILIES = ('match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks', 'convex_hull_image', 'convex_hull_object', 'hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line', 'medial_axis', 'hough_line', 'denoise_bilateral', 'regionprops_table', 'isotropic_morphology', 'corner_moravec')
+CURRENT320_ADDED_FAMILIES = ('match_descriptors', 'thin', 'skeletonize', 'hough_circle', 'hough_line_peaks', 'convex_hull_image', 'convex_hull_object', 'hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line', 'medial_axis', 'hough_line', 'denoise_bilateral', 'regionprops_table', 'isotropic_morphology', 'corner_moravec')
+FINAL477_FAMILIES = ('active_contour', 'blob_detectors', 'brief', 'canny', 'cascade', 'censure', 'chan_vese', 'corner_fast', 'corner_orientations', 'data_checkerboard', 'data_loaders_a', 'data_loaders_b', 'data_shepp_logan_phantom', 'epipolar', 'feature_descriptors', 'felzenszwalb', 'fisher_vector', 'future_filters', 'geometric_models', 'graph_paths', 'graph_rag', 'gray_texture', 'io_suite', 'line_model_nd', 'marching_cubes', 'morphological_snakes', 'orb', 'peak_local_max', 'phase_cross_correlation', 'piecewise_affine', 'polygon_perimeter', 'polynomial', 'quickshift', 'random_walker', 'rectangle_perimeter', 'registration_flows', 'remove_objects_by_distance', 'resize_local_mean', 'restoration_denoise', 'restoration_extra', 'sift', 'slic', 'thin_plate_spline', 'tomography', 'warp', 'watershed')
+CURRENT_ADDED_FAMILIES = CURRENT320_ADDED_FAMILIES + FINAL477_FAMILIES
 
 
 @pytest.fixture
@@ -2313,7 +2315,7 @@ def current_metadata_artifact(tmp_path):
     """Inert independently enumerated package/install envelope; never imported."""
     import tomllib
     source = {name: (ROOT/name).read_bytes() for name in
-              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json','coverage/contracts/current-public-qualification-v9.json','coverage/contracts/current-public-qualification-v10.json','coverage/contracts/current-public-qualification-v11.json','coverage/contracts/current-public-qualification-v12.json','coverage/contracts/current-public-qualification-v13.json','coverage/contracts/current-public-qualification-v14.json','coverage/contracts/current-public-qualification-v15.json','coverage/contracts/current-public-qualification-v16.json','coverage/contracts/current-public-qualification-v17.json','coverage/contracts/current-public-qualification-v18.json','coverage/contracts/current-public-qualification-v19.json','coverage/contracts/current-public-qualification-v20.json','coverage/contracts/current-public-qualification-v21.json')}
+              ('CMakeLists.txt','pyproject.toml',q.CURRENT_SCOPE_CONTRACT,'coverage/contracts/current-public-qualification-v8.json','coverage/contracts/current-public-qualification-v9.json','coverage/contracts/current-public-qualification-v10.json','coverage/contracts/current-public-qualification-v11.json','coverage/contracts/current-public-qualification-v12.json','coverage/contracts/current-public-qualification-v13.json','coverage/contracts/current-public-qualification-v14.json','coverage/contracts/current-public-qualification-v15.json','coverage/contracts/current-public-qualification-v16.json','coverage/contracts/current-public-qualification-v17.json','coverage/contracts/current-public-qualification-v18.json','coverage/contracts/current-public-qualification-v19.json','coverage/contracts/current-public-qualification-v20.json','coverage/contracts/current-public-qualification-v21.json','coverage/contracts/current-public-qualification-v22.json')}
     for name in ('image','tv_chambolle','tv_reductions','tv_denoise','tv_bregman',
                  'max_tree','matrix_transform','reconstruction','h_extrema','normalized_mutual_information','draw_coordinates','circle_perimeter','line_aa','regionprops_state','circle_perimeter_aa','line_nd','draw_ellipsoid','draw_ellipse_perimeter','draw_polygon','bezier_curve','draw_set_color','find_boundaries','join_segmentations','crop','regular_grid','array_views','slice_along_axes','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','draw_haar_like_feature','haar_like_features',
                  'find_contours','random_noise','random_shapes', *CURRENT_ADDED_FAMILIES):
@@ -2324,7 +2326,8 @@ def current_metadata_artifact(tmp_path):
     source['python/skimagexx/_data_assets/chelsea.rgb'] = b'\x01\r\n\xff'
     for name in ('_pyramid_spatial.py', '_data_camera_coffee.py', '_pyramid_generators.py',
                  '_find_contours.py', '_random_noise.py', '_random_shapes.py',
-                 *(f'_{family}.py' for family in CURRENT_ADDED_FAMILIES)):
+                 *(f'{m}.py' for m in q.FINAL477_PY_MODULES),
+                 *(f'_{family}.py' for family in CURRENT320_ADDED_FAMILIES)):
         source['python/skimagexx/' + name] = b'# inert module\n'
     for name in ('camera.gray', 'coffee.rgb', 'camera-coffee.RIGHTS.txt'):
         source['python/skimagexx/_data_assets/' + name] = b'\x02\r\n\xff'
@@ -2367,17 +2370,17 @@ def test_current_sdk_extracts_draw_fixture_and_prescott_headers():
 
 @pytest.mark.parametrize('profile',('windows','modern','minimum','debug'))
 def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(profile):
-    result=q.plan(ROOT,profile,320)
+    result=q.plan(ROOT,profile,408)
     assert not result['blockers'] and result['readiness_only'] is True
-    assert result['product_scope']=='current320' and result['registry']['image_count']==320
-    assert result['product_members']==304 and result['SDK_members']==136
-    assert set(result['registry']['packaged_assets']) == {
-        'data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee',
+    assert result['product_scope']=='current408' and result['registry']['image_count']==408
+    assert result['product_members']==403 and result['SDK_members']==182
+    assert len(result['registry']['packaged_assets']) == 37 and {'data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee', 'data.grass', 'data.gravel', 'data.horse', 'data.text', 'data.astronaut', 'data.rocket'} <= set(result['registry']['packaged_assets'])
+    assert {'data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee',
         'data.grass', 'data.gravel', 'data.horse', 'data.text',
     }
     assert result['public_groups']['public-packaged-assets'] == q.PACKAGED_ASSET_TESTS
-    assert result['SDK_checks']==132 and 'current66 required' in result['SDK_client_scope']
-    assert len(result['public_groups']['public-post203'])==179
+    assert result['SDK_checks']==224 and 'current112 required' in result['SDK_client_scope']
+    assert len(result['public_groups']['public-post203'])==231
     assert {'test_pyramid_spatial_public.py', 'test_pyramid_generators_public.py', 'test_find_contours_public.py',
             'test_random_noise_public.py', 'test_random_shapes_public.py'} <= set(result['public_groups']['public-post203'])
     assert 'test_data_camera_coffee_public.py' in result['public_groups']['public-packaged-assets']
@@ -2388,17 +2391,17 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
         assert 'public-golden-angle-saved-linux' not in groups
     else:
         assert groups['public-golden-angle-saved-linux']==('test_order_angles_golden_ratio_public.py',)
-    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v22.json'
+    assert q.CURRENT_SCOPE_CONTRACT == 'coverage/contracts/current-public-qualification-v23.json'
     contract = q.current_contract(lambda name: (ROOT / name).read_bytes())
-    predecessor = ROOT / 'coverage/contracts/current-public-qualification-v21.json'
+    predecessor = ROOT / 'coverage/contracts/current-public-qualification-v22.json'
     raw = predecessor.read_bytes()
-    assert hashlib.sha256(raw).hexdigest() == '0ea203026349b76e674672fa125d925341e14415f8a10b8361f834f687d5f2cb'
+    assert hashlib.sha256(raw).hexdigest() == 'd9381445fc5be43360d8255cf522a64d623f4d8702919b6789389dfadd0ae194'
     previous = json.loads(raw)['required_selectors']
-    added = ['test_hough_line_public.py', 'test_denoise_bilateral_public.py', 'test_regionprops_table_public.py', 'test_isotropic_morphology_public.py', 'test_corner_moravec_public.py']
+    added = list(q.CURRENT408_PUBLIC_TESTS)
     selectors = contract['required_selectors']
-    assert len(previous) == 197 and len(selectors) == 202
+    assert len(previous) == 202 and len(selectors) == 254
     assert selectors == previous + ['tests/' + name for name in added]
-    assert groups['public-post203'][-5:] == tuple(added)
+    assert groups['public-post203'][-52:] == tuple(added)
     assert contract['required_generic_selectors'] == {
         'shared': ['tests/test_api.py', 'tests/test_dtype_metadata.py'],
         'public-post203': ['tests/test_dtype_aliases.py'],
@@ -2412,7 +2415,7 @@ def test_current_source_plan_derives_full_closure_and_labels_required_sdk29(prof
             'skimagexx/_find_contours.py', 'skimagexx/_random_noise.py', 'skimagexx/_random_shapes.py',
             'skimagexx/_data_assets/camera.gray', 'skimagexx/_data_assets/coffee.rgb',
             'skimagexx/_data_assets/camera-coffee.RIGHTS.txt'} <= set(layout['source_members'])
-    assert {f'skimagexx/_{family}.py' for family in CURRENT_ADDED_FAMILIES} <= set(layout['source_members'])
+    assert ({f'skimagexx/{m}.py' for m in q.FINAL477_PY_MODULES} | {f'skimagexx/_{family}.py' for family in CURRENT320_ADDED_FAMILIES}) <= set(layout['source_members'])
     assert {f'include/skimagexx/{family}.hpp' for family in CURRENT_ADDED_FAMILIES} <= set(layout['SDK_members'])
     assert ('lib/skimagexx.lib' in layout['SDK_members']) == (profile=='windows')
     assert 'lib/cmake/skimagexx/skimagexxTargets-'+('debug' if profile=='debug' else 'release')+'.cmake' in layout['SDK_members']
@@ -2480,7 +2483,7 @@ def test_current_wheel_requires_source_closed_members_and_bytes(current_metadata
         with pytest.raises(q.QualificationError):q.inspect_wheel(product,source,revision,**kwargs)
     else:
         result=q.inspect_wheel(product,source,revision,**kwargs)
-        assert result['product_scope']=='current320' and result['record_verified']
+        assert result['product_scope']=='current408' and result['record_verified']
         with pytest.raises(q.QualificationError,match='complete120'):q.inspect_wheel(product,source,revision)
         assert q.product_census('h_extrema23')==(120,68)
 
@@ -2494,14 +2497,14 @@ def test_current_sdk29_plan_blocks_missing_new_installed_client(monkeypatch,fami
     else:
         original=Path.is_file;target=ROOT/'tests/cmake_consumer'/(family+'_consumer.cpp')
         monkeypatch.setattr(Path,'is_file',lambda path:False if path==target else original(path))
-    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',320)['blockers'])
+    assert any(family in b and ('SDK client' in b) for b in q.plan(ROOT,'modern',408)['blockers'])
 
 
 def test_current_sdk29_discovery_and_kept_coordinate_selector_are_separate_from_legacy23():
     assert q.CURRENT_FAMILIES==q.FAMILIES+('colocalization','footprint_shapes','recent_primitives','draw_coordinates','circle_perimeter','line_nd','draw_ellipsoid','draw_ellipse_perimeter','label_pair_metrics','mark_boundaries','draw_multiblock_lbp','finite_radon','variation_of_information','flood_fill','rolling_ball','structural_similarity','local_extrema','order_angles_golden_ratio','pearson','hausdorff','ellipsoid_stats','expand_labels','haar_like_feature_drawing','haar_like_features','find_contours','random_noise','random_shapes', *CURRENT_ADDED_FAMILIES) and len(q.FAMILIES)==23
-    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==66
-    plan=q.plan(ROOT,'modern',320)
-    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(136,66,132)
+    assert len(q.CURRENT_FAMILIES)==len(set(q.CURRENT_FAMILIES))==112
+    plan=q.plan(ROOT,'modern',408)
+    assert not plan['blockers']and (plan['SDK_members'],len(plan['SDK_families']),plan['SDK_checks'])==(182,112,224)
     assert set(plan['SDK_families'])==set(q.CURRENT_FAMILIES)
     without_rolling={'tests':[{'name':'installed_'+n+'_consumer'}for n in q.CURRENT_FAMILIES if n!='rolling_ball']}
     with pytest.raises(q.QualificationError):q.validate_sdk_listing(without_rolling,scope=q.CURRENT_PRODUCT_SCOPE)

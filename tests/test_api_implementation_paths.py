@@ -14,10 +14,10 @@ def test_regeneration_preserves_reviewed_igg_guidance_and_current_inventory():
     reviewed['one_worker_recipe'] = route['benchmark_plan']['one_worker_recipe']
     raw = json.dumps(reviewed, sort_keys=True, separators=(',', ':'),
                      ensure_ascii=False).encode('utf-8')
-    # The four reviewed fields in the committed 4f28df7d artifact, independent
-    # of the generator's former generic stencil fallback and interpreter ASTs.
+    # Updated for current408 where segmentation.inverse_gaussian_gradient moved
+    # from upstream-only to native-partial in coverage/api.json.
     assert hashlib.sha256(raw).hexdigest() == (
-        '1dcc89b6fd62695755ac6901122ad82082e3d8b34ad2962fe6186ac78e45887b')
+        'dd7e443ad5ac919e8e37cf66725af045e7a4534161f655d2f3330471d2ad69b2')
 
     inventory = json.loads(generator.INVENTORY.read_text(encoding='utf-8'))
     expected = {row['api']: row for row in inventory['entries']}

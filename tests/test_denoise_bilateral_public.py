@@ -79,31 +79,40 @@ def test_frozen_bilateral(name, image, options, native, oracle, monkeypatch):
             assert actual == {key: value for key, value in expected.items() if key not in ('id', 'native')}
         else:
             ref = observe(upstream, image, options, [])
-            assert actual['shape'] == ref['shape'] and actual['dtype'] == ref['dtype']
-            assert actual['warnings'] == ref['warnings']
-            assert actual['result_sha256'] == ref['result_sha256']
-            assert actual['calls'] >= 1
+            if name.endswith('constant-identity'):
+                assert not observations
+            else:
+                assert len(observations) >= 1
+            assert actual == {**ref, 'prepared': actual['prepared']}
     else:
         fallback_warning = [FallbackWarning.__module__, FallbackWarning.__name__,
                             'skimage.restoration.denoise_bilateral executed by scikit-image fallback']
         assert actual['warnings'].count(fallback_warning) == 1 and not observations
         actual['warnings'].remove(fallback_warning)
-        assert actual == {key: value for key, value in expected.items() if key not in ('id', 'native', 'prepared')} | {'prepared': []}
+        if expected is not None:
+            assert actual == {key: value for key, value in expected.items() if key not in ('id', 'native', 'prepared')} | {'prepared': []}
+        else:
+            ref = observe(upstream, image, options, [])
+            assert actual == ref
 
 
 @pytest.mark.parametrize('spec', list(RECIPES.case_specs()), ids=lambda row: row['id'])
 def test_bilateral_fixed_recipe(spec, oracle):
+    from skimage.restoration import denoise_bilateral as upstream
     from skimagexx._denoise_bilateral import denoise_bilateral as owned
 
     (image,), options = RECIPES.make_case(spec)
-    expected = next(row for row in oracle['benchmark'] if row['id'] == spec['id'])
     assert xx.restoration.denoise_bilateral is owned
     previous = xx.set_fallback_enabled(False)
     try:
         actual = observe(xx.restoration.denoise_bilateral, image, options, [])
     finally:
         xx.set_fallback_enabled(previous)
-    assert actual == {key: value for key, value in expected.items() if key not in ('id', 'prepared')} | {'prepared': []}
+    if oracle is not None:
+        expected = next(row for row in oracle['benchmark'] if row['id'] == spec['id'])
+        assert actual == {key: value for key, value in expected.items() if key not in ('id', 'prepared')} | {'prepared': []}
+    else:
+        assert actual == observe(upstream, image, options, [])
 
 
 def test_bilateral_hot_swap():

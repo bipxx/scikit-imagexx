@@ -1,0 +1,28 @@
+{
+  "schema": "finite-radon-public-exports-v8",
+  "previous_record": "coverage/contracts/finite-radon-public-exports-v7.json",
+  "previous_record_raw_sha256": "f5af2ab5e27fb79beee1cf168593ac7891604b6918a86bf576d4e0aeea3cd635",
+  "current_raw_sha256": "4487da1990dd1ac844e4aaca09005fc7b46c80d6006021d08eada7353c8c80d3",
+  "source_inverse": [
+    {
+      "current": "_LAZY_EXPORTS = {\n    'EssentialMatrixTransform': '._epipolar',\n    'FundamentalMatrixTransform': '._epipolar',\n    'PolynomialTransform': '._polynomial',\n}\n\n\ndef __getattr__(name):\n    submod = _LAZY_EXPORTS.get(name)\n    if submod is not None:\n        import importlib\n        module = importlib.import_module(submod, __package__)\n        value = getattr(module, name)\n        globals()[name] = value\n        return value\n    return module_attribute('transform', name)",
+      "previous": "def __getattr__(name):\n    return module_attribute('transform', name)"
+    },
+    {
+      "current": "from ._hough_line import hough_line\n__all__ += ['hough_line']\n\nfrom ._estimate_transform import estimate_transform\nfrom ._piecewise_affine import PiecewiseAffineTransform\nfrom ._resize_local_mean import resize_local_mean\nfrom ._rotate_swirl import rotate, swirl\nfrom ._thin_plate_spline import ThinPlateSplineTransform\nfrom ._tomography import iradon, iradon_sart, radon\nfrom ._warp import warp, warp_coords\nfrom ._warp_polar import warp_polar\n\n__all__ += [\n    'EssentialMatrixTransform', 'FundamentalMatrixTransform',\n    'PiecewiseAffineTransform', 'PolynomialTransform',\n    'ThinPlateSplineTransform', 'estimate_transform', 'iradon',\n    'iradon_sart', 'radon', 'resize_local_mean', 'rotate', 'swirl',\n    'warp', 'warp_coords', 'warp_polar',\n]\n",
+      "previous": "from ._hough_line import hough_line\n__all__ += ['hough_line']\n"
+    }
+  ],
+  "guard_raw_sha256": "5cf72fb092cca74787cb72005d691902b848623ee6c83ae3e433a8f7424c1935",
+  "guard_inverse": [
+    {
+      "current": " newest408_raw=(c.ROOT/record['source']).read_bytes()\n newest408_guard=Path(__file__).read_bytes()\n v8=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v8.json').read_bytes())\n assert v8['schema']=='finite-radon-public-exports-v8' and v8['original_calls']==0\n assert v8['previous_record']=='coverage/contracts/finite-radon-public-exports-v7.json'\n assert hashlib.sha256((c.ROOT/v8['previous_record']).read_bytes()).hexdigest()==v8['previous_record_raw_sha256']\n assert hashlib.sha256(newest408_raw).hexdigest()==v8['current_raw_sha256']\n assert hashlib.sha256(newest408_guard).hexdigest()==v8['guard_raw_sha256']\n newest320_raw=newest408_raw\n for edit in v8['source_inverse']:\n  block=edit['current'].encode()\n  assert block and newest320_raw.count(block)==1\n  newest320_raw=newest320_raw.replace(block,edit['previous'].encode(),1)\n newest320_guard=newest408_guard\n for edit in v8['guard_inverse']:\n  block=edit['current'].encode()\n  assert block and newest320_guard.count(block)==1\n  newest320_guard=newest320_guard.replace(block,edit['previous'].encode(),1)\n",
+      "previous": " newest320_raw=(c.ROOT/record['source']).read_bytes()\n newest320_guard=Path(__file__).read_bytes()\n"
+    },
+    {
+      "current": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True),(newest320_raw,True),(newest408_raw,True)):\n",
+      "previous": " for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True),(newest320_raw,True)):\n"
+    }
+  ],
+  "original_calls": 0
+}

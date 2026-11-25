@@ -33,8 +33,24 @@ def test_missing_intake_refuses_before_runtime(monkeypatch):
 def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  import sys,types
  record=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v1.json').read_bytes())
- newest320_raw=(c.ROOT/record['source']).read_bytes()
- newest320_guard=Path(__file__).read_bytes()
+ newest408_raw=(c.ROOT/record['source']).read_bytes()
+ newest408_guard=Path(__file__).read_bytes()
+ v8=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v8.json').read_bytes())
+ assert v8['schema']=='finite-radon-public-exports-v8' and v8['original_calls']==0
+ assert v8['previous_record']=='coverage/contracts/finite-radon-public-exports-v7.json'
+ assert hashlib.sha256((c.ROOT/v8['previous_record']).read_bytes()).hexdigest()==v8['previous_record_raw_sha256']
+ assert hashlib.sha256(newest408_raw).hexdigest()==v8['current_raw_sha256']
+ assert hashlib.sha256(newest408_guard).hexdigest()==v8['guard_raw_sha256']
+ newest320_raw=newest408_raw
+ for edit in v8['source_inverse']:
+  block=edit['current'].encode()
+  assert block and newest320_raw.count(block)==1
+  newest320_raw=newest320_raw.replace(block,edit['previous'].encode(),1)
+ newest320_guard=newest408_guard
+ for edit in v8['guard_inverse']:
+  block=edit['current'].encode()
+  assert block and newest320_guard.count(block)==1
+  newest320_guard=newest320_guard.replace(block,edit['previous'].encode(),1)
  v7=json.loads((c.ROOT/'coverage/contracts/finite-radon-public-exports-v7.json').read_bytes())
  assert v7['schema']=='finite-radon-public-exports-v7' and v7['original_calls']==0
  assert v7['previous_record']=='coverage/contracts/finite-radon-public-exports-v6.json'
@@ -130,7 +146,7 @@ def test_real_public_star_exports_include_both_owned_Radon_entries(monkeypatch):
  provider.frt2=object();provider.ifrt2=object()
  monkeypatch.setitem(sys.modules,'skimagexx',parent)
  monkeypatch.setitem(sys.modules,'skimagexx._finite_radon',provider)
- for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True),(newest320_raw,True)):
+ for text,current in ((predecessor,False),(raw,True),(current_raw,True),(live_raw,True),(newest_raw,True),(newest312_raw,True),(newest320_raw,True),(newest408_raw,True)):
   tree=ast.parse(text);declarations=[]
   for node in tree.body:
    if isinstance(node,ast.Assign)and any(isinstance(t,ast.Name)and t.id=='__all__'for t in node.targets):declarations.append(node)
