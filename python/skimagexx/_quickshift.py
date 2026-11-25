@@ -40,11 +40,15 @@ def quickshift(
                 values = values.astype(np.float64)
                 values *= 1 / 255
             if convert2lab:
-                from skimage.color import rgb2lab
+                from .color import rgb2lab
                 values = rgb2lab(values)
             if sigma:
-                from scipy.ndimage import gaussian_filter
-                values = gaussian_filter(values, [sigma, sigma, 0], mode='reflect')
+                if int(4.0 * sigma + 0.5) > 100_000:
+                    # Preserve large kernels beyond the native Gaussian radius limit.
+                    from skimage.filters import gaussian
+                else:
+                    from .filters import gaussian
+                values = gaussian(values, sigma, mode='reflect', preserve_range=True, channel_axis=-1)
             values = np.multiply(values, ratio, order='C')
             noise = np.random.default_rng(rng).normal(scale=0.00001, size=values.shape[:2])
             noise = noise.astype(values.dtype, copy=False)
