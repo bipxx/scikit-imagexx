@@ -1,4 +1,5 @@
 #include "skimagexx/restoration_denoise.hpp"
+#include "skimagexx/image.hpp"
 
 #include "execution.hpp"
 #include "fft_internal.hpp"
@@ -14,6 +15,11 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
+
+#if defined(SKIMAGEXX_AVX2) && (defined(_M_X64) || defined(_M_IX86) || defined(__x86_64__) || defined(__i386__))
+#include <immintrin.h>
+#define SKIMAGEXX_NLM_AVX2
+#endif
 
 namespace skimagexx {
 namespace {
@@ -41,6 +47,122 @@ double nl_weight(double distance) {
     return weight;
 }
 
+#ifdef SKIMAGEXX_NLM_AVX2
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4752)
+#define NLM_AVX_INLINE __forceinline
+#define NLM_AVX_ENTRY __declspec(noinline)
+#else
+#define NLM_AVX_INLINE __attribute__((target("avx2"), always_inline)) inline
+#define NLM_AVX_ENTRY __attribute__((target("avx2"), noinline))
+#endif
+
+template<int FixedChannels, bool FirstRow, bool FirstPlane>
+NLM_AVX_ENTRY int nl_prefix_avx2(const double* padded, double* sums, std::ptrdiff_t row,
+                                 std::ptrdiff_t shift, int end, int channels,
+                                 std::ptrdiff_t count, int width, std::ptrdiff_t plane,
+                                 double noise, double& running) {
+    if constexpr (FixedChannels != 0) channels = FixedChannels;
+    const auto variance = _mm256_set1_pd(noise);
+    int x = 0;
+    for (; x + 4 <= end; x += 4) {
+        const auto p = row + x;
+        auto squared = _mm256_setzero_pd();
+        for (int c = 0; c < channels; ++c) {
+            const auto* a = padded + c * count + p;
+            const auto delta = _mm256_sub_pd(_mm256_loadu_pd(a), _mm256_loadu_pd(a + shift));
+            squared = _mm256_add_pd(squared, _mm256_mul_pd(delta, delta));
+        }
+        // Keep the exact left-to-right sum across the row and SIMD across rows/planes.
+        const auto values = _mm256_sub_pd(squared, variance);
+        const auto lo = _mm256_castpd256_pd128(values);
+        const auto hi = _mm256_extractf128_pd(values, 1);
+        const auto first = _mm_add_sd(_mm_set_sd(running), lo);
+        const auto second = _mm_add_sd(first, _mm_unpackhi_pd(lo, lo));
+        const auto third = _mm_add_sd(second, hi);
+        const auto fourth = _mm_add_sd(third, _mm_unpackhi_pd(hi, hi));
+        running = _mm_cvtsd_f64(fourth);
+        const auto prefix_lo = _mm_unpacklo_pd(first, second);
+        const auto prefix_hi = _mm_unpacklo_pd(third, fourth);
+        auto sum = _mm256_insertf128_pd(_mm256_castpd128_pd256(prefix_lo), prefix_hi, 1);
+        if constexpr (!FirstRow) sum = _mm256_add_pd(sum, _mm256_loadu_pd(sums + p - width));
+        if constexpr (!FirstPlane) {
+            sum = _mm256_add_pd(sum, _mm256_loadu_pd(sums + p - plane));
+            if constexpr (!FirstRow)
+                sum = _mm256_sub_pd(sum, _mm256_loadu_pd(sums + p - plane - width));
+        }
+        _mm256_storeu_pd(sums + p, sum);
+    }
+    return x;
+}
+
+NLM_AVX_INLINE __m256d nl_patch_sum_avx2(const double* sums, std::ptrdiff_t ry, int radius) {
+    return _mm256_sub_pd(
+        _mm256_sub_pd(_mm256_loadu_pd(sums + ry + radius), _mm256_loadu_pd(sums + ry - radius)),
+        _mm256_sub_pd(_mm256_loadu_pd(sums - ry + radius), _mm256_loadu_pd(sums - ry - radius)));
+}
+
+NLM_AVX_INLINE __m256d nl_weight_avx2(__m256d distance) {
+    const auto exponent = _mm256_cvttpd_epi32(_mm256_mul_pd(
+        _mm256_set1_pd(-1512775.3951951856938), distance));
+    const auto biased = _mm_add_epi32(_mm_set1_epi32(1072632447), exponent);
+    return _mm256_castsi256_pd(_mm256_slli_epi64(_mm256_cvtepi32_epi64(biased), 32));
+}
+
+NLM_AVX_INLINE void nl_update_avx2(double* weights, double* accum, const double* padded,
+                                   int channels, std::ptrdiff_t count, __m256d weight,
+                                   __m256i mask) {
+    _mm256_maskstore_pd(weights, mask, _mm256_add_pd(_mm256_loadu_pd(weights), weight));
+    for (int c = 0; c < channels; ++c) {
+        auto* total = accum + c * count;
+        const auto product = _mm256_mul_pd(weight, _mm256_loadu_pd(padded + c * count));
+        _mm256_maskstore_pd(total, mask, _mm256_add_pd(_mm256_loadu_pd(total), product));
+    }
+}
+
+template<bool Volume, int FixedChannels>
+NLM_AVX_ENTRY int nl_patches_avx2(const double* sums, const double* padded, double* weights,
+                                  double* accum, std::ptrdiff_t count, int channels,
+                                  std::ptrdiff_t row, int x, int end, std::ptrdiff_t shift,
+                                  std::ptrdiff_t rz, std::ptrdiff_t ry, int radius,
+                                  double inv_scale, double multiplicity) {
+    if constexpr (FixedChannels != 0) channels = FixedChannels;
+    const auto zero = _mm256_setzero_pd();
+    const auto inv = _mm256_set1_pd(inv_scale);
+    const auto factor = _mm256_set1_pd(multiplicity);
+    const auto cutoff = _mm256_set1_pd(5.0);
+    for (; x + 4 <= end; x += 4) {
+        const auto p = row + x;
+        const auto q = p + shift;
+        auto squared = nl_patch_sum_avx2(sums + p + rz, ry, radius);
+        if constexpr (Volume)
+            squared = _mm256_sub_pd(squared, nl_patch_sum_avx2(sums + p - rz, ry, radius));
+        const auto distance = _mm256_mul_pd(_mm256_max_pd(squared, zero), inv);
+        const auto active = _mm256_cmp_pd(distance, cutoff, _CMP_LE_OQ);
+        if (!_mm256_movemask_pd(active)) continue;
+        const auto weight = _mm256_mul_pd(factor, nl_weight_avx2(_mm256_and_pd(distance, active)));
+        const auto mask = _mm256_castpd_si256(active);
+        // If the two ranges overlap, the higher address from the earlier lane
+        // is updated first. Zero shift applies both contributions to each lane.
+        if (shift > 0) {
+            nl_update_avx2(weights + q, accum + q, padded + p, channels, count, weight, mask);
+            nl_update_avx2(weights + p, accum + p, padded + q, channels, count, weight, mask);
+        } else {
+            nl_update_avx2(weights + p, accum + p, padded + q, channels, count, weight, mask);
+            nl_update_avx2(weights + q, accum + q, padded + p, channels, count, weight, mask);
+        }
+    }
+    return x;
+}
+
+#undef NLM_AVX_INLINE
+#undef NLM_AVX_ENTRY
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#endif
+
 template<bool Volume, int FixedChannels, class T>
 void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int channels,
                     int patch, int search, double h, double sigma) {
@@ -51,7 +173,7 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
     const int py = rows + 2 * pad;
     const int pz = Volume ? depth + 2 * pad : 1;
     const Index plane = static_cast<Index>(px) * py;
-    const auto count = static_cast<std::size_t>(plane) * pz;
+    const Index count = plane * pz;
     if constexpr (FixedChannels != 0) channels = FixedChannels;
     std::vector<double> padded(count * channels);
     // Each shift overwrites its entire overlapping prefix-sum region before use.
@@ -66,13 +188,18 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
             const int iy = reflect(y - pad, rows);
             for (int x = 0; x < px; ++x) {
                 const auto src = ((static_cast<Index>(iz) * rows + iy) * cols + reflected_x[x]) * channels;
-                const auto dst = (z * plane + static_cast<Index>(y) * px + x) * channels;
-                std::copy_n(image + src, channels, padded.data() + dst);
+                const auto dst = z * plane + static_cast<Index>(y) * px + x;
+                for (int c = 0; c < channels; ++c)
+                    padded[c * count + dst] = image[src + c];
             }
         }
     }
     double scale = channels * h * h * patch * patch;
     if constexpr (Volume) scale *= patch;
+    const double inv_scale = 1.0 / scale;
+#ifdef SKIMAGEXX_NLM_AVX2
+    const bool vectorized = has_avx2();
+#endif
     const double noise = (2 * (sigma * sigma)) * channels;
     const Index ry = static_cast<Index>(radius) * px;
     const Index rz = Volume ? radius * plane : 0;
@@ -90,30 +217,43 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
                 // Inclusive prefix sum over the overlap of the padded images.
                 // Each query subtracts the lower corner, so the reference's
                 // fast path effectively integrates 2*radius samples per axis.
-                for (int z = z_first; z < z_last; ++z) {
-                    for (int y = y_first; y < y_last; ++y) {
+                const auto prefix_plane = [&]<bool FirstPlane>(int z) {
+                    const auto prefix_row = [&]<bool FirstRow>(int y) {
                         double running = 0;
                         const Index row = z * plane + static_cast<Index>(y) * px;
-                        for (int x = 0; x < x_last; ++x) {
+                        int x = 0;
+#ifdef SKIMAGEXX_NLM_AVX2
+                        if (vectorized)
+                            x = nl_prefix_avx2<FixedChannels, FirstRow, FirstPlane>(
+                                padded.data(), sums.get(), row, shift, x_last, channels,
+                                count, px, plane, noise, running);
+#endif
+                        for (; x < x_last; ++x) {
                             const Index p = row + x;
                             double squared = 0;
                             for (int c = 0; c < channels; ++c) {
-                                const double delta = padded[p * channels + c] -
-                                                     padded[(p + shift) * channels + c];
+                                const auto channel = c * count;
+                                const double delta = padded[channel + p] - padded[channel + p + shift];
                                 squared += delta * delta;
                             }
                             running += squared - noise;
                             double sum = running;
-                            if (y != y_first) sum += sums[p - px];
-                            if constexpr (Volume) {
-                                if (z != z_first) {
-                                    sum += sums[p - plane];
-                                    if (y != y_first) sum -= sums[p - plane - px];
-                                }
+                            if constexpr (!FirstRow) sum += sums[p - px];
+                            if constexpr (!FirstPlane) {
+                                sum += sums[p - plane];
+                                if constexpr (!FirstRow) sum -= sums[p - plane - px];
                             }
                             sums[p] = sum;
                         }
-                    }
+                    };
+                    prefix_row.template operator()<true>(y_first);
+                    for (int y = y_first + 1; y < y_last; ++y)
+                        prefix_row.template operator()<false>(y);
+                };
+                prefix_plane.template operator()<true>(z_first);
+                if constexpr (Volume) {
+                    for (int z = z_first + 1; z < z_last; ++z)
+                        prefix_plane.template operator()<false>(z);
                 }
                 const auto patch_sum = [&](Index p) {
                     return (sums[p + ry + radius] - sums[p + ry - radius]) -
@@ -123,20 +263,28 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
                      z < (Volume ? pad + depth - std::min(0, dz) : 1); ++z) {
                     for (int y = pad - std::max(0, dy); y < pad + rows - std::min(0, dy); ++y) {
                         const Index row = z * plane + static_cast<Index>(y) * px;
-                        for (int x = pad - dx; x < pad + cols; ++x) {
+                        int x = pad - dx;
+#ifdef SKIMAGEXX_NLM_AVX2
+                        if (vectorized)
+                            x = nl_patches_avx2<Volume, FixedChannels>(sums.get(), padded.data(), weights.data(),
+                                accum.data(), count, channels, row, x, pad + cols, shift,
+                                rz, ry, radius, inv_scale, multiplicity);
+#endif
+                        for (; x < pad + cols; ++x) {
                             const Index p = row + x;
                             const Index q = p + shift;
                             double squared;
                             if constexpr (Volume) squared = patch_sum(p + rz) - patch_sum(p - rz);
                             else squared = patch_sum(p);
-                            const double distance = std::max(0.0, squared) / scale;
+                            const double distance = std::max(0.0, squared) * inv_scale;
                             if (distance > 5) continue;
                             const double w = multiplicity * nl_weight(distance);
                             weights[p] += w;
                             weights[q] += w;
                             for (int c = 0; c < channels; ++c) {
-                                accum[p * channels + c] += w * padded[q * channels + c];
-                                accum[q * channels + c] += w * padded[p * channels + c];
+                                const auto channel = c * count;
+                                accum[channel + p] += w * padded[channel + q];
+                                accum[channel + q] += w * padded[channel + p];
                             }
                         }
                     }
@@ -149,7 +297,7 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
             Index p = (Volume ? (z + pad) * plane : 0) + static_cast<Index>(y + pad) * px + pad;
             for (int x = 0; x < cols; ++x, ++p) {
                 for (int c = 0; c < channels; ++c)
-                    *out++ = static_cast<T>(accum[p * channels + c] / weights[p]);
+                    *out++ = static_cast<T>(accum[c * count + p] / weights[p]);
             }
         }
     }

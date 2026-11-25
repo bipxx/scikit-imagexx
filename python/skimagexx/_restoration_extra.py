@@ -13,12 +13,14 @@ import warnings
 import numpy as np
 
 from . import _core
+from . import _tv_chambolle
 from ._compat import fallback
 from ._component_consumers import _DEPRECATED
 from ._tv_bregman import _channel_as_last_axis, img_as_float
 
 
 _DASK_AVAILABLE = find_spec('dask') is not None
+_TV_CHAMBOLLE = _tv_chambolle.denoise_tv_chambolle
 
 
 def _plain_numeric(value):
@@ -82,46 +84,18 @@ def wiener(image, psf, balance, reg=None, is_real=True, clip=True):
 
 class _GibbsWorkspace:
     def __init__(self, data):
-        shape = data.shape
-        dtype = data.real.dtype
-        self.sample = np.empty_like(data)
-        self.residuals = np.empty((2, *shape), dtype=data.dtype)
-        self.normals = np.empty((2, *shape), dtype=np.float64)
+        self.normals = np.empty((2, *data.shape), dtype=np.float64)
         self.real, self.imag = self.normals
-        self.squared = np.empty((2, *shape), dtype=dtype)
-        self.rows = np.empty((2, shape[0]), dtype=dtype)
-        self.norms = np.empty(2, dtype=dtype)
-        self.first_column = np.empty(2, dtype=dtype)
         self.total = np.zeros_like(data)
-        self.difference = np.empty_like(data)
-        self.mean = np.empty_like(data)
-        self.magnitude = self.squared[0]
+        self.scalar = data.real.dtype.type
+        self.kernel = _core.restoration_extra_gibbs_accumulate
 
-    def residual_norms(self):
-        # Keep upstream's two axis reductions and its half-spectrum heuristic.
-        np.absolute(self.residuals, out=self.squared)
-        np.square(self.squared, out=self.squared)
-        np.sum(self.squared, axis=-1, out=self.rows)
-        np.sum(self.rows, axis=-1, out=self.norms)
-        if self.sample.shape[0] != self.sample.shape[1]:
-            self.rows[:] = self.squared[..., 0]
-            np.sum(self.rows, axis=-1, out=self.first_column)
-            return (2 * self.norms[0] - self.first_column[0],
-                    2 * self.norms[1] - self.first_column[1])
-        return self.norms
-
-    def accumulate(self, count):
-        if count == 1:
-            np.add(self.total, self.sample, out=self.total)
-            return np.nan
-        np.divide(self.total, count - 1, out=self.difference)
-        np.add(self.total, self.sample, out=self.total)
-        np.divide(self.total, count, out=self.mean)
-        np.subtract(self.mean, self.difference, out=self.difference)
-        np.absolute(self.difference, out=self.magnitude)
-        change = self.magnitude.sum()
-        np.absolute(self.total, out=self.magnitude)
-        return change / self.magnitude.sum() / count
+    def step(self, data, transfer, regularizer, power, reg_power, noise, prior, count):
+        noise_norm, prior_norm, delta = self.kernel(
+            data, transfer, regularizer, power, reg_power, noise, prior,
+            self.normals, self.total, max(0, count),
+        )
+        return self.scalar(noise_norm), self.scalar(prior_norm), delta
 
 
 def unsupervised_wiener(
@@ -150,7 +124,7 @@ def unsupervised_wiener(
         return original()
     image, transfer, regularizer = inputs
     data = _core.restoration_extra_gibbs_forward(image)
-    power = np.abs(transfer) ** 2
+    power = transfer.real ** 2 + transfer.imag ** 2
     reg_power = regularizer ** 2
     initial_precision = power + reg_power
     if (not np.isfinite(data).all() or not np.isfinite(initial_precision).all()
@@ -160,22 +134,18 @@ def unsupervised_wiener(
     workspace = _GibbsWorkspace(data)
     draw_normal = generator.standard_normal
     draw_gamma = generator.gamma
-    sample = _core.restoration_extra_gibbs_step
     noise_shape, prior_shape = image.size / 2, (image.size - 1) / 2
     noise, prior = [1], [1]
-    delta = np.nan
     for iteration in range(maximum):
         # Keep the reference's float64 fills and noise-before-prior gamma draws.
         draw_normal(out=workspace.real)
         draw_normal(out=workspace.imag)
-        sample(data, transfer, regularizer, power, reg_power, noise[-1], prior[-1],
-               workspace.normals, workspace.sample, workspace.residuals)
-        noise_norm, prior_norm = workspace.residual_norms()
+        count = iteration - burnin
+        noise_norm, prior_norm, delta = workspace.step(
+            data, transfer, regularizer, power, reg_power, noise[-1], prior[-1], count
+        )
         noise.append(draw_gamma(noise_shape, 2 / noise_norm))
         prior.append(draw_gamma(prior_shape, 2 / prior_norm))
-        count = iteration - burnin
-        if count > 0:
-            delta = workspace.accumulate(count)
         if iteration > minimum and delta < threshold:
             break
     np.divide(workspace.total, count, out=workspace.total)
@@ -203,15 +173,66 @@ def _j_image(image):
     return image.astype(_float_dtype(image), copy=False)
 
 
-def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks):
-    interp = _core.restoration_extra_interpolate(_native_dense(image), spatial_rank)
+def _original_tv(denoise_function):
+    return (denoise_function is _TV_CHAMBOLLE
+            and denoise_function is _tv_chambolle.denoise_tv_chambolle)
+
+
+def _tv_batch_parameters(image, denoise_function, kwargs):
+    if (not _original_tv(denoise_function) or not _spin_dense(image) or image.ndim != 2
+            or type(kwargs) is not dict or kwargs.keys() - {
+                'weight', 'eps', 'max_num_iter', 'channel_axis'
+            } or kwargs.get('channel_axis') is not None):
+        return None
+    weight = kwargs.get('weight', 0.1)
+    eps = kwargs.get('eps', 0.0002)
+    iterations = kwargs.get('max_num_iter', 200)
+    if (type(weight) is not float or type(eps) is not float or type(iterations) is not int
+            or not 2.**-20 <= weight <= 2.**20 or not 0. <= eps <= 2.**20
+            or not 1 <= iterations <= 20000
+            or not hasattr(_core, 'tv_chambolle_finite_interface')
+            or not _tv_chambolle._providers_pristine()):
+        return None
+    policy = np.geterr()
+    if policy['under'] != 'ignore' or any(v not in ('ignore', 'warn', 'raise') for v in policy.values()):
+        return None
+    profile = _tv_chambolle._finite_profile()
+    buffer_elements = np.getbufsize()
+    if profile is None or type(buffer_elements) is not int or buffer_elements <= 0:
+        return None
+    _tv_chambolle._require_stages()
+    _tv_chambolle._require_finite()
+    return weight, eps, iterations, profile == '2.5.4', buffer_elements
+
+
+def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks, interp=None,
+            generated_phase=None):
+    if interp is None:
+        interp = _core.restoration_extra_interpolate(_native_dense(image), spatial_rank)
+    if spatial_rank == 2 and (masks is None or generated_phase is not None):
+        parameters = _tv_batch_parameters(image, denoise_function, kwargs)
+        if parameters is not None and stride * stride <= 4096:
+            jobs = (list(product(range(stride), repeat=2)) if generated_phase is None
+                    else [divmod(generated_phase, stride)])
+            result = _core.restoration_extra_tv_batch(image, interp, jobs, stride, *parameters)
+            if result is not None:
+                return result
     output = np.zeros_like(image)
+    # Explicit mask iterators may have side effects between yields.
+    reuse = ((masks is None or generated_phase is not None)
+             and _original_tv(denoise_function) and _tv_chambolle._providers_pristine())
     if masks is None:
         masks = (_grid(i, spatial_rank, stride) for i in range(stride**spatial_rank))
-    for mask in masks:
+    # A custom callback can mutate or retain its argument across calls.
+    if reuse:
         input_image = image.copy()
+    for mask in masks:
+        if not reuse:
+            input_image = image.copy()
         input_image[mask] = interp[mask]
         output[mask] = denoise_function(input_image, **kwargs)[mask]
+        if reuse:
+            input_image[mask] = image[mask]
     return output
 
 
@@ -241,20 +262,27 @@ def calibrate_denoiser(
     prepared = _j_image(image)
     parameters = [dict(zip(denoise_parameters, values))
                   for values in product(*denoise_parameters.values())]
+    ranks = [image.ndim - int(kwargs.get('channel_axis') is not None) for kwargs in parameters]
+    source = _native_dense(prepared)
+    interpolated = {rank: _core.restoration_extra_interpolate(source, rank)
+                    for rank in dict.fromkeys(ranks) if rank > 0}
     losses = []
-    for kwargs in parameters:
-        spatial_rank = image.ndim - int(kwargs.get('channel_axis') is not None)
+    stride_int = int(stride)
+    for kwargs, spatial_rank in zip(parameters, ranks):
         if approximate_loss:
-            mask = _grid(int(stride)**spatial_rank // 2, spatial_rank, int(stride))
+            phase = stride_int**spatial_rank // 2
+            mask = _grid(phase, spatial_rank, stride_int)
             masks = [mask]
         else:
+            phase = None
             mask = Ellipsis
             masks = None
         if spatial_rank == 0:
             denoised = denoise_invariant(image, denoise_function, stride=stride,
                                          masks=masks, denoiser_kwargs=kwargs)
         else:
-            denoised = _masked(prepared, denoise_function, kwargs, spatial_rank, int(stride), masks)
+            denoised = _masked(prepared, denoise_function, kwargs, spatial_rank, stride_int, masks,
+                               interpolated[spatial_rank], phase)
         # MSE subtracts in image precision and accumulates in float64.
         losses.append(np.mean((image[mask].astype(prepared.dtype, copy=False) - denoised[mask])
                               ** 2, dtype=np.float64))
@@ -337,14 +365,26 @@ def cycle_spin(
     kwargs = {} if func_kw is None else func_kw
     dense = _spin_dense(x)
     roll = _core.restoration_extra_roll
+    if (x.ndim == 2 and all(ranges) and len(ranges[0]) * len(ranges[1]) <= 4096):
+        parameters = _tv_batch_parameters(x, func, kwargs)
+        if parameters is not None:
+            jobs = [(row % x.shape[0], col % x.shape[1]) for row, col in product(*ranges)]
+            batch = _core.restoration_extra_tv_batch(x, None, jobs, 1, *parameters)
+            if batch is not None:
+                batch /= len(jobs)
+                return batch
     for shift in product(*ranges):
-        shifted = (roll(x, tuple(s % n for s, n in zip(shift, x.shape))) if dense
-                   else np.roll(x, shift, axis=axes))
+        if shift == (0, 0):
+            shifted = x.copy(order='K')
+        else:
+            shifted = (roll(x, tuple(s % n for s, n in zip(shift, x.shape))) if dense
+                       else np.roll(x, shift, axis=axes))
         result = func(shifted, **kwargs)
         if (_spin_dense(result) and result.shape == x.shape
                 and (mean is None or (_spin_dense(mean) and mean.shape == x.shape
                                       and mean.dtype == result.dtype))):
-            mean = roll(result, tuple(-s % n for s, n in zip(shift, x.shape)), mean)
+            mean = (result.copy() if shift == (0, 0) and mean is None else
+                    roll(result, tuple(-s % n for s, n in zip(shift, x.shape)), mean))
         else:
             aligned = np.roll(result, tuple(-s for s in shift), axis=axes)
             if mean is None:

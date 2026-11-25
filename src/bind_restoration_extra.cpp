@@ -1,13 +1,34 @@
 #include <skimagexx/image.hpp>
 #include <skimagexx/restoration_extra.hpp>
+#include <skimagexx/tv_denoise.hpp>
 #include "bind_array_storage.hpp"
 
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#define NPY_TARGET_VERSION NPY_1_23_API_VERSION
+#define NO_IMPORT_ARRAY
+#include <numpy/arrayobject.h>
 #include <pybind11/complex.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 #include <algorithm>
+#include <array>
 #include <cstdint>
+#include <functional>
+#include <limits>
 #include <type_traits>
+#include <vector>
+
+namespace skimagexx {
+template<class T>
+std::array<double, 3> restoration_gibbs_accumulate(const std::complex<T>*,
+    const std::complex<T>*, const T*, const T*, const T*, T, T, const double*,
+    std::size_t, std::size_t, std::size_t, std::complex<T>*);
+
+namespace detail {
+const char* tv_denoise_try_finite_reuse_into(const TvConstView&, const TvDenoiseWorkspace&,
+    const TvDenoiseParameters&, TvDenoiseResult&);
+}
+}
 
 namespace py = pybind11;
 namespace {
@@ -15,7 +36,7 @@ using skimagexx::RestorationShape;
 
 template<class T> const T* dense(const py::array& input) {
     if (input.dtype().num() != py::dtype::of<T>().num() ||
-        !input.dtype().attr("isnative").cast<bool>() ||
+        !PyArray_ISNOTSWAPPED(reinterpret_cast<PyArrayObject*>(input.ptr())) ||
         !(input.flags() & py::array::c_style) || input.size() == 0 ||
         reinterpret_cast<std::uintptr_t>(input.data()) % alignof(T))
         throw py::value_error("restoration requires a nonempty native aligned dense array");
@@ -50,6 +71,63 @@ template<class Fn> auto real_dispatch(const py::array& input, Fn fn) {
     if (input.dtype().num() == py::dtype::of<float>().num())
         return fn(dense<float>(input));
     return fn(dense<double>(input));
+}
+
+template<class T>
+bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
+              const std::vector<std::array<std::size_t, 2>>& jobs, std::size_t stride,
+              const skimagexx::TvDenoiseParameters& parameters, T* output) {
+    using namespace skimagexx;
+    const auto height = shape[0], width = shape[1], size = height * width;
+    const auto type = std::is_same_v<T, float> ? TvScalarType::float32 : TvScalarType::float64;
+    const std::vector<std::ptrdiff_t> strides{std::ptrdiff_t(width * sizeof(T)), sizeof(T)};
+    std::vector<T> shifted(size), p(2 * size), g(2 * size), d(size), out(size), squared(size), norm(size);
+    const TvDenoiseWorkspace workspace{
+        {p.data(), type, shape}, {g.data(), type, shape}, {d.data(), type, shape, strides},
+        {out.data(), type, shape, strides}, {squared.data(), type, shape, strides},
+        {norm.data(), type, shape, strides}, {p.data(), type, shape}, {g.data(), type, shape},
+        {out.data(), type, shape, strides}, {norm.data(), type, shape, strides}};
+    TvConstView source{shifted.data(), type, shape, strides};
+    RestorationShape shift(2);
+    bool add = false;
+    if (interp) std::fill_n(output, size, T(0));
+    for (const auto& job : jobs) {
+        const auto [y, x] = job;
+        const auto each_masked = [&](const auto& action) {
+            for (auto row = y; row < height; row += stride)
+                for (auto col = x; col < width; col += stride)
+                    action(row * width + col);
+        };
+        if (interp) {
+            if (!add) std::copy_n(input, size, shifted.data());
+            each_masked([&](auto i) { shifted[i] = interp[i]; });
+        } else if (y || x) {
+            shift[0] = y;
+            shift[1] = x;
+            restoration_roll(input, shape, shift, shifted.data(), false);
+        }
+        source.data = interp || y || x ? shifted.data() : input;
+        TvDenoiseResult result{};
+        if (detail::tv_denoise_try_finite_reuse_into(source, workspace, parameters, result))
+            return false;
+        const auto* denoised = result.input_alias ? static_cast<const T*>(source.data) : out.data();
+        if (interp) {
+            each_masked([&](auto i) {
+                output[i] = denoised[i];
+                shifted[i] = input[i];
+            });
+        } else if (y || x) {
+            shift[0] = y ? height - y : 0;
+            shift[1] = x ? width - x : 0;
+            restoration_roll(denoised, shape, shift, output, add);
+        } else if (add) {
+            std::transform(denoised, denoised + size, output, output, std::plus<T>());
+        } else {
+            std::copy_n(denoised, size, output);
+        }
+        add = true;
+    }
+    return true;
 }
 } // namespace
 
@@ -180,6 +258,72 @@ void bind_restoration_extra(py::module_& module) {
        py::arg("power").noconvert(), py::arg("reg_power").noconvert(), py::arg("noise"),
        py::arg("prior"), py::arg("normals").noconvert(), py::arg("sample").noconvert(),
        py::arg("residuals").noconvert());
+
+    module.def("restoration_extra_gibbs_accumulate", [](
+        const py::array& data, const py::array& transfer, const py::array& reg,
+        const py::array& power, const py::array& reg_power, double noise, double prior,
+        const py::array& normals, py::array& total, std::size_t count) {
+        if (data.ndim() != 2 || !same_shape(data, transfer) || !same_shape(data, reg) ||
+            !same_shape(data, power) || !same_shape(data, reg_power) || !same_shape(data, total) ||
+            normals.ndim() != 3 || normals.shape(0) != 2 || normals.shape(1) != data.shape(0) ||
+            normals.shape(2) != data.shape(1))
+            throw py::value_error("restoration Gibbs workspace shape mismatch");
+        for (const auto* input : {&data, &transfer, &reg, &power, &reg_power, &normals})
+            if (overlaps(*input, total))
+                throw py::value_error("restoration Gibbs input and output overlap");
+        const auto* draws = dense<double>(normals);
+        const auto height = std::size_t(data.shape(0)), width = std::size_t(data.shape(1));
+        return real_dispatch(reg, [&](auto regularizer) {
+            using T = std::remove_cv_t<std::remove_pointer_t<decltype(regularizer)>>;
+            using C = std::complex<T>;
+            const auto* y = dense<C>(data);
+            const auto* h = dense<C>(transfer);
+            const auto* p = dense<T>(power);
+            const auto* rp = dense<T>(reg_power);
+            dense<C>(total);
+            auto* out = static_cast<C*>(total.mutable_data());
+            py::gil_scoped_release release;
+            return skimagexx::restoration_gibbs_accumulate(y, h, regularizer, p, rp,
+                T(noise), T(prior), draws, height, width, count, out);
+        });
+    }, py::arg("data").noconvert(), py::arg("transfer").noconvert(), py::arg("reg").noconvert(),
+       py::arg("power").noconvert(), py::arg("reg_power").noconvert(), py::arg("noise"),
+       py::arg("prior"), py::arg("normals").noconvert(), py::arg("total").noconvert(), py::arg("count"));
+
+    module.def("restoration_extra_tv_batch", [](const py::array& image, const py::object& interpolation,
+        const std::vector<std::array<std::size_t, 2>>& jobs, std::size_t stride, double weight,
+        double eps, std::size_t iterations, bool modern, std::size_t buffer_elements) -> py::object {
+        using namespace skimagexx;
+        const auto shape = shape_of(image);
+        if (shape.size() != 2 || jobs.empty() || !stride ||
+            std::max(shape[0], shape[1]) > std::numeric_limits<std::size_t>::max() - stride)
+            throw py::value_error("restoration TV batch requires a nonempty 2D job list");
+        const auto interp = interpolation.is_none() ? py::array() : interpolation.cast<py::array>();
+        if (!interpolation.is_none() && !same_shape(image, interp))
+            throw py::value_error("restoration TV interpolation shape mismatch");
+        if (interpolation.is_none())
+            for (const auto& job : jobs)
+                if (job[0] >= shape[0] || job[1] >= shape[1])
+                    throw py::value_error("restoration TV shift is not reduced");
+        const auto profile = modern ? TvReductionProfile::numpy_254_aligned_contiguous
+                                    : TvReductionProfile::numpy_1244_buffered;
+        const TvDenoiseParameters parameters{weight, eps, iterations, {profile, buffer_elements}};
+        return real_dispatch(image, [&](auto input) -> py::object {
+            using T = std::remove_cv_t<std::remove_pointer_t<decltype(input)>>;
+            const auto* values = interpolation.is_none() ? nullptr : dense<T>(interp);
+            py::array_t<T> output(shape);
+            auto* out = output.mutable_data();
+            bool success;
+            {
+                py::gil_scoped_release release;
+                success = tv_batch(input, values, shape, jobs, stride, parameters, out);
+            }
+            if (!success) return py::none();
+            return output;
+        });
+    }, py::arg("image").noconvert(), py::arg("interpolation"), py::arg("jobs"), py::arg("stride"),
+       py::arg("weight"), py::arg("eps"), py::arg("iterations"), py::arg("modern"),
+       py::arg("buffer_elements"));
 
     module.def("restoration_extra_interpolate", [](const py::array& image, std::size_t spatial_rank) {
         return real_dispatch(image, [&](auto source) -> py::array {

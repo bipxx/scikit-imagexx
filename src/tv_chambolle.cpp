@@ -1,8 +1,10 @@
 #include "skimagexx/tv_chambolle.hpp"
+#include "skimagexx/tv_denoise.hpp"
 #include "skimagexx/image.hpp"
 #include "execution.hpp"
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <cmath>
 #include <cstring>
 #include <limits>
@@ -10,6 +12,13 @@
 #include <type_traits>
 
 namespace skimagexx {
+namespace detail {
+// Finite reductions retain the profile's exact ordering and discard FP status.
+std::uint64_t tv_finite_square_sum(TvReductionInput input, void* output, TvReductionPlan plan);
+std::uint64_t tv_finite_sum(TvReductionInput input, TvReductionPlan plan);
+template<class T> void tv_finite_add(const void* input, const T* d, T* out, std::size_t n);
+template<class T> void tv_finite_scale_norm(T* norm, T coefficient, std::size_t n);
+}
 namespace {
 struct Layout {
     std::size_t rank=0,n=0,bytes=0;
@@ -184,7 +193,83 @@ template<class T> void dual(const TvPlanes& p,const TvConstPlanes& g,const TvCon
         }
     });
 }
+
+template<class T> using ScalarBits = std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
+template<class T> std::uint64_t bits(T value) { return std::bit_cast<ScalarBits<T>>(value); }
+template<class T> T scalar(std::uint64_t raw) { return std::bit_cast<T>(ScalarBits<T>(raw)); }
+
+template<class T,class Energy>
+TvDenoiseResult run_finite(const TvConstView& input,const TvDenoiseWorkspace& w,
+    const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,
+    const Layout& source,const Layout& contiguous) {
+    const auto type=sizeof(T)==4?TvReductionType::float32:TvReductionType::float64;
+    const auto n=source.n;
+    const auto* d=static_cast<const T*>(w.d.data);
+    auto* out=static_cast<T*>(w.out.data);
+    auto* norm_data=static_cast<T*>(w.norm.data);
+    const double tau=1.0/(2.0*double(source.rank));
+    const T norm_coefficient=T(tau/parameters.weight);
+    const Energy weight=Energy(parameters.weight),eps=Energy(parameters.eps),size=Energy(double(n));
+    Energy initial=0,previous=0;
+    for(std::size_t iteration=0;iteration<parameters.max_iterations;++iteration) {
+        if(iteration) {
+            divergence<T>(w.p_read,w.d,contiguous,contiguous);
+            if(source.contiguous)detail::tv_finite_add(input.data,d,out,n);
+            else detail::partition(n,detail::active_workers(n),[&](std::size_t begin,std::size_t end,std::size_t){
+                if(begin==end)return;
+                InputCursor cursor(source,begin);
+                for(std::size_t i=begin;i<end;++i) {
+                    out[i]=T(read<T>(input.data,cursor.byte)+d[i]);
+                    if(i+1<end)cursor.advance();
+                }
+            });
+        }
+        const auto squared_sum=detail::tv_finite_square_sum({d,n,type},w.squared.data,parameters.reduction);
+        gradient<T>(iteration?w.out_read:input,w.g,contiguous,iteration?contiguous:source);
+        norm<T>(w.g_read,w.norm,contiguous,contiguous);
+        const auto norm_sum=detail::tv_finite_sum({norm_data,n,type},parameters.reduction);
+        const Energy weighted=Energy(weight*Energy(scalar<T>(norm_sum)));
+        Energy energy=Energy(Energy(scalar<T>(squared_sum))+weighted);
+        detail::tv_finite_scale_norm(norm_data,norm_coefficient,n);
+        dual<T>(w.p,w.g_read,w.norm_read,tau,contiguous,contiguous);
+        energy=Energy(energy/size);
+        Energy difference=0,threshold=0;bool stopped=false;
+        if(!iteration)initial=previous=energy;
+        else {
+            difference=std::abs(Energy(previous-energy));
+            threshold=Energy(eps*initial);
+            stopped=difference<threshold;
+            if(!stopped)previous=energy;
+        }
+        if(trace)trace[iteration]={squared_sum,norm_sum,bits(energy),bits(difference),bits(threshold),sizeof(Energy)==4,stopped};
+        if(stopped)return {iteration+1,false};
+    }
+    return {parameters.max_iterations,parameters.max_iterations==1};
 }
+}
+
+namespace detail {
+TvDenoiseResult tv_chambolle_run_validated(const TvConstView& input,
+    const TvDenoiseWorkspace& workspace,const TvDenoiseParameters& parameters,
+    TvDenoiseTrace* trace,bool reset) {
+    // The finite guard already certified the shared shape, dtype, C layout,
+    // aliases and disjointness. Derive the two traversal layouts once.
+    const auto source=layout(input.data,input.type,input.shape,&input.strides,false,false);
+    const auto contiguous=layout(workspace.p.data,input.type,input.shape,nullptr,true,true);
+    if(reset) {
+        const auto spatial=source.n*source.bytes;
+        std::memset(workspace.p.data,0,spatial*source.rank);
+        std::memset(workspace.g.data,0,spatial*source.rank);
+        std::memset(workspace.d.data,0,spatial);
+    }
+    if(input.type==TvScalarType::float64)
+        return run_finite<double,double>(input,workspace,parameters,trace,source,contiguous);
+    if(parameters.reduction.profile==TvReductionProfile::numpy_1244_buffered)
+        return run_finite<float,double>(input,workspace,parameters,trace,source,contiguous);
+    return run_finite<float,float>(input,workspace,parameters,trace,source,contiguous);
+}
+} // namespace detail
+
 std::uint32_t tv_chambolle_capabilities() noexcept {return 0x3f;}
 void tv_chambolle_divergence_into(const TvConstPlanes& p,const TvView& d) {
     const auto a=layout(p.data,p.type,p.shape,nullptr,false,true),b=layout(d.data,d.type,d.shape,&d.strides,true,false);compatible(a,b,p.type,d.type);disjoint(a,b);

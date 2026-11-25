@@ -17,6 +17,8 @@ import numpy as np
 
 from . import _core
 
+_LEGACY_COMPLEX_SIGN = np.sign(1j) == 1
+
 
 def _check_2d(array, arg_name):
     # Source check_nD validates a temporary asanyarray without replacing the
@@ -39,10 +41,44 @@ def _fft(array, forward):
     return _core.fft_c2c(array, tuple(range(array.ndim)), forward, _core.get_num_threads())
 
 
+def _inverse_fft(spectrum, shape):
+    if shape is None:
+        return _fft(spectrum, False)
+    return _core.fft_c2r(spectrum, shape, (0, 1), _core.get_num_threads())
+
+
+def _shifted_magnitude(spectrum, shape, output_shape):
+    shifted = _ifftshift(_inverse_fft(spectrum, shape))
+    if shape is None:
+        return _center(np.abs(shifted), output_shape)
+    out = _center(shifted, output_shape)
+    np.abs(out, out=out)
+    return out
+
+
+def _full_spectrum(half, shape):
+    width = half.shape[1]
+    full = np.empty(shape, dtype=half.dtype)
+    full[:, :width] = half
+    np.conjugate(half[:1, :0:-1], out=full[:1, width:])
+    np.conjugate(half[:0:-1, :0:-1], out=full[1:, width:])
+    return full
+
+
+def _limit_spectra(F, G, shape):
+    # NumPy 1's sign of a purely imaginary value is real. Limiting or
+    # clipping conjugate coefficients can then break Hermitian symmetry.
+    if shape is not None and _LEGACY_COMPLEX_SIGN and np.any((F.real == 0) & (F.imag != 0)):
+        return _full_spectrum(F, shape), _full_spectrum(G, shape), None
+    return F, G, shape
+
+
 def _min_limit(x, val=np.finfo(float).eps):
     _core.fft_check(x)
-    mask = np.abs(x) < val
+    magnitude = np.abs(x)
+    mask = magnitude < val
     x[mask] = np.sign(x[mask]) * val
+    return magnitude
 
 
 def _center(x, oshape):
@@ -77,6 +113,10 @@ class LPIFilter2D:
         self._cache = None
 
     def _prepare(self, data):
+        F, G, _ = self._prepare_spectra(data)
+        return F, G
+
+    def _prepare_spectra(self, data, half=False):
         dshape = np.array(data.shape)
         even_offset = (dshape % 2 == 0).astype(int)
         dshape += even_offset
@@ -87,7 +127,7 @@ class LPIFilter2D:
             _core.fft_check(data)
         data = data.astype(float_dtype, copy=False)
 
-        if self._cache is None or np.any(self._cache.shape != oshape):
+        if half or self._cache is None or np.any(self._cache.shape != oshape):
             coords = np.mgrid[
                 [slice(0 + offset, float(n + offset))
                  for n, offset in zip(dshape, even_offset)]
@@ -101,6 +141,12 @@ class LPIFilter2D:
                 coords[:, 0], coords[:, 1], **self.filter_params
             ).reshape(dshape)
             f = _pad(f, oshape)
+            if half and f.dtype.kind in "biuf":
+                axes = (0, 1)
+                F = _core.fft_r2c(f, axes, _core.get_num_threads())
+                data = _pad(data, oshape)
+                G = _core.fft_r2c(data, axes, _core.get_num_threads())
+                return F, G, tuple(oshape)
             F = _fft(f, True)
             self._cache = F
         else:
@@ -111,7 +157,7 @@ class LPIFilter2D:
         # G's preparation/FFT allocate after the cache was retrieved. The
         # cache is publicly mutable, so check it before its next array read.
         _core.fft_check(F)
-        return F, G
+        return F, G, None
 
     def __call__(self, data):
         _check_2d(data, "data")
@@ -140,7 +186,9 @@ def filter_forward(data, impulse_response=None, filter_params=None, predefined_f
         filter_params = {}
     _check_2d(data, "data")
     if predefined_filter is None:
-        predefined_filter = _new_filter(impulse_response, filter_params)
+        filt = _new_filter(impulse_response, filter_params)
+        F, G, shape = filt._prepare_spectra(data, half=True)
+        return np.abs(_center(_inverse_fft(F * G, shape), data.shape))
     return predefined_filter(data)
 
 
@@ -151,15 +199,19 @@ def filter_inverse(data, impulse_response=None, filter_params=None, max_gain=2,
     _check_2d(data, "data")
     if predefined_filter is None:
         filt = _new_filter(impulse_response, filter_params)
+        F, G, shape = filt._prepare_spectra(
+            data, half=isinstance(max_gain, (int, float, np.integer, np.floating))
+        )
     else:
-        filt = predefined_filter
+        F, G = predefined_filter._prepare(data)
+        shape = None
 
-    F, G = filt._prepare(data)
+    F, G, shape = _limit_spectra(F, G, shape)
     _min_limit(F, val=np.finfo(F.real.dtype).eps)
     F = 1 / F
     mask = np.abs(F) > max_gain
     F[mask] = np.sign(F[mask]) * max_gain
-    return _center(np.abs(_ifftshift(_fft(G * F, False))), data.shape)
+    return _shifted_magnitude(G * F, shape, data.shape)
 
 
 def wiener(data, impulse_response=None, filter_params=None, K=0.25, predefined_filter=None):
@@ -170,13 +222,26 @@ def wiener(data, impulse_response=None, filter_params=None, K=0.25, predefined_f
         _check_2d(K, "K")
     if predefined_filter is None:
         filt = _new_filter(impulse_response, filter_params)
+        F, G, shape = filt._prepare_spectra(data, half=type(K) is float)
     else:
-        filt = predefined_filter
+        F, G = predefined_filter._prepare(data)
+        shape = None
 
-    F, G = filt._prepare(data)
-    _min_limit(F, val=np.finfo(F.real.dtype).eps)
-    H_mag_sqr = np.abs(F) ** 2
+    F, G, shape = _limit_spectra(F, G, shape)
+    limits = np.finfo(F.real.dtype)
+    H_mag_sqr = _min_limit(F, val=limits.eps)
     if isinstance(K, np.ndarray):
         _core.fft_check(K)
-    F = 1 / F * H_mag_sqr / (H_mag_sqr + K)
-    return _center(np.abs(_ifftshift(_fft(G * F, False))), data.shape)
+    if (np.result_type(F, G, K) == F.dtype and np.geterr()["under"] == "ignore"
+            and H_mag_sqr.max(initial=0) <= float(limits.max) ** 0.5 * 0.5):
+        np.square(F.real, out=H_mag_sqr)
+        H_mag_sqr += np.square(F.imag)
+    else:
+        # Preserve magnitude rounding for widened results and NumPy's
+        # original floating-point warnings for exceptional inputs.
+        H_mag_sqr = np.abs(F)
+        np.square(H_mag_sqr, out=H_mag_sqr)
+    F = 1 / F
+    F *= H_mag_sqr
+    F = F / (H_mag_sqr + K)
+    return _shifted_magnitude(G * F, shape, data.shape)

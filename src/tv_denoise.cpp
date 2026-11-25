@@ -1,4 +1,5 @@
 #include "skimagexx/tv_denoise.hpp"
+#include "skimagexx/image.hpp"
 #include "tv_denoise_internal.hpp"
 #include "execution.hpp"
 #include <array>
@@ -11,13 +12,20 @@
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
 #include <xmmintrin.h>
 #endif
+#ifdef SKIMAGEXX_AVX2
+#include <immintrin.h>
+#if defined(_MSC_VER)
+#define SKIMAGEXX_TV_AVX2 __declspec(noinline)
+#else
+#define SKIMAGEXX_TV_AVX2 __attribute__((target("avx2,no-fma")))
+#endif
+#endif
 
 namespace skimagexx {
 namespace detail {
-// Internal reductions for the fully validated finite loop. Unlike the SDK
-// stages, they only return the sum bits and discard all reduction FP status.
-std::uint64_t tv_finite_square_sum(TvReductionInput input, void* output, TvReductionPlan plan);
-std::uint64_t tv_finite_sum(TvReductionInput input, TvReductionPlan plan);
+TvDenoiseResult tv_chambolle_run_validated(const TvConstView& input,
+    const TvDenoiseWorkspace& workspace,const TvDenoiseParameters& parameters,
+    TvDenoiseTrace* trace,bool reset);
 }
 namespace {
 struct Interval { std::uintptr_t low, high; };
@@ -153,66 +161,80 @@ template<class T> bool bounded_input(const TvConstView& input,const InputLayout&
     }
     return true;
 }
-template<class T> T scalar(std::uint64_t raw) {
-    T value;
-    if constexpr(sizeof(T)==4) {auto word=std::uint32_t(raw);std::memcpy(&value,&word,4);}
-    else std::memcpy(&value,&raw,8);
-    return value;
+#ifdef SKIMAGEXX_AVX2
+template<class T>
+SKIMAGEXX_TV_AVX2 std::size_t add_avx2(const unsigned char* input, const T* d,
+                                       T* out, std::size_t i, std::size_t end) {
+    if constexpr (std::is_same_v<T, float>) {
+        for (; end - i >= 8; i += 8) {
+            const auto value = _mm256_loadu_ps(reinterpret_cast<const float*>(input + i * sizeof(T)));
+            _mm256_storeu_ps(out + i, _mm256_add_ps(value, _mm256_loadu_ps(d + i)));
+        }
+    } else {
+        for (; end - i >= 4; i += 4) {
+            const auto value = _mm256_loadu_pd(reinterpret_cast<const double*>(input + i * sizeof(T)));
+            _mm256_storeu_pd(out + i, _mm256_add_pd(value, _mm256_loadu_pd(d + i)));
+        }
+    }
+    return i;
 }
 
-template<class T,class Energy> TvDenoiseResult run(const TvConstView& input,
-    const TvDenoiseWorkspace& w,const TvDenoiseParameters& parameters,TvDenoiseTrace* trace) {
-    InputLayout layout;Interval ignored;input_layout(input,layout,ignored);
-    const auto type=sizeof(T)==4?TvReductionType::float32:TvReductionType::float64;
-    auto* d=static_cast<T*>(w.d.data);auto* out=static_cast<T*>(w.out.data);
-    auto* norm=static_cast<T*>(w.norm.data);
-    const double tau=1.0/(2.0*double(layout.rank));
-    const T norm_coefficient=T(tau/parameters.weight);
-    const Energy weight=Energy(parameters.weight),eps=Energy(parameters.eps),size=Energy(double(layout.n));
-    Energy initial=0,previous=0;
-    for(std::size_t iteration=0;iteration<parameters.max_iterations;++iteration) {
-        if(iteration) {
-            tv_chambolle_divergence_into(w.p_read,w.d);
-            detail::partition(layout.n,detail::active_workers(layout.n),[&](std::size_t begin,std::size_t end,std::size_t){
-                if(layout.contiguous) {
-                    for(std::size_t i=begin;i<end;++i)out[i]=T(load<T>(input.data,offset(layout,i))+d[i]);
-                } else if(begin<end) {
-                    InputCursor cursor(layout,begin);
-                    for(std::size_t i=begin;i<end;++i) {
-                        out[i]=T(load<T>(input.data,cursor.byte)+d[i]);
-                        if(i+1<end)cursor.advance();
-                    }
-                }
-            });
+template<class T>
+SKIMAGEXX_TV_AVX2 std::size_t scale_norm_avx2(T* norm, T coefficient,
+                                              std::size_t i, std::size_t end) {
+    if constexpr (std::is_same_v<T, float>) {
+        const auto scale = _mm256_set1_ps(coefficient);
+        const auto one = _mm256_set1_ps(1);
+        for (; end - i >= 8; i += 8) {
+            const auto product = _mm256_mul_ps(_mm256_loadu_ps(norm + i), scale);
+            _mm256_storeu_ps(norm + i, _mm256_add_ps(product, one));
         }
-        const auto squared_sum=detail::tv_finite_square_sum({w.d.data,layout.n,type},w.squared.data,parameters.reduction);
-        tv_chambolle_gradient_into(iteration?w.out_read:input,w.g);
-        tv_chambolle_norm_into(w.g_read,w.norm);
-        const auto norm_sum=detail::tv_finite_sum({w.norm.data,layout.n,type},parameters.reduction);
-        const Energy weighted=Energy(weight*Energy(scalar<T>(norm_sum)));
-        Energy energy=Energy(Energy(scalar<T>(squared_sum))+weighted);
-        detail::partition(layout.n,detail::active_workers(layout.n),[&](std::size_t begin,std::size_t end,std::size_t){
-            for(std::size_t i=begin;i<end;++i)norm[i]=T(T(norm[i]*norm_coefficient)+T(1));
-        });
-        tv_chambolle_dual_into(w.p,w.g_read,w.norm_read,tau);
-        energy=Energy(energy/size);
-        Energy difference=0,threshold=0;bool stopped=false;
-        if(!iteration)initial=previous=energy;
-        else {
-            difference=std::abs(Energy(previous-energy));
-            threshold=Energy(eps*initial);
-            stopped=difference<threshold;
-            if(!stopped)previous=energy;
+    } else {
+        const auto scale = _mm256_set1_pd(coefficient);
+        const auto one = _mm256_set1_pd(1);
+        for (; end - i >= 4; i += 4) {
+            const auto product = _mm256_mul_pd(_mm256_loadu_pd(norm + i), scale);
+            _mm256_storeu_pd(norm + i, _mm256_add_pd(product, one));
         }
-        if(trace)trace[iteration]={squared_sum,norm_sum,bits(energy),bits(difference),bits(threshold),sizeof(Energy)==4,stopped};
-        if(stopped)return {iteration+1,false};
     }
-    return {parameters.max_iterations,parameters.max_iterations==1};
+    return i;
 }
+#endif
 } // namespace
 
-const char* tv_denoise_ineligibility(const TvConstView& input,const TvDenoiseWorkspace& w,
-    const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,std::size_t capacity) noexcept {
+namespace detail {
+template<class T>
+void tv_finite_add(const void* input, const T* d, T* out, std::size_t n) {
+    partition(n, active_workers(n), [&](std::size_t begin, std::size_t end, std::size_t) {
+        std::size_t i = begin;
+#ifdef SKIMAGEXX_AVX2
+        if (has_avx2()) i = add_avx2(static_cast<const unsigned char*>(input), d, out, i, end);
+#endif
+        for (; i < end; ++i) out[i] = T(load<T>(input, i * sizeof(T)) + d[i]);
+    });
+}
+
+template<class T>
+void tv_finite_scale_norm(T* norm, T coefficient, std::size_t n) {
+    partition(n, active_workers(n), [&](std::size_t begin, std::size_t end, std::size_t) {
+        std::size_t i = begin;
+#ifdef SKIMAGEXX_AVX2
+        if (has_avx2()) i = scale_norm_avx2(norm, coefficient, i, end);
+#endif
+        for (; i < end; ++i) norm[i] = T(T(norm[i] * coefficient) + T(1));
+    });
+}
+
+template void tv_finite_add(const void*, const float*, float*, std::size_t);
+template void tv_finite_add(const void*, const double*, double*, std::size_t);
+template void tv_finite_scale_norm(float*, float, std::size_t);
+template void tv_finite_scale_norm(double*, double, std::size_t);
+} // namespace detail
+
+namespace {
+const char* ineligibility(const TvConstView& input,const TvDenoiseWorkspace& w,
+    const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,std::size_t capacity,
+    bool require_zero) noexcept {
     InputLayout layout;std::array<Interval,8> spans{};
     if(!input_layout(input,layout,spans[0]))return "TV finite input requires rank1..4, valid strides and 1..2^30 elements";
     const auto weight=bits(parameters.weight),epsilon=bits(parameters.eps);
@@ -240,20 +262,35 @@ const char* tv_denoise_ineligibility(const TvConstView& input,const TvDenoiseWor
     for(std::size_t a=0;a<count;++a)for(std::size_t b=0;b<a;++b)
         if(intersects(spans[a],spans[b]))return "TV finite buffers and input must be disjoint";
     if(input.type==TvScalarType::float32?!bounded_input<float>(input,layout):!bounded_input<double>(input,layout))return "TV finite input must be finite with abs<=2^20";
-    if(!zero_bytes(w.p.data,layout.n*layout.rank*layout.width) ||
-       !zero_bytes(w.g.data,layout.n*layout.rank*layout.width) || !zero_bytes(w.d.data,layout.n*layout.width))return "TV finite p/g/d must start positive zero";
+    if(require_zero && (!zero_bytes(w.p.data,layout.n*layout.rank*layout.width) ||
+       !zero_bytes(w.g.data,layout.n*layout.rank*layout.width) || !zero_bytes(w.d.data,layout.n*layout.width)))return "TV finite p/g/d must start positive zero";
     return nullptr;
+}
+
+} // namespace
+
+const char* tv_denoise_ineligibility(const TvConstView& input,const TvDenoiseWorkspace& workspace,
+    const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,std::size_t capacity) noexcept {
+    return ineligibility(input,workspace,parameters,trace,capacity,true);
 }
 
 const char* detail::tv_denoise_try_finite_into(const TvConstView& input,
     const TvDenoiseWorkspace& workspace,const TvDenoiseParameters& parameters,
     TvDenoiseResult& result,TvDenoiseTrace* trace,std::size_t capacity) {
     if(const char* reason=tv_denoise_ineligibility(input,workspace,parameters,trace,capacity))return reason;
-    if(input.type==TvScalarType::float64)result=run<double,double>(input,workspace,parameters,trace);
-    else if(parameters.reduction.profile==TvReductionProfile::numpy_1244_buffered)result=run<float,double>(input,workspace,parameters,trace);
-    else result=run<float,float>(input,workspace,parameters,trace);
+    result=tv_chambolle_run_validated(input,workspace,parameters,trace,false);
     return nullptr;
 }
+
+namespace detail {
+const char* tv_denoise_try_finite_reuse_into(const TvConstView& input,
+    const TvDenoiseWorkspace& workspace,const TvDenoiseParameters& parameters,
+    TvDenoiseResult& result) {
+    if(const char* reason=ineligibility(input,workspace,parameters,nullptr,0,false))return reason;
+    result=tv_chambolle_run_validated(input,workspace,parameters,nullptr,true);
+    return nullptr;
+}
+} // namespace detail
 
 TvDenoiseResult tv_denoise_finite_into(const TvConstView& input,const TvDenoiseWorkspace& workspace,
     const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,std::size_t capacity) {
