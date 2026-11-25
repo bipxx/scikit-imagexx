@@ -9,14 +9,17 @@
 #include <limits>
 #include <vector>
 
-#if defined(SKIMAGEXX_AVX2) || defined(__AVX2__)
+#if defined(SKIMAGEXX_AVX2) && (defined(__AVX2__) || (defined(__GNUC__) && !defined(_MSC_VER)) || (defined(__clang__) && !defined(_MSC_VER)))
 #include <immintrin.h>
 #define QUICKSHIFT_AVX2 1
-#if defined(__GNUC__) || defined(__clang__)
+#if defined(__AVX2__)
+#define QUICKSHIFT_TARGET_AVX2
+#else
 #define QUICKSHIFT_TARGET_AVX2 __attribute__((target("avx2")))
+#endif
+#if defined(__GNUC__) || defined(__clang__)
 #define QUICKSHIFT_INLINE inline __attribute__((always_inline))
 #else
-#define QUICKSHIFT_TARGET_AVX2
 #define QUICKSHIFT_INLINE __forceinline
 #endif
 #endif
