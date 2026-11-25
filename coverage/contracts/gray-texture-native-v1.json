@@ -4,12 +4,12 @@
   "scope": "PRIVATE_COMPONENT_NOT_GENUINE_OR_RELEASE",
   "files": {
     "include/skimagexx/gray_texture.hpp": "7bda6f236f40231c62e49e9b3c1059b677ecbdbf49863fee54d86cc155dee0cf",
-    "src/gray_texture.cpp": "3969c4d23b5de04e01dc12bdf8f2abc185e5503230ed1987c2e734fc65d7a8ed",
-    "src/bind_gray_texture.cpp": "0749a63ab3e6e31f6a8471094d67eeeb724604900136ca5360da5953e9908603",
-    "python/skimagexx/_gray_texture.py": "e28c2d793cbbee15b1a171e8c6a6c9f1e1e7c37668918a4008e788d85a9d2f79",
+    "src/gray_texture.cpp": "9521cbf3bffe93bf25e654255cd0df17faf30fad5ee2337f8e16873940c9c697",
+    "src/bind_gray_texture.cpp": "39b9c6b6b6cbbfffb59c8e7a4ca43b14020c5cb25ed37800dea37119f5501b3c",
+    "python/skimagexx/_gray_texture.py": "4a1a1dcf661402d42764785c9d77cba4dc965c3c98762f5a4183b53e6d9f4492",
     "tests/gray_texture_private_module.cpp": "239d8248b8593dc702f49e406f87d382901930c0b80fa193f215d288566a5a33",
     "tests/test_gray_texture.cpp": "06ff7fd14d5fa2642ae24dafd6b546f76d7a991a77fb0d35fab20958349c4d3b",
-    "tests/test_gray_texture_public.py": "f9ca78a534a236573dd3b492cd0350e3cdb46c924ebbada120c3757bc8368552",
+    "tests/test_gray_texture_public.py": "57ce8f6ce40629134dc424ce33285c84e940a45d25c395f02135d0eb037ea486",
     "tests/fixtures/gray_texture_saved_v1.hpp": "dd498ef1570330df40fd8fabaf6ea8dd3cf036e5e8bfb20f950aec84f49f8e55",
     "tests/fixtures/gray_texture_original_v1.json": "cb8dac8505bebba62e49c5d660dfabe6d036d96b4f4a04f51dbfc0ca147dc4bb",
     "benchmarks/gray_texture_native.py": "bdf4a191f5a6e1e9d30f089d7b59dd38d3738576c8d6836c891804c0e740dcbc"

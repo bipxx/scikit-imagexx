@@ -14,6 +14,9 @@ from ._geometric import FailedEstimation as _StandaloneFailure
 from ._geometric import _deprecate_estimate
 
 
+_FLOAT64 = np.dtype(np.float64)
+
+
 def _check_rank(data):
     if data.ndim < 2 or data.shape[1] < 2:
         raise ValueError("Input data must be at least 2D.")
@@ -129,11 +132,27 @@ class LineModelND:
         return self.origin, self.direction
 
     def residuals(self, data, params=DEPRECATED):
-        _warn_params(params, "residuals")
+        if params is not DEPRECATED:
+            _warn_params(params, "residuals")
         _check_rank(data)
         origin, direction = self._get_init_values(params)
         if len(origin) != data.shape[1]:
             raise ValueError(f"`origin` is {len(origin)}D, but `data` is {data.shape[1]}D")
+        # Keep both source subtractions for protocols and for any subtraction
+        # which must deliver NumPy floating-point warnings or callbacks.
+        if (type(data) is type(origin) is type(direction) is np.ndarray
+                and data.ndim == 2 and origin.ndim == direction.ndim == 1
+                and data.dtype is origin.dtype is direction.dtype is _FLOAT64):
+            try:
+                with np.errstate(all="raise"):
+                    centered = data - origin
+            except FloatingPointError:
+                pass
+            else:
+                projection = (centered @ direction)[:, np.newaxis] * direction
+                np.subtract(centered, projection, out=centered)
+                np.multiply(centered, centered, out=centered)
+                return np.sqrt(np.add.reduce(centered, axis=1))
         res = (data - origin) - ((data - origin) @ direction)[..., np.newaxis] * direction
         return np.linalg.norm(res, axis=1)
 

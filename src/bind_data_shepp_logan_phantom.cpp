@@ -12,8 +12,9 @@ void bind_data_shepp_logan_phantom(py::module_& module) {
         py::array_t<double> result(
             {static_cast<py::ssize_t>(skimagexx::data_shepp_logan_phantom_rows),
              static_cast<py::ssize_t>(skimagexx::data_shepp_logan_phantom_columns)});
-        if (!skimagexx::data_shepp_logan_phantom_f64_into(
-                result.mutable_data(), skimagexx::data_shepp_logan_phantom_elements)) {
+        auto* output = result.mutable_data();
+        py::gil_scoped_release release;
+        if (!skimagexx::data_shepp_logan_phantom_f64_into(output, skimagexx::data_shepp_logan_phantom_elements)) {
             throw std::runtime_error("data_shepp_logan_phantom failed");
         }
         return result;

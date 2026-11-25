@@ -10,7 +10,7 @@
   },
   "provider": {
     "pooch": "Direct import-time callable alias. The pinned Pooch 1.9.0 implementation provides the computation and its own algorithm validation; callable identity is part of this profile.",
-    "stdlib": "When the Pooch import raises ModuleNotFoundError, validate alg using hashlib.algorithms_available, construct a hashlib digest, and read binary chunks of 65536 bytes. Hashlib provides the digest computation. Built-in open supplies the path/descriptor protocol, including file-opening errors and ownership."
+    "stdlib": "When the Pooch import raises ModuleNotFoundError, use named hashlib constructors for exact string sha256 and sha512 algorithm names. Other arguments use the original algorithms_available validation and hashlib.new. Hashlib provides the digest computation in bounded binary chunks. Built-in open supplies the path/descriptor protocol, including file-opening errors and ownership."
   },
   "contract": "No path coercion before algorithm validation. Keep str, bytes, pathlib and custom os.PathLike handling, default algorithm and exact exception behavior for the active supplier. Return Python lowercase hexadecimal str. Pooch and hashlib profile errors differ.",
   "performance": {

@@ -222,6 +222,33 @@ def test_prediction_aliases_keep_dynamic_dispatch_and_owner():
     assert model.predict_y(x).base is produced.base
 
 
+def test_residuals_preserve_subtraction_protocol_and_error_callbacks():
+    from skimage.measure import LineModelND as StockLineModelND
+
+    class Observed(np.ndarray):
+        def __sub__(self, other):
+            subtractions.append(other)
+            return self.view(np.ndarray) - other
+
+    expected, actual = (cls([1., 2., 3.], [2., -1., 0.5])
+                        for cls in (StockLineModelND, measure.LineModelND))
+    data = np.arange(384.0).reshape(128, 3)
+    subtractions = []
+    assert actual.residuals(data.view(Observed)).tobytes() == expected.residuals(data).tobytes()
+    assert len(subtractions) == 2 and all(origin is actual.origin for origin in subtractions)
+
+    answers = []
+    for model in (expected, actual):
+        model.origin[0] = np.inf
+        data[0, 0] = np.inf
+        messages = []
+        with np.errstate(invalid="call", call=lambda message, flag: messages.append((message, flag))):
+            result = model.residuals(data)
+        answers.append((result, messages))
+    np.testing.assert_array_equal(answers[0][0], answers[1][0])
+    assert answers[0][1] == answers[1][1] and len(answers[0][1]) >= 2
+
+
 def test_large_two_coordinate_prediction():
     model = measure.LineModelND([1., 2.], [3., 4.])
     x = np.arange(8192) / 8 - 128

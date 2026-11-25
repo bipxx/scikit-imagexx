@@ -31,7 +31,7 @@ OrientImageKind image_kind(const py::array& image) {
     if (dtype.equal(py::dtype::of<float>())) {
         return image.writeable() ? OrientImageKind::f32 : OrientImageKind::none;
     }
-    if (dtype.equal(py::dtype::of<double>())) {
+    if (dtype.char_() == 'd' && dtype.equal(py::dtype::of<double>())) {
         return image.writeable() ? OrientImageKind::f64 : OrientImageKind::none;
     }
     return OrientImageKind::none;
@@ -78,7 +78,13 @@ py::object run_orientations(const py::array& image, const py::array& corners,
     if (!check_backing(image) || !check_backing(corners) || !check_backing(mask)) {
         return py::none();
     }
-    if (!fn(owner.mutable_data())) {
+    auto* output = owner.mutable_data();
+    bool done;
+    {
+        py::gil_scoped_release release;
+        done = fn(output);
+    }
+    if (!done) {
         return py::none();
     }
     return owner;

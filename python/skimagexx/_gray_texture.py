@@ -8,6 +8,9 @@ import numpy as np
 from . import _core
 
 
+_U32 = np.dtype(np.uint32)
+
+
 def _check_nd(array, ndim, arg_name='image'):
     array = np.asanyarray(array)
     if array.size == 0:
@@ -78,8 +81,13 @@ def graycoprops(P, prop='contrast'):
         raise ValueError('num_dist must be positive.')
     if num_angle <= 0:
         raise ValueError('num_angle must be positive.')
-    # Required source conversion is a provider (complex warning and object
-    # conversion included); no NumPy image-property arithmetic is delegated.
-    prepared = P.astype(np.float64)
+    # Dense Fortran-order histogram counts convert exactly to double inside
+    # the native kernel. Other sources retain NumPy's conversion behavior.
+    if (type(P) is np.ndarray and P.dtype is _U32
+            and P.flags.f_contiguous and P.flags.owndata
+            and type(prop) is str and prop in ('ASM', 'energy', 'correlation')):
+        prepared = P
+    else:
+        prepared = P.astype(np.float64)
     # Property refusal occurs only after native normalization/policy delivery.
     return _core.graycoprops_apply(prepared, prop, _core.get_num_threads(), _policy)

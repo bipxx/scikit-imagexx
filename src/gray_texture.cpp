@@ -40,6 +40,21 @@ template<class F>double pairwise(std::size_t n,const F& get,std::size_t begin=0)
 std::ptrdiff_t rounded(double x){if(!std::isfinite(x)||x<=double(std::numeric_limits<std::ptrdiff_t>::min())+1.||x>=double(std::numeric_limits<std::ptrdiff_t>::max())-1.)throw std::invalid_argument("graycomatrix unsafe nonfinite/wide offset");return static_cast<std::ptrdiff_t>(x>=0.?x+.5:x-.5);}
 void source_clear();
 int budget(int workers){if(workers<0)throw std::invalid_argument("workers must be nonnegative");return workers?workers:get_num_threads();}
+
+template<std::size_t fixed_planes>
+void count_u8(GrayImageView image, std::size_t levels, std::size_t planes, std::size_t plane,
+              std::ptrdiff_t dr, std::ptrdiff_t dc, std::ptrdiff_t r0, std::ptrdiff_t r1,
+              std::ptrdiff_t c0, std::ptrdiff_t c1, std::uint32_t* counts) {
+    if constexpr (fixed_planes != 0) planes = fixed_planes;
+    const auto* base = static_cast<const std::uint8_t*>(image.data);
+    auto* plane_counts = counts + plane;
+    for (auto r = r0; r < r1; ++r) {
+        const auto* first = base + r * image.row_stride;
+        const auto* second = base + (r + dr) * image.row_stride;
+        for (auto c = c0; c < c1; ++c)
+            ++plane_counts[(first[c] * levels + second[c + dc]) * planes];
+    }
+}
 }
 GrayMatrix graycomatrix(GrayImageView image,const std::vector<double>& distances,const std::vector<double>& angles,std::size_t levels,bool symmetric,bool normed,int workers){
  const int captured=budget(workers);if(!image.writeable)throw std::invalid_argument("buffer source array is read-only");if(image.swapped&&image.type!=GrayIntegerType::i8&&image.type!=GrayIntegerType::u8)throw std::invalid_argument("Big-endian buffer not supported on little-endian compiler");if(!image.data||!image.rows||!image.columns||!levels||distances.empty()||angles.empty())throw std::invalid_argument("graycomatrix empty shape");
@@ -47,8 +62,27 @@ GrayMatrix graycomatrix(GrayImageView image,const std::vector<double>& distances
  const auto planes=product(distances.size(),angles.size()),cells=product(levels,levels);GrayMatrix result{levels,distances.size(),angles.size(),normed,{},{}};result.counts.assign(product(cells,planes),0);
  // Validate once before independent plane processing; uint64 labels never cast
  // through signed storage. No source-image bound fixed to retained tiny cases.
- for(std::size_t r=0;r<image.rows;++r)for(std::size_t c=0;c<image.columns;++c)if(integer(image,r,c)>=levels)throw std::invalid_argument("The maximum grayscale value in the image should be smaller than the number of levels.");
- for(std::size_t a=0;a<angles.size();++a)for(std::size_t d=0;d<distances.size();++d){const double angle=angles[a],distance=distances[d];const auto dr=rounded(std::sin(angle)*distance),dc=rounded(std::cos(angle)*distance);const auto p=d*angles.size()+a;const auto rows=std::ptrdiff_t(image.rows),cols=std::ptrdiff_t(image.columns);if(dr>=rows||dr<=-rows||dc>=cols||dc<=-cols)continue;const auto r0=std::max(std::ptrdiff_t(0),-dr),r1=std::min(rows,rows-dr),c0=std::max(std::ptrdiff_t(0),-dc),c1=std::min(cols,cols-dc);for(auto r=r0;r<r1;++r)for(auto c=c0;c<c1;++c){const auto i=integer(image,std::size_t(r),std::size_t(c)),j=integer(image,std::size_t(r+dr),std::size_t(c+dc));++result.counts[(i*levels+j)*planes+p];}}
+ const bool dense_u8=image.type==GrayIntegerType::u8&&image.column_stride==1;
+ auto invalid_label=[](){throw std::invalid_argument("The maximum grayscale value in the image should be smaller than the number of levels.");};
+ if(dense_u8){
+  const auto* base=static_cast<const std::uint8_t*>(image.data);
+  if(levels<256)for(std::size_t r=0;r<image.rows;++r){
+   const auto* row=base+std::ptrdiff_t(r)*image.row_stride;
+   if(std::any_of(row,row+image.columns,[levels](auto value){return value>=levels;}))invalid_label();
+  }
+ }else for(std::size_t r=0;r<image.rows;++r)for(std::size_t c=0;c<image.columns;++c)if(integer(image,r,c)>=levels)invalid_label();
+ for(std::size_t a=0;a<angles.size();++a)for(std::size_t d=0;d<distances.size();++d){
+  const double angle=angles[a],distance=distances[d];const auto dr=rounded(std::sin(angle)*distance),dc=rounded(std::cos(angle)*distance);const auto p=d*angles.size()+a;const auto rows=std::ptrdiff_t(image.rows),cols=std::ptrdiff_t(image.columns);
+  if(dr>=rows||dr<=-rows||dc>=cols||dc<=-cols)continue;
+  const auto r0=std::max(std::ptrdiff_t(0),-dr),r1=std::min(rows,rows-dr),c0=std::max(std::ptrdiff_t(0),-dc),c1=std::min(cols,cols-dc);
+  if(dense_u8){
+   if(planes==4)count_u8<4>(image,levels,planes,p,dr,dc,r0,r1,c0,c1,result.counts.data());
+   else count_u8<0>(image,levels,planes,p,dr,dc,r0,r1,c0,c1,result.counts.data());
+  }else for(auto r=r0;r<r1;++r)for(auto c=c0;c<c1;++c){
+   const auto i=integer(image,std::size_t(r),std::size_t(c)),j=integer(image,std::size_t(r+dr),std::size_t(c+dc));
+   ++result.counts[(i*levels+j)*planes+p];
+  }
+ }
  if(symmetric){auto copy=result.counts;detail::partition(result.counts.size(),result.counts.size()>=detail::parallel_min?captured:1,[&](auto begin,auto end,auto){for(auto k=begin;k<end;++k){const auto cell=k/planes,i=cell/levels,j=cell%levels;result.counts[k]=copy[k]+copy[(j*levels+i)*planes+k%planes];}});}
  if(normed){source_clear();result.probabilities.resize(result.counts.size());for(std::size_t k=0;k<result.counts.size();++k)result.probabilities[k]=double(result.counts[k]);for(std::size_t p=0;p<planes;++p){double sum=0.;if(planes==1)sum=pairwise(cells,[&](auto i){return result.probabilities[i];});else for(std::size_t i=0;i<cells;++i)sum+=result.probabilities[i*planes+p];if(sum==0.)sum=1.;for(std::size_t i=0;i<cells;++i)result.probabilities[i*planes+p]/=sum;}result.counts.clear();}
  return result;
@@ -89,24 +123,121 @@ double probability_value(const char* p,GrayNumericType type,bool swapped){
  case GrayNumericType::f64:case GrayNumericType::c128:return load<double>(p,swapped);
  }throw std::invalid_argument("graycoprops POD input type");}
 struct GrayData {std::vector<double>v;GrayLayout layout;};
+
+bool dense_f_u32(GrayProbabilityView source, std::size_t cells) {
+    constexpr auto item = sizeof(std::uint32_t);
+    const auto limit = std::size_t(std::numeric_limits<std::ptrdiff_t>::max()) / item;
+    return source.data && source.type == GrayNumericType::u32 && !source.swapped &&
+        source.levels > 1 && source.distances > 1 && source.angles > 1 &&
+        cells <= limit / source.distances / source.angles &&
+        source.strides[0] == std::ptrdiff_t(item) &&
+        source.strides[1] == std::ptrdiff_t(source.levels * item) &&
+        source.strides[2] == std::ptrdiff_t(cells * item) &&
+        source.strides[3] == std::ptrdiff_t(cells * source.distances * item);
 }
-GrayProperties graycoprops(GrayProbabilityView source,GrayProperty property,int workers,GrayPolicyCallback policy,void* context){
- const int captured=budget(workers);(void)captured;const auto L=source.levels,planes=product(source.distances,source.angles),cells=product(L,L),length=product(cells,planes);
+
+double f_histogram_correlation(const double* probabilities, std::size_t levels,
+                               double* first, double* second, double* di, double* dj) {
+    for (std::size_t j = 0; j < levels; ++j)
+        for (std::size_t i = 0; i < levels; ++i) {
+            const auto k = j * levels + i;
+            first[k] = double(i) * probabilities[k];
+            second[k] = double(j) * probabilities[k];
+        }
+    const auto cells = levels * levels;
+    const auto mi = 0. + pairwise(cells, [first](auto k) { return first[k]; });
+    const auto mj = 0. + pairwise(cells, [second](auto k) { return second[k]; });
+    for (std::size_t i = 0; i < levels; ++i) {
+        di[i] = double(i) - mi;
+        dj[i] = double(i) - mj;
+    }
+
+    // Broadcasting the first coordinate puts columns first in its weighted
+    // variance. The second coordinate keeps rows first. Covariance visits
+    // cells in logical row-major order once the two coordinates are combined.
+    double vi = 0., vj = 0.;
+    for (std::size_t i = 0; i < levels; ++i) {
+        const auto square = di[i] * di[i];
+        vi += pairwise(levels, [&](auto j) { return probabilities[j * levels + i] * square; });
+    }
+    for (std::size_t j = 0; j < levels; ++j) {
+        const auto square = dj[j] * dj[j];
+        const auto* column = probabilities + j * levels;
+        vj += pairwise(levels, [&](auto i) { return column[i] * square; });
+    }
+    const double si = std::sqrt(vi), sj = std::sqrt(vj);
+    if (si < 1e-15 || sj < 1e-15) return 1.;
+
+    double covariance = 0.;
+    for (std::size_t i = 0; i < levels; ++i)
+        for (std::size_t j = 0; j < levels; ++j)
+            covariance += -0. + probabilities[j * levels + i] * (di[i] * dj[j]);
+    return covariance / (si * sj);
+}
+
+GrayProperties f_histogram_properties(GrayProbabilityView source, GrayProperty property,
+                                      std::size_t cells, std::size_t planes) {
+    const bool correlation = property == GrayProperty::correlation;
+    GrayProperties result{source.distances, source.angles, std::vector<double>(planes), !correlation};
+    std::vector<double> values(cells), first(correlation ? cells : 0), second(correlation ? cells : 0);
+    std::vector<double> di(correlation ? source.levels : 0), dj(correlation ? source.levels : 0);
+    const auto* base = static_cast<const char*>(source.data);
+    // uint32 counts give finite, nonnegative probabilities and bounded normal
+    // intermediates. No NumPy error callback is needed in this domain.
+    source_clear();
+    for (std::size_t a = 0; a < source.angles; ++a)
+        for (std::size_t d = 0; d < source.distances; ++d) {
+            const auto* plane = base + a * source.strides[3] + d * source.strides[2];
+            for (std::size_t k = 0; k < cells; ++k)
+                values[k] = double(load<std::uint32_t>(plane + k * sizeof(std::uint32_t), false));
+            const auto total = 0. + pairwise(cells, [&](auto k) { return values[k]; });
+            const auto divisor = total == 0. ? 1. : total;
+            for (auto& value : values) value /= divisor;
+            double answer;
+            if (correlation)
+                answer = f_histogram_correlation(values.data(), source.levels,
+                    first.data(), second.data(), di.data(), dj.data());
+            else {
+                for (auto& value : values) value *= value;
+                const auto squares = 0. + pairwise(cells, [&](auto k) { return values[k]; });
+                answer = property == GrayProperty::energy ? std::sqrt(squares) : squares;
+            }
+            result.values[d * source.angles + a] = answer;
+        }
+    return result;
+}
+
+template<std::size_t fixed_planes>
+GrayProperties graycoprops_impl(GrayProbabilityView source,GrayProperty property,GrayPolicyCallback policy,void* context){
+ const auto L=source.levels,planes=fixed_planes?fixed_planes:product(source.distances,source.angles),cells=product(L,L),length=product(cells,planes);
  if(!source.data||!L||!source.distances||!source.angles)throw std::invalid_argument("graycoprops empty shape");
  GrayData P{std::vector<double>(length),packed_layout(GrayLayout{{L,L,source.distances,source.angles},{source.strides[0],source.strides[1],source.strides[2],source.strides[3]}})};
  if((source.type==GrayNumericType::c64||source.type==GrayNumericType::c128)&&policy)policy("complex-cast",0,context);
- for(std::size_t i=0;i<L;++i)for(std::size_t j=0;j<L;++j)for(std::size_t d=0;d<source.distances;++d)for(std::size_t a=0;a<source.angles;++a){double value;const auto offset=std::ptrdiff_t(i)*source.strides[0]+std::ptrdiff_t(j)*source.strides[1]+std::ptrdiff_t(d)*source.strides[2]+std::ptrdiff_t(a)*source.strides[3];value=probability_value(reinterpret_cast<const char*>(source.data)+offset,source.type,source.swapped);P.v[(i*L+j)*planes+d*source.angles+a]=value;}
+ const auto* bytes=static_cast<const char*>(source.data);
+ if(source.type==GrayNumericType::f64&&!source.swapped&&source.strides[3]==8&&
+    source.strides[2]==std::ptrdiff_t(source.angles*8)&&source.strides[1]==std::ptrdiff_t(planes*8)&&
+    source.strides[0]==std::ptrdiff_t(L*planes*8)){
+  std::memcpy(P.v.data(),bytes,length*sizeof(double));
+ }else for(std::size_t i=0;i<L;++i)for(std::size_t j=0;j<L;++j)for(std::size_t d=0;d<source.distances;++d)for(std::size_t a=0;a<source.angles;++a){const auto offset=std::ptrdiff_t(i)*source.strides[0]+std::ptrdiff_t(j)*source.strides[1]+std::ptrdiff_t(d)*source.strides[2]+std::ptrdiff_t(a)*source.strides[3];P.v[(i*L+j)*planes+d*source.angles+a]=probability_value(bytes+offset,source.type,source.swapped);}
  auto notify=[&](const char* op){auto flags=source_flags();if(flags&&policy)policy(op,flags,context);};
+ const bool power_of_two=(L&(L-1))==0;
+ unsigned level_shift=0;
+ if(power_of_two)for(auto n=L;n>1;n>>=1)++level_shift;
+ auto row_index=[&](std::size_t cell){return power_of_two?cell>>level_shift:cell/L;};
+ auto col_index=[&](std::size_t cell){return power_of_two?cell&(L-1):cell%L;};
  auto reduction=[&](const GrayData& x){source_clear();GrayData out{std::vector<double>(planes),reduced_layout(x.layout)};auto order=axis_order(x.layout);int fast_reduction=-1;std::size_t chunk=1;for(int axis:order)if(x.layout.shape[axis]>1){if(axis<2){if(fast_reduction<0)fast_reduction=axis;chunk*=L;}else break;}if(fast_reduction<0){for(int axis:order)if(axis<2){fast_reduction=axis;break;}}
-  for(std::size_t p=0;p<planes;++p){auto get=[&](std::size_t k){if(fast_reduction==0)k=(k%L)*L+k/L;return x.v[k*planes+p];};double sum=0.;for(std::size_t begin=0;begin<cells;begin+=chunk)sum+=pairwise(chunk,[&](auto i){return get(begin+i);});out.v[p]=sum;}notify("reduce");return out;};
+  if(chunk==1&&fast_reduction!=0){
+   for(std::size_t begin=0;begin<length;begin+=planes)
+    for(std::size_t p=0;p<planes;++p)out.v[p]+=-0.+x.v[begin+p];
+  }else for(std::size_t p=0;p<planes;++p){auto get=[&](std::size_t k){if(fast_reduction==0)k=col_index(k)*L+row_index(k);return x.v[k*planes+p];};double sum=0.;for(std::size_t begin=0;begin<cells;begin+=chunk)sum+=pairwise(chunk,[&](auto i){return get(begin+i);});out.v[p]=sum;}notify("reduce");return out;};
  auto transform=[&](const char* op,std::size_t n,GrayLayout layout,auto get){source_clear();GrayData out{std::vector<double>(n),layout};for(std::size_t k=0;k<n;++k)out.v[k]=get(k);notify(op);return out;};
  auto totals=reduction(P);for(auto& t:totals.v)if(t==0.)t=1.;
  P=transform("divide",length,P.layout,[&](auto k){return P.v[k]/totals.v[k%planes];});
  if(property==GrayProperty::invalid)throw std::domain_error("graycoprops invalid property");
  const GrayLayout I{{L,1,1,1},{8,8,8,8}},J{{1,L,1,1},{std::ptrdiff_t(L*8),8,8,8}};
- auto coordinate=[&](bool second){return transform("multiply",length,binary_layout(second?J:I,P.layout),[&](auto k){return ordered_multiply(double(second?(k/planes)%L:(k/planes)/L),P.v[k]);});};
+ auto coordinate=[&](bool second){return transform("multiply",length,binary_layout(second?J:I,P.layout),[&](auto k){return ordered_multiply(double(second?col_index(k/planes):row_index(k/planes)),P.v[k]);});};
  auto mean=[&](bool second){return reduction(coordinate(second));};
- auto differences=[&](const GrayData& means,bool second){return transform("subtract",length,binary_layout(second?J:I,means.layout),[&](auto k){return double(second?(k/planes)%L:(k/planes)/L)-means.v[k%planes];});};
+ auto differences=[&](const GrayData& means,bool second){return transform("subtract",length,binary_layout(second?J:I,means.layout),[&](auto k){return double(second?col_index(k/planes):row_index(k/planes))-means.v[k%planes];});};
  auto variance=[&](const GrayData& delta){auto square=transform("square",length,delta.layout,[&](auto k){return delta.v[k]*delta.v[k];});auto weighted=transform("multiply",length,binary_layout(P.layout,square.layout),[&](auto k){return ordered_multiply(P.v[k],square.v[k]);});return reduction(weighted);};
  auto root=[&](const GrayData& x){return transform("sqrt",planes,x.layout,[&](auto k){return std::sqrt(x.v[k]);});};
  GrayData answer;
@@ -114,8 +245,26 @@ GrayProperties graycoprops(GrayProbabilityView source,GrayProperty property,int 
  else if(property==GrayProperty::variance||property==GrayProperty::stddev){auto means=mean(false);auto delta=differences(means,false);answer=variance(delta);if(property==GrayProperty::stddev)answer=root(answer);}
  else if(property==GrayProperty::correlation){auto mi=mean(false),mj=mean(true);auto di=differences(mi,false),dj=differences(mj,true);auto si=root(variance(di)),sj=root(variance(dj));auto cross=transform("multiply",length,binary_layout(di.layout,dj.layout),[&](auto k){return ordered_multiply(di.v[k],dj.v[k]);});auto weighted=transform("multiply",length,binary_layout(P.layout,cross.layout),[&](auto k){return ordered_multiply(P.v[k],cross.v[k]);});auto cov=reduction(weighted);std::vector<unsigned char>regular(planes);source_clear();for(std::size_t k=0;k<planes;++k)regular[k]=!(si.v[k]<1e-15||sj.v[k]<1e-15);auto denominator=transform("multiply",planes,binary_layout(si.layout,sj.layout),[&](auto k){return regular[k]?ordered_multiply(si.v[k],sj.v[k]):1.;});answer=transform("divide",planes,GrayLayout{{1,1,source.distances,source.angles},{0,0,std::ptrdiff_t(source.angles*8),8}},[&](auto k){return regular[k]?cov.v[k]/denominator.v[k]:1.;});}
  else if(property==GrayProperty::entropy){auto logarithm=transform("log",length,P.layout,[&](auto k){return P.v[k]!=0.?source_log(P.v[k]):0.;});auto negative=transform("negative",length,logarithm.layout,[&](auto k){return -logarithm.v[k];});auto weighted=transform("multiply",length,binary_layout(P.layout,negative.layout),[&](auto k){return ordered_multiply(P.v[k],negative.v[k]);});answer=reduction(weighted);}
- else{GrayLayout weights{{L,L,1,1},{std::ptrdiff_t(L*8),8,0,0}};auto layout=property==GrayProperty::ASM||property==GrayProperty::energy?P.layout:binary_layout(P.layout,weights);auto weighted=transform("multiply",length,layout,[&](auto k){const double v=P.v[k],delta=double((k/planes)/L)-double((k/planes)%L);switch(property){case GrayProperty::contrast:return ordered_multiply(v,delta*delta);case GrayProperty::dissimilarity:return ordered_multiply(v,std::abs(delta));case GrayProperty::homogeneity:return ordered_multiply(v,1./(1.+delta*delta));case GrayProperty::ASM:case GrayProperty::energy:return v*v;default:throw std::invalid_argument("graycoprops property");}});answer=reduction(weighted);if(property==GrayProperty::energy)answer=root(answer);}
+ else if(property==GrayProperty::ASM||property==GrayProperty::energy){
+  auto weighted=transform("multiply",length,P.layout,[&](auto k){return P.v[k]*P.v[k];});
+  answer=reduction(weighted);if(property==GrayProperty::energy)answer=root(answer);
+ }
+ else{GrayLayout weights{{L,L,1,1},{std::ptrdiff_t(L*8),8,0,0}};auto layout=binary_layout(P.layout,weights);auto weighted=transform("multiply",length,layout,[&](auto k){const double v=P.v[k],delta=double(row_index(k/planes))-double(col_index(k/planes));switch(property){case GrayProperty::contrast:return ordered_multiply(v,delta*delta);case GrayProperty::dissimilarity:return ordered_multiply(v,std::abs(delta));case GrayProperty::homogeneity:return ordered_multiply(v,1./(1.+delta*delta));default:throw std::invalid_argument("graycoprops property");}});answer=reduction(weighted);}
  const bool fortran=answer.layout.strides[2]<answer.layout.strides[3];
  return GrayProperties{source.distances,source.angles,std::move(answer.v),fortran};
+}
+}
+
+GrayProperties graycoprops(GrayProbabilityView source,GrayProperty property,int workers,GrayPolicyCallback policy,void* context){
+ (void)budget(workers);
+ const auto planes=product(source.distances,source.angles);
+ if(property==GrayProperty::energy||property==GrayProperty::ASM||property==GrayProperty::correlation){
+  const auto cells=product(source.levels,source.levels);
+  if(dense_f_u32(source,cells)&&std::fegetround()==FE_TONEAREST)
+   return f_histogram_properties(source,property,cells,planes);
+ }
+ if(planes==4)
+  return graycoprops_impl<4>(source,property,policy,context);
+ return graycoprops_impl<0>(source,property,policy,context);
 }
 }

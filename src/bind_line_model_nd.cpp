@@ -37,9 +37,15 @@ py::object bind_predict(py::handle x, py::handle origin, py::handle direction, s
         return py::none();
 
     py::array_t<double> output(py::array::ShapeContainer{values.size(), size});
-    if (!predict(static_cast<const double*>(values.data()), static_cast<std::size_t>(values.size()),
-                 static_cast<const double*>(center.data()), static_cast<const double*>(vector.data()),
-                 axis, output.mutable_data()))
+    auto* result = output.mutable_data();
+    bool done;
+    {
+        py::gil_scoped_release release;
+        done = predict(static_cast<const double*>(values.data()), static_cast<std::size_t>(values.size()),
+                       static_cast<const double*>(center.data()), static_cast<const double*>(vector.data()),
+                       axis, result);
+    }
+    if (!done)
         return py::none();
     return output;
 }
@@ -57,8 +63,13 @@ void bind_line_model_nd(py::module_& module) {
 
         std::array<double, 3> center, delta;
         const auto axes = data.shape(1);
-        if (!skimagexx::line_model_nd_two_point(static_cast<const double*>(data.data()),
-                static_cast<std::size_t>(axes), center.data(), delta.data())) return py::none();
+        bool done;
+        {
+            py::gil_scoped_release release;
+            done = skimagexx::line_model_nd_two_point(static_cast<const double*>(data.data()),
+                    static_cast<std::size_t>(axes), center.data(), delta.data());
+        }
+        if (!done) return py::none();
         py::array_t<double> origin(axes), direction(axes);
         const auto bytes = static_cast<std::size_t>(axes) * sizeof(double);
         std::memcpy(origin.mutable_data(), center.data(), bytes);

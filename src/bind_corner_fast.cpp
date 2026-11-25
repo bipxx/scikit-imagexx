@@ -30,7 +30,7 @@ FastKind fast_kind(const py::array& image) {
     if (dtype.equal(py::dtype::of<float>())) {
         return image.writeable() ? FastKind::f32 : FastKind::none;
     }
-    if (dtype.equal(py::dtype::of<double>())) {
+    if (dtype.char_() == 'd' && dtype.equal(py::dtype::of<double>())) {
         return image.writeable() ? FastKind::f64 : FastKind::none;
     }
     return FastKind::none;
@@ -51,7 +51,13 @@ py::object run_fast(const py::array& image, FastKind expected_kind,
             return py::none();
         }
     }
-    if (!fn(owner.mutable_data())) {
+    auto* output = owner.mutable_data();
+    bool done;
+    {
+        py::gil_scoped_release release;
+        done = fn(output);
+    }
+    if (!done) {
         return py::none();
     }
     return owner;

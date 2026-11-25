@@ -1,8 +1,11 @@
 """Fixed allocation-inclusive FAST workloads; source-only plan."""
 
+from functools import partial
+import inspect
 from pathlib import Path
 import json
 import runpy
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -15,6 +18,33 @@ def public_cases(np):
 
 def public_call(function, image, options):
     return function(image, **options)
+
+
+def fixed_public_calls(original, candidate, native_entry):
+    import numpy as np
+
+    assert inspect.signature(original) == inspect.signature(candidate)
+    assert inspect.isbuiltin(native_entry)
+    for name, image, options in public_cases(np):
+        reference = partial(public_call, original, image, options)
+        owned = partial(public_call, candidate, image, options)
+        entries = []
+
+        def profile(frame, event, value):
+            if event == 'c_return' and value is native_entry:
+                entries.append(value)
+
+        expected = reference()
+        previous = sys.getprofile()
+        sys.setprofile(profile)
+        try:
+            actual = owned()
+        finally:
+            sys.setprofile(previous)
+        assert entries == [native_entry]
+        assert actual.dtype == expected.dtype and actual.shape == expected.shape
+        np.testing.assert_array_equal(actual, expected)
+        yield name, reference, owned
 
 
 if __name__ == '__main__':
