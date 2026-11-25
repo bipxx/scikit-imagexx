@@ -2,17 +2,16 @@
 
 import heapq
 import math
+from functools import wraps
+from threading import Lock
+from types import FunctionType
 
-import networkx as nx
 import numpy as np
-from scipy import sparse
-from scipy.sparse import linalg
-from skimage._shared.compat import SCIPY_GE_1_17_0_DEV0
-from skimage._shared.version_requirements import require
-from skimage.graph._ncut_cy import argmin2
-from skimage.graph._rag import RAG as _OriginalRAG, min_weight
 
 from . import _compat, _core
+
+
+_rag_lock = Lock()
 
 
 def _fallback(name, *args, **kwargs):
@@ -51,74 +50,120 @@ def _label_slots(labels):
     return high + 1
 
 
-class RAG(nx.Graph):
-    """Region adjacency graph with an optional labeled-image initializer."""
+def _rag_type():
+    rag = globals().get('RAG')
+    if rag is not None:
+        return rag
+    import networkx as nx
+    from skimage.graph._rag import min_weight
 
-    def __init__(self, label_image=None, connectivity=1, data=None, **attr):
-        labels = None if label_image is None else _adjacency_labels(label_image, connectivity)
-        if label_image is not None and labels is None:
-            graph = _fallback('RAG', label_image, connectivity=connectivity, data=data, **attr)
-            self.__dict__.update(graph.__dict__)
-            return
-        super().__init__(data, **attr)
-        self.max_id = max(self) if self.number_of_nodes() else 0
-        if labels is None:
-            return
-        edges = _core.graph_rag_adjacency(labels, max(1, min(connectivity, labels.ndim)))
-        for first, second in edges:
-            first, second = np.intp(first), np.intp(second)
-            if not self.has_edge(first, second):
-                self.add_edge(first, second)
+    with _rag_lock:
+        rag = globals().get('RAG')
+        if rag is not None:
+            return rag
 
-    def merge_nodes(
-        self, src, dst, weight_func=min_weight, in_place=True,
-        extra_arguments=None, extra_keywords=None,
-    ):
-        if extra_arguments is None:
-            extra_arguments = []
-        if extra_keywords is None:
-            extra_keywords = {}
-        neighbors = (set(self.neighbors(src)) | set(self.neighbors(dst))) - {src, dst}
-        new = dst
-        if not in_place:
-            new = self.next_id()
-            self.add_node(new)
-        for neighbor in neighbors:
-            attrs = weight_func(self, src, dst, neighbor, *extra_arguments, **extra_keywords)
-            self.add_edge(neighbor, new, attr_dict=attrs)
-        self.nodes[new]['labels'] = self.nodes[src]['labels'] + self.nodes[dst]['labels']
-        self.remove_node(src)
-        if not in_place:
-            self.remove_node(dst)
-        return new
+        class RAG(nx.Graph):
+            """Region adjacency graph with an optional labeled-image initializer."""
 
-    def add_node(self, n, attr_dict=None, **attr):
-        if attr_dict is not None:
-            attr_dict.update(attr)
-            attr = attr_dict
-        super().add_node(n, **attr)
-        self.max_id = max(n, self.max_id)
+            def __init__(self, label_image=None, connectivity=1, data=None, **attr):
+                labels = None if label_image is None else _adjacency_labels(label_image, connectivity)
+                if label_image is not None and labels is None:
+                    graph = _fallback('RAG', label_image, connectivity=connectivity, data=data, **attr)
+                    self.__dict__.update(graph.__dict__)
+                    return
+                super().__init__(data, **attr)
+                self.max_id = max(self) if self.number_of_nodes() else 0
+                if labels is None:
+                    return
+                edges = _core.graph_rag_adjacency(labels, max(1, min(connectivity, labels.ndim)))
+                for first, second in edges:
+                    first, second = np.intp(first), np.intp(second)
+                    if not self.has_edge(first, second):
+                        self.add_edge(first, second)
 
-    def add_edge(self, u, v, attr_dict=None, **attr):
-        if attr_dict is not None:
-            attr_dict.update(attr)
-            attr = attr_dict
-        super().add_edge(u, v, **attr)
-        self.max_id = max(u, v, self.max_id)
+            def merge_nodes(
+                self, src, dst, weight_func=min_weight, in_place=True,
+                extra_arguments=None, extra_keywords=None,
+            ):
+                if extra_arguments is None:
+                    extra_arguments = []
+                if extra_keywords is None:
+                    extra_keywords = {}
+                neighbors = (set(self.neighbors(src)) | set(self.neighbors(dst))) - {src, dst}
+                new = dst
+                if not in_place:
+                    new = self.next_id()
+                    self.add_node(new)
+                for neighbor in neighbors:
+                    attrs = weight_func(self, src, dst, neighbor, *extra_arguments, **extra_keywords)
+                    self.add_edge(neighbor, new, attr_dict=attrs)
+                self.nodes[new]['labels'] = self.nodes[src]['labels'] + self.nodes[dst]['labels']
+                self.remove_node(src)
+                if not in_place:
+                    self.remove_node(dst)
+                return new
 
-    def copy(self):
-        graph = super().copy()
-        graph.max_id = self.max_id
-        return graph
+            def add_node(self, n, attr_dict=None, **attr):
+                if attr_dict is not None:
+                    attr_dict.update(attr)
+                    attr = attr_dict
+                super().add_node(n, **attr)
+                self.max_id = max(n, self.max_id)
 
-    def fresh_copy(self):
-        return RAG()
+            def add_edge(self, u, v, attr_dict=None, **attr):
+                if attr_dict is not None:
+                    attr_dict.update(attr)
+                    attr = attr_dict
+                super().add_edge(u, v, **attr)
+                self.max_id = max(u, v, self.max_id)
 
-    def next_id(self):
-        return self.max_id + 1
+            def copy(self):
+                graph = super().copy()
+                graph.max_id = self.max_id
+                return graph
 
-    def _add_node_silent(self, n):
-        super().add_node(n)
+            def fresh_copy(self):
+                return RAG()
+
+            def next_id(self):
+                return self.max_id + 1
+
+            def _add_node_silent(self, n):
+                super().add_node(n)
+
+        RAG.__qualname__ = 'RAG'
+        for member in vars(RAG).values():
+            if isinstance(member, FunctionType):
+                member.__qualname__ = f'RAG.{member.__name__}'
+        globals()['RAG'] = RAG
+        return RAG
+
+
+def __getattr__(name):
+    if name == 'RAG':
+        return _rag_type()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def _is_rag(rag):
+    cls = type(rag)
+    if cls is globals().get('RAG'):
+        return True
+    from skimage.graph._rag import RAG as original_rag
+
+    return cls is original_rag
+
+
+def _require_matplotlib(function):
+    @wraps(function)
+    def checked(*args, **kwargs):
+        from skimage._shared.version_requirements import is_installed
+
+        if not is_installed('matplotlib', '>=3.3'):
+            raise ImportError(f'"{function}" in "{__name__}" requires "matplotlib >=3.3"')
+        return function(*args, **kwargs)
+
+    return checked
 
 
 def rag_mean_color(image, labels, connectivity=2, mode='distance', sigma=255.0):
@@ -135,7 +180,7 @@ def rag_mean_color(image, labels, connectivity=2, mode='distance', sigma=255.0):
     if slots is None:
         return _fallback('rag_mean_color', image, labels, connectivity, mode, sigma)
     _core.graph_rag_check(image)
-    graph = RAG(prepared, connectivity)
+    graph = _rag_type()(prepared, connectivity)
     rgb = _buffer(image, np.float64)
     # IEEE exceptional cases retain NumPy's warning/error policy via fallback.
     if image.dtype.kind == 'f' and np.max(np.abs(rgb)) > 1e280 / labels.size:
@@ -189,6 +234,8 @@ def rag_boundary(labels, edge_map, connectivity=2):
         low, high, pixels = _core.graph_rag_boundary_samples(prepared, conn)
         if not pixels.size:
             return _fallback('rag_boundary', labels, edge_map, connectivity)
+        from scipy import sparse
+
         coordinates = (low.astype(index_dtype, copy=False), high.astype(index_dtype, copy=False))
         data = edge_map.ravel()[pixels].astype(scalar, copy=False)
         weights = sparse.csr_array((data, coordinates))
@@ -201,7 +248,7 @@ def rag_boundary(labels, edge_map, connectivity=2):
         )
     else:
         return _fallback('rag_boundary', labels, edge_map, connectivity)
-    graph = RAG()
+    graph = _rag_type()()
     graph.add_edges_from(weighted)
     for node, attrs in graph.nodes(data=True):
         attrs['labels'] = [node]
@@ -210,6 +257,8 @@ def rag_boundary(labels, edge_map, connectivity=2):
 
 def central_pixel(graph, nodes=None, shape=None, partition_size=100):
     """Find the pixel with the smallest nonzero total shortest-path length."""
+    from scipy import sparse
+
     if (
         type(graph) not in (sparse.csr_array, sparse.csr_matrix)
         or graph.shape[0] != graph.shape[1] or not 2 <= graph.shape[0] <= 10000
@@ -243,7 +292,7 @@ def central_pixel(graph, nodes=None, shape=None, partition_size=100):
 def cut_threshold(labels, rag, thresh, in_place=True):
     """Remove edges at or above the threshold and identify components."""
     if (
-        not _integer_labels(labels, max_ndim=32) or type(rag) not in (RAG, _OriginalRAG)
+        not _integer_labels(labels, max_ndim=32) or not _is_rag(rag)
         or type(thresh) not in (int, float, np.float32, np.float64, np.int32, np.int64)
     ):
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
@@ -269,6 +318,12 @@ def cut_threshold(labels, rag, thresh, in_place=True):
 
 
 def _normalized_relabel(rag, thresh, num_cuts, rng):
+    import networkx as nx
+    from scipy import sparse
+    from scipy.sparse import linalg
+    from skimage._shared.compat import SCIPY_GE_1_17_0_DEV0
+    from skimage.graph._ncut_cy import argmin2
+
     weights = nx.to_scipy_sparse_array(rag, format='csc')
     entries = weights.sum(axis=0)
     degree = sparse.dia_array((entries, 0), shape=weights.shape).tocsc()
@@ -301,7 +356,7 @@ def _normalized_relabel(rag, thresh, num_cuts, rng):
 def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_edge=1.0, *, rng=None):
     """Recursively label regions using cuts of the normalized Laplacian."""
     if (
-        not _integer_labels(labels, max_ndim=32) or type(rag) not in (RAG, _OriginalRAG) or not rag
+        not _integer_labels(labels, max_ndim=32) or not _is_rag(rag) or not rag
         or type(num_cuts) is not int or not 0 <= num_cuts <= 10000
         or type(max_edge) not in (int, float) or not 0 < max_edge <= 1e100
     ):
@@ -327,7 +382,7 @@ def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_ed
 
 def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func, weight_func):
     """Merge neighboring regions in weight order using caller-supplied callbacks."""
-    if not _integer_labels(labels, max_ndim=32) or type(rag) not in (RAG, _OriginalRAG):
+    if not _integer_labels(labels, max_ndim=32) or not _is_rag(rag):
         return _fallback('merge_hierarchical', labels, rag, thresh, rag_copy, in_place_merge,
                          merge_func, weight_func)
     slots = _label_slots(labels)
@@ -372,7 +427,7 @@ def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func
     return mapping[labels]
 
 
-@require("matplotlib", ">=3.3")
+@_require_matplotlib
 def show_rag(
     labels, rag, image, border_color='black', edge_width=1.5, edge_cmap='magma',
     img_cmap='bone', in_place=True, ax=None,
@@ -380,7 +435,7 @@ def show_rag(
     """Draw region centroids and weighted edges over an image."""
     if (
         not _integer_labels(labels, max_ndim=2) or labels.ndim != 2
-        or type(rag) not in (RAG, _OriginalRAG) or type(image) is not np.ndarray
+        or not _is_rag(rag) or type(image) is not np.ndarray
         or image.ndim != 3 or image.shape[:2] != labels.shape
         or image.shape[2] not in ((3, 4) if img_cmap is None else (3,))
         or image.dtype.kind not in 'biuf' or image.itemsize > 8

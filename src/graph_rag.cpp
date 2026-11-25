@@ -1,5 +1,6 @@
 #include "skimagexx/graph_rag.hpp"
 #include "skimagexx/image.hpp"
+#include "execution.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -393,26 +394,43 @@ std::vector<double> central_distances(std::size_t nodes, const std::int32_t* row
         return totals;
     }
 
-    const auto infinity = std::numeric_limits<double>::infinity();
-    std::vector<double> distances(nodes);
-    for (std::size_t source = 0; source < nodes; ++source) {
-        std::fill(distances.begin(), distances.end(), infinity);
-        distances[source] = 0.0;
-        if (uniform) {
-            order.assign(1, source);
-            for (std::size_t i = 0; i < order.size(); ++i) {
-                const auto vertex = order[i];
-                for (const auto& arc : adj[vertex]) {
-                    if (distances[arc.first] == infinity) {
-                        distances[arc.first] = distances[vertex] + unit;
-                        totals[source] += distances[arc.first];
-                        order.push_back(arc.first);
+    const int workers = detail::active_workers(nodes * arcs);
+    if (uniform) {
+        detail::partition(nodes, workers, [&](auto begin, auto end, auto) {
+            std::vector<int> steps(nodes);
+            std::vector<std::size_t> queue;
+            queue.reserve(nodes);
+            for (auto source = begin; source < end; ++source) {
+                std::fill(steps.begin(), steps.end(), -1);
+                steps[source] = 0;
+                queue.assign(1, source);
+                int total_steps = 0;
+                for (std::size_t i = 0; i < queue.size(); ++i) {
+                    const auto vertex = queue[i];
+                    const int next_step = steps[vertex] + 1;
+                    for (const auto& arc : adj[vertex]) {
+                        if (steps[arc.first] == -1) {
+                            steps[arc.first] = next_step;
+                            total_steps += next_step;
+                            queue.push_back(arc.first);
+                        }
                     }
                 }
+                // The admission bound keeps all weighted totals exact in double.
+                totals[source] = total_steps * unit;
             }
-        } else {
-            using Candidate = std::pair<double, std::size_t>;
-            std::priority_queue<Candidate, std::vector<Candidate>, std::greater<Candidate>> queue;
+        });
+        return totals;
+    }
+
+    const auto infinity = std::numeric_limits<double>::infinity();
+    detail::partition(nodes, workers, [&](auto begin, auto end, auto) {
+        std::vector<double> distances(nodes);
+        using Candidate = std::pair<double, std::size_t>;
+        std::priority_queue<Candidate, std::vector<Candidate>, std::greater<Candidate>> queue;
+        for (auto source = begin; source < end; ++source) {
+            std::fill(distances.begin(), distances.end(), infinity);
+            distances[source] = 0.0;
             queue.emplace(0.0, source);
             while (!queue.empty()) {
                 const auto [distance, vertex] = queue.top();
@@ -430,7 +448,7 @@ std::vector<double> central_distances(std::size_t nodes, const std::int32_t* row
                 }
             }
         }
-    }
+    });
     return totals;
 }
 
@@ -449,36 +467,147 @@ SpectralCut spectral_cut(const double* eigenvector, const double* degrees,
         return best;
     }
     const double step = (high - low) / static_cast<double>(cuts);
+    const auto threshold_at = [&](std::size_t candidate) {
+        return low + (step == 0.0 ?
+            static_cast<double>(candidate) / static_cast<double>(cuts) * (high - low) :
+            static_cast<double>(candidate) * step);
+    };
     std::vector<std::uint8_t> mask(nodes);
     std::vector<double> a, b;
     a.reserve(nodes);
     b.reserve(nodes);
-    for (std::size_t candidate = 0; candidate < cuts; ++candidate) {
-        const auto threshold = low + (step == 0.0 ?
-            static_cast<double>(candidate) / static_cast<double>(cuts) * (high - low) :
-            static_cast<double>(candidate) * step);
+    const auto exact_cost = [&]() {
         a.clear();
         b.clear();
         for (std::size_t i = 0; i < nodes; ++i) {
-            mask[i] = eigenvector[i] > threshold;
             (mask[i] ? a : b).push_back(degrees[i]);
+        }
+        if (a.empty() || b.empty()) {
+            return std::numeric_limits<double>::infinity();
         }
         double crossing = 0.0;
         for (std::size_t i = 0; i < nodes; ++i) {
             for (auto k = columns[i]; k < columns[i + 1]; ++k) {
-                const auto row = static_cast<std::size_t>(rows[k]);
-                if (mask[row] != mask[i]) {
+                if (mask[rows[k]] != mask[i]) {
                     crossing += weights[k];
                 }
             }
         }
-        if (a.empty() || b.empty()) {
+        crossing *= 0.5;
+        return crossing / sum(a.data(), a.size()) + crossing / sum(b.data(), b.size());
+    };
+
+    double degree_total = 0.0;
+    double weight_total = 0.0;
+    bool sweepable = cuts > 2 && std::isfinite(step);
+    for (std::size_t i = 0; sweepable && i < nodes; ++i) {
+        sweepable = std::isfinite(eigenvector[i]) && degrees[i] > 0;
+        degree_total += degrees[i];
+        for (auto k = columns[i]; k < columns[i + 1]; ++k) {
+            sweepable = sweepable && weights[k] >= 0;
+            weight_total += weights[k];
+        }
+    }
+    if (!sweepable || !std::isfinite(degree_total) || !std::isfinite(weight_total)) {
+        for (std::size_t candidate = 0; candidate < cuts; ++candidate) {
+            const auto threshold = threshold_at(candidate);
+            for (std::size_t i = 0; i < nodes; ++i) {
+                mask[i] = eigenvector[i] > threshold;
+            }
+            const auto cost = exact_cost();
+            if (cost < best.cost) {
+                best = {mask, cost};
+            }
+        }
+        return best;
+    }
+
+    std::vector<std::size_t> order(nodes);
+    std::iota(order.begin(), order.end(), std::size_t{0});
+    std::sort(order.begin(), order.end(), [&](auto first, auto second) {
+        return eigenvector[first] < eigenvector[second];
+    });
+    // Retain both incidences so each directed entry contributes exactly once
+    // when an endpoint moves, even for asymmetric matrices.
+    using Arc = std::pair<std::size_t, double>;
+    std::vector<std::vector<Arc>> incoming(nodes);
+    std::size_t entries = 0;
+    for (std::size_t i = 0; i < nodes; ++i) {
+        for (auto k = columns[i]; k < columns[i + 1]; ++k) {
+            const auto j = static_cast<std::size_t>(rows[k]);
+            if (i != j) {
+                incoming[j].emplace_back(i, weights[k]);
+                ++entries;
+            }
+        }
+    }
+
+    // Bound the difference between incremental sums and the ordered cost.
+    // Each edge is added once and subtracted once during the sweep.
+    constexpr double epsilon = std::numeric_limits<double>::epsilon();
+    const double degree_error = 8 * epsilon * (nodes + 1) * degree_total;
+    const double crossing_error = 8 * epsilon * (entries + 1) * weight_total;
+    struct Candidate {
+        std::size_t moved;
+        double lower;
+    };
+    std::vector<Candidate> candidates;
+    double best_upper = std::numeric_limits<double>::infinity();
+    std::fill(mask.begin(), mask.end(), std::uint8_t{1});
+    std::size_t moved = 0;
+    double crossing = 0.0, sum_b = 0.0;
+    for (std::size_t candidate = 0; candidate < cuts && moved < nodes; ++candidate) {
+        const auto threshold = threshold_at(candidate);
+        const auto previous = moved;
+        while (moved < nodes && eigenvector[order[moved]] <= threshold) {
+            const auto i = order[moved++];
+            mask[i] = 0;
+            sum_b += degrees[i];
+            for (auto k = columns[i]; k < columns[i + 1]; ++k) {
+                const auto j = static_cast<std::size_t>(rows[k]);
+                if (i != j) {
+                    crossing += mask[j] ? weights[k] : -weights[k];
+                }
+            }
+            for (const auto& [j, weight] : incoming[i]) {
+                crossing += mask[j] ? weight : -weight;
+            }
+        }
+        if (moved == previous || moved == nodes) {
             continue;
         }
-        crossing *= 0.5;
-        const double cost = crossing / sum(a.data(), a.size()) + crossing / sum(b.data(), b.size());
+        const double sum_a = degree_total - sum_b;
+        const double low_crossing = 0.5 * std::max(0.0, crossing - crossing_error);
+        const double high_crossing = 0.5 * (crossing + crossing_error);
+        const double lower = (low_crossing / (sum_a + degree_error) +
+                              low_crossing / (sum_b + degree_error)) * (1 - 8 * epsilon);
+        if (lower <= best_upper) {
+            candidates.push_back({moved, lower});
+            if (std::min(sum_a, sum_b) > degree_error) {
+                const auto upper = (high_crossing / (sum_a - degree_error) +
+                                    high_crossing / (sum_b - degree_error)) * (1 + 8 * epsilon);
+                best_upper = std::min(best_upper, upper);
+            }
+        }
+    }
+
+    // Re-evaluate contenders in threshold order to preserve strict ties and
+    // the exact cost used by the Python caller to decide whether to recurse.
+    std::fill(mask.begin(), mask.end(), std::uint8_t{1});
+    moved = 0;
+    for (const auto& candidate : candidates) {
+        if (candidate.lower > best_upper || candidate.lower >= best.cost) {
+            continue;
+        }
+        while (moved < candidate.moved) {
+            mask[order[moved++]] = 0;
+        }
+        const auto cost = exact_cost();
         if (cost < best.cost) {
             best = {mask, cost};
+        }
+        if (best.cost == 0.0) {
+            break;
         }
     }
     return best;

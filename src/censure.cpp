@@ -1,4 +1,5 @@
 #include "skimagexx/censure.hpp"
+#include "execution.hpp"
 
 #include <algorithm>
 #include <array>
@@ -118,23 +119,31 @@ void dob_response(const std::vector<double>& integral, Grid grid, int scale, std
     }
 }
 
-// Store each reflected row contiguously so the ordered convolution can process
-// adjacent output pixels together, without reflection inside the filter loop.
 template <typename T>
-std::vector<double> reflect_columns(const T* image, Grid grid, int pad) {
-    const Grid padded{grid.rows, grid.columns + 2 * pad};
-    std::vector<double> reflected(padded.offset(padded.rows, 0));
-    for (int row = 0; row < grid.rows; ++row) {
-        for (int col = 0; col < padded.columns; ++col) {
-            reflected[padded.offset(row, col)] = image[grid.offset(row, reflect(col - pad, grid.columns))];
+std::vector<double> horizontal_prefix(const T* image, Grid grid, int pad) {
+    const Grid padded{grid.rows, grid.columns + 2 * pad + 1};
+    std::vector<double> prefix(padded.offset(padded.rows, 0));
+    detail::partition(grid.rows, detail::active_workers(prefix.size()), [&](auto begin, auto end, auto) {
+        for (auto row = begin; row < end; ++row) {
+            const auto* source = image + grid.offset(static_cast<int>(row), 0);
+            auto* sums = prefix.data() + padded.offset(static_cast<int>(row), 0);
+            for (int col = 1; col < padded.columns; ++col) {
+                sums[col] = sums[col - 1] + source[reflect(col - 1 - pad, grid.columns)];
+            }
         }
-    }
-    return reflected;
+    });
+    return prefix;
 }
 
-template <typename T>
-void footprint_response(const std::vector<double>& image, Grid grid, CensureMode mode, int scale, int pad,
-                        int margin, std::vector<double>& plane, std::vector<double>& scratch) {
+struct Footprint {
+    int radius;
+    double outer_weight;
+    double inner_weight;
+    double error;
+    std::vector<std::array<int, 2>> extents;
+};
+
+Footprint make_footprint(Grid grid, CensureMode mode, int scale, int pad, double magnitude) {
     const auto index = static_cast<std::size_t>(scale - 1);
     const int radius = support(mode, scale);
     const Shape outer = mode == CensureMode::octagon ? outer_octagons[index] : Shape{stars[index].side, 0};
@@ -142,29 +151,134 @@ void footprint_response(const std::vector<double>& image, Grid grid, CensureMode
     const int inner_radius = mode == CensureMode::octagon
         ? (inner.side - 1) / 2 + inner.slope : inner.side + inner.side / 2;
     const int inner_size = footprint_size(mode, inner, inner_radius);
-    const double outer_weight = 1.0 / (footprint_size(mode, outer, radius) - inner_size);
+    const int outer_size = footprint_size(mode, outer, radius);
+    const double outer_weight = 1.0 / (outer_size - inner_size);
     const double inner_weight = outer_weight - (outer_weight + 1.0 / inner_size);
-    const Grid padded{grid.rows, grid.columns + 2 * pad};
+    const double width = grid.columns + 2 * pad;
+    // A prefix accumulates at most width additions of partial sums bounded by
+    // width*magnitude. Include two prefix errors per interval, weighted row
+    // accumulation, and the source-ordered sum of at most outer_size terms.
+    const double error = 8 * std::numeric_limits<double>::epsilon() * magnitude
+        * (width * width * (2 * radius + 1) * (2 * outer_weight - inner_weight) + outer_size);
+    Footprint footprint{radius, outer_weight, inner_weight, error, {}};
+    footprint.extents.reserve(2 * radius + 1);
+    for (int dr = -radius; dr <= radius; ++dr) {
+        footprint.extents.push_back({row_extent(mode, outer, std::abs(dr)),
+                                     row_extent(mode, inner, std::abs(dr))});
+    }
+    return footprint;
+}
+
+void footprint_response(const std::vector<double>& prefix, Grid grid, const Footprint& footprint,
+                        int pad, int margin, std::vector<double>& plane) {
+    const Grid padded{grid.rows, grid.columns + 2 * pad + 1};
     const int row_end = grid.rows - margin + 1;
     const int col_end = grid.columns - margin + 1;
-    for (int row = margin; row < row_end; ++row) {
-        std::fill(scratch.begin() + margin, scratch.begin() + col_end, 0.0);
-        for (int dr = -radius; dr <= radius; ++dr) {
-            const int outer_half = row_extent(mode, outer, std::abs(dr));
-            const int inner_half = row_extent(mode, inner, std::abs(dr));
-            const double* source = image.data() + padded.offset(reflect(row + dr, grid.rows), pad);
-            for (int dc = -outer_half; dc <= outer_half; ++dc) {
-                const double weight = std::abs(dc) <= inner_half ? inner_weight : outer_weight;
-                const double* samples = source + dc;
-                for (int col = margin; col < col_end; ++col) {
-                    scratch[static_cast<std::size_t>(col)] += weight * samples[col];
+    const auto work = static_cast<std::size_t>(row_end - margin) * (col_end - margin)
+        * footprint.extents.size();
+    const double correction = footprint.inner_weight - footprint.outer_weight;
+    detail::partition(row_end - margin, detail::active_workers(work), [&](auto begin, auto end, auto) {
+        for (int row = margin + static_cast<int>(begin); row < margin + static_cast<int>(end); ++row) {
+            auto* target = plane.data() + grid.offset(row, 0);
+            std::fill(target + margin, target + col_end, 0.0);
+            int source_row = row - footprint.radius;
+            for (const auto& [outer, inner] : footprint.extents) {
+                const auto* source = prefix.data() + padded.offset(reflect(source_row++, grid.rows), pad);
+                const auto* outer_start = source - outer;
+                const auto* outer_end = source + outer + 1;
+                if (inner < 0) {
+                    for (int col = margin; col < col_end; ++col) {
+                        target[col] += footprint.outer_weight * (outer_end[col] - outer_start[col]);
+                    }
+                } else {
+                    const auto* inner_start = source - inner;
+                    const auto* inner_end = source + inner + 1;
+                    for (int col = margin; col < col_end; ++col) {
+                        target[col] += footprint.outer_weight * (outer_end[col] - outer_start[col])
+                            + correction * (inner_end[col] - inner_start[col]);
+                    }
                 }
             }
         }
-        for (int col = margin; col < col_end; ++col) {
-            plane[grid.offset(row, col)] = static_cast<T>(scratch[static_cast<std::size_t>(col)]);
+    });
+}
+
+template <typename T>
+double ordered_response(const T* image, Grid grid, const Footprint& footprint, int row, int col) {
+    double value = 0;
+    int source_row = row - footprint.radius;
+    for (const auto& [outer, inner] : footprint.extents) {
+        const auto* source = image + grid.offset(reflect(source_row++, grid.rows), 0);
+        for (int dc = -outer; dc <= outer; ++dc) {
+            const auto weight = std::abs(dc) <= inner ? footprint.inner_weight : footprint.outer_weight;
+            value += weight * source[reflect(col + dc, grid.columns)];
         }
     }
+    return static_cast<T>(value);
+}
+
+template <typename T>
+bool footprint_extremum(const T* image, Grid grid, const std::array<std::vector<double>, 3>& planes,
+                        const std::array<Footprint, 3>& footprints, int center,
+                        int row, int col, double threshold) {
+    const auto interval = [](double value, double error) {
+        return std::array<double, 2>{static_cast<T>(value - error), static_cast<T>(value + error)};
+    };
+    const auto [low, high] = interval(planes[center][grid.offset(row, col)], footprints[center].error);
+    if (high < threshold) {
+        return false;
+    }
+    bool min_possible = true, max_possible = true;
+    bool min_certain = true, max_certain = true;
+    for (int dr = -1; dr <= 1; ++dr) {
+        for (int dc = -1; dc <= 1; ++dc) {
+            const auto index = grid.offset(row + dr, col + dc);
+            for (int i = 0; i < 3; ++i) {
+                if (i == center && dr == 0 && dc == 0) {
+                    continue;
+                }
+                const auto [a, b] = interval(planes[i][index], footprints[i].error);
+                min_possible = min_possible && low <= b;
+                max_possible = max_possible && high >= a;
+                min_certain = min_certain && high <= a;
+                max_certain = max_certain && low >= b;
+            }
+            if (!min_possible && !max_possible) {
+                return false;
+            }
+        }
+    }
+    if (low >= threshold && (min_certain || max_certain)) {
+        return true;
+    }
+    // A close threshold or tied neighbor needs the original rounding order.
+    const auto value = ordered_response(image, grid, footprints[center], row, col);
+    if (value < threshold) {
+        return false;
+    }
+    for (int dr = -1; dr <= 1; ++dr) {
+        for (int dc = -1; dc <= 1; ++dc) {
+            for (int i = 0; i < 3; ++i) {
+                if (i == center && dr == 0 && dc == 0) {
+                    continue;
+                }
+                const auto index = grid.offset(row + dr, col + dc);
+                const auto [a, b] = interval(planes[i][index], footprints[i].error);
+                if (a == b || value < a || value > b) {
+                    min_possible = min_possible && value <= b;
+                    max_possible = max_possible && value >= a;
+                } else {
+                    const auto neighbor = ordered_response(image, grid, footprints[i], row + dr, col + dc);
+                    min_possible = min_possible && value <= neighbor;
+                    max_possible = max_possible && value >= neighbor;
+                }
+            }
+            if (!min_possible && !max_possible) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 template <typename T>
@@ -305,11 +419,13 @@ std::optional<std::vector<CensureKeypoint>> detect(const T* image, std::size_t r
         throw std::invalid_argument("CENSURE DoB image is too small for max_scale");
     }
     const auto size = rows * columns;
+    double max_magnitude = 0;
     for (std::size_t i = 0; i < size; ++i) {
         const auto magnitude = std::abs(static_cast<double>(image[i]));
         if (!(magnitude <= 1e6) || (magnitude != 0 && magnitude < 1e-9)) {
             return std::nullopt;
         }
+        max_magnitude = std::max(max_magnitude, magnitude);
     }
 
     const int margin = support(mode, options.min_scale + 1);
@@ -317,11 +433,11 @@ std::optional<std::vector<CensureKeypoint>> detect(const T* image, std::size_t r
     if (!dob && (grid.rows < 2 * margin || grid.columns < 2 * margin)) {
         return result;
     }
-    const auto prepared = dob ? summed_image(image, grid) : reflect_columns(image, grid, pad);
+    const auto prepared = dob ? summed_image(image, grid) : horizontal_prefix(image, grid, pad);
     std::array<std::vector<double>, 3> planes{
         std::vector<double>(size), std::vector<double>(size), std::vector<double>(size),
     };
-    std::vector<double> scratch(columns);
+    std::array<Footprint, 3> footprints{};
     std::vector<Tensor<T>> products;
     for (int scale = options.min_scale; scale <= options.max_scale; ++scale) {
         const int index = scale - options.min_scale;
@@ -329,12 +445,15 @@ std::optional<std::vector<CensureKeypoint>> detect(const T* image, std::size_t r
         if (dob) {
             dob_response(prepared, grid, scale, plane);
         } else {
-            footprint_response<T>(prepared, grid, mode, scale, pad, margin - 1, plane, scratch);
+            auto& footprint = footprints[static_cast<std::size_t>(index % 3)];
+            footprint = make_footprint(grid, mode, scale, pad, max_magnitude);
+            footprint_response(prepared, grid, footprint, pad, margin - 1, plane);
         }
         if (index < 2) {
             continue;
         }
-        const auto& center = planes[static_cast<std::size_t>((index - 1) % 3)];
+        const int center_index = (index - 1) % 3;
+        const auto& center = planes[static_cast<std::size_t>(center_index)];
         const int candidate_scale = scale - 1;
         // DoB's zero-initialized perimeter can be selected at nonpositive thresholds.
         const int border = dob ? 0 : support(mode, candidate_scale);
@@ -344,7 +463,11 @@ std::optional<std::vector<CensureKeypoint>> detect(const T* image, std::size_t r
         for (int row = border; row < row_end; ++row) {
             for (int col = border; col < col_end; ++col) {
                 const double value = center[grid.offset(row, col)];
-                if (value < options.non_max_threshold || !extremum(planes, grid, row, col, value)) {
+                const bool selected = dob
+                    ? value >= options.non_max_threshold && extremum(planes, grid, row, col, value)
+                    : footprint_extremum(image, grid, planes, footprints, center_index,
+                                         row, col, options.non_max_threshold);
+                if (!selected) {
                     continue;
                 }
                 if (products.empty()) {
