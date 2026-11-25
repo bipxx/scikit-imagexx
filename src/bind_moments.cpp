@@ -6,8 +6,10 @@
 #include <limits>
 #include <stdexcept>
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+#include <algorithm>
 #include <complex>
 #include <cstdint>
 #include <cstring>
@@ -15,25 +17,27 @@
 #include <type_traits>
 
 namespace py = pybind11;
+namespace bindings = skimagexx::bindings;
 namespace {
-using Shape = std::vector<py::ssize_t>;
-Shape dimensions(const py::array& value) {
-    return Shape(value.shape(), value.shape() + value.ndim());
-}
+constexpr auto max_rank = bindings::numpy_max_rank;
 template<class T> using Array = py::array_t<T, py::array::c_style | py::array::forcecast>;
-template<class T> void check(const py::array& value, const Shape& shape, bool aligned = true) {
-    skimagexx::bindings::check_array_storage(value);
-    if (dimensions(value) != shape || !Array<T>::check_(value) ||
+template<class T> void check(const py::array& value, const py::ssize_t* shape,
+                             std::size_t rank, bool aligned = true) {
+    bindings::check_array_storage(value);
+    if (std::size_t(value.ndim()) != rank ||
+        !std::equal(shape, shape + rank, value.shape()) || !Array<T>::check_(value) ||
         (aligned && reinterpret_cast<std::uintptr_t>(value.data()) % alignof(T)))
         throw py::value_error("moments input changed during allocation");
 }
 template<class T> Array<T> prepare(const py::array& value) {
-    skimagexx::bindings::check_array_storage(value);
+    bindings::check_array_storage(value);
     Array<T> result(value);
     if (reinterpret_cast<std::uintptr_t>(result.data()) % alignof(T)) {
-        const auto shape = dimensions(result);
-        py::array_t<T> aligned(shape);
-        check<T>(result, shape, false);
+        py::ssize_t shape[max_rank];
+        const auto rank = result.ndim();
+        std::copy_n(result.shape(), rank, shape);
+        auto aligned = bindings::empty_c_array<T>(shape, static_cast<int>(rank));
+        check<T>(result, shape, std::size_t(rank), false);
         std::memcpy(aligned.mutable_data(), result.data(), std::size_t(result.nbytes()));
         return Array<T>(aligned);
     }
@@ -42,17 +46,20 @@ template<class T> Array<T> prepare(const py::array& value) {
 template<class T> py::tuple project(const py::array& calc, const py::array& powers,
                                     std::size_t axis, int workers) {
     auto values = prepare<T>(calc), weights = prepare<T>(powers);
-    const auto shape = dimensions(values), power_shape = dimensions(weights);
-    if (axis >= shape.size() || power_shape.size() != 2 || power_shape[0] != shape[axis])
+    const auto rank = std::size_t(values.ndim());
+    if (axis >= rank || weights.ndim() != 2 || weights.shape(0) != values.shape(axis))
         throw py::value_error("moments projection shape/axis mismatch");
-    auto output_shape = shape;
+    py::ssize_t shape[max_rank], output_shape[max_rank];
+    std::copy_n(values.shape(), rank, shape);
+    std::copy_n(shape, rank, output_shape);
+    const py::ssize_t power_shape[]{weights.shape(0), weights.shape(1)};
     output_shape[axis] = power_shape[1];
-    py::array_t<T> output(output_shape);
+    auto output = bindings::empty_c_array<T>(output_shape, static_cast<int>(rank));
     // Preparation and output allocation may run callbacks. Recheck the two
     // established typed buffers here before releasing the GIL for native reads.
-    check<T>(values, shape);
-    check<T>(weights, power_shape);
-    const std::vector<std::size_t> native_shape(shape.begin(), shape.end());
+    check<T>(values, shape, rank);
+    check<T>(weights, power_shape, 2);
+    const std::vector<std::size_t> native_shape(shape, shape + rank);
     unsigned status;
     {
         py::gil_scoped_release release;
@@ -74,9 +81,10 @@ template<class T> py::object inertia(const py::array& diagonal,const py::array& 
         throw py::value_error("inertia tensor size overflow");
     const auto pairs=n*(n-1)/2;
     const T total=sum.cast<T>(),mass=zero.cast<T>();
-    py::array output(diagonal.dtype(),Shape{n,n});
-    check<T>(diagonal,Shape{n});
-    check<T>(mixed,Shape{pairs});
+    const py::ssize_t output_shape[]{n,n}, diagonal_shape[]{n}, mixed_shape[]{pairs};
+    auto output=bindings::empty_c_array(diagonal.dtype(),output_shape,2);
+    check<T>(diagonal,diagonal_shape,1);
+    check<T>(mixed,mixed_shape,1);
     auto* result=static_cast<T*>(output.mutable_data());
     // Capture only native arithmetic; the established buffers remain live.
     std::fenv_t saved;
@@ -98,12 +106,13 @@ template<class T> py::object inertia_eigenvalues(const py::array& input) {
        input.shape(0)<1 || input.shape(0)>64)return py::none();
     auto values=prepare<T>(input);
     const auto n=values.shape(0),count=n*(n+1)/2;
-    py::array_t<T> output(n);
+    const py::ssize_t output_shape[]{n}, input_shape[]{n,n};
+    auto output=bindings::empty_c_array<T>(output_shape);
     std::vector<T> packed(static_cast<std::size_t>(count));
     std::vector<const void*> fields(static_cast<std::size_t>(count));
     // Preparation/output allocation is the last callback boundary before
     // reading the established typed C buffer. The tiny solve retains the GIL.
-    check<T>(values,Shape{n,n});
+    check<T>(values,input_shape,2);
     const auto* data=values.data();
     std::size_t field=0;
     for(py::ssize_t r=0;r<n;++r)for(py::ssize_t c=r;c<n;++c,++field) {
@@ -118,13 +127,14 @@ template<class T> py::object inertia_eigenvalues(const py::array& input) {
 // Powers are the frontend's private native C copy, not the external point view.
 template<class T>py::object coords_reduce(const py::array& powers,int workers){
     if(powers.ndim()!=3)return py::none();
-    const auto shape=dimensions(powers);
+    const py::ssize_t shape[]{powers.shape(0),powers.shape(1),powers.shape(2)};
     const auto N=shape[0],D=shape[1],K=shape[2];
     if(N<1||D<1||D>3||K<2)return py::none();
-    py::array_t<T> output(Shape(std::size_t(D),K));
+    const py::ssize_t output_shape[]{K,K,K};
+    auto output=bindings::empty_c_array<T>(output_shape,static_cast<int>(D));
     // One actual pointer boundary after output allocation, no FFT guards on
     // earlier NumPy-only power/intermediate arrays.
-    check<T>(powers,shape);
+    check<T>(powers,shape,3);
     const auto* input=static_cast<const T*>(powers.data());auto* result=output.mutable_data();
     unsigned flags;
     {

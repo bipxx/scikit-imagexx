@@ -24,6 +24,13 @@ from . import _core
 _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
           (4, "under", "underflow"), (8, "invalid", "invalid value"))
 _FLOAT_TYPES = {"e": np.float32, "f": np.float32, "d": np.float64}
+_ORIGINS = ((), (0,), (0, 0), (0, 0, 0))
+_FIRST_ORDER_INDICES = {
+    1: (np.array([1]),),
+    2: (np.array([1, 0]), np.array([0, 1])),
+    3: (np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])),
+}
+
 # Detect the installed source route before any test traps. This inspects only
 # implementation metadata; neither einsum nor bmm_einsum is ever called.
 _EINSUM_SOURCE = import_module("numpy._core.einsumfunc" if hasattr(np, "_core")
@@ -69,7 +76,9 @@ def _project(calc, powers, axis):
     # the binding handles the later contiguous/output allocation boundary.
     _check_array(calc)
     _check_array(powers)
-    dtype = np.result_type(calc.dtype, powers.dtype).newbyteorder("=")
+    dtype = np.result_type(calc.dtype, powers.dtype)
+    if not dtype.isnative:
+        dtype = dtype.newbyteorder("=")
     calc = calc.astype(dtype, copy=False)
     powers = powers.astype(dtype, copy=False)
     snapshot = (np.geterr(), np.geterrcall()) if _MATMUL_ERRORS else None
@@ -85,7 +94,9 @@ def _project(calc, powers, axis):
 
 def moments(image, order=3, *, spacing=None):
     """Calculate raw image moments up to the requested order."""
-    return moments_central(image, (0,) * image.ndim, order=order, spacing=spacing)
+    ndim = image.ndim
+    origin = _ORIGINS[ndim] if 0 <= ndim < len(_ORIGINS) else (0,) * ndim
+    return moments_central(image, origin, order=order, spacing=spacing)
 
 
 def moments_central(image, center=None, order=3, *, spacing=None, **kwargs):
@@ -114,8 +125,13 @@ def moments_central(image, center=None, order=3, *, spacing=None, **kwargs):
 
 def centroid(image, *, spacing=None):
     """Return the weighted centroid as the source ndarray result."""
-    M = moments_central(image, center=(0,) * image.ndim, order=1, spacing=spacing)
-    center = M[tuple(np.eye(image.ndim, dtype=int))] / M[(0,) * image.ndim]
+    M = moments(image, order=1, spacing=spacing)
+    ndim = image.ndim
+    indices = _FIRST_ORDER_INDICES.get(ndim)
+    if indices is None:
+        indices = tuple(np.eye(ndim, dtype=int))
+    origin = _ORIGINS[ndim] if 0 <= ndim < len(_ORIGINS) else (0,) * ndim
+    center = M[indices] / M[origin]
     return center
 
 
@@ -292,14 +308,15 @@ def inertia_tensor(image, mu=None, *, spacing=None):
     corners2 = tuple(2 * np.eye(image.ndim, dtype=int))
     d = np.diag(result)
     d.flags.writeable = True
-    total = np.sum(mu[corners2])
     diagonal = mu[corners2]
+    total = np.sum(diagonal)
+    if type(mu) is not np.ndarray:
+        diagonal = mu[corners2]
     if (type(mu) is np.ndarray and mu.dtype.char in ('f', 'd')
             and np.ndim(mu0) == 0 and np.isfinite(mu0) and mu0 != 0
             and np.isfinite(total) and np.all(np.isfinite(diagonal))):
-        pairs = list(itertools.combinations(range(image.ndim), 2))
         values = []
-        for dims in pairs:
+        for dims in itertools.combinations(range(image.ndim), 2):
             mu_index = np.zeros(image.ndim, dtype=int)
             mu_index[list(dims)] = 1
             values.append(mu[tuple(mu_index)])

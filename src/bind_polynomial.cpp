@@ -1,11 +1,13 @@
 #include "skimagexx/polynomial.hpp"
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 
 #include <cstdint>
 #include <pybind11/numpy.h>
 
 namespace py = pybind11;
 namespace {
+using namespace skimagexx::bindings;
 
 bool doubles(const py::array& input, py::ssize_t dimensions) {
     if (input.ndim() != dimensions || !(input.flags() & py::array::c_style) ||
@@ -26,17 +28,16 @@ const double* data(const py::array& input) {
 py::object apply(const py::array& coords, const py::array& params) {
     if (!doubles(coords, 2) || !doubles(params, 2) ||
         coords.shape(1) != 2 || params.shape(0) != 2) return py::none();
-    py::array_t<double> output({coords.shape(0), py::ssize_t{2}});
+    const py::ssize_t shape[]{coords.shape(0), 2};
+    auto output = empty_c_array<double>(shape);
     const auto* points = data(coords);
     const auto* coefficients = data(params);
     const auto count = static_cast<std::size_t>(coords.shape(0));
     const auto terms = static_cast<std::size_t>(params.shape(1));
     auto* dst = output.mutable_data();
     bool finite;
-    if (count < 1024) {
-        finite = skimagexx::polynomial_apply(points, count, coefficients, terms, dst);
-    } else {
-        py::gil_scoped_release release;
+    {
+        optional_gil_release release(output.size() >= 4096);
         finite = skimagexx::polynomial_apply(points, count, coefficients, terms, dst);
     }
     if (!finite) return py::none();
@@ -58,13 +59,14 @@ py::object constraints(const py::array& src, const py::array& dst, unsigned orde
         if (!doubles(weights_array, 1) || weights_array.shape(0) != count) return py::none();
         confidences = data(weights_array);
     }
-    py::array_t<double> equations({2 * count, columns});
+    const py::ssize_t shape[]{2 * count, columns};
+    auto equations = empty_c_array<double>(shape);
     const auto* src_points = data(src);
     const auto* dst_points = data(dst);
     auto* rows = equations.mutable_data();
     bool valid;
     {
-        py::gil_scoped_release release;
+        optional_gil_release release(equations.size() >= 4096);
         valid = skimagexx::polynomial_constraints(src_points, dst_points, confidences,
             static_cast<std::size_t>(count), order, rows);
     }

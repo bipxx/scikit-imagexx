@@ -1,5 +1,6 @@
 #include "skimagexx/hough_ellipse.hpp"
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
@@ -38,10 +39,13 @@ void bind_hough_ellipse(py::module_& module) {
         }
         if (!results)
             return py::none();
-        if (!results->has_foreground)
-            return py::array_t<double>(py::array::ShapeContainer{py::ssize_t(0), py::ssize_t(6)});
+        if (!results->has_foreground) {
+            const py::ssize_t shape[]{0, 6};
+            return skimagexx::bindings::empty_c_array<double>(shape);
+        }
         const auto size = results->detections.size();
-        py::array array(dtype, std::vector<py::ssize_t>{py::ssize_t(size)});
+        const py::ssize_t shape[]{py::ssize_t(size)};
+        auto array = skimagexx::bindings::empty_c_array(dtype, shape, 1);
         if (size)
             std::memcpy(array.mutable_data(), results->detections.data(), size * sizeof(Record));
         return array;

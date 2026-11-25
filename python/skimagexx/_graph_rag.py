@@ -34,7 +34,7 @@ def _adjacency_labels(labels, connectivity):
         return None
     _core.graph_rag_check(labels)
     if labels.dtype.itemsize == 8 and (
-        int(labels.min()) < -(2**53) or int(labels.max()) > 2**53
+        int(labels.max()) > 2**53 or (labels.dtype.kind == 'i' and int(labels.min()) < -(2**53))
     ):
         return None
     return _buffer(labels, np.int64)
@@ -43,11 +43,16 @@ def _adjacency_labels(labels, connectivity):
 def _label_slots(labels):
     """Bound dense tables and preserve NumPy's original max-plus-one behavior."""
     _core.graph_rag_check(labels)
-    low, high = int(labels.min()), int(labels.max())
+    high = int(labels.max())
     overflow = high == np.iinfo(labels.dtype).max
-    if low < 0 or overflow or high >= max(65536, min(2**20, 4 * labels.size)):
+    if (overflow or high >= max(65536, min(2**20, 4 * labels.size))
+            or (labels.dtype.kind == 'i' and labels.min() < 0)):
         return None
     return high + 1
+
+
+def _label_edges(labels, connectivity):
+    return _core.graph_rag_adjacency(labels, max(1, min(connectivity, labels.ndim)))
 
 
 def _rag_type():
@@ -75,8 +80,7 @@ def _rag_type():
                 self.max_id = max(self) if self.number_of_nodes() else 0
                 if labels is None:
                     return
-                edges = _core.graph_rag_adjacency(labels, max(1, min(connectivity, labels.ndim)))
-                for first, second in edges:
+                for first, second in _label_edges(labels, connectivity):
                     first, second = np.intp(first), np.intp(second)
                     if not self.has_edge(first, second):
                         self.add_edge(first, second)
@@ -118,7 +122,21 @@ def _rag_type():
                 self.max_id = max(u, v, self.max_id)
 
             def copy(self):
-                graph = super().copy()
+                if type(self) is RAG and _plain_graph(self):
+                    graph = RAG()
+                    graph.graph.update(self.graph)
+                    graph._node = {node: attrs.copy() for node, attrs in self._node.items()}
+                    adjacency = {node: {} for node in self._node}
+                    # Replay the adjacency traversal order of NetworkX.copy,
+                    # keeping one shallow attribute dictionary per edge.
+                    for node, neighbors in self._adj.items():
+                        target = adjacency[node]
+                        for neighbor, attrs in neighbors.items():
+                            if neighbor not in target:
+                                target[neighbor] = adjacency[neighbor][node] = attrs.copy()
+                    graph._adj = adjacency
+                else:
+                    graph = super().copy()
                 graph.max_id = self.max_id
                 return graph
 
@@ -154,6 +172,15 @@ def _is_rag(rag):
     return cls is original_rag
 
 
+def _plain_graph(graph):
+    return (
+        type(graph._adj) is dict and type(graph._node) is dict
+        and graph.node_dict_factory is dict and graph.node_attr_dict_factory is dict
+        and graph.adjlist_outer_dict_factory is dict and graph.adjlist_inner_dict_factory is dict
+        and graph.edge_attr_dict_factory is dict and graph.graph_attr_dict_factory is dict
+    )
+
+
 def _require_matplotlib(function):
     @wraps(function)
     def checked(*args, **kwargs):
@@ -168,19 +195,23 @@ def _require_matplotlib(function):
 
 def rag_mean_color(image, labels, connectivity=2, mode='distance', sigma=255.0):
     """Build a region graph weighted by distance or similarity of mean RGB."""
-    prepared = _adjacency_labels(labels, connectivity)
+    if not _integer_labels(labels) or type(connectivity) not in (int, bool):
+        return _fallback('rag_mean_color', image, labels, connectivity, mode, sigma)
+    slots = _label_slots(labels)
     if (
-        prepared is None or type(image) is not np.ndarray
+        slots is None or type(image) is not np.ndarray
         or image.shape != labels.shape + (3,)
         or image.dtype.kind not in 'biuf' or image.itemsize > 8
         or type(mode) is not str or type(sigma) not in (int, float)
     ):
         return _fallback('rag_mean_color', image, labels, connectivity, mode, sigma)
-    slots = _label_slots(labels)
-    if slots is None:
-        return _fallback('rag_mean_color', image, labels, connectivity, mode, sigma)
     _core.graph_rag_check(image)
-    graph = _rag_type()(prepared, connectivity)
+    prepared = _buffer(labels, np.int64)
+    graph = _rag_type()()
+    # Native adjacency lists each undirected edge once. A fresh RAG needs no
+    # membership test and the dense slot bound already covers int64 precision.
+    for first, second in _label_edges(prepared, connectivity):
+        graph.add_edge(np.intp(first), np.intp(second))
     rgb = _buffer(image, np.float64)
     # IEEE exceptional cases retain NumPy's warning/error policy via fallback.
     if image.dtype.kind == 'f' and np.max(np.abs(rgb)) > 1e280 / labels.size:
@@ -376,7 +407,13 @@ def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_ed
     _normalized_relabel(rag, thresh, num_cuts, generator)
     mapping = np.zeros(slots, dtype=labels.dtype)
     for _, attrs in rag.nodes(data=True):
-        mapping[attrs['labels']] = attrs['ncut label']
+        old_labels = attrs['labels']
+        if (type(old_labels) is list and len(old_labels) == 1
+                and type(label := old_labels[0]) in (int, np.intp, np.int32)
+                and 0 <= label < slots):
+            mapping[label] = attrs['ncut label']
+        else:
+            mapping[old_labels] = attrs['ncut label']
     return mapping[labels]
 
 

@@ -23,6 +23,8 @@ build-dir = "build/{wheel_tag}"
 [tool.scikit-build.cmake.define]
 SKIMAGEXX_BUILD_PYTHON = "ON"
 BUILD_TESTING = "OFF"
+CMAKE_CXX_VISIBILITY_PRESET = "hidden"
+CMAKE_VISIBILITY_INLINES_HIDDEN = "ON"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

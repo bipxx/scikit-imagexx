@@ -1,4 +1,5 @@
 #include "skimagexx/footprint_dense.hpp"
+#include "bind_helpers.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <limits>
@@ -9,6 +10,8 @@
 namespace py=pybind11;
 
 void bind_footprint_dense(py::module_& module) {
+    using namespace skimagexx::bindings;
+    const py::object shares_memory=py::module_::import("numpy").attr("shares_memory");
     module.def("footprint_rectangle_numeric_into",[](py::array output) {
         if(!(output.flags()&py::array::c_style) || !output.writeable())
             throw py::value_error("rectangle output must be writable C-contiguous");
@@ -31,18 +34,18 @@ void bind_footprint_dense(py::module_& module) {
             else if(component==4){const float value=1;std::memcpy(one.data(),&value,4);}
             else{const double value=1;std::memcpy(one.data(),&value,8);}
         } else throw py::type_error("ordinary numeric rectangle dtype required");
-        if(!dtype.attr("isnative").cast<bool>()) {
+        if(!is_native_byteorder(dtype)) {
             for(std::size_t offset=0;offset<itemsize;offset+=component)
                 std::reverse(one.begin()+offset,one.begin()+offset+component);
         }
         // Atoms live on this call's stack, disjoint from the owned output.
         // No Python scalar conversions, dtype caches, or geometry changes.
         auto* data=output.mutable_data();const auto count=std::size_t(output.size());
-        {py::gil_scoped_release release;
+        {optional_gil_release release(count>=4096);
          skimagexx::footprint_dense_into(data,count,itemsize,one.data(),one.data(),
              nullptr,0,skimagexx::DenseFootprint::rectangle,0.);}
     });
-    module.def("footprint_dense_into",[](py::array output,
+    module.def("footprint_dense_into",[shares_memory](py::array output,
         py::array_t<double,py::array::c_style> axis,int kind,double limit,
         py::array zero,py::array one) {
         if(kind<0 || kind>3)throw py::value_error("invalid dense footprint kind");
@@ -62,13 +65,13 @@ void bind_footprint_dense(py::module_& module) {
         }
         // Reject overlapping buffers before releasing the GIL. No dtype may
         // expose Python references to the byte-writing C++ kernel.
-        const auto np=py::module_::import("numpy");
         for(const auto& input:{py::array(axis),zero,one})
-            if(np.attr("shares_memory")(output,input).cast<bool>())
+            if(shares_memory(output,input).cast<bool>())
                 throw py::value_error("disjoint dense footprint buffers required");
         const auto itemsize=std::size_t(output.itemsize());
-        py::gil_scoped_release release;
-        skimagexx::footprint_dense_into(output.mutable_data(),std::size_t(output.size()),
+        auto* data=output.mutable_data();const auto count=std::size_t(output.size());
+        optional_gil_release release(count>=4096);
+        skimagexx::footprint_dense_into(data,count,
             itemsize,zero.data(),one.data(),axis.data(),
             std::size_t(axis.size()),static_cast<skimagexx::DenseFootprint>(kind),limit);
     });

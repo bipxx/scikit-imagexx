@@ -24,33 +24,61 @@ _TRANSFORMS = {
 }
 
 
-def _positive_determinant(matrix, dimensions):
-    if dimensions == 2:
-        (a, b), (c, d) = matrix
-        return a * d - b * c > 0
-    (a, b, c), (d, e, f), (g, h, i) = matrix
-    return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g) > 0
-
-
 def _fit_rigid(model, src, dst, dimensions):
-    # Full-rank, orientation-preserving Umeyama fits have an identity sign
-    # matrix. Retain the owned solver for reflected or near-singular inputs.
+    # The rotation is the orthogonal polar factor of the covariance.
     src_mean = src.mean(axis=0)
     dst_mean = dst.mean(axis=0)
     centered = src - src_mean
     covariance = (dst - dst_mean).T @ centered / len(src)
-    u, singular, vh = np.linalg.svd(covariance)
-    if singular[-1] <= 1e-4 * singular[0] or not _positive_determinant(covariance, dimensions):
-        return None
-
-    rotation = u @ vh
+    if dimensions == 2:
+        a, b, c, d = covariance.ravel()
+        trace, skew = a + d, c - b
+        stretch = np.hypot(trace, skew)
+        if not a * d - b * c > 1e-4 * stretch**2:
+            return None  # Reflections and poorly conditioned fits use Umeyama.
+        cosine, sine = trace / stretch, skew / stretch
+        rotation = np.array(((cosine, -sine), (sine, cosine)))
+    else:
+        if not np.linalg.det(covariance) > 0:
+            return None
+        eigenvalues, vectors = np.linalg.eigh(covariance.T @ covariance)
+        # Squaring the condition number in the Gram matrix amplifies error.
+        if not eigenvalues[0] > 1e-3 * eigenvalues[-1]:
+            return None
+        singular = np.sqrt(eigenvalues)
+        rotation = ((covariance @ vectors) / singular) @ vectors.T
+        stretch = singular.sum()
     scale = 1.0
     if model is SimilarityTransform:
-        scale = 1.0 / centered.var(axis=0).sum() * singular.sum()
+        scale = 1.0 / centered.var(axis=0).sum() * stretch
     matrix = np.eye(dimensions + 1)
     matrix[:-1, -1] = dst_mean - scale * (rotation @ src_mean)
     matrix[:-1, :-1] = scale * rotation
     return model(matrix)
+
+
+def _small_exact_affine(src, dst, dimensions):
+    # For exact correspondences, the least-squares solution is also the right
+    # null vector of the homogeneous system. Noisy data needs the full fit.
+    src_mean = src.mean(axis=0)
+    dst_mean = dst.mean(axis=0)
+    design = src - src_mean
+    target = dst - dst_mean
+    transpose = design.T
+    gram = transpose @ design
+    spread = np.trace(gram) / dimensions
+    if not np.linalg.det(gram) > 1e-2 * spread**dimensions:
+        return None
+    coefficients = np.linalg.solve(gram, transpose @ target)
+    dst_spread = np.max(np.abs(target))
+    if (not dst_spread > 0 or not np.max(np.abs(design @ coefficients - target)) <= 8e-15 * dst_spread
+            or src_mean @ src_mean > 64 * spread / len(src)
+            or np.max(np.abs(dst_mean)) > 8 * dst_spread):
+        return None
+    matrix = np.eye(dimensions + 1)
+    matrix[:-1, :-1] = coefficients.T
+    matrix[:-1, -1] = dst_mean - src_mean @ coefficients
+    return AffineTransform(matrix)
 
 
 def _fit_linear(model, src, dst, dimensions, weights):
@@ -124,6 +152,10 @@ def _try_fast_estimate(model, src, dst, args, kwargs):
         try:
             if rigid:
                 return _fit_rigid(model, src, dst, dimensions)
+            if model is AffineTransform and weights is None and len(src) <= 32:
+                result = _small_exact_affine(src, dst, dimensions)
+                if result is not None:
+                    return result
             return _fit_linear(model, src, dst, dimensions, weights)
         except (FloatingPointError, np.linalg.LinAlgError):
             return None

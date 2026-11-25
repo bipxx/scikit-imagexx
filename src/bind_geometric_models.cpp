@@ -1,11 +1,13 @@
 #include "skimagexx/geometric_models.hpp"
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
+namespace bindings = skimagexx::bindings;
 namespace {
 
 bool real_buffer(const py::array& input) {
@@ -15,7 +17,7 @@ bool real_buffer(const py::array& input) {
         || reinterpret_cast<std::uintptr_t>(input.data()) % alignof(double)
         || (!dtype.is(py::dtype::of<double>())
             && (dtype.kind() != 'f' || dtype.itemsize() != sizeof(double)
-                || !dtype.attr("isnative").cast<bool>() || !dtype.attr("metadata").is_none()))) {
+                || !bindings::is_native_byteorder(dtype) || !dtype.attr("metadata").is_none()))) {
         return false;
     }
     if (!input.owndata()) skimagexx::bindings::check_array_storage(input);
@@ -54,7 +56,8 @@ py::object residuals(const py::array& data, const py::array& center, double radi
     const auto origin = pair_from_array(center);
     const auto axes = axis_lengths.is_none() ? std::array<double, 2>{}
                                             : pair_from_array(axis_lengths.cast<py::array>());
-    py::array_t<double> result(data.shape(0));
+    const py::ssize_t shape[]{data.shape(0)};
+    auto result = bindings::empty_c_array<double>(shape);
     // NumPy allocation can call GC and Python finalizers. Check again before
     // reading the buffer and keep the GIL over the native computation.
     if (data.shape(0) != result.shape(0) || !point_buffer(data)) return py::none();
@@ -76,14 +79,16 @@ py::object predict(const py::array& cosine, const py::array& sine, const py::arr
     const auto origin = pair_from_array(center);
     const auto axes = axis_lengths.is_none() ? std::array<double, 2>{}
                                             : pair_from_array(axis_lengths.cast<py::array>());
-    std::vector<py::ssize_t> shape(cosine.shape(), cosine.shape() + cosine.ndim());
-    shape.push_back(2);
-    py::array_t<double> result(shape);
-    const auto dimensions = static_cast<py::ssize_t>(shape.size() - 1);
+    // NumPy 2 supports at most 64 input axes; the trailing output axis is extra.
+    py::ssize_t shape[bindings::numpy_max_rank + 1];
+    const auto dimensions = cosine.ndim();
+    std::copy_n(cosine.shape(), dimensions, shape);
+    shape[dimensions] = 2;
+    auto result = bindings::empty_c_array<double>(shape, static_cast<int>(dimensions + 1));
     if (!real_buffer(cosine) || !real_buffer(sine) ||
         cosine.ndim() != dimensions || sine.ndim() != dimensions ||
-        !std::equal(shape.begin(), shape.end() - 1, cosine.shape()) ||
-        !std::equal(shape.begin(), shape.end() - 1, sine.shape())) return py::none();
+        !std::equal(shape, shape + dimensions, cosine.shape()) ||
+        !std::equal(shape, shape + dimensions, sine.shape())) return py::none();
     const auto* c = static_cast<const double*>(cosine.data());
     const auto* s = static_cast<const double*>(sine.data());
     const auto count = static_cast<std::size_t>(cosine.size());
@@ -123,10 +128,9 @@ py::tuple ransac(const py::object& data, const py::object& model_class,
                  std::size_t minimum, const py::object& threshold, double trials,
                  double stop_samples, const py::object& stop_residuals, double probability,
                  const py::object& validate_data, const py::object& validate_model,
-                 const py::object& warn) {
-    const auto np = py::module_::import("numpy");
-    const auto absolute = np.attr("abs");
-    const auto count_nonzero = np.attr("count_nonzero");
+                 const py::object& warn, const py::module_& numpy, const py::module_& builtins) {
+    const auto absolute = numpy.attr("abs");
+    const auto count_nonzero = numpy.attr("count_nonzero");
     const auto choice = rng.attr("choice");
     py::object best = py::none();
     auto best_count = std::size_t{0};
@@ -154,7 +158,7 @@ py::tuple ransac(const py::object& data, const py::object& model_class,
         }
     }
     py::object model = py::none();
-    if (!best.is_none() && truth(py::module_::import("builtins").attr("any")(best))) {
+    if (!best.is_none() && truth(builtins.attr("any")(best))) {
         const auto subset = select(data, best);
         model = model_class.attr("from_estimate")(*subset);
         if (!validate_model.is_none() && !truth(validate_model(*prepend(model, subset)))) {
@@ -173,5 +177,15 @@ void bind_geometric_models(py::module_& module) {
     module.def("measure_geometric_fit", &fit, py::arg("data").noconvert(), py::arg("ellipse"));
     module.def("measure_geometric_residuals", &residuals);
     module.def("measure_geometric_predict", &predict);
-    module.def("measure_ransac_loop", &ransac);
+    const auto numpy = py::module_::import("numpy");
+    const auto builtins = py::module_::import("builtins");
+    module.def("measure_ransac_loop", [numpy, builtins](
+        const py::object& data, const py::object& model_class, const py::object& rng,
+        py::object indices, std::size_t samples, std::size_t minimum, const py::object& threshold,
+        double trials, double stop_samples, const py::object& stop_residuals, double probability,
+        const py::object& validate_data, const py::object& validate_model, const py::object& warn) {
+        return ransac(data, model_class, rng, std::move(indices), samples, minimum, threshold,
+                     trials, stop_samples, stop_residuals, probability, validate_data, validate_model,
+                     warn, numpy, builtins);
+    });
 }

@@ -4,11 +4,13 @@ from functools import lru_cache
 from pathlib import Path, WindowsPath, PosixPath
 from os import stat
 from stat import S_ISREG
+from struct import Struct
 
 import numpy as np
 from PIL import Image
 from skimage import io as _stock
 from skimage._shared.utils import DEPRECATED
+from skimage.exposure import is_low_contrast
 from skimage.io._plugins import imageio_plugin
 from skimage.io.manage_plugins import plugin_store
 
@@ -26,6 +28,8 @@ _imageio_read = imageio_plugin.imread
 _imageio_write = imageio_plugin.imsave
 _imageio_collection = imageio_plugin.imread_collection
 _max_file_bytes = 64 * 1024 * 1024
+_png_header = Struct('>16sII')
+_png_prefix = b'\x89PNG\r\n\x1a\n\0\0\0\rIHDR'
 
 image_stack = _stock.image_stack
 pop, push = _core.io_stack_api(image_stack, np.ndarray, _stock.push, _stock.pop)
@@ -98,9 +102,40 @@ def _read_bytes(path):
         return b''
 
 
+def _read_png(path):
+    try:
+        if not S_ISREG(stat(path).st_mode):
+            return None
+        with open(path, 'rb') as stream:
+            header = stream.read(_png_header.size)
+            if len(header) != _png_header.size:
+                return None
+            signature, width, height = _png_header.unpack(header)
+            limit = Image.MAX_IMAGE_PIXELS
+            if signature != _png_prefix or (limit is not None and (
+                type(limit) is not int or width * height > limit
+            )):
+                return None  # Let the provider own diagnostics.
+            stream.seek(0)
+            with Image.open(stream, formats=('PNG',)) as image:
+                if (image.mode not in ('1', 'L', 'RGB', 'RGBA', 'I;16')
+                        or image.custom_mimetype == 'image/apng'):
+                    return None
+                image.load()
+                if 'exif' not in image.info:
+                    return np.array(image)
+    except (OSError, SyntaxError, ValueError, Image.DecompressionBombError):
+        pass
+    return None
+
+
 def imread(fname, as_gray=False, plugin=DEPRECATED, **plugin_args):
     if plugin is DEPRECATED and not plugin_args and as_gray is False and _active('imread', _imageio_read):
         path = _local_path(fname)
+        if path[-4:].lower() == '.png' and not _zip_member(path):
+            result = _read_png(path)
+            if result is not None:
+                return result
         if path.lower().endswith(('.pgm', '.ppm', '.pnm')) and not _zip_member(path):
             data = _read_bytes(path)
             if data:
@@ -115,24 +150,34 @@ def imread(fname, as_gray=False, plugin=DEPRECATED, **plugin_args):
 
 def imsave(fname, arr, plugin=DEPRECATED, *, check_contrast=True, **plugin_args):
     if (
-        plugin is DEPRECATED and not plugin_args and check_contrast is False
+        plugin is DEPRECATED and not plugin_args and type(check_contrast) is bool
         and type(arr) is np.ndarray and arr.dtype == np.uint8
         and _active('imsave', _imageio_write)
     ):
         path = _local_path(fname)
         suffix = path[-4:].lower()
-        if suffix in ('.pgm', '.ppm') and not _zip_member(path):
-            header = _core.io_netpbm_header(arr, suffix == '.ppm')
-            if header is not None:
+        if suffix in ('.png', '.pgm', '.ppm') and not _zip_member(path):
+            if suffix == '.png' and arr.size and (
+                arr.ndim == 2 or (arr.ndim == 3 and arr.shape[-1] in (3, 4))
+            ) and (not check_contrast or not is_low_contrast(arr)):
                 try:
-                    stream = open(path, 'wb')
-                except (OSError, ValueError):
-                    pass
-                else:
-                    with stream:
-                        stream.write(header)
-                        stream.write(arr)
+                    with Image.fromarray(arr) as image:
+                        image.save(path, format='PNG')
                     return None
+                except (OSError, ValueError):
+                    pass  # Retain the provider's file error and message.
+            elif suffix in ('.pgm', '.ppm') and not check_contrast:
+                header = _core.io_netpbm_header(arr, suffix == '.ppm')
+                if header is not None:
+                    try:
+                        stream = open(path, 'wb')
+                    except (OSError, ValueError):
+                        pass
+                    else:
+                        with stream:
+                            stream.write(header)
+                            stream.write(arr)
+                        return None
     return _imsave(fname, arr, plugin=plugin, check_contrast=check_contrast, **plugin_args)
 
 

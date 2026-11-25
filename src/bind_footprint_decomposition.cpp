@@ -1,8 +1,10 @@
 #include "skimagexx/footprint_decomposition.hpp"
+#include "bind_helpers.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 namespace py=pybind11;
+using skimagexx::bindings::optional_gil_release;
 namespace {
 py::tuple plans(const std::vector<skimagexx::FootprintCross>& input) {
     py::tuple result(input.size());std::size_t i=0;
@@ -11,20 +13,21 @@ py::tuple plans(const std::vector<skimagexx::FootprintCross>& input) {
 }
 }
 void bind_footprint_decomposition(py::module_& module) {
+    const py::object shares_memory=py::module_::import("numpy").attr("shares_memory");
     module.def("footprint_sphere_counts",&skimagexx::footprint_sphere_counts);
     module.def("footprint_cross_costs",[](py::array_t<double,py::array::c_style> costs,double limit) {
         if(costs.ndim()!=1)throw py::value_error("cross costs must be one-dimensional");
         std::vector<skimagexx::FootprintCross> result;
-        {py::gil_scoped_release release;result=skimagexx::footprint_cross_costs(costs.data(),std::size_t(costs.size()),limit);}
+        {optional_gil_release release(costs.size()>=4096);result=skimagexx::footprint_cross_costs(costs.data(),std::size_t(costs.size()),limit);}
         return plans(result);
     });
     module.def("footprint_cross_sums",[](py::array_t<std::ptrdiff_t,py::array::c_style> sums,std::size_t height) {
         if(sums.ndim()!=1)throw py::value_error("cross sums must be one-dimensional");
         std::vector<skimagexx::FootprintCross> result;
-        {py::gil_scoped_release release;result=skimagexx::footprint_cross_sums(sums.data(),std::size_t(sums.size()),height);}
+        {optional_gil_release release(sums.size()>=4096);result=skimagexx::footprint_cross_sums(sums.data(),std::size_t(sums.size()),height);}
         return plans(result);
     });
-    module.def("footprint_element_into",[](py::array output,py::array zero,py::array one,
+    module.def("footprint_element_into",[shares_memory](py::array output,py::array zero,py::array one,
                                           int kind,int dimensions,int axis,int direction,
                                           std::size_t vertical,std::size_t horizontal) {
         if(!(output.flags()&py::array::c_style) || !output.writeable())throw py::value_error("element output must be writable C-contiguous");
@@ -39,10 +42,10 @@ void bind_footprint_decomposition(py::module_& module) {
             if(output.ndim()!=dimensions)throw py::value_error("element output rank mismatch");
             for(py::ssize_t d=0;d<output.ndim();++d)if(output.shape(d)!=3)throw py::value_error("element output shape mismatch");
         }
-        const auto np=py::module_::import("numpy");
-        for(const auto& atom:{zero,one})if(np.attr("shares_memory")(output,atom).cast<bool>())throw py::value_error("disjoint element buffers required");
+        for(const auto& atom:{zero,one})if(shares_memory(output,atom).cast<bool>())throw py::value_error("disjoint element buffers required");
         const auto itemsize=std::size_t(output.itemsize());
-        py::gil_scoped_release release;
-        skimagexx::footprint_element_into(output.mutable_data(),itemsize,zero.data(),one.data(),kind,dimensions,axis,direction,vertical,horizontal);
+        auto* data=output.mutable_data();
+        optional_gil_release release(output.size()>=4096);
+        skimagexx::footprint_element_into(data,itemsize,zero.data(),one.data(),kind,dimensions,axis,direction,vertical,horizontal);
     });
 }

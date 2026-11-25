@@ -1,5 +1,6 @@
 #include <skimagexx/draw_coordinates.hpp>
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <algorithm>
@@ -12,6 +13,7 @@
 
 namespace py=pybind11;
 namespace {
+using namespace skimagexx::bindings;
 using Int=std::intptr_t;
 using UInt=std::uintptr_t;
 constexpr auto limit=std::numeric_limits<py::ssize_t>::max();
@@ -20,17 +22,15 @@ void worker_snapshot(int workers) {
     if(workers<1||workers>1024)throw py::value_error("drawing worker snapshot outside [1,1024]");
 }
 
-py::array coordinates(const std::vector<py::ssize_t>& shape) {
+py::array_t<Int> coordinates(const py::ssize_t* shape,int rank) {
     // NumPy empty grids have zero strides on every axis, not partial C strides.
-    if(std::find(shape.begin(),shape.end(),0)!=shape.end())
-        return py::array(py::dtype("intp"),shape,std::vector<py::ssize_t>(shape.size(),0));
-    return py::array(py::dtype("intp"),shape);
+    return empty_c_array<Int>(shape,rank,true);
 }
 
 bool integer_vector(const py::array& value,std::vector<Int>& output) {
     using Array=py::array_t<Int,py::array::c_style>;
     if(!Array::check_(value)||value.ndim()!=1
-        ||!value.dtype().attr("isnative").cast<bool>()
+        ||!is_native_byteorder(value)
         ||reinterpret_cast<UInt>(value.data())%alignof(Int))return false;
     skimagexx::bindings::check_array_storage(value);
     output.clear();
@@ -71,7 +71,7 @@ template<class T> bool real_pair_values(const py::array& value,std::array<double
 
 bool real_pair(const py::array& value,std::array<double,2>& output) {
     if(value.ndim()!=1||value.size()!=2||!(value.flags()&py::array::c_style)
-        ||!value.dtype().attr("isnative").cast<bool>())return false;
+        ||!is_native_byteorder(value))return false;
     const auto kind=value.dtype().kind();const auto bytes=value.itemsize();
     if((kind!='i'&&kind!='u'&&kind!='f')||bytes<1||bytes>8)return false;
     skimagexx::bindings::check_array_storage(value);
@@ -107,11 +107,12 @@ void bind_draw_coordinates(py::module_& module) {
         if(dr>UInt(limit)/2||dc>UInt(limit)/2)return py::none();
         const UInt count=std::max(dr,dc)+1;
         if(count>UInt(limit)/sizeof(Int))return py::none();
-        auto rows=coordinates({py::ssize_t(count)}),columns=coordinates({py::ssize_t(count)});
+        const py::ssize_t shape[]{py::ssize_t(count)};
+        auto rows=coordinates(shape,1),columns=coordinates(shape,1);
         const skimagexx::detail::DrawCoordinatePair output{
-            static_cast<Int*>(rows.mutable_data()),static_cast<Int*>(columns.mutable_data()),1,1};
+            rows.mutable_data(),columns.mutable_data(),1,1};
         {
-            py::gil_scoped_release release;
+            optional_gil_release release(count>=4096);
             skimagexx::detail::draw_line_into(r0,c0,r1,c1,output,workers);
         }
         return py::make_tuple(rows,columns);
@@ -123,12 +124,14 @@ void bind_draw_coordinates(py::module_& module) {
         if(!integer_vector(top_left,starts)||!integer_vector(bottom_right,stops)
             ||starts.size()!=stops.size())return py::none();
         const auto rank=starts.size();py::list result;if(!rank)return result;
-        std::vector<std::size_t> lengths(rank);std::vector<py::ssize_t> shape(rank);
+        std::vector<std::size_t> lengths(rank);
+        std::array<py::ssize_t,64> shape;
         std::size_t count=1;
         for(std::size_t i=0;i<rank;++i) {
             const UInt length=stops[i]<=starts[i]?0:UInt(stops[i])-UInt(starts[i]);
             if(length>UInt(limit))return py::none();
-            lengths[i]=std::size_t(length);shape[i]=py::ssize_t(length);
+            lengths[i]=std::size_t(length);
+            if(i<shape.size())shape[i]=py::ssize_t(length);
             if(length&&count>std::size_t(limit)/length)return py::none();
             count*=length;
         }
@@ -136,10 +139,12 @@ void bind_draw_coordinates(py::module_& module) {
         if(rank>=2)std::swap(shape[0],shape[1]);
         std::vector<py::array> owners;owners.reserve(rank);std::vector<Int*> outputs;outputs.reserve(rank);
         for(std::size_t i=0;i<rank;++i) {
-            owners.push_back(coordinates(shape));outputs.push_back(static_cast<Int*>(owners.back().mutable_data()));
+            // NumPy rejects ranks above 64 before it reads the dimensions.
+            auto output=coordinates(shape.data(),static_cast<int>(rank));
+            outputs.push_back(output.mutable_data());owners.push_back(std::move(output));
         }
         {
-            py::gil_scoped_release release;
+            optional_gil_release release(count>=4096);
             skimagexx::detail::draw_rectangle_into(starts.data(),lengths.data(),rank,count,outputs.data(),workers);
         }
         for(const auto& output:owners)result.append(output);
@@ -165,17 +170,18 @@ void bind_draw_coordinates(py::module_& module) {
         std::vector<std::uint8_t> mask(rows*columns);std::vector<std::size_t> prefix(rows+1);
         bool accepted;
         {
-            py::gil_scoped_release release;
+            optional_gil_release release(mask.size()>=4096);
             accepted=skimagexx::detail::draw_ellipse_mask_into(grid,mask.data(),prefix.data(),workers);
         }
         if(!accepted)return py::none();
         const auto count=prefix[rows];if(count>std::size_t(limit)/(2*sizeof(Int)))return py::none();
-        auto output=coordinates({py::ssize_t(count),2});
-        auto* values=static_cast<Int*>(output.mutable_data());
+        const py::ssize_t shape[]{py::ssize_t(count),2};
+        auto output=coordinates(shape,2);
+        auto* values=output.mutable_data();
         // Empty columns use the same pointer: there are no addresses to emit.
         const skimagexx::detail::DrawCoordinatePair pair{values,count?values+1:values,2,2};
         {
-            py::gil_scoped_release release;
+            optional_gil_release release(mask.size()>=4096);
             skimagexx::detail::draw_ellipse_emit_into(grid,mask.data(),prefix.data(),pair,workers);
         }
         return output;

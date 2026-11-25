@@ -1,5 +1,7 @@
 #include <skimagexx/rectangle_perimeter.hpp>
+#include "bind_helpers.hpp"
 
+#include <cmath>
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
@@ -21,10 +23,17 @@ void bind_rectangle_perimeter(py::module_& module) {
             !bindings::read_perimeter_vector(start, a, true) || !bindings::read_perimeter_vector(second, b, true))
             return py::none();
         if (clip && !shape) throw py::value_error("Must specify clipping shape");
+        // Estimate the unclipped edge traversal from the admitted integer bounds.
+        constexpr double limit = 1 << 26;
+        const bool bounded = std::abs(a[0]) <= limit && std::abs(a[1]) <= limit &&
+                             std::abs(b[0]) <= limit && std::abs(b[1]) <= limit;
+        const bool large = bounded &&
+            2 * (std::abs(use_extent ? b[0] : b[0] - a[0]) +
+                 std::abs(use_extent ? b[1] : b[1] - a[1])) + (use_extent ? 8 : 12) >= 4096;
         detail::PerimeterCoordinates output;
         detail::PerimeterStatus status;
         {
-            py::gil_scoped_release release;
+            bindings::optional_gil_release release(large);
             status = detail::rectangle_perimeter({static_cast<Int>(a[0]), static_cast<Int>(a[1])},
                                                   {static_cast<Int>(b[0]), static_cast<Int>(b[1])},
                                                   use_extent, shape, clip, output);

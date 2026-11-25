@@ -34,7 +34,7 @@ def _triangle(row, column, height, width, lo, hi, rng):
         raise ValueError('dimension must be > 1 for triangles')
     available = min(width - column, row, hi) - lo
     side = lo + rng.integers(max(1, available)) - 1
-    rise = int(np.ceil(np.sqrt(3 / 4.0) * side))
+    rise = int(np.ceil(_TRIANGLE_RISE * side))
     points = polygon([row, row - rise, row], [column, column + side // 2, column + side])
     return points, ('triangle', ((row - rise, row + 1), (column, column + side + 1)))
 
@@ -54,11 +54,12 @@ def _ellipse(row, column, height, width, lo, hi, rng):
 
 
 _GENERATORS = dict(rectangle=_rectangle, circle=_circle, triangle=_triangle, ellipse=_ellipse)
-_CHOICES = list(_GENERATORS.values())
+_CHOICES = np.array(list(_GENERATORS.values()), dtype=object)
+_TRIANGLE_RISE = np.sqrt(3 / 4.0)
 
 
 def _int_range(value):
-    return type(value) is tuple and len(value) == 2 and all(type(bound) is int for bound in value)
+    return type(value) is tuple and len(value) == 2 and type(value[0]) is int and type(value[1]) is int
 
 
 def _ranges_supported(value, channels):
@@ -75,7 +76,8 @@ def random_shapes(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=No
     channels = 1 if channel_axis is None else num_channels
     supported = (
         type(image_shape) is tuple and len(image_shape) == 2
-        and all(type(size) is int and 1 <= size <= 256 for size in image_shape)
+        and type(image_shape[0]) is int and 1 <= image_shape[0] <= 256
+        and type(image_shape[1]) is int and 1 <= image_shape[1] <= 256
         and type(max_shapes) is int and 0 <= max_shapes <= 128
         and type(min_shapes) is int and 0 <= min_shapes <= 128
         and type(min_size) is int and 1 <= min_size <= 256
@@ -98,8 +100,8 @@ def random_shapes(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=No
         raise ValueError('Minimum dimension must be less than ncols and nrows')
     hi = max_size or max(height, width)
     ranges = (intensity_range or (0, 254),) if channels == 1 else intensity_range or ((0, 254),)
-    for pair in ranges:
-        if any(not 0 <= value <= 255 for value in pair):
+    for lo, high in ranges:
+        if not (0 <= lo <= 255 and 0 <= high <= 255):
             raise ValueError('Intensity range must lie within (0, 255) interval')
     if len(ranges) == 1:
         ranges = ranges * channels
@@ -111,13 +113,14 @@ def random_shapes(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=No
     count = generator.integers(min_shapes, max_shapes + 1)
     colors = np.transpose([generator.integers(lo, high + 1, size=count) for lo, high in ranges])
     colors = colors.astype(np.uint8, order='C')
+    generate = _GENERATORS[shape] if count and shape is not None else None
     for index in range(count):
-        generate = generator.choice(_CHOICES) if shape is None else _GENERATORS[shape]
+        place_shape = generator.choice(_CHOICES) if generate is None else generate
         for _ in range(num_trials):
             column = generator.integers(max(1, width - min_size))
             row = generator.integers(max(1, height - min_size))
             try:
-                (rr, cc), label = generate(row, column, height, width, min_size, hi, generator)
+                (rr, cc), label = place_shape(row, column, height, width, min_size, hi, generator)
             except ArithmeticError:
                 continue
             if _core.random_shapes_paint(image, occupied, rr, cc, colors[index], allow_overlap):

@@ -1,16 +1,19 @@
 #include "resample_detail.hpp"
 #include "bind_numeric.hpp"
+#include "bind_helpers.hpp"
 #include "execution.hpp"
 #include "resize_gaussian.hpp"
 #include "resize_clip.hpp"
 #include "resize_range.hpp"
 #include "resize_half.hpp"
+#include <algorithm>
 #include <cstring>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py=pybind11;
+namespace bindings=skimagexx::bindings;
 namespace {
 template<class T> void clip_python(py::array& image,const py::array& lower,const py::array& upper,
                                   skimagexx::PixelType type,int policy) {
@@ -19,13 +22,13 @@ template<class T> void clip_python(py::array& image,const py::array& lower,const
     skimagexx::detail::resize_clip_into(image.mutable_data(),std::size_t(image.size()),type,&low,&high,static_cast<skimagexx::detail::ResizeClipPolicy>(policy));
 }
 template<std::size_t Bytes> void copy_layout(const void* source,void* destination,std::size_t count,
-                 const std::vector<std::size_t>& shape,const std::vector<std::ptrdiff_t>& strides,bool swap) {
+                 const std::vector<std::size_t>& shape,const std::ptrdiff_t* strides,bool swap) {
     auto* target=static_cast<unsigned char*>(destination);const auto* input=static_cast<const unsigned char*>(source);
     std::vector<std::size_t> steps(shape.size());std::size_t step=1;
     for(auto axis=shape.size();axis-->0;){steps[axis]=step;step*=shape[axis];}
     const auto threads=skimagexx::detail::active_workers(count);
     const auto width=shape.empty() ? std::size_t{1}:shape.back();
-    const auto inner=shape.empty() ? std::ptrdiff_t{0}:strides.back();
+    const auto inner=shape.empty() ? std::ptrdiff_t{0}:strides[shape.size()-1];
     // Calculate coordinates once per inner-axis span. The pixel loop only
     // loads/stores raw words; contiguous and broadcast spans use bulk copies.
     skimagexx::detail::partition(count,threads,[&](std::size_t begin,std::size_t end,std::size_t) {
@@ -61,7 +64,7 @@ template<std::size_t Bytes> void copy_layout(const void* source,void* destinatio
     });
 }
 void copy_native(const void* source,void* destination,std::size_t count,std::size_t bytes,
-                 const std::vector<std::size_t>& shape,const std::vector<std::ptrdiff_t>& strides,
+                 const std::vector<std::size_t>& shape,const std::ptrdiff_t* strides,
                  bool swap,bool contiguous) {
     if(!count)return;
     if(contiguous && !swap){std::memcpy(destination,source,count*bytes);return;}
@@ -83,21 +86,24 @@ void bind_resample(py::module_& module) {
     module.def("resize_half_identity",[minimum,maximum,fmin,fmax](py::array image,bool clip,int policy)->py::tuple {
         if(image.dtype().kind()!='f' || image.itemsize()!=2)throw py::type_error("binary16 identity input required");
         if(policy<0 || policy>1)throw py::value_error("invalid half clip policy");
-        std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;std::vector<std::ptrdiff_t> strides;
-        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
-            shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
+        const bool swap=!bindings::is_native_byteorder(image),contiguous=bool(image.flags()&py::array::c_style);
+        std::vector<std::size_t> shape;
+        std::vector<std::ptrdiff_t> strides;
+        if(!contiguous) {
+            shape.assign(image.shape(),image.shape()+image.ndim());
+            strides.assign(image.strides(),image.strides()+image.ndim());
         }
-        const bool swap=!image.dtype().attr("isnative").cast<bool>(),contiguous=bool(image.flags()&py::array::c_style);
-        const py::dtype dtype("float16");py::array result(dtype,dimensions);
+        const py::dtype dtype("float16");
+        auto result=bindings::empty_c_array(dtype,image.shape(),int(image.ndim()));
         const auto count=std::size_t(image.size());
         {
             py::gil_scoped_release release;
             if(contiguous)skimagexx::detail::half_copy_into(image.data(),static_cast<std::uint16_t*>(result.mutable_data()),count,swap);
-            else copy_native(image.data(),result.mutable_data(),count,2,shape,strides,swap,false);
+            else copy_native(image.data(),result.mutable_data(),count,2,shape,strides.data(),swap,false);
         }
         if(!clip)return py::make_tuple(result,py::none(),py::none(),false,false,false);
         if(!count)throw py::value_error("zero-size array to reduction operation minimum which has no identity");
-        py::array lower(dtype,std::vector<py::ssize_t>{}),upper(dtype,std::vector<py::ssize_t>{});
+        auto lower=bindings::empty_c_array(dtype,nullptr,0),upper=bindings::empty_c_array(dtype,nullptr,0);
         skimagexx::detail::ResizeRangeInfo info;
         {
             py::gil_scoped_release release;
@@ -122,20 +128,22 @@ void bind_resample(py::module_& module) {
         const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
         if(!image.size())throw py::value_error("zero-size array to reduction operation minimum which has no identity");
         const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
-        std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;std::vector<std::ptrdiff_t> strides;
-        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
-            shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
-        }
         const auto itemsize=std::size_t(image.itemsize());
-        const bool swap=!image.dtype().attr("isnative").cast<bool>() && itemsize>1;
+        const bool swap=itemsize>1 && !bindings::is_native_byteorder(image);
         const bool contiguous=bool(image.flags()&(py::array::c_style|py::array::f_style));
-        const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
-        py::array normalized=copy ? py::array(dtype,dimensions) : image;
-        py::array lower(dtype,std::vector<py::ssize_t>{}),upper(dtype,std::vector<py::ssize_t>{});
+        const bool copy=swap || !contiguous || !bindings::is_aligned(image);
+        std::vector<std::size_t> shape;
+        std::vector<std::ptrdiff_t> strides;
+        if(!contiguous || swap) {
+            shape.assign(image.shape(),image.shape()+image.ndim());
+            strides.assign(image.strides(),image.strides()+image.ndim());
+        }
+        auto normalized=copy ? bindings::empty_c_array(dtype,image.shape(),int(image.ndim())) : image;
+        auto lower=bindings::empty_c_array(dtype,nullptr,0),upper=bindings::empty_c_array(dtype,nullptr,0);
         skimagexx::detail::ResizeRangeInfo info;
         {
             py::gil_scoped_release release;
-            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides,swap,contiguous);
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides.data(),swap,contiguous);
             info=skimagexx::detail::resize_range_into(normalized.data(),std::size_t(image.size()),type,lower.mutable_data(),upper.mutable_data());
         }
         bool ambiguous=!info.has_value;
@@ -151,10 +159,10 @@ void bind_resample(py::module_& module) {
     });
     module.def("resize_clip",[](py::array image,py::array lower,py::array upper,int policy) {
         const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
-        if(!(image.flags()&py::array::c_style) || !image.writeable() || !image.dtype().attr("isnative").cast<bool>() ||
-           !image.attr("flags").attr("aligned").cast<bool>())throw py::value_error("writable native aligned C-order clip image required");
+        if(!(image.flags()&py::array::c_style) || !image.writeable() || !bindings::is_native_byteorder(image) ||
+           !bindings::is_aligned(image))throw py::value_error("writable native aligned C-order clip image required");
         for(const auto& bound:{lower,upper})
-            if(bound.size()!=1 || !bound.dtype().attr("isnative").cast<bool>() ||
+            if(bound.size()!=1 || !bindings::is_native_byteorder(bound) ||
                skimagexx::bindings::real_pixel_type(bound.dtype())!=type)throw py::type_error("one same-dtype native scalar per clip bound required");
         switch(type) {
             case skimagexx::PixelType::boolean:clip_python<std::uint8_t>(image,lower,upper,type,policy);break;
@@ -172,10 +180,13 @@ void bind_resample(py::module_& module) {
         const auto type=skimagexx::bindings::real_pixel_type(image.dtype());
         if(axes.size()!=std::size_t(kernels.size()) || modes.size()!=axes.size())throw py::value_error("one Gaussian kernel and mode per axis required");
         const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
-        std::vector<std::size_t> shape;std::vector<py::ssize_t> dimensions;std::vector<std::ptrdiff_t> strides;
-        for(py::ssize_t axis=0;axis<image.ndim();++axis) {
-            shape.push_back(std::size_t(image.shape(axis)));dimensions.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
-        }
+        const auto rank=std::size_t(image.ndim());
+        // Pin the descriptor values before converting the Python kernel objects.
+        py::ssize_t dimensions[bindings::numpy_max_rank];
+        std::ptrdiff_t strides[bindings::numpy_max_rank];
+        std::copy_n(image.shape(),rank,dimensions);
+        std::copy_n(image.strides(),rank,strides);
+        const std::vector<std::size_t> shape(dimensions,dimensions+rank);
         std::vector<skimagexx::GaussianPass> passes;
         for(std::size_t j=0;j<axes.size();++j) {
             auto weights=py::array_t<double,py::array::c_style|py::array::forcecast>::ensure(kernels[j]);
@@ -184,11 +195,11 @@ void bind_resample(py::module_& module) {
             pass.weights.assign(weights.data(),weights.data()+weights.size());passes.push_back(std::move(pass));
         }
         const auto itemsize=std::size_t(image.itemsize());
-        const bool swap=!image.dtype().attr("isnative").cast<bool>() && itemsize>1;
+        const bool swap=itemsize>1 && !bindings::is_native_byteorder(image);
         const bool contiguous=bool(image.flags()&py::array::c_style);
-        const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
-        py::array normalized=copy ? py::array(dtype,dimensions) : image;
-        py::array result(dtype,dimensions);
+        const bool copy=swap || !contiguous || !bindings::is_aligned(image);
+        auto normalized=copy ? bindings::empty_c_array(dtype,dimensions,int(rank)) : image;
+        auto result=bindings::empty_c_array(dtype,dimensions,int(rank));
         {
             py::gil_scoped_release release;
             if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides,swap,contiguous);
@@ -203,13 +214,13 @@ void bind_resample(py::module_& module) {
         if(dimensions.size()!=std::size_t(image.ndim()))throw py::value_error("matching zoom ranks required");
         auto input=py::array_t<double,py::array::c_style|py::array::forcecast>::ensure(image);
         if(!input)throw py::type_error("float64 zoom input required");
-        if(!input.attr("flags").attr("aligned").cast<bool>())input=input.attr("copy")().cast<decltype(input)>();
+        if(!bindings::is_aligned(input))input=bindings::copy_array(input);
         std::vector<std::size_t> shape,target;
         for(py::ssize_t axis=0;axis<input.ndim();++axis) {
             if(dimensions[std::size_t(axis)]<0)throw py::value_error("negative zoom dimension");
             shape.push_back(std::size_t(input.shape(axis)));target.push_back(std::size_t(dimensions[std::size_t(axis)]));
         }
-        py::array_t<double> result(dimensions);
+        auto result=bindings::empty_c_array<double>(dimensions.data(),int(dimensions.size()));
         skimagexx::detail::ZoomOptions options;
         options.order=order;options.border=static_cast<skimagexx::GaussianBorder>(border);options.cval=cval;
         options.legacy_reflect=legacy;options.identity_copy=identity;options.allow_simd=simd;
@@ -222,24 +233,24 @@ void bind_resample(py::module_& module) {
         if(image.ndim()<1 || dimensions.size()!=std::size_t(image.ndim()))throw py::value_error("matching nonzero zoom ranks required");
         const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
         std::vector<std::size_t> shape,target;
-        std::vector<py::ssize_t> source_shape;std::vector<std::ptrdiff_t> strides;
         for(py::ssize_t axis=0;axis<image.ndim();++axis) {
             if(dimensions[std::size_t(axis)]<0)throw py::value_error("negative zoom dimension");
             shape.push_back(std::size_t(image.shape(axis)));target.push_back(std::size_t(dimensions[std::size_t(axis)]));
-            source_shape.push_back(image.shape(axis));strides.push_back(std::ptrdiff_t(image.strides(axis)));
         }
         const auto itemsize=std::size_t(image.itemsize());
-        const bool swap=!image.dtype().attr("isnative").cast<bool>() && itemsize>1;
+        const bool swap=itemsize>1 && !bindings::is_native_byteorder(image);
         const bool contiguous=bool(image.flags()&py::array::c_style);
-        const bool copy=swap || !contiguous || !image.attr("flags").attr("aligned").cast<bool>();
-        py::array normalized=copy ? py::array(dtype,source_shape) : image;
-        py::array result(dtype,dimensions);
+        const bool copy=swap || !contiguous || !bindings::is_aligned(image);
+        std::vector<std::ptrdiff_t> strides;
+        if(!contiguous || swap)strides.assign(image.strides(),image.strides()+image.ndim());
+        auto normalized=copy ? bindings::empty_c_array(dtype,image.shape(),int(image.ndim())) : image;
+        auto result=bindings::empty_c_array(dtype,dimensions.data(),int(dimensions.size()));
         skimagexx::detail::ZoomOptions options;
         options.order=order;options.border=static_cast<skimagexx::GaussianBorder>(border);options.cval=cval;
         options.legacy_reflect=legacy;options.identity_copy=identity;options.allow_simd=simd;
         {
             py::gil_scoped_release release;
-            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides,swap,contiguous);
+            if(copy)copy_native(image.data(),normalized.mutable_data(),std::size_t(image.size()),itemsize,shape,strides.data(),swap,contiguous);
             skimagexx::detail::zoom_typed_into(normalized.data(),result.mutable_data(),type,shape,target,options);
         }
         return result;

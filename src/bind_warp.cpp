@@ -14,7 +14,7 @@ namespace {
 bool is_dtype(const py::dtype& dtype, const py::dtype& expected) {
     return dtype.is(expected) ||
            (dtype.char_() == expected.char_() && dtype.equal(expected) &&
-            dtype.attr("isnative").cast<bool>());
+            bindings::is_native_byteorder(dtype));
 }
 
 py::object sample(const py::array& image, std::array<py::ssize_t, 2> dimensions,

@@ -1,6 +1,7 @@
 #include "skimagexx/graph_paths.hpp"
 
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 #include <pybind11/stl.h>
 
 #include <algorithm>
@@ -50,7 +51,7 @@ void check_indices(const graph::Shape& indices, graph::Index size) {
 py::object solve(const graph::Grid& grid, const Flat<double>& costs, const graph::Shape& starts,
            const graph::Shape& ends, int mode, bool all_ends, bool use_ends, std::ptrdiff_t max_visits,
            double max_step, Flat<double>& distance, Flat<graph::Offset>& predecessor,
-           const py::tuple& callbacks, graph::Shape pending) {
+           const py::tuple& callbacks, graph::Shape pending, const py::module_& numpy) {
     check_flat(costs, grid.size());
     check_flat(distance, grid.size());
     check_flat(predecessor, grid.size());
@@ -128,7 +129,7 @@ py::object solve(const graph::Grid& grid, const Flat<double>& costs, const graph
     }
     py::object numpy_index;
     if (!connect.is_none()) {
-        numpy_index = py::module_::import("numpy").attr("intp");
+        numpy_index = numpy.attr("intp");
         hooks.connect = [&](graph::Index first, graph::Index second, graph::Index node,
                             graph::Index next, double cost, double next_cost) {
             auto connection_point = [&](graph::Index position) {
@@ -189,7 +190,8 @@ py::object shortest(const Flat<double>& costs, const graph::Shape& shape, int re
     }
     if (output_indexlist) return py::make_tuple(points(grid, result.first), result.second);
     const auto dimensions = static_cast<py::ssize_t>(shape.size()) - 1;
-    py::array_t<py::ssize_t> path({static_cast<py::ssize_t>(result.first.size()), dimensions});
+    const py::ssize_t output_shape[]{static_cast<py::ssize_t>(result.first.size()), dimensions};
+    auto path = skimagexx::bindings::empty_c_array<py::ssize_t>(output_shape);
     auto* out = path.mutable_data();
     for (const auto node : result.first) {
         auto coordinates = grid.coordinates(node);
@@ -227,9 +229,16 @@ py::tuple pixel(const graph::Shape& shape, const py::object& mask, graph::Offset
 } // namespace
 
 void bind_graph_paths(py::module_& module) {
+    const auto numpy = py::module_::import("numpy");
     py::class_<graph::Grid>(module, "GraphPathsGrid")
         .def(py::init<graph::Shape, graph::Offsets, std::vector<double>, bool>())
-        .def("solve", &solve, py::arg("costs").noconvert(), py::arg("starts"), py::arg("ends"),
+        .def("solve", [numpy](const graph::Grid& grid, const Flat<double>& costs,
+             const graph::Shape& starts, const graph::Shape& ends, int mode, bool all_ends,
+             bool use_ends, std::ptrdiff_t max_visits, double max_step, Flat<double>& distance,
+             Flat<graph::Offset>& predecessor, const py::tuple& callbacks, graph::Shape pending) {
+                return solve(grid, costs, starts, ends, mode, all_ends, use_ends, max_visits,
+                             max_step, distance, predecessor, callbacks, std::move(pending), numpy);
+             }, py::arg("costs").noconvert(), py::arg("starts"), py::arg("ends"),
              py::arg("mode"), py::arg("all_ends"), py::arg("use_ends"), py::arg("max_visits"),
              py::arg("max_step"), py::arg("distance").noconvert(), py::arg("predecessor").noconvert(),
              py::arg("callbacks"), py::arg("pending"))
