@@ -4,6 +4,7 @@
 #include "structure_tensor_detail.hpp"
 #include "execution.hpp"
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstring>
 #include <limits>
@@ -52,109 +53,180 @@ template<class T> void gradient(const T* input,T* output,std::size_t count,std::
   }
  });
 }
-template<class T> void convolve(const T* input,T* output,std::size_t count,const std::vector<std::size_t>& shape,const HessianPass& plan,int workers){
- const auto& p=plan.filter;const auto original_radius=p.weights.size()/2,length=shape[p.axis];
- // ndimage chooses its symmetric arithmetic before antisymmetric arithmetic.
- // Tiny derivative kernels can satisfy both tests within double epsilon.
- bool derivative=plan.derivative;
- if(derivative){derivative=false;for(std::size_t j=0;j<original_radius;++j)
-  if(std::abs(p.weights[j]-p.weights[p.weights.size()-1-j])>std::numeric_limits<double>::epsilon()){derivative=true;break;}}
+bool antisymmetric(const HessianPass& plan){
+ if(!plan.derivative)return false;
+ const auto& w=plan.filter.weights;
+ for(std::size_t j=0;j<w.size()/2;++j)
+  if(std::abs(w[j]-w[w.size()-1-j])>std::numeric_limits<double>::epsilon())return true;
+ return false;
+}
 
- std::size_t first=0;while(first<original_radius && p.weights[first]==0.)++first;
- const auto radius=original_radius-first;const auto* weights=p.weights.data()+first;std::size_t stride=1;
+std::size_t zero_prefix(const std::vector<double>& weights){
+ std::size_t first=0;
+ while(first<weights.size()/2 && weights[first]==0.)++first;
+ return first;
+}
+
+template<class T,class Samples>
+void convolve_point(double center,T& output,T* derivative_output,const simd::HessianKernel& kernel,const Samples& samples){
+ const auto radius=kernel.radius;
+ double sum=center*kernel.weights[radius],derivative_sum=0.;
+ if(derivative_output)derivative_sum=center*kernel.derivative_weights[radius];
+ for(std::size_t j=0;j<radius;++j){
+  const auto [a,b]=samples(j);
+  if(j>=kernel.smooth_start)sum+=(kernel.derivative ? a-b : a+b)*kernel.weights[j];
+  if(derivative_output && j>=kernel.derivative_start)derivative_sum+=(a-b)*kernel.derivative_weights[j];
+ }
+ output=T(sum);
+ if(derivative_output)*derivative_output=T(derivative_sum);
+}
+
+template<class T> void convolve(const T* input,T* output,std::size_t count,const std::vector<std::size_t>& shape,
+ const HessianPass& plan,int workers,T* derivative_output=nullptr,const HessianPass* derivative_plan=nullptr){
+ const auto& p=plan.filter;
+ const auto original_radius=p.weights.size()/2,length=shape[p.axis];
+ const auto* derivative_weights=derivative_plan ? &derivative_plan->filter.weights : nullptr;
+ const auto first=zero_prefix(p.weights),derivative_first=derivative_weights ? zero_prefix(*derivative_weights) : first;
+ const auto trim=std::min(first,derivative_first);
+ const simd::HessianKernel full{p.weights.data(),derivative_weights ? derivative_weights->data() : nullptr,
+  original_radius,0,0,antisymmetric(plan)};
+ const simd::HessianKernel kernel{full.weights+trim,full.derivative_weights ? full.derivative_weights+trim : nullptr,
+  original_radius-trim,first-trim,derivative_first-trim,full.derivative};
+ const auto radius=kernel.radius;
+ const auto smooth_full=simd::HessianKernel{full.weights,nullptr,original_radius,0,0,full.derivative};
+ const auto derivative_full=simd::HessianKernel{full.derivative_weights,nullptr,original_radius,0,0,true};
+ // Skipping exact-zero tails can only affect a cropped negative zero.
+ // Recompute that cold case with each filter's original ordered taps.
+ auto repair=[&](double center,T& value,T* derivative_value,const auto& samples){
+  if(first && value==T(0) && std::signbit(value))
+   convolve_point(center,value,static_cast<T*>(nullptr),smooth_full,samples);
+  if(derivative_value && derivative_first && *derivative_value==T(0) && std::signbit(*derivative_value))
+   convolve_point(center,*derivative_value,static_cast<T*>(nullptr),derivative_full,samples);
+ };
+
+ std::size_t stride=1;
  for(std::size_t axis=p.axis+1;axis<shape.size();++axis)stride*=shape[axis];
 #ifdef SKIMAGEXX_AVX2
  const bool use_simd=has_avx2();
+ constexpr bool single=std::is_same_v<T,float>;
 #endif
- // Pad a contiguous last-axis line once, retaining double cval precision even
- // for float32 inputs. Every output pixel can then use the SIMD dot product.
+ // Keep the padded cval in double precision even for float32 images.
  if(stride==1){
-  std::vector<std::pair<std::ptrdiff_t,std::ptrdiff_t>> border(original_radius);
+  std::vector<simd::HessianTap> border(original_radius);
   for(std::size_t j=0;j<original_radius;++j){
    border[j]={mapped(std::ptrdiff_t(j)-std::ptrdiff_t(original_radius),length,p.border),
        mapped(std::ptrdiff_t(length)+std::ptrdiff_t(j),length,p.border)};
   }
   detail::partition(count/length,workers,[&](auto row_begin,auto row_end,auto){
    std::vector<double> padded(length+2*original_radius);
-   std::vector<const void*> left(radius),right(radius);
-   for(std::size_t j=0;j<radius;++j){left[j]=padded.data()+original_radius-radius+j;right[j]=padded.data()+original_radius+radius-j;}
-   for(auto row=row_begin;row<row_end;++row){const auto* from=input+row*length;auto* target=output+row*length;
-    if(row>row_begin && std::memcmp(from,from-length,length*sizeof(T))==0){std::copy_n(target-length,length,target);continue;}
-    std::copy_n(from,length,padded.data()+original_radius);
+   for(auto row=row_begin;row<row_end;++row){
+    const auto* from=input+row*length;
+    auto* target=output+row*length;
+    auto* derivative_target=derivative_output ? derivative_output+row*length : nullptr;
+    if(row>row_begin && std::memcmp(from,from-length,length*sizeof(T))==0){
+     std::copy_n(target-length,length,target);
+     if(derivative_target)std::copy_n(derivative_target-length,length,derivative_target);
+     continue;
+    }
+    auto* center=padded.data()+original_radius;
+    std::copy_n(from,length,center);
     for(std::size_t j=0;j<original_radius;++j){
      const auto [lo,hi]=border[j];
      padded[j]=lo<0 ? p.cval : double(from[std::size_t(lo)]);
-     padded[original_radius+length+j]=hi<0 ? p.cval : double(from[std::size_t(hi)]);
+     center[length+j]=hi<0 ? p.cval : double(from[std::size_t(hi)]);
     }
     std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-    if(use_simd)done=simd::hessian_convolve(left.data(),right.data(),padded.data()+original_radius,target,length,radius,weights,derivative,p.cval,false,std::is_same_v<T,float>);
+    if(use_simd)done=simd::hessian_convolve_direct(center,target,derivative_target,length,1,kernel,false,single);
 #endif
-    for(;done<length;++done){double sum=padded[original_radius+done]*weights[radius];
-     for(std::size_t j=0;j<radius;++j){const auto a=padded[original_radius+done-radius+j],b=padded[original_radius+done+radius-j];sum+=(derivative ? a-b : a+b)*weights[j];}
-     target[done]=T(sum);
+    for(;done<length;++done){
+     const auto samples=[&](std::size_t j){return std::pair{padded[original_radius+done+j-radius],center[done+radius-j]};};
+     convolve_point(center[done],target[done],derivative_target ? derivative_target+done : nullptr,kernel,samples);
     }
-    if(first)for(std::size_t x=0;x<length;++x)if(target[x]==T(0) && std::signbit(target[x])){
-     double sum=padded[original_radius+x]*p.weights[original_radius];
-     for(std::size_t j=0;j<original_radius;++j){const auto a=padded[x+j],b=padded[2*original_radius+x-j];sum+=(derivative ? a-b : a+b)*p.weights[j];}
-     target[x]=T(sum);
+    if(first || (derivative_target && derivative_first))for(std::size_t x=0;x<length;++x){
+     const auto samples=[&](std::size_t j){return std::pair{padded[x+j],padded[2*original_radius+x-j]};};
+     repair(center[x],target[x],derivative_target ? derivative_target+x : nullptr,samples);
     }
    }
-  });return;
+  });
+  return;
  }
- // Identical inner blocks have identical ordered results. Compute one value
- // per block, including the original zero tails, then copy its exact bits.
- if(stride>1){
-  bool repeated=true;const auto blocks=count/stride;
-  for(std::size_t block=0;block<blocks;++block)
-   if(std::memcmp(input+block*stride,input+block*stride+1,(stride-1)*sizeof(T))){repeated=false;break;}
-  if(repeated){
-   detail::partition(blocks,workers,[&](auto begin,auto end,auto){
-    for(auto position=begin;position<end;++position){const auto x=position%length,base=(position/length)*length;
-     double sum=double(input[position*stride])*p.weights[original_radius];
-     for(std::size_t j=0;j<original_radius;++j){const auto distance=std::ptrdiff_t(original_radius-j);
-      const auto lo=mapped(std::ptrdiff_t(x)-distance,length,p.border),hi=mapped(std::ptrdiff_t(x)+distance,length,p.border);
-      const auto a=lo<0 ? p.cval : double(input[(base+std::size_t(lo))*stride]),b=hi<0 ? p.cval : double(input[(base+std::size_t(hi))*stride]);
-      sum+=(derivative ? a-b : a+b)*p.weights[j];
-     }std::fill_n(output+position*stride,stride,T(sum));
-    }
-   });return;
-  }
+
+ const auto blocks=count/stride;
+ const auto row_bytes=(stride-1)*sizeof(T);
+ // Typical images differ immediately in the first row.
+ bool repeated=std::memcmp(input,input+1,row_bytes)==0;
+ for(std::size_t block=1;repeated && block<blocks;++block){
+  const auto* row=input+block*stride;
+  repeated=std::memcmp(row,row+1,row_bytes)==0;
  }
+ const auto offsets=[&](std::size_t x,std::size_t distance){
+  const auto d=std::ptrdiff_t(distance);
+  const auto lo=mapped(std::ptrdiff_t(x)-d,length,p.border),hi=mapped(std::ptrdiff_t(x)+d,length,p.border);
+  return simd::HessianTap{lo<0 ? -1 : lo*std::ptrdiff_t(stride),hi<0 ? -1 : hi*std::ptrdiff_t(stride)};
+ };
+ const auto sample=[&](const T* base,simd::HessianTap tap){
+  return std::pair{tap.left<0 ? p.cval : double(base[tap.left]),tap.right<0 ? p.cval : double(base[tap.right])};
+ };
+ if(repeated){
+  detail::partition(blocks,workers,[&](auto begin,auto end,auto){
+   for(auto position=begin;position<end;++position){
+    const auto x=position%length;
+    const auto* base=input+(position-x)*stride;
+    const auto samples=[&](std::size_t j){return sample(base,offsets(x,original_radius-j));};
+    T value,derivative_value;
+    convolve_point(double(input[position*stride]),value,derivative_output ? &derivative_value : nullptr,full,samples);
+    std::fill_n(output+position*stride,stride,value);
+    if(derivative_output)std::fill_n(derivative_output+position*stride,stride,derivative_value);
+   }
+  });
+  return;
+ }
+
  detail::partition(count,workers,[&](auto begin,auto end,auto){
-  std::vector<const void*> left(radius),right(radius);
-  while(begin<end){const auto coordinate=begin/stride%length,inner=begin%stride,block=begin-coordinate*stride-inner;
-   auto stop=std::min(end,begin+stride-inner);
-   for(std::size_t j=0;j<radius;++j){const auto distance=std::ptrdiff_t(radius-j);
-    const auto lo=mapped(std::ptrdiff_t(coordinate)-distance,length,p.border),hi=mapped(std::ptrdiff_t(coordinate)+distance,length,p.border);
-    left[j]=lo<0 ? nullptr : input+block+std::size_t(lo)*stride+inner;
-    right[j]=hi<0 ? nullptr : input+block+std::size_t(hi)*stride+inner;
-   }
+  std::vector<simd::HessianTap> taps(radius);
+  while(begin<end){
+   const auto x=begin/stride%length,inner=begin%stride,base_index=begin-x*stride;
+   const auto* base=input+base_index;
+   const auto stop=std::min(end,begin+stride-inner);
+   const bool interior=radius<=x && radius<length-x;
+   if(!interior)for(std::size_t j=0;j<radius;++j)taps[j]=offsets(x,radius-j);
+   auto* derivative_target=derivative_output ? derivative_output+begin : nullptr;
    std::size_t done=0;
 #ifdef SKIMAGEXX_AVX2
-   if(use_simd)done=simd::hessian_convolve(left.data(),right.data(),input+begin,output+begin,stop-begin,radius,weights,derivative,p.cval,std::is_same_v<T,float>,std::is_same_v<T,float>);
-#endif
-   for(;done<stop-begin;++done){double sum=double(input[begin+done])*weights[radius];
-    for(std::size_t j=0;j<radius;++j){const auto a=left[j] ? double(static_cast<const T*>(left[j])[done]) : p.cval,b=right[j] ? double(static_cast<const T*>(right[j])[done]) : p.cval;
-     sum+=(derivative ? a-b : a+b)*weights[j];}
-    output[begin+done]=T(sum);
+   if(use_simd){
+    if(interior)done=simd::hessian_convolve_direct(input+begin,output+begin,derivative_target,stop-begin,stride,kernel,single,single);
+    else done=simd::hessian_convolve_indexed(base,input+begin,output+begin,derivative_target,stop-begin,
+      taps.data(),kernel,p.cval,p.border==GaussianBorder::constant,single);
    }
-   // Exactly zero tails cannot change finite nonzero sums. They can change a
-   // negative zero into positive zero. Repair only that cold output case with
-   // the original ordered pass, preserving ndimage's signed-zero behavior.
-   if(first)for(auto position=begin;position<stop;++position)if(output[position]==T(0) && std::signbit(output[position])){
-    const auto x=position/stride%length,k=position%stride,base=position-x*stride-k;
-    double sum=double(input[position])*p.weights[original_radius];
-    for(std::size_t j=0;j<original_radius;++j){const auto distance=std::ptrdiff_t(original_radius-j);
-     const auto lo=mapped(std::ptrdiff_t(x)-distance,length,p.border),hi=mapped(std::ptrdiff_t(x)+distance,length,p.border);
-     const auto a=lo<0 ? p.cval : double(input[base+std::size_t(lo)*stride+k]),b=hi<0 ? p.cval : double(input[base+std::size_t(hi)*stride+k]);
-     sum+=(derivative ? a-b : a+b)*p.weights[j];
-    }output[position]=T(sum);
+#endif
+   for(;done<stop-begin;++done){
+    const auto* point=input+begin+done;
+    const auto samples=[&](std::size_t j){
+     if(!interior)return sample(base+done,taps[j]);
+     const auto distance=(radius-j)*stride;
+     return std::pair{double(*(point-distance)),double(*(point+distance))};
+    };
+    convolve_point(double(*point),output[begin+done],derivative_target ? derivative_target+done : nullptr,kernel,samples);
+   }
+   if(first || (derivative_target && derivative_first))for(auto position=begin;position<stop;++position){
+    const auto samples=[&](std::size_t j){return sample(base+(position-begin),offsets(x,original_radius-j));};
+    repair(double(input[position]),output[position],derivative_output ? derivative_output+position : nullptr,samples);
    }
    begin=stop;
   }
  });
 }
+
+bool can_pair(const std::vector<HessianPass>& a,const std::vector<HessianPass>& b){
+ if(a.empty() || b.empty() || a.front().derivative==b.front().derivative)return false;
+ const auto& x=a.front().filter;
+ const auto& y=b.front().filter;
+ return x.axis==y.axis && x.weights.size()==y.weights.size() && x.border==y.border &&
+  (x.border!=GaussianBorder::constant || std::memcmp(&x.cval,&y.cval,sizeof(double))==0) &&
+  antisymmetric(a.front().derivative ? a.front() : b.front());
+}
+
 constexpr double bounded_input_limit=4294967296.0; // 2^32
 template<class T> bool execute(const void* input,PixelType source,void* const* output,const std::vector<std::size_t>& shape,const std::vector<std::vector<HessianPass>>& plans,bool gaussian,bool xy,std::size_t count,bool bounded_plan){
  constexpr bool single=std::is_same_v<T,float>;const auto type=single ? PixelType::float32 : PixelType::float64;
@@ -186,18 +258,67 @@ template<class T> bool execute(const void* input,PixelType source,void* const* o
    convolve(current,target,count,shape,passes[i],workers);if(!bounded && !finite(target,count))return false;current=target;
   }return true;
  };
- if(gaussian){for(std::size_t axis=0;axis<n;++axis)if(!filter(prepared,derivatives+axis*count,plans[axis]))return false;}
+ auto filter_pair=[&](const T* from,T* to_a,T* to_b,const auto& a,const auto& b){
+  auto* first_a=a.size()%2 ? to_a : scratch;
+  auto* first_b=b.size()%2 ? to_b : other;
+  if(a.front().derivative)convolve(from,first_b,count,shape,b.front(),workers,first_a,&a.front());
+  else convolve(from,first_a,count,shape,a.front(),workers,first_b,&b.front());
+  if(!bounded && (!finite(first_a,count) || !finite(first_b,count)))return false;
+  // Each chain has its own temporary buffer. Alternate with its eventual
+  // output so the remaining passes leave the other intermediate intact.
+  auto finish=[&](T* current,T* target,T* temporary,const auto& passes){
+   for(std::size_t i=1;i<passes.size();++i){
+    auto* next=current==target ? temporary : target;
+    convolve(current,next,count,shape,passes[i],workers);
+    if(!bounded && !finite(next,count))return false;
+    current=next;
+   }
+   return true;
+  };
+  return finish(first_a,to_a,scratch,a) && finish(first_b,to_b,other,b);
+ };
+ auto filter_group=[&](const T* from,std::size_t begin,auto axis_for,auto target_for){
+  std::array<bool,5> ready{};
+  for(auto i=begin;i<n;++i){
+   if(ready[i])continue;
+   const auto& a=plans[axis_for(i)];
+   auto j=i+1;
+   while(j<n && (ready[j] || !can_pair(a,plans[axis_for(j)])))++j;
+   if(j==n){
+    if(!filter(from,target_for(i),a))return false;
+   }else{
+    if(!filter_pair(from,target_for(i),target_for(j),a,plans[axis_for(j)]))return false;
+    ready[j]=true;
+   }
+  }
+  return true;
+ };
+ if(gaussian){
+  if(!filter_group(prepared,0,[](auto i){return i;},[&](auto i){return derivatives+i*count;}))return false;
+ }
  else{
   std::vector<GaussianPass> smoothing;for(const auto& pass:plans[0])smoothing.push_back(pass.filter);
   gaussian_nd_into(prepared,other,type,type,shape,smoothing,true);
   if(!finite(other,count))return false;
   std::size_t stride=count;for(std::size_t axis=0;axis<n;++axis){stride/=shape[axis];gradient(other,derivatives+axis*count,count,shape[axis],stride,workers);}
  }
- std::size_t field=0;for(std::size_t r=0;r<n;++r)for(std::size_t c=r;c<n;++c){
-  const auto first=xy ? n-1-r : r,second=xy ? n-1-c : c;auto* target=static_cast<T*>(output[field++]);
-  if(gaussian){if(!filter(derivatives+first*count,target,plans[second]))return false;}
-  else{std::size_t stride=1;for(std::size_t a=second+1;a<n;++a)stride*=shape[a];gradient(derivatives+first*count,target,count,shape[second],stride,workers);if(!finite(target,count))return false;}
- }return true;
+ std::size_t field=0;
+ for(std::size_t r=0;r<n;++r){
+  const auto axis_for=[&](auto i){return xy ? n-1-i : i;};
+  const auto target_for=[&](auto c){return static_cast<T*>(output[field+c-r]);};
+  const auto* from=derivatives+axis_for(r)*count;
+  if(gaussian){
+   if(!filter_group(from,r,axis_for,target_for))return false;
+  }else for(auto c=r;c<n;++c){
+   const auto second=axis_for(c);
+   std::size_t stride=1;for(std::size_t a=second+1;a<n;++a)stride*=shape[a];
+   auto* target=target_for(c);
+   gradient(from,target,count,shape[second],stride,workers);
+   if(!finite(target,count))return false;
+  }
+  field+=n-r;
+ }
+ return true;
 }
 }}
 namespace skimagexx {

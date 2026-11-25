@@ -101,12 +101,18 @@ template<class T> py::object run(const py::array& image, const py::array& out,
     const auto count = static_cast<std::size_t>(out.size());
     // Uninitialized aux storage is completely overwritten by the kernel's
     // copy-before-reset stage. No Python allocation provider is substituted.
-    std::unique_ptr<T[]> dx(new T[count]), dy(new T[count]), bx(new T[count]), by(new T[count]);
+    if (count > std::size_t(PY_SSIZE_T_MAX) / sizeof(T) / 4)
+        throw std::overflow_error("TV Bregman auxiliary workspace size overflow");
+    std::unique_ptr<T[]> aux(new T[4 * count]);
+    T* const dx = aux.get();
+    T* const dy = dx + count;
+    T* const bx = dy + count;
+    T* const by = bx + count;
     std::vector<skimagexx::TvBregmanTrace> trace;
     if (tracing && maximum > 0) trace.resize(static_cast<std::size_t>(maximum));
     skimagexx::TvBregmanImage input{image.data(), sizeof(T) == 4 ? skimagexx::TvBregmanType::float32 : skimagexx::TvBregmanType::float64,
         rows, cols, channels, static_cast<std::size_t>(image.size())};
-    skimagexx::TvBregmanWorkspace workspace{{const_cast<void*>(out.data()),count},{dx.get(),count},{dy.get(),count},{bx.get(),count},{by.get(),count}};
+    skimagexx::TvBregmanWorkspace workspace{{const_cast<void*>(out.data()),count},{dx,count},{dy,count},{bx,count},{by,count}};
     skimagexx::TvBregmanParameters params{weight,maximum,eps,isotropic};
     skimagexx::TvBregmanResult result;
     {

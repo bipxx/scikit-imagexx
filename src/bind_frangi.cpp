@@ -14,6 +14,9 @@
 #include <atomic>
 namespace py=pybind11;
 namespace {
+PyArrayObject* numpy_array(const py::array& array){
+ return reinterpret_cast<PyArrayObject*>(array.ptr());
+}
 struct NumpyFrangiFloatExp {
  py::object owner;
  PyUFuncGenericFunction function=nullptr;void* data=nullptr;
@@ -123,15 +126,15 @@ void bind_frangi(py::module_& module){
  module.def("frangi_accumulate",[eigen,exponential,float_exponential](py::list fields,py::object previous,py::dtype dtype,double alpha_den,double beta_den,py::object gamma_den,bool alpha_single,bool beta_single,bool gamma_single,bool gamma_compute_single)->py::object{
   std::vector<py::array> storage;std::vector<const void*> data;std::vector<py::ssize_t> shape;py::dtype field_dtype;
   for(auto entry:fields){auto a=py::array::ensure(entry,py::array::c_style);
-   if(!a || !a.dtype().attr("isnative").cast<bool>() || a.dtype().kind()!='f' || (a.itemsize()!=4 && a.itemsize()!=8) || a.ndim()<2 || a.ndim()>3)throw py::value_error("native Frangi Hessian fields required");
+   if(!a || !PyArray_ISNOTSWAPPED(numpy_array(a)) || a.dtype().kind()!='f' || (a.itemsize()!=4 && a.itemsize()!=8) || a.ndim()<2 || a.ndim()>3)throw py::value_error("native Frangi Hessian fields required");
    if(storage.empty()){shape.assign(a.shape(),a.shape()+a.ndim());field_dtype=a.dtype();}
    else if(!a.dtype().is(field_dtype) || std::vector<py::ssize_t>(a.shape(),a.shape()+a.ndim())!=shape)throw py::value_error("homogeneous Frangi fields required");
-   if(!a.attr("flags").attr("aligned").cast<bool>())a=a.attr("copy")().cast<py::array>();storage.push_back(a);data.push_back(storage.back().data());
+   if(!PyArray_ISALIGNED(numpy_array(a)))a=a.attr("copy")().cast<py::array>();storage.push_back(a);data.push_back(storage.back().data());
   }
-  const auto n=shape.size();if(n<2 || fields.size()!=n*(n+1)/2 || dtype.kind()!='f' || dtype.itemsize()!=field_dtype.itemsize() || !dtype.attr("isnative").cast<bool>())throw py::value_error("invalid Frangi output plan");
+  const auto n=shape.size();if(n<2 || fields.size()!=n*(n+1)/2 || dtype.kind()!='f' || dtype.itemsize()!=field_dtype.itemsize() || !PyDataType_ISNOTSWAPPED(reinterpret_cast<PyArray_Descr*>(dtype.ptr())))throw py::value_error("invalid Frangi output plan");
   py::array prior;const void* old=nullptr;
-  if(!previous.is_none()){prior=py::array::ensure(previous,py::array::c_style);if(!prior || prior.dtype().kind()!='f' || prior.itemsize()!=dtype.itemsize() || !prior.dtype().attr("isnative").cast<bool>() || std::vector<py::ssize_t>(prior.shape(),prior.shape()+prior.ndim())!=shape)throw py::value_error("invalid Frangi previous output");
-   if(!prior.attr("flags").attr("aligned").cast<bool>())prior=prior.attr("copy")().cast<py::array>();old=prior.data();}
+  if(!previous.is_none()){prior=py::array::ensure(previous,py::array::c_style);if(!prior || prior.dtype().kind()!='f' || prior.itemsize()!=dtype.itemsize() || !PyArray_ISNOTSWAPPED(numpy_array(prior)) || std::vector<py::ssize_t>(prior.shape(),prior.shape()+prior.ndim())!=shape)throw py::value_error("invalid Frangi previous output");
+   if(!PyArray_ISALIGNED(numpy_array(prior)))prior=prior.attr("copy")().cast<py::array>();old=prior.data();}
   skimagexx::FrangiParameters p;p.alpha_den=alpha_den;p.beta_den=beta_den;p.alpha_single=alpha_single;p.beta_single=beta_single;p.gamma_single=gamma_single;p.gamma_compute_single=gamma_compute_single;p.automatic_gamma=gamma_den.is_none();if(!p.automatic_gamma)p.gamma_den=gamma_den.cast<double>();
   if(n==3)p.eigen_provider=&eigen->provider;
   if(dtype.itemsize()==8)p.exp_provider=&exponential->provider;
@@ -141,7 +144,7 @@ void bind_frangi(py::module_& module){
   return valid ? py::object(py::make_tuple(output,p.gamma_den)) : py::none();
  });
  module.def("ridge_hessian_finish",[](py::array output){
-  if(output.dtype().kind()!='f' || (output.itemsize()!=4 && output.itemsize()!=8) || !output.dtype().attr("isnative").cast<bool>() || !output.writeable() || !output.attr("flags").attr("aligned").cast<bool>())throw py::value_error("writable native ridge Hessian response required");
+  if(output.dtype().kind()!='f' || (output.itemsize()!=4 && output.itemsize()!=8) || !PyArray_ISNOTSWAPPED(numpy_array(output)) || !output.writeable() || !PyArray_ISALIGNED(numpy_array(output)))throw py::value_error("writable native ridge Hessian response required");
   std::vector<std::pair<py::ssize_t,py::ssize_t>> axes;
   for(py::ssize_t axis=0;axis<output.ndim();++axis)if(output.shape(axis)>1)axes.emplace_back(output.strides(axis),output.shape(axis));
   std::sort(axes.begin(),axes.end());py::ssize_t stride=output.itemsize();

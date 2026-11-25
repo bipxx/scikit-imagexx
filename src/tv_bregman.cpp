@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstring>
 #include <limits>
+#include <memory>
 #include <stdexcept>
 #ifdef _OPENMP
 #include <omp.h>
@@ -20,6 +21,10 @@ namespace skimagexx {
 namespace simd {
 void tv_bregman_copy4(const float*,float*,float*,float*,float*,std::size_t);
 void tv_bregman_copy4(const double*,double*,double*,double*,double*,std::size_t);
+void tv_bregman_wavefront(const float*,float*,float*,float*,float*,float*,float*,
+                          std::size_t,std::size_t,float,float,float,bool);
+void tv_bregman_wavefront(const double*,double*,double*,double*,double*,double*,double*,
+                          std::size_t,std::size_t,double,double,double,bool);
 }
 #endif
 namespace {
@@ -103,8 +108,31 @@ template<class T> int initialize(const TvBregmanImage& image,const TvBregmanWork
     for(std::size_t y=0;y<r;++y)std::memcpy(out+(y+1)*stride+(c+1)*d,input+(y*c+c-1)*d,d*sizeof(T));
     return actual.load();
 }
+template<class T, bool Isotropic>
+inline T sweep_pixel(T source,T* out,T* dx,T* dy,T* bx,T* by,std::ptrdiff_t i,
+                     std::ptrdiff_t step,std::ptrdiff_t stride,T weight,T lam,T norm) {
+    const T previous=out[i];
+    const T ux=T(out[i+step]-previous),uy=T(out[i+stride]-previous);
+    T total=T(out[i+stride]+out[i-stride]);total=T(total+out[i+step]);total=T(total+out[i-step]);
+    total=T(total+dx[i-step]);total=T(total-dx[i]);total=T(total+dy[i-stride]);total=T(total-dy[i]);total=T(total-bx[i-step]);total=T(total+bx[i]);total=T(total-by[i-stride]);total=T(total+by[i]);
+    const T unew=T(T(T(lam*total)+T(weight*source))/norm);out[i]=unew;
+    T tx=T(unew-previous);const T squared=T(tx*tx);
+    const T bxx=bx[i],byy=by[i];T dxx,dyy;
+    if constexpr(Isotropic) {
+        tx=T(ux+bxx);const T ty=T(uy+byy);const T length=T(std::sqrt(double(T(T(tx*tx)+T(ty*ty)))));
+        const T factor=T(length*lam);const double denominator=double(factor)+1.0;
+        dxx=T(double(T(factor*tx))/denominator);dyy=T(double(T(factor*ty))/denominator);
+    }else {
+        const double threshold=1.0/double(lam);
+        T s=T(ux+bxx);dxx=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
+        s=T(uy+byy);dyy=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
+    }
+    dx[i]=dxx;dy[i]=dyy;bx[i]=T(bxx+T(ux-dxx));by[i]=T(byy+T(uy-dyy));
+    return squared;
+}
+
 template<class T, bool Grayscale, bool Isotropic>
-TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int actual,T weight,T lam,T norm) {
+TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int actual,T weight,T lam,T norm,[[maybe_unused]] T* squared=nullptr) {
     const auto* input=static_cast<const T*>(image.data);auto* out=static_cast<T*>(workspace.out.data);auto* dx=static_cast<T*>(workspace.dx.data);auto* dy=static_cast<T*>(workspace.dy.data);auto* bx=static_cast<T*>(workspace.bx.data);auto* by=static_cast<T*>(workspace.by.data);
     const std::ptrdiff_t step=Grayscale?1:std::ptrdiff_t(image.channels);
     const std::ptrdiff_t row_width=std::ptrdiff_t(image.cols)*step;
@@ -113,29 +141,42 @@ TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& work
     double rmse=std::numeric_limits<double>::max();std::size_t iteration=0;
     while(iteration<max_iterations && rmse>parameters.eps) {
         rmse=0.;
-        const T* source=input;
-        std::ptrdiff_t row=stride+step;
-        for(std::size_t y=0;y<image.rows;++y,row+=stride) {
+        std::size_t y=0;
+#ifdef SKIMAGEXX_AVX2
+        if constexpr(Grayscale) {
+            if(squared) {
+                constexpr std::size_t lanes=32/sizeof(T);
+                const auto cols=image.cols;
+                for(;y+4<=image.rows;) {
+                    const std::size_t height=cols>=lanes && image.rows-y>=lanes ? lanes : 4;
+                    const auto first=std::ptrdiff_t(y+1)*stride+1;
+                    auto edge=[&](std::size_t lane,std::size_t begin,std::size_t end) {
+                        for(auto x=begin;x<end;++x) {
+                            const auto i=first+std::ptrdiff_t(lane)*stride+std::ptrdiff_t(x);
+                            squared[(x+lane)*lanes+lane]=sweep_pixel<T,Isotropic>(
+                                input[(y+lane)*cols+x],out,dx,dy,bx,by,i,1,stride,weight,lam,norm);
+                        }
+                    };
+                    // Ramp up the diagonal, then finish the right-hand triangle.
+                    for(std::size_t lane=0;lane<height-1;++lane)edge(lane,0,height-1-lane);
+                    simd::tv_bregman_wavefront(input+y*cols,out+first,dx+first,dy+first,
+                                               bx+first,by+first,squared,cols,height,weight,lam,norm,Isotropic);
+                    for(std::size_t lane=1;lane<height;++lane)edge(lane,cols-lane,cols);
+                    // The convergence test consumes each term in source row order.
+                    for(std::size_t lane=0;lane<height;++lane)
+                        for(std::size_t x=0;x<cols;++x)rmse+=double(squared[(x+lane)*lanes+lane]);
+                    y+=height;
+                }
+            }
+        }
+#endif
+        const T* source=input+y*row_width;
+        std::ptrdiff_t row=std::ptrdiff_t(y+1)*stride+step;
+        for(;y<image.rows;++y,row+=stride) {
             // Visit the padded row in the original x/channel order. The
             // grayscale instantiation has unit-offset horizontal neighbors.
             for(std::ptrdiff_t i=row;i<row+row_width;++i,++source) {
-                const T previous=out[i];
-                const T ux=T(out[i+step]-previous),uy=T(out[i+stride]-previous);
-                T total=T(out[i+stride]+out[i-stride]);total=T(total+out[i+step]);total=T(total+out[i-step]);
-                total=T(total+dx[i-step]);total=T(total-dx[i]);total=T(total+dy[i-stride]);total=T(total-dy[i]);total=T(total-bx[i-step]);total=T(total+bx[i]);total=T(total-by[i-stride]);total=T(total+by[i]);
-                const T unew=T(T(T(lam*total)+T(weight*(*source)))/norm);out[i]=unew;
-                T tx=T(unew-previous);const T squared=T(tx*tx);rmse+=double(squared);
-                const T bxx=bx[i],byy=by[i];T dxx,dyy;
-                if constexpr(Isotropic) {
-                    tx=T(ux+bxx);const T ty=T(uy+byy);const T length=T(std::sqrt(double(T(T(tx*tx)+T(ty*ty)))));
-                    const T factor=T(length*lam);const double denominator=double(factor)+1.0;
-                    dxx=T(double(T(factor*tx))/denominator);dyy=T(double(T(factor*ty))/denominator);
-                }else {
-                    const double threshold=1.0/double(lam);
-                    T s=T(ux+bxx);dxx=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
-                    s=T(uy+byy);dyy=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
-                }
-                dx[i]=dxx;dy[i]=dyy;bx[i]=T(bxx+T(ux-dxx));by[i]=T(byy+T(uy-dyy));
+                rmse+=double(sweep_pixel<T,Isotropic>(*source,out,dx,dy,bx,by,i,step,stride,weight,lam,norm));
             }
         }
         rmse=std::sqrt(rmse/double(image.elements));
@@ -147,11 +188,29 @@ TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& work
 template<class T> TvBregmanResult process(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int workers) {
     T weight{},lam{},norm{};
     if(!coefficients(parameters.weight,weight,lam,norm))throw std::invalid_argument("TV Bregman coefficient prewrite check failed");
-    const int actual=initialize<T>(image,workspace,workers);
     if(image.channels==1) {
-        if(parameters.isotropic)return sweep<T,true,true>(image,workspace,parameters,trace,actual,weight,lam,norm);
-        return sweep<T,true,false>(image,workspace,parameters,trace,actual,weight,lam,norm);
+        T* squared=nullptr;
+#ifdef SKIMAGEXX_AVX2
+        constexpr std::size_t lanes=32/sizeof(T);
+        constexpr std::size_t local_cols=520;
+        alignas(32) T local_squared[(local_cols+lanes-1)*lanes];
+        std::unique_ptr<T[]> large_squared;
+        // Gather offsets hold the distance from the first row's pixel to
+        // each diagonal lane. Fewer than four rows or columns stay scalar.
+        if(parameters.max_iterations>0 && image.rows>=4 && image.cols>=4 &&
+           image.cols<std::size_t(std::numeric_limits<int>::max())/lanes && has_avx2()) {
+            if(image.cols<=local_cols) squared=local_squared;
+            else {
+                large_squared.reset(new T[(image.cols+lanes-1)*lanes]);
+                squared=large_squared.get();
+            }
+        }
+#endif
+        const int actual=initialize<T>(image,workspace,workers);
+        if(parameters.isotropic)return sweep<T,true,true>(image,workspace,parameters,trace,actual,weight,lam,norm,squared);
+        return sweep<T,true,false>(image,workspace,parameters,trace,actual,weight,lam,norm,squared);
     }
+    const int actual=initialize<T>(image,workspace,workers);
     if(parameters.isotropic)return sweep<T,false,true>(image,workspace,parameters,trace,actual,weight,lam,norm);
     return sweep<T,false,false>(image,workspace,parameters,trace,actual,weight,lam,norm);
 }
