@@ -3,10 +3,9 @@
 #include <algorithm>
 #include <array>
 #include <cfenv>
+#include <cstring>
 #include <limits>
-#include <list>
 #include <type_traits>
-#include <unordered_map>
 
 namespace skimagexx {
 namespace {
@@ -22,10 +21,72 @@ struct EqualPoint {
 };
 
 struct HashPoint {
+    static std::uint64_t bits(double value) noexcept {
+        std::uint64_t result;
+        std::memcpy(&result, &value, sizeof(result));
+        return value == 0.0 ? 0 : result;
+    }
+
     std::size_t operator()(ContourPoint point) const noexcept {
-        const auto row = std::hash<double>{}(point.row);
-        const auto column = std::hash<double>{}(point.column);
-        return row ^ (column + 0x9e3779b9u + (row << 6) + (row >> 2));
+        const auto row = bits(point.row);
+        const auto column = bits(point.column);
+        auto hash = row ^ ((column << 29) | (column >> 35));
+        // Integer coordinates concentrate their entropy in the high bits.
+        hash = (hash ^ (hash >> 33)) * 0xff51afd7ed558ccdULL;
+        return static_cast<std::size_t>(hash ^ (hash >> 33));
+    }
+};
+
+class Endpoints {
+    struct Entry {
+        ContourPoint point{};
+        std::size_t path = no_path;
+    };
+    std::vector<Entry> entries_;
+    std::size_t size_ = 0;
+
+    std::size_t find(ContourPoint point) const {
+        const auto mask = entries_.size() - 1;
+        auto slot = HashPoint{}(point) & mask;
+        while (entries_[slot].path != no_path && !EqualPoint{}(entries_[slot].point, point)) {
+            slot = (slot + 1) & mask;
+        }
+        return slot;
+    }
+
+public:
+    void set(ContourPoint point, std::size_t path) {
+        if (size_ >= entries_.size() / 2) {
+            std::vector<Entry> larger(entries_.empty() ? 16 : entries_.size() * 2);
+            entries_.swap(larger);
+            for (const auto& entry : larger) {
+                if (entry.path != no_path) entries_[find(entry.point)] = entry;
+            }
+        }
+        auto& entry = entries_[find(point)];
+        size_ += entry.path == no_path;
+        entry = {point, path};
+    }
+
+    std::size_t take(ContourPoint point) {
+        if (!size_) return no_path;
+        auto hole = find(point);
+        const auto path = entries_[hole].path;
+        if (path == no_path) return no_path;
+        --size_;
+
+        // Close the gap for entries whose probe sequence crosses it.
+        const auto mask = entries_.size() - 1;
+        for (auto slot = (hole + 1) & mask; entries_[slot].path != no_path;
+             slot = (slot + 1) & mask) {
+            const auto home = HashPoint{}(entries_[slot].point) & mask;
+            if (((hole - home) & mask) < ((slot - home) & mask)) {
+                entries_[hole] = entries_[slot];
+                hole = slot;
+            }
+        }
+        entries_[hole].path = no_path;
+        return path;
     }
 };
 
@@ -35,21 +96,28 @@ public:
         if (EqualPoint{}(from, to)) {
             return;
         }
-        const auto tail = take(starts_, to);
-        const auto head = take(ends_, from);
+        const auto tail = starts_.take(to);
+        const auto head = ends_.take(from);
         if (tail == no_path && head == no_path) {
             const auto index = paths_.size();
-            paths_.emplace_back(std::initializer_list<ContourPoint>{from, to});
-            starts_[from] = index;
-            ends_[to] = index;
+            const auto first = add_vertex(from);
+            const auto last = add_vertex(to);
+            vertices_[first].next = last;
+            paths_.push_back({first, last, 2});
+            starts_.set(from, index);
+            ends_.set(to, index);
         } else if (head == no_path) {
-            paths_[tail].push_front(from);
-            starts_[from] = tail;
-        } else if (tail == no_path) {
-            paths_[head].push_back(to);
-            ends_[to] = head;
-        } else if (head == tail) {
-            paths_[head].push_back(to);
+            auto& path = paths_[tail];
+            path.first = add_vertex(from, path.first);
+            ++path.size;
+            starts_.set(from, tail);
+        } else if (tail == no_path || head == tail) {
+            auto& path = paths_[head];
+            const auto last = add_vertex(to);
+            vertices_[path.last].next = last;
+            path.last = last;
+            ++path.size;
+            if (tail == no_path) ends_.set(to, head);
         } else {
             join(head, tail);
         }
@@ -58,26 +126,28 @@ public:
     Contours finish() const {
         Contours result;
         for (const auto& path : paths_) {
-            if (!path.empty()) {
-                result.emplace_back(path.begin(), path.end());
+            if (path.size) {
+                auto& contour = result.emplace_back();
+                contour.reserve(path.size);
+                for (auto i = path.first; i != no_path; i = vertices_[i].next) {
+                    contour.push_back(vertices_[i].point);
+                }
             }
         }
         return result;
     }
 
 private:
-    using Endpoints = std::unordered_map<ContourPoint, std::size_t, HashPoint, EqualPoint>;
+    struct Vertex { ContourPoint point; std::size_t next; };
+    struct Path { std::size_t first, last, size; };
     Endpoints starts_;
     Endpoints ends_;
-    std::vector<std::list<ContourPoint>> paths_;
+    std::vector<Vertex> vertices_;
+    std::vector<Path> paths_;
 
-    static std::size_t take(Endpoints& endpoints, ContourPoint point) {
-        const auto item = endpoints.find(point);
-        if (item == endpoints.end()) {
-            return no_path;
-        }
-        const auto index = item->second;
-        endpoints.erase(item);
+    std::size_t add_vertex(ContourPoint point, std::size_t next = no_path) {
+        const auto index = vertices_.size();
+        vertices_.push_back({point, next});
         return index;
     }
 
@@ -85,16 +155,15 @@ private:
         // Keep the earlier creation index regardless of geometric direction.
         auto& left = paths_[head];
         auto& right = paths_[tail];
-        if (head < tail) {
-            left.splice(left.end(), right);
-            starts_[left.front()] = head;
-            ends_[left.back()] = head;
-        } else {
-            starts_.erase(left.front());
-            right.splice(right.begin(), left);
-            starts_[right.front()] = tail;
-            ends_[right.back()] = tail;
-        }
+        const auto first = vertices_[left.first].point;
+        if (head > tail) starts_.take(first);
+        vertices_[left.last].next = right.first;
+        const Path merged{left.first, right.last, left.size + right.size};
+        const auto keep = std::min(head, tail);
+        paths_[std::max(head, tail)].size = 0;
+        paths_[keep] = merged;
+        starts_.set(first, keep);
+        ends_.set(vertices_[merged.last].point, keep);
     }
 };
 
@@ -112,19 +181,17 @@ double fraction(double from, double to, double level) {
 }
 
 void connect_cell(OrderedContours& paths, double row, double column, double level,
-                  bool connect_high, double ul, double ur, double ll, double lr) {
-    const auto code = unsigned(ul > level) | (unsigned(ur > level) << 1)
-        | (unsigned(ll > level) << 2) | (unsigned(lr > level) << 3);
-    if (code == 0 || code == 15) {
-        return;
-    }
-    const std::array<ContourPoint, 4> points{{
-        {row, column + fraction(ul, ur, level)},
-        {row + fraction(ur, lr, level), column + 1},
-        {row + 1, column + fraction(ll, lr, level)},
-        {row + fraction(ul, ll, level), column}
-    }};
-    auto add = [&](Edge from, Edge to) { paths.add(points[from], points[to]); };
+                  bool connect_high, unsigned code, double ul, double ur, double ll, double lr) {
+    auto point = [&](Edge edge) -> ContourPoint {
+        switch (edge) {
+        case top: return {row, column + fraction(ul, ur, level)};
+        case right: return {row + fraction(ur, lr, level), column + 1};
+        case bottom: return {row + 1, column + fraction(ll, lr, level)};
+        case left: return {row + fraction(ul, ll, level), column};
+        }
+        return {};
+    };
+    auto add = [&](Edge from, Edge to) { paths.add(point(from), point(to)); };
     if (code == 6) {
         if (connect_high) {
             add(left, top);
@@ -180,12 +247,20 @@ bool contours(const Pixel* image, const std::uint8_t* mask, std::size_t rows,
 
     OrderedContours paths;
     for (std::size_t row = 0; row + 1 < rows; ++row) {
+        const auto row_start = row * columns;
+        auto left_code = unsigned(image[row_start] > level)
+            | (unsigned(image[row_start + columns] > level) << 2);
         for (std::size_t column = 0; column + 1 < columns; ++column) {
-            const auto a = row * columns + column;
+            const auto a = row_start + column;
             const auto b = a + columns;
-            if (!mask || (mask[a] && mask[a + 1] && mask[b] && mask[b + 1])) {
+            const auto right_code = unsigned(image[a + 1] > level)
+                | (unsigned(image[b + 1] > level) << 2);
+            const auto code = left_code | (right_code << 1);
+            left_code = right_code;
+            if (code != 0 && code != 15
+                && (!mask || (mask[a] && mask[a + 1] && mask[b] && mask[b + 1]))) {
                 connect_cell(paths, double(row), double(column), level, options.connect_high,
-                             image[a], image[a + 1], image[b], image[b + 1]);
+                             code, image[a], image[a + 1], image[b], image[b + 1]);
             }
         }
     }

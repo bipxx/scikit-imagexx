@@ -42,11 +42,20 @@ double shannon_entropy_counts(const std::ptrdiff_t* counts,std::size_t size,int 
     }
     Capture capture;
     if(!size)return 0.;
-    const double total=0.+pairwise(0,size,[&](auto i){return double(counts[i]);});
+    // Every partial sum is exact when the integer total fits in binary64.
+    const double total=integer_total<=9007199254740992ULL ? double(integer_total) :
+        0.+pairwise(0,size,[&](auto i){return double(counts[i]);});
+    const auto term=[&](std::size_t i) {
+        const double p=double(counts[i])/total;
+        return -p*std::log(p);
+    };
+    if(workers==1 || size<parallel_min)
+        return 0.+pairwise(0,size,term);
+
     std::vector<double> terms(size);
-    partition(size,size>=parallel_min?workers:1,[&](auto begin,auto end,auto){
+    partition(size,workers,[&](auto begin,auto end,auto){
         Capture worker_capture;
-        for(auto i=begin;i<end;++i){const double p=double(counts[i])/total;terms[i]=-p*std::log(p);}
+        for(auto i=begin;i<end;++i)terms[i]=term(i);
     });
     return 0.+pairwise(0,size,[&](auto i){return terms[i];});
 }

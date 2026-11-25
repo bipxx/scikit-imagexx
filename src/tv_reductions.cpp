@@ -8,7 +8,11 @@
 #include <xmmintrin.h>
 #endif
 
+#ifdef _MSC_VER
+#pragma fenv_access(on)
+#else
 #pragma STDC FENV_ACCESS ON
+#endif
 
 namespace skimagexx {
 namespace {
@@ -54,6 +58,21 @@ public:
     }
 };
 
+// Only the certified finite loop uses this guard, and it discards reduction
+// status. These x86-64 targets perform the typed sums and products in SSE
+// registers. Mask their traps locally and restore the exact caller status,
+// including flags raised by preceding non-reduction stages.
+class DiscardReductionStatus {
+#if defined(_M_X64) || (defined(__x86_64__) && defined(__SSE2_MATH__))
+    unsigned original_ = _mm_getcsr();
+public:
+    DiscardReductionStatus() { _mm_setcsr(original_ | 0x1f80u); }
+    ~DiscardReductionStatus() { _mm_setcsr(original_); }
+#else
+    Capture capture_;
+#endif
+};
+
 // Association adapted from NumPy v1.24.4 and v2.5.4 loops_utils.h.src;
 // NumPy's BSD notice is retained in third_party/numpy-LICENSE.txt.
 // FLOAT/DOUBLE_pairwise_sum, PW_BLOCKSIZE=128. Do not reassociate or use FMA.
@@ -80,8 +99,7 @@ template<class T> T pairwise(const T* a, std::size_t n) {
     const T right = pairwise(a+half, n-half);
     return T(left + right);
 }
-template<class T> TvReductionResult sum(TvReductionInput input, TvReductionPlan plan) {
-    Capture capture;
+template<class T> std::uint64_t sum_bits(TvReductionInput input, TvReductionPlan plan) {
     T value = T(0); // NumPy's ADD reduction identity, distinct from leaf -0.
     const auto* data = static_cast<const T*>(input.data);
     const std::size_t block = plan.profile == TvReductionProfile::numpy_1244_buffered
@@ -91,18 +109,38 @@ template<class T> TvReductionResult sum(TvReductionInput input, TvReductionPlan 
         value = T(value + pairwise(data+i, count));
         i += count;
     }
-    TvReductionResult result{0, capture.flags()};
-    std::memcpy(&result.bits, &value, sizeof(T));
-    return result;
+    std::uint64_t bits = 0;
+    std::memcpy(&bits, &value, sizeof(T));
+    return bits;
 }
-template<class T> unsigned square(TvReductionInput input, void* output) {
-    Capture capture;
+template<class T> void square_values(TvReductionInput input, void* output) {
     const auto* source = static_cast<const T*>(input.data);
     auto* target = static_cast<T*>(output);
     for (std::size_t i = 0; i < input.count; ++i) target[i] = T(source[i] * source[i]);
-    return capture.flags();
+}
+std::uint64_t sum_bits(TvReductionInput input, TvReductionPlan plan) {
+    return input.type == TvReductionType::float32 ? sum_bits<float>(input, plan) : sum_bits<double>(input, plan);
+}
+void square_values(TvReductionInput input, void* output) {
+    if (input.type == TvReductionType::float32) square_values<float>(input, output);
+    else square_values<double>(input, output);
 }
 } // namespace
+
+namespace detail {
+// The finite-loop guard has already validated all descriptors and the FP
+// profile. Materialize squared exactly as before, under the same guard as its
+// sum, since the loop observes only the numerical result of this pair.
+std::uint64_t tv_finite_square_sum(TvReductionInput input, void* output, TvReductionPlan plan) {
+    DiscardReductionStatus guard;
+    square_values(input, output);
+    return sum_bits({output, input.count, input.type}, plan);
+}
+std::uint64_t tv_finite_sum(TvReductionInput input, TvReductionPlan plan) {
+    DiscardReductionStatus guard;
+    return sum_bits(input, plan);
+}
+} // namespace detail
 
 TvReductionResult tv_sum_contiguous(TvReductionInput input, TvReductionPlan plan) {
     validate(input);
@@ -111,7 +149,9 @@ TvReductionResult tv_sum_contiguous(TvReductionInput input, TvReductionPlan plan
         throw std::invalid_argument("unknown audited TV reduction profile");
     if (!plan.buffer_elements)
         throw std::invalid_argument("TV reduction buffer must be positive");
-    return input.type == TvReductionType::float32 ? sum<float>(input, plan) : sum<double>(input, plan);
+    Capture capture;
+    const auto bits = sum_bits(input, plan);
+    return {bits, capture.flags()};
 }
 unsigned tv_square_contiguous_into(TvReductionInput input, void* output) {
     const auto bytes = validate(input);
@@ -120,6 +160,8 @@ unsigned tv_square_contiguous_into(TvReductionInput input, void* output) {
     const auto b = reinterpret_cast<std::uintptr_t>(output);
     if (bytes && a < b+bytes && b < a+bytes)
         throw std::invalid_argument("TV square requires disjoint output");
-    return input.type == TvReductionType::float32 ? square<float>(input, output) : square<double>(input, output);
+    Capture capture;
+    square_values(input, output);
+    return capture.flags();
 }
 } // namespace skimagexx

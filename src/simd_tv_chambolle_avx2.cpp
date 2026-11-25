@@ -45,8 +45,10 @@ template<class T> std::size_t divergence(const void* p,void* d,std::size_t n,std
         // constant in every axis. Boundary leftovers use exact scalar loads;
         // never speculatively read before plane0 to mask the access afterward.
         std::size_t span=length-done;
+        unsigned predecessors=0;
         for(std::size_t a=0;a<rank;++a) {
             const auto position=(index/steps[a])%shape[a];
+            if(position)predecessors|=1u<<a;
             const auto boundary=position ? (shape[a]-position)*steps[a]-index%steps[a]:steps[a]-index%steps[a];
             span=std::min(span,boundary);
         }
@@ -54,7 +56,7 @@ template<class T> std::size_t divergence(const void* p,void* d,std::size_t n,std
             T value=T(0);
             for(std::size_t a=0;a<rank;++a)value=T(value+read<T>(p,a*n+index));
             value=T(-value);
-            for(std::size_t a=0;a<rank;++a)if((index/steps[a])%shape[a])value=T(value+read<T>(p,a*n+index-steps[a]));
+            for(std::size_t a=0;a<rank;++a)if(predecessors&(1u<<a))value=T(value+read<T>(p,a*n+index-steps[a]));
             write<T>(d,done,value);++done;continue;
         }
         const auto stop=done+span-span%X::lanes;
@@ -62,7 +64,7 @@ template<class T> std::size_t divergence(const void* p,void* d,std::size_t n,std
             const auto i=begin+done;auto value=X::zero();
             for(std::size_t a=0;a<rank;++a)value=X::add(value,X::load(at<T>(p,a*n+i)));
             value=X::neg(value);
-            for(std::size_t a=0;a<rank;++a)if((i/steps[a])%shape[a])value=X::add(value,X::load(at<T>(p,a*n+i-steps[a])));
+            for(std::size_t a=0;a<rank;++a)if(predecessors&(1u<<a))value=X::add(value,X::load(at<T>(p,a*n+i-steps[a])));
             X::store(at<T>(d,done),value);
         }
     }

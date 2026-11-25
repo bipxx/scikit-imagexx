@@ -7,7 +7,8 @@ from . import _core
 def shannon_entropy(image, base=2):
     """Calculate Shannon entropy, retaining source base-validation ordering.
 
-    Standard real image counts and entropy arithmetic are owned C++ stages.
+    Standard real images use native counts and entropy reduction. Unsigned
+    8-bit and 16-bit images count symbols directly in bounded tables.
     Unsupported unique types use NumPy unique; scalar boxing and logarithmic
     base conversion retain the source NumPy/Python operations.
     """

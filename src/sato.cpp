@@ -9,6 +9,9 @@
 #include <limits>
 #include <memory>
 #include <stdexcept>
+namespace skimagexx::detail {
+std::unique_ptr<void,void(*)(void*)> acquire_ridge_scratch(std::size_t,bool);
+}
 namespace skimagexx { namespace {
 template<class T> void negate(T* data,std::size_t count){
  detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto){
@@ -18,15 +21,16 @@ template<class T> void negate(T* data,std::size_t count){
   for(;begin<end;++begin)data[begin]=-data[begin];
  });
 }
-template<class T> bool response(const void* const* fields,const void* previous,void* output,std::size_t count,std::size_t n,
+template<class T,std::size_t n> bool response(const void* const* fields,const void* previous,void* output,std::size_t count,
  bool previous_single,bool output_single,bool value_single,double factor){
- std::unique_ptr<T[]> eigen(new T[n*count]);
- if(!symmetric_eigenvalues_into(fields,eigen.get(),count,n,sizeof(T)==4))return false;
+ auto workspace=detail::acquire_ridge_scratch(n*count,sizeof(T)==4);
+ auto* eigen=static_cast<T*>(workspace.get());
+ if(!symmetric_eigenvalues_into(fields,eigen,count,n,sizeof(T)==4))return false;
  std::atomic<bool> valid{true};
  detail::partition((count+3)/4,detail::active_workers(count*8),[&](auto first,auto last,auto){
   auto begin=first*4;const auto end=std::min(count,last*4);bool supported=true;
 #ifdef SKIMAGEXX_AVX2
-  if(has_avx2())begin+=simd::sato_response(eigen.get()+begin,n==3 ? eigen.get()+count+begin : nullptr,
+  if(has_avx2())begin+=simd::sato_response(eigen+begin,n==3 ? eigen+count+begin : nullptr,
      previous ? (previous_single ? static_cast<const void*>(static_cast<const float*>(previous)+begin) : static_cast<const void*>(static_cast<const double*>(previous)+begin)) : nullptr,
      output_single ? static_cast<void*>(static_cast<float*>(output)+begin) : static_cast<void*>(static_cast<double*>(output)+begin),
      end-begin,sizeof(T)==4,previous_single,output_single,value_single,factor,supported);
@@ -34,7 +38,7 @@ template<class T> bool response(const void* const* fields,const void* previous,v
   if(!supported){valid.store(false,std::memory_order_relaxed);return;}
   for(;begin<end;++begin){
    T value=std::max(T(0),eigen[begin]);
-   if(n==3)value=std::sqrt(T(value*std::max(T(0),eigen[count+begin])));
+   if constexpr(n==3)value=std::sqrt(T(value*std::max(T(0),eigen[count+begin])));
    const double scaled=value_single ? double(float(value)*float(factor)) : double(value)*factor;
    const double prior=previous ? (previous_single ? double(static_cast<const float*>(previous)[begin]) : static_cast<const double*>(previous)[begin]) : 0.;
    const double result=scaled>=prior ? scaled : prior;
@@ -56,7 +60,9 @@ bool sato_accumulate_into(const void* const* fields,const void* previous,void* o
  if(!count)return true;if(!fields || !output)throw std::invalid_argument("nonnull Sato fields/output required");
  for(std::size_t f=0;f<n*(n+1)/2;++f)if(!fields[f])throw std::invalid_argument("nonnull Sato component required");
  if(!std::isfinite(factor))return false;
- return single ? response<float>(fields,previous,output,count,n,previous_single,output_single,value_single,factor)
-               : response<double>(fields,previous,output,count,n,previous_single,output_single,value_single,factor);
+ if(n==2)return single ? response<float,2>(fields,previous,output,count,previous_single,output_single,value_single,factor)
+                       : response<double,2>(fields,previous,output,count,previous_single,output_single,value_single,factor);
+ return single ? response<float,3>(fields,previous,output,count,previous_single,output_single,value_single,factor)
+               : response<double,3>(fields,previous,output,count,previous_single,output_single,value_single,factor);
 }
 }

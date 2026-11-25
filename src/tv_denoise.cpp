@@ -13,6 +13,12 @@
 #endif
 
 namespace skimagexx {
+namespace detail {
+// Internal reductions for the fully validated finite loop. Unlike the SDK
+// stages, they only return the sum bits and discard all reduction FP status.
+std::uint64_t tv_finite_square_sum(TvReductionInput input, void* output, TvReductionPlan plan);
+std::uint64_t tv_finite_sum(TvReductionInput input, TvReductionPlan plan);
+}
 namespace {
 struct Interval { std::uintptr_t low, high; };
 struct InputLayout {
@@ -179,13 +185,12 @@ template<class T,class Energy> TvDenoiseResult run(const TvConstView& input,
                 }
             });
         }
-        tv_square_contiguous_into({w.d.data,layout.n,type},w.squared.data);
-        const auto squared_sum=tv_sum_contiguous({w.squared.data,layout.n,type},parameters.reduction);
+        const auto squared_sum=detail::tv_finite_square_sum({w.d.data,layout.n,type},w.squared.data,parameters.reduction);
         tv_chambolle_gradient_into(iteration?w.out_read:input,w.g);
         tv_chambolle_norm_into(w.g_read,w.norm);
-        const auto norm_sum=tv_sum_contiguous({w.norm.data,layout.n,type},parameters.reduction);
-        const Energy weighted=Energy(weight*Energy(scalar<T>(norm_sum.bits)));
-        Energy energy=Energy(Energy(scalar<T>(squared_sum.bits))+weighted);
+        const auto norm_sum=detail::tv_finite_sum({w.norm.data,layout.n,type},parameters.reduction);
+        const Energy weighted=Energy(weight*Energy(scalar<T>(norm_sum)));
+        Energy energy=Energy(Energy(scalar<T>(squared_sum))+weighted);
         detail::partition(layout.n,detail::active_workers(layout.n),[&](std::size_t begin,std::size_t end,std::size_t){
             for(std::size_t i=begin;i<end;++i)norm[i]=T(T(norm[i]*norm_coefficient)+T(1));
         });
@@ -199,7 +204,7 @@ template<class T,class Energy> TvDenoiseResult run(const TvConstView& input,
             stopped=difference<threshold;
             if(!stopped)previous=energy;
         }
-        if(trace)trace[iteration]={squared_sum.bits,norm_sum.bits,bits(energy),bits(difference),bits(threshold),sizeof(Energy)==4,stopped};
+        if(trace)trace[iteration]={squared_sum,norm_sum,bits(energy),bits(difference),bits(threshold),sizeof(Energy)==4,stopped};
         if(stopped)return {iteration+1,false};
     }
     return {parameters.max_iterations,parameters.max_iterations==1};

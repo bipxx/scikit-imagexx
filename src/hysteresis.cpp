@@ -29,6 +29,13 @@ template<class T> T value(const HysteresisView& view,std::ptrdiff_t i) {
     if constexpr(std::is_same_v<T,std::uint8_t>)return view.type==PixelType::boolean ? T(x!=0) : x;
     else return x;
 }
+template<class T> T minimum_value(T x, T y) {
+    if constexpr (std::is_floating_point_v<T>) {
+        if (std::isnan(x)) return x;
+        if (std::isnan(y)) return y;
+    }
+    return x < y ? x : y;
+}
 template<class T> void map(const HysteresisView& a,const HysteresisView& b,void* output,const std::vector<std::size_t>& shape,bool minimum) {
     const auto n=extent(shape);if(!n)return;
     const auto ap=linear(a,shape),bp=linear(b,shape);
@@ -47,12 +54,8 @@ template<class T> void map(const HysteresisView& a,const HysteresisView& b,void*
         for(auto k=done;k<length;++k) {
             const auto i=position+k;
             const auto x=value<T>(a,ai+std::ptrdiff_t(k)*as),y=value<T>(b,bi+std::ptrdiff_t(k)*bs);
-            if(minimum) {
-                T result;
-                if constexpr(std::is_floating_point_v<T>)result=std::isnan(x) ? x : std::isnan(y) ? y : x<y ? x : y;
-                else result=x<y ? x : y;
-                static_cast<T*>(output)[i]=result;
-            } else static_cast<std::uint8_t*>(output)[i]=x>y;
+            if(minimum) static_cast<T*>(output)[i]=minimum_value(x,y);
+            else static_cast<std::uint8_t*>(output)[i]=x>y;
         }
         position+=length;
         }
@@ -96,7 +99,11 @@ void flood_runs(const std::uint8_t* weak,const std::uint8_t* strong,std::uint8_t
     // while the queue holds runs instead of every seed and reached pixel.
     using Run=std::pair<std::size_t,std::size_t>;
     std::vector<Run> queue;
-    for(std::size_t i=0;i<n;++i)out[i]=!weak[i] && background;
+    if (background) {
+        for (std::size_t i = 0; i < n; ++i) out[i] = !weak[i];
+    } else {
+        std::fill_n(out, n, std::uint8_t(0));
+    }
     auto discover=[&](std::size_t seed,std::size_t row_begin) {
         auto left=seed,right=seed+1;const auto row_end=row_begin+width;
         while(left>row_begin && weak[left-1] && !out[left-1])--left;
@@ -104,7 +111,8 @@ void flood_runs(const std::uint8_t* weak,const std::uint8_t* strong,std::uint8_t
         std::fill(out+left,out+right,std::uint8_t(1));
         queue.emplace_back(left,right);return right;
     };
-    for(std::size_t seed=0;seed<n;++seed)if(weak[seed] && strong[seed] && !out[seed]) {
+    auto flood_seed = [&](std::size_t seed) {
+        if (!strong[seed] || out[seed] || !weak[seed]) return;
         queue.clear();discover(seed,seed-seed%width);
         for(std::size_t head=0;head<queue.size();++head) {
             // discover may reallocate the queue; keep this run by value.
@@ -118,7 +126,17 @@ void flood_runs(const std::uint8_t* weak,const std::uint8_t* strong,std::uint8_t
             if(row_begin)scan(run.first-width,run.second-width,row_begin-width);
             if(row_begin<n-width)scan(run.first+width,run.second+width,row_begin+width);
         }
-    }return;
+    };
+    std::size_t seed = 0;
+    // A word load skips sparse seed blocks and also supports noncanonical mask bytes.
+    for (; n - seed >= sizeof(std::uint64_t); seed += sizeof(std::uint64_t)) {
+        std::uint64_t block;
+        std::memcpy(&block, strong + seed, sizeof(block));
+        if (block) {
+            for (std::size_t lane = 0; lane < sizeof(block); ++lane) flood_seed(seed + lane);
+        }
+    }
+    for (; seed < n; ++seed) flood_seed(seed);
 }
 }
 void hysteresis_minimum_into(const HysteresisView& a,const HysteresisView& b,void* out,const std::vector<std::size_t>& shape){dispatch(a,b,out,shape,true);}
@@ -133,22 +151,19 @@ void hysteresis_connect_into(const std::uint8_t* weak,const std::uint8_t* strong
     if(!counts.seeds || counts.seeds==counts.weak || counts.weak==n) {
         detail::partition(n,workers,[&](auto begin,auto end,auto){for(auto i=begin;i<end;++i)out[i]=weak[i] ? counts.seeds && (counts.seeds==counts.weak || counts.weak==n) : counts.background;});return;
     }
-    const auto pitch=pitches(shape);
     if(workers==1 && shape.size()==2) {
         flood_runs(weak,strong,out,n,shape[1],counts.background);return;
     }
+    const auto pitch=pitches(shape);
     if(workers==1) {
         std::vector<std::size_t> queue;queue.reserve(counts.weak);
         for(std::size_t i=0;i<n;++i){out[i]=weak[i] ? strong[i]!=0 : counts.background;if(weak[i] && strong[i])queue.push_back(i);}
         for(std::size_t head=0;head<queue.size();++head){const auto i=queue[head];
             auto visit=[&](auto j){if(weak[j] && !out[j]){out[j]=1;queue.push_back(j);}};
-            if(shape.size()==2){const auto width=shape[1],column=i%width;
-                if(i>=width)visit(i-width);if(i<n-width)visit(i+width);
-                if(column)visit(i-1);if(column+1<width)visit(i+1);
-            } else if(shape.size()==1){if(i)visit(i-1);if(i+1<n)visit(i+1);}
+            if(shape.size()==1){if(i)visit(i-1);if(i+1<n)visit(i+1);}
             else for(std::size_t d=0;d<shape.size();++d){const auto coordinate=i/pitch[d]%shape[d];
-                if(coordinate){const auto j=i-pitch[d];if(weak[j] && !out[j]){out[j]=1;queue.push_back(j);}}
-                if(coordinate+1<shape[d]){const auto j=i+pitch[d];if(weak[j] && !out[j]){out[j]=1;queue.push_back(j);}}
+                if(coordinate)visit(i-pitch[d]);
+                if(coordinate+1<shape[d])visit(i+pitch[d]);
             }
         }return;
     }
@@ -171,11 +186,43 @@ void hysteresis_connect_into(const std::uint8_t* weak,const std::uint8_t* strong
 void hysteresis_threshold_into(const void* image,const void* low,const void* high,std::uint8_t* out,PixelType type,
     const std::vector<std::size_t>& shape,bool low_scalar,bool high_scalar) {
     const auto n=extent(shape);if(!n)return;
-    const auto p=pitches(shape);std::vector<std::ptrdiff_t> stride(p.begin(),p.end()),zero(shape.size(),0);
-    HysteresisView a{image,type,stride},l{low,type,low_scalar ? zero : stride},h{high,type,high_scalar ? zero : stride};
-    auto run=[&](auto sample){using T=decltype(sample);std::vector<T> clipped(n);std::vector<std::uint8_t> weak(n),strong(n);
-        hysteresis_minimum_into(l,h,clipped.data(),shape);HysteresisView c{clipped.data(),type,stride};
-        hysteresis_greater_into(a,c,weak.data(),shape);hysteresis_greater_into(a,h,strong.data(),shape);hysteresis_connect_into(weak.data(),strong.data(),out,shape);
+    if (!image || !low || !high || !out) throw std::invalid_argument("nonnull hysteresis buffers required");
+    const HysteresisView a{image, type, {}}, l{low, type, {}}, h{high, type, {}};
+    auto run = [&](auto sample) {
+        using T = decltype(sample);
+        std::vector<std::uint8_t> weak(n), strong(n);
+#ifdef SKIMAGEXX_AVX2
+        const bool vectorized = has_avx2();
+#endif
+        detail::partition(n, detail::active_workers(n), [&](auto begin, auto end, auto) {
+#ifdef SKIMAGEXX_AVX2
+            if (vectorized) {
+                // Keep the existing SIMD comparison semantics while sharing a
+                // cache-sized scratch buffer between the two mask calculations.
+                T clipped[256];
+                constexpr std::size_t lanes = 32 / sizeof(T);
+                while (end - begin >= lanes) {
+                    const auto* x = static_cast<const T*>(image) + begin;
+                    const auto* lo = static_cast<const T*>(low) + (low_scalar ? 0 : begin);
+                    const auto* hi = static_cast<const T*>(high) + (high_scalar ? 0 : begin);
+                    const auto length = std::min<std::size_t>(end - begin, 256);
+                    const auto done = simd::hysteresis_map(lo, hi, clipped, length, type,
+                                                          !low_scalar, !high_scalar, true);
+                    simd::hysteresis_map(x, clipped, weak.data() + begin, done, type, 1, 1, false);
+                    simd::hysteresis_map(x, hi, strong.data() + begin, done, type, 1, !high_scalar, false);
+                    begin += done;
+                }
+            }
+#endif
+            for (auto i = begin; i < end; ++i) {
+                const T x = value<T>(a, i);
+                const T lo = value<T>(l, low_scalar ? 0 : i);
+                const T hi = value<T>(h, high_scalar ? 0 : i);
+                weak[i] = x > minimum_value(lo, hi);
+                strong[i] = x > hi;
+            }
+        });
+        hysteresis_connect_into(weak.data(), strong.data(), out, shape);
     };
     switch(type) {
 #define RUN(tag,T) case PixelType::tag:run(T{});return;

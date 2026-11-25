@@ -117,6 +117,9 @@ template<class T> void divergence(const TvConstPlanes& p,const TvView& d,const L
     });
 }
 template<class T> void gradient(const TvConstView& out,const TvPlanes& g,const Layout& r,const Layout& input) {
+#ifdef SKIMAGEXX_AVX2
+    const bool vectorized=r.n>1 && input.contiguous && has_avx2();
+#endif
     detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
         for(std::size_t a=0;a<r.rank;++a) {
             std::size_t i=begin;
@@ -129,7 +132,7 @@ template<class T> void gradient(const TvConstView& out,const TvPlanes& g,const L
                 }
                 const auto stop=std::min(end,i+(r.shape[a]-position-1)*r.steps[a]-i%r.steps[a]);
 #ifdef SKIMAGEXX_AVX2
-                if(input.contiguous && has_avx2()) {
+                if(vectorized) {
                     const auto* first=static_cast<const unsigned char*>(out.data)+i*sizeof(T);
                     auto* destination=static_cast<unsigned char*>(g.data)+(a*r.n+i)*sizeof(T);
                     i+=simd::tv_gradient(first,destination,r.steps[a],stop-i,std::is_same_v<T,float>);

@@ -1,10 +1,52 @@
 #include "skimagexx/symmetric_eigen.hpp"
 #include "symmetric_eigen_detail.hpp"
 #include "execution.hpp"
+#include <array>
 #include <atomic>
+#include <memory>
 #include <stdexcept>
 #include <vector>
 #include <type_traits>
+
+namespace skimagexx::detail {
+namespace {
+template<class T> struct RidgeScratch {
+    std::unique_ptr<T[]> storage;
+    std::size_t capacity=0;
+    bool in_use=false;
+};
+
+template<class T> auto& ridge_scratch() {
+    static thread_local RidgeScratch<T> scratch;
+    return scratch;
+}
+
+template<class T> void release_ridge_scratch(void* pointer) {
+    auto& scratch=ridge_scratch<T>();
+    if(pointer==scratch.storage.get())scratch.in_use=false;
+    else delete[] static_cast<T*>(pointer);
+}
+
+template<class T> std::unique_ptr<void,void(*)(void*)> lease_ridge_scratch(std::size_t elements) {
+    // Reuse workspace across scale calls on the caller's thread. A provider
+    // can reenter a ridge kernel; give nested calls independent storage.
+    constexpr std::size_t max_cached=16*1024*1024/sizeof(T);
+    auto& scratch=ridge_scratch<T>();
+    if(scratch.in_use || elements>max_cached)
+        return {new T[elements],release_ridge_scratch<T>};
+    if(elements>scratch.capacity){
+        scratch.storage.reset(new T[elements]);
+        scratch.capacity=elements;
+    }
+    scratch.in_use=true;
+    return {scratch.storage.get(),release_ridge_scratch<T>};
+}
+}
+
+std::unique_ptr<void,void(*)(void*)> acquire_ridge_scratch(std::size_t elements,bool single) {
+    return single ? lease_ridge_scratch<float>(elements) : lease_ridge_scratch<double>(elements);
+}
+}
 
 namespace skimagexx { namespace {
 template<class T> bool execute(const void* const* fields,T* output,std::size_t count,std::size_t n,
@@ -21,7 +63,12 @@ template<class T> bool execute(const void* const* fields,T* output,std::size_t c
         if(has_avx2() && precision==PairPrecision::native)i=simd::symmetric_eigenvalues(fields,output,count,n,begin,end,std::is_same_v<T,float>,pair,interleaved,valid);
 #endif
         if(!valid){supported.store(false,std::memory_order_relaxed);return;}
-        std::vector<double> matrix(n*n),values(n);
+        if(i==end)return;
+        std::array<double,25> small_matrix;
+        std::array<double,5> small_values;
+        std::vector<double> large_matrix(n>5 ? n*n : 0),large_values(n>5 ? n : 0);
+        auto* matrix=n>5 ? large_matrix.data() : small_matrix.data();
+        auto* values=n>5 ? large_values.data() : small_values.data();
         for(;i<end;++i){
             double scale=0.;
             for(std::size_t field=0;field<n*(n+1)/2;++field){const auto x=double(static_cast<const T*>(fields[field])[i]);
@@ -47,7 +94,7 @@ template<class T> bool execute(const void* const* fields,T* output,std::size_t c
             if(!scale)scale=1;
             std::size_t field=0;
             for(std::size_t r=0;r<n;++r)for(std::size_t c=r;c<n;++c){const auto x=double(static_cast<const T*>(fields[field++])[i])/scale;matrix[r*n+c]=matrix[c*n+r]=x;}
-            if(!detail::eigen_jacobi(matrix.data(),values.data(),n)){supported.store(false,std::memory_order_relaxed);return;}
+            if(!detail::eigen_jacobi(matrix,values,n)){supported.store(false,std::memory_order_relaxed);return;}
             for(std::size_t d=0;d<n;++d)output[interleaved ? i*n+n-1-d : d*count+i]=T(values[d]*scale);
         }
     });

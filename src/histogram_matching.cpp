@@ -5,6 +5,7 @@
 #include "half.hpp"
 #include "simd.hpp"
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstring>
 #include <limits>
@@ -68,6 +69,63 @@ struct Distribution {
     std::vector<std::uint64_t> hash_keys;
     std::vector<std::size_t> hash_positions;
 };
+
+template<class T,class Visit>
+void visit_unsigned(const T* input,std::ptrdiff_t stride,std::size_t begin,std::size_t end,Visit visit) {
+    if(stride==1) {
+        for(auto i=begin;i<end;++i)visit(i,input[i]);
+    } else {
+        for(auto i=begin;i<end;++i)visit(i,input[std::ptrdiff_t(i)*stride]);
+    }
+}
+
+template<class T>
+Distribution unsigned_distribution(const T* input,std::size_t count,std::ptrdiff_t stride,
+    bool source,bool values,int workers) {
+    Distribution result;
+    result.dense=true;
+    result.high=std::numeric_limits<T>::max();
+    if constexpr(sizeof(T)==2) {
+        // Avoid clearing and scanning the full uint16 domain for small images
+        // with a narrow range, without allocating one key per pixel.
+        if(count<4096) {
+            T low=input[0],high=low;
+            visit_unsigned(input,stride,1,count,[&](auto,T value) {
+                low=std::min(low,value);high=std::max(high,value);
+            });
+            result.low=low;result.high=high;
+        }
+    }
+    const auto bins=std::size_t(result.high-result.low)+1;
+    const auto low=std::size_t(result.low);
+    // Bound the replicated histograms by the number of input samples.
+    const auto teams=std::min(std::size_t(workers),std::max(std::size_t(1),count/bins));
+    std::array<std::size_t,sizeof(T)==1 ? 256 : 0> small{};
+    std::vector<std::size_t> large;
+    auto* histogram=small.data();
+    if(bins>small.size() || teams>1) {
+        large.resize(teams*bins);
+        histogram=large.data();
+    }
+    detail::partition(count,int(teams),[&](auto begin,auto end,auto worker) {
+        auto* local=histogram+worker*bins;
+        visit_unsigned(input,stride,begin,end,[&](auto,T value){++local[value-low];});
+    });
+    for(std::size_t worker=1;worker<teams;++worker)
+        for(std::size_t i=0;i<bins;++i)histogram[i]+=histogram[worker*bins+i];
+
+    const auto capacity=std::min(count,bins);
+    result.counts.reserve(capacity);
+    if(source)result.ends.reserve(capacity);
+    else if(values)result.values.reserve(capacity);
+    for(std::size_t i=0;i<bins;++i)if(histogram[i]) {
+        result.counts.push_back(histogram[i]);
+        if(source)result.ends.push_back(i);
+        else if(values)result.values.push_back(double(low+i));
+    }
+    return result;
+}
+
 std::size_t hash_slot(std::uint64_t key,const std::vector<std::uint64_t>& keys,const std::vector<std::size_t>& positions) {
     auto hash=key;hash^=hash>>33;hash*=UINT64_C(0xff51afd7ed558ccd);hash^=hash>>33;
     hash*=UINT64_C(0xc4ceb9fe1a85ec53);hash^=hash>>33;
@@ -113,6 +171,12 @@ template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,K
 }
 Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pixels,std::ptrdiff_t component,std::size_t channel,
     PixelType type,bool source,bool require_nonnegative,int workers,bool values=true) {
+    if(!count)return {};
+    const auto offset=std::ptrdiff_t(channel)*component;
+    if(type==PixelType::uint8)
+        return unsigned_distribution(static_cast<const std::uint8_t*>(input)+offset,count,pixels,source,values,workers);
+    if(type==PixelType::uint16)
+        return unsigned_distribution(static_cast<const std::uint16_t*>(input)+offset,count,pixels,source,values,workers);
     Distribution result;
     result.keys.resize(count);
     const auto read=reader(type);
@@ -125,12 +189,10 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
 #endif
         for(;i<end;++i)result.keys[i]=read(input,std::ptrdiff_t(i)*pixels+std::ptrdiff_t(channel)*component);
     });
-    if(!count)return result;
-    const bool small=type==PixelType::boolean || type==PixelType::uint8 || type==PixelType::int8 || type==PixelType::uint16 || type==PixelType::int16;
+    const bool small=type==PixelType::boolean || type==PixelType::int8 || type==PixelType::int16;
     if(small && count>=4096) {
         result.low=type==PixelType::int8 ? sign64-128 : type==PixelType::int16 ? sign64-32768 : 0;
-        result.high=type==PixelType::boolean ? 1 : type==PixelType::uint8 ? 255 : type==PixelType::int8 ? sign64+127 :
-            type==PixelType::int16 ? sign64+32767 : 65535;
+        result.high=type==PixelType::boolean ? 1 : type==PixelType::int8 ? sign64+127 : sign64+32767;
     } else {
         const auto bounds=std::minmax_element(result.keys.begin(),result.keys.end());
         result.low=*bounds.first;result.high=*bounds.second;
@@ -277,6 +339,89 @@ Writer writer(PixelType type) {
     default:throw std::invalid_argument("unsupported histogram-matching output type");
     }
 }
+template<class T,class Output>
+unsigned apply_unsigned(const T* source,std::ptrdiff_t stride,const Distribution& distribution,
+    const std::vector<double>& mapped,void* output,std::size_t count,std::size_t channels,
+    std::size_t channel,int workers,Writer write,bool half_round,bool swap_output) {
+    const auto bins=std::size_t(distribution.high-distribution.low)+1;
+    const auto low=std::size_t(distribution.low);
+    std::unique_ptr<Output[]> table(new Output[bins]);
+    unsigned flags=0;
+    for(std::size_t i=0;i<mapped.size();++i) {
+        const auto bin=distribution.ends[i];
+        if constexpr(std::is_same_v<Output,double>)table[bin]=mapped[i];
+        else flags|=write(table.get(),bin,mapped[i],half_round,swap_output);
+    }
+    auto* target=static_cast<unsigned char*>(output);
+    detail::partition(count,workers,[&](auto begin,auto end,auto) {
+        visit_unsigned(source,stride,begin,end,[&](auto i,T value) {
+            std::memcpy(target+(i*channels+channel)*sizeof(Output),&table[value-low],sizeof(Output));
+        });
+    });
+    return flags;
+}
+
+template<class T>
+unsigned apply_unsigned(const T* source,std::ptrdiff_t stride,const Distribution& distribution,
+    const std::vector<double>& mapped,void* output,std::size_t count,std::size_t channels,
+    std::size_t channel,int workers,Writer write,PixelType type,bool half_round,bool swap_output) {
+    const auto emit=[&](auto tag,Writer convert) {
+        return apply_unsigned<T,decltype(tag)>(source,stride,distribution,mapped,output,count,
+            channels,channel,workers,convert,half_round,swap_output);
+    };
+    switch(pixel_size(type)) {
+    case 1:return emit(std::uint8_t{},write);
+    case 2:return emit(std::uint16_t{},write);
+    case 4:return emit(std::uint32_t{},write);
+    default:
+        if(type==PixelType::float64 && !half_round && !swap_output)return emit(double{},nullptr);
+        return emit(std::uint64_t{},write);
+    }
+}
+
+std::vector<double> interpolate_quantiles(const Distribution& source,const Distribution& reference,
+    std::size_t count,std::size_t reference_count) {
+    std::vector<double> mapped(source.counts.size());
+    std::size_t total=0,reference_total=reference.counts.front();
+    const double first=double(reference_total)/double(reference_count);
+    std::size_t upper=1;
+    double lower_q=first,upper_q=first,slope=0.;
+    const auto advance=[&] {
+        reference_total+=reference.counts[upper];
+        upper_q=double(reference_total)/double(reference_count);
+    };
+    const auto size=reference.counts.size();
+    if(upper<size)advance();
+    bool slope_ready=false;
+    for(std::size_t i=0;i<mapped.size();++i) {
+        total+=source.counts[i];
+        const double q=double(total)/double(count);
+        while(upper<size && q>=upper_q) {
+            lower_q=upper_q;
+            ++upper;
+            if(upper<size)advance();
+            slope_ready=false;
+        }
+        const double lower_value=reference.values[upper-1];
+        if(q<=first)mapped[i]=reference.values.front();
+        else if(upper==size || q==lower_q)mapped[i]=lower_value;
+        else {
+            const double upper_value=reference.values[upper];
+            if(!slope_ready) {
+                slope=(upper_value-lower_value)/(upper_q-lower_q);
+                slope_ready=true;
+            }
+            auto value=slope*(q-lower_q)+lower_value;
+            if(std::isnan(value)) {
+                value=slope*(q-upper_q)+upper_value;
+                if(std::isnan(value) && lower_value==upper_value)value=lower_value;
+            }
+            mapped[i]=value;
+        }
+    }
+    return mapped;
+}
+
 template<class T> void apply_floating(const Distribution& source,const T* mapped,std::size_t groups,
     T* output,std::size_t count,std::size_t channels,std::size_t channel,int workers) {
     if(source.dense) {
@@ -359,27 +504,22 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
         std::vector<std::uint64_t>().swap(b.keys);
         std::vector<std::uint64_t>().swap(b.hash_keys);
         std::vector<std::size_t>().swap(b.hash_positions);
-        std::vector<double> cdf(b.counts.size());std::size_t total=0;
-        for(std::size_t i=0;i<cdf.size();++i){total+=b.counts[i];cdf[i]=double(total)/double(reference_count);}
+        auto mapped=interpolate_quantiles(a,b,count,reference_count);
         std::vector<std::size_t>().swap(b.counts);
-        std::vector<double> mapped(a.counts.size());std::size_t position=0;total=0;
-        for(std::size_t i=0;i<mapped.size();++i) {
-            total+=a.counts[i];const double q=double(total)/double(count);
-            while(position+1<cdf.size() && q>=cdf[position+1])++position;
-            if(q<=cdf.front())mapped[i]=b.values.front();
-            else if(position+1==cdf.size() || q==cdf[position])mapped[i]=b.values[position];
-            else {
-                const auto slope=(b.values[position+1]-b.values[position])/(cdf[position+1]-cdf[position]);
-                auto value=slope*(q-cdf[position])+b.values[position];
-                if(std::isnan(value)) {
-                    value=slope*(q-cdf[position+1])+b.values[position+1];
-                    if(std::isnan(value) && b.values[position]==b.values[position+1])value=b.values[position];
-                }
-                mapped[i]=value;
-            }
-        }
         std::vector<std::size_t>().swap(a.counts);
-        std::vector<double>().swap(b.values);std::vector<double>().swap(cdf);
+        std::vector<double>().swap(b.values);
+        if(st==PixelType::uint8 || st==PixelType::uint16) {
+            const auto offset=std::ptrdiff_t(channel)*strides.source_channels;
+            const auto apply=[&](const auto* data) {
+                return apply_unsigned(data+offset,strides.source_pixels,a,mapped,output,count,channels,
+                    channel,workers,write,ot,half_round,swap_output);
+            };
+            const auto notice=st==PixelType::uint8 ? apply(static_cast<const std::uint8_t*>(source)) :
+                apply(static_cast<const std::uint16_t*>(source));
+            if(channel_flags)channel_flags[channel]=notice;
+            flags|=notice;
+            continue;
+        }
         if(!half_round && !swap_output && (ot==PixelType::float64 || ot==PixelType::float32)) {
             unsigned channel_notice=0;
             if(ot==PixelType::float64)

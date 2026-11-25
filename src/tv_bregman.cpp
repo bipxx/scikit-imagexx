@@ -103,38 +103,57 @@ template<class T> int initialize(const TvBregmanImage& image,const TvBregmanWork
     for(std::size_t y=0;y<r;++y)std::memcpy(out+(y+1)*stride+(c+1)*d,input+(y*c+c-1)*d,d*sizeof(T));
     return actual.load();
 }
-template<class T> TvBregmanResult process(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int workers) {
-    T weight{},lam{},norm{};
-    if(!coefficients(parameters.weight,weight,lam,norm))throw std::invalid_argument("TV Bregman coefficient prewrite check failed");
-    const int actual=initialize<T>(image,workspace,workers);
+template<class T, bool Grayscale, bool Isotropic>
+TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int actual,T weight,T lam,T norm) {
     const auto* input=static_cast<const T*>(image.data);auto* out=static_cast<T*>(workspace.out.data);auto* dx=static_cast<T*>(workspace.dx.data);auto* dy=static_cast<T*>(workspace.dy.data);auto* bx=static_cast<T*>(workspace.bx.data);auto* by=static_cast<T*>(workspace.by.data);
-    const auto r=image.rows,c=image.cols,d=image.channels,stride=(c+2)*d;
+    const std::ptrdiff_t step=Grayscale?1:std::ptrdiff_t(image.channels);
+    const std::ptrdiff_t row_width=std::ptrdiff_t(image.cols)*step;
+    const std::ptrdiff_t stride=row_width+2*step;
+    const auto max_iterations=std::size_t(parameters.max_iterations>0?parameters.max_iterations:0);
     double rmse=std::numeric_limits<double>::max();std::size_t iteration=0;
-    while(iteration<std::size_t(parameters.max_iterations>0?parameters.max_iterations:0) && rmse>parameters.eps) {
+    while(iteration<max_iterations && rmse>parameters.eps) {
         rmse=0.;
-        for(std::size_t y=1;y<=r;++y)for(std::size_t x=1;x<=c;++x)for(std::size_t k=0;k<d;++k) {
-            const auto i=y*stride+x*d+k;const T previous=out[i];const T ux=T(out[i+d]-previous),uy=T(out[i+stride]-previous);
-            T total=T(out[i+stride]+out[i-stride]);total=T(total+out[i+d]);total=T(total+out[i-d]);
-            total=T(total+dx[i-d]);total=T(total-dx[i]);total=T(total+dy[i-stride]);total=T(total-dy[i]);total=T(total-bx[i-d]);total=T(total+bx[i]);total=T(total-by[i-stride]);total=T(total+by[i]);
-            const T unew=T(T(T(lam*total)+T(weight*input[((y-1)*c+x-1)*d+k]))/norm);out[i]=unew;
-            T tx=T(unew-previous);const T squared=T(tx*tx);rmse+=double(squared);
-            const T bxx=bx[i],byy=by[i];T dxx,dyy;
-            if(parameters.isotropic) {
-                tx=T(ux+bxx);const T ty=T(uy+byy);const T length=T(std::sqrt(double(T(T(tx*tx)+T(ty*ty)))));
-                const T factor=T(length*lam);const double denominator=double(factor)+1.0;
-                dxx=T(double(T(factor*tx))/denominator);dyy=T(double(T(factor*ty))/denominator);
-            }else {
-                const double threshold=1.0/double(lam);
-                T s=T(ux+bxx);dxx=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
-                s=T(uy+byy);dyy=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
+        const T* source=input;
+        std::ptrdiff_t row=stride+step;
+        for(std::size_t y=0;y<image.rows;++y,row+=stride) {
+            // Visit the padded row in the original x/channel order. The
+            // grayscale instantiation has unit-offset horizontal neighbors.
+            for(std::ptrdiff_t i=row;i<row+row_width;++i,++source) {
+                const T previous=out[i];
+                const T ux=T(out[i+step]-previous),uy=T(out[i+stride]-previous);
+                T total=T(out[i+stride]+out[i-stride]);total=T(total+out[i+step]);total=T(total+out[i-step]);
+                total=T(total+dx[i-step]);total=T(total-dx[i]);total=T(total+dy[i-stride]);total=T(total-dy[i]);total=T(total-bx[i-step]);total=T(total+bx[i]);total=T(total-by[i-stride]);total=T(total+by[i]);
+                const T unew=T(T(T(lam*total)+T(weight*(*source)))/norm);out[i]=unew;
+                T tx=T(unew-previous);const T squared=T(tx*tx);rmse+=double(squared);
+                const T bxx=bx[i],byy=by[i];T dxx,dyy;
+                if constexpr(Isotropic) {
+                    tx=T(ux+bxx);const T ty=T(uy+byy);const T length=T(std::sqrt(double(T(T(tx*tx)+T(ty*ty)))));
+                    const T factor=T(length*lam);const double denominator=double(factor)+1.0;
+                    dxx=T(double(T(factor*tx))/denominator);dyy=T(double(T(factor*ty))/denominator);
+                }else {
+                    const double threshold=1.0/double(lam);
+                    T s=T(ux+bxx);dxx=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
+                    s=T(uy+byy);dyy=double(s)>threshold?T(double(s)-threshold):double(s)<-threshold?T(double(s)+threshold):T(0);
+                }
+                dx[i]=dxx;dy[i]=dyy;bx[i]=T(bxx+T(ux-dxx));by[i]=T(byy+T(uy-dyy));
             }
-            dx[i]=dxx;dy[i]=dyy;bx[i]=T(bxx+T(ux-dxx));by[i]=T(byy+T(uy-dyy));
         }
         rmse=std::sqrt(rmse/double(image.elements));
         if(trace){std::uint64_t bits;std::memcpy(&bits,&rmse,sizeof(bits));trace[iteration]={bits,!(rmse>parameters.eps)};}
         ++iteration;
     }
     return {iteration,rmse,actual};
+}
+template<class T> TvBregmanResult process(const TvBregmanImage& image,const TvBregmanWorkspace& workspace,const TvBregmanParameters& parameters,TvBregmanTrace* trace,int workers) {
+    T weight{},lam{},norm{};
+    if(!coefficients(parameters.weight,weight,lam,norm))throw std::invalid_argument("TV Bregman coefficient prewrite check failed");
+    const int actual=initialize<T>(image,workspace,workers);
+    if(image.channels==1) {
+        if(parameters.isotropic)return sweep<T,true,true>(image,workspace,parameters,trace,actual,weight,lam,norm);
+        return sweep<T,true,false>(image,workspace,parameters,trace,actual,weight,lam,norm);
+    }
+    if(parameters.isotropic)return sweep<T,false,true>(image,workspace,parameters,trace,actual,weight,lam,norm);
+    return sweep<T,false,false>(image,workspace,parameters,trace,actual,weight,lam,norm);
 }
 } // namespace
 

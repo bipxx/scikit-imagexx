@@ -13,6 +13,8 @@
 #include <intrin.h>
 #endif
 namespace skimagexx::detail {
+std::unique_ptr<void,void(*)(void*)> acquire_ridge_scratch(std::size_t,bool);
+
 bool frangi_fma_available(){
 #ifdef SKIMAGEXX_AVX2
  if(!has_avx2())return false;
@@ -43,30 +45,34 @@ template<class T> T factor(T value,double denominator,bool narrow,bool& valid){
  if(!std::isfinite(exponent)){valid=false;return T(0);}
  return detail::frangi_exp(exponent);
 }
-template<class T> bool run(const void* const* fields,const void* previous,void* destination,std::size_t count,std::size_t n,FrangiParameters& parameters){
- std::unique_ptr<T[]> eigen(new T[n*count]),work(new T[3*count]);auto* ra=work.get();auto* rb=ra+count;auto* norm=rb+count;auto* output=static_cast<T*>(destination);const auto* old=static_cast<const T*>(previous);
+template<class T,std::size_t n> bool run(const void* const* fields,const void* previous,void* destination,std::size_t count,FrangiParameters& parameters){
+ auto workspace=detail::acquire_ridge_scratch((n+3)*count,sizeof(T)==4);
+ auto* eigen=static_cast<T*>(workspace.get());auto* ra=eigen+n*count;auto* rb=ra+count;auto* norm=rb+count;auto* output=static_cast<T*>(destination);const auto* old=static_cast<const T*>(previous);
  const bool eigen_valid=parameters.eigen_provider && parameters.eigen_provider->evaluate
-     ? parameters.eigen_provider->evaluate(fields,eigen.get(),count,n,sizeof(T)==4,parameters.eigen_provider->context)
-     : symmetric_eigenvalues_into(fields,eigen.get(),count,n,sizeof(T)==4);
+     ? parameters.eigen_provider->evaluate(fields,eigen,count,n,sizeof(T)==4,parameters.eigen_provider->context)
+     : symmetric_eigenvalues_into(fields,eigen,count,n,sizeof(T)==4);
  if(!eigen_valid)return false;
  const auto blocks=(count+3)/4;const auto workers=detail::active_workers(count*16);
+ const bool automatic_gamma=parameters.automatic_gamma;
  std::atomic<bool> valid{true};std::atomic<double> maximum{0.};
  detail::partition(blocks,workers,[&](auto first,auto last,auto){
   auto begin=first*4;const auto end=std::min(count,last*4);double local_max=0.;bool supported=true;
 #ifdef SKIMAGEXX_AVX2
-  if(has_avx2())begin+=simd::frangi_prepare(eigen.get(),ra,rb,norm,count,n,begin,end,sizeof(T)==4,local_max,supported);
+  if(has_avx2())begin+=simd::frangi_prepare(eigen,ra,rb,norm,count,n,begin,end,sizeof(T)==4,local_max,supported);
 #endif
   if(!supported){valid.store(false,std::memory_order_relaxed);return;}
-  for(;begin<end;++begin){T values[3];for(std::size_t d=0;d<n;++d)values[d]=eigen[d*count+begin];
-   for(std::size_t d=1;d<n;++d)for(auto j=d;j>0 && std::abs(values[j])<std::abs(values[j-1]);--j)std::swap(values[j],values[j-1]);
+  for(;begin<end;++begin){T values[n];for(std::size_t d=0;d<n;++d)values[d]=eigen[d*count+begin];
+   const auto order=[&](std::size_t a,std::size_t b){if(std::abs(values[b])<std::abs(values[a]))std::swap(values[a],values[b]);};
+   order(0,1);
+   if constexpr(n==3){order(1,2);order(0,1);}
    const T second=std::max(values[1],T(1e-10));T sum=0;for(std::size_t d=0;d<n;++d)sum=T(sum+T(values[d]*values[d]));
    norm[begin]=std::sqrt(sum);
-   if(n==2){ra[begin]=T(0);rb[begin]=T(std::abs(values[0])/second);}
+   if constexpr(n==2){ra[begin]=T(0);rb[begin]=T(std::abs(values[0])/second);}
    else{const T third=std::max(values[2],T(1e-10));ra[begin]=T(second/third);rb[begin]=T(std::abs(values[0])/std::sqrt(T(second*third)));}
    if(!std::isfinite(norm[begin]) || !std::isfinite(ra[begin]) || !std::isfinite(rb[begin])){valid.store(false,std::memory_order_relaxed);return;}
-   local_max=std::max(local_max,double(norm[begin]));
+   if(automatic_gamma)local_max=std::max(local_max,double(norm[begin]));
   }
-  auto current=maximum.load(std::memory_order_relaxed);while(current<local_max && !maximum.compare_exchange_weak(current,local_max,std::memory_order_relaxed)){}
+  if(automatic_gamma){auto current=maximum.load(std::memory_order_relaxed);while(current<local_max && !maximum.compare_exchange_weak(current,local_max,std::memory_order_relaxed)){}}
  });
  if(!valid.load(std::memory_order_relaxed))return false;
  if(parameters.automatic_gamma){
@@ -100,10 +106,10 @@ template<class T> bool run(const void* const* fields,const void* previous,void* 
     if(!supported)valid.store(false,std::memory_order_relaxed);
    });
    if(!valid.load(std::memory_order_relaxed))return false;
-   if constexpr(sizeof(T)==8)parameters.exp_provider->evaluate(inputs[f],eigen.get()+(f-first_factor)*count,count,parameters.exp_provider->context);
-   else parameters.float_exp_provider->evaluate(inputs[f],eigen.get()+(f-first_factor)*count,count,parameters.float_exp_provider->context);
+   if constexpr(sizeof(T)==8)parameters.exp_provider->evaluate(inputs[f],eigen+(f-first_factor)*count,count,parameters.exp_provider->context);
+   else parameters.float_exp_provider->evaluate(inputs[f],eigen+(f-first_factor)*count,count,parameters.float_exp_provider->context);
   }
-  const T* plate=n==2 ? nullptr : eigen.get();const auto* blob=eigen.get()+(n==2 ? 0 : count);const auto* structure=blob+count;
+  const T* plate=n==2 ? nullptr : eigen;const auto* blob=eigen+(n==2 ? 0 : count);const auto* structure=blob+count;
   detail::partition(blocks,workers,[&](auto first,auto last,auto){
    auto begin=first*4;const auto end=std::min(count,last*4);bool supported=true;
 #ifdef SKIMAGEXX_AVX2
@@ -137,7 +143,8 @@ bool frangi_accumulate_into(const void* const* fields,const void* previous,void*
  if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/(3*sizeof(double)))throw std::overflow_error("Frangi dimensions overflow");
  if(!count)return true;if(!fields || !output)throw std::invalid_argument("nonnull Frangi fields/output required");
  for(std::size_t f=0;f<n*(n+1)/2;++f)if(!fields[f])throw std::invalid_argument("nonnull Frangi component required");
- return single ? run<float>(fields,previous,output,count,n,parameters) : run<double>(fields,previous,output,count,n,parameters);
+ if(n==2)return single ? run<float,2>(fields,previous,output,count,parameters) : run<double,2>(fields,previous,output,count,parameters);
+ return single ? run<float,3>(fields,previous,output,count,parameters) : run<double,3>(fields,previous,output,count,parameters);
 }
 void ridge_hessian_finish_into(void* output,std::size_t count,bool single){
  if(count && !output)throw std::invalid_argument("nonnull ridge Hessian output required");

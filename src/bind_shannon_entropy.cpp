@@ -26,7 +26,8 @@ template<class T>py::object counts(const py::array& input,skimagexx::PixelType t
     std::vector<std::size_t> values;
     {py::gil_scoped_release release;values=skimagexx::histogram_sorted_counts(data,size,type,workers);}
     py::array_t<py::ssize_t> output(values.size());
-    for(std::size_t i=0;i<values.size();++i)output.mutable_data()[i]=py::ssize_t(values[i]);
+    auto* result=output.mutable_data();
+    for(std::size_t i=0;i<values.size();++i)result[i]=py::ssize_t(values[i]);
     return output;
 }
 }
