@@ -74,17 +74,19 @@ struct Moments {
         : mass(components), first(components * dimensions),
           second(components * dimensions), squares(dimensions) {}
 
-    void add(const double* row, const double* probabilities) {
+    template<class ProbabilityAt>
+    void add(const double* row, ProbabilityAt probability_at) {
         const auto width = squares.size();
         for (std::size_t j = 0; j < width; ++j)
             squares[j] = row[j] * row[j];
-        for (std::size_t k = 0; k < mass.size(); ++k) {
-            const double probability = probabilities[k];
+        auto* first_row = first.data();
+        auto* second_row = second.data();
+        for (std::size_t k = 0; k < mass.size(); ++k, first_row += width, second_row += width) {
+            const double probability = probability_at(k);
             mass[k] += probability;
-            const auto offset = k * width;
             for (std::size_t j = 0; j < width; ++j) {
-                first[offset + j] += probability * row[j];
-                second[offset + j] += probability * squares[j];
+                first_row[j] += probability * row[j];
+                second_row[j] += probability * squares[j];
             }
         }
     }
@@ -121,12 +123,11 @@ bool diagonal_gmm_maximization(const double* descriptors, std::size_t rows,
                                double* precision_cholesky) {
     if (!rows || !dimensions || !components) return false;
     Moments moments(components, dimensions);
-    std::vector<double> probabilities(components, 1.);
     for (std::size_t i = 0; i < rows; ++i) {
         const auto* log_row = log_responsibilities + i * components;
-        for (std::size_t k = 0; k < components; ++k)
-            probabilities[k] = log_row[k] == 0. ? 1. : std::exp(log_row[k]);
-        moments.add(descriptors + i * dimensions, probabilities.data());
+        moments.add(descriptors + i * dimensions, [log_row](std::size_t k) {
+            return log_row[k] == 0. ? 1. : std::exp(log_row[k]);
+        });
     }
     constexpr double prior = 10. * std::numeric_limits<double>::epsilon();
     for (auto& mass : moments.mass) mass += prior;
@@ -156,7 +157,7 @@ bool fisher_vector(const double* descriptors, std::size_t rows, DiagonalMixtureV
     DiagonalDensity density(model);
     if (!density.prepare()) return false;
     Moments moments(components, dimensions);
-    std::vector<double> probabilities(components, 1.);
+    std::vector<double> probabilities(components > 1 ? components : 0);
     for (std::size_t i = 0; i < rows; ++i) {
         const auto* row = descriptors + i * dimensions;
         if (components > 1) {
@@ -167,9 +168,12 @@ bool fisher_vector(const double* descriptors, std::size_t rows, DiagonalMixtureV
                 score = std::exp(score - peak);
                 sum += score;
             }
-            for (double& probability : probabilities) probability /= sum;
+            moments.add(row, [&probabilities, sum](std::size_t k) {
+                return probabilities[k] / sum;
+            });
+        } else {
+            moments.add(row, [](std::size_t) { return 1.; });
         }
-        moments.add(row, probabilities.data());
     }
     const double count = static_cast<double>(rows);
     const double sqrt_two = std::sqrt(2.);

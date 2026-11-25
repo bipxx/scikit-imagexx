@@ -291,6 +291,17 @@ constexpr Pair pattern[] = {
     {{-1, -6}, {0, -11}},
 };
 static_assert(std::size(pattern) == orb_descriptor_size);
+constexpr int pattern_min = -13;
+constexpr int pattern_max = 12;
+static_assert([] {
+    const auto in_range = [](Offset p) {
+        return p.row >= pattern_min && p.row <= pattern_max
+            && p.col >= pattern_min && p.col <= pattern_max;
+    };
+    for (const auto& pair : pattern)
+        if (!in_range(pair.first) || !in_range(pair.second)) return false;
+    return true;
+}());
 
 std::size_t checked_count(const void* input, std::size_t rows, std::size_t cols) {
     if (!input || !rows || !cols)
@@ -325,28 +336,41 @@ bool has_arc(unsigned bits, int length) {
 template<class T>
 T fast_score(const T* center, const std::array<Index, 16>& offsets,
              int length, T threshold) {
-    const T upper = *center + threshold;
-    const T lower = *center - threshold;
+    const T pixel = *center;
+    const T upper = pixel + threshold;
+    const T lower = pixel - threshold;
     T samples[16];
     unsigned bright = 0, dark = 0;
-    for (unsigned i = 0; i < 16; ++i) {
+    const auto classify = [&](unsigned i) {
         const T value = center[offsets[i]];
         samples[i] = value;
         bright |= unsigned(value > upper) << i;
         dark |= unsigned(value <= upper && value < lower) << i;
-    }
-    if (length >= 12) {
+    };
+    if (length >= 8) {
+        // Every arc of this length crosses at least length / 4 cardinal points.
+        for (unsigned i = 0; i < 16; i += 4)
+            classify(i);
         const auto cardinal_count = [](unsigned bits) {
             return (bits & 1u) + ((bits >> 4) & 1u)
                  + ((bits >> 8) & 1u) + ((bits >> 12) & 1u);
         };
-        if (cardinal_count(bright) < 3 && cardinal_count(dark) < 3) return 0;
+        const unsigned required = unsigned(length / 4);
+        if (cardinal_count(bright) < required && cardinal_count(dark) < required) return 0;
+        for (unsigned i = 0; i < 16; i += 4) {
+            classify(i + 1);
+            classify(i + 2);
+            classify(i + 3);
+        }
+    } else {
+        for (unsigned i = 0; i < 16; ++i)
+            classify(i);
     }
     if (!has_arc(bright, length) && !has_arc(dark, length)) return 0;
 
     T score = 0;
     for (const T value : samples)
-        score = T(double(score) + std::abs(double(value - *center)));
+        score = T(double(score) + std::abs(double(value - pixel)));
     return score;
 }
 
@@ -354,9 +378,11 @@ template<class T>
 T orientation_at(const T* center, Index cols) {
     T horizontal = 0, vertical = 0;
     for (int row = -15; row <= 15; ++row) {
+        const T* image_row = center + row * cols;
+        const int radius = umax[std::abs(row)];
         T row_sum = 0;
-        for (int col = -umax[std::abs(row)]; col <= umax[std::abs(row)]; ++col) {
-            const T value = center[row * cols + col];
+        for (int col = -radius; col <= radius; ++col) {
+            const T value = image_row[col];
             horizontal += value * T(col);
             row_sum += value;
         }
@@ -377,60 +403,75 @@ OrbOctave detect(const T* image, Index rows, Index cols, int fast_n,
 
     detail::partition(std::size_t(rows - 6), detail::active_workers(count),
         [&](auto begin, auto end, auto) {
-            for (Index row = Index(begin) + 3; row < Index(end) + 3; ++row)
-                for (Index col = 3; col < cols - 3; ++col) {
-                    const Index at = row * cols + col;
-                    score[at] = fast_score(image + at, offsets, fast_n, T(threshold));
-                }
+            const T fast_threshold = T(threshold);
+            for (Index row = Index(begin) + 3; row < Index(end) + 3; ++row) {
+                const T* image_row = image + row * cols;
+                T* score_row = score.data() + row * cols;
+                for (Index col = 3; col < cols - 3; ++col)
+                    score_row[col] = fast_score(image_row + col, offsets, fast_n, fast_threshold);
+            }
         });
 
     OrbOctave result{};
-    std::vector<std::uint8_t> selected(count);
-    for (Index row = 3; row < rows - 3; ++row)
+    std::vector<std::uint8_t> selected(2 * std::size_t(cols));
+    auto* previous_selected = selected.data();
+    auto* current_selected = previous_selected + cols;
+    for (Index row = 3; row < rows - 3; ++row) {
+        const T* current_score = score.data() + row * cols;
+        const T* previous_score = current_score - cols;
+        const T* next_score = current_score + cols;
         for (Index col = 3; col < cols - 3; ++col) {
-            const Index at = row * cols + col;
-            const T value = score[at];
-            if (value <= 0 || selected[at - cols - 1] || selected[at - cols]
-                    || selected[at - cols + 1] || selected[at - 1])
+            current_selected[col] = 0;
+            const T value = current_score[col];
+            if (value <= 0 || previous_selected[col - 1] || previous_selected[col]
+                    || previous_selected[col + 1] || current_selected[col - 1])
                 continue;
-            if (value < score[at - cols - 1] || value < score[at - cols]
-                    || value < score[at - cols + 1] || value < score[at - 1]
-                    || value < score[at + 1] || value < score[at + cols - 1]
-                    || value < score[at + cols] || value < score[at + cols + 1])
+            if (value < previous_score[col - 1] || value < previous_score[col]
+                    || value < previous_score[col + 1] || value < current_score[col - 1]
+                    || value < current_score[col + 1] || value < next_score[col - 1]
+                    || value < next_score[col] || value < next_score[col + 1])
                 continue;
             // Adjacent local maxima necessarily tie. Visit ties in the
             // reference's row-major order before filtering the 16px border.
             result.had_fast_peaks = true;
-            selected[at] = 1;
+            current_selected[col] = 1;
             if (in_bounds(double(row), double(col), rows, cols, 16))
-                result.points.push_back({row, col, 0, 0});
+                result.points.push_back({row, col, 0, double(value)});
         }
+        std::swap(previous_selected, current_selected);
+    }
 
     if (result.points.empty()) return result;
-    std::stable_sort(result.points.begin(), result.points.end(), [&](const auto& a, const auto& b) {
-        return score[a.row * cols + a.col] > score[b.row * cols + b.col];
-    });
 
     const std::vector<double> coefficients(weights.begin(), weights.end());
     const auto border = GaussianBorder::constant;
     const std::vector<GaussianPass> passes{{0, coefficients, border}, {1, coefficients, border}};
-    std::array<std::vector<T>, 3> fields;
-    for (auto& field : fields) field.resize(count);
-    void* outputs[] = {fields[0].data(), fields[1].data(), fields[2].data()};
+    // The FAST peaks already carry their scores, so reuse the score image for rr.
+    std::vector<T> fields(2 * count);
+    T* rr_field = score.data();
+    T* rc_field = fields.data();
+    T* cc_field = rc_field + count;
+    void* outputs[] = {rr_field, rc_field, cc_field};
     if (!structure_tensor_into(image, pixel_type<T>, outputs,
                                {std::size_t(rows), std::size_t(cols)}, passes, {border, border}))
         throw std::invalid_argument("ORB input exceeded its numerical range");
 
+    std::sort(result.points.begin(), result.points.end(), [](const auto& a, const auto& b) {
+        if (a.response != b.response) return a.response > b.response;
+        if (a.row != b.row) return a.row < b.row;
+        return a.col < b.col;
+    });
     detail::partition(result.points.size(), detail::active_workers(count),
         [&](auto begin, auto end, auto) {
+            const T harris_k = T(k);
             for (auto i = begin; i < end; ++i) {
                 auto& point = result.points[i];
                 const Index at = point.row * cols + point.col;
                 point.orientation = double(orientation_at(image + at, cols));
-                const T rr = fields[0][at], rc = fields[1][at], cc = fields[2][at];
+                const T rr = rr_field[at], rc = rc_field[at], cc = cc_field[at];
                 const T determinant = rr * cc - rc * rc;
                 const T trace = rr + cc;
-                point.response = double(determinant - T(k) * (trace * trace));
+                point.response = double(determinant - harris_k * (trace * trace));
             }
         });
     return result;
@@ -466,30 +507,48 @@ OrbDescriptors extract(const T* image, Index rows, Index cols, const double* poi
                        const T* angles, std::size_t count) {
     OrbDescriptors result;
     result.mask.resize(count);
-    std::vector<std::size_t> accepted;
+    std::size_t accepted_count = 0;
     for (std::size_t index = 0; index < count; ++index) {
         if (!std::isfinite(angles[index])) throw std::invalid_argument("ORB orientation must be finite");
         if (in_bounds(points[2 * index], points[2 * index + 1], rows, cols, 20)) {
-            accepted.push_back(index);
+            ++accepted_count;
             result.mask[index] = 1;
         }
     }
-    result.data.resize(accepted.size() * orb_descriptor_size);
-    detail::partition(accepted.size(), detail::active_workers(result.data.size()),
+    if (!accepted_count) return result;
+
+    std::vector<std::size_t> accepted;
+    if (accepted_count != count) {
+        accepted.reserve(accepted_count);
+        for (std::size_t index = 0; index < count; ++index)
+            if (result.mask[index]) accepted.push_back(index);
+    }
+    const auto* selected = accepted.empty() ? nullptr : accepted.data();
+    result.data.resize(accepted_count * orb_descriptor_size);
+    detail::partition(accepted_count, detail::active_workers(result.data.size()),
         [&](auto begin, auto end, auto) {
+            struct RotationProducts {
+                T sine;
+                T cosine;
+            };
+            RotationProducts rotation[pattern_max - pattern_min + 1];
             for (auto i = begin; i < end; ++i) {
-                const auto index = accepted[i];
+                const auto index = selected ? selected[i] : i;
                 const auto* center = image + Index(points[2 * index]) * cols + Index(points[2 * index + 1]);
                 const T sine = T(std::sin(double(angles[index])));
                 const T cosine = T(std::cos(double(angles[index])));
+                for (int coord = pattern_min; coord <= pattern_max; ++coord)
+                    rotation[coord - pattern_min] = {sine * T(coord), cosine * T(coord)};
                 const auto sample = [&](Offset p) {
-                    const Index row = nearest(sine * T(p.row) + cosine * T(p.col));
-                    const Index col = nearest(cosine * T(p.row) - sine * T(p.col));
+                    const auto& r = rotation[p.row - pattern_min];
+                    const auto& c = rotation[p.col - pattern_min];
+                    const Index row = nearest(r.sine + c.cosine);
+                    const Index col = nearest(r.cosine - c.sine);
                     return center[row * cols + col];
                 };
-                for (std::size_t bit = 0; bit < orb_descriptor_size; ++bit)
-                    result.data[i * orb_descriptor_size + bit] =
-                        std::uint8_t(sample(pattern[bit].first) < sample(pattern[bit].second));
+                auto* descriptor = result.data.data() + i * orb_descriptor_size;
+                for (const auto& pair : pattern)
+                    *descriptor++ = std::uint8_t(sample(pair.first) < sample(pair.second));
             }
         });
     return result;

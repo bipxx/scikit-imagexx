@@ -12,6 +12,7 @@
 #include <array>
 #include <cmath>
 #include <limits>
+#include <memory>
 #include <numeric>
 #include <stdexcept>
 #include <type_traits>
@@ -21,15 +22,16 @@ namespace {
 
 constexpr double pi = 3.14159265358979323846264338327950288;
 constexpr double tau = 2 * pi;
+constexpr int max_scales = 12, max_bins = 256, max_spatial_bins = 16, max_angular_bins = 64;
 
 template<class T>
 constexpr PixelType real_type = std::is_same_v<T, float> ? PixelType::float32 : PixelType::float64;
 
 int octaves_for(int height, int width, const SiftOptions& p) {
     if ((p.upsampling != 1 && p.upsampling != 2 && p.upsampling != 4) ||
-        p.n_octaves < 1 || p.n_scales < 1 || p.n_scales > 12 ||
-        p.n_bins < 6 || p.n_bins > 256 || p.n_hist < 1 || p.n_hist > 16 ||
-        p.n_ori < 1 || p.n_ori > 64 || height < 3 || width < 3 ||
+        p.n_octaves < 1 || p.n_scales < 1 || p.n_scales > max_scales ||
+        p.n_bins < 6 || p.n_bins > max_bins || p.n_hist < 1 || p.n_hist > max_spatial_bins ||
+        p.n_ori < 1 || p.n_ori > max_angular_bins || height < 3 || width < 3 ||
         height > 16384 || width > 16384 ||
         !(p.sigma_min >= p.sigma_in * p.upsampling && p.sigma_min > 0 &&
           p.sigma_min <= 64 && p.sigma_in >= 0 && p.c_dog > 0 &&
@@ -44,25 +46,22 @@ int octaves_for(int height, int width, const SiftOptions& p) {
     return std::min(p.n_octaves, int(std::log2(smallest / 12.0) + 1));
 }
 
-template<class T>
-void blur(const std::vector<T>& input, std::vector<T>& output, int height, int width,
-          double sigma) {
-    const int radius = int(4 * sigma + 0.5);
-    if (radius == 0) {
-        output = input;
-        return;
+struct BlurPasses {
+    std::vector<GaussianPass> vertical, horizontal;
+
+    explicit BlurPasses(double sigma) {
+        const int radius = int(4 * sigma + 0.5);
+        if (radius == 0) return;
+        std::vector<double> weights(2 * radius + 1);
+        const double exponent = -0.5 / (sigma * sigma);
+        for (int x = -radius; x <= radius; ++x)
+            weights[x + radius] = std::exp(exponent * double(x * x));
+        const double sum = std::accumulate(weights.begin(), weights.end(), 0.0);
+        for (auto& weight : weights) weight /= sum;
+        vertical.push_back({0, weights, GaussianBorder::reflect});
+        horizontal.push_back({1, std::move(weights), GaussianBorder::reflect});
     }
-    std::vector<double> weights(2 * radius + 1);
-    const double exponent = -0.5 / (sigma * sigma);
-    for (int x = -radius; x <= radius; ++x)
-        weights[x + radius] = std::exp(exponent * double(x * x));
-    const double sum = std::accumulate(weights.begin(), weights.end(), 0.0);
-    for (auto& weight : weights) weight /= sum;
-    output.resize(input.size());
-    gaussian_nd_into(input.data(), output.data(), real_type<T>, real_type<T>,
-                     {std::size_t(height), std::size_t(width)},
-                     {{0, weights, GaussianBorder::reflect}, {1, weights, GaussianBorder::reflect}});
-}
+};
 
 template<class T>
 struct ScaleOctave {
@@ -74,7 +73,9 @@ template<class T>
 class ScaleSpace {
 public:
     ScaleSpace(const void* image, int height, int width, PixelType type, const SiftOptions& p)
-        : height_(height * p.upsampling), width_(width * p.upsampling), p_(p),
+        : p_(p), octave_{height * p.upsampling, width * p.upsampling,
+                        std::vector<std::vector<T>>(p.n_scales + 3)},
+          shape_{std::size_t(octave_.height), std::size_t(octave_.width)},
           sigmas_(p.n_scales + 3) {
         if (!image) throw std::invalid_argument("Non-null SIFT image required");
         std::vector<T> input(std::size_t(height) * width);
@@ -83,39 +84,44 @@ public:
             std::any_of(input.begin(), input.end(), [](T pixel) { return !std::isfinite(pixel); }))
             throw std::invalid_argument("SIFT requires a finite image");
         if (p.upsampling > 1) {
-            std::vector<T> resized(std::size_t(height_) * width_);
+            std::vector<T> resized(shape_[0] * shape_[1]);
             detail::zoom_typed_into(input.data(), resized.data(), real_type<T>,
                                     {std::size_t(height), std::size_t(width)},
-                                    {std::size_t(height_), std::size_t(width_)}, {});
+                                    shape_, {});
             const auto limits = std::minmax_element(input.begin(), input.end());
             for (auto& pixel : resized) pixel = std::clamp(pixel, *limits.first, *limits.second);
             input = std::move(resized);
         }
         const auto initial = p.sigma_in * p.upsampling;
-        blur(input, base_, height_, width_, std::sqrt(p.sigma_min * p.sigma_min - initial * initial));
+        blur(input, octave_.levels[0], BlurPasses(std::sqrt(p.sigma_min * p.sigma_min - initial * initial)));
         for (int s = 0; s < p.n_scales + 3; ++s)
             sigmas_[s] = std::pow(2.0, double(s) / p.n_scales) * p.sigma_min;
-    }
-
-    ScaleOctave<T> next(bool more) {
-        ScaleOctave<T> out{height_, width_, std::vector<std::vector<T>>(sigmas_.size())};
-        out.levels[0] = std::move(base_);
+        passes_.reserve(sigmas_.size() - 1);
         for (std::size_t s = 1; s < sigmas_.size(); ++s) {
             const auto before = sigmas_[s - 1], after = sigmas_[s];
-            blur(out.levels[s - 1], out.levels[s], height_, width_,
-                 std::sqrt(after * after - before * before));
+            passes_.emplace_back(std::sqrt(after * after - before * before));
         }
-        if (more) {
-            const int height = (height_ + 1) / 2, width = (width_ + 1) / 2;
-            base_.resize(std::size_t(height) * width);
-            const auto& level = out.levels[p_.n_scales];
-            for (int r = 0; r < height; ++r)
+    }
+
+    const ScaleOctave<T>& next(bool downsample) {
+        auto& [height, width, levels] = octave_;
+        if (downsample) {
+            const int previous_width = width;
+            height = (height + 1) / 2;
+            width = (width + 1) / 2;
+            shape_[0] = height;
+            shape_[1] = width;
+            levels[0].resize(std::size_t(height) * width);
+            for (int r = 0; r < height; ++r) {
+                const T* source = levels[p_.n_scales].data() + std::size_t(2 * r) * previous_width;
+                T* destination = levels[0].data() + std::size_t(r) * width;
                 for (int c = 0; c < width; ++c)
-                    base_[std::size_t(r) * width + c] = level[std::size_t(2 * r) * width_ + 2 * c];
-            height_ = height;
-            width_ = width;
+                    destination[c] = source[2 * c];
+            }
         }
-        return out;
+        for (std::size_t s = 1; s < levels.size(); ++s)
+            blur(levels[s - 1], levels[s], passes_[s - 1]);
+        return octave_;
     }
 
     double sigma(int scale, T offset, double delta) const {
@@ -123,10 +129,24 @@ public:
     }
 
 private:
-    int height_, width_;
+    void blur(const std::vector<T>& input, std::vector<T>& output, const BlurPasses& passes) {
+        if (passes.vertical.empty()) {
+            output = input;
+            return;
+        }
+        output.resize(input.size());
+        if (!temporary_) temporary_.reset(new T[input.size()]);
+        // Keep the shared Gaussian kernel and the rounding after each axis.
+        gaussian_nd_into(input.data(), temporary_.get(), real_type<T>, real_type<T>, shape_, passes.vertical);
+        gaussian_nd_into(temporary_.get(), output.data(), real_type<T>, real_type<T>, shape_, passes.horizontal);
+    }
+
     const SiftOptions& p_;
-    std::vector<T> base_;
+    ScaleOctave<T> octave_;
+    std::vector<std::size_t> shape_;
     std::vector<double> sigmas_;
+    std::vector<BlurPasses> passes_;
+    std::unique_ptr<T[]> temporary_;
 };
 
 template<class T>
@@ -134,14 +154,25 @@ struct Dog {
     int height, width, scales;
     std::vector<T> values;
 
-    explicit Dog(const ScaleOctave<T>& octave)
-        : height(octave.height), width(octave.width), scales(int(octave.levels.size()) - 1),
-          values(std::size_t(height) * width * scales) {
+    void update(const ScaleOctave<T>& octave) {
+        height = octave.height;
+        width = octave.width;
+        scales = int(octave.levels.size()) - 1;
+        values.resize(std::size_t(height) * width * scales);
+        std::array<const T*, max_scales + 3> levels;
+        for (int s = 0; s <= scales; ++s)
+            levels[s] = octave.levels[s].data();
         detail::partition(std::size_t(height) * width, detail::active_workers(values.size()),
             [&](auto first, auto last, auto) {
-                for (auto k = first; k < last; ++k)
-                    for (int s = 0; s < scales; ++s)
-                        values[k * scales + s] = octave.levels[s + 1][k] - octave.levels[s][k];
+                auto* destination = values.data() + first * scales;
+                for (auto k = first; k < last; ++k, destination += scales) {
+                    T lower = levels[0][k];
+                    for (int s = 0; s < scales; ++s) {
+                        const T upper = levels[s + 1][k];
+                        destination[s] = upper - lower;
+                        lower = upper;
+                    }
+                }
             });
     }
 
@@ -201,9 +232,10 @@ void localize(const Dog<T>& dog, const ScaleSpace<T>& space, const SiftOptions& 
     bool any = false;
     const std::array<int, 3> limits{dog.height - 1, dog.width - 1, dog.scales - 1};
     for (int r = 1; r < limits[0]; ++r) {
-        for (int c = 1; c < limits[1]; ++c) {
+        const T* pixel = dog.at(r, 1, 0);
+        for (int c = 1; c < limits[1]; ++c, pixel += col) {
             for (int s = 1; s < limits[2]; ++s) {
-                const auto* center = dog.at(r, c, s);
+                const auto* center = pixel + s;
                 if (std::abs(center[0]) < contrast * 0.8) continue;
                 if (center[0] == center[neighbors[0]]) continue;
                 const bool minimum = center[0] < center[neighbors[0]];
@@ -256,48 +288,65 @@ Patch patch(double y, double x, double radius, int height, int width) {
 }
 
 template<class T>
-std::pair<T,T> gradient(const std::vector<T>& level, int height, int width, int r, int c) {
-    const auto index = std::size_t(r) * width + c;
-    const auto* at = level.data() + index;
-    const T dr = r == 0 ? at[width] - at[0] : r == height - 1 ? at[0] - at[-width] :
-                 T(0.5) * (at[width] - at[-width]);
-    const T dc = c == 0 ? at[1] - at[0] : c == width - 1 ? at[0] - at[-1] :
-                 T(0.5) * (at[1] - at[-1]);
-    return {dr, dc};
-}
+struct GradientRow {
+    const T *previous, *current, *next;
+    T row_scale;
+    int last_column;
+
+    GradientRow(const std::vector<T>& level, int height, int width, int r)
+        : previous(level.data() + std::size_t(std::max(0, r - 1)) * width),
+          current(level.data() + std::size_t(r) * width),
+          next(level.data() + std::size_t(std::min(height - 1, r + 1)) * width),
+          row_scale(r == 0 || r == height - 1 ? T(1) : T(0.5)), last_column(width - 1) {}
+
+    std::pair<T, T> at(int c) const {
+        const T dr = row_scale * (next[c] - previous[c]);
+        const T dc = c == 0 ? current[1] - current[0] :
+                     c == last_column ? current[c] - current[c - 1] :
+                     T(0.5) * (current[c + 1] - current[c - 1]);
+        return {dr, dc};
+    }
+};
 
 template<class T>
 void orientations(const ScaleOctave<T>& octave, const SiftOptions& p, double delta,
-                  SiftKeypoint& key, std::vector<SiftKeypoint>& extra) {
+                  SiftKeypoint& key, std::vector<SiftKeypoint>& extra,
+                  T* hist, T* smooth) {
     const double y = key.row / delta, x = key.col / delta, sigma = key.sigma / delta;
     const double width = p.lambda_ori * sigma;
     const auto box = patch(y, x, 3 * width, octave.height, octave.width);
-    std::vector<T> hist(p.n_bins, T(0)), smooth(p.n_bins);
+    std::fill_n(hist, p.n_bins, T(0));
+    const auto& level = octave.levels[key.scale];
+    const double gaussian = -2 * width * width;
     for (int r = box.r0; r <= box.r1; ++r) {
         const T dy = T(r - y);
+        const T dy_squared = dy * dy;
+        const GradientRow<T> gradients(level, octave.height, octave.width, r);
         for (int c = box.c0; c <= box.c1; ++c) {
             const T dx = T(c - x);
-            const auto [dr, dc] = gradient(octave.levels[key.scale], octave.height, octave.width, r, c);
+            const auto [dr, dc] = gradients.at(c);
             T theta = std::atan2(dc, dr);
             if (!std::isfinite(theta)) continue;
             if (theta < T(0)) theta += T(tau);
             const int bin = int(std::floor(theta / T(tau) * T(p.n_bins) + T(0.5))) % p.n_bins;
-            const double weight = std::exp(double(dy * dy + dx * dx) / (-2 * width * width));
+            const double weight = std::exp(double(dy_squared + dx * dx) / gaussian);
             hist[bin] = T(hist[bin] + weight * std::sqrt(dr * dr + dc * dc));
         }
     }
     const T third = T(1.0 / 3);
+    const int last = p.n_bins - 1;
     for (int pass = 0; pass < 6; ++pass) {
-        for (int j = 0; j < p.n_bins; ++j)
-            smooth[j] = third * hist[(j + p.n_bins - 1) % p.n_bins] +
-                        third * hist[j] + third * hist[(j + 1) % p.n_bins];
+        smooth[0] = third * hist[last] + third * hist[0] + third * hist[1];
+        for (int j = 1; j < last; ++j)
+            smooth[j] = third * hist[j - 1] + third * hist[j] + third * hist[j + 1];
+        smooth[last] = third * hist[last - 1] + third * hist[last] + third * hist[0];
         std::swap(hist, smooth);
     }
-    const T threshold = T(p.c_max) * *std::max_element(hist.begin(), hist.end());
+    const T threshold = T(p.c_max) * *std::max_element(hist, hist + p.n_bins);
     bool primary = true;
     for (int j = 0; j < p.n_bins; ++j) {
-        const T left = hist[(j + p.n_bins - 1) % p.n_bins], mid = hist[j];
-        const T right = hist[(j + 1) % p.n_bins];
+        const T left = hist[j == 0 ? last : j - 1], mid = hist[j];
+        const T right = hist[j == last ? 0 : j + 1];
         if (mid < threshold || mid < left || mid < right) continue;
         const T denominator = 2 * (left + right - 2 * mid);
         const T offset = denominator == T(0) ? std::numeric_limits<T>::quiet_NaN() :
@@ -316,7 +365,7 @@ void orientations(const ScaleOctave<T>& octave, const SiftOptions& p, double del
 
 template<class T>
 bool descriptor(const ScaleOctave<T>& octave, const SiftOptions& p, double delta,
-                const SiftKeypoint& key, T* histogram, std::uint8_t* output) {
+                const SiftKeypoint& key, const T* angles, T* histogram, std::uint8_t* output) {
     const int count = p.n_hist * p.n_hist * p.n_ori;
     std::fill(histogram, histogram + count, T(0));
     if (!std::isfinite(key.orientation)) {
@@ -330,18 +379,20 @@ bool descriptor(const ScaleOctave<T>& octave, const SiftOptions& p, double delta
     const T spacing = T(2 * lam_sig / p.n_hist), inverse = T(1) / spacing;
     const T cos = T(std::cos(key.orientation)), sin = T(std::sin(key.orientation));
     const T gaussian = T(-2 * lam_sig * lam_sig), angular = T(p.n_ori / tau);
-    std::array<T, 16> spatial{};
-    std::array<T, 64> angles{};
+    std::array<T, max_spatial_bins> spatial;
     for (int j = 0; j < p.n_hist; ++j)
         spatial[j] = T(j + 1 - (1 + p.n_hist) / 2.0) * spacing;
-    for (int j = 0; j < p.n_ori; ++j) angles[j] = (T(tau) * T(j + 1)) / T(p.n_ori);
+    const auto& level = octave.levels[key.scale];
+    const int row_stride = p.n_hist * p.n_ori;
     for (int r = box.r0; r < box.r1; ++r) {
         const T dy = T(r) - T(y);
+        const T rotated_y = cos * dy, rotated_x = -sin * dy;
+        const GradientRow<T> gradients(level, octave.height, octave.width, r);
         for (int c = box.c0; c < box.c1; ++c) {
             const T dx = T(c) - T(x);
-            const T yr = cos * dy + sin * dx, xr = -sin * dy + cos * dx;
+            const T yr = rotated_y + sin * dx, xr = rotated_x + cos * dx;
             if (std::max(std::abs(yr), std::abs(xr)) >= T(radius)) continue;
-            const auto [dr, dc] = gradient(octave.levels[key.scale], octave.height, octave.width, r, c);
+            const auto [dr, dc] = gradients.at(c);
             const T theta = std::atan2(dc, dr) - T(key.orientation);
             const T magnitude = std::sqrt(dr * dr + dc * dc) * std::exp((yr * yr + xr * xr) / gaussian);
             int bin = 0;
@@ -355,16 +406,25 @@ bool descriptor(const ScaleOctave<T>& octave, const SiftOptions& p, double delta
                     nearest = distance;
                 }
             }
-            const int next = (bin + 1) % p.n_ori;
+            const int next = bin + 1 == p.n_ori ? 0 : bin + 1;
+            std::array<int, max_spatial_bins> offsets;
+            std::array<T, max_spatial_bins> horizontal;
+            int used = 0;
+            for (int j = 0; j < p.n_hist; ++j) {
+                const T u = std::abs(spatial[j] - xr);
+                if (u > spacing) continue;
+                offsets[used] = j * p.n_ori;
+                horizontal[used++] = 1 - inverse * u;
+            }
             for (int i = 0; i < p.n_hist; ++i) {
                 const T v = std::abs(spatial[i] - yr);
                 if (v > spacing) continue;
-                for (int j = 0; j < p.n_hist; ++j) {
-                    const T u = std::abs(spatial[j] - xr);
-                    if (u > spacing) continue;
-                    const T weight = (1 - inverse * v) * (1 - inverse * u) * magnitude;
+                const T vertical = 1 - inverse * v;
+                T* row = histogram + i * row_stride;
+                for (int j = 0; j < used; ++j) {
+                    const T weight = vertical * horizontal[j] * magnitude;
                     const T portion = weight * angular * nearest;
-                    T* cell = histogram + (i * p.n_hist + j) * p.n_ori;
+                    T* cell = row + offsets[j];
                     cell[bin] += portion;
                     cell[next] += weight - portion;
                 }
@@ -389,24 +449,43 @@ bool descriptor(const ScaleOctave<T>& octave, const SiftOptions& p, double delta
 }
 
 template<class T>
-std::vector<std::uint8_t> describe_keys(const ScaleOctave<T>& octave, const SiftOptions& p,
-                                       double delta, const std::vector<SiftKeypoint>& keys,
-                                       const std::vector<std::size_t>& indices, bool& zero_norm) {
-    const int columns = p.n_hist * p.n_hist * p.n_ori;
-    std::vector<std::uint8_t> output(indices.size() * columns);
-    if (indices.empty()) return output;
-    const int workers = indices.size() >= 32 ? get_num_threads() : 1;
-    std::vector<T> working(std::size_t(workers) * columns);
-    std::vector<unsigned char> degenerate(workers, 0);
-    detail::partition(indices.size(), workers, [&](auto first, auto last, auto worker) {
-        for (auto i = first; i < last; ++i)
-            if (!descriptor(octave, p, delta, keys[indices[i]], working.data() + worker * columns,
-                            output.data() + i * columns))
-                degenerate[worker] = 1;
-    });
-    zero_norm = zero_norm || std::find(degenerate.begin(), degenerate.end(), 1) != degenerate.end();
-    return output;
-}
+class Descriptors {
+public:
+    explicit Descriptors(const SiftOptions& p) : columns(p.n_hist * p.n_hist * p.n_ori) {
+        for (int j = 0; j < p.n_ori; ++j) angles_[j] = (T(tau) * T(j + 1)) / T(p.n_ori);
+    }
+
+    void write(const ScaleOctave<T>& octave, const SiftOptions& p, double delta,
+               const SiftKeypoint* keys, std::size_t count, std::uint8_t* output,
+               bool& zero_norm, const std::size_t* indices = nullptr) {
+        const int workers = count >= 32 ? get_num_threads() : 1;
+        if (degenerate_.size() < std::size_t(workers)) {
+            working_.resize(std::size_t(workers) * columns);
+            degenerate_.resize(workers);
+        }
+        std::fill_n(degenerate_.begin(), workers, std::uint8_t{0});
+        detail::partition(count, workers, [&](auto first, auto last, auto worker) {
+            T* histogram = working_.data() + worker * columns;
+            bool degenerate = false;
+            for (auto i = first; i < last; ++i) {
+                const auto index = indices ? indices[i] : i;
+                if (!descriptor(octave, p, delta, keys[index], angles_.data(), histogram,
+                                output + index * columns))
+                    degenerate = true;
+            }
+            degenerate_[worker] = degenerate;
+        });
+        const auto end = degenerate_.begin() + workers;
+        zero_norm = zero_norm || std::find(degenerate_.begin(), end, 1) != end;
+    }
+
+    const int columns;
+
+private:
+    std::array<T, max_angular_bins> angles_;
+    std::vector<T> working_;
+    std::vector<std::uint8_t> degenerate_;
+};
 
 template<class T>
 SiftResult detect(const void* image, int height, int width, PixelType type,
@@ -414,25 +493,31 @@ SiftResult detect(const void* image, int height, int width, PixelType type,
     SiftResult result;
     std::vector<SiftKeypoint> extra;
     std::vector<std::uint8_t> extra_descriptors;
+    std::array<T, max_bins> hist, smooth;
     ScaleSpace<T> space(image, height, width, type, p);
+    Dog<T> dog;
+    Descriptors<T> descriptors(p);
+    const auto append_descriptors = [&](const auto& keys, std::size_t first, auto& output,
+                                        const auto& octave, double delta) {
+        const std::size_t count = keys.size() - first;
+        if (!count) return;
+        const std::size_t offset = output.size();
+        output.resize(offset + count * descriptors.columns);
+        descriptors.write(octave, p, delta, keys.data() + first, count, output.data() + offset,
+                          result.descriptor_has_zero_norm);
+    };
     for (int o = 0; o < octaves; ++o) {
-        auto octave = space.next(o + 1 < octaves);
+        const auto& octave = space.next(o > 0);
         const auto first = result.keypoints.size();
         const auto extra_first = extra.size();
-        localize(Dog<T>(octave), space, p, height, width, o, result.keypoints, result.promoted_positions);
+        dog.update(octave);
+        localize(dog, space, p, height, width, o, result.keypoints, result.promoted_positions);
         const double delta = std::ldexp(1.0 / p.upsampling, o);
         for (auto j = first; j < result.keypoints.size(); ++j)
-            orientations(octave, p, delta, result.keypoints[j], extra);
+            orientations(octave, p, delta, result.keypoints[j], extra, hist.data(), smooth.data());
         if (describe) {
-            std::vector<std::size_t> indices(result.keypoints.size() - first);
-            std::iota(indices.begin(), indices.end(), first);
-            auto rows = describe_keys(octave, p, delta, result.keypoints, indices,
-                                      result.descriptor_has_zero_norm);
-            result.descriptors.insert(result.descriptors.end(), rows.begin(), rows.end());
-            indices.resize(extra.size() - extra_first);
-            std::iota(indices.begin(), indices.end(), extra_first);
-            rows = describe_keys(octave, p, delta, extra, indices, result.descriptor_has_zero_norm);
-            extra_descriptors.insert(extra_descriptors.end(), rows.begin(), rows.end());
+            append_descriptors(result.keypoints, first, result.descriptors, octave, delta);
+            append_descriptors(extra, extra_first, extra_descriptors, octave, delta);
         }
     }
     result.multiple_orientations = !extra.empty();
@@ -445,18 +530,24 @@ template<class T>
 std::vector<std::uint8_t> extract(const void* image, int height, int width, PixelType type,
                                   const SiftOptions& p, int octaves,
                                   const std::vector<SiftKeypoint>& keys, bool& zero_norm) {
-    const int columns = p.n_hist * p.n_hist * p.n_ori;
-    std::vector<std::uint8_t> output(keys.size() * columns);
+    Descriptors<T> descriptors(p);
+    std::vector<std::uint8_t> output(keys.size() * descriptors.columns);
+    std::vector<std::size_t> ends(octaves + 1, 0);
+    for (const auto& key : keys) ++ends[key.octave + 1];
+    std::partial_sum(ends.begin(), ends.end(), ends.begin());
+    std::vector<std::size_t> indices(keys.size());
+    for (std::size_t j = 0; j < keys.size(); ++j)
+        indices[ends[keys[j].octave]++] = j;
+
     ScaleSpace<T> space(image, height, width, type, p);
     for (int o = 0; o < octaves; ++o) {
-        auto octave = space.next(o + 1 < octaves);
+        const auto first = o == 0 ? 0 : ends[o - 1];
+        const auto count = ends[o] - first;
+        const auto& octave = space.next(o > 0);
         const double delta = std::ldexp(1.0 / p.upsampling, o);
-        std::vector<std::size_t> indices;
-        for (std::size_t j = 0; j < keys.size(); ++j)
-            if (keys[j].octave == o) indices.push_back(j);
-        auto rows = describe_keys(octave, p, delta, keys, indices, zero_norm);
-        for (std::size_t j = 0; j < indices.size(); ++j)
-            std::copy_n(rows.data() + j * columns, columns, output.data() + indices[j] * columns);
+        if (count)
+            descriptors.write(octave, p, delta, keys.data(), count, output.data(), zero_norm,
+                              indices.data() + first);
     }
     return output;
 }

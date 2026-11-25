@@ -11,6 +11,7 @@
 #include <locale>
 #include <sstream>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 namespace skimagexx {
@@ -271,15 +272,14 @@ struct HaarRectangle {
     float weight;
 };
 
-using HaarFeature = std::vector<HaarRectangle>;
-
 } // namespace
 
 struct Cascade::Model {
     int height = 0, width = 0;
     bool haar = false;
     std::vector<Rectangle> lbp_rectangles;
-    std::vector<std::vector<Rectangle>> haar_rectangles;
+    std::vector<Rectangle> haar_rectangles;
+    std::vector<std::size_t> haar_feature_offsets;
     std::vector<Stage> stages;
     std::vector<Stump> stumps;
     std::size_t total_features = 0;
@@ -301,6 +301,7 @@ struct Cascade::Model {
         }
         const auto& features = cascade.get("features").children;
         total_features = features.size();
+        if (haar) haar_feature_offsets.push_back(0);
         for (const auto& feature : features) {
             if (!haar) {
                 lbp_rectangles.push_back(rectangle(feature.get("rect"), false));
@@ -309,11 +310,10 @@ struct Cascade::Model {
             if (const auto* tilted = feature.find("tilted"); tilted && scalar<int>(*tilted) != 0) {
                 throw std::invalid_argument("Tilted Haar cascade features are unsupported");
             }
-            auto& rectangles = haar_rectangles.emplace_back();
-            for (const auto& rect : feature.get("rects").children) {
-                rectangles.push_back(rectangle(rect, true));
-            }
+            const auto& rectangles = feature.get("rects").children;
             if (rectangles.empty()) throw std::invalid_argument("Empty Haar feature");
+            for (const auto& rect : rectangles) haar_rectangles.push_back(rectangle(rect, true));
+            haar_feature_offsets.push_back(haar_rectangles.size());
         }
         const auto& source_stages = cascade.get("stages").children;
         const auto count = scalar<std::ptrdiff_t>(cascade.get("stageNum"));
@@ -419,20 +419,23 @@ std::vector<CascadeDetection> Cascade::detect(const float* integral, int rows, i
         // the squared integral required for Haar variance normalization.
         squared.resize(pixel_count);
         for (int r = 0; r < rows; ++r) {
+            const auto row_offset = static_cast<Offset>(r) * stride;
+            const auto* top = padded.data() + row_offset;
+            const auto* bottom = top + stride;
+            const auto* squared_top = squared.data() + row_offset + 1;
+            auto* squared_bottom = squared.data() + row_offset + stride + 1;
             double accumulated = 0;
             for (int c = 0; c < columns; ++c) {
-                const auto offset = static_cast<Offset>(r) * stride + c;
-                const auto pixel = area_sum(padded.data() + offset, corners(0, 0, 1, 1, stride));
+                const float pixel = ((bottom[c + 1] + top[c]) - top[c + 1]) - bottom[c];
                 accumulated += static_cast<double>(pixel) * pixel;
-                squared[static_cast<std::size_t>(offset + stride + 1)] =
-                    accumulated + squared[static_cast<std::size_t>(offset + 1)];
+                squared_bottom[c] = accumulated + squared_top[c];
             }
         }
     }
 
     std::vector<Cluster> clusters;
     std::vector<LbpGrid> grids(model_->lbp_rectangles.size());
-    std::vector<HaarFeature> haar_features(model_->haar_rectangles.size());
+    std::vector<HaarRectangle> haar_rectangles(model_->haar_rectangles.size());
     for (const float scale : scales) {
         if (!std::isfinite(scale) || scale < 1) throw std::invalid_argument("Invalid cascade scale");
         const auto height = static_cast<float>(window_height) * scale;
@@ -465,55 +468,64 @@ std::vector<CascadeDetection> Cascade::detect(const float* integral, int rows, i
             const int norm_height = scaled(model_->height - 2, scale);
             norm_area = corners(border, border, norm_width, norm_height, stride);
             norm_pixels = static_cast<double>(norm_width) * norm_height;
-            for (std::size_t i = 0; i < haar_features.size(); ++i) {
-                auto& feature = haar_features[i];
-                feature.clear();
-                for (const auto& rect : model_->haar_rectangles[i]) {
-                    feature.push_back({corners(scaled(rect.x, scale), scaled(rect.y, scale),
-                                               scaled(rect.width, scale), scaled(rect.height, scale), stride),
-                                       rect.weight});
-                }
+            for (std::size_t i = 0; i < haar_rectangles.size(); ++i) {
+                const auto& rect = model_->haar_rectangles[i];
+                haar_rectangles[i] = {corners(scaled(rect.x, scale), scaled(rect.y, scale),
+                                              scaled(rect.width, scale), scaled(rect.height, scale), stride),
+                                      rect.weight};
             }
         }
-        for (Offset r = 0; r < max_r; r += step) {
-            for (Offset c = 0; c < max_c; c += step) {
-                const auto offset = r * stride + c;
-                const auto* origin = padded.data() + offset;
-                float variance_norm = 1.f;
-                if (model_->haar) {
-                    const double sum = area_sum(origin, norm_area);
-                    const double sum_squares = area_sum(squared.data() + offset, norm_area);
-                    const double variance = norm_pixels * sum_squares - sum * sum;
-                    if (variance > 0) variance_norm = static_cast<float>(std::sqrt(variance));
-                }
-                bool passed = true;
-                for (std::ptrdiff_t i = 0; i < stages_number; ++i) {
-                    const auto& stage = model_->stages[static_cast<std::size_t>(i)];
-                    float score = 0;
-                    for (auto j = stage.begin; j < stage.end; ++j) {
-                        const auto& stump = model_->stumps[j];
-                        bool left;
-                        if (model_->haar) {
-                            float value = 0;
-                            for (const auto& rect : haar_features[stump.feature]) {
-                                value += area_sum(origin, rect.area) * rect.weight;
+        // Select the feature evaluator once per scale, outside the stump loop.
+        const auto scan = [&](auto is_haar) {
+            constexpr bool haar = decltype(is_haar)::value;
+            for (Offset r = 0; r < max_r; r += step) {
+                const auto row_offset = r * stride;
+                const auto* image_row = padded.data() + row_offset;
+                const double* squared_row = nullptr;
+                if constexpr (haar) squared_row = squared.data() + row_offset;
+                for (Offset c = 0; c < max_c; c += step) {
+                    const auto* origin = image_row + c;
+                    float variance_norm = 1.f;
+                    if constexpr (haar) {
+                        const double sum = area_sum(origin, norm_area);
+                        const double sum_squares = area_sum(squared_row + c, norm_area);
+                        const double variance = norm_pixels * sum_squares - sum * sum;
+                        if (variance > 0) variance_norm = static_cast<float>(std::sqrt(variance));
+                    }
+                    bool passed = true;
+                    for (std::ptrdiff_t i = 0; i < stages_number; ++i) {
+                        const auto& stage = model_->stages[static_cast<std::size_t>(i)];
+                        float score = 0;
+                        for (auto j = stage.begin; j < stage.end; ++j) {
+                            const auto& stump = model_->stumps[j];
+                            bool left;
+                            if constexpr (haar) {
+                                float value = 0;
+                                const auto* offsets = model_->haar_feature_offsets.data() + stump.feature;
+                                const auto* rect = haar_rectangles.data() + offsets[0];
+                                const auto* end = haar_rectangles.data() + offsets[1];
+                                for (; rect != end; ++rect) {
+                                    value += area_sum(origin, rect->area) * rect->weight;
+                                }
+                                left = value < stump.threshold * variance_norm;
+                            } else {
+                                const unsigned code = lbp_code(origin, grids[stump.feature]);
+                                left = ((stump.lut[code >> 5] >> (code & 31)) & 1U) != 0;
                             }
-                            left = value < stump.threshold * variance_norm;
-                        } else {
-                            const unsigned code = lbp_code(origin, grids[stump.feature]);
-                            left = ((stump.lut[code >> 5] >> (code & 31)) & 1U) != 0;
+                            score += left ? stump.left : stump.right;
                         }
-                        score += left ? stump.left : stump.right;
+                        if (score < stage.threshold - eps) {
+                            passed = false;
+                            break;
+                        }
                     }
-                    if (score < stage.threshold - eps) {
-                        passed = false;
-                        break;
-                    }
+                    if (passed) add_detection(clusters, {static_cast<int>(r), static_cast<int>(c),
+                                                         current_width, current_height}, threshold);
                 }
-                if (passed) add_detection(clusters, {static_cast<int>(r), static_cast<int>(c),
-                                                     current_width, current_height}, threshold);
             }
-        }
+        };
+        if (model_->haar) scan(std::true_type{});
+        else scan(std::false_type{});
     }
     std::vector<CascadeDetection> result;
     for (const auto& cluster : clusters) {

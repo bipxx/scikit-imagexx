@@ -167,15 +167,20 @@ void correlate(const T* image, const T* pattern, int rows, int cols, int ph, int
 }
 
 void gradient_axis(const float* image, int rows, int cols, bool vertical, float* result) {
-    const int extent = vertical ? rows : cols;
-    const int stride = vertical ? cols : 1;
+    if (cols <= 0) return;
     for (int r = 0; r < rows; ++r) {
-        for (int c = 0; c < cols; ++c) {
-            const int position = vertical ? r : c;
-            const auto* p = image + std::size_t(r) * cols + c;
-            result[std::size_t(r) * cols + c] =
-                (p[position + 1 < extent ? stride : 0] - p[position > 0 ? -stride : 0]) *
-                (position > 0 && position + 1 < extent ? 0.5f : 1.0f);
+        const auto offset = std::size_t(r) * cols;
+        const auto* row = image + offset;
+        auto* dest = result + offset;
+        if (vertical) {
+            const auto* prev = r > 0 ? row - cols : row;
+            const auto* next = r + 1 < rows ? row + cols : row;
+            const float weight = r > 0 && r + 1 < rows ? 0.5f : 1.0f;
+            for (int c = 0; c < cols; ++c) dest[c] = (next[c] - prev[c]) * weight;
+        } else {
+            dest[0] = (row[cols > 1 ? 1 : 0] - row[0]) * 1.0f;
+            for (int c = 1; c + 1 < cols; ++c) dest[c] = (row[c + 1] - row[c - 1]) * 0.5f;
+            if (cols > 1) dest[cols - 1] = (row[cols - 1] - row[cols - 2]) * 1.0f;
         }
     }
 }
@@ -226,6 +231,7 @@ void hog_into(const Input* image, const HogOptions& o, Output* features, Output*
     const int block_rows = cell_rows - o.block_rows + 1, block_cols = cell_cols - o.block_cols + 1;
     const std::size_t block_size = std::size_t(o.block_rows) * o.block_cols * o.orientations;
     const double interval = 180.0 / o.orientations;
+    const float cell_area = static_cast<float>(o.cell_rows * o.cell_cols);
     const int workers = detail::active_workers(std::size_t(o.rows) * o.cols);
     std::vector<double> histogram(std::size_t(cell_rows) * cell_cols * o.orientations);
     detail::partition(std::size_t(cell_rows), workers, [&](auto begin, auto end, auto) {
@@ -236,14 +242,17 @@ void hog_into(const Input* image, const HogOptions& o, Output* features, Output*
                 std::fill(totals.begin(), totals.end(), 0.0f);
                 for (int ry = 0; ry < o.cell_rows; ++ry) {
                     const auto y = r * o.cell_rows + ry;
+                    const auto* row = image + y * row_stride;
+                    const bool vertical_interior = y > 0 && y + 1 < std::size_t(o.rows);
+                    const auto* p = row + c * o.cell_cols * o.channels;
                     for (int cx = 0; cx < o.cell_cols; ++cx) {
                         const int x = c * o.cell_cols + cx;
-                        const auto* p = image + y * row_stride + x * o.channels;
+                        const bool horizontal_interior = x > 0 && x + 1 < o.cols;
                         double best_x = 0, best_y = 0, best = -1;
                         for (int ch = 0; ch < o.channels; ++ch) {
-                            const Output dy = y > 0 && y + 1 < std::size_t(o.rows)
+                            const Output dy = vertical_interior
                                 ? Output(p[ch + row_stride]) - Output(p[ch - row_stride]) : Output{0};
-                            const Output dx = x > 0 && x + 1 < o.cols
+                            const Output dx = horizontal_interior
                                 ? Output(p[ch + o.channels]) - Output(p[ch - o.channels]) : Output{0};
                             const auto magnitude = double(dx) * dx + double(dy) * dy;
                             const double selection = std::is_same_v<Output, float> && o.channels > 1
@@ -262,11 +271,12 @@ void hog_into(const Input* image, const HogOptions& o, Output* features, Output*
                         if (bin + 1 < o.orientations && degrees >= (bin + 1) * interval) ++bin;
                         if (degrees < (bin + 1) * interval)
                             totals[bin] = static_cast<float>(totals[bin] + std::hypot(best_x, best_y));
+                        p += o.channels;
                     }
                 }
                 auto* dest = histogram.data() + (r * cell_cols + c) * o.orientations;
                 for (int i = 0; i < o.orientations; ++i)
-                    dest[i] = totals[i] / static_cast<float>(o.cell_rows * o.cell_cols);
+                    dest[i] = totals[i] / cell_area;
             }
         }
     });
@@ -341,13 +351,17 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
     std::vector<Output> magnitudes(size), angles(size), histogram(size), filtered(size);
     const auto scale = std::is_same_v<Input, std::uint8_t> ? Output(1.0 / 255.0) : Output{1};
     for (int r = 0; r < o.rows; ++r) {
+        const auto offset = std::size_t(r) * o.cols;
+        const auto* row = image + offset;
+        const auto* below = r + 1 < o.rows ? row + o.cols : nullptr;
+        auto* magnitude = magnitudes.data() + offset;
+        auto* angle = angles.data() + offset;
         for (int c = 0; c < o.cols; ++c) {
-            const auto i = std::size_t(r) * o.cols + c;
-            const auto center = Output(image[i]) * scale;
-            const auto dx = c + 1 < o.cols ? Output(image[i + 1]) * scale - center : Output{0};
-            const auto dy = r + 1 < o.rows ? Output(image[i + o.cols]) * scale - center : Output{0};
-            magnitudes[i] = std::sqrt(dx * dx + dy * dy);
-            angles[i] = std::atan2(dy, dx);
+            const auto center = Output(row[c]) * scale;
+            const auto dx = c + 1 < o.cols ? Output(row[c + 1]) * scale - center : Output{0};
+            const auto dy = below ? Output(below[c]) * scale - center : Output{0};
+            magnitude[c] = std::sqrt(dx * dx + dy * dy);
+            angle[c] = std::atan2(dy, dx);
         }
     }
     std::vector<int> y(groups), x(groups);
@@ -359,9 +373,10 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
             x[group] = static_cast<int>(std::nearbyint(radii[ring] * std::cos(theta)));
         }
     }
+    const auto kappa = Output(o.orientations / pi);
+    std::vector<const Output*> sample_rows(groups);
     for (int bin = 0; bin < o.orientations; ++bin) {
         const auto orientation = Output(2 * bin * pi / o.orientations - pi);
-        const auto kappa = Output(o.orientations / pi);
         for (std::size_t i = 0; i < size; ++i)
             histogram[i] = std::exp(kappa * std::cos(angles[i] - orientation)) * magnitudes[i];
         for (int ring = 0; ring <= o.rings; ++ring) {
@@ -370,12 +385,15 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
             const int first = ring == 0 ? 0 : 1 + (ring - 1) * o.histograms;
             const int last = ring == 0 ? 1 : first + o.histograms;
             for (int r = 0; r < oh; ++r) {
+                for (int group = first; group < last; ++group) {
+                    const auto row = std::size_t(r * o.step + o.radius + y[group]);
+                    sample_rows[group] = filtered.data() + row * o.cols;
+                }
                 for (int c = 0; c < ow; ++c) {
                     auto* dest = output + (std::size_t(r) * ow + c) * width + bin;
+                    const int col = c * o.step + o.radius;
                     for (int group = first; group < last; ++group) {
-                        const auto row = std::size_t(r * o.step + o.radius + y[group]);
-                        const auto col = c * o.step + o.radius + x[group];
-                        dest[group * o.orientations] = filtered[row * o.cols + col];
+                        dest[group * o.orientations] = sample_rows[group][col + x[group]];
                     }
                 }
             }
