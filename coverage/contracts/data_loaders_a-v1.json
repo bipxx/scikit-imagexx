@@ -1,0 +1,187 @@
+{
+  "base": "8fe4908a703e7a361cc2734be94c8cf2509d132c",
+  "scope": "Private Windows sample-data leaf with a standalone pybind11 extension. No bundled assets were copied into this repository.",
+  "owner": "codex-w11-data-a",
+  "source_raw_sha256": {
+    "benchmarks/data_loaders_a.py": "6711a0c4fca991f80816a0c6a1791e2758fbc318c34784b2bf34f656be585a42",
+    "include/skimagexx/data_loaders_a.hpp": "dc0f0749bb884e19f58c6aaed6affec9336e82df6971047d448250f8f1ccfcd9",
+    "python/skimagexx/_data_loaders_a.py": "a76246015a3e3a3f45bbbc037dc5ec984b5b0715a7a37eb61b31b51bf324ed28",
+    "src/bind_data_loaders_a.cpp": "1a8467a6ce7b74879fcc72c739d499e0dbbdf33966e66c1a74c7313bd03a8265",
+    "src/data_loaders_a.cpp": "4718a4e3f6dc8b83ca8c2d8d3719294ee9386de32104f24a6f167c222f8506a2",
+    "tests/cmake_consumer/data_loaders_a_consumer.cpp": "7fc02b9bb0c88bc2d7a4de53f133108ef41a44bd514963fb846f58165a8faeeb",
+    "tests/test_data_loaders_a_public.py": "1f8822750764221ec4b5f8e27c7a4fdf81fd9c7c2dfe5fb4b0b1c68601a3fba1"
+  },
+  "provider": {
+    "version": "scikit-image 0.26.0",
+    "cold_decode": "Verified installed files decoded with the stock ImageIO, tifffile or NumPy provider.",
+    "warm_copy": "File identity and decoder selection scoped to the current registry, cache and distribution. Immutable decoded bytes copied into fresh native storage.",
+    "download_all": "Original Pooch orchestration callable. Controlled local registry case uses a single sample stream for that same callable.",
+    "missing_remote": "Policy-aware fallback to the original provider."
+  },
+  "validation": {
+    "windows_python": "C:/Users/HEQ/Projects/scikit-imagexx/.venv/Scripts/python.exe",
+    "normal": {
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scalar": {
+      "environment": "SKIMAGEXX_DISABLE_SIMD=1",
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0
+    },
+    "msvc": {
+      "flags": "/std:c++17 /EHsc /O2 /fp:strict /W4, plus /LD for the extension",
+      "binding": "passed",
+      "consumer_exit": 0
+    },
+    "wsl_gcc": {
+      "version": "13.3.0",
+      "flags": "-std=c++17 -O3 -ffp-contract=off -fno-fast-math -frounding-math -Wall -Wextra -Wpedantic -Werror",
+      "binding": "passed",
+      "consumer_exit": 0
+    },
+    "python_ast_parsed": 1131
+  },
+  "performance": {
+    "scope": "One-thread warm local leaf calls on Windows. Cold file hashing and decoding are outside the timed interval.",
+    "acceptance": "All available cases must reach at least 1.0x median speedup.",
+    "batch_sample_count": 9,
+    "status": "passed for nine available cases",
+    "results": {
+      "astronaut": {
+        "original_ns": 13263200,
+        "native_ns": 172686.66666666666,
+        "speedup": 76.80500328147319,
+        "batch_calls": [1, 165],
+        "samples_ns": [
+          [13423700, 10494100, 17741900, 8771700, 13263200, 13882400, 21092200, 10888200, 11568600],
+          [235329.69696969696, 188858.18181818182, 260128.48484848486, 172686.66666666666, 74094.54545454546, 141020.60606060605, 114253.93939393939, 125055.75757575757, 192078.78787878787]
+        ]
+      },
+      "brain": {
+        "status": "remote fixture unavailable"
+      },
+      "cell": {
+        "original_ns": 12347150,
+        "native_ns": 71093.52818371607,
+        "speedup": 173.67473967662934,
+        "batch_calls": [2, 479],
+        "samples_ns": [
+          [18389700, 14576050, 5065300, 12579600, 9008300, 5246700, 15815800, 12347150, 5008750],
+          [71093.52818371607, 62739.87473903967, 83412.5260960334, 62742.171189979126, 94881.62839248434, 86451.7745302714, 64170.5636743215, 71819.624217119, 65825.8872651357]
+        ]
+      },
+      "cells3d": {
+        "status": "remote fixture unavailable"
+      },
+      "coins": {
+        "original_ns": 5233400,
+        "native_ns": 41638.50574712644,
+        "speedup": 125.6865467695408,
+        "batch_calls": [3, 522],
+        "samples_ns": [
+          [4245200, 5233400, 4572133.333333333, 7393700, 4207666.666666667, 4265566.666666667, 7807966.666666667, 6919000, 9947666.666666666],
+          [42970.30651340996, 41638.50574712644, 43484.48275862069, 57910.727969348656, 25141.76245210728, 30557.471264367818, 49563.9846743295, 32641.570881226053, 36277.77777777778]
+        ]
+      },
+      "colorwheel": {
+        "original_ns": 7019833.333333333,
+        "native_ns": 69658.79120879121,
+        "speedup": 100.77454993860707,
+        "batch_calls": [3, 364],
+        "samples_ns": [
+          [8481766.666666666, 7347533.333333333, 6867466.666666667, 7019833.333333333, 6904433.333333333, 6010800, 6874800, 10414066.666666666, 13623933.333333334],
+          [69658.79120879121, 66232.96703296703, 50073.9010989011, 73035.98901098901, 69346.7032967033, 111428.02197802198, 53646.703296703294, 76411.81318681319, 131703.02197802198]
+        ]
+      },
+      "eagle": {
+        "status": "remote fixture unavailable"
+      },
+      "hubble_deep_field": {
+        "original_ns": 21838700,
+        "native_ns": 487987.5,
+        "speedup": 44.752580752580755,
+        "batch_calls": [1, 56],
+        "samples_ns": [
+          [23513400, 18615900, 21838700, 25235600, 26401000, 18508700, 22020900, 21029300, 18508000],
+          [518435.71428571426, 334880.35714285716, 487987.5, 452701.78571428574, 520873.21428571426, 613242.8571428572, 620825, 266494.64285714284, 252414.2857142857]
+        ]
+      },
+      "human_mitosis": {
+        "status": "remote fixture unavailable"
+      },
+      "immunohistochemistry": {
+        "original_ns": 18690700,
+        "native_ns": 95091.35802469136,
+        "speedup": 196.555190589946,
+        "batch_calls": [1, 81],
+        "samples_ns": [
+          [18489900, 18690700, 11736500, 38513100, 16062500, 28197300, 17248000, 29491200, 22451900],
+          [103933.33333333333, 65409.87654320987, 73207.4074074074, 81182.71604938271, 171638.27160493826, 95091.35802469136, 133498.76543209876, 75783.95061728395, 122661.72839506173]
+        ]
+      },
+      "kidney": {
+        "status": "remote fixture unavailable"
+      },
+      "lbp_frontal_face_cascade_filename": {
+        "original_ns": 181869.5652173913,
+        "native_ns": 20623.050847457627,
+        "speedup": 8.818751724108358,
+        "batch_calls": [138, 590],
+        "samples_ns": [
+          [170221.01449275363, 167165.21739130435, 339731.884057971, 255349.27536231885, 173319.5652173913, 164171.73913043478, 209531.884057971, 181869.5652173913, 210608.69565217392],
+          [13608.813559322034, 28543.050847457627, 20623.050847457627, 22389.15254237288, 14033.050847457627, 25113.050847457627, 17088.813559322032, 26034.57627118644, 13605.93220338983]
+        ]
+      },
+      "lfw_subset": {
+        "original_ns": 3504033.3333333335,
+        "native_ns": 205290.32258064515,
+        "speedup": 17.068672742509953,
+        "batch_calls": [12, 62],
+        "samples_ns": [
+          [2333208.3333333335, 6846533.333333333, 5207683.333333333, 4999958.333333333, 2935250, 3504033.3333333335, 2886708.3333333335, 4202591.666666667, 2932883.3333333335],
+          [164964.51612903227, 123890.32258064517, 507393.5483870968, 276312.9032258064, 369272.5806451613, 185525.8064516129, 205290.32258064515, 179848.38709677418, 231712.90322580645]
+        ]
+      },
+      "download_all_local_registry": {
+        "original_ns": 10953466.666666666,
+        "native_ns": 10953466.666666666,
+        "speedup": 1,
+        "batch_calls": [3, 3],
+        "samples_ns": [
+          [11843466.666666666, 10953466.666666666, 7385366.666666667, 15463766.666666666, 11181133.333333334, 3722833.3333333335, 16407266.666666666, 6042033.333333333, 5189166.666666667],
+          [11843466.666666666, 10953466.666666666, 7385366.666666667, 15463766.666666666, 11181133.333333334, 3722833.3333333335, 16407266.666666666, 6042033.333333333, 5189166.666666667]
+        ]
+      }
+    }
+  },
+  "superseded_failures": [
+    "Initial MSVC link used the Python DLL name instead of the import library. Rebuilt using python313.lib.",
+    "Initial WSL invocation expanded shell variables at the argument boundary. Passed the build script over stdin and verified GCC compilation and execution.",
+    "Initial pytest run had 39 passes and four failures on TIFF view reuse. The binding and wrapper now copy the decoded owner and reconstruct its view, including planar channel reordering. Both complete profiles passed."
+  ],
+  "cleanup": {
+    "scratch": "D:/Scratch/track-a-workers/_wave2_tmp/codex-w11-data-a",
+    "removed": [
+      "bind_data_loaders_a_gcc.obj",
+      "bind_data_loaders_a.obj",
+      "data_loaders_a_consumer.obj",
+      "data_loaders_a_gcc.exe",
+      "data_loaders_a_gcc.obj",
+      "data_loaders_a_msvc.exe",
+      "data_loaders_a.obj"
+    ],
+    "logical_bytes": 3617874,
+    "free_before": 202091565056,
+    "free_after": 202095173632,
+    "retained": "_core.pyd"
+  },
+  "next_gate": {
+    "owner": "wave integration owner",
+    "status": "pending",
+    "trigger": "Wire the shared binding, data exports, SDK consumer and coverage in the integration branch. Verify the installed public routes and release qualification.",
+    "remote": "Authentic data parity and timings for brain, cells3d, eagle, human_mitosis and kidney remain pending until verified local files are supplied. Offline tests cover provider behavior using bundled fixtures."
+  }
+}
