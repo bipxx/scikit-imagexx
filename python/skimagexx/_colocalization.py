@@ -7,6 +7,7 @@ colocalization functions are never called. The process worker policy is shared
 with the sole installed/private core; this module does not create a worker pool.
 """
 import warnings
+from types import BuiltinFunctionType
 
 import numpy as np
 
@@ -14,6 +15,9 @@ from . import _core
 
 
 _PROFILES = {"1.24.4": 1, "2.5.4": 2}
+_PROFILE = _PROFILES.get(np.__version__, 0)
+_BOOL = np.dtype(bool)
+_ASARRAY = np.asarray if isinstance(np.asarray, BuiltinFunctionType) else None
 _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
           (4, "under", "underflow"), (8, "invalid", "invalid value"))
 
@@ -21,7 +25,7 @@ _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
 class _Context:
     def __init__(self):
         self.guards = _core.ColocalizationGuards()
-        self.profile = _PROFILES.get(np.__version__, 0)
+        self.profile = _PROFILE
 
     def check(self):
         self.guards.check()
@@ -31,6 +35,8 @@ class _Context:
         return array
 
     def array(self, value):
+        if type(value) is np.ndarray and np.asarray is _ASARRAY:
+            return self.retain(value)
         # Reject a forged existing ndarray BEFORE NumPy gets a chance to read
         # it. For a foreign conversion protocol, check every prior live owner
         # after the callback and capture the returned array before any read.
@@ -88,7 +94,7 @@ class _Context:
 
     def binary(self, value, variable_name):
         array = self.array(value)
-        if array.dtype == np.dtype(bool):
+        if array.dtype == _BOOL:
             # Preserve noncanonical bool bytes: their truth is byte != 0.
             return array
         self.check()
@@ -148,6 +154,14 @@ class _Context:
         self.dispatch(status, "square" if second is None else "multiply", snapshot)
         return value
 
+    def sum_product(self, first, second=None):
+        if first.size >= 128 and self.policy() is not None:
+            buffer_elements = np.getbufsize()
+            result = _core.coloc_product_sum(self.guards, first, second, self.profile, buffer_elements)
+            if result is not None:
+                return result
+        return self.sum(self.product(first, second))
+
     def count(self, array):
         self.check()
         if not self.profile:
@@ -178,6 +192,15 @@ def _shape(*arrays):
 
 
 def intersection_coeff(image0_mask, image1_mask, mask=None):
+    if (_PROFILE and np.asarray is _ASARRAY and type(image0_mask) is np.ndarray
+            and image0_mask.size >= 128 and type(image1_mask) is np.ndarray
+            and (mask is None or type(mask) is np.ndarray)):
+        counts = _core.coloc_dense_intersection(image0_mask, image1_mask, mask)
+        if counts is not None:
+            total, joint = counts
+            if total == 0:
+                return 0
+            return np.intp(joint) / np.intp(total) if _PROFILE == 2 else joint / total
     context = _Context()
     image0_mask = context.binary(image0_mask, "image0_mask")
     image1_mask = context.binary(image1_mask, "image1_mask")
@@ -211,7 +234,7 @@ def manders_coloc_coeff(image0, image1_mask, mask=None):
     total = context.sum(image0)
     if total == 0:
         return 0
-    joint = context.sum(context.product(image0, image1_mask))
+    joint = context.sum_product(image0, image1_mask)
     return context.provider(lambda a, b: a / b, joint, total)
 
 
@@ -230,9 +253,9 @@ def manders_overlap_coeff(image0, image1, mask=None):
         raise ValueError("image0 contains negative values")
     if context.minimum_negative(image1):
         raise ValueError("image1 contains negative values")
-    square0 = context.sum(context.product(image0))
-    square1 = context.sum(context.product(image1))
+    square0 = context.sum_product(image0)
+    square1 = context.sum_product(image1)
     product = context.provider(lambda a, b: a * b, square0, square1)
     denominator = context.provider(lambda a: a ** 0.5, product)
-    numerator = context.sum(context.product(image0, image1))
+    numerator = context.sum_product(image0, image1)
     return context.provider(lambda a, b: a / b, numerator, denominator)

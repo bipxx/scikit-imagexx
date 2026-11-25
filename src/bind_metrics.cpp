@@ -8,21 +8,43 @@
 #include <numeric>
 namespace py=pybind11;
 namespace {
-skimagexx::MetricImageView view(const py::array& image,const std::vector<std::size_t>& axes) {
+bool swapped(const py::dtype& dtype) {
+    const std::uint16_t one=1;
+    const bool little=*reinterpret_cast<const unsigned char*>(&one)!=0;
+    const auto byteorder=dtype.byteorder();
+    return dtype.itemsize()>1 && ((byteorder=='>' && little) || (byteorder=='<' && !little));
+}
+skimagexx::MetricImageView storage_view(const py::array& image) {
+    const auto dtype=image.dtype();
     skimagexx::MetricImageView result;result.data=image.data();
-    result.half=image.dtype().kind()=='f' && image.itemsize()==2;
-    result.type=result.half ? skimagexx::PixelType::uint16:skimagexx::bindings::real_pixel_type(image.dtype());
-    result.swap=!image.dtype().attr("isnative").cast<bool>() && image.itemsize()>1;
+    result.half=dtype.kind()=='f' && dtype.itemsize()==2;
+    result.type=result.half ? skimagexx::PixelType::uint16:skimagexx::bindings::real_pixel_type(dtype);
+    result.swap=swapped(dtype);
+    return result;
+}
+skimagexx::MetricImageView view(const py::array& image,const std::vector<std::size_t>& axes) {
+    auto result=storage_view(image);
+    result.shape.reserve(axes.size());result.strides.reserve(axes.size());
     for(auto axis:axes){result.shape.push_back(std::size_t(image.shape(py::ssize_t(axis))));result.strides.push_back(std::ptrdiff_t(image.strides(py::ssize_t(axis))));}
+    return result;
+}
+skimagexx::MetricImageView dense_reduction_view(const py::array& image) {
+    auto result=storage_view(image);
+    // Keep rank-zero inputs rank zero for the legacy NumPy scalar-power rule.
+    if(image.ndim()!=0) {
+        result.shape.push_back(std::size_t(image.size()));
+        result.strides.push_back(std::ptrdiff_t(image.itemsize()));
+    }
     return result;
 }
 std::vector<std::size_t> order(const py::array& image,bool keep) {
     std::vector<std::size_t> axes(std::size_t(image.ndim()));std::iota(axes.begin(),axes.end(),std::size_t{0});
+    if(!keep || (image.flags()&py::array::c_style))return axes;
     // Broadcast axes carry no physical ordering information. NumPy retains
     // logical C order rather than moving a zero-stride axis innermost.
-    if(keep)for(auto axis:axes)if(image.strides(py::ssize_t(axis))==0)return axes;
+    for(auto axis:axes)if(image.strides(py::ssize_t(axis))==0)return axes;
     const auto magnitude=[](py::ssize_t value){return value<0 ? std::uint64_t(-(value+1))+1:std::uint64_t(value);};
-    if(keep)std::stable_sort(axes.begin(),axes.end(),[&](auto a,auto b){return magnitude(image.strides(py::ssize_t(a)))>magnitude(image.strides(py::ssize_t(b)));});
+    std::stable_sort(axes.begin(),axes.end(),[&](auto a,auto b){return magnitude(image.strides(py::ssize_t(a)))>magnitude(image.strides(py::ssize_t(b)));});
     return axes;
 }
 }
@@ -33,11 +55,29 @@ void bind_metrics(py::module_& module) {
     module.def("metrics_reduce",[numpy,minimum,maximum,buffered](py::array first,py::array second,bool single,int normalization,bool capture_underflow,bool scalar_power_double) {
         if(first.ndim()!=second.ndim())throw py::value_error("Input images must have the same dimensions.");
         for(py::ssize_t axis=0;axis<first.ndim();++axis)if(first.shape(axis)!=second.shape(axis))throw py::value_error("Input images must have the same dimensions.");
+        const bool common_c=(first.flags()&second.flags()&py::array::c_style)!=0;
         const bool common_f=bool(first.flags()&py::array::f_style) && bool(second.flags()&py::array::f_style);
-        auto axes=order(first,common_f);auto a=view(first,axes),b=view(second,axes);
+        bool dense=common_c;
+        if(!dense && common_f) {
+            dense=true;
+            // The existing traversal retains C order even for a zero
+            // stride on a singleton axis of an otherwise F-contiguous array.
+            for(py::ssize_t axis=0;axis<first.ndim();++axis)
+                if(first.strides(axis)==0){dense=false;break;}
+        }
+        // The pinned kernel's reduction tree depends on the element count.
+        // A shared dense layout preserves its traversal and avoids row breaks.
+        const auto axes=dense ? std::vector<std::size_t>{}:order(first,common_f);
+        const auto a=dense ? dense_reduction_view(first):view(first,axes);
+        const auto b=dense ? dense_reduction_view(second):view(second,axes);
         const auto mode=static_cast<skimagexx::MetricNormalization>(normalization);
-        const auto true_axes=order(first,true);const bool separate=normalization!=0 && true_axes!=axes;
-        const auto normalized=view(first,true_axes);
+        skimagexx::MetricImageView normalized;
+        bool separate=false;
+        if(normalization!=0 && !common_f && !(first.flags()&py::array::c_style)) {
+            const auto true_axes=order(first,true);
+            separate=true_axes!=axes;
+            if(separate)normalized=view(first,true_axes);
+        }
         const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
         skimagexx::MetricSums result;
         {
@@ -86,10 +126,8 @@ void bind_metrics(py::module_& module) {
         } else output=numpy.attr("empty_like")(first,py::arg("dtype")=dtype,py::arg("order")="K",py::arg("subok")=false).cast<py::array>();
         const auto axes=order(output,true);const auto out=view(output,axes);
         const auto broadcast=[&](const py::array& input) {
-            skimagexx::MetricImageView result;result.data=input.data();
-            result.half=input.dtype().kind()=='f' && input.itemsize()==2;
-            result.type=result.half ? skimagexx::PixelType::uint16:skimagexx::bindings::real_pixel_type(input.dtype());
-            result.swap=!input.dtype().attr("isnative").cast<bool>() && input.itemsize()>1;
+            auto result=storage_view(input);
+            result.shape.reserve(axes.size());result.strides.reserve(axes.size());
             for(auto axis:axes) {
                 const auto logical=py::ssize_t(axis)-(output.ndim()-input.ndim());
                 result.shape.push_back(std::size_t(output.shape(py::ssize_t(axis))));

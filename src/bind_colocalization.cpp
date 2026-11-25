@@ -6,9 +6,16 @@
 #include <cstring>
 #include <limits>
 #include <memory>
+#include <optional>
 #include <vector>
 
 namespace py=pybind11;
+namespace skimagexx {
+std::array<std::uint64_t,3> coloc_intersection_strided(const ColocView&,const ColocView&,
+    const ColocView*,unsigned);
+int coloc_finite_min_negative(const ColocView&);
+ColocScalar coloc_product_sum(const ColocView&,const ColocView*,ColocReductionPlan);
+}
 namespace {
 using Type=skimagexx::ColocType;
 using View=skimagexx::ColocView;
@@ -76,7 +83,7 @@ public:
                 if(PyObject_GetBuffer(current.ptr(),&lease->value,PyBUF_SIMPLE)<0)throw py::error_already_set();
                 if(lease->value.len<0)throw py::value_error("colocalization invalid buffer extent");
                 allocation_=reinterpret_cast<std::uintptr_t>(lease->value.buf);
-                bytes_=std::size_t(lease->value.len);leases_.push_back(std::move(lease));check();return;
+                bytes_=std::size_t(lease->value.len);leases_.push_back(std::move(lease));check_extent();return;
             }
             auto array=py::reinterpret_borrow<py::array>(current);
             const auto* raw=py::detail::array_proxy(array.ptr());
@@ -90,13 +97,11 @@ public:
             if(!(raw->flags&py::detail::npy_api::NPY_ARRAY_OWNDATA_) || !(raw->flags&(py::array::c_style|py::array::f_style)))
                 throw py::value_error("colocalization requires an owned contiguous root allocation");
             allocation_=reinterpret_cast<std::uintptr_t>(raw->data);
-            bytes_=checked_product(count(stamps_.back()),std::size_t(stamps_.back().item));check();return;
+            bytes_=checked_product(count(stamps_.back()),std::size_t(stamps_.back().item));check_extent();return;
         }
         throw py::value_error("colocalization owner chain exceeds bound");
     }
     void check()const {
-        const auto limit=std::numeric_limits<std::uintptr_t>::max();
-        if((bytes_ && !allocation_) || bytes_>limit-allocation_)throw py::value_error("colocalization owner allocation overflows");
         for(const auto& stamp:stamps_) {
             const auto* raw=py::detail::array_proxy(stamp.array.ptr());
             if(raw->data!=stamp.data || raw->base!=stamp.base || reinterpret_cast<PyObject*>(raw->descr)!=stamp.dtype ||
@@ -105,6 +110,13 @@ public:
             for(py::ssize_t axis=0;axis<stamp.array.ndim();++axis)
                 if(stamp.array.shape(axis)!=stamp.shape[std::size_t(axis)] || stamp.array.strides(axis)!=stamp.strides[std::size_t(axis)])
                     throw py::value_error("colocalization owner metadata changed during the call");
+        }
+    }
+private:
+    void check_extent()const {
+        const auto limit=std::numeric_limits<std::uintptr_t>::max();
+        if((bytes_ && !allocation_) || bytes_>limit-allocation_)throw py::value_error("colocalization owner allocation overflows");
+        for(const auto& stamp:stamps_) {
             if(!count(stamp))continue;
             std::uintptr_t negative=0,positive=0;
             for(std::size_t axis=0;axis<stamp.shape.size();++axis) {
@@ -121,6 +133,7 @@ public:
                 throw py::value_error("colocalization array escapes its current owner allocation");
         }
     }
+public:
     const void* allocation()const{return reinterpret_cast<const void*>(allocation_);}
     std::size_t bytes()const{return bytes_;}
 };
@@ -152,10 +165,12 @@ bool real_type(const py::array& array,Type& result) {
     case 'b':if(size==1){result=Type::boolean;return true;}return false;
     case 'u':
         if(size==1)result=Type::uint8;else if(size==2)result=Type::uint16;
-        else if(size==4)result=Type::uint32;else if(size==8)result=Type::uint64;else return false;return true;
+        else if(size==4)result=Type::uint32;else if(size==8)result=Type::uint64;else return false;
+        return true;
     case 'i':
         if(size==1)result=Type::int8;else if(size==2)result=Type::int16;
-        else if(size==4)result=Type::int32;else if(size==8)result=Type::int64;else return false;return true;
+        else if(size==4)result=Type::int32;else if(size==8)result=Type::int64;else return false;
+        return true;
     case 'f':
         if(size==2)result=Type::float16;else if(size==4)result=Type::float32;else if(size==8)result=Type::float64;else return false;return true;
     default:return false;
@@ -171,20 +186,21 @@ const char* dtype_name(Type type) {
     }throw py::value_error("unknown colocalization dtype");
 }
 struct Input {
-    std::vector<std::size_t> shape;
-    std::vector<std::ptrdiff_t> strides;
+    std::array<std::size_t,skimagexx::colocalization_max_rank> shape;
+    std::array<std::ptrdiff_t,skimagexx::colocalization_max_rank> strides;
     View value;
     Input(Guards& guards,const py::array& input,Type type) {
         auto& owner=guards.add(input);
-        for(py::ssize_t axis=0;axis<input.ndim();++axis){shape.push_back(std::size_t(input.shape(axis)));strides.push_back(input.strides(axis));}
+        const auto rank=std::size_t(input.ndim());
+        for(std::size_t axis=0;axis<rank;++axis){shape[axis]=std::size_t(input.shape(axis));strides[axis]=input.strides(axis);}
         const std::uint16_t one=1;const bool little=*reinterpret_cast<const unsigned char*>(&one)!=0;
         const auto order=input.dtype().byteorder();
-        value={input.data(),owner.allocation(),owner.bytes(),{shape.data(),shape.size()},
-               {strides.data(),strides.size()},type,(order=='>' && little)||(order=='<' && !little)};
+        value={input.data(),owner.allocation(),owner.bytes(),{shape.data(),rank},
+               {strides.data(),rank},type,(order=='>' && little)||(order=='<' && !little)};
     }
 };
 py::array output(Guards& guards,const Input& input,const skimagexx::ColocOrder& order,Type type) {
-    std::vector<py::ssize_t> shape(input.shape.begin(),input.shape.end()),strides(shape.size(),0);
+    std::vector<py::ssize_t> shape(input.shape.begin(),input.shape.begin()+order.rank),strides(shape.size(),0);
     std::size_t stride=skimagexx::coloc_itemsize(type);
     for(std::size_t i=0;i<order.rank;++i) {
         const auto axis=order.axes[i];strides[axis]=py::ssize_t(stride);
@@ -210,7 +226,8 @@ py::object scalar(const skimagexx::ColocScalar& value) {
     else if(item==8)std::memcpy(raw.data(),&value.bits,8);
     else raw[0]=static_cast<unsigned char>(value.bits);
     auto result=py::reinterpret_steal<py::object>(py::detail::npy_api::get().PyArray_Scalar_(raw.data(),dtype.ptr(),nullptr));
-    if(!result)throw py::error_already_set();return result;
+    if(!result)throw py::error_already_set();
+    return result;
 }
 skimagexx::ColocReductionPlan reduction(int profile,std::size_t buffer_elements) {
     if(profile!=1 && profile!=2)throw py::value_error("colocalization requires an audited NumPy profile");
@@ -225,6 +242,41 @@ void bind_colocalization(py::module_& module) {
         .def("add",[](Guards& guards,py::array array){guards.add(array);guards.check();},py::arg("array").noconvert())
         .def("check",&Guards::check);
     module.attr("colocalization_interface")=skimagexx::colocalization_interface;
+    module.def("coloc_dense_intersection",[mmap_type](const py::array& a,const py::array& b,const py::object& mask)->py::object {
+        const bool masked=!mask.is_none();
+        if(masked && !py::isinstance<py::array>(mask))return py::none();
+        const auto selection=masked ? py::reinterpret_borrow<py::array>(mask):a;
+        const py::array* arrays[]={&a,&b,&selection};
+        unsigned integers=0;
+        const unsigned count=masked ? 3 : 2;
+        for(unsigned i=0;i<count;++i) {
+            const auto& array=*arrays[i];
+            if(array.ndim()!=a.ndim())return py::none();
+            const auto number=array.dtype().num();
+            if(number==1 || number==2)integers|=1u<<i;
+            else if(number!=0)return py::none();
+            for(py::ssize_t axis=0;axis<a.ndim();++axis)
+                if(array.shape(axis)!=a.shape(axis))return py::none();
+        }
+        Guards guards(mmap_type);
+        std::array<std::uint64_t,3> counts;
+        try {
+            const auto type=[&](unsigned i){return integers&(1u<<i) ? Type::uint8:Type::boolean;};
+            Input first(guards,a,type(0)),second(guards,b,type(1));
+            std::optional<Input> roi;
+            if(masked)roi.emplace(guards,selection,type(2));
+            guards.check();
+            py::gil_scoped_release release;
+            counts=skimagexx::coloc_intersection_strided(first.value,second.value,
+                roi ? &roi->value:nullptr,integers);
+        } catch(const py::value_error&) {
+            // Replay the staged route to keep invalid binary controls and
+            // owner errors in argument order.
+            return py::none();
+        }
+        if(counts[2])return py::none();
+        return py::make_tuple(counts[0],counts[1]);
+    },py::arg("image0").noconvert(),py::arg("image1").noconvert(),py::arg("mask"));
     module.def("coloc_binary",[](Guards& guards,py::array array)->py::object {
         guards.add(array);Type type;if(!real_type(array,type))return py::none();
         Input input(guards,array,type);skimagexx::ColocPredicate valid;
@@ -251,12 +303,10 @@ void bind_colocalization(py::module_& module) {
     },py::arg("guards"),py::arg("image0").noconvert(),py::arg("image1").noconvert());
     module.def("coloc_min_negative",[](Guards& guards,py::array array)->py::object {
         guards.add(array);Type type;if(!real_type(array,type))return py::none();
-        Input input(guards,array,type);skimagexx::ColocPredicate result;
-        bool finite;guards.check();{py::gil_scoped_release release;
-            finite=skimagexx::coloc_all_finite(input.value);
-            if(finite)result=skimagexx::coloc_min_negative(input.value);
-        }
-        if(!finite)return py::none();return py::bool_(result.value);
+        Input input(guards,array,type);int result;
+        guards.check();{py::gil_scoped_release release;result=skimagexx::coloc_finite_min_negative(input.value);}
+        if(result<0)return py::none();
+        return py::bool_(result!=0);
     },py::arg("guards"),py::arg("array").noconvert());
     module.def("coloc_gather",[](Guards& guards,py::array array,py::array mask)->py::object {
         guards.add(array);guards.add(mask);Type type;if(!real_type(array,type))return py::none();
@@ -277,6 +327,28 @@ void bind_colocalization(py::module_& module) {
         catch(const skimagexx::ColocProviderRequired&){return py::none();}
         auto boxed=scalar(result);guards.check();return py::make_tuple(boxed,result.fp_status);
     },py::arg("guards"),py::arg("array").noconvert(),py::arg("profile"),py::arg("buffer_elements"));
+    module.def("coloc_product_sum",[](Guards& guards,const py::array& a,const py::object& second,
+        int profile,std::size_t buffer_elements)->py::object {
+        Type type;
+        if(!real_type(a,type) || (type!=Type::float32 && type!=Type::float64))return py::none();
+        Input first(guards,a,type);
+        std::optional<Input> other;
+        if(!second.is_none()) {
+            if(!py::isinstance<py::array>(second))return py::none();
+            auto b=py::reinterpret_borrow<py::array>(second);
+            Type btype;
+            if(!real_type(b,btype) || (btype!=type && btype!=Type::boolean))return py::none();
+            other.emplace(guards,b,btype);
+        }
+        const auto plan=reduction(profile,buffer_elements);
+        skimagexx::ColocScalar result;
+        guards.check();
+        try {
+            py::gil_scoped_release release;
+            result=skimagexx::coloc_product_sum(first.value,other ? &other->value:nullptr,plan);
+        } catch(const skimagexx::ColocProviderRequired&) {return py::none();}
+        auto boxed=scalar(result);guards.check();return boxed;
+    },py::arg("guards"),py::arg("image0").noconvert(),py::arg("image1"),py::arg("profile"),py::arg("buffer_elements"));
     module.def("coloc_product",[](Guards& guards,py::array a,py::object second)->py::object {
         guards.add(a);Type type;if(!real_type(a,type))return py::none();
         Input first(guards,a,type);std::unique_ptr<Input> other;

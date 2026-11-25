@@ -8,6 +8,7 @@
 #include <cstring>
 #include <functional>
 #include <limits>
+#include <memory>
 #include <stdexcept>
 #include <type_traits>
 
@@ -32,7 +33,10 @@ template<class T> std::intptr_t index_value(T value,bool& invalid) {
     if constexpr(std::is_floating_point_v<T>) {
         using Bits=std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
         Bits bits;std::memcpy(&bits,&value,sizeof(T));
-        constexpr Bits exponent=sizeof(T)==4 ? Bits(0x7f800000u) : Bits(0x7ff0000000000000ULL);
+        constexpr Bits exponent=[] {
+            if constexpr(sizeof(T)==4)return Bits{0x7f800000u};
+            else return Bits{0x7ff0000000000000ULL};
+        }();
         if((bits&exponent)==exponent){invalid=true;return std::numeric_limits<std::intptr_t>::min();}
         const double wide=double(value);
         constexpr double limit=sizeof(std::intptr_t)==8 ? 0x1p63 : 0x1p31;
@@ -47,7 +51,11 @@ template<class T> std::intptr_t index_value(T value,bool& invalid) {
 }
 template<class T,bool Half=false> ComponentsConversionInfo prepare(const ComponentsView& view,std::intptr_t* output,std::size_t count) {
     const auto workers=detail::active_workers(count);
-    struct alignas(64) Flag {bool invalid=false;};std::vector<Flag> flags(std::size_t(workers),Flag{});
+    struct alignas(64) Flag {
+        bool invalid=false;
+        unsigned char padding[64-sizeof(bool)]{};
+    };
+    std::vector<Flag> flags(std::size_t(workers),Flag{});
     std::vector<std::size_t> cstrides(view.shape.size());std::size_t stride=1;bool contiguous=true;
     for(auto axis=view.shape.size();axis-->0;) {
         cstrides[axis]=stride;
@@ -130,7 +138,8 @@ template<class T> std::size_t equal_prefix(const T* input,std::size_t count,T va
 #else
     (void)vectorized;
 #endif
-    while(n<count && input[n]==value)++n;return n;
+    while(n<count && input[n]==value)++n;
+    return n;
 }
 template<class T> void fill(T* output,std::size_t count,T value,bool vectorized) {
     if(count==1){*output=value;return;}
@@ -142,17 +151,17 @@ template<class T> void fill(T* output,std::size_t count,T value,bool vectorized)
 #endif
     std::fill(output+n,output+count,value);
 }
-template<class Index> Index root(std::vector<Index>& forest,Index node) {
+template<class Index> Index root(Index* forest,Index node) {
     while(forest[std::size_t(node)]!=node) {
         forest[std::size_t(node)]=forest[std::size_t(forest[std::size_t(node)])];node=forest[std::size_t(node)];
     }
     return node;
 }
-template<class Index> void unite(std::vector<Index>& forest,Index first,Index second) {
+template<class Index> void unite(Index* forest,Index first,Index second) {
     first=root(forest,first);second=root(forest,second);
     if(first<second)forest[std::size_t(second)]=first;else if(second<first)forest[std::size_t(first)]=second;
 }
-template<class Index> Index canonical(std::vector<Index>& forest,Index node,std::size_t& count) {
+template<class Index> Index canonical(Index* forest,Index node,std::size_t& count) {
     auto end=node;
     while(forest[std::size_t(end)]>0 && forest[std::size_t(end)]!=end)end=forest[std::size_t(end)];
     Index number;
@@ -164,7 +173,7 @@ template<class Index> Index canonical(std::vector<Index>& forest,Index node,std:
     return number;
 }
 template<class Input,class Index> std::size_t label(const Input* input,Index* output,const std::vector<std::size_t>& shape,
-    Input background,int connectivity) {
+    Input background,int connectivity,bool has_background=true) {
     if(shape.empty() || connectivity<1 || std::size_t(connectivity)>shape.size())throw std::invalid_argument("invalid component rank or connectivity");
     const auto count=count_of(shape);if(!count)return 0;
     if(!input || !output)throw std::invalid_argument("nonnull component input/output required");
@@ -172,18 +181,26 @@ template<class Input,class Index> std::size_t label(const Input* input,Index* ou
     const auto width=shape.back(),rows=count/width;const auto plan=row_plan(shape,connectivity);
     const bool vectorized=has_avx2();const auto workers=detail::active_workers(count);
     struct Interval {std::size_t begin=0,end=0;};std::vector<Interval> intervals(std::size_t(workers),Interval{});
-    std::vector<Index> forest(count+1);
+    // Only foreground run starts enter the forest. Each is initialized
+    // before its first union, so background and interior slots need no fill.
+    std::unique_ptr<Index[]> storage(new Index[count+1]);
+    auto* const forest=storage.get();
+    const auto is_background=[&](Input value){return has_background && value==background;};
     auto connect=[&](std::size_t row,std::size_t first,std::size_t last,Input value,Index id,
                      const Neighbor& neighbor) {
         const auto other=std::size_t(std::ptrdiff_t(row)+neighbor.row_delta);
         const auto left=first>neighbor.margin ? first-neighbor.margin : 0;
         const auto right=std::min(width,last+neighbor.margin);
-        std::size_t x=left;
-        while(x<right) {
-            const auto previous=output[other*width+x];
-            const auto length=equal_prefix(output+other*width+x,right-x,previous,vectorized);
-            if(previous && input[other*width+x]==value)unite(forest,id,previous);
-            x+=length;
+        const auto* keys=input+other*width;
+        const auto* previous_ids=output+other*width;
+        for(auto x=left;x<right;) {
+            if(keys[x]!=value) {
+                ++x;
+                continue;
+            }
+            const auto previous=previous_ids[x];
+            if(previous)unite(forest,id,previous);
+            x+=equal_prefix(previous_ids+x,right-x,previous,vectorized);
         }
     };
     const bool line=std::count_if(shape.begin(),shape.end(),[](auto length){return length>1;})<=1;
@@ -192,13 +209,13 @@ template<class Input,class Index> std::size_t label(const Input* input,Index* ou
             intervals[worker]={begin,end};auto i=begin;
             while(i<end) {
                 const auto value=input[i];const auto length=equal_prefix(input+i,end-i,value,vectorized);
-                if(value==background)fill(output+i,length,Index{0},vectorized);
+                if(is_background(value))fill(output+i,length,Index{0},vectorized);
                 else {const auto id=Index(i+1);forest[std::size_t(id)]=id;fill(output+i,length,id,vectorized);}
                 i+=length;
             }
         });
         for(const auto& interval:intervals)
-            if(interval.begin && interval.begin<interval.end && input[interval.begin]!=background && input[interval.begin]==input[interval.begin-1])
+            if(interval.begin && interval.begin<interval.end && !is_background(input[interval.begin]) && input[interval.begin]==input[interval.begin-1])
                 unite(forest,output[interval.begin],output[interval.begin-1]);
     } else {
     // Whole rows belong to one worker. Local union operations never touch
@@ -206,16 +223,30 @@ template<class Input,class Index> std::size_t label(const Input* input,Index* ou
     detail::partition(rows,workers,[&](std::size_t begin,std::size_t end,std::size_t worker) {
         intervals[worker]={begin,end};
         for(auto row=begin;row<end;++row) {
-            const auto mask=available(row,shape,plan);std::size_t x=0;
+            const auto mask=available(row,shape,plan);
+            // All runs in this row share the same predecessor rows.
+            std::array<const Neighbor*,13> nearby;
+            std::size_t nearby_count=0;
+            const bool small_plan=plan.neighbors.size()<=nearby.size();
+            const auto precedes=[&](const Neighbor& neighbor) {
+                return contains(mask,neighbor.required) &&
+                    std::ptrdiff_t(row)+neighbor.row_delta>=std::ptrdiff_t(begin);
+            };
+            if(small_plan)for(const auto& neighbor:plan.neighbors)
+                if(precedes(neighbor))nearby[nearby_count++]=&neighbor;
+            std::size_t x=0;
             while(x<width) {
                 const auto value=input[row*width+x];const auto length=equal_prefix(input+row*width+x,width-x,value,vectorized);
-                if(value==background)fill(output+row*width+x,length,Index{0},vectorized);
+                if(is_background(value))fill(output+row*width+x,length,Index{0},vectorized);
                 else {
                     const auto id=Index(row*width+x+1);forest[std::size_t(id)]=id;
                     fill(output+row*width+x,length,id,vectorized);
-                    for(const auto& neighbor:plan.neighbors)
-                        if(contains(mask,neighbor.required) && std::ptrdiff_t(row)+neighbor.row_delta>=std::ptrdiff_t(begin))
-                            connect(row,x,x+length,value,id,neighbor);
+                    if(small_plan) {
+                        for(std::size_t j=0;j<nearby_count;++j)connect(row,x,x+length,value,id,*nearby[j]);
+                    } else {
+                        for(const auto& neighbor:plan.neighbors)
+                            if(precedes(neighbor))connect(row,x,x+length,value,id,neighbor);
+                    }
                 }
                 x+=length;
             }
@@ -231,7 +262,7 @@ template<class Input,class Index> std::size_t label(const Input* input,Index* ou
                 std::size_t x=0;
                 while(x<width) {
                     const auto value=input[row*width+x];const auto length=equal_prefix(input+row*width+x,width-x,value,vectorized);
-                    if(value!=background)connect(row,x,x+length,value,output[row*width+x],neighbor);
+                    if(!is_background(value))connect(row,x,x+length,value,output[row*width+x],neighbor);
                     x+=length;
                 }
             }
@@ -287,6 +318,33 @@ void components_prepare_bool_into(const ComponentsView& view,std::uint8_t* outpu
 std::size_t components_label_index_into(const std::intptr_t* input,std::intptr_t* output,const std::vector<std::size_t>& shape,std::intptr_t background,int connectivity) {
     if(shape.empty() || shape.size()>3)throw std::invalid_argument("non-boolean component rank must be1-3");
     return label(input,output,shape,background,connectivity);
+}
+namespace {
+template<class T> std::size_t label_dense_integer(const void* input,std::intptr_t* output,
+    const std::vector<std::size_t>& shape,std::intptr_t background,int connectivity) {
+    const auto key=static_cast<T>(background);
+    bool invalid=false;
+    // The cast round trip is the same one used by index preparation. For
+    // example, UINT64_MAX matches background=-1 on a 64-bit platform.
+    const bool has_background=index_value(key,invalid)==background;
+    return label(static_cast<const T*>(input),output,shape,key,connectivity,has_background);
+}
+}
+// Binding-only entry point for aligned, native-endian C integer images.
+std::size_t components_label_dense_integer_into(const void* input,std::intptr_t* output,
+    const std::vector<std::size_t>& shape,std::intptr_t background,int connectivity,PixelType type) {
+    if(shape.empty() || shape.size()>3)throw std::invalid_argument("non-boolean component rank must be1-3");
+    switch(type) {
+        #define LABEL(tag,T) case PixelType::tag: if constexpr(sizeof(T)<=sizeof(std::intptr_t)) \
+            return label_dense_integer<T>(input,output,shape,background,connectivity); else break;
+        LABEL(int8,std::int8_t) LABEL(uint8,std::uint8_t)
+        LABEL(int16,std::int16_t) LABEL(uint16,std::uint16_t)
+        LABEL(int32,std::int32_t) LABEL(uint32,std::uint32_t)
+        LABEL(int64,std::int64_t) LABEL(uint64,std::uint64_t)
+        #undef LABEL
+        default:break;
+    }
+    throw std::invalid_argument("unsupported dense component input dtype");
 }
 std::size_t components_label_bool_into(const std::uint8_t* input,void* output,bool wide,const std::vector<std::size_t>& shape,std::uint8_t background,int connectivity) {
     if(background>1)throw std::invalid_argument("boolean component background must be0or1");
