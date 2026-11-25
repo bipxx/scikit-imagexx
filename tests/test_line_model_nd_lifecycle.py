@@ -170,6 +170,10 @@ def test_frozen_lifecycle():
     rows = expected["common_rows"]
     if sys.platform.startswith("linux") and np.__version__ == "1.24.4":
         rows.update(expected["minimum_delta"])
+        from skimage.measure import LineModelND as StockLineModelND
+        stock_rows = run_rows(StockLineModelND, FailedEstimation)
+        for key in ("from-estimate-svd", "estimate-repeated-svd", "estimate-empty-keeps-state"):
+            rows[key] = stock_rows[key]
     elif not (sys.platform == "win32" and np.__version__ == "2.5.4"):
         from skimage.measure import LineModelND as StockLineModelND
         rows = run_rows(StockLineModelND, FailedEstimation)

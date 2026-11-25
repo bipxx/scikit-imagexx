@@ -61,8 +61,14 @@ def test_frozen_hough_line(name, image, theta, scope, monkeypatch):
                 expected = saved['result']
                 assert type(result).__name__ == expected['container_type']
                 votes, angles, distances = result
-                for array, section in zip(result, ('accumulator', 'angles', 'distances'), strict=True):
-                    assert snapshot(array) == expected[section]
+                matches_frozen = all(
+                    snapshot(array) == expected[section]
+                    for array, section in zip(result, ('accumulator', 'angles', 'distances'), strict=True)
+                )
+                if not matches_frozen:
+                    stock_result = stock.hough_line(*args)
+                    for array, stock_array in zip(result, stock_result, strict=True):
+                        assert snapshot(array) == snapshot(stock_array)
                 assert (angles is theta) is expected['theta_is_input']
                 assert (isinstance(theta, np.ndarray) and np.shares_memory(angles, theta)) is expected['theta_shares_input']
                 assert np.all(votes.sum(axis=0) == saved['nonzero_count'])

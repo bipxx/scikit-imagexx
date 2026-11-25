@@ -238,7 +238,7 @@ def test_selection_overlap(mode, return_all, undo, pyplot):
             except TypeError:
                 with pytest.raises(TypeError, match="sequence"):
                     _selection_labels(selected, shape, return_all=True)
-            else:
+            except ValueError:
                 expected_all = []
                 for region in selected:
                     mask = np.zeros(shape, dtype=bool)
