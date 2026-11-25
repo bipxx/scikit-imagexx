@@ -2,11 +2,20 @@
 #include <immintrin.h>
 #include <cstring>
 #include <type_traits>
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
 
 namespace skimagexx::simd {
 namespace {
-unsigned first_zero(unsigned mask,unsigned lanes) {
-    unsigned i=0;for(;i<lanes && (mask&(1u<<i));++i){}return i;
+unsigned first_zero(unsigned mask) {
+#ifdef _MSC_VER
+    unsigned long bit;
+    _BitScanForward(&bit,~mask);
+    return unsigned(bit);
+#else
+    return unsigned(__builtin_ctz(~mask));
+#endif
 }
 template<class T> __m256i expand(const T* p,bool swap) {
     if constexpr(sizeof(T)==1) {
@@ -35,6 +44,30 @@ template<class T> std::size_t prepare(const void* source,std::intptr_t* output,s
         return i;
     }
 }
+template<class T> std::size_t prepare_float(const void* source,std::intptr_t* output,
+                                            std::size_t count,bool swap) {
+    if(sizeof(std::intptr_t)!=8 || swap)return 0;
+    const auto* input=static_cast<const T*>(source);
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        __m256d value;
+        if constexpr(std::is_same_v<T,float>) {
+            const auto words=_mm_loadu_si128(reinterpret_cast<const __m128i*>(input+i));
+            const auto magnitude=_mm_and_si128(words,_mm_set1_epi32(0x7fffffff));
+            const auto valid=_mm_cmpgt_epi32(_mm_set1_epi32(0x4f000000),magnitude);
+            if(_mm_movemask_ps(_mm_castsi128_ps(valid))!=15)break;
+            value=_mm256_cvtps_pd(_mm_castsi128_ps(words));
+        } else {
+            value=_mm256_loadu_pd(input+i);
+            const auto magnitude=_mm256_and_si256(_mm256_castpd_si256(value),_mm256_set1_epi64x(0x7fffffffffffffffLL));
+            const auto valid=_mm256_cmpgt_epi64(_mm256_set1_epi64x(0x41e0000000000000LL),magnitude);
+            if(_mm256_movemask_pd(_mm256_castsi256_pd(valid))!=15)break;
+        }
+        const auto converted=_mm256_cvtepi32_epi64(_mm256_cvttpd_epi32(value));
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),converted);
+    }
+    return i;
+}
 }
 std::size_t components_prepare_index(const void* input,std::intptr_t* output,std::size_t count,PixelType type,bool swap) {
     switch(type) {
@@ -42,6 +75,8 @@ std::size_t components_prepare_index(const void* input,std::intptr_t* output,std
         PREP(uint8,std::uint8_t) PREP(int8,std::int8_t) PREP(uint16,std::uint16_t) PREP(int16,std::int16_t)
         PREP(uint32,std::uint32_t) PREP(int32,std::int32_t) PREP(uint64,std::uint64_t) PREP(int64,std::int64_t)
         #undef PREP
+        case PixelType::float32:return prepare_float<float>(input,output,count,swap);
+        case PixelType::float64:return prepare_float<double>(input,output,count,swap);
         default:return 0;
     }
 }
@@ -54,24 +89,32 @@ std::size_t components_prepare_bool(const std::uint8_t* input,std::uint8_t* outp
     return i;
 }
 std::size_t components_equal_prefix(const void* input,std::size_t count,const void* scalar,std::size_t bytes) {
+    // Callers check AVX2 availability and finish the unprocessed suffix.
+    if((bytes!=1 && bytes!=2 && bytes!=4 && bytes!=8) || count<8*(32/bytes))return 0;
     std::size_t i=0;
     if(bytes==1) {
         const auto value=_mm256_set1_epi8(char(*static_cast<const std::uint8_t*>(scalar)));
         for(;i+32<=count;i+=32) {
             const auto equal=_mm256_cmpeq_epi8(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(static_cast<const char*>(input)+i)),value);
-            const auto mask=unsigned(_mm256_movemask_epi8(equal));if(mask!=0xffffffffu)return i+first_zero(mask,32);
+            const auto mask=unsigned(_mm256_movemask_epi8(equal));if(mask!=0xffffffffu)return i+first_zero(mask);
+        }
+    } else if(bytes==2) {
+        std::int16_t word;std::memcpy(&word,scalar,2);const auto value=_mm256_set1_epi16(word);
+        for(;i+16<=count;i+=16) {
+            const auto equal=_mm256_cmpeq_epi16(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(static_cast<const char*>(input)+i*2)),value);
+            const auto mask=unsigned(_mm256_movemask_epi8(equal));if(mask!=0xffffffffu)return i+first_zero(mask)/2;
         }
     } else if(bytes==4) {
         std::int32_t word;std::memcpy(&word,scalar,4);const auto value=_mm256_set1_epi32(word);
         for(;i+8<=count;i+=8) {
             const auto equal=_mm256_cmpeq_epi32(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(static_cast<const char*>(input)+i*4)),value);
-            const auto mask=unsigned(_mm256_movemask_ps(_mm256_castsi256_ps(equal)));if(mask!=255)return i+first_zero(mask,8);
+            const auto mask=unsigned(_mm256_movemask_ps(_mm256_castsi256_ps(equal)));if(mask!=255)return i+first_zero(mask);
         }
     } else {
         std::int64_t word;std::memcpy(&word,scalar,8);const auto value=_mm256_set1_epi64x(word);
         for(;i+4<=count;i+=4) {
             const auto equal=_mm256_cmpeq_epi64(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(static_cast<const char*>(input)+i*8)),value);
-            const auto mask=unsigned(_mm256_movemask_pd(_mm256_castsi256_pd(equal)));if(mask!=15)return i+first_zero(mask,4);
+            const auto mask=unsigned(_mm256_movemask_pd(_mm256_castsi256_pd(equal)));if(mask!=15)return i+first_zero(mask);
         }
     }
     return i;

@@ -28,6 +28,7 @@ __all__ = ['erosion','dilation','opening','closing','white_tophat','black_tophat
            'ellipse','octagon','octahedron','star','footprint_from_sequence','local_maxima','local_minima']
 _DTYPES = tuple(np.dtype(t) for t in ('bool','uint8','int8','uint16','int16','uint32',
                                     'int32','uint64','int64','float32','float64'))
+_OBJECT_DTYPES = frozenset(_DTYPES[:-2]) - {np.dtype('uint64')}
 _MODES = ('reflect','constant','nearest','mirror','wrap','max','min','ignore')
 _SEQUENCE_ERROR = ('All elements of footprint sequence must be a 2-tuple where the first '
                    'element of the tuple is an ndarray and the second is an integer '
@@ -45,6 +46,23 @@ def remove_small_objects(*args,**kwargs):
     if source is not None and (type(source) is not np.ndarray or
                               out is not None and type(out) is not np.ndarray):
         return fallback('morphology','remove_small_objects',*args,**kwargs)
+    if (type(source) is np.ndarray and out is None and len(args) <= 1
+            and not (args and 'ar' in kwargs)
+            and kwargs.keys() <= {'ar', 'connectivity', 'max_size', 'out'}
+            and source.size and source.flags.c_contiguous and source.flags.aligned
+            and source.dtype in _OBJECT_DTYPES and source.dtype.metadata is None):
+        threshold = kwargs.get('max_size', 64)
+        connectivity = kwargs.get('connectivity', 1)
+        fast = getattr(_core, 'components_remove_small_objects_fast', None)
+        if (fast is not None and type(threshold) is int and 0 <= threshold < 2**63
+                and type(connectivity) is int and 1 <= connectivity < 2**31):
+            result = fast(source, threshold, connectivity)
+            if result is not None:
+                output, single_label = result
+                if single_label:
+                    warnings.warn('Only one label was provided to `remove_small_objects`. Did you mean to use a boolean array?',
+                                  UserWarning, stacklevel=2)
+                return output
     return _consumers.remove_small_objects(*args,**kwargs)
 
 

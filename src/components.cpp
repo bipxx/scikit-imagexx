@@ -11,6 +11,7 @@
 #include <memory>
 #include <stdexcept>
 #include <type_traits>
+#include <unordered_map>
 
 namespace skimagexx {
 namespace {
@@ -51,15 +52,41 @@ template<class T> std::intptr_t index_value(T value,bool& invalid) {
 }
 template<class T,bool Half=false> ComponentsConversionInfo prepare(const ComponentsView& view,std::intptr_t* output,std::size_t count) {
     const auto workers=detail::active_workers(count);
+    const auto* input=static_cast<const char*>(view.data);
+    std::size_t stride=1;
+    bool contiguous=true;
+    for(auto axis=view.shape.size();axis-->0;) {
+        if(view.shape[axis]>1 && view.strides[axis]!=std::ptrdiff_t(stride*sizeof(T)))contiguous=false;
+        stride*=view.shape[axis];
+    }
+    const auto convert=[&](const char* data,bool& invalid) {
+        const auto word=read<T>(data,view.swap);
+        if constexpr(Half) {
+            if((word&0x7c00)==0x7c00) {
+                invalid=true;
+                return std::numeric_limits<std::intptr_t>::min();
+            }
+            return index_value(detail::decode_half(word),invalid);
+        } else return index_value(word,invalid);
+    };
+    if(contiguous && workers==1) {
+        std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+        if constexpr(!Half)if(count>=4 && has_avx2())
+            i=simd::components_prepare_index(input,output,count,view.type,view.swap);
+#endif
+        ComponentsConversionInfo info;
+        for(;i<count;++i)output[i]=convert(input+i*sizeof(T),info.invalid_cast);
+        return info;
+    }
     struct alignas(64) Flag {
         bool invalid=false;
         unsigned char padding[64-sizeof(bool)]{};
     };
     std::vector<Flag> flags(std::size_t(workers),Flag{});
-    std::vector<std::size_t> cstrides(view.shape.size());std::size_t stride=1;bool contiguous=true;
+    std::vector<std::size_t> cstrides(view.shape.size());stride=1;
     for(auto axis=view.shape.size();axis-->0;) {
         cstrides[axis]=stride;
-        if(view.shape[axis]>1 && view.strides[axis]!=std::ptrdiff_t(stride*sizeof(T)))contiguous=false;
         stride*=view.shape[axis];
     }
     // Preallocate odometers outside OpenMP; no allocation/exception in a team.
@@ -75,11 +102,7 @@ template<class T,bool Half=false> ComponentsConversionInfo prepare(const Compone
             position[axis]=(begin/cstrides[axis])%view.shape[axis];offset+=std::ptrdiff_t(position[axis])*view.strides[axis];
         }
         for(auto i=begin;i<end;++i) {
-            const auto word=read<T>(static_cast<const char*>(view.data)+offset,view.swap);
-            if constexpr(Half) {
-                if((word&0x7c00)==0x7c00) {invalid=true;output[i]=std::numeric_limits<std::intptr_t>::min();}
-                else output[i]=index_value(detail::decode_half(word),invalid);
-            } else output[i]=index_value(word,invalid);
+            output[i]=convert(input+offset,invalid);
             for(auto axis=view.shape.size();axis-->0;) {
                 if(position[axis]+1<view.shape[axis]){++position[axis];offset+=view.strides[axis];break;}
                 offset-=std::ptrdiff_t(view.shape[axis]-1)*view.strides[axis];position[axis]=0;
@@ -132,9 +155,11 @@ template<class T> std::size_t equal_prefix(const T* input,std::size_t count,T va
     // paying for an out-of-line SIMD scan; keep vector scans for long runs.
     if(!count || input[0]!=value)return 0;
     if(count==1 || input[1]!=value)return 1;
-    std::size_t n=2;
+    if(count==2 || input[2]!=value)return 2;
+    if(count==3 || input[3]!=value)return 3;
+    std::size_t n=4;
 #ifdef SKIMAGEXX_AVX2
-    if(vectorized && count>=32/sizeof(T))n=simd::components_equal_prefix(input,count,&value,sizeof(T));
+    if(vectorized && count>=8*(32/sizeof(T)))n=simd::components_equal_prefix(input,count,&value,sizeof(T));
 #else
     (void)vectorized;
 #endif
@@ -172,14 +197,66 @@ template<class Index> Index canonical(Index* forest,Index node,std::size_t& coun
     }
     return number;
 }
+template<class Input,class Index> std::size_t label_2d(const Input* input,Index* output,
+    std::size_t rows,std::size_t width,Input background,bool has_background,bool diagonal,bool vectorized) {
+    const auto count=rows*width;
+    std::unique_ptr<std::uint32_t[]> storage(new std::uint32_t[count+1]);
+    auto* const forest=storage.get();
+    forest[0]=0;
+    auto* ids=output;
+    auto* keys=input;
+    for(std::size_t y=0;y<rows;++y,ids+=width,keys+=width) {
+        const auto* previous_keys=y ? keys-width : nullptr;
+        const auto* previous_ids=y ? ids-width : nullptr;
+        for(std::size_t x=0;x<width;) {
+            const auto value=keys[x];
+            const auto length=equal_prefix(keys+x,width-x,value,vectorized);
+            const auto end=x+length;
+            if(has_background && value==background) {
+                fill(ids+x,length,Index{0},vectorized);
+            } else {
+                const auto id=std::uint32_t(ids-output+x+1);
+                forest[id]=id;
+                fill(ids+x,length,Index(id),vectorized);
+                if(previous_keys) {
+                    auto left=x-std::size_t(diagonal && x>0);
+                    const auto right=end+std::size_t(diagonal && end<width);
+                    while(left<right) {
+                        if(previous_keys[left]!=value) {
+                            ++left;
+                            continue;
+                        }
+                        const auto previous=previous_ids[left];
+                        unite(forest,id,std::uint32_t(previous));
+                        left+=equal_prefix(previous_ids+left,right-left,previous,vectorized);
+                    }
+                }
+            }
+            x=end;
+        }
+    }
+    // Union links always point to an earlier run, whose final ID is ready
+    // when reached in C order. Only run starts have initialized parents.
+    std::uint32_t number=0;
+    for(std::size_t i=0;i<count;) {
+        const auto id=std::uint32_t(output[i]);
+        if(id)forest[id]=forest[id]==id ? ++number : forest[forest[id]];
+        i+=equal_prefix(output+i,count-i,Index(id),vectorized);
+    }
+    for(std::size_t i=0;i<count;++i)output[i]=Index(forest[std::uint32_t(output[i])]);
+    return number;
+}
 template<class Input,class Index> std::size_t label(const Input* input,Index* output,const std::vector<std::size_t>& shape,
     Input background,int connectivity,bool has_background=true) {
     if(shape.empty() || connectivity<1 || std::size_t(connectivity)>shape.size())throw std::invalid_argument("invalid component rank or connectivity");
     const auto count=count_of(shape);if(!count)return 0;
     if(!input || !output)throw std::invalid_argument("nonnull component input/output required");
     if(count>=std::size_t(std::numeric_limits<Index>::max()))throw std::overflow_error("component index capacity exceeded");
-    const auto width=shape.back(),rows=count/width;const auto plan=row_plan(shape,connectivity);
     const bool vectorized=has_avx2();const auto workers=detail::active_workers(count);
+    const auto width=shape.back();
+    if(shape.size()==2 && workers==1 && count<std::size_t(std::numeric_limits<std::int32_t>::max()))
+        return label_2d(input,output,shape[0],width,background,has_background,connectivity==2,vectorized);
+    const auto rows=count/width;const auto plan=row_plan(shape,connectivity);
     struct Interval {std::size_t begin=0,end=0;};std::vector<Interval> intervals(std::size_t(workers),Interval{});
     // Only foreground run starts enter the forest. Each is initialized
     // before its first union, so background and interior slots need no fill.
@@ -350,5 +427,161 @@ std::size_t components_label_bool_into(const std::uint8_t* input,void* output,bo
     if(background>1)throw std::invalid_argument("boolean component background must be0or1");
     if(wide)return label(input,static_cast<std::intptr_t*>(output),shape,background,connectivity);
     return label(input,static_cast<std::int32_t*>(output),shape,background,connectivity);
+}
+
+namespace {
+template<class F> decltype(auto) integer_width(std::size_t bytes,F visit) {
+    switch(bytes) {
+        case 1:return visit(std::uint8_t{});
+        case 2:return visit(std::uint16_t{});
+        case 4:return visit(std::uint32_t{});
+        case 8:return visit(std::uint64_t{});
+        default:throw std::invalid_argument("unsupported component integer width");
+    }
+}
+}
+
+// Binding-only kernels. The binding admits native C-order arrays and allocates
+// disjoint outputs with the public API's dtype and shape.
+std::vector<std::uint64_t> components_relabel_sequential_fast(const void* input,std::size_t count,
+    std::size_t bytes,bool signed_input,std::unordered_map<std::uint64_t,std::uint64_t>& mapping) {
+    std::vector<std::uint64_t> keys;
+    const bool admitted=integer_width(bytes,[&](auto tag) {
+        using T=decltype(tag);
+        const auto* source=static_cast<const char*>(input);
+        for(std::size_t i=0;i<count;++i) {
+            const auto key=read<T>(source+i*sizeof(T),false);
+            if(signed_input && key>std::numeric_limits<std::make_signed_t<T>>::max())return false;
+            if(mapping.try_emplace(key,0).second)keys.push_back(key);
+        }
+        return true;
+    });
+    if(!admitted)return {};
+    std::sort(keys.begin(),keys.end());
+    return keys;
+}
+
+void components_relabel_write_fast(const void* input,std::size_t count,std::size_t bytes,
+    const std::vector<std::uint64_t>& keys,std::uint64_t offset,
+    std::unordered_map<std::uint64_t,std::uint64_t>& mapping,void* old_keys,
+    void* new_values,void* output,std::size_t output_bytes) {
+    integer_width(bytes,[&](auto input_tag) {
+        using Input=decltype(input_tag);
+        const auto* source=static_cast<const char*>(input);
+        auto* old=static_cast<char*>(old_keys);
+        integer_width(output_bytes,[&](auto output_tag) {
+            using Output=decltype(output_tag);
+            auto* values=static_cast<char*>(new_values);
+            auto* result=static_cast<char*>(output);
+            for(std::size_t k=0;k<keys.size();++k) {
+                const auto key=keys[k];
+                const auto value=key ? offset++ : 0;
+                mapping.at(key)=value;
+                const auto old_value=Input(key);
+                const auto new_value=Output(value);
+                std::memcpy(old+k*sizeof(Input),&old_value,sizeof(Input));
+                std::memcpy(values+k*sizeof(Output),&new_value,sizeof(Output));
+            }
+            const auto& lookup=mapping;
+            detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
+                for(auto i=begin;i<end;++i) {
+                    const auto key=read<Input>(source+i*sizeof(Input),false);
+                    const auto found=lookup.find(key);
+                    const auto value=found==lookup.end() ? Output{0} : Output(found->second);
+                    std::memcpy(result+i*sizeof(Output),&value,sizeof(Output));
+                }
+            });
+        });
+    });
+}
+
+void components_clear_border_fast(const ComponentsView& view,void* output,
+    std::size_t bytes,std::size_t border) {
+    const auto count=count_of(view.shape);
+    const auto rows=view.shape[0],width=view.shape[1];
+    if(border>=rows-border || border>=width-border) {
+        std::memset(output,0,count*bytes);
+        return;
+    }
+    std::unique_ptr<std::intptr_t[]> labels(new std::intptr_t[count]);
+    std::size_t number;
+    if(view.type==PixelType::boolean) {
+        std::unique_ptr<std::uint8_t[]> keys(new std::uint8_t[count]);
+        components_prepare_bool_into(view,keys.get());
+        number=label(keys.get(),labels.get(),view.shape,std::uint8_t{0},2);
+    } else {
+        number=components_label_dense_integer_into(view.data,labels.get(),view.shape,0,2,view.type);
+    }
+    std::vector<std::uint8_t> remove(number+1);
+    for(std::size_t y=0;y<rows;++y) {
+        const auto* ids=labels.get()+y*width;
+        if(y<border || rows-y<=border) {
+            for(std::size_t x=0;x<width;++x)remove[ids[x]]=1;
+        } else {
+            for(std::size_t x=0;x<border;++x) {
+                remove[ids[x]]=1;
+                remove[ids[width-1-x]]=1;
+            }
+        }
+    }
+    integer_width(bytes,[&](auto tag) {
+        using T=decltype(tag);
+        const auto* source=static_cast<const char*>(view.data);
+        auto* result=static_cast<char*>(output);
+        detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
+            for(auto i=begin;i<end;++i) {
+                const auto value=remove[labels[i]] ? T{0} : read<T>(source+i*sizeof(T),false);
+                std::memcpy(result+i*sizeof(T),&value,sizeof(T));
+            }
+        });
+    });
+}
+
+bool components_remove_small_objects_fast(const ComponentsView& view,void* output,
+    std::size_t bytes,double threshold,int connectivity) {
+    const auto count=count_of(view.shape);
+    if(!count)return false;
+    const auto* input=static_cast<const char*>(view.data);
+    auto* result=static_cast<char*>(output);
+    if(threshold==0) {
+        std::memcpy(result,input,count*bytes);
+        return false;
+    }
+    const bool boolean=view.type==PixelType::boolean;
+    std::unique_ptr<std::intptr_t[]> labels(new std::intptr_t[count]);
+    std::size_t maximum=0;
+    if(boolean) {
+        std::unique_ptr<std::uint8_t[]> keys(new std::uint8_t[count]);
+        components_prepare_bool_into(view,keys.get());
+        maximum=label(keys.get(),labels.get(),view.shape,std::uint8_t{0},connectivity);
+    } else {
+        components_prepare_index_into(view,labels.get());
+        for(std::size_t i=0;i<count;++i) {
+            const auto key=labels[i];
+            if(key<0)throw std::invalid_argument("Negative value labels are not supported. Try relabeling the input with `scipy.ndimage.label` or `skimage.morphology.label`.");
+            maximum=std::max(maximum,std::size_t(key));
+        }
+    }
+    const auto filter=[&](const auto& size_of) {
+        integer_width(bytes,[&](auto tag) {
+            using T=decltype(tag);
+            detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
+                for(auto i=begin;i<end;++i) {
+                    const auto value=double(size_of(std::size_t(labels[i])))<=threshold ? T{0} : read<T>(input+i*sizeof(T),false);
+                    std::memcpy(result+i*sizeof(T),&value,sizeof(T));
+                }
+            });
+        });
+    };
+    if(boolean || (maximum<=16*1024*1024 && maximum<=count+1024)) {
+        std::vector<std::size_t> sizes(maximum+1);
+        for(std::size_t i=0;i<count;++i)++sizes[std::size_t(labels[i])];
+        filter([&](std::size_t key){return sizes[key];});
+    } else {
+        std::unordered_map<std::size_t,std::size_t> sizes;
+        for(std::size_t i=0;i<count;++i)++sizes[std::size_t(labels[i])];
+        filter([&](std::size_t key){return sizes.at(key);});
+    }
+    return !boolean && maximum==1;
 }
 }

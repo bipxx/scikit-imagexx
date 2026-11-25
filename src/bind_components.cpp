@@ -4,15 +4,43 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <limits>
+#include <unordered_map>
 namespace py=pybind11;
 namespace skimagexx {
 std::size_t components_label_dense_integer_into(const void*,std::intptr_t*,
     const std::vector<std::size_t>&,std::intptr_t,int,PixelType);
+std::vector<std::uint64_t> components_relabel_sequential_fast(const void*,std::size_t,
+    std::size_t,bool,std::unordered_map<std::uint64_t,std::uint64_t>&);
+void components_relabel_write_fast(const void*,std::size_t,std::size_t,
+    const std::vector<std::uint64_t>&,std::uint64_t,std::unordered_map<std::uint64_t,std::uint64_t>&,
+    void*,void*,void*,std::size_t);
+void components_clear_border_fast(const ComponentsView&,void*,std::size_t,std::size_t);
+bool components_remove_small_objects_fast(const ComponentsView&,void*,std::size_t,double,int);
 }
 namespace {
 bool aligned_c(const py::array& image) {
-    constexpr auto flags=py::array::c_style|py::detail::npy_api::NPY_ARRAY_ALIGNED_;
+    constexpr int flags=int(py::array::c_style)|int(py::detail::npy_api::NPY_ARRAY_ALIGNED_);
     return (image.flags()&flags)==flags;
+}
+bool fast_consumer_input(const py::array& image,bool allow_bool) {
+    const auto dtype=image.dtype();
+    const auto kind=dtype.kind();
+    const auto bytes=dtype.itemsize();
+    return Py_TYPE(image.ptr())==py::detail::npy_api::get().PyArray_Type_ && aligned_c(image) &&
+        ((allow_bool && kind=='b') || ((kind=='i' || kind=='u') &&
+         (bytes==1 || bytes==2 || bytes==4 || bytes==8))) &&
+        dtype.attr("isnative").cast<bool>() && dtype.attr("metadata").is_none();
+}
+std::vector<py::ssize_t> dimensions(const py::array& image) {
+    return {image.shape(),image.shape()+image.ndim()};
+}
+py::dtype relabel_dtype(py::dtype input,std::uint64_t last) {
+    const auto required=last<=UINT8_MAX ? py::dtype::of<std::uint8_t>() :
+        last<=UINT16_MAX ? py::dtype::of<std::uint16_t>() :
+        last<=UINT32_MAX ? py::dtype::of<std::uint32_t>() : py::dtype::of<std::uint64_t>();
+    const auto bits=unsigned(input.itemsize()*8-(input.kind()=='i'));
+    const auto maximum=bits==64 ? UINT64_MAX : (std::uint64_t{1}<<bits)-1;
+    return input.itemsize()>=required.itemsize() && last<maximum ? input : required;
 }
 skimagexx::ComponentsView view(const py::array& image,bool boolean) {
     skimagexx::ComponentsView result;const auto kind=image.dtype().kind();const auto size=image.itemsize();
@@ -109,6 +137,64 @@ void bind_components(py::module_& module) {
         if(!prepared)return py::none();
         return py::make_tuple(output,py::int_(count));
     },py::arg("image").noconvert(),py::arg("background"),py::arg("connectivity"),py::arg("dtype"));
+    module.def("components_relabel_sequential_fast",[](const py::array& image,std::int64_t offset)->py::object {
+        if(sizeof(std::intptr_t)!=8 || offset<=0 || !image.size() || !image.writeable() ||
+           !fast_consumer_input(image,false))return py::none();
+        const auto dtype=image.dtype();
+        const auto bytes=std::size_t(dtype.itemsize());
+        const auto count=std::size_t(image.size());
+        const auto* input=image.data();
+        const bool signed_input=dtype.kind()=='i';
+        std::unordered_map<std::uint64_t,std::uint64_t> mapping;
+        std::vector<std::uint64_t> keys;
+        {
+            py::gil_scoped_release release;
+            keys=skimagexx::components_relabel_sequential_fast(input,count,bytes,signed_input,mapping);
+        }
+        if(keys.empty())return py::none();
+        const auto positive=keys.size()-std::size_t(keys.front()==0);
+        if(positive && positive-1>std::uint64_t(INT64_MAX-offset))return py::none();
+        const auto last=positive ? std::uint64_t(offset)+positive-1 : 0;
+        const auto output_dtype=relabel_dtype(dtype,last);
+        const std::vector<py::ssize_t> map_shape{py::ssize_t(keys.size())};
+        py::array old_keys(dtype,map_shape);
+        py::array values(output_dtype,map_shape);
+        py::array output(output_dtype,dimensions(image));
+        {
+            py::gil_scoped_release release;
+            skimagexx::components_relabel_write_fast(input,count,bytes,keys,std::uint64_t(offset),mapping,
+                old_keys.mutable_data(),values.mutable_data(),output.mutable_data(),std::size_t(output_dtype.itemsize()));
+        }
+        return py::make_tuple(output,old_keys,values);
+    },py::arg("image").noconvert(),py::arg("offset"));
+    module.def("components_clear_border_fast",[](const py::array& image,py::ssize_t buffer)->py::object {
+        if(image.ndim()!=2 || buffer<0 || buffer>=image.shape(0) || buffer>=image.shape(1) ||
+           image.itemsize()>py::ssize_t(sizeof(std::intptr_t)) || !fast_consumer_input(image,true))return py::none();
+        const auto plan=view(image,image.dtype().kind()=='b');
+        py::array output(image.dtype(),dimensions(image));
+        {
+            py::gil_scoped_release release;
+            skimagexx::components_clear_border_fast(plan,output.mutable_data(),std::size_t(image.itemsize()),std::size_t(buffer)+1);
+        }
+        return output;
+    },py::arg("image").noconvert(),py::arg("buffer_size"));
+    module.def("components_remove_small_objects_fast",[](const py::array& image,std::int64_t threshold,int connectivity)->py::object {
+        const auto dtype=image.dtype();
+        const bool boolean=dtype.kind()=='b';
+        if(!image.size() || !fast_consumer_input(image,true) || threshold<0 || connectivity<1 ||
+           (boolean && (image.ndim()<1 || image.ndim()>3 || connectivity>image.ndim())) ||
+           (dtype.kind()=='u' && dtype.itemsize()>=py::ssize_t(sizeof(std::intptr_t))) ||
+           dtype.itemsize()>py::ssize_t(sizeof(std::intptr_t)))return py::none();
+        const auto plan=view(image,boolean);
+        py::array output(dtype,dimensions(image));
+        bool single_label;
+        {
+            py::gil_scoped_release release;
+            single_label=skimagexx::components_remove_small_objects_fast(plan,output.mutable_data(),
+                std::size_t(dtype.itemsize()),double(threshold),connectivity);
+        }
+        return py::make_tuple(output,single_label);
+    },py::arg("image").noconvert(),py::arg("max_size"),py::arg("connectivity"));
 }
 #ifdef SKIMAGEXX_COMPONENTS_STANDALONE
 PYBIND11_MODULE(_components_core,module) {
