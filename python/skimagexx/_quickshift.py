@@ -45,7 +45,7 @@ def quickshift(
             if sigma:
                 from scipy.ndimage import gaussian_filter
                 values = gaussian_filter(values, [sigma, sigma, 0], mode='reflect')
-            values = np.ascontiguousarray(values * ratio)
+            values = np.multiply(values, ratio, order='C')
             noise = np.random.default_rng(rng).normal(scale=0.00001, size=values.shape[:2])
             noise = noise.astype(values.dtype, copy=False)
             result = _core.quickshift_prepared(values, noise, kernel_size, max_dist)

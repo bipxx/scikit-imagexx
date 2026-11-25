@@ -18,8 +18,14 @@ def active_contour(
     boundary_condition='periodic',
 ):
     """Fit an open or closed snake to edges and intensities in a 2D image."""
-    args = (image, snake, alpha, beta, w_line, w_edge, gamma, max_px_move, max_num_iter, convergence)
-    result = _core.active_contour_finite(*args, boundary_condition)
+    result = _core.active_contour_finite(
+        image, snake, alpha, beta, w_line, w_edge, gamma, max_px_move,
+        max_num_iter, convergence, boundary_condition,
+    )
     if result is not None:
         return result
-    return fallback('segmentation', 'active_contour', *args, boundary_condition=boundary_condition)
+    return fallback(
+        'segmentation', 'active_contour', image, snake, alpha, beta, w_line,
+        w_edge, gamma, max_px_move, max_num_iter, convergence,
+        boundary_condition=boundary_condition,
+    )

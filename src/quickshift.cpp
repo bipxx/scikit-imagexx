@@ -32,6 +32,12 @@ void segment(const T* image, const T* noise, Index* labels,
         static_cast<double>(std::max(height, width))));
     const T inverse = static_cast<T>(-0.5 / (kernel_size * kernel_size));
     std::vector<T> densities(noise, noise + count);
+    std::vector<T> squared_offsets(2 * radius + 1);
+    T* const squared = squared_offsets.data() + radius;
+    for (Index offset = -radius; offset <= radius; ++offset) {
+        const T difference = static_cast<T>(offset);
+        squared[offset] = difference * difference;
+    }
 
     // Each pair contributes to both densities. Traversing the upper triangle
     // in row-major order preserves the summation order at every pixel.
@@ -46,15 +52,13 @@ void segment(const T* image, const T* noise, Index* labels,
             const auto right = std::min(width, col + radius + 1);
             for (auto other_row = row; other_row < bottom; ++other_row) {
                 const auto start = other_row == row ? col + 1 : left;
-                const auto row_difference = static_cast<T>(other_row - row);
-                const auto row_squared = row_difference * row_difference;
-                for (auto other_col = start; other_col < right; ++other_col) {
-                    const auto other = other_row * width + other_col;
-                    const auto col_difference = static_cast<T>(other_col - col);
-                    const auto squared = distance<T, fixed_channels>(
+                const auto row_squared = squared[other_row - row];
+                auto other = other_row * width + start;
+                for (auto other_col = start; other_col < right; ++other_col, ++other) {
+                    const auto squared_distance = distance<T, fixed_channels>(
                         values, image + other * channels, row_squared,
-                        col_difference * col_difference, channels);
-                    const auto weight = std::exp(static_cast<double>(squared * inverse));
+                        squared[other_col - col], channels);
+                    const auto weight = std::exp(static_cast<double>(squared_distance * inverse));
                     density = static_cast<T>(density + weight);
                     densities[other] = static_cast<T>(densities[other] + weight);
                 }
@@ -74,20 +78,19 @@ void segment(const T* image, const T* noise, Index* labels,
             const auto left = std::max(Index{0}, col - search_radius);
             const auto right = std::min(width, col + search_radius + 1);
             const auto* values = image + pixel * channels;
+            const auto density = densities[pixel];
             T closest = std::numeric_limits<T>::infinity();
             auto parent = pixel;
             for (auto other_row = top; other_row < bottom; ++other_row) {
-                const auto row_difference = static_cast<T>(row - other_row);
-                const auto row_squared = row_difference * row_difference;
-                for (auto other_col = left; other_col < right; ++other_col) {
-                    const auto other = other_row * width + other_col;
-                    if (densities[other] <= densities[pixel]) continue;
-                    const auto col_difference = static_cast<T>(col - other_col);
-                    const auto squared = distance<T, fixed_channels>(
+                const auto row_squared = squared[row - other_row];
+                auto other = other_row * width + left;
+                for (auto other_col = left; other_col < right; ++other_col, ++other) {
+                    if (densities[other] <= density) continue;
+                    const auto squared_distance = distance<T, fixed_channels>(
                         values, image + other * channels, row_squared,
-                        col_difference * col_difference, channels);
-                    if (squared < closest) {
-                        closest = squared;
+                        squared[col - other_col], channels);
+                    if (squared_distance < closest) {
+                        closest = squared_distance;
                         parent = other;
                     }
                 }
@@ -97,8 +100,6 @@ void segment(const T* image, const T* noise, Index* labels,
         }
     }
 
-    std::vector<Index> root_labels(static_cast<std::size_t>(count), -1);
-    Index next = 0;
     for (Index pixel = 0; pixel < count; ++pixel) {
         auto root = pixel;
         while (labels[root] != root) root = labels[root];
@@ -108,12 +109,20 @@ void segment(const T* image, const T* noise, Index* labels,
             labels[node] = root;
             node = next_node;
         }
-        root_labels[root] = 0;
     }
-    for (auto& label : root_labels) {
-        if (label == 0) label = next++;
+    // Encode labels as negative values until all compressed root indices have
+    // been resolved. Numbering the roots in pixel order preserves tie order.
+    Index next = 0;
+    for (Index pixel = 0; pixel < count; ++pixel) {
+        if (labels[pixel] == pixel)
+            labels[pixel] = -1 - next++;
     }
-    for (Index pixel = 0; pixel < count; ++pixel) labels[pixel] = root_labels[labels[pixel]];
+    for (Index pixel = 0; pixel < count; ++pixel) {
+        if (labels[pixel] >= 0)
+            labels[pixel] = labels[labels[pixel]];
+    }
+    for (Index pixel = 0; pixel < count; ++pixel)
+        labels[pixel] = -1 - labels[pixel];
 }
 
 } // namespace

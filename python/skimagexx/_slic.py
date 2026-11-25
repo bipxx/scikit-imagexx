@@ -57,7 +57,9 @@ def _prepare_features(image, rank, lab, sigma, spacing, compactness):
         from scipy.ndimage import gaussian_filter
 
         working = gaussian_filter(working, [*widths, 0], mode='reflect')
-    return np.ascontiguousarray(working.reshape(image.shape) * (1. / compactness))
+    working = np.ascontiguousarray(working.reshape(image.shape))
+    working *= 1. / compactness
+    return working
 
 
 def slic(

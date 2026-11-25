@@ -15,7 +15,9 @@ def _ordinary_storage(image):
 
 def _native_sampling(spacing, rank):
     if type(spacing) in (int, float):
-        spacing = (spacing,) * rank
+        if rank == 0 or 1 / 65536 <= spacing <= 65536:
+            return (spacing,) * rank
+        return None
     if type(spacing) in (tuple, list) and len(spacing) == rank:
         if all(type(value) in (int, float) and 1 / 65536 <= value <= 65536 for value in spacing):
             return tuple(spacing)

@@ -87,6 +87,9 @@ void felzenszwalb_costs_into(const double* image, double* costs, Index height,
     case 1:
         fill_costs<1>(image, costs, height, width, channels);
         break;
+    case 2:
+        fill_costs<2>(image, costs, height, width, channels);
+        break;
     case 3:
         fill_costs<3>(image, costs, height, width, channels);
         break;
@@ -129,12 +132,12 @@ void felzenszwalb_labels_into(const double* costs, const Index* order, Index* la
         }
     }
 
-    // Roots are always the smallest pixel in their respective component.
-    // Earlier indices therefore hold their final labels when visited here.
+    // Each non-root parent has a smaller index, so it already holds its
+    // final component label when visited here.
     Index next = 0;
-    for (Index pixel = 0; pixel < pixels; ++pixel) labels[pixel] = find_root(labels, pixel);
     for (Index pixel = 0; pixel < pixels; ++pixel) {
-        labels[pixel] = labels[pixel] == pixel ? next++ : labels[labels[pixel]];
+        const auto parent = labels[pixel];
+        labels[pixel] = parent == pixel ? next++ : labels[parent];
     }
 }
 

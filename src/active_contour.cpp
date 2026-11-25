@@ -164,18 +164,22 @@ template<class Pixel, class Work>
 ImageSpline make_spline(const Pixel* image, std::size_t rows, std::size_t columns,
                         std::size_t channels, ActiveContourOptions options) {
     const std::size_t size = rows * columns;
-    std::vector<Work> intensity(size), edge(size);
-    std::vector<Work> plane(size), gradient(size);
+    const bool use_edge = options.w_edge != 0;
+    std::vector<Work> intensity(size);
+    std::vector<Work> edge(use_edge ? size : 0);
+    std::vector<Work> plane(edge.size()), gradient(edge.size());
     for (std::size_t channel = 0; channel < channels; ++channel) {
         for (std::size_t i = 0; i < size; ++i) {
             Work pixel = static_cast<Work>(image[i * channels + channel]);
             if constexpr (std::is_same_v<Pixel, std::uint8_t>) {
                 pixel *= Work{1} / Work{255};
             }
-            plane[i] = pixel;
+            if (use_edge) {
+                plane[i] = pixel;
+            }
             intensity[i] += pixel;
         }
-        if (options.w_edge != 0) {
+        if (use_edge) {
             sobel_into(plane.data(), gradient.data(), rows, columns);
             for (std::size_t i = 0; i < size; ++i) {
                 edge[i] += gradient[i];
@@ -183,9 +187,10 @@ ImageSpline make_spline(const Pixel* image, std::size_t rows, std::size_t column
         }
     }
     std::vector<std::array<double, 1>> values(size);
+    const auto w_line = static_cast<Work>(options.w_line);
+    const auto w_edge = static_cast<Work>(options.w_edge);
     for (std::size_t i = 0; i < size; ++i) {
-        values[i][0] = static_cast<Work>(options.w_line) * intensity[i]
-                       + static_cast<Work>(options.w_edge) * edge[i];
+        values[i][0] = w_line * intensity[i] + w_edge * (use_edge ? edge[i] : Work{0});
     }
     return ImageSpline(std::move(values), rows, columns);
 }
@@ -228,50 +233,71 @@ bool evolve(const ImageSpline& spline, const BandSystem<Width>& system,
             bool periodic, Endpoint start, Endpoint end, ActiveContourOptions options) {
     constexpr int history_count = 10;
     const std::size_t points = order.size();
+    const auto gamma = static_cast<Work>(options.gamma);
+    const auto max_move = static_cast<Work>(options.max_px_move);
+    const auto convergence = static_cast<Work>(options.convergence);
+    const bool check_convergence = convergence > 0 && options.max_num_iter > history_count;
+    const std::size_t first_moving = !periodic && start == Endpoint::fixed ? 1 : 0;
+    const std::size_t end_moving = !periodic && end == Endpoint::fixed ? points - 1 : points;
     std::vector<std::array<double, 2>> rhs(points);
-    std::vector<Work> history(history_count * snake.size());
-    for (int iteration = 0; iteration < options.max_num_iter; ++iteration) {
-        for (std::size_t i = 0; i < points; ++i) {
-            auto force = spline.gradient(snake[2 * i], snake[2 * i + 1]);
-            if (!periodic && (i == 0 || i + 1 == points)) {
-                for (double& component : force) {
-                    component = (i == 0 ? start : end) == Endpoint::fixed ? 0.0 : 2.0 * component;
-                }
-            }
-            for (std::size_t j = 0; j < 2; ++j) {
-                rhs[order[i]][j] = static_cast<Work>(options.gamma) * snake[2 * i + j]
-                                    + static_cast<Work>(force[j]);
+    std::vector<Work> history(check_convergence ? history_count * snake.size() : 0);
+    const auto set_rhs = [&](std::size_t i, const std::array<double, 2>& force) {
+        for (std::size_t j = 0; j < 2; ++j) {
+            rhs[order[i]][j] = gamma * snake[2 * i + j] + static_cast<Work>(force[j]);
+        }
+    };
+    const auto set_endpoint_rhs = [&](std::size_t i, Endpoint endpoint) {
+        std::array<double, 2> force{};
+        if (endpoint == Endpoint::free) {
+            force = spline.gradient(snake[2 * i], snake[2 * i + 1]);
+            for (double& component : force) {
+                component = 2.0 * component;
             }
         }
+        set_rhs(i, force);
+    };
+    for (int iteration = 0; iteration < options.max_num_iter; ++iteration) {
+        if (!periodic) {
+            set_endpoint_rhs(0, start);
+        }
+        const std::size_t first_interior = periodic ? 0 : 1;
+        const std::size_t end_interior = periodic ? points : points - 1;
+        for (std::size_t i = first_interior; i < end_interior; ++i) {
+            set_rhs(i, spline.gradient(snake[2 * i], snake[2 * i + 1]));
+        }
+        if (!periodic) {
+            set_endpoint_rhs(points - 1, end);
+        }
         system.solve(rhs.data());
-        for (std::size_t i = 0; i < points; ++i) {
-            if (!periodic && ((i == 0 && start == Endpoint::fixed)
-                              || (i + 1 == points && end == Endpoint::fixed))) {
-                continue;
-            }
+        for (std::size_t i = first_moving; i < end_moving; ++i) {
             for (std::size_t j = 0; j < 2; ++j) {
                 Work& coordinate = snake[2 * i + j];
                 const Work fitted = static_cast<Work>(rhs[order[i]][j]);
                 if (!std::isfinite(fitted)) {
                     return false;
                 }
-                coordinate += static_cast<Work>(options.max_px_move) * std::tanh(fitted - coordinate);
+                coordinate += max_move * std::tanh(fitted - coordinate);
             }
         }
 
+        if (!check_convergence) {
+            continue;
+        }
         const int slot = iteration % (history_count + 1);
         if (slot < history_count) {
             std::copy(snake.begin(), snake.end(), history.data() + std::size_t(slot) * snake.size());
         } else {
             for (int sample = 0; sample < history_count; ++sample) {
                 const auto* previous = history.data() + std::size_t(sample) * snake.size();
-                Work maximum = 0;
-                for (std::size_t i = 0; i < points; ++i) {
+                std::size_t i = first_moving;
+                for (; i < end_moving; ++i) {
                     const Work distance = std::abs(previous[2 * i] - snake[2 * i])
                                           + std::abs(previous[2 * i + 1] - snake[2 * i + 1]);
-                    maximum = std::max(maximum, distance);
+                    if (distance >= convergence) {
+                        break;
+                    }
                 }
-                if (maximum < static_cast<Work>(options.convergence)) {
+                if (i == end_moving) {
                     return true;
                 }
             }

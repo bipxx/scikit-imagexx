@@ -15,7 +15,8 @@ namespace {
 constexpr std::size_t max_classes = 32;
 
 struct Markers {
-    std::vector<int> classes;
+    // Positive entries are seed classes. Nonpositive entries negate unknown rows.
+    std::vector<int> nodes;
     std::vector<int> unknown;
     std::size_t count;
 };
@@ -23,33 +24,37 @@ struct Markers {
 template<class T>
 std::optional<Markers> prepare_markers(const void* input, std::size_t size) {
     const auto* values = static_cast<const T*>(input);
-    std::vector<T> seeds;
+    std::array<T, max_classes> seeds;
+    auto seed_end = seeds.begin();
+    std::size_t unknowns = 0;
     for (std::size_t i = 0; i < size; ++i) {
         const T value = values[i];
         if constexpr (std::is_signed_v<T>) {
             if (value < 0) return std::nullopt;
         }
-        if (value && std::find(seeds.begin(), seeds.end(), value) == seeds.end()) {
-            if (seeds.size() == max_classes) return std::nullopt;
-            seeds.push_back(value);
+        if (!value) {
+            ++unknowns;
+        } else if (std::find(seeds.begin(), seed_end, value) == seed_end) {
+            if (seed_end == seeds.end()) return std::nullopt;
+            *seed_end++ = value;
         }
     }
-    if (seeds.empty()) return std::nullopt;
-    std::sort(seeds.begin(), seeds.end());
+    if (seed_end == seeds.begin() || unknowns == 0) return std::nullopt;
+    std::sort(seeds.begin(), seed_end);
 
-    Markers result{{}, {}, seeds.size()};
-    result.classes.resize(size);
-    result.unknown.reserve(size);
+    Markers result{{}, {}, static_cast<std::size_t>(seed_end - seeds.begin())};
+    result.nodes.reserve(size);
+    result.unknown.reserve(unknowns);
     for (std::size_t i = 0; i < size; ++i) {
         const T value = values[i];
         if (!value) {
+            result.nodes.push_back(-static_cast<int>(result.unknown.size()));
             result.unknown.push_back(static_cast<int>(i));
         } else {
-            const auto seed = std::lower_bound(seeds.begin(), seeds.end(), value);
-            result.classes[i] = static_cast<int>(seed - seeds.begin()) + 1;
+            const auto seed = std::lower_bound(seeds.begin(), seed_end, value);
+            result.nodes.push_back(static_cast<int>(seed - seeds.begin()) + 1);
         }
     }
-    if (result.unknown.empty()) return std::nullopt;
     return result;
 }
 
@@ -74,13 +79,16 @@ struct Laplacian {
     std::vector<double> inverse_diagonal;
     std::vector<double> rhs;
 
-    void apply(const std::vector<double>& input, std::vector<double>& output) const {
+    double apply_and_dot(const std::vector<double>& input, std::vector<double>& output) const {
+        double curvature = 0;
         for (std::size_t i = 0; i < output.size(); ++i) {
             double value = 0;
             for (auto at = rows[i]; at < rows[i + 1]; ++at)
                 value += values[at] * input[columns[at]];
             output[i] = value;
+            curvature += input[i] * value;
         }
+        return curvature;
     }
 };
 
@@ -107,7 +115,7 @@ template<class T>
 std::optional<Laplacian> build_laplacian(
     const T* data, const Markers& markers, const std::vector<std::size_t>& shape,
     const RandomWalkerOptions& options) {
-    const auto pixels = markers.classes.size();
+    const auto pixels = markers.nodes.size();
     const auto unknowns = markers.unknown.size();
     const auto scale = weight_scale(data, pixels, options.beta);
     if (!std::isfinite(scale) || (scale == 0.0 && options.beta != 0.0))
@@ -133,10 +141,6 @@ std::optional<Laplacian> build_laplacian(
             }
     }
 
-    std::vector<int> index(pixels);
-    for (std::size_t i = 0; i < unknowns; ++i)
-        index[markers.unknown[i]] = static_cast<int>(i);
-
     Laplacian laplacian;
     laplacian.columns.reserve(unknowns * (2 * rank + 1));
     laplacian.values.reserve(unknowns * (2 * rank + 1));
@@ -146,20 +150,27 @@ std::optional<Laplacian> build_laplacian(
 
     for (std::size_t row = 0; row < unknowns; ++row) {
         const std::size_t pixel = markers.unknown[row];
+        std::array<std::size_t, 3> coordinate;
+        auto remaining = pixel;
+        for (auto axis = rank; axis-- > 1;) {
+            coordinate[axis] = remaining % shape[axis];
+            remaining /= shape[axis];
+        }
+        coordinate[0] = remaining;
         double diagonal = 0;
         const auto add_neighbor = [&](std::size_t neighbor, double weight) {
             diagonal += weight;
-            const auto label = markers.classes[neighbor];
-            if (label) {
-                laplacian.rhs[(label - 1) * unknowns + row] += weight;
+            const auto node = markers.nodes[neighbor];
+            if (node > 0) {
+                laplacian.rhs[(node - 1) * unknowns + row] += weight;
             } else {
-                laplacian.columns.push_back(index[neighbor]);
+                laplacian.columns.push_back(-node);
                 laplacian.values.push_back(-weight);
             }
         };
         laplacian.rows.push_back(laplacian.columns.size());
         for (std::size_t axis = 0; axis < rank; ++axis)
-            if ((pixel / step[axis]) % shape[axis] != 0) {
+            if (coordinate[axis] != 0) {
                 const auto neighbor = pixel - step[axis];
                 add_neighbor(neighbor, edges[axis][neighbor]);
             }
@@ -167,7 +178,7 @@ std::optional<Laplacian> build_laplacian(
         laplacian.columns.push_back(static_cast<int>(row));
         laplacian.values.push_back(0);
         for (auto axis = rank; axis-- > 0;)
-            if ((pixel / step[axis]) % shape[axis] + 1 != shape[axis])
+            if (coordinate[axis] + 1 != shape[axis])
                 add_neighbor(pixel + step[axis], edges[axis][pixel]);
         laplacian.values[center] = diagonal;
         laplacian.inverse_diagonal[row] = 1.0 / diagonal;
@@ -199,20 +210,18 @@ struct ConjugateGradient {
         double previous = 0;
         for (std::size_t iter = 0; iter < 10 * size; ++iter) {
             if (norm < threshold || norm == 0) return true;
+            auto& scaled_residual = iter == 0 ? direction : product;
             double rho = 0;
             for (std::size_t i = 0; i < size; ++i) {
-                product[i] = laplacian.inverse_diagonal[i] * residual[i];
-                rho += residual[i] * product[i];
+                scaled_residual[i] = laplacian.inverse_diagonal[i] * residual[i];
+                rho += residual[i] * scaled_residual[i];
             }
-            if (iter == 0) {
-                direction = product;
-            } else {
+            if (iter != 0) {
                 const auto beta = rho / previous;
                 for (std::size_t i = 0; i < size; ++i)
                     direction[i] = product[i] + beta * direction[i];
             }
-            laplacian.apply(direction, product);
-            const auto curvature = dot(direction, product);
+            const auto curvature = laplacian.apply_and_dot(direction, product);
             if (!(curvature > 0.0) || !std::isfinite(curvature)) return false;
             const auto alpha = rho / curvature;
             double norm_squared = 0;
@@ -230,14 +239,14 @@ struct ConjugateGradient {
 
 std::optional<RandomWalkerResult> solve(
     const Laplacian& laplacian, const Markers& markers, const RandomWalkerOptions& options) {
-    const auto size = markers.classes.size();
+    const auto size = markers.nodes.size();
     const auto unknowns = markers.unknown.size();
     RandomWalkerResult result;
     result.classes = markers.count;
     if (options.return_probabilities)
         result.probabilities.resize(size * markers.count);
     else
-        result.labels.assign(markers.classes.begin(), markers.classes.end());
+        result.labels.assign(markers.nodes.begin(), markers.nodes.end());
 
     ConjugateGradient cg(unknowns);
     std::vector<double> best(options.return_probabilities ? 0 : unknowns);
@@ -261,7 +270,7 @@ std::optional<RandomWalkerResult> solve(
     }
     if (options.return_probabilities)
         for (std::size_t pixel = 0; pixel < size; ++pixel)
-            if (const auto label = markers.classes[pixel])
+            if (const auto label = markers.nodes[pixel]; label > 0)
                 result.probabilities[(label - 1) * size + pixel] = 1.0;
     return result;
 }

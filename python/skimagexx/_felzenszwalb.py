@@ -1,11 +1,12 @@
 """Native edge costs and minimum-spanning-forest image segmentation."""
 
-import math
-
 import numpy as np
 
 from . import _core
 from ._compat import fallback
+
+
+_INTP_MAX = np.iinfo(np.intp).max
 
 
 def _native_image(image):
@@ -25,21 +26,19 @@ def felzenszwalb(image, scale=1, sigma=0.8, min_size=20, *, channel_axis=-1):
         _native_image(image)
         and (channel_axis is None and image.ndim == 2
              or type(channel_axis) is int and -image.ndim <= channel_axis < image.ndim)
-        and type(min_size) is int and -np.iinfo(np.intp).max <= min_size <= np.iinfo(np.intp).max
-        and all(type(p) in (int, float) and abs(p) <= 2**53 and math.isfinite(p)
-                for p in (scale, sigma))
+        and type(min_size) is int and -_INTP_MAX <= min_size <= _INTP_MAX
+        and all(type(p) in (int, float) and abs(p) <= 2**53 for p in (scale, sigma))
         and sigma >= 0
     ):
         values = (image[:, :, None] if image.ndim == 2
                   else np.moveaxis(image, channel_axis, -1))
         if values.shape[-1] <= 3:
-            values = values.astype(np.float64, copy=False)
+            values = values.astype(np.float64, order='K' if sigma else 'C', copy=False)
             if image.dtype.char == 'B':
                 values *= 1 / 255
             if sigma:
                 from scipy.ndimage import gaussian_filter
                 values = gaussian_filter(values, [sigma, sigma, 0], mode='reflect')
-            values = np.ascontiguousarray(values)
             result = _core.felzenszwalb_prepared(values, scale, min_size)
             if result is not None:
                 return result

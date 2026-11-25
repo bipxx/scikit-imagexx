@@ -17,14 +17,13 @@ namespace {
 using Coordinate = std::int32_t;
 template<std::size_t Rank> using Point = std::array<Coordinate, Rank>;
 
-template<std::size_t Rank>
-Point<Rank> coordinates(std::size_t position, const std::size_t* shape) {
-    Point<Rank> point{};
-    for (std::size_t axis = Rank; axis-- > 0;) {
-        point[axis] = static_cast<Coordinate>(position % shape[axis]);
-        position /= shape[axis];
+template<std::size_t Begin, std::size_t End, std::size_t Rank>
+void advance_coordinates(Point<Rank>& point, const std::size_t* shape) {
+    for (std::size_t axis = End; axis-- > Begin;) {
+        if (++point[axis] < static_cast<Coordinate>(shape[axis]))
+            return;
+        point[axis] = 0;
     }
-    return point;
 }
 
 inline double squared_offset(Coordinate site, Coordinate position, double spacing) {
@@ -38,8 +37,8 @@ bool first_axis(const T* labels, std::size_t count, const std::size_t* shape,
     const auto stride = count / shape[0];
     const auto length = static_cast<Coordinate>(shape[0]);
     bool any_seed = false;
-    for (std::size_t offset = 0; offset < stride; ++offset) {
-        auto site = coordinates<Rank>(offset, shape);
+    Point<Rank> site{};
+    for (std::size_t offset = 0; offset < stride; ++offset, advance_coordinates<1, Rank>(site, shape)) {
         site[0] = -1;
         auto index = offset;
         for (Coordinate i = 0; i < length; ++i, index += stride) {
@@ -95,70 +94,93 @@ void assign_label(const T* labels, const Point<Rank>& feature, const std::size_t
     result = labels[index];
 }
 
-template<class T, std::size_t Rank>
-void other_axes(const T* labels, std::size_t count, const std::size_t* shape,
+template<std::size_t Axis, class T, std::size_t Rank>
+void other_axis(const T* labels, std::size_t count, const std::size_t* shape,
                 const double* sampling, double distance, std::vector<Point<Rank>>& features,
-                T* result) {
-    std::vector<Site<Rank>> envelope;
-    envelope.reserve(*std::max_element(shape + 1, shape + Rank));
-    auto stride = count / shape[0];
-    for (std::size_t axis = 1; axis < Rank; ++axis) {
-        const auto length = shape[axis];
-        stride /= length;
-        const double spacing = sampling[axis];
-        const bool final_axis = axis + 1 == Rank;
-        for (std::size_t block = 0; block < count; block += length * stride) {
-            for (std::size_t offset = 0; offset < stride; ++offset) {
-                const auto start = block + offset;
-                const auto fixed = coordinates<Rank>(start, shape);
-                envelope.clear();
-                for (auto index = start; index < start + length * stride; index += stride) {
-                    const auto feature = features[index];
-                    if (feature[0] < 0)
-                        continue;
-                    double orthogonal = 0.0;
-                    // Later axes still agree with the current plane. Its zero
-                    // terms do not change the finite, nonnegative sum.
-                    for (std::size_t earlier = 0; earlier < axis; ++earlier)
-                        orthogonal += squared_offset(feature[earlier], fixed[earlier], sampling[earlier]);
-                    const Site<Rank> next{feature, orthogonal};
-                    while (envelope.size() >= 2 &&
-                           hidden(envelope[envelope.size() - 2], envelope.back(), next, axis, spacing))
-                        envelope.pop_back();
-                    envelope.push_back(next);
-                }
-                if (envelope.empty()) {
-                    // No intermediate candidates means this line keeps its
-                    // absent features. The final sweep writes all outcomes.
-                    if (final_axis)
-                        for (auto index = start; index < start + length * stride; index += stride)
-                            result[index] = 0;
+                std::vector<Site<Rank>>& envelope, T* result) {
+    const auto length = static_cast<Coordinate>(shape[Axis]);
+    const double spacing = sampling[Axis];
+    std::size_t stride = 1;
+    for (std::size_t later = Axis + 1; later < Rank; ++later)
+        stride *= shape[later];
+    const auto span = shape[Axis] * stride;
+    Point<Rank> fixed{};
+    for (std::size_t block = 0; block < count; block += span, advance_coordinates<0, Axis>(fixed, shape)) {
+        for (std::size_t offset = 0; offset < stride; ++offset) {
+            const auto start = block + offset;
+            const auto stop = start + span;
+            envelope.clear();
+            for (auto index = start; index < stop; index += stride) {
+                const auto feature = features[index];
+                if (feature[0] < 0)
                     continue;
+                double orthogonal = 0.0;
+                // Only earlier axes contribute, and their fixed coordinates
+                // are shared by every line in the block.
+                for (std::size_t earlier = 0; earlier < Axis; ++earlier)
+                    orthogonal += squared_offset(feature[earlier], fixed[earlier], sampling[earlier]);
+                const Site<Rank> next{feature, orthogonal};
+                while (envelope.size() >= 2 &&
+                       hidden(envelope[envelope.size() - 2], envelope.back(), next, Axis, spacing))
+                    envelope.pop_back();
+                envelope.push_back(next);
+            }
+            if (envelope.empty()) {
+                // No intermediate candidates means this line keeps its
+                // absent features. The final sweep writes all outcomes.
+                if constexpr (Axis + 1 == Rank)
+                    std::fill_n(result + start, length, T(0));
+                continue;
+            }
+            std::size_t site = 0;
+            auto index = start;
+            for (Coordinate pos = 0; pos < length; ++pos, index += stride) {
+                const auto squared_distance = [&](const Site<Rank>& candidate) {
+                    return candidate.orthogonal + squared_offset(candidate.feature[Axis], pos, spacing);
+                };
+                auto best = squared_distance(envelope[site]);
+                while (site + 1 < envelope.size()) {
+                    const auto next = squared_distance(envelope[site + 1]);
+                    if (best <= next)
+                        break;
+                    best = next;
+                    ++site;
                 }
-                std::size_t site = 0;
-                auto index = start;
-                for (std::size_t pos = 0; pos < length; ++pos, index += stride) {
-                    auto squared_distance = [&](const Site<Rank>& candidate) {
-                        return candidate.orthogonal + squared_offset(candidate.feature[axis],
-                            static_cast<Coordinate>(pos), spacing);
-                    };
-                    auto best = squared_distance(envelope[site]);
-                    while (site + 1 < envelope.size()) {
-                        const auto next = squared_distance(envelope[site + 1]);
-                        if (best <= next)
-                            break;
-                        best = next;
-                        ++site;
-                    }
-                    const auto& feature = envelope[site].feature;
-                    if (final_axis)
-                        assign_label(labels, feature, shape, best, distance, result[index]);
-                    else
-                        features[index] = feature;
-                }
+                const auto& feature = envelope[site].feature;
+                if constexpr (Axis + 1 == Rank)
+                    assign_label(labels, feature, shape, best, distance, result[index]);
+                else
+                    features[index] = feature;
             }
         }
     }
+}
+
+template<class T>
+void expand_line(const T* labels, std::size_t count, double spacing, double distance, T* result) {
+    const auto* first = std::find_if(labels, labels + count, [](T label) { return label != 0; });
+    if (first == labels + count) {
+        std::fill_n(result, count, T(0));
+        return;
+    }
+
+    auto nearest = static_cast<Coordinate>(first - labels);
+    Coordinate position = 0;
+    const auto write_through = [&](Coordinate last) {
+        const T label = labels[nearest];
+        for (; position <= last; ++position) {
+            const double squared = squared_offset(nearest, position, spacing);
+            result[position] = std::sqrt(squared) > distance ? T(0) : label;
+        }
+    };
+    for (auto next = nearest + 1; next < static_cast<Coordinate>(count); ++next) {
+        if (labels[next] != 0) {
+            // The midpoint belongs to the lower feature coordinate on a tie.
+            write_through(nearest + (next - nearest) / 2);
+            nearest = next;
+        }
+    }
+    write_through(static_cast<Coordinate>(count - 1));
 }
 
 template<class T, std::size_t Rank>
@@ -169,15 +191,11 @@ void expand(const T* labels, std::size_t count, const std::size_t* shape,
         std::fill_n(result, count, T(0));
         return;
     }
-    if constexpr (Rank == 1) {
-        for (std::size_t position = 0; position < count; ++position) {
-            const auto nearest = features[position][0];
-            const auto squared = squared_offset(nearest, static_cast<Coordinate>(position), sampling[0]);
-            assign_label(labels, features[position], shape, squared, distance, result[position]);
-        }
-    } else {
-        other_axes(labels, count, shape, sampling, distance, features, result);
-    }
+    std::vector<Site<Rank>> envelope;
+    envelope.reserve(*std::max_element(shape + 1, shape + Rank));
+    other_axis<1>(labels, count, shape, sampling, distance, features, envelope, result);
+    if constexpr (Rank == 3)
+        other_axis<2>(labels, count, shape, sampling, distance, features, envelope, result);
 }
 
 }  // namespace
@@ -205,7 +223,7 @@ void expand_labels_into(const T* labels, std::size_t label_count,
     } else if (distance == 0) {
         std::copy_n(labels, count, result);
     } else if (rank == 1) {
-        expand<T, 1>(labels, count, shape, sampling, distance, result);
+        expand_line(labels, count, sampling[0], distance, result);
     } else if (rank == 2) {
         expand<T, 2>(labels, count, shape, sampling, distance, result);
     } else {

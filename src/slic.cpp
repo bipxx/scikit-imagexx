@@ -167,6 +167,7 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
     std::vector<Index> members(seeds.count);
     std::vector<T> maximum_color(seeds.count, T(1));
     std::vector<T> distances(volume.pixels);
+    std::vector<T> x_distances(width);
     Index seed = 0;
     for (Index z = z0; z < depth; z += seed_z)
         for (Index y = y0; y < height; y += seed_y)
@@ -192,17 +193,19 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
             const Index z_max = static_cast<Index>(std::min(cz + T(window_z) + T(1), T(depth)));
             const Index y_max = static_cast<Index>(std::min(cy + T(window_y) + T(1), T(height)));
             const Index x_max = static_cast<Index>(std::min(cx + T(window_x) + T(1), T(width)));
+            const T color_scale = options.slic_zero ? maximum_color[k] : T(1);
+            for (Index x = x_min; x < x_max; ++x)
+                x_distances[x] = square(sx * (cx - T(x)));
             for (Index z = z_min; z < z_max; ++z) {
                 const T dz = square(sz * (cz - T(z)));
                 for (Index y = y_min; y < y_max; ++y) {
-                    const T dy = square(sy * (cy - T(y)));
+                    const T spatial_yz = dz + square(sy * (cy - T(y)));
                     Index offset = z * volume.plane + y * width + x_min;
                     for (Index x = x_min; x < x_max; ++x, ++offset) {
-                        const T dx = square(sx * (cx - T(x)));
                         T color = color_distance(image + offset * channels, center + 3, channels);
-                        if (options.slic_zero)
-                            color /= maximum_color[k];
-                        const T distance = (dz + dy + dx) * spatial_weight + color;
+                        if (color_scale != T(1))
+                            color /= color_scale;
+                        const T distance = (spatial_yz + x_distances[x]) * spatial_weight + color;
                         if (distances[offset] > distance) {
                             nearest[offset] = k + start;
                             distances[offset] = distance;
