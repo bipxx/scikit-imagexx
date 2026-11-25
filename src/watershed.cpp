@@ -4,11 +4,15 @@
 #include <skimagexx/watershed.hpp>
 
 #include <algorithm>
+#include <array>
+#include <bitset>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <memory>
 #include <stdexcept>
 #include <type_traits>
+#include <unordered_set>
 
 namespace skimagexx {
 namespace {
@@ -21,45 +25,72 @@ using Index = std::ptrdiff_t;
 #define WATERSHED_INLINE inline
 #endif
 
-template<class Position, bool TrackSource>
+template<class Position, bool TrackSource, class Priority = double>
 struct Item {
-    double value;
+    Priority priority;
     std::uint32_t age;
     Position index;
     Position source;
 };
 
-template<class Position>
-struct Item<Position, false> {
-    double value;
+template<class Position, class Priority>
+struct Item<Position, false, Priority> {
+    Priority priority;
     std::uint32_t age;
     Position index;
 };
 
-template<class Entry>
-WATERSHED_INLINE bool smaller(const Entry& a, const Entry& b) {
-    return a.value < b.value || (a.value == b.value && a.age < b.age);
+constexpr auto sign_bit = UINT64_C(1) << 63;
+static_assert(sizeof(double) == sizeof(std::uint64_t));
+
+std::uint64_t order_key(double value) {
+    std::uint64_t bits = 0;
+    if (value != 0)
+        std::memcpy(&bits, &value, sizeof(bits));
+    return bits ^ ((UINT64_C(0) - (bits >> 63)) | sign_bit);
 }
 
-template<class Position, bool TrackSource>
+template<class Position, bool TrackSource, bool Ordered>
 class FloodHeap {
 public:
-    using Entry = Item<Position, TrackSource>;
+    using Entry = Item<Position, TrackSource, std::conditional_t<Ordered, std::uint64_t, double>>;
+
+    explicit FloodHeap(std::size_t capacity)
+        : items_(new Entry[capacity]), capacity_(capacity) {}
+
     bool empty() const { return size_ == 0; }
+
+    static double value(const Entry& item) {
+        if constexpr (Ordered) {
+            const auto key = item.priority;
+            const auto bits = key ^ (((key >> 63) - 1) | sign_bit);
+            double decoded;
+            std::memcpy(&decoded, &bits, sizeof(decoded));
+            return decoded;
+        } else {
+            return item.priority;
+        }
+    }
 
     WATERSHED_INLINE void push(double value, std::uint32_t age, Position index, Position source) {
         if (size_ == capacity_)
             grow();
+        const auto priority = [&] {
+            if constexpr (Ordered)
+                return order_key(value);
+            else
+                return value;
+        }();
         const auto item = [&] {
             if constexpr (TrackSource)
-                return Entry{value, age, index, source};
+                return Entry{priority, age, index, source};
             else
-                return Entry{value, age, index};
+                return Entry{priority, age, index};
         }();
         auto child = size_++;
         auto* items = items_.get();
         while (child) {
-            const auto parent = (child - 1) / 2;
+            const auto parent = (child - 1) / arity;
             if (!smaller(item, items[parent]))
                 break;
             items[child] = items[parent];
@@ -76,23 +107,32 @@ public:
         const Entry last = items[size_];
 
         std::size_t parent = 0;
-        for (auto left = 1u + 2 * parent; left < size_; left = 1u + 2 * parent) {
-            // Keep the comparison with the displaced item first. A NaN is
-            // unordered, so comparing only the two children changes ties.
-            auto next = smaller(items[left], last) ? left : parent;
-            const auto right = left + 1;
-            if (right < size_ && smaller(items[right], next == parent ? last : items[left]))
-                next = right;
-            if (next == parent)
+        for (auto left = 1u + arity * parent; left < size_; left = 1u + arity * parent) {
+            // Start with the displaced entry to preserve the binary heap's
+            // behavior when floating-point comparisons are unordered.
+            const Entry* next = &last;
+            for (auto child = left, end = left + std::min(arity, size_ - left); child < end; ++child)
+                if (smaller(items[child], *next))
+                    next = items + child;
+            if (next == &last)
                 break;
-            items[parent] = items[next];
-            parent = next;
+            items[parent] = *next;
+            parent = static_cast<std::size_t>(next - items);
         }
         items[parent] = last;
         return result;
     }
 
 private:
+    static constexpr std::size_t arity = Ordered ? 4 : 2;
+
+    static WATERSHED_INLINE bool smaller(const Entry& a, const Entry& b) {
+        if constexpr (Ordered)
+            return (a.priority < b.priority) | ((a.priority == b.priority) & (a.age < b.age));
+        else
+            return a.priority < b.priority || (a.priority == b.priority && a.age < b.age);
+    }
+
     void grow() {
         const auto capacity = capacity_ ? 2 * capacity_ : 1024;
         std::unique_ptr<Entry[]> next(new Entry[capacity]);
@@ -105,6 +145,39 @@ private:
     std::unique_ptr<Entry[]> items_;
     std::size_t size_ = 0;
     std::size_t capacity_ = 0;
+};
+
+template<class Position, bool TrackSource>
+class FloodBuckets {
+public:
+    using Entry = Item<Position, TrackSource, unsigned>;
+
+    bool empty() {
+        while (priority_ < buckets_.size() && head_ == buckets_[priority_].size()) {
+            buckets_[priority_].clear();
+            ++priority_;
+            head_ = 0;
+        }
+        return priority_ == buckets_.size();
+    }
+
+    static double value(const Entry& item) { return item.priority; }
+
+    void push(double value, std::uint32_t age, Position index, Position source) {
+        const auto priority = static_cast<unsigned>(value);
+        priority_ = std::min(priority_, priority);
+        if constexpr (TrackSource)
+            buckets_[priority].push_back({priority, age, index, source});
+        else
+            buckets_[priority].push_back({priority, age, index});
+    }
+
+    Entry pop() { return buckets_[priority_][head_++]; }
+
+private:
+    std::array<std::vector<Entry>, 256> buckets_;
+    unsigned priority_ = 256;
+    std::size_t head_ = 0;
 };
 
 template<class Position>
@@ -124,15 +197,16 @@ double distance(Position a, Position b, const std::vector<Index>& strides) {
 // preserves the stock conversion when the insertion counter crosses INT_MAX.
 constexpr std::uint32_t seed_age = UINT32_C(0x80000000);
 
-template<class T, class Position, bool Compact, bool Line>
-void flood(const std::vector<double>& image, std::vector<T>& labels,
+template<class T, class Position, bool Compact, bool Line, class Queue>
+void flood(const double* image, T* labels,
            std::vector<std::uint8_t>& mask, const std::vector<Index>& neighbors,
            const std::vector<Index>& strides, double compactness,
            Position axis2_width, const std::vector<Position>& row_indices,
-           FloodHeap<Position, Compact || Line>& heap) {
+           Queue& heap) {
     std::uint32_t age = seed_age + 1;
     while (!heap.empty()) {
         const auto item = heap.pop();
+        const auto current_value = heap.value(item);
         auto source = item.index;
         if constexpr (Compact || Line)
             source = item.source;
@@ -184,8 +258,8 @@ void flood(const std::vector<double>& image, std::vector<T>& labels,
                 labels[next] = label;
                 mask[next] = 0;
             }
-            if (value < item.value)
-                value = item.value;
+            if (value < current_value)
+                value = current_value;
             heap.push(value, ++age, next, source);
         };
         if (axis2_width) {
@@ -250,8 +324,8 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
             throw std::invalid_argument("watershed offsets exceed padded storage");
     }
 
-    std::vector<double> elevations(padded_count);
-    std::vector<T> labels(padded_count);
+    std::unique_ptr<double[]> elevations(new double[padded_count]);
+    std::unique_ptr<T[]> labels(new T[padded_count]);
     std::vector<std::uint8_t> active(padded_count);
     // Walk row starts with an odometer, skipping padding rather than dividing
     // each pixel index to recover coordinates.
@@ -273,37 +347,94 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
         }
     };
 
+    bool finite = true;
+    bool byte_range = compactness == 0;
+    std::vector<Index> seeds;
+    visit_rows([&](std::size_t start, Index row) {
+        for (std::size_t column = 0; column < width; ++column) {
+            const auto i = start + column;
+            const auto p = row + static_cast<Index>(column);
+            const double value = image[i];
+            elevations[p] = value;
+            finite &= std::isfinite(value);
+            if (byte_range && !(value >= 0 && value <= 255 && value == static_cast<unsigned>(value)))
+                byte_range = false;
+            const bool included = !mask || mask[i];
+            const T marker = markers[i];
+            active[p] = included && ((watershed_line && !(compactness > 0)) || !marker);
+            labels[p] = included ? (boolean_markers ? T(marker != 0) : marker) : T(0);
+            if (included && marker)
+                seeds.push_back(p);
+        }
+    });
+    // All seeds have the same age. The stock binary heap's layout breaks
+    // equal seed priorities, and NaNs are unordered under its comparator.
+    // Later entries have a total order until the signed insertion age wraps.
+    const auto max_pushes_per_pixel = (compactness > 0 || watershed_line)
+        ? std::max(std::size_t(1), offsets.size()) : 1;
+    bool ordered = finite && std::isfinite(compactness) &&
+        count <= (seed_age - 2) / max_pushes_per_pixel;
+    if (ordered && seeds.size() > 1) {
+        if (byte_range) {
+            std::bitset<256> seen;
+            for (const auto p : seeds) {
+                const auto key = static_cast<unsigned>(elevations[p]);
+                if (seen.test(key)) {
+                    ordered = false;
+                    break;
+                }
+                seen.set(key);
+            }
+        } else {
+            std::unordered_set<std::uint64_t> seen;
+            for (const auto p : seeds) {
+                if (!seen.insert(order_key(elevations[p])).second) {
+                    ordered = false;
+                    break;
+                }
+            }
+        }
+    }
+
     const auto run = [&](auto position, auto compact, auto line) {
         using Position = decltype(position);
         constexpr bool Compact = decltype(compact)::value;
         constexpr bool Line = decltype(line)::value;
-        FloodHeap<Position, Compact || Line> heap;
         const auto axis2_width = static_cast<Position>(!neighborhood && rank == 2 ? strides[0] : 0);
         std::vector<Position> row_indices;
-        Position row_index = 0;
         if constexpr (Compact) {
-            if (axis2_width)
+            if (axis2_width) {
                 row_indices.resize(padded_count);
-        }
-        visit_rows([&](std::size_t start, Index row) {
-            std::copy_n(image + start, width, elevations.data() + row);
-            if (!row_indices.empty())
-                std::fill_n(row_indices.data() + row, width, ++row_index);
-            for (std::size_t column = 0; column < width; ++column) {
-                const auto i = start + column;
-                const auto p = static_cast<Position>(row + static_cast<Index>(column));
-                const bool included = !mask || mask[i];
-                const T marker = markers[i];
-                // Only the line path examines the labels of active neighbors.
-                active[p] = included && (Line || !marker);
-                if (included && marker) {
-                    labels[p] = boolean_markers ? T(1) : marker;
-                    heap.push(elevations[p], seed_age, p, p);
-                }
+                Position row_index = 0;
+                std::fill(coordinates.begin(), coordinates.end(), 0);
+                visit_rows([&](std::size_t, Index row) {
+                    std::fill_n(row_indices.data() + row, width, ++row_index);
+                });
             }
-        });
-        flood<T, Position, Compact, Line>(elevations, labels, active, offsets, strides,
-                                         compactness, axis2_width, row_indices, heap);
+        }
+        const auto fill_and_flood = [&](auto& queue) {
+            for (const auto p : seeds) {
+                const auto seed = static_cast<Position>(p);
+                queue.push(elevations[p], seed_age, seed, seed);
+            }
+            flood<T, Position, Compact, Line>(elevations.get(), labels.get(), active, offsets, strides,
+                                             compactness, axis2_width, row_indices, queue);
+        };
+        const auto capacity = std::max(seeds.size(), std::min(count, std::size_t(1024)));
+        if constexpr (!Compact) {
+            if (ordered && byte_range) {
+                FloodBuckets<Position, Line> buckets;
+                fill_and_flood(buckets);
+                return;
+            }
+        }
+        if (ordered) {
+            FloodHeap<Position, Compact || Line, true> heap(capacity);
+            fill_and_flood(heap);
+        } else {
+            FloodHeap<Position, Compact || Line, false> heap(capacity);
+            fill_and_flood(heap);
+        }
     };
     const auto dispatch = [&](auto position) {
         if (compactness > 0)
@@ -320,7 +451,7 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
 
     std::fill(coordinates.begin(), coordinates.end(), 0);
     visit_rows([&](std::size_t start, Index row) {
-        std::copy_n(labels.data() + row, width, output + start);
+        std::copy_n(labels.get() + row, width, output + start);
     });
 }
 

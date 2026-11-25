@@ -1,10 +1,22 @@
 #include "skimagexx/felzenszwalb.hpp"
+#include "skimagexx/image.hpp"
 
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
+#include <limits>
+#include <memory>
 #include <numeric>
 #include <utility>
 #include <vector>
+
+#if defined(SKIMAGEXX_AVX2) && (defined(__GNUC__) || defined(__clang__))
+#include <immintrin.h>
+#define FELZENSZWALB_AVX2 __attribute__((target("avx2,no-fma"), noinline))
+#elif defined(SKIMAGEXX_AVX2) && defined(_MSC_VER)
+#include <immintrin.h>
+#define FELZENSZWALB_AVX2 __declspec(noinline)
+#endif
 
 namespace skimagexx {
 namespace {
@@ -23,35 +35,73 @@ struct GridEdges {
           diagonal_end(down_end + (height - 1) * (w - 1)),
           count(diagonal_end + (height - 1) * (w - 1)) {}
 
-    std::pair<Index, Index> endpoints(Index edge) const {
+    template<class Position>
+    std::pair<Position, Position> endpoints(Index edge, const Position* origins) const {
         if (edge < right) {
-            const auto left = edge + edge / (width - 1);
-            return {left, left + 1};
+            const Index left = origins[edge];
+            return {Position(left), Position(left + 1)};
         }
         if (edge < down_end) {
             const auto top = edge - right;
-            return {top, top + width};
+            return {Position(top), Position(top + width)};
         }
         if (edge < diagonal_end) {
-            edge -= down_end;
-            const auto top = edge + edge / (width - 1);
-            return {top, top + width + 1};
+            const Index top = origins[edge - down_end];
+            return {Position(top), Position(top + width + 1)};
         }
-        edge -= diagonal_end;
-        const auto top = edge + edge / (width - 1);
-        return {top + 1, top + width};
+        const Index top = origins[edge - diagonal_end];
+        return {Position(top + 1), Position(top + width)};
     }
 };
+
+#ifdef FELZENSZWALB_AVX2
+template<Index Channels>
+FELZENSZWALB_AVX2 Index fill_cost_row_avx2(const double* a, const double* b, double* out, Index cols) {
+    const auto offsets = _mm256_setr_epi64x(0, Channels, 2 * Channels, 3 * Channels);
+    const Index end = cols - cols % 4;
+    for (Index col = 0; col < end; col += 4, a += 4 * Channels, b += 4 * Channels) {
+        auto squared = _mm256_setzero_pd();
+        for (Index channel = 0; channel < Channels; ++channel) {
+            __m256d first, second;
+            if constexpr (Channels == 1) {
+                first = _mm256_loadu_pd(a);
+                second = _mm256_loadu_pd(b);
+            } else {
+                first = _mm256_i64gather_pd(a + channel, offsets, sizeof(double));
+                second = _mm256_i64gather_pd(b + channel, offsets, sizeof(double));
+            }
+            const auto difference = _mm256_sub_pd(first, second);
+            squared = _mm256_add_pd(squared, _mm256_mul_pd(difference, difference));
+        }
+        _mm256_storeu_pd(out + col, _mm256_sqrt_pd(squared));
+    }
+    return end;
+}
+#endif
 
 template<Index fixed_channels>
 void fill_costs(const double* image, double* out, Index height, Index width, Index channels) {
     const auto count = fixed_channels ? fixed_channels : channels;
+#ifdef FELZENSZWALB_AVX2
+    const bool vectorized = fixed_channels && has_avx2();
+#endif
     const auto fill = [&](Index rows, Index cols, Index first, Index delta) {
         if (cols == 0) return;
         for (Index row = 0; row < rows; ++row) {
             const auto* a = image + (row * width + first) * channels;
             const auto* b = a + delta * channels;
-            for (Index col = 0; col < cols; ++col, a += channels, b += channels) {
+            Index col = 0;
+#ifdef FELZENSZWALB_AVX2
+            if constexpr (fixed_channels != 0) {
+                if (vectorized && cols >= 4) {
+                    col = fill_cost_row_avx2<fixed_channels>(a, b, out, cols);
+                    a += col * channels;
+                    b += col * channels;
+                    out += col;
+                }
+            }
+#endif
+            for (; col < cols; ++col, a += channels, b += channels) {
                 double squared = 0;
                 for (Index channel = 0; channel < count; ++channel) {
                     const double difference = a[channel] - b[channel];
@@ -67,12 +117,66 @@ void fill_costs(const double* image, double* out, Index height, Index width, Ind
     fill(height - 1, width - 1, 1, width - 1);
 }
 
-Index find_root(Index* parent, Index pixel) {
+template<class Position>
+Position find_root(Position* parent, Position pixel) {
     while (parent[pixel] != pixel) {
         parent[pixel] = parent[parent[pixel]];
         pixel = parent[pixel];
     }
     return pixel;
+}
+
+template<class Position>
+void label_components(const double* costs, const Index* order, Index* labels,
+                      Index height, Index width, double scale, Index min_size, Position* parent) {
+    const GridEdges edges(height, width);
+    const auto pixels = height * width;
+    // Right edges and both diagonal blocks share the same row-major origin
+    // map. Vertical edges already use their top endpoint as the local index.
+    std::unique_ptr<Position[]> origins(new Position[edges.right]);
+    Index origin = 0;
+    for (Index row = 0; row < height && width > 1; ++row)
+        for (Index col = 0; col < width - 1; ++col)
+            origins[origin++] = static_cast<Position>(row * width + col);
+
+    std::iota(parent, parent + pixels, Position{0});
+    std::vector<Position> sizes(static_cast<std::size_t>(pixels), 1);
+    scale /= 255;
+    std::vector<float> thresholds(static_cast<std::size_t>(pixels), static_cast<float>(0.0 + scale));
+    const auto join = [&](Position a, Position b) {
+        const auto root = std::min(a, b);
+        parent[std::max(a, b)] = root;
+        sizes[root] = sizes[a] + sizes[b];
+        return root;
+    };
+
+    for (Index i = 0; i < edges.count; ++i) {
+        const auto edge = order[i];
+        const auto [first, second] = edges.endpoints(edge, origins.get());
+        const auto a = find_root(parent, first);
+        const auto b = find_root(parent, second);
+        if (a == b) continue;
+        const double cost = costs[edge];
+        if (cost < std::min(thresholds[a], thresholds[b])) {
+            const auto root = join(a, b);
+            thresholds[root] = static_cast<float>(cost + scale / static_cast<double>(sizes[root]));
+        }
+    }
+    if (min_size > 1) {
+        for (Index i = 0; i < edges.count; ++i) {
+            const auto [first, second] = edges.endpoints(order[i], origins.get());
+            const auto a = find_root(parent, first);
+            const auto b = find_root(parent, second);
+            if (a != b && (sizes[a] < min_size || sizes[b] < min_size)) join(a, b);
+        }
+    }
+
+    // Each non-root parent has a smaller index, so its final label is ready.
+    Index next = 0;
+    for (Index pixel = 0; pixel < pixels; ++pixel) {
+        const auto root = parent[pixel];
+        labels[pixel] = root == pixel ? next++ : labels[root];
+    }
 }
 
 } // namespace
@@ -100,44 +204,12 @@ void felzenszwalb_costs_into(const double* image, double* costs, Index height,
 
 void felzenszwalb_labels_into(const double* costs, const Index* order, Index* labels,
                               Index height, Index width, double scale, Index min_size) {
-    const GridEdges edges(height, width);
     const auto pixels = height * width;
-    std::iota(labels, labels + pixels, Index{0});
-    std::vector<Index> sizes(static_cast<std::size_t>(pixels), 1);
-    std::vector<double> internal_cost(static_cast<std::size_t>(pixels), 0);
-    scale /= 255;
-    const auto join = [&](Index a, Index b) {
-        const auto root = std::min(a, b);
-        labels[std::max(a, b)] = root;
-        sizes[root] = sizes[a] + sizes[b];
-        return root;
-    };
-
-    for (Index i = 0; i < edges.count; ++i) {
-        const auto edge = order[i];
-        const auto [first, second] = edges.endpoints(edge);
-        const auto a = find_root(labels, first);
-        const auto b = find_root(labels, second);
-        if (a == b) continue;
-        const auto threshold_a = static_cast<float>(internal_cost[a] + scale / static_cast<double>(sizes[a]));
-        const auto threshold_b = static_cast<float>(internal_cost[b] + scale / static_cast<double>(sizes[b]));
-        if (costs[edge] < std::min(threshold_a, threshold_b)) internal_cost[join(a, b)] = costs[edge];
-    }
-    if (min_size > 1) {
-        for (Index i = 0; i < edges.count; ++i) {
-            const auto [first, second] = edges.endpoints(order[i]);
-            const auto a = find_root(labels, first);
-            const auto b = find_root(labels, second);
-            if (a != b && (sizes[a] < min_size || sizes[b] < min_size)) join(a, b);
-        }
-    }
-
-    // Each non-root parent has a smaller index, so it already holds its
-    // final component label when visited here.
-    Index next = 0;
-    for (Index pixel = 0; pixel < pixels; ++pixel) {
-        const auto parent = labels[pixel];
-        labels[pixel] = parent == pixel ? next++ : labels[parent];
+    if (pixels <= std::numeric_limits<std::int32_t>::max()) {
+        std::unique_ptr<std::int32_t[]> parent(new std::int32_t[pixels]);
+        label_components(costs, order, labels, height, width, scale, min_size, parent.get());
+    } else {
+        label_components(costs, order, labels, height, width, scale, min_size, labels);
     }
 }
 

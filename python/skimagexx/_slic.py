@@ -4,6 +4,7 @@ import numpy as np
 
 from . import _core
 from ._compat import fallback
+from .filters import gaussian
 
 
 def _spacing_values(spacing, rank):
@@ -26,8 +27,6 @@ def _sigma_values(sigma, rank):
 
 def _prepare_features(image, rank, lab, sigma, spacing, compactness):
     # Preprocessing follows scikit-image 0.26.0 slic_superpixels.py.
-    # Color conversion and the Gaussian kernel use the stock numerical
-    # providers so their dtype, rounding and axis order are preserved.
     # Copyright 2009-2022 the scikit-image team, BSD-3-Clause.
     if image.dtype == np.dtype(np.uint8):
         working = np.multiply(image, 1. / 255., dtype=np.float64)
@@ -45,6 +44,8 @@ def _prepare_features(image, rank, lab, sigma, spacing, compactness):
         shape += (1,)
     working = working.reshape(shape)
     if lab:
+        # Lab rounding can change the outcome of SLIC's strict distance
+        # comparisons. Use the reference's conversion for exact labels.
         from skimage.color import rgb2lab
 
         working = rgb2lab(working)
@@ -54,9 +55,7 @@ def _prepare_features(image, rank, lab, sigma, spacing, compactness):
         widths = np.full(3, sigma, dtype=working.dtype)
         widths /= np.asarray(spacing, dtype=working.dtype)
     if (widths > 0).any():
-        from scipy.ndimage import gaussian_filter
-
-        working = gaussian_filter(working, [*widths, 0], mode='reflect')
+        working = gaussian(working, [*widths, 0], mode='reflect', preserve_range=True)
     working = np.ascontiguousarray(working.reshape(image.shape))
     working *= 1. / compactness
     return working

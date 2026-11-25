@@ -33,12 +33,23 @@ def felzenszwalb(image, scale=1, sigma=0.8, min_size=20, *, channel_axis=-1):
         values = (image[:, :, None] if image.ndim == 2
                   else np.moveaxis(image, channel_axis, -1))
         if values.shape[-1] <= 3:
-            values = values.astype(np.float64, order='K' if sigma else 'C', copy=False)
+            smooth = sigma > 1e-15
+            values = values.astype(np.float64, order='K' if smooth else 'C', copy=False)
             if image.dtype.char == 'B':
                 values *= 1 / 255
-            if sigma:
-                from scipy.ndimage import gaussian_filter
-                values = gaussian_filter(values, [sigma, sigma, 0], mode='reflect')
+            if smooth:
+                from .filters import _gaussian_cached_coefficients, _gaussian_coefficients
+
+                # Match SciPy's radius and axis order, including radii above
+                # the public Gaussian wrapper's compatibility cutoff.
+                radius = int(4. * sigma + .5)
+                coefficients = (
+                    _gaussian_cached_coefficients if np.geterr()['under'] == 'ignore'
+                    else _gaussian_coefficients
+                )
+                weights = coefficients(sigma, radius)
+                values = _core.gaussian_nd(values, [weights, weights], [0, 1], [0, 0],
+                                           0., True, values.dtype)[0]
             result = _core.felzenszwalb_prepared(values, scale, min_size)
             if result is not None:
                 return result

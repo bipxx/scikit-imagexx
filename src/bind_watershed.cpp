@@ -1,6 +1,11 @@
 #include "bind_array_storage.hpp"
 #include <skimagexx/watershed.hpp>
 
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#define NPY_TARGET_VERSION NPY_1_23_API_VERSION
+#define PY_ARRAY_UNIQUE_SYMBOL SKIMAGEXX_WATERSHED_ARRAY_API
+#include <numpy/arrayobject.h>
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -19,14 +24,22 @@ bool real_dtype(const py::dtype& dtype) {
 }
 
 void check_storage(const py::array& value) {
-    if (Py_TYPE(value.ptr()) != py::detail::npy_api::get().PyArray_Type_)
+    if (!PyArray_CheckExact(value.ptr()))
         throw py::type_error("watershed requires an exact ndarray");
+    auto* array = reinterpret_cast<PyArrayObject*>(value.ptr());
     const auto dtype = value.dtype();
-    if (!real_dtype(dtype) || !dtype.attr("metadata").is_none() || !dtype.attr("isnative").cast<bool>())
+    if (!real_dtype(dtype) || PyDataType_METADATA(PyArray_DESCR(array)) || !PyArray_ISNOTSWAPPED(array))
         throw py::type_error("watershed requires an untagged native fixed-width real dtype");
-    if (!(value.flags() & py::array::c_style) || !value.writeable() || !value.attr("flags").attr("aligned").cast<bool>())
+    if (!PyArray_ISCARRAY(array))
         throw py::value_error("watershed requires writable aligned C-order storage");
     skimagexx::bindings::check_array_storage(value);
+}
+
+py::array cast_array(const py::array& value, int type) {
+    auto* result = PyArray_Cast(reinterpret_cast<PyArrayObject*>(value.ptr()), type);
+    if (!result)
+        throw py::error_already_set();
+    return py::reinterpret_steal<py::array>(result);
 }
 
 bool same_shape(const py::array& first, const py::array& second) {
@@ -51,6 +64,8 @@ void apply(const py::array& image, const py::array& markers, const std::uint8_t*
 }  // namespace
 
 void bind_watershed(py::module_& module) {
+    if (_import_array() < 0)
+        throw py::error_already_set();
     module.def("watershed_check_storage", &check_storage, py::arg("array").noconvert());
     module.def("watershed", [](const py::array& image, const py::array& markers,
                                const py::object& mask, double compactness, bool line,
@@ -74,20 +89,18 @@ void bind_watershed(py::module_& module) {
 
         py::array mask_array;
         if (!mask.is_none()) {
-            if (!py::isinstance<py::array>(mask))
+            if (!PyArray_CheckExact(mask.ptr()))
                 throw py::type_error("watershed mask requires an exact ndarray");
             mask_array = py::reinterpret_borrow<py::array>(mask);
             check_storage(mask_array);
             if (!same_shape(image, mask_array))
                 throw py::value_error("watershed requires matching image and mask shapes");
             if (mask_array.dtype().kind() != 'b')
-                mask_array = mask_array.attr("astype")(py::dtype::of<bool>()).cast<py::array>();
+                mask_array = cast_array(mask_array, NPY_BOOL);
         }
 
-        const auto image_dtype = image.dtype();
-        py::array values = image;
-        if (!image_dtype.equal(py::dtype::of<double>()))
-            values = image.attr("astype")(py::dtype::of<double>()).cast<py::array>();
+        py::array values = PyArray_TYPE(reinterpret_cast<PyArrayObject*>(image.ptr())) == NPY_DOUBLE
+            ? image : cast_array(image, NPY_DOUBLE);
 
         const std::vector<py::ssize_t> dimensions(image.shape(), image.shape() + image.ndim());
         const std::vector<std::size_t> shape(dimensions.begin(), dimensions.end());

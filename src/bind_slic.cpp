@@ -8,6 +8,7 @@
 #include <array>
 #include <cfenv>
 #include <cstdint>
+#include <memory>
 #include <type_traits>
 
 namespace py = pybind11;
@@ -68,11 +69,10 @@ bool call(const py::array& image, const std::array<std::size_t, 4>& shape,
 void bind_slic(py::module_& module) {
     const auto np = py::module_::import("numpy");
     const auto ndarray = np.attr("ndarray").cast<py::type>();
-    const auto asarray = np.attr("asarray").cast<py::object>();
     module.def("slic_accept_image", [ndarray](const py::array& image, unsigned rank) {
         return admissible(image, ndarray, rank) != Input::unsupported;
     }, py::arg("image").noconvert(), py::arg("spatial_rank"));
-    module.def("slic_grid", [ndarray, asarray](
+    module.def("slic_grid", [ndarray](
         const py::array& image, unsigned rank, std::size_t count, double compactness,
         std::size_t iterations, const std::array<double, 3>& spacing, bool connectivity,
         double min_size_factor, double max_size_factor, bool zero, py::ssize_t start_label,
@@ -87,7 +87,12 @@ void bind_slic(py::module_& module) {
             shape[3 - rank + axis] = static_cast<std::size_t>(image.shape(axis));
         if (image.ndim() != rank)
             shape[3] = static_cast<std::size_t>(image.shape(rank));
-        py::array_t<py::ssize_t> labels({py::ssize_t(shape[0]), py::ssize_t(shape[1]), py::ssize_t(shape[2])});
+        // Keep the public result as a writable view with independent storage.
+        std::unique_ptr<py::ssize_t[]> storage(new py::ssize_t[image.size() / shape[3]]);
+        py::capsule owner(storage.get(), [](void* data) { delete[] static_cast<py::ssize_t*>(data); });
+        auto* const data = storage.release();
+        py::array_t<py::ssize_t> labels(
+            py::array::ShapeContainer(image.shape(), image.shape() + rank), data, owner);
         bool success = false;
         switch (kind) {
         case Input::u8:
@@ -104,13 +109,7 @@ void bind_slic(py::module_& module) {
         }
         if (!success)
             return py::none();
-        auto memory = py::reinterpret_steal<py::object>(PyMemoryView_FromObject(labels.ptr()));
-        if (!memory)
-            throw py::error_already_set();
-        auto result = asarray(memory);
-        if (rank == 2)
-            return result.attr("__getitem__")(0);
-        return result;
+        return labels;
     }, py::arg("image").noconvert(), py::arg("spatial_rank"), py::arg("n_segments"),
        py::arg("compactness"), py::arg("max_num_iter"), py::arg("spacing"),
        py::arg("enforce_connectivity"), py::arg("min_size_factor"), py::arg("max_size_factor"),
