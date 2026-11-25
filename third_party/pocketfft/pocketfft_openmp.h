@@ -61,6 +61,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <complex>
 #include <algorithm>
+#include <limits>
+#if defined(__AVX2__) && defined(_MSC_VER) && !defined(__clang__) && !defined(POCKETFFT_NO_VECTORS)
+#include <immintrin.h>
+#define POCKETFFT_MSVC_AVX2
+#endif
 #if defined(_MSC_VER) && defined(_M_X64)
 #include <cfenv>
 #include "../../src/fft_angle.hpp"
@@ -112,11 +117,13 @@ using stride_t = std::vector<ptrdiff_t>;
 constexpr bool FORWARD  = true,
                BACKWARD = false;
 
-// only enable vector support for gcc>=5.0 and clang>=5.0
+// GCC and Clang use compiler vectors; MSVC needs the AVX2 translation unit.
 #ifndef POCKETFFT_NO_VECTORS
 #define POCKETFFT_NO_VECTORS
 #if defined(__INTEL_COMPILER)
 // do nothing. This is necessary because this compiler also sets __GNUC__.
+#elif defined(POCKETFFT_MSVC_AVX2)
+#undef POCKETFFT_NO_VECTORS
 #elif defined(__clang__)
 // AppleClang has their own version numbering
 #ifdef __apple_build_version__
@@ -139,7 +146,7 @@ template<typename T> struct VLEN { static constexpr size_t val=1; };
 #if (defined(__AVX512F__))
 template<> struct VLEN<float> { static constexpr size_t val=16; };
 template<> struct VLEN<double> { static constexpr size_t val=8; };
-#elif (defined(__AVX__))
+#elif (defined(__AVX__) || defined(POCKETFFT_MSVC_AVX2))
 template<> struct VLEN<float> { static constexpr size_t val=8; };
 template<> struct VLEN<double> { static constexpr size_t val=4; };
 #elif (defined(__SSE2__))
@@ -596,7 +603,8 @@ template <typename Func> void thread_map(size_t requested, Func f)
   {
   if (requested<=1) { f(); return; }
   std::exception_ptr error;
-  #pragma omp parallel num_threads(requested)
+  const int team_size = int(std::min(requested, size_t((std::numeric_limits<int>::max)())));
+  #pragma omp parallel num_threads(team_size)
     {
     const auto saved_id=thread_id(), saved_count=num_threads();
     thread_id()=size_t(omp_get_thread_num());
@@ -919,6 +927,7 @@ template<typename T0> class cfftp
       };
 
     size_t length;
+    size_t generic_radix=0;
     arr<cmplx<T0>> mem;
     std::vector<fctdata> fact;
 
@@ -1399,7 +1408,7 @@ template<bool fwd, typename T> void pass11 (size_t ido, size_t l1,
 template<bool fwd, typename T> void passg (size_t ido, size_t ip,
   size_t l1, T * POCKETFFT_RESTRICT cc, T * POCKETFFT_RESTRICT ch,
   const cmplx<T0> * POCKETFFT_RESTRICT wa,
-  const cmplx<T0> * POCKETFFT_RESTRICT csarr) const
+  const cmplx<T0> * POCKETFFT_RESTRICT csarr, cmplx<T0> *wal) const
   {
   const size_t cdim=ip;
   size_t ipph = (ip+1)/2;
@@ -1416,7 +1425,6 @@ template<bool fwd, typename T> void passg (size_t ido, size_t ip,
   auto CH2 = [ch, idl1](size_t a, size_t b) -> const T&
     { return ch[a+idl1*b]; };
 
-  arr<cmplx<T0>> wal(ip);
   wal[0] = cmplx<T0>(1., 0.);
   for (size_t i=1; i<ip; ++i)
     wal[i]=cmplx<T0>(csarr[i].r,fwd ? -csarr[i].i : csarr[i].i);
@@ -1505,12 +1513,11 @@ template<bool fwd, typename T> void passg (size_t ido, size_t ip,
     }
   }
 
-template<bool fwd, typename T> void pass_all(T c[], T0 fct) const
+template<bool fwd, typename T> void pass_all(T c[], T0 fct, T ch[]) const
   {
   if (length==1) { c[0]*=fct; return; }
   size_t l1=1;
-  arr<T> ch(length);
-  T *p1=c, *p2=ch.data();
+  T *p1=c, *p2=ch;
 
   for(size_t k1=0; k1<fact.size(); k1++)
     {
@@ -1533,7 +1540,8 @@ template<bool fwd, typename T> void pass_all(T c[], T0 fct) const
       pass11<fwd> (ido, l1, p1, p2, fact[k1].tw);
     else
       {
-      passg<fwd>(ido, ip, l1, p1, p2, fact[k1].tw, fact[k1].tws);
+      auto wal = reinterpret_cast<cmplx<T0> *>(ch+length);
+      passg<fwd>(ido, ip, l1, p1, p2, fact[k1].tw, fact[k1].tws, wal);
       std::swap(p1,p2);
       }
     std::swap(p1,p2);
@@ -1554,8 +1562,17 @@ template<bool fwd, typename T> void pass_all(T c[], T0 fct) const
   }
 
   public:
+    // The generic radix also needs scalar twiddle scratch after ch.
+    size_t scratch_size() const { return length==1 ? 0 : length+generic_radix; }
+
+    template<typename T> void exec(T c[], T0 fct, bool fwd, T ch[]) const
+      { fwd ? pass_all<true>(c, fct, ch) : pass_all<false>(c, fct, ch); }
+
     template<typename T> void exec(T c[], T0 fct, bool fwd) const
-      { fwd ? pass_all<true>(c, fct) : pass_all<false>(c, fct); }
+      {
+      arr<T> ch(scratch_size());
+      exec(c, fct, fwd, ch.data());
+      }
 
   private:
     POCKETFFT_NOINLINE void factorize()
@@ -1610,6 +1627,7 @@ template<bool fwd, typename T> void pass_all(T c[], T0 fct) const
             fact[k].tw[(j-1)*(ido-1)+i-1] = twiddle[j*l1*i];
         if (ip>11)
           {
+          generic_radix=std::max(generic_radix, ip);
           fact[k].tws=mem.data()+memofs;
           memofs+=ip;
           for (size_t j=0; j<ip; ++j)
@@ -2310,12 +2328,13 @@ template<typename T> void radbg(size_t ido, size_t ip, size_t l1,
       }
 
   public:
-    template<typename T> void exec(T c[], T0 fct, bool r2hc) const
+    size_t scratch_size() const { return length==1 ? 0 : length; }
+
+    template<typename T> void exec(T c[], T0 fct, bool r2hc, T ch[]) const
       {
       if (length==1) { c[0]*=fct; return; }
       size_t nf=fact.size();
-      arr<T> ch(length);
-      T *p1=c, *p2=ch.data();
+      T *p1=c, *p2=ch;
 
       if (r2hc)
         for(size_t k1=0, l1=length; k1<nf;++k1)
@@ -2356,6 +2375,12 @@ template<typename T> void radbg(size_t ido, size_t ip, size_t l1,
           }
 
       copy_and_norm(c,p1,fct);
+      }
+
+    template<typename T> void exec(T c[], T0 fct, bool r2hc) const
+      {
+      arr<T> ch(scratch_size());
+      exec(c, fct, r2hc, ch.data());
       }
 
   private:
@@ -2452,10 +2477,8 @@ template<typename T0> class fftblue
     arr<cmplx<T0>> mem;
     cmplx<T0> *bk, *bkf;
 
-    template<bool fwd, typename T> void fft(cmplx<T> c[], T0 fct) const
+    template<bool fwd, typename T> void fft(cmplx<T> c[], T0 fct, cmplx<T> akf[]) const
       {
-      arr<cmplx<T>> akf(n2);
-
       /* initialize a_k and FFT it */
       for (size_t m=0; m<n; ++m)
         special_mul<fwd>(c[m],bk[m],akf[m]);
@@ -2463,7 +2486,7 @@ template<typename T0> class fftblue
       for (size_t m=n; m<n2; ++m)
         akf[m]=zero;
 
-      plan.exec (akf.data(),1.,true);
+      plan.exec(akf, T0(1), true, akf+n2);
 
       /* do the convolution */
       akf[0] = akf[0].template special_mul<!fwd>(bkf[0]);
@@ -2476,7 +2499,7 @@ template<typename T0> class fftblue
         akf[n2/2] = akf[n2/2].template special_mul<!fwd>(bkf[n2/2]);
 
       /* inverse FFT */
-      plan.exec (akf.data(),1.,false);
+      plan.exec(akf, T0(1), false, akf+n2);
 
       /* multiply by b_k */
       for (size_t m=0; m<n; ++m)
@@ -2513,29 +2536,37 @@ template<typename T0> class fftblue
         bkf[i] = tbkf[i];
       }
 
-    template<typename T> void exec(cmplx<T> c[], T0 fct, bool fwd) const
-      { fwd ? fft<true>(c,fct) : fft<false>(c,fct); }
+    size_t scratch_size() const { return n2+plan.scratch_size(); }
+    size_t real_scratch_size() const { return 2*(scratch_size()+n); }
 
-    template<typename T> void exec_r(T c[], T0 fct, bool fwd)
+    template<typename T> void exec(cmplx<T> c[], T0 fct, bool fwd, cmplx<T> work[]) const
+      { fwd ? fft<true>(c,fct,work) : fft<false>(c,fct,work); }
+
+    template<typename T> void exec_r(T c[], T0 fct, bool fwd, T work[]) const
       {
-      arr<cmplx<T>> tmp(n);
+      auto akf = reinterpret_cast<cmplx<T> *>(work);
+      auto tmp = akf+scratch_size();
       if (fwd)
         {
         auto zero = T0(0)*c[0];
         for (size_t m=0; m<n; ++m)
           tmp[m].Set(c[m], zero);
-        fft<true>(tmp.data(),fct);
+        fft<true>(tmp,fct,akf);
         c[0] = tmp[0].r;
-        std::copy_n (&tmp[1].r, n-1, &c[1]);
+        for (size_t m=1; 2*m<n; ++m)
+          { c[2*m-1]=tmp[m].r; c[2*m]=tmp[m].i; }
+        if ((n&1)==0) c[n-1]=tmp[n/2].r;
         }
       else
         {
         tmp[0].Set(c[0],c[0]*0);
-        std::copy_n (c+1, n-1, &tmp[1].r);
-        if ((n&1)==0) tmp[n/2].i=T0(0)*c[0];
         for (size_t m=1; 2*m<n; ++m)
-          tmp[n-m].Set(tmp[m].r, -tmp[m].i);
-        fft<false>(tmp.data(),fct);
+          {
+          tmp[m].Set(c[2*m-1], c[2*m]);
+          tmp[n-m].Set(c[2*m-1], -c[2*m]);
+          }
+        if ((n&1)==0) tmp[n/2].Set(c[n-1], T0(0)*c[0]);
+        fft<false>(tmp,fct,akf);
         for (size_t m=0; m<n; ++m)
           c[m] = tmp[m].r;
         }
@@ -2573,8 +2604,11 @@ template<typename T0> class pocketfft_c
         packplan=std::unique_ptr<cfftp<T0>>(new cfftp<T0>(length));
       }
 
-    template<typename T> POCKETFFT_NOINLINE void exec(cmplx<T> c[], T0 fct, bool fwd) const
-      { packplan ? packplan->exec(c,fct,fwd) : blueplan->exec(c,fct,fwd); }
+    size_t scratch_size() const
+      { return packplan ? packplan->scratch_size() : blueplan->scratch_size(); }
+
+    template<typename T> POCKETFFT_NOINLINE void exec(cmplx<T> c[], T0 fct, bool fwd, cmplx<T> work[]) const
+      { packplan ? packplan->exec(c,fct,fwd,work) : blueplan->exec(c,fct,fwd,work); }
 
     size_t length() const { return len; }
   };
@@ -2610,8 +2644,17 @@ template<typename T0> class pocketfft_r
         packplan=std::unique_ptr<rfftp<T0>>(new rfftp<T0>(length));
       }
 
-    template<typename T> POCKETFFT_NOINLINE void exec(T c[], T0 fct, bool fwd) const
-      { packplan ? packplan->exec(c,fct,fwd) : blueplan->exec_r(c,fct,fwd); }
+    size_t scratch_size() const
+      { return packplan ? packplan->scratch_size() : blueplan->real_scratch_size(); }
+
+    template<typename T> POCKETFFT_NOINLINE void exec(T c[], T0 fct, bool fwd, T work[]) const
+      { packplan ? packplan->exec(c,fct,fwd,work) : blueplan->exec_r(c,fct,fwd,work); }
+
+    template<typename T> void exec(T c[], T0 fct, bool fwd) const
+      {
+      arr<T> work(scratch_size());
+      exec(c,fct,fwd,work.data());
+      }
 
     size_t length() const { return len; }
   };
@@ -3117,7 +3160,46 @@ class rev_iter
 template<typename T> struct VTYPE {};
 template <typename T> using vtype_t = typename VTYPE<T>::type;
 
-#ifndef POCKETFFT_NO_VECTORS
+#ifdef POCKETFFT_MSVC_AVX2
+template<typename T, size_t N> struct SimdVec;
+
+template<> struct SimdVec<float, 8>
+  {
+  __m256 native;
+  SimdVec() = default;
+  SimdVec(float x) : native(_mm256_set1_ps(x)) {}
+  explicit SimdVec(__m256 x) : native(x) {}
+  float &operator[](size_t i) { return native.m256_f32[i]; }
+  float operator[](size_t i) const { return native.m256_f32[i]; }
+  SimdVec operator-() const { return SimdVec(_mm256_xor_ps(native, _mm256_set1_ps(-0.f))); }
+  friend SimdVec operator+(SimdVec a, SimdVec b) { return SimdVec(_mm256_add_ps(a.native, b.native)); }
+  friend SimdVec operator-(SimdVec a, SimdVec b) { return SimdVec(_mm256_sub_ps(a.native, b.native)); }
+  friend SimdVec operator*(SimdVec a, SimdVec b) { return SimdVec(_mm256_mul_ps(a.native, b.native)); }
+  SimdVec &operator+=(SimdVec x) { return *this = *this+x; }
+  SimdVec &operator-=(SimdVec x) { return *this = *this-x; }
+  SimdVec &operator*=(SimdVec x) { return *this = *this*x; }
+  };
+
+template<> struct SimdVec<double, 4>
+  {
+  __m256d native;
+  SimdVec() = default;
+  SimdVec(double x) : native(_mm256_set1_pd(x)) {}
+  explicit SimdVec(__m256d x) : native(x) {}
+  double &operator[](size_t i) { return native.m256d_f64[i]; }
+  double operator[](size_t i) const { return native.m256d_f64[i]; }
+  SimdVec operator-() const { return SimdVec(_mm256_xor_pd(native, _mm256_set1_pd(-0.))); }
+  friend SimdVec operator+(SimdVec a, SimdVec b) { return SimdVec(_mm256_add_pd(a.native, b.native)); }
+  friend SimdVec operator-(SimdVec a, SimdVec b) { return SimdVec(_mm256_sub_pd(a.native, b.native)); }
+  friend SimdVec operator*(SimdVec a, SimdVec b) { return SimdVec(_mm256_mul_pd(a.native, b.native)); }
+  SimdVec &operator+=(SimdVec x) { return *this = *this+x; }
+  SimdVec &operator-=(SimdVec x) { return *this = *this-x; }
+  SimdVec &operator*=(SimdVec x) { return *this = *this*x; }
+  };
+
+template<> struct VTYPE<float> { using type = SimdVec<float, 8>; };
+template<> struct VTYPE<double> { using type = SimdVec<double, 4>; };
+#elif !defined(POCKETFFT_NO_VECTORS)
 template<> struct VTYPE<float>
   {
   using type = float __attribute__ ((vector_size (VLEN<float>::val*sizeof(float))));
@@ -3132,27 +3214,24 @@ template<> struct VTYPE<long double>
   };
 #endif
 
-template<typename T> arr<char> alloc_tmp(const shape_t &shape,
-  size_t axsize, size_t elemsize)
+// The worker's line buffer and FFT scratch use the same lane width. Scalar
+// tails reuse both regions after the worker has finished its vector batches.
+class fft_workspace
   {
-  auto othersize = util::prod(shape)/axsize;
-  auto tmpsize = axsize*((othersize>=VLEN<T>::val) ? VLEN<T>::val : 1);
-  return arr<char>(tmpsize*elemsize);
-  }
-template<typename T> arr<char> alloc_tmp(const shape_t &shape,
-  const shape_t &axes, size_t elemsize)
-  {
-  size_t fullsize=util::prod(shape);
-  size_t tmpsize=0;
-  for (size_t i=0; i<axes.size(); ++i)
-    {
-    auto axsize = shape[axes[i]];
-    auto othersize = fullsize/axsize;
-    auto sz = axsize*((othersize>=VLEN<T>::val) ? VLEN<T>::val : 1);
-    if (sz>tmpsize) tmpsize=sz;
-    }
-  return arr<char>(tmpsize*elemsize);
-  }
+  size_t line_bytes;
+  arr<char> storage;
+
+  public:
+    fft_workspace(size_t len, size_t scratch_size, size_t elemsize, size_t lanes)
+      : line_bytes(len*elemsize*lanes), storage(line_bytes+scratch_size*elemsize*lanes) {}
+    char *data() { return storage.data(); }
+    char *scratch() { return storage.data()+line_bytes; }
+  };
+
+// DCT/DST plans own their existing per-call temporaries.
+template<typename Plan> size_t fft_scratch_size(const Plan &) { return 0; }
+template<typename T> size_t fft_scratch_size(const pocketfft_c<T> &plan) { return plan.scratch_size(); }
+template<typename T> size_t fft_scratch_size(const pocketfft_r<T> &plan) { return plan.scratch_size(); }
 
 template <typename T, size_t vlen> void copy_input(const multi_iter<vlen> &it,
   const cndarr<cmplx<T>> &src, cmplx<vtype_t<T>> *POCKETFFT_RESTRICT dst)
@@ -3227,16 +3306,17 @@ POCKETFFT_NOINLINE void general_nd(const cndarr<T> &in, ndarr<T> &out,
       util::thread_count(nthreads, in.shape(), axes[iax], VLEN<T>::val),
       [&] {
         constexpr auto vlen = VLEN<T0>::val;
-        auto storage = alloc_tmp<T0>(in.shape(), len, sizeof(T));
         const auto &tin(iax==0? in : out);
         multi_iter<vlen> it(tin, out, axes[iax]);
+        fft_workspace storage(len, fft_scratch_size(*plan), sizeof(T),
+          it.remaining()>=vlen ? vlen : 1);
 #ifndef POCKETFFT_NO_VECTORS
-        if (vlen>1)
+        if constexpr (vlen>1)
           while (it.remaining()>=vlen)
             {
             it.advance(vlen);
             auto tdatav = reinterpret_cast<add_vec_t<T> *>(storage.data());
-            exec(it, tin, out, tdatav, *plan, fct);
+            exec(it, tin, out, tdatav, *plan, fct, storage.scratch());
             }
 #endif
         while (it.remaining()>0)
@@ -3244,7 +3324,7 @@ POCKETFFT_NOINLINE void general_nd(const cndarr<T> &in, ndarr<T> &out,
           it.advance(1);
           auto buf = allow_inplace && it.stride_out() == sizeof(T) ?
             &out[it.oofs(0)] : reinterpret_cast<T *>(storage.data());
-          exec(it, tin, out, buf, *plan, fct);
+          exec(it, tin, out, buf, *plan, fct, storage.scratch());
           }
       });  // end of parallel region
     fct = T0(1); // factor has been applied, use 1 for remaining axes
@@ -3257,10 +3337,10 @@ struct ExecC2C
 
   template <typename T0, typename T, size_t vlen> void operator () (
     const multi_iter<vlen> &it, const cndarr<cmplx<T0>> &in,
-    ndarr<cmplx<T0>> &out, T * buf, const pocketfft_c<T0> &plan, T0 fct) const
+    ndarr<cmplx<T0>> &out, T * buf, const pocketfft_c<T0> &plan, T0 fct, char *scratch) const
     {
     copy_input(it, in, buf);
-    plan.exec(buf, fct, forward);
+    plan.exec(buf, fct, forward, reinterpret_cast<T *>(scratch));
     copy_output(it, buf, out);
     }
   };
@@ -3300,10 +3380,10 @@ struct ExecHartley
   {
   template <typename T0, typename T, size_t vlen> void operator () (
     const multi_iter<vlen> &it, const cndarr<T0> &in, ndarr<T0> &out,
-    T * buf, const pocketfft_r<T0> &plan, T0 fct) const
+    T * buf, const pocketfft_r<T0> &plan, T0 fct, char *scratch) const
     {
     copy_input(it, in, buf);
-    plan.exec(buf, fct, true);
+    plan.exec(buf, fct, true, reinterpret_cast<T *>(scratch));
     copy_hartley(it, buf, out);
     }
   };
@@ -3316,7 +3396,7 @@ struct ExecDcst
 
   template <typename T0, typename T, typename Tplan, size_t vlen>
   void operator () (const multi_iter<vlen> &it, const cndarr<T0> &in,
-    ndarr<T0> &out, T * buf, const Tplan &plan, T0 fct) const
+    ndarr<T0> &out, T * buf, const Tplan &plan, T0 fct, char *) const
     {
     copy_input(it, in, buf);
     plan.exec(buf, fct, ortho, type, cosine);
@@ -3334,16 +3414,17 @@ template<typename T> POCKETFFT_NOINLINE void general_r2c(
     util::thread_count(nthreads, in.shape(), axis, VLEN<T>::val),
     [&] {
     constexpr auto vlen = VLEN<T>::val;
-    auto storage = alloc_tmp<T>(in.shape(), len, sizeof(T));
     multi_iter<vlen> it(in, out, axis);
+    fft_workspace storage(len, plan->scratch_size(), sizeof(T),
+      it.remaining()>=vlen ? vlen : 1);
 #ifndef POCKETFFT_NO_VECTORS
-    if (vlen>1)
+    if constexpr (vlen>1)
       while (it.remaining()>=vlen)
         {
         it.advance(vlen);
         auto tdatav = reinterpret_cast<vtype_t<T> *>(storage.data());
         copy_input(it, in, tdatav);
-        plan->exec(tdatav, fct, true);
+        plan->exec(tdatav, fct, true, reinterpret_cast<vtype_t<T> *>(storage.scratch()));
         for (size_t j=0; j<vlen; ++j)
           out[it.oofs(j,0)].Set(tdatav[0][j]);
         size_t i=1, ii=1;
@@ -3365,7 +3446,7 @@ template<typename T> POCKETFFT_NOINLINE void general_r2c(
       it.advance(1);
       auto tdata = reinterpret_cast<T *>(storage.data());
       copy_input(it, in, tdata);
-      plan->exec(tdata, fct, true);
+      plan->exec(tdata, fct, true, reinterpret_cast<T *>(storage.scratch()));
       out[it.oofs(0)].Set(tdata[0]);
       size_t i=1, ii=1;
       if (forward)
@@ -3389,10 +3470,11 @@ template<typename T> POCKETFFT_NOINLINE void general_c2r(
     util::thread_count(nthreads, in.shape(), axis, VLEN<T>::val),
     [&] {
       constexpr auto vlen = VLEN<T>::val;
-      auto storage = alloc_tmp<T>(out.shape(), len, sizeof(T));
       multi_iter<vlen> it(in, out, axis);
+      fft_workspace storage(len, plan->scratch_size(), sizeof(T),
+        it.remaining()>=vlen ? vlen : 1);
 #ifndef POCKETFFT_NO_VECTORS
-      if (vlen>1)
+      if constexpr (vlen>1)
         while (it.remaining()>=vlen)
           {
           it.advance(vlen);
@@ -3419,7 +3501,7 @@ template<typename T> POCKETFFT_NOINLINE void general_c2r(
             for (size_t j=0; j<vlen; ++j)
               tdatav[i][j] = in[it.iofs(j,ii)].r;
           }
-          plan->exec(tdatav, fct, false);
+          plan->exec(tdatav, fct, false, reinterpret_cast<vtype_t<T> *>(storage.scratch()));
           copy_output(it, tdatav, out);
           }
 #endif
@@ -3445,7 +3527,7 @@ template<typename T> POCKETFFT_NOINLINE void general_c2r(
         if (i<len)
           tdata[i] = in[it.iofs(ii)].r;
         }
-        plan->exec(tdata, fct, false);
+        plan->exec(tdata, fct, false, reinterpret_cast<T *>(storage.scratch()));
         copy_output(it, tdata, out);
         }
     });  // end of parallel region
@@ -3457,13 +3539,13 @@ struct ExecR2R
 
   template <typename T0, typename T, size_t vlen> void operator () (
     const multi_iter<vlen> &it, const cndarr<T0> &in, ndarr<T0> &out, T * buf,
-    const pocketfft_r<T0> &plan, T0 fct) const
+    const pocketfft_r<T0> &plan, T0 fct, char *scratch) const
     {
     copy_input(it, in, buf);
     if ((!r2h) && forward)
       for (size_t i=2; i<it.length_out(); i+=2)
         buf[i] = -buf[i];
-    plan.exec(buf, fct, r2h);
+    plan.exec(buf, fct, r2h, reinterpret_cast<T *>(scratch));
     if (r2h && (!forward))
       for (size_t i=2; i<it.length_out(); i+=2)
         buf[i] = -buf[i];
