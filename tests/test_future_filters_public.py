@@ -240,10 +240,10 @@ def test_selection_overlap(mode, return_all, undo, pyplot):
                     _selection_labels(selected, shape, return_all=True)
             except ValueError:
                 expected_all = []
-                for region in selected:
-                    mask = np.zeros(shape, dtype=bool)
+                for label, region in enumerate(selected, start=1):
+                    mask = np.zeros(shape, dtype=int)
                     columns, rows = zip(*region)
-                    mask[polygon(rows, columns, shape=shape)] = True
+                    mask[polygon(rows, columns, shape=shape)] = label
                     expected_all.append(mask)
                 check_array(_selection_labels(selected, shape, return_all=True), np.stack(expected_all))
             return
