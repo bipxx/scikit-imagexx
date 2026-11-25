@@ -163,6 +163,52 @@ NLM_AVX_ENTRY int nl_patches_avx2(const double* sums, const double* padded, doub
 #endif
 #endif
 
+template<int FixedChannels, bool FirstPlane, bool FirstRow>
+void nlm_prefix_row_loop(const double* padded, double* sums, int z, int y, int px,
+                         std::ptrdiff_t plane, std::ptrdiff_t shift, int x_last,
+                         int channels, std::ptrdiff_t count, double noise,
+                         bool vectorized) {
+    double running = 0;
+    const std::ptrdiff_t row = z * plane + static_cast<std::ptrdiff_t>(y) * px;
+    int x = 0;
+#ifdef SKIMAGEXX_NLM_AVX2
+    if (vectorized)
+        x = nl_prefix_avx2<FixedChannels, FirstRow, FirstPlane>(
+            padded, sums, row, shift, x_last, channels,
+            count, px, plane, noise, running);
+#else
+    (void)vectorized;
+#endif
+    for (; x < x_last; ++x) {
+        const std::ptrdiff_t p = row + x;
+        double squared = 0;
+        for (int c = 0; c < channels; ++c) {
+            const auto channel = c * count;
+            const double delta = padded[channel + p] - padded[channel + p + shift];
+            squared += delta * delta;
+        }
+        running += squared - noise;
+        double sum = running;
+        if constexpr (!FirstRow) sum += sums[p - px];
+        if constexpr (!FirstPlane) {
+            sum += sums[p - plane];
+            if constexpr (!FirstRow) sum -= sums[p - plane - px];
+        }
+        sums[p] = sum;
+    }
+}
+
+template<int FixedChannels, bool FirstPlane>
+void nlm_prefix_plane_loop(const double* padded, double* sums, int z, int y_first, int y_last,
+                           int px, std::ptrdiff_t plane, std::ptrdiff_t shift, int x_last,
+                           int channels, std::ptrdiff_t count, double noise, bool vectorized) {
+    nlm_prefix_row_loop<FixedChannels, FirstPlane, true>(
+        padded, sums, z, y_first, px, plane, shift, x_last, channels, count, noise, vectorized);
+    for (int y = y_first + 1; y < y_last; ++y)
+        nlm_prefix_row_loop<FixedChannels, FirstPlane, false>(
+            padded, sums, z, y, px, plane, shift, x_last, channels, count, noise, vectorized);
+}
+
 template<bool Volume, int FixedChannels, class T>
 void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int channels,
                     int patch, int search, double h, double sigma) {
@@ -217,43 +263,19 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
                 // Inclusive prefix sum over the overlap of the padded images.
                 // Each query subtracts the lower corner, so the reference's
                 // fast path effectively integrates 2*radius samples per axis.
-                const auto prefix_plane = [&]<bool FirstPlane>(int z) {
-                    const auto prefix_row = [&]<bool FirstRow>(int y) {
-                        double running = 0;
-                        const Index row = z * plane + static_cast<Index>(y) * px;
-                        int x = 0;
 #ifdef SKIMAGEXX_NLM_AVX2
-                        if (vectorized)
-                            x = nl_prefix_avx2<FixedChannels, FirstRow, FirstPlane>(
-                                padded.data(), sums.get(), row, shift, x_last, channels,
-                                count, px, plane, noise, running);
+                const bool use_simd = vectorized;
+#else
+                const bool use_simd = false;
 #endif
-                        for (; x < x_last; ++x) {
-                            const Index p = row + x;
-                            double squared = 0;
-                            for (int c = 0; c < channels; ++c) {
-                                const auto channel = c * count;
-                                const double delta = padded[channel + p] - padded[channel + p + shift];
-                                squared += delta * delta;
-                            }
-                            running += squared - noise;
-                            double sum = running;
-                            if constexpr (!FirstRow) sum += sums[p - px];
-                            if constexpr (!FirstPlane) {
-                                sum += sums[p - plane];
-                                if constexpr (!FirstRow) sum -= sums[p - plane - px];
-                            }
-                            sums[p] = sum;
-                        }
-                    };
-                    prefix_row.template operator()<true>(y_first);
-                    for (int y = y_first + 1; y < y_last; ++y)
-                        prefix_row.template operator()<false>(y);
-                };
-                prefix_plane.template operator()<true>(z_first);
+                nlm_prefix_plane_loop<FixedChannels, true>(
+                    padded.data(), sums.get(), z_first, y_first, y_last,
+                    px, plane, shift, x_last, channels, count, noise, use_simd);
                 if constexpr (Volume) {
                     for (int z = z_first + 1; z < z_last; ++z)
-                        prefix_plane.template operator()<false>(z);
+                        nlm_prefix_plane_loop<FixedChannels, false>(
+                            padded.data(), sums.get(), z, y_first, y_last,
+                            px, plane, shift, x_last, channels, count, noise, use_simd);
                 }
                 const auto patch_sum = [&](Index p) {
                     return (sums[p + ry + radius] - sums[p + ry - radius]) -

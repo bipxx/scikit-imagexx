@@ -2,11 +2,8 @@
 #include <skimagexx/restoration_extra.hpp>
 #include <skimagexx/tv_denoise.hpp>
 #include "bind_array_storage.hpp"
+#include "bind_helpers.hpp"
 
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
-#define NPY_TARGET_VERSION NPY_1_23_API_VERSION
-#define NO_IMPORT_ARRAY
-#include <numpy/arrayobject.h>
 #include <pybind11/complex.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
@@ -36,7 +33,7 @@ using skimagexx::RestorationShape;
 
 template<class T> const T* dense(const py::array& input) {
     if (input.dtype().num() != py::dtype::of<T>().num() ||
-        !PyArray_ISNOTSWAPPED(reinterpret_cast<PyArrayObject*>(input.ptr())) ||
+        !skimagexx::bindings::is_native_byteorder(input) ||
         !(input.flags() & py::array::c_style) || input.size() == 0 ||
         reinterpret_cast<std::uintptr_t>(input.data()) % alignof(T))
         throw py::value_error("restoration requires a nonempty native aligned dense array");

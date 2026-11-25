@@ -866,24 +866,26 @@ BytePlan byte_plan(const RankView& v,const Plan& prepared,RankOperation op,std::
     return result;
 }
 
+template<bool Vector,RankOperation Op,bool WideEqualize>
+auto make_byte_hist(std::size_t depth) {
+    if constexpr(Vector)return ByteVectorHistogram(depth);
+    else return ByteHistogram<Op,WideEqualize>{};
+}
+
 template<RankOperation Op,class O,bool WideEqualize=false,bool Constant=false>
 void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,std::size_t begin,std::size_t end,
                    const std::vector<double>& logarithms,double p0,double p1,std::ptrdiff_t s0,std::ptrdiff_t s1) {
     if(begin==end)return;
     using R=RankOperation;
-    constexpr bool vector=Op==R::windowed_histogram;
-    auto hist=[&] {
-        if constexpr(vector)return ByteVectorHistogram(fast.depth);
-        else return ByteHistogram<Op,WideEqualize>{};
-    }();
+    auto hist=make_byte_hist<(Op==R::windowed_histogram),Op,WideEqualize>(fast.depth);
     const auto* image=static_cast<const std::uint8_t*>(v.image);
     const auto rows=std::ptrdiff_t(v.shape[1]),cols=std::ptrdiff_t(v.shape[2]);
     const auto top=v.center[1],bottom=rows-std::ptrdiff_t(v.footprint_shape[1])+top+1;
     const auto left=v.center[2],right=cols-std::ptrdiff_t(v.footprint_shape[2])+left;
     const auto fixed=hist.ranks(fast.population,p0,p1);
-    const double inv_pop=vector ? 1./double(fast.population):0.;
+    const double inv_pop=(Op==R::windowed_histogram) ? 1./double(fast.population):0.;
 #ifdef SKIMAGEXX_AVX2
-    const bool simd_vector=vector && std::is_floating_point_v<O> && fast.depth>=4 && has_avx2();
+    const bool simd_vector=(Op==R::windowed_histogram) && std::is_floating_point_v<O> && fast.depth>=4 && has_avx2();
 #endif
     const auto* const enter=fast.enter.data();
     const auto* const leave=fast.leave.data();
@@ -906,7 +908,7 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
     constexpr std::false_type remove{};
     const auto write=[&](auto interior,std::uint32_t population,const auto& ranks) {
         auto* out=static_cast<unsigned char*>(v.output)+r*v.output_strides[1]+c*v.output_strides[2];
-        if constexpr(vector) {
+        if constexpr(Op==R::windowed_histogram) {
             const double scale=interior.value ? inv_pop:population ? 1./double(population):0.;
             std::size_t i=0;
 #ifdef SKIMAGEXX_AVX2
@@ -939,7 +941,7 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
         const auto arrive=[&] {clipped(add,east ? prepared.enter[2]:prepared.leave[2],0,0);};
         const auto move=[&]() {
             // Remove first for signed counts so they only represent one window.
-            if constexpr(vector){depart();arrive();}
+            if constexpr(Op==R::windowed_histogram){depart();arrive();}
             else {arrive();depart();}
             edge();
         };
@@ -950,7 +952,7 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
                 if constexpr(Op!=R::pop && !Constant) {
                     const auto* center=image+r*cols+c+(east ? 0:1);
                     for(std::size_t i=0;i<endpoints;++i) {
-                        if constexpr(vector) {
+                        if constexpr(Op==R::windowed_histogram) {
                             hist.template update<false>(center[leaving[i]]);
                             hist.template update<true>(center[entering[i]]);
                         } else {
@@ -970,9 +972,9 @@ void process_bytes(const RankView& v,const Plan& prepared,const BytePlan& fast,s
         edge();
         if(east)sweep(add);else sweep(remove);
         if(++r>=std::ptrdiff_t(end))break;
-        if constexpr(vector)clipped(remove,prepared.leave[1],-1,0);
+        if constexpr(Op==R::windowed_histogram)clipped(remove,prepared.leave[1],-1,0);
         clipped(add,prepared.enter[1],0,0);
-        if constexpr(!vector)clipped(remove,prepared.leave[1],-1,0);
+        if constexpr(Op!=R::windowed_histogram)clipped(remove,prepared.leave[1],-1,0);
     }
 }
 

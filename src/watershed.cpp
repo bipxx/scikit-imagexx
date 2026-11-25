@@ -278,6 +278,63 @@ void flood(const double* image, T* labels,
 
 }  // namespace
 
+template<class T, class Position, bool Compact, bool Line, class Queue>
+void fill_and_flood_queue(const double* elevations, T* labels,
+                          std::vector<std::uint8_t>& active, const std::vector<Index>& offsets,
+                          const std::vector<Index>& strides, double compactness,
+                          Position axis2_width, const std::vector<Position>& row_indices,
+                          const std::vector<Index>& seeds, Queue& queue) {
+    for (const auto p : seeds) {
+        const auto seed = static_cast<Position>(p);
+        queue.push(elevations[p], seed_age, seed, seed);
+    }
+    flood<T, Position, Compact, Line>(elevations, labels, active, offsets, strides,
+                                      compactness, axis2_width, row_indices, queue);
+}
+
+template<class T, class Position, bool Compact, bool Line, class VisitRows>
+void run_watershed_mode(const double* elevations, T* labels,
+                        std::vector<std::uint8_t>& active, const std::vector<Index>& offsets,
+                        const std::vector<Index>& strides, double compactness,
+                        const WatershedNeighborhood* neighborhood, std::size_t rank,
+                        std::size_t width, std::size_t count, std::size_t padded_count,
+                        std::vector<std::size_t>& coordinates, const std::vector<Index>& seeds,
+                        bool ordered, bool byte_range, VisitRows&& visit_rows) {
+    const auto axis2_width = static_cast<Position>(!neighborhood && rank == 2 ? strides[0] : 0);
+    std::vector<Position> row_indices;
+    if constexpr (Compact) {
+        if (axis2_width) {
+            row_indices.resize(padded_count);
+            Position row_index = 0;
+            std::fill(coordinates.begin(), coordinates.end(), 0);
+            visit_rows([&](std::size_t, Index row) {
+                std::fill_n(row_indices.data() + row, width, ++row_index);
+            });
+        }
+    }
+    const auto capacity = std::max(seeds.size(), std::min(count, std::size_t(1024)));
+    if constexpr (!Compact) {
+        if (ordered && byte_range) {
+            FloodBuckets<Position, Line> buckets;
+            fill_and_flood_queue<T, Position, Compact, Line>(
+                elevations, labels, active, offsets, strides, compactness,
+                axis2_width, row_indices, seeds, buckets);
+            return;
+        }
+    }
+    if (ordered) {
+        FloodHeap<Position, Compact || Line, true> heap(capacity);
+        fill_and_flood_queue<T, Position, Compact, Line>(
+            elevations, labels, active, offsets, strides, compactness,
+            axis2_width, row_indices, seeds, heap);
+    } else {
+        FloodHeap<Position, Compact || Line, false> heap(capacity);
+        fill_and_flood_queue<T, Position, Compact, Line>(
+            elevations, labels, active, offsets, strides, compactness,
+            axis2_width, row_indices, seeds, heap);
+    }
+}
+
 template<class T>
 void watershed_into(const double* image, const T* markers, const std::uint8_t* mask,
                     std::size_t count, const std::size_t* shape, std::size_t rank,
@@ -396,53 +453,23 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
         }
     }
 
-    const auto run = [&](auto position, auto compact, auto line) {
-        using Position = decltype(position);
-        constexpr bool Compact = decltype(compact)::value;
-        constexpr bool Line = decltype(line)::value;
-        const auto axis2_width = static_cast<Position>(!neighborhood && rank == 2 ? strides[0] : 0);
-        std::vector<Position> row_indices;
-        if constexpr (Compact) {
-            if (axis2_width) {
-                row_indices.resize(padded_count);
-                Position row_index = 0;
-                std::fill(coordinates.begin(), coordinates.end(), 0);
-                visit_rows([&](std::size_t, Index row) {
-                    std::fill_n(row_indices.data() + row, width, ++row_index);
-                });
-            }
-        }
-        const auto fill_and_flood = [&](auto& queue) {
-            for (const auto p : seeds) {
-                const auto seed = static_cast<Position>(p);
-                queue.push(elevations[p], seed_age, seed, seed);
-            }
-            flood<T, Position, Compact, Line>(elevations.get(), labels.get(), active, offsets, strides,
-                                             compactness, axis2_width, row_indices, queue);
-        };
-        const auto capacity = std::max(seeds.size(), std::min(count, std::size_t(1024)));
-        if constexpr (!Compact) {
-            if (ordered && byte_range) {
-                FloodBuckets<Position, Line> buckets;
-                fill_and_flood(buckets);
-                return;
-            }
-        }
-        if (ordered) {
-            FloodHeap<Position, Compact || Line, true> heap(capacity);
-            fill_and_flood(heap);
-        } else {
-            FloodHeap<Position, Compact || Line, false> heap(capacity);
-            fill_and_flood(heap);
-        }
-    };
     const auto dispatch = [&](auto position) {
+        using Position = decltype(position);
         if (compactness > 0)
-            run(position, std::true_type{}, std::false_type{});
+            run_watershed_mode<T, Position, true, false>(
+                elevations.get(), labels.get(), active, offsets, strides, compactness,
+                neighborhood, rank, width, count, padded_count, coordinates, seeds,
+                ordered, byte_range, visit_rows);
         else if (watershed_line)
-            run(position, std::false_type{}, std::true_type{});
+            run_watershed_mode<T, Position, false, true>(
+                elevations.get(), labels.get(), active, offsets, strides, compactness,
+                neighborhood, rank, width, count, padded_count, coordinates, seeds,
+                ordered, byte_range, visit_rows);
         else
-            run(position, std::false_type{}, std::false_type{});
+            run_watershed_mode<T, Position, false, false>(
+                elevations.get(), labels.get(), active, offsets, strides, compactness,
+                neighborhood, rank, width, count, padded_count, coordinates, seeds,
+                ordered, byte_range, visit_rows);
     };
     if (padded_count <= static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()))
         dispatch(std::int32_t{});

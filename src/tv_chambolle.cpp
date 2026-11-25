@@ -4,7 +4,6 @@
 #include "execution.hpp"
 #include <algorithm>
 #include <array>
-#include <bit>
 #include <cmath>
 #include <cstring>
 #include <limits>
@@ -195,8 +194,17 @@ template<class T> void dual(const TvPlanes& p,const TvConstPlanes& g,const TvCon
 }
 
 template<class T> using ScalarBits = std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
-template<class T> std::uint64_t bits(T value) { return std::bit_cast<ScalarBits<T>>(value); }
-template<class T> T scalar(std::uint64_t raw) { return std::bit_cast<T>(ScalarBits<T>(raw)); }
+template<class T> std::uint64_t bits(T value) {
+    ScalarBits<T> raw=0;
+    std::memcpy(&raw,&value,sizeof(raw));
+    return std::uint64_t(raw);
+}
+template<class T> T scalar(std::uint64_t raw) {
+    const auto narrowed=ScalarBits<T>(raw);
+    T value{};
+    std::memcpy(&value,&narrowed,sizeof(value));
+    return value;
+}
 
 template<class T,class Energy>
 TvDenoiseResult run_finite(const TvConstView& input,const TvDenoiseWorkspace& w,
