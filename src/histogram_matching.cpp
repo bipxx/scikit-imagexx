@@ -16,16 +16,37 @@
 #include <vector>
 
 namespace skimagexx {
+#ifdef SKIMAGEXX_AVX2
+namespace simd {
+std::size_t histogram_keys(const void*,std::uint64_t*,std::size_t,PixelType,std::size_t,unsigned&);
+std::size_t rank_dense_labels(const void*,void*,std::size_t,std::uint64_t,const std::size_t*,PixelType,std::size_t);
+}
+#endif
 namespace {
 constexpr auto sign64=UINT64_C(1)<<63;
-template<class T> std::uint64_t read_key(const void* p,std::ptrdiff_t i) {
+template<class T,bool DetectRankEdges=false>
+std::uint64_t read_key(const void* p,std::ptrdiff_t i,unsigned* flags=nullptr) {
     const auto value=static_cast<const T*>(p)[i];
     if constexpr(std::is_floating_point_v<T>) {
-        if(std::isnan(value))return sizeof(T)==4 ? UINT32_MAX : UINT64_MAX;
         using U=std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint64_t>;
-        U bits;std::memcpy(&bits,&value,sizeof(value));
-        if(value==0)bits=0;
         constexpr U sign=U(1)<<(8*sizeof(T)-1);
+        U bits;
+        std::memcpy(&bits,&value,sizeof(bits));
+        if constexpr(DetectRankEdges) {
+            constexpr U infinity=sizeof(T)==4 ? U(0x7f800000) : U(UINT64_C(0x7ff0000000000000));
+            const auto magnitude=bits&(sign-1);
+            if(magnitude>infinity) {
+                *flags|=1;
+                return std::numeric_limits<U>::max();
+            }
+            if(!magnitude) {
+                *flags|=bits&sign ? 2u : 4u;
+                bits=0;
+            }
+        } else {
+            if(std::isnan(value))return std::numeric_limits<U>::max();
+            if(value==0)bits=0;
+        }
         return bits&sign ? U(~bits) : U(bits^sign);
     } else if constexpr(std::is_signed_v<T>)return std::uint64_t(std::int64_t(value))^sign64;
     else return std::uint64_t(value);
@@ -35,7 +56,7 @@ using KeyReader=std::uint64_t(*)(const void*,std::ptrdiff_t);
 KeyReader reader(PixelType type) {
     switch(type) {
     case PixelType::boolean:return read_bool;
-#define KEY(tag,T) case PixelType::tag:return read_key<T>;
+#define KEY(tag,T) case PixelType::tag:return [](const void* p,std::ptrdiff_t i){return read_key<T>(p,i);};
     KEY(uint8,std::uint8_t) KEY(int8,std::int8_t) KEY(uint16,std::uint16_t) KEY(int16,std::int16_t)
     KEY(uint32,std::uint32_t) KEY(int32,std::int32_t) KEY(uint64,std::uint64_t) KEY(int64,std::int64_t)
     KEY(float32,float) KEY(float64,double)
@@ -43,6 +64,31 @@ KeyReader reader(PixelType type) {
     default:throw std::invalid_argument("unsupported histogram-matching dtype");
     }
 }
+// Three naturally aligned words keep the record compact on both endian orders.
+struct Packed {
+    std::array<std::uint32_t,2> words;
+    std::uint32_t position;
+    std::uint64_t key() const {
+        std::uint64_t value;
+        std::memcpy(&value,words.data(),sizeof(value));
+        return value;
+    }
+};
+static_assert(sizeof(Packed)==12);
+struct WideEntry {
+    std::uint64_t bits;
+    std::size_t position;
+    std::uint64_t key() const {return bits;}
+};
+template<class Entry> Entry indexed_key(std::uint64_t key,std::size_t position) {
+    if constexpr(std::is_same_v<Entry,Packed>) {
+        Packed entry;
+        std::memcpy(entry.words.data(),&key,sizeof(key));
+        entry.position=std::uint32_t(position);
+        return entry;
+    } else return {key,position};
+}
+constexpr auto entry_key=[](const auto& entry){return entry.key();};
 double value_from_key(std::uint64_t key,PixelType type) {
     if(type==PixelType::float32 || type==PixelType::float64) {
         if(key==UINT64_MAX)return std::numeric_limits<double>::quiet_NaN();
@@ -100,19 +146,32 @@ Distribution unsigned_distribution(const T* input,std::size_t count,std::ptrdiff
     const auto low=std::size_t(result.low);
     // Bound the replicated histograms by the number of input samples.
     const auto teams=std::min(std::size_t(workers),std::max(std::size_t(1),count/bins));
-    std::array<std::size_t,sizeof(T)==1 ? 256 : 0> small{};
+    const auto lanes=count/teams/bins>=8 ? std::size_t(4) : std::size_t(1);
+    std::array<std::size_t,sizeof(T)==1 ? 4*256 : 0> small{};
     std::vector<std::size_t> large;
     auto* histogram=small.data();
-    if(bins>small.size() || teams>1) {
-        large.resize(teams*bins);
+    if(lanes*bins>small.size() || teams>1) {
+        large.resize(teams*lanes*bins);
         histogram=large.data();
     }
     detail::partition(count,int(teams),[&](auto begin,auto end,auto worker) {
-        auto* local=histogram+worker*bins;
+        auto* local=histogram+worker*lanes*bins;
+        const auto lane_stride=lanes==4 ? bins : 0;
+        const auto accumulate=[&](auto step) {
+            for(;end-begin>=4;begin+=4) {
+                const auto* p=input+std::ptrdiff_t(begin)*step;
+                ++local[p[0]-low];
+                ++local[lane_stride+p[step]-low];
+                ++local[2*lane_stride+p[2*step]-low];
+                ++local[3*lane_stride+p[3*step]-low];
+            }
+        };
+        if(stride==1)accumulate(std::integral_constant<std::ptrdiff_t,1>{});
+        else accumulate(stride);
         visit_unsigned(input,stride,begin,end,[&](auto,T value){++local[value-low];});
     });
-    for(std::size_t worker=1;worker<teams;++worker)
-        for(std::size_t i=0;i<bins;++i)histogram[i]+=histogram[worker*bins+i];
+    for(std::size_t lane=1;lane<teams*lanes;++lane)
+        for(std::size_t i=0;i<bins;++i)histogram[i]+=histogram[lane*bins+i];
 
     const auto capacity=std::min(count,bins);
     result.counts.reserve(capacity);
@@ -126,16 +185,92 @@ Distribution unsigned_distribution(const T* input,std::size_t count,std::ptrdiff
     return result;
 }
 
-std::size_t hash_slot(std::uint64_t key,const std::vector<std::uint64_t>& keys,const std::vector<std::size_t>& positions) {
+template<class Keys,class Positions>
+std::size_t hash_slot(std::uint64_t key,const Keys& keys,const Positions& positions) {
     auto hash=key;hash^=hash>>33;hash*=UINT64_C(0xff51afd7ed558ccd);hash^=hash>>33;
     hash*=UINT64_C(0xc4ceb9fe1a85ec53);hash^=hash>>33;
     auto slot=std::size_t(hash)&(keys.size()-1);
     while(positions[slot] && keys[slot]!=key)slot=(slot+1)&(keys.size()-1);
     return slot;
 }
+template<class KeyAt> bool high_cardinality(KeyAt key_at,bool require_wide_span=false) {
+    std::array<std::uint64_t,512> keys;
+    std::array<unsigned char,512> occupied{};
+    unsigned unique=0;
+    std::uint64_t low=UINT64_MAX,high=0;
+    for(std::size_t i=0;i<256;++i) {
+        const auto key=key_at(i);
+        const auto slot=hash_slot(key,keys,occupied);
+        if(!occupied[slot]) {
+            ++unique;
+            if(require_wide_span) {
+                low=std::min(low,key);high=std::max(high,key);
+            }
+            if(unique>200 && (!require_wide_span || high-low>=65536))return true;
+            keys[slot]=key;
+            occupied[slot]=1;
+        }
+    }
+    return false;
+}
+
+template<class T,class Key>
+int scatter_msd(const T* values,T* target,std::size_t count,std::array<std::size_t,256>& ends,Key key) {
+    const auto first=key(values[0]);
+    std::uint64_t differences=0;
+    for(std::size_t i=0;i<count;++i)differences|=first^key(values[i]);
+    if(!differences)return -1;
+    int shift=56;
+    while(!(differences>>shift))shift-=8;
+    for(std::size_t i=0;i<count;++i)++ends[(key(values[i])>>shift)&255];
+    std::array<std::size_t,256> next;
+    std::exclusive_scan(ends.begin(),ends.end(),next.begin(),std::size_t(0));
+    for(std::size_t bin=0;bin<256;++bin)ends[bin]+=next[bin];
+    for(std::size_t i=0;i<count;++i)target[next[(key(values[i])>>shift)&255]++]=values[i];
+    return shift;
+}
+
+template<class T,class Key>
+void radix_msd(T* values,T* scratch,std::size_t count,Key key) {
+    std::array<std::size_t,256> ends{};
+    const int shift=scatter_msd(values,scratch,count,ends,key);
+    if(shift<0)return;
+    if(!shift) {
+        std::copy_n(scratch,count,values);
+        return;
+    }
+    const auto compare=[&](const auto& a,const auto& b){return key(a)<key(b);};
+    std::size_t begin=0;
+    for(auto end:ends) {
+        const auto size=end-begin;
+        if(size>64) {
+            std::array<std::size_t,256> inner_ends{};
+            const int inner_shift=scatter_msd(scratch+begin,values+begin,size,inner_ends,key);
+            if(inner_shift<0)std::copy_n(scratch+begin,size,values+begin);
+            if(inner_shift>0) {
+                auto start=begin;
+                for(auto offset:inner_ends) {
+                    const auto stop=begin+offset;
+                    if(stop-start>1)std::sort(values+start,values+stop,compare);
+                    start=stop;
+                }
+            }
+        } else if(size) {
+            std::copy_n(scratch+begin,size,values+begin);
+            if(size>1)std::sort(values+begin,values+end,compare);
+        }
+        begin=end;
+    }
+}
+
 template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,Key key,int bytes=8) {
     if(values.size()<2048) {
         std::sort(values.begin(),values.end(),[&](const auto& a,const auto& b){return key(a)<key(b);});return;
+    }
+    if(workers==1) {
+        std::unique_ptr<T[]> temporary(new T[values.size()]);
+        radix_msd(values.data(),temporary.get(),values.size(),key);
+        return;
     }
     std::vector<T> temporary(values.size());
     std::vector<std::size_t> counts(std::size_t(workers)*256),offsets(counts.size());
@@ -169,6 +304,25 @@ template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,K
         values.swap(temporary);
     }
 }
+void fill_keys(const void* input,std::uint64_t* keys,std::size_t count,std::ptrdiff_t pixels,
+    std::ptrdiff_t offset,PixelType type,int workers) {
+    const auto read=reader(type);
+    detail::partition(count,workers,[&](auto begin,auto end,auto) {
+        auto i=begin;
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2() && pixels>=0)i+=simd::histogram_keys(static_cast<const unsigned char*>(input)+
+            (std::ptrdiff_t(begin)*pixels+offset)*std::ptrdiff_t(pixel_size(type)),keys+begin,end-begin,type,std::size_t(pixels));
+#endif
+        for(;i<end;++i)keys[i]=read(input,std::ptrdiff_t(i)*pixels+offset);
+    });
+}
+bool signed_integer(PixelType type) {
+    return type==PixelType::int8 || type==PixelType::int16 || type==PixelType::int32 || type==PixelType::int64;
+}
+void require_nonnegative_keys(const std::vector<std::uint64_t>& keys,PixelType type,bool required) {
+    if(required && signed_integer(type) && *std::min_element(keys.begin(),keys.end())<sign64)
+        throw std::invalid_argument("'list' argument must have no negative elements");
+}
 Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pixels,std::ptrdiff_t component,std::size_t channel,
     PixelType type,bool source,bool require_nonnegative,int workers,bool values=true) {
     if(!count)return {};
@@ -179,16 +333,7 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         return unsigned_distribution(static_cast<const std::uint16_t*>(input)+offset,count,pixels,source,values,workers);
     Distribution result;
     result.keys.resize(count);
-    const auto read=reader(type);
-    detail::partition(count,workers,[&](auto begin,auto end,auto) {
-        auto i=begin;
-#ifdef SKIMAGEXX_AVX2
-        if(has_avx2() && pixels>=0)i+=simd::histogram_keys(static_cast<const unsigned char*>(input)+
-            (std::ptrdiff_t(begin)*pixels+std::ptrdiff_t(channel)*component)*std::ptrdiff_t(pixel_size(type)),
-            result.keys.data()+begin,end-begin,type,std::size_t(pixels));
-#endif
-        for(;i<end;++i)result.keys[i]=read(input,std::ptrdiff_t(i)*pixels+std::ptrdiff_t(channel)*component);
-    });
+    fill_keys(input,result.keys.data(),count,pixels,offset,type,workers);
     const bool small=type==PixelType::boolean || type==PixelType::int8 || type==PixelType::int16;
     if(small && count>=4096) {
         result.low=type==PixelType::int8 ? sign64-128 : type==PixelType::int16 ? sign64-32768 : 0;
@@ -197,9 +342,7 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         const auto bounds=std::minmax_element(result.keys.begin(),result.keys.end());
         result.low=*bounds.first;result.high=*bounds.second;
     }
-    if(require_nonnegative && (type==PixelType::int8 || type==PixelType::int16 || type==PixelType::int32 || type==PixelType::int64)
-            && *std::min_element(result.keys.begin(),result.keys.end())<sign64)
-        throw std::invalid_argument("'list' argument must have no negative elements");
+    require_nonnegative_keys(result.keys,type,require_nonnegative);
     const auto span=result.high-result.low;
     // Bounded direct tables cover quantized floating data as well as integers.
     // Key spans for most floating images are large, selecting the sorted path.
@@ -216,7 +359,7 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         }
         return result;
     }
-    if(count>=4096) {
+    if(count>=4096 && !high_cardinality([&](auto i){return result.keys[i];})) {
         result.hash_keys.resize(8192);result.hash_positions.assign(8192,0);
         bool complete=true;
         for(auto key:result.keys) {
@@ -379,47 +522,100 @@ unsigned apply_unsigned(const T* source,std::ptrdiff_t stride,const Distribution
     }
 }
 
-std::vector<double> interpolate_quantiles(const Distribution& source,const Distribution& reference,
-    std::size_t count,std::size_t reference_count) {
-    std::vector<double> mapped(source.counts.size());
-    std::size_t total=0,reference_total=reference.counts.front();
-    const double first=double(reference_total)/double(reference_count);
-    std::size_t upper=1;
-    double lower_q=first,upper_q=first,slope=0.;
-    const auto advance=[&] {
-        reference_total+=reference.counts[upper];
-        upper_q=double(reference_total)/double(reference_count);
-    };
-    const auto size=reference.counts.size();
-    if(upper<size)advance();
-    bool slope_ready=false;
-    for(std::size_t i=0;i<mapped.size();++i) {
-        total+=source.counts[i];
-        const double q=double(total)/double(count);
-        while(upper<size && q>=upper_q) {
-            lower_q=upper_q;
-            ++upper;
-            if(upper<size)advance();
+template<class Next>
+auto quantile_interpolator(std::size_t count,Next next) {
+    auto [end,first_value]=next();
+    const double first=double(end)/double(count);
+    double lower_q=first,upper_q=first,lower_value=first_value,upper_value=first_value,slope=0.;
+    bool has_upper=end<count,slope_ready=false;
+    if(has_upper) {
+        const auto group=next();
+        end=group.first;upper_value=group.second;
+        upper_q=double(end)/double(count);
+    }
+    return [=](double q) mutable {
+        while(has_upper && q>=upper_q) {
+            lower_q=upper_q;lower_value=upper_value;
+            has_upper=end<count;
+            if(has_upper) {
+                const auto group=next();
+                end=group.first;upper_value=group.second;
+                upper_q=double(end)/double(count);
+            }
             slope_ready=false;
         }
-        const double lower_value=reference.values[upper-1];
-        if(q<=first)mapped[i]=reference.values.front();
-        else if(upper==size || q==lower_q)mapped[i]=lower_value;
-        else {
-            const double upper_value=reference.values[upper];
-            if(!slope_ready) {
-                slope=(upper_value-lower_value)/(upper_q-lower_q);
-                slope_ready=true;
-            }
-            auto value=slope*(q-lower_q)+lower_value;
-            if(std::isnan(value)) {
-                value=slope*(q-upper_q)+upper_value;
-                if(std::isnan(value) && lower_value==upper_value)value=lower_value;
-            }
-            mapped[i]=value;
+        if(q<=first)return first_value;
+        if(!has_upper || q==lower_q)return lower_value;
+        if(!slope_ready) {
+            slope=(upper_value-lower_value)/(upper_q-lower_q);
+            slope_ready=true;
         }
+        auto value=slope*(q-lower_q)+lower_value;
+        if(std::isnan(value)) {
+            value=slope*(q-upper_q)+upper_value;
+            if(std::isnan(value) && lower_value==upper_value)value=lower_value;
+        }
+        return value;
+    };
+}
+
+std::vector<double> interpolate_quantiles(const Distribution& source,const Distribution& reference,
+    std::size_t count,std::size_t reference_count) {
+    auto interpolate=quantile_interpolator(reference_count,[&,group=std::size_t(0),end=std::size_t(0)]() mutable {
+        end+=reference.counts[group];
+        return std::pair{end,reference.values[group++]};
+    });
+    std::vector<double> mapped(source.counts.size());
+    std::size_t total=0;
+    for(std::size_t i=0;i<mapped.size();++i) {
+        total+=source.counts[i];
+        mapped[i]=interpolate(double(total)/double(count));
     }
     return mapped;
+}
+
+unsigned match_sorted(const void* source,const void* reference,void* output,std::size_t count,std::size_t reference_count,
+    std::size_t channels,std::size_t channel,PixelType st,PixelType rt,HistogramMatchingStrides strides,
+    bool unsigned_source,Writer write,bool half_round,bool swap_output) {
+    std::vector<Packed> entries;
+    entries.reserve(count);
+    std::uint64_t source_keys[1024];
+    const auto source_offset=std::ptrdiff_t(channel)*strides.source_channels;
+    for(std::size_t begin=0;begin<count;) {
+        const auto size=std::min(std::size(source_keys),count-begin);
+        fill_keys(source,source_keys,size,strides.source_pixels,
+            std::ptrdiff_t(begin)*strides.source_pixels+source_offset,st,1);
+        for(std::size_t i=0;i<size;++i)entries.push_back(indexed_key<Packed>(source_keys[i],begin+i));
+        begin+=size;
+    }
+    radix_sort(entries,1,entry_key);
+
+    std::vector<std::uint64_t> keys(reference_count);
+    fill_keys(reference,keys.data(),reference_count,strides.reference_pixels,
+        std::ptrdiff_t(channel)*strides.reference_channels,rt,1);
+    require_nonnegative_keys(keys,rt,unsigned_source);
+    radix_sort(keys,1,[](auto key){return key;});
+    auto interpolate=quantile_interpolator(reference_count,[&,end=std::size_t(0)]() mutable {
+        const auto key=keys[end++];
+        while(end<keys.size() && keys[end]==key)++end;
+        return std::pair{end,value_from_key(key,rt)};
+    });
+
+    unsigned flags=0;
+    for(std::size_t begin=0;begin<count;) {
+        auto end=begin+1;
+        const auto key=entries[begin].key();
+        while(end<count && entries[end].key()==key)++end;
+        const auto value=interpolate(double(end)/double(count));
+        if(write) {
+            for(;begin<end;++begin)
+                flags|=write(output,std::size_t(entries[begin].position)*channels+channel,value,half_round,swap_output);
+        } else {
+            for(;begin<end;++begin)
+                static_cast<double*>(output)[std::size_t(entries[begin].position)*channels+channel]=value;
+        }
+    }
+    return flags;
 }
 
 template<class T> void apply_floating(const Distribution& source,const T* mapped,std::size_t groups,
@@ -499,6 +695,19 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
     const int workers=detail::active_workers(std::max(count,reference_count));
     unsigned flags=0;
     for(std::size_t channel=0;channel<channels;++channel) {
+        const auto source_offset=std::ptrdiff_t(channel)*strides.source_channels;
+        if(workers==1 && count>=4096 && count<=UINT32_MAX && pixel_size(st)>=4) {
+            std::uint64_t sample[256];
+            fill_keys(source,sample,std::size(sample),strides.source_pixels,source_offset,st,1);
+            if(high_cardinality([&](auto i){return sample[i];},true)) {
+                const auto sorted_write=ot==PixelType::float64 && !half_round && !swap_output ? nullptr : write;
+                const auto notice=match_sorted(source,reference,output,count,reference_count,channels,channel,st,rt,
+                    strides,unsigned_source,sorted_write,half_round,swap_output);
+                if(channel_flags)channel_flags[channel]=notice;
+                flags|=notice;
+                continue;
+            }
+        }
         auto a=distribution(source,count,strides.source_pixels,strides.source_channels,channel,st,true,false,workers);
         auto b=distribution(reference,reference_count,strides.reference_pixels,strides.reference_channels,channel,rt,false,unsigned_source,workers);
         std::vector<std::uint64_t>().swap(b.keys);
@@ -509,9 +718,8 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
         std::vector<std::size_t>().swap(a.counts);
         std::vector<double>().swap(b.values);
         if(st==PixelType::uint8 || st==PixelType::uint16) {
-            const auto offset=std::ptrdiff_t(channel)*strides.source_channels;
             const auto apply=[&](const auto* data) {
-                return apply_unsigned(data+offset,strides.source_pixels,a,mapped,output,count,channels,
+                return apply_unsigned(data+source_offset,strides.source_pixels,a,mapped,output,count,channels,
                     channel,workers,write,ot,half_round,swap_output);
             };
             const auto notice=st==PixelType::uint8 ? apply(static_cast<const std::uint8_t*>(source)) :
@@ -580,78 +788,164 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
 }
 
 namespace {
+template<class Assign> void with_rank_labels(PixelType type,void* output,Assign assign) {
+    switch(type) {
+    case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
+    case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
+    case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
+    case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
+    default:throw std::invalid_argument("unsigned rank labels required");
+    }
+}
+
 template<class Entry>
-#if defined(_MSC_VER)
-__declspec(noinline)
-#elif defined(__GNUC__) || defined(__clang__)
-__attribute__((noinline))
-#endif
 void rank_sort_and_emit(std::vector<Entry>& entries,int workers,PixelType label_type,void* output,
-    std::vector<std::size_t>& representatives,const std::vector<std::pair<std::uint64_t,std::uint64_t>>& bounds) {
-    const auto count=entries.size();std::uint64_t low=UINT64_MAX,high=0;
-    for(const auto& bound:bounds){low=std::min(low,bound.first);high=std::max(high,bound.second);}
-    const auto span=high-low;
-    auto emit_sorted=[&](const auto& sorted,auto key,auto position) {
-        // Record actual first-pass segments: OpenMP may resize its next team.
-        std::vector<std::pair<std::size_t,std::size_t>> segments(std::size_t(workers),{0,0});
-        std::vector<std::size_t> groups(std::size_t(workers),0),prefix(std::size_t(workers),0);
-        detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
-            segments[worker]={begin,end};std::size_t total=0;
-            for(auto i=begin;i<end;++i)total+=!i || key(sorted[i])!=key(sorted[i-1]);
-            groups[worker]=total;
-        });
-        std::size_t total=0;
-        for(std::size_t worker=0;worker<groups.size();++worker){prefix[worker]=total;total+=groups[worker];}
-        representatives.resize(total);
-        auto assign=[&](auto* labels) {
+    std::vector<std::size_t>& representatives) {
+    radix_sort(entries,workers,entry_key);
+    const auto count=entries.size();
+    if(workers==1) {
+        with_rank_labels(label_type,output,[&](auto* labels) {
             using U=std::remove_pointer_t<decltype(labels)>;
-            detail::partition(std::size_t(workers),workers,[&](auto begin,auto end,auto) {
-                for(auto worker=begin;worker<end;++worker) {
-                    auto rank=prefix[worker];
-                    for(auto i=segments[worker].first;i<segments[worker].second;++i) {
-                        const auto original=position(sorted[i]);
-                        if(!i || key(sorted[i])!=key(sorted[i-1]))representatives[rank++]=original;
-                        labels[original]=U(rank-1);
-                    }
+            auto previous=entries.front().key();
+            representatives.push_back(entries.front().position);
+            for(const auto& entry:entries) {
+                const auto key=entry.key();
+                if(key!=previous) {
+                    representatives.push_back(entry.position);
+                    previous=key;
+                } else if(count>=2048) {
+                    representatives.back()=std::min(representatives.back(),std::size_t(entry.position));
                 }
-            });
-        };
-        switch(label_type) {
-        case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
-        case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
-        case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
-        case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
-        default:throw std::invalid_argument("unsigned rank labels required");
-        }
-    };
-    if(count>=4096 && count<=UINT32_MAX) {
-        if(span<=UINT32_MAX) {
-            // A relative 32-bit key plus a 32-bit original position halves
-            // record traffic and needs only four stable radix passes.
-            std::vector<std::uint64_t> packed(count);
-            detail::partition(count,workers,[&](auto begin,auto end,auto) {
-                for(auto i=begin;i<end;++i)packed[i]=((entries[i].key-low)<<32)|std::uint64_t(entries[i].position);
-            });
-            std::vector<Entry>().swap(entries);
-            radix_sort(packed,workers,[](auto value){return value>>32;},4);
-            emit_sorted(packed,[](auto value){return value>>32;},[](auto value){return std::size_t(value&UINT32_MAX);});
-        } else {
-            // Standard, alignment-safe 12-byte records keep the full key.
-            // memcpy round-trips the native representation on either endian.
-            struct Packed {std::uint32_t words[3];};
-            std::vector<Packed> packed(count);
-            detail::partition(count,workers,[&](auto begin,auto end,auto) {
-                for(auto i=begin;i<end;++i){std::memcpy(packed[i].words,&entries[i].key,8);packed[i].words[2]=std::uint32_t(entries[i].position);}
-            });
-            std::vector<Entry>().swap(entries);
-            auto key=[](const Packed& value){std::uint64_t result;std::memcpy(&result,value.words,8);return result;};
-            radix_sort(packed,workers,key);
-            emit_sorted(packed,key,[](const Packed& value){return std::size_t(value.words[2]);});
-        }
+                labels[entry.position]=U(representatives.size()-1);
+            }
+        });
         return;
     }
-    radix_sort(entries,workers,[](const auto& entry){return entry.key;});
-    emit_sorted(entries,[](const auto& entry){return entry.key;},[](const auto& entry){return entry.position;});
+
+    // Keep the original segment boundaries if OpenMP resizes its next team.
+    std::vector<std::pair<std::size_t,std::size_t>> segments(std::size_t(workers),{0,0});
+    std::vector<std::size_t> groups(std::size_t(workers),0),prefix(std::size_t(workers),0);
+    const auto starts_group=[&](auto i){return !i || entries[i].key()!=entries[i-1].key();};
+    detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
+        segments[worker]={begin,end};
+        for(auto i=begin;i<end;++i)groups[worker]+=starts_group(i);
+    });
+    std::size_t total=0;
+    for(std::size_t worker=0;worker<groups.size();++worker){prefix[worker]=total;total+=groups[worker];}
+    representatives.resize(total);
+    with_rank_labels(label_type,output,[&](auto* labels) {
+        using U=std::remove_pointer_t<decltype(labels)>;
+        detail::partition(std::size_t(workers),workers,[&](auto begin,auto end,auto) {
+            for(auto worker=begin;worker<end;++worker) {
+                auto rank=prefix[worker];
+                for(auto i=segments[worker].first;i<segments[worker].second;++i) {
+                    const auto original=entries[i].position;
+                    if(starts_group(i))representatives[rank++]=original;
+                    labels[original]=U(rank-1);
+                }
+            }
+        });
+    });
+}
+
+template<class Entry>
+bool rank_entries(const void* input,std::size_t count,PixelType type,KeyReader read,int workers,void* output,
+    PixelType label_type,std::vector<std::size_t>& representatives) {
+    std::vector<Entry> entries(count);
+    std::vector<unsigned> notices(std::size_t(workers),0);
+    std::vector<std::pair<std::uint64_t,std::uint64_t>> bounds(std::size_t(workers),{UINT64_MAX,0});
+    const auto floating=type==PixelType::float32 || type==PixelType::float64;
+    const auto rank_read=type==PixelType::float32 ? read_key<float,true> : read_key<double,true>;
+    detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
+        unsigned flags=0;auto i=begin;std::uint64_t low=UINT64_MAX,high=0;
+        const auto put=[&](std::size_t index,std::uint64_t key) {
+            entries[index]=indexed_key<Entry>(key,index);
+            low=std::min(low,key);high=std::max(high,key);
+        };
+#ifdef SKIMAGEXX_AVX2
+        if(has_avx2()) {
+            std::uint64_t keys[1024];
+            while(i<end) {
+                const auto n=std::min(std::size_t(1024),end-i);
+                const auto done=simd::histogram_keys(static_cast<const unsigned char*>(input)+i*pixel_size(type),keys,n,type,1,flags);
+                if(!done)break;
+                for(std::size_t k=0;k<done;++k)put(i+k,keys[k]);
+                i+=done;
+            }
+        }
+#endif
+        if(floating) {
+            for(;i<end;++i)put(i,rank_read(input,std::ptrdiff_t(i),&flags));
+        } else if(type==PixelType::boolean) {
+            const auto* data=static_cast<const unsigned char*>(input);
+            for(;i<end;++i) {
+                if(data[i]>1)flags|=8;
+                put(i,data[i]!=0);
+            }
+        } else {
+            for(;i<end;++i)put(i,read(input,std::ptrdiff_t(i)));
+        }
+        notices[worker]=flags;
+        bounds[worker]={low,high};
+    });
+    unsigned flags=0;for(auto notice:notices)flags|=notice;
+    if((flags&9) || (flags&6)==6)return false;
+    representatives.clear();
+    auto emit_table=[&](auto rank_at,const std::size_t* dense=nullptr,std::uint64_t low=0) {
+        with_rank_labels(label_type,output,[&](auto* labels) {
+            using U=std::remove_pointer_t<decltype(labels)>;
+            detail::partition(count,workers,[&](auto begin,auto end,auto) {
+#ifdef SKIMAGEXX_AVX2
+                if(dense && has_avx2())begin+=simd::rank_dense_labels(entries.data()+begin,labels+begin,end-begin,low,dense,label_type,sizeof(Entry));
+#else
+                (void)dense;(void)low;
+#endif
+                for(auto i=begin;i<end;++i)labels[i]=U(rank_at(i));
+            });
+        });
+    };
+    if(count>=4096) {
+        std::uint64_t low=UINT64_MAX,high=0;
+        for(const auto& bound:bounds){low=std::min(low,bound.first);high=std::max(high,bound.second);}
+        const auto span=high-low;
+        if(span<65536) {
+            std::vector<std::size_t> table(std::size_t(span)+1,count);
+            for(const auto& entry:entries) {
+                auto& position=table[std::size_t(entry.key()-low)];
+                if(position==count)position=entry.position;
+            }
+            for(auto& position:table)if(position!=count){const auto original=position;position=representatives.size();representatives.push_back(original);}
+            emit_table([&](auto i){return table[std::size_t(entries[i].key()-low)];},table.data(),low);
+            return true;
+        }
+        if(!high_cardinality([&](auto i){return entries[i].key();})) {
+            std::vector<std::uint64_t> keys(8192);
+            std::vector<std::size_t> positions(8192,0);
+            std::size_t unique_count=0;
+            for(const auto& entry:entries) {
+                const auto key=entry.key();
+                const auto slot=hash_slot(key,keys,positions);
+                if(!positions[slot]) {
+                    if(unique_count==4096){++unique_count;break;}
+                    keys[slot]=key;positions[slot]=std::size_t(entry.position)+1;++unique_count;
+                }
+            }
+            if(unique_count<=4096) {
+                std::vector<Entry> unique;unique.reserve(unique_count);
+                for(std::size_t slot=0;slot<keys.size();++slot)
+                    if(positions[slot])unique.push_back(indexed_key<Entry>(keys[slot],positions[slot]-1));
+                std::sort(unique.begin(),unique.end(),[](const auto& a,const auto& b){return a.key()<b.key();});
+                for(const auto& entry:unique) {
+                    representatives.push_back(entry.position);
+                    positions[hash_slot(entry.key(),keys,positions)]=representatives.size();
+                }
+                emit_table([&](auto i){return positions[hash_slot(entries[i].key(),keys,positions)]-1;});
+                return true;
+            }
+        }
+    }
+    rank_sort_and_emit(entries,workers,label_type,output,representatives);
+    return true;
 }
 }
 
@@ -661,8 +955,8 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
     const auto maximum=label_type==PixelType::uint8 ? UINT64_C(255) : label_type==PixelType::uint16 ? UINT64_C(65535) :
         label_type==PixelType::uint32 ? UINT64_C(4294967295) : label_type==PixelType::uint64 ? UINT64_MAX : 0;
     if(!maximum || count-1>maximum)throw std::invalid_argument("rank label type is too narrow");
-    struct Entry {std::uint64_t key;std::size_t position;};
-    if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(Entry))throw std::overflow_error("rank-order dimensions overflow");
+    if(count>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(WideEntry))
+        throw std::overflow_error("rank-order dimensions overflow");
     const auto read=reader(type);const auto workers=detail::active_workers(count);
     if(type==PixelType::boolean && *static_cast<const unsigned char*>(input)>1)return false;
     if(type==PixelType::float32 && std::isnan(*static_cast<const float*>(input)))return false;
@@ -674,90 +968,7 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
 #endif
     for(std::size_t i=1;i<count;++i)if(std::memcmp(input,static_cast<const unsigned char*>(input)+i*bytes,bytes)){uniform=false;break;}
     if(uniform){std::memset(output,0,count*pixel_size(label_type));representatives.assign(1,0);return true;}
-    std::vector<Entry> entries(count);std::vector<unsigned> notices(std::size_t(workers),0);
-    std::vector<std::pair<std::uint64_t,std::uint64_t>> bounds(std::size_t(workers),{UINT64_MAX,0});
-    detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
-        unsigned flags=0;auto i=begin;std::uint64_t low=UINT64_MAX,high=0;
-#ifdef SKIMAGEXX_AVX2
-        if(has_avx2()) {
-            std::uint64_t keys[1024];
-            while(i<end) {
-                const auto n=std::min(std::size_t(1024),end-i);
-                const auto done=simd::histogram_keys(static_cast<const unsigned char*>(input)+i*pixel_size(type),keys,n,type,1);
-                if(!done)break;
-                for(std::size_t k=0;k<done;++k){entries[i+k]={keys[k],i+k};low=std::min(low,keys[k]);high=std::max(high,keys[k]);}
-                i+=done;
-            }
-        }
-#endif
-        for(;i<end;++i){const auto key=read(input,std::ptrdiff_t(i));entries[i]={key,i};low=std::min(low,key);high=std::max(high,key);}
-        if(type==PixelType::float32 || type==PixelType::float64)for(auto k=begin;k<end;++k) {
-            const auto value=type==PixelType::float32 ? double(static_cast<const float*>(input)[k]) : static_cast<const double*>(input)[k];
-            if(std::isnan(value))flags|=1;
-            if(value==0)flags|=std::signbit(value) ? 2u : 4u;
-        }
-        if(type==PixelType::boolean)for(auto k=begin;k<end;++k)if(static_cast<const unsigned char*>(input)[k]>1)flags|=8;
-        notices[worker]=flags;
-        bounds[worker]={low,high};
-    });
-    unsigned flags=0;for(auto notice:notices)flags|=notice;
-    if((flags&9) || (flags&6)==6)return false;
-    representatives.clear();
-    auto emit_table=[&](auto rank_at,const std::size_t* dense=nullptr,std::uint64_t low=0) {
-        auto assign=[&](auto* labels) {
-            using U=std::remove_pointer_t<decltype(labels)>;
-            detail::partition(count,workers,[&](auto begin,auto end,auto) {
-#ifdef SKIMAGEXX_AVX2
-                if(dense && sizeof(Entry)==16 && sizeof(std::size_t)==8 && has_avx2())begin+=simd::rank_dense_labels(entries.data()+begin,labels+begin,end-begin,low,dense,label_type);
-#else
-                (void)dense;(void)low;
-#endif
-                for(auto i=begin;i<end;++i)labels[i]=U(rank_at(i));
-            });
-        };
-        switch(label_type) {
-        case PixelType::uint8:assign(static_cast<std::uint8_t*>(output));break;
-        case PixelType::uint16:assign(static_cast<std::uint16_t*>(output));break;
-        case PixelType::uint32:assign(static_cast<std::uint32_t*>(output));break;
-        case PixelType::uint64:assign(static_cast<std::uint64_t*>(output));break;
-        default:throw std::invalid_argument("unsigned rank labels required");
-        }
-    };
-    if(count>=4096) {
-        std::uint64_t low=UINT64_MAX,high=0;
-        for(const auto& bound:bounds){low=std::min(low,bound.first);high=std::max(high,bound.second);}
-        const auto span=high-low;
-        if(span<65536) {
-            std::vector<std::size_t> table(std::size_t(span)+1,count);
-            for(const auto& entry:entries)if(table[std::size_t(entry.key-low)]==count)table[std::size_t(entry.key-low)]=entry.position;
-            for(auto& position:table)if(position!=count){const auto original=position;position=representatives.size();representatives.push_back(original);}
-            emit_table([&](auto i){return table[std::size_t(entries[i].key-low)];},table.data(),low);
-            return true;
-        }
-        // Bound sparse discovery independently of image size. High-cardinality
-        // images abandon this table and retain the general radix path.
-        {
-        std::vector<std::uint64_t> keys(8192);std::vector<std::size_t> positions(8192,0);
-        std::size_t unique_count=0;bool complete=true;
-        for(const auto& entry:entries) {
-            const auto slot=hash_slot(entry.key,keys,positions);
-            if(!positions[slot]) {
-                if(unique_count==4096){complete=false;break;}
-                keys[slot]=entry.key;positions[slot]=entry.position+1;++unique_count;
-            }
-        }
-        if(complete) {
-            std::vector<Entry> unique;unique.reserve(unique_count);
-            for(std::size_t slot=0;slot<keys.size();++slot)if(positions[slot])unique.push_back({keys[slot],positions[slot]-1});
-            std::sort(unique.begin(),unique.end(),[](const auto& a,const auto& b){return a.key<b.key;});
-            for(std::size_t rank=0;rank<unique.size();++rank){const auto& entry=unique[rank];representatives.push_back(entry.position);positions[hash_slot(entry.key,keys,positions)]=rank+1;}
-            emit_table([&](auto i){return positions[hash_slot(entries[i].key,keys,positions)]-1;});
-            return true;
-        }
-        }
-
-    }
-    rank_sort_and_emit(entries,workers,label_type,output,representatives,bounds);
-    return true;
+    if(count<=UINT32_MAX)return rank_entries<Packed>(input,count,type,read,workers,output,label_type,representatives);
+    return rank_entries<WideEntry>(input,count,type,read,workers,output,label_type,representatives);
 }
 }
