@@ -27,8 +27,8 @@ The [Montage copy correction](benchmarks/montage-word-copy-same-host.md) is merg
 
 The earlier [byte-fill v2](benchmarks/montage-row-owned-v2-same-host.md) and [sustained](benchmarks/montage-sustained-same-host.md) experiments retain their original UNRESOLVED_MEASUREMENT outcomes and raw evidence.
 
-The [latest accepted qualification](build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json) on `main` (`1d9a0bbf`) ships **312 partially native image API paths**, **10 packaged-asset routes**, **5 native-class paths**, **3 metadata helpers**, and **1 exception metadata provider** (with **146 upstream-only** keys remaining across 477 public APIs).
-Its four profiles and three relocated products pass **1,008,468 public outcomes** and **488 installed SDK checks** with no failures/errors/skips ([run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252)); `archive_retained: false`.
+The [latest accepted qualification](build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json) on `main` (`c4135c8d`) ships **477/477 inventoried public APIs** (**408 `native-partial`**, **37 `packaged-asset-partial`**, **27 `native-class-partial`**, **3 `metadata`**, **2 `exception-metadata-provider`**, **0 `upstream-only`** across 448 callables, 29 classes, and 284 static member paths).
+All four hosted qualification profiles (`modern`, `minimum`, `debug`, `windows`) pass with **896 installed SDK checks** (`224` per profile across `112` families), `45,588–48,944` rehashed manifest records per profile, and zero failed commands ([run 45609669785](https://github.com/bipxx/scikit-imagexx/actions/runs/45609669785)); `archive_retained: false`. Historical baseline [run 45344078252](https://github.com/bipxx/scikit-imagexx/actions/runs/45344078252) at `1d9a0bbf` (`312` `native-partial`, `146` `upstream-only`) remains preserved.
 The earlier [68-case one-thread cohort](benchmarks/join-util-views-minimum-initial-v1/README.md) at `a6bae9ac` (271 paths) retains **34 wins and 34 losses**; newer batches retain their separate per-family timing receipts.
 
 ## Supported parity surface
@@ -39,26 +39,24 @@ with all 60 cases faster per API on each OS. Corrected-source full CI passes.
 See the [eigenvalue report](benchmarks/symmetric-eigen-initial.md) for the partial
 input contract, raw samples and rejected trials.
 
-The reference is scikit-image **0.26.0**. Main ships **312 partially native
-image API paths, 10 packaged-asset routes, 5 native-class paths, 3 metadata helpers, and 1 exception metadata provider**. The 312 image paths have a
-qualified four-profile baseline at `1d9a0bbf`; scope remains partial per API.
+The reference is scikit-image **0.26.0**. Main ships **477/477 public APIs**
+(**408 `native-partial`, 37 `packaged-asset-partial`, 27 `native-class-partial`, 3 `metadata`, 2 `exception-metadata-provider`, 0 `upstream-only`**). Exact `c4135c8d` has a
+qualified four-profile baseline across `modern`, `minimum`, `debug`, and `windows`; per-API domain/depth/speed closure remains tracked per family.
 Initial one-thread measurements give polygon approximation **6.73× (9/9 wins)** and
 subdivision **4.00× (14/14 wins)** versus scikit-image in their frozen cohorts.
 See the [RDP report](benchmarks/approximate-polygon-minimum-initial.md) and
 [subdivision report](benchmarks/subdivide-polygon-minimum-initial.md). The
-[API inventory](coverage/README.md) tracks 477 public callable paths across 20
+[API inventory](coverage/README.md) tracks all 477 public callable paths across 20
 modules, including four deprecated binary morphology functions and 19 assessed
-rank.generic aliases and three public bilateral aliases of existing algorithms; **146 paths remain upstream-only**.
-Five classes now have partial native coordinate/state implementations,
-and one exception path uses an explicit canonical metadata provider. These are
-counted separately from image functions. Static discovery records 284 member paths
-across 29 exported classes; remaining classes, member contracts and runtime
-attributes still need implementation and assessment.
-This is not full scikit-image coverage.
+rank.generic aliases and three public bilateral aliases of existing algorithms; **0 paths remain upstream-only**.
+27 classes now have partial native/asset coordinate/state implementations
+alongside 2 exception metadata providers and 3 metadata helpers; static discovery records 284 member paths
+across 29 exported classes, where full member/runtime/speed closure remains tracked per row.
+This is scoped parity per API, not a claim of full scikit-image domain parity.
 
-The [latest accepted qualification](build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json) passes
-1,008,468 public outcomes across Windows, modern/minimum Linux and Debug builds with normal
-and scalar dispatch, plus 488 installed SDK checks across 61 targets (122 per profile) and 48 frozen corpora.
+The [latest accepted qualification](build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json) passes
+all four hosted profiles (Windows MSVC `3.13.16`, Ubuntu modern `3.13.16`, Ubuntu minimum `3.11.17` / NumPy `1.24.4`, Ubuntu debug `3.13.16`) with normal
+and scalar dispatch, plus 896 installed SDK checks across 112 families (`224` per profile); `archive_retained: false`.
 The fixed corpora run with one and four native workers. TV-Chambolle and TV-Bregman
 have qualified partial C++ implementations alongside the accepted rank optimization.
 The [initial TV-Chambolle one-worker baseline](benchmarks/tv-chambolle-public-initial.md)

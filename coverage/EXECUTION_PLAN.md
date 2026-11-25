@@ -6,7 +6,15 @@ Current execution state is in the [current coverage checkpoint](#current-coverag
 
 User authorized **Track A (Full 477-API + depth/speed/member completion)** from verified `main` `b1d67cc0` (`308` `native-partial`, `10` `packaged-asset-partial`, `5` `native-class-partial`, `3` `metadata`, `1` `exception-metadata-provider`, `150` `upstream-only`; run `45219397159`, `1,007,220` public outcomes, `456` SDK checks). Active sequence: Phase 0 baseline sync (`EXECUTION_PLAN.md`, `work_items.json`, `README.md`) -> Phase 1 harvest of 23 already-built private APIs -> Phase 2 Wave P providers/assets -> Phase 3 W2/W3 -> Phase 4 W4 -> Phase 5 W5 -> Phase 6 depth/class-members/runtime/speed closure -> Phase 7 final qualification & hygiene.
 
-## Batch 1A (`current312`) closeout — latest 2026-11-24
+## `current408` Full `477/477` Inventory Closeout — 2026-11-25
+
+- **Delivered to `main`**: `c4135c8d38603c1fc51f3d100431a754f9d6196f` (tree `04b563bf34767d036e832e470ff251218f12a4f4`, fast-forwarded onto `main`) closes all **`477/477` inventoried public APIs** (**`408` `native-partial`**, **`37` `packaged-asset-partial`**, **`27` `native-class-partial`**, **`3` `metadata`**, **`2` `exception-metadata-provider`**, **`0` `upstream-only`**, across `448` callables, `29` classes, and `284` static member paths). All temporary `work/final-current408-all477-v1` checkouts are scheduled for retirement; `archive_retained: false`.
+- **Exact admissions & receipts**:
+  - Four-profile release qualification ([admission](../build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json), `sha256: 71839ff454e4878d1ce202148de4434d6c47d1927fb9f67d290ab5f6b7c851c3`, [run 45609669785](https://github.com/bipxx/scikit-imagexx/actions/runs/45609669785)): `modern` (`15024386458`, `46,869` records), `minimum` (`15024616083`, `48,944` records), `debug` (`15025346433`, `46,738` records), and `windows` (`15027787851`, `45,588` records) all passed (`0` failed commands, **`896` installed SDK checks** = `224` per profile across `112` families, `archive_retained: false`).
+  - Prior failed qualification runs (`45557858466`, `45582555940`, `45596316544`) remain preserved under `build/evidence/u182-post-haar/current408-qualification-v1/`.
+- **Next gate (owner: root/optimization wave 2)**: Execute baseline 1-thread benchmark and parallel unpinned Codex CLI (`gpt-6.2-sol`, `medium`) optimization & waste-reduction wave off `c4135c8d` / `main`.
+
+## Batch 1A (`current312`) closeout — 2026-11-24
 
 - **Delivered to `main`**: `1d9a0bbfd06bf715cc4508a50dc2fac429078981` (tree `6259f876460a5e2bc9ebc2a51852ebcabcbaf23f`) adds bounded native `transform.hough_circle_peaks`, `transform.hough_ellipse`, `transform.probabilistic_hough_line`, and `morphology.medial_axis`. Inventory on `main`: **`312` `native-partial`**, **`10` `packaged-asset-partial`**, **`5` `native-class-partial`**, **`3` `metadata`**, **`1` `exception-metadata-provider`**, **`146` `upstream-only`** (477 keys, 29 classes, 284 static members; closing 36 of 182 original upstream-only gaps). All temporary carrier branches deleted; `archive_retained: false` across all admissions.
 - **Exact admissions & receipts**:

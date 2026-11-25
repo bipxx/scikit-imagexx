@@ -39108,16 +39108,16 @@
   "snapshot_base_sha": "0be9c6711640fd1265855743ce2cedf67350de3d",
   "inventory_snapshot": {
     "public_names": 477,
-    "native_partial_image_names": 312,
-    "packaged_asset_names": 10,
-    "native_class_names": 5,
+    "native_partial_image_names": 408,
+    "packaged_asset_names": 37,
+    "native_class_names": 27,
     "metadata_names": 3,
-    "exception_metadata_provider_names": 1,
-    "upstream_only_names": 146,
+    "exception_metadata_provider_names": 2,
+    "upstream_only_names": 0,
     "classes": 29,
     "static_member_paths": 284,
-    "note": "Main source 1d9a0bbf is delivered and verified: 312 native-partial, 10 packaged-asset-partial, 5 native-class-partial, 3 metadata, 1 exception-metadata-provider, 146 upstream-only (477 public keys, 29 classes, 284 static members). Run 45344078252 verified 1,008,468 public outcomes, 488 installed SDK checks (122 per profile across 61 families), and 3 packaging stagers (archive_retained: false), closing 36 of 182 original upstream-only gaps. Full-contract checkboxes and older speed losses remain open; previously policy-blocked cleanup remains manual-only.",
-    "accepted_binary_image_names": 312
+    "note": "Main source c4135c8d is delivered and verified: 408 native-partial, 37 packaged-asset-partial, 27 native-class-partial, 3 metadata, 2 exception-metadata-provider, 0 upstream-only (477 public keys, 29 classes, 284 static members). Run 45609669785 verified all 4 profiles (modern, minimum, debug, windows) with 0 failed commands and 896 installed SDK checks (224 per profile across 112 families, archive_retained: false). Full-contract domain depth and one-thread speed optimization continue in the follow-up wave.",
+    "accepted_binary_image_names": 408
   },
   "execution_policy": {
     "active_workers": [
@@ -54888,23 +54888,39 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
-    "source_tree": "6259f876460a5e2bc9ebc2a51852ebcabcbaf23f",
-    "run": 45344078252,
-    "image_paths": 312,
-    "packaged_assets": 10,
-    "upstream_only": 146,
-    "receipt": "build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json",
-    "sha256": "42162fabce0d3318d045198e57d6d999ec836242a11c2c422a761302c40e132e",
+    "source": "c4135c8d38603c1fc51f3d100431a754f9d6196f",
+    "source_tree": "04b563bf34767d036e832e470ff251218f12a4f4",
+    "run": 45609669785,
+    "image_paths": 408,
+    "packaged_assets": 37,
+    "native_class_paths": 27,
+    "metadata_paths": 3,
+    "exception_metadata_providers": 2,
+    "upstream_only": 0,
+    "receipt": "build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json",
+    "sha256": "71839ff454e4878d1ce202148de4434d6c47d1927fb9f67d290ab5f6b7c851c3",
     "archive_retained": false,
-    "windows_focus_timing_receipt": "build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json",
-    "windows_focus_timing_run": 45340574164,
-    "source_barrier_receipt": "build/evidence/u182-post-haar/current312-source-barrier-v4/complete-312-intake-readback-v4.json",
-    "source_barrier_run": 45340542569,
-    "scope": "Exact four profiles and three relocated products, 1,008,468 public outcomes and 488 installed SDK checks (122 per profile across 61 families). Bounded hough_circle_peaks, hough_ellipse, probabilistic_hough_line, and medial_axis added; 36 of 182 original upstream-only gaps closed.",
-    "main_delivery": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
-    "delivery_status": "PASS_EXACT_CURRENT312_MAIN_DELIVERED",
+    "scope": "Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46869/48944/46738/45588 rehashed manifest records. Closes all 477/477 inventoried public APIs (0 upstream-only).",
+    "main_delivery": "c4135c8d38603c1fc51f3d100431a754f9d6196f",
+    "delivery_status": "PASS_EXACT_CURRENT408_ALL477_MAIN_DELIVERED",
     "previous": {
+      "source": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
+      "source_tree": "6259f876460a5e2bc9ebc2a51852ebcabcbaf23f",
+      "run": 45344078252,
+      "image_paths": 312,
+      "packaged_assets": 10,
+      "upstream_only": 146,
+      "receipt": "build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json",
+      "sha256": "42162fabce0d3318d045198e57d6d999ec836242a11c2c422a761302c40e132e",
+      "archive_retained": false,
+      "windows_focus_timing_receipt": "build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json",
+      "windows_focus_timing_run": 45340574164,
+      "source_barrier_receipt": "build/evidence/u182-post-haar/current312-source-barrier-v4/complete-312-intake-readback-v4.json",
+      "source_barrier_run": 45340542569,
+      "scope": "Exact four profiles and three relocated products, 1,008,468 public outcomes and 488 installed SDK checks (122 per profile across 61 families). Bounded hough_circle_peaks, hough_ellipse, probabilistic_hough_line, and medial_axis added; 36 of 182 original upstream-only gaps closed.",
+      "main_delivery": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
+      "delivery_status": "PASS_EXACT_CURRENT312_MAIN_DELIVERED",
+      "previous": {
       "source": "b1d67cc0a50029b80c23bc90d5acab6c932b9609",
       "source_tree": "24119004362d729c1c5d7b57fc794e8717839193",
       "run": 45219397159,
@@ -55008,6 +55024,7 @@
         }
       }
     }
+  }
   }
   },
   "rolling_source_retirement": {
