@@ -10,11 +10,36 @@
 #include <cstring>
 namespace py=pybind11;
 namespace {
+bool native_dtype(const py::dtype& dtype) {
+    // Structured dtypes may encode endianness in their fields.
+    if(dtype.kind()=='V')return dtype.attr("isnative").cast<bool>();
+    const std::uint16_t one=1;
+    const char native=*reinterpret_cast<const unsigned char*>(&one) ? '<':'>';
+    const auto order=dtype.byteorder();
+    return order=='=' || order=='|' || order==native;
+}
+bool plain_array(const py::array& a) {
+    return Py_TYPE(a.ptr())==py::detail::npy_api::get().PyArray_Type_;
+}
+bool ready_input(const py::array& a,const py::dtype& dtype) {
+    constexpr int flags=py::array::c_style | py::detail::npy_api::NPY_ARRAY_ALIGNED_;
+    return (a.flags()&flags)==flags && native_dtype(dtype) && plain_array(a);
+}
+bool shares_memory(const py::module_& numpy,const py::array& a,const py::array& b) {
+    // Shift/parameter hooks can change layout after buffer admission.
+    // Array subclasses can also override the NumPy operation.
+    if(!(a.flags()&py::array::c_style) || !(b.flags()&py::array::c_style) ||
+       !plain_array(a) || !plain_array(b))return numpy.attr("shares_memory")(a,b).cast<bool>();
+    const auto an=a.nbytes(),bn=b.nbytes();
+    if(!an || !bn)return false;
+    const auto ap=reinterpret_cast<std::uintptr_t>(a.data()),bp=reinterpret_cast<std::uintptr_t>(b.data());
+    return ap<=bp ? bp-ap<std::size_t(an):ap-bp<std::size_t(bn);
+}
 void buffer(const py::array& a,int rank) {
     if(a.ndim()!=rank)throw py::value_error("Buffer has wrong number of dimensions (expected "+std::to_string(rank)+", got "+std::to_string(a.ndim())+")");
     if(!(a.flags()&py::array::c_style))throw py::value_error("ndarray is not C-contiguous");
     if(!a.writeable())throw py::value_error("buffer source array is read-only");
-    if(!a.dtype().attr("isnative").cast<bool>())throw py::value_error("Big-endian buffer not supported on little-endian compiler");
+    if(!native_dtype(a.dtype()))throw py::value_error("Big-endian buffer not supported on little-endian compiler");
 }
 int shift(py::handle value) {
         if(!PyNumber_Check(value.ptr()))throw py::type_error("an integer is required");
@@ -67,9 +92,14 @@ void bind_rank(py::module_& module) {
     module.attr("rank_decisions_capabilities")=py::int_(skimagexx::rank_decisions_capabilities());
     const auto numpy=py::module_::import("numpy");
     module.def("rank_convert",[numpy](py::array image) {
-        const bool half=image.dtype().kind()=='f' && image.itemsize()==2;
-        const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
-        auto input=numpy.attr("require")(image,py::arg("dtype")=dtype,py::arg("requirements")=py::make_tuple("C","A")).cast<py::array>();
+        auto dtype=image.dtype();
+        const auto kind=dtype.kind();
+        const bool half=kind=='f' && image.itemsize()==2;
+        auto input=image;
+        if(!ready_input(image,dtype) || (kind!='b' && kind!='i' && kind!='u' && kind!='f')) {
+            dtype=py::dtype::from_args(dtype.attr("type"));
+            input=numpy.attr("require")(image,py::arg("dtype")=dtype,py::arg("requirements")=py::make_tuple("C","A")).cast<py::array>();
+        }
         py::array_t<std::uint8_t> result(std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
         skimagexx::ConversionInfo info;skimagexx::RankHalfConversion half_info;
         const auto source_type=half ? skimagexx::PixelType::uint16:skimagexx::bindings::real_pixel_type(dtype);
@@ -86,8 +116,12 @@ void bind_rank(py::module_& module) {
         return py::make_tuple(result,info.downcast_without_scaling,maximum,info.nan_to_integer || half_info.nan,info.floating_overflow || half_info.overflow,info.floating_underflow,info.invalid_float_cast,half_info.invalid_multiply);
     });
     module.def("rank_positive",[numpy](py::array image) {
-        const auto dtype=py::dtype::from_args(image.dtype().attr("newbyteorder")("="));
-        auto input=numpy.attr("require")(image,py::arg("dtype")=dtype,py::arg("requirements")=py::make_tuple("C","A")).cast<py::array>();
+        auto dtype=image.dtype();
+        auto input=image;
+        if(!ready_input(image,dtype)) {
+            dtype=py::dtype::from_args(dtype.attr("newbyteorder")("="));
+            input=numpy.attr("require")(image,py::arg("dtype")=dtype,py::arg("requirements")=py::make_tuple("C","A")).cast<py::array>();
+        }
         py::array_t<std::uint8_t> result(std::vector<py::ssize_t>(image.shape(),image.shape()+image.ndim()));
         const auto n=std::size_t(input.size());const auto kind=dtype.kind();const auto width=dtype.itemsize();
         // Dtype dispatch copies a Python dtype reference: finish it before
@@ -160,10 +194,11 @@ void bind_rank(py::module_& module) {
         const auto dtype=output.dtype();const auto kind=dtype.kind();const auto width=dtype.itemsize();
         if(output.ndim()!=rank+1 || !((kind=='u' && (width==1 || width==2)) || kind=='b' || (kind=='f' && (width==4 || width==8))))throw py::type_error("Function call with ambiguous argument types");
         buffer(image,rank);buffer(footprint,rank);
-        py::array mask;if(!mask_object.is_none()){mask=mask_object.cast<py::array>();buffer(mask,rank);}
+        auto mask=image;if(!mask_object.is_none()){mask=mask_object.cast<py::array>();buffer(mask,rank);}
         buffer(output,rank+1);
         if(mode && ((image.dtype().kind()!='u' || (image.itemsize()!=1 && image.itemsize()!=2)) || footprint.dtype().kind()!='u' || footprint.itemsize()!=1 || (!mask_object.is_none() && (mask.dtype().kind()!='u' || mask.itemsize()!=1))))throw py::type_error("rank statistics requires prepared unsigned buffers");
-        std::vector<int> shifts;for(const auto& value:requested_shifts)shifts.push_back(shift(value));
+        std::array<int,3> shifts{};
+        for(int axis=0;axis<rank;++axis)shifts[axis]=shift(requested_shifts[axis]);
         double lower=0.,upper=1.;
         if(mode==3) {
             // Match Cython argument conversion, including NumPy scalar and
@@ -193,11 +228,11 @@ void bind_rank(py::module_& module) {
             if(mask.size()<image.size())throw py::value_error("rank mask storage is smaller than image");
             view.mask=static_cast<const std::uint8_t*>(mask.data());
         }
-        view.serial_alias=numpy.attr("shares_memory")(image,output).cast<bool>() || (!mask_object.is_none() && numpy.attr("shares_memory")(mask,output).cast<bool>());
+        view.serial_alias=shares_memory(numpy,image,output) || (!mask_object.is_none() && shares_memory(numpy,mask,output));
         const auto depth=std::size_t(output.shape(rank));
         if(mode==2 && rank!=2)throw py::value_error("rank vector requires 2D input");
         if(mode==3 && rank!=2)throw py::value_error("rank percentile requires 2D input");
-        if(operation>=9 && numpy.attr("shares_memory")(footprint,output).cast<bool>())throw py::value_error("overlapping buffers are outside rank-histogram-v3 parity");
+        if(operation>=9 && shares_memory(numpy,footprint,output))throw py::value_error("overlapping buffers are outside rank-histogram-v3 parity");
         {py::gil_scoped_release release;
             const auto op=static_cast<skimagexx::RankOperation>(operation);
             if(mode==3)skimagexx::rank_percentile_into(view,op,lower,upper);
