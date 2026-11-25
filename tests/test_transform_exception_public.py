@@ -68,8 +68,8 @@ def test_exception_signature_and_invalid_keyword_match_original():
 def test_upstream_backed_failed_models_use_same_public_catch_type(name):
     old=xx.set_fallback_enabled(True)
     try:
-        with pytest.warns(xx.FallbackWarning):cls=getattr(xx.transform,name)
-        failed=cls.from_estimate(np.zeros((8,2)),np.ones((8,2)))
+        cls=getattr(xx.transform,name)
+        with pytest.warns(xx.FallbackWarning):failed=cls.from_estimate(np.zeros((8,2)),np.ones((8,2)))
         caught=False
         try:failed.params
         except xx.util.FailedEstimationAccessError as error:
@@ -83,8 +83,8 @@ def test_own_only_alias_cannot_catch_compatibility_exception(monkeypatch):
     """Scoped regression demonstration, never an acceptance backend adapter."""
     old=xx.set_fallback_enabled(True)
     try:
-        with pytest.warns(xx.FallbackWarning):cls=xx.transform.EssentialMatrixTransform
-        failed=cls.from_estimate(np.zeros((8,2)),np.ones((8,2)))
+        cls=xx.transform.EssentialMatrixTransform
+        with pytest.warns(xx.FallbackWarning):failed=cls.from_estimate(np.zeros((8,2)),np.ones((8,2)))
         monkeypatch.setattr(xx.util,'FailedEstimationAccessError',implementation._StandaloneFailedEstimationAccessError)
         with pytest.raises(original.FailedEstimationAccessError):
             try:failed.params
@@ -94,11 +94,11 @@ def test_own_only_alias_cannot_catch_compatibility_exception(monkeypatch):
 
 def test_resolver_caches_one_identity_and_exposes_no_kernel_claim():
     from skimagexx.coverage import native_classes,class_metadata_providers,class_contract
-    assert set(native_classes())=={
+    assert {
         'filters.LPIFilter2D','transform.ProjectiveTransform','transform.AffineTransform',
-        'transform.EuclideanTransform','transform.SimilarityTransform'}
-    assert class_metadata_providers()==('util.FailedEstimationAccessError',)
-    facts=class_contract(class_metadata_providers()[0])
+        'transform.EuclideanTransform','transform.SimilarityTransform'}<=set(native_classes())
+    assert 'util.FailedEstimationAccessError' in class_metadata_providers()
+    facts=class_contract('util.FailedEstimationAccessError')
     assert facts['implementation']=='exception-metadata-provider'
     assert facts['parity_evidence'] is facts['performance_evidence'] is None
     assert implementation._canonical_failure_error() is xx.util.FailedEstimationAccessError

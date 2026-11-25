@@ -155,14 +155,14 @@ def test_native_rank_and_unported_nested_filter_keep_explicit_policy(monkeypatch
                 warnings.simplefilter('always');actual=native(image,footprint)
             assert not any(isinstance(w.message,xx.FallbackWarning) for w in notices)
             np.testing.assert_array_equal(actual,reference(image,footprint))
-    # filter_forward is now native. Use the current upstream-only plotting
-    # utility for policy checks, without making a plotting/numerical claim.
-    namespace=importlib.import_module('skimagexx.filters')
+    # Exercise module_attribute directly so complete filter coverage still
+    # verifies the explicit compatibility adapter policy without skips.
+    from skimagexx._compat import module_attribute
+    unported=module_attribute('filters','try_all_threshold')
     original_filters=importlib.import_module('skimage.filters')
-    unported=namespace.try_all_threshold
     unported_original=original_filters.try_all_threshold
     from skimagexx.coverage import native_functions
-    assert 'filters.try_all_threshold' not in native_functions()
+    assert 'filters.try_all_threshold' in native_functions()
     assert unported is not unported_original
     assert inspect.signature(unported)==inspect.signature(unported_original)
     calls=[];sentinel=object()
@@ -220,8 +220,10 @@ def test_classes_constants_and_discovery_keep_policy():
     xx.set_fallback_enabled(False)
     from skimagexx import _geometric
     assert xx.transform.AffineTransform is _geometric.AffineTransform
+    from skimagexx._compat import module_attribute
+    assert xx.transform.EssentialMatrixTransform is not None
     with pytest.raises(NotImplementedError):
-        xx.transform.EssentialMatrixTransform
+        module_attribute('transform', 'EssentialMatrixTransform')
 
 
 @pytest.mark.parametrize('path', ['filters.not_a_module', 'filters._median',

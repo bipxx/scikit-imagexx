@@ -21,7 +21,17 @@ target_sources(skimagexx PRIVATE
     src/medial_axis.cpp
     src/convex_hull_image.cpp src/convex_hull_object.cpp
     src/hough_line.cpp src/denoise_bilateral.cpp src/regionprops_table.cpp
-    src/isotropic_morphology.cpp src/corner_moravec.cpp)
+    src/isotropic_morphology.cpp src/corner_moravec.cpp
+    src/active_contour.cpp src/blob_detectors.cpp src/brief.cpp src/canny.cpp src/cascade.cpp
+    src/censure.cpp src/chan_vese.cpp src/corner_fast.cpp src/corner_orientations.cpp src/data_checkerboard.cpp
+    src/data_loaders_a.cpp src/data_loaders_b.cpp src/data_shepp_logan_phantom.cpp src/epipolar.cpp src/feature_descriptors.cpp
+    src/felzenszwalb.cpp src/fisher_vector.cpp src/future_filters.cpp src/geometric_models.cpp src/graph_paths.cpp
+    src/graph_rag.cpp src/gray_texture.cpp src/io_suite.cpp src/line_model_nd.cpp src/marching_cubes.cpp
+    src/morphological_snakes.cpp src/orb.cpp src/peak_local_max.cpp src/phase_cross_correlation.cpp src/piecewise_affine.cpp
+    src/polygon_perimeter.cpp src/polynomial.cpp src/quickshift.cpp src/random_walker.cpp src/rectangle_perimeter.cpp
+    src/registration_flows.cpp src/remove_objects_by_distance.cpp src/resize_local_mean.cpp src/restoration_denoise.cpp src/restoration_extra.cpp
+    src/sift.cpp src/slic.cpp src/thin_plate_spline.cpp src/tomography.cpp src/warp.cpp
+    src/watershed.cpp)
 target_sources(skimagexx PRIVATE src/compare_images.cpp)
 target_sources(skimagexx PRIVATE src/level_set.cpp)
 target_sources(skimagexx PRIVATE src/map_array.cpp)
@@ -199,6 +209,26 @@ if(MSVC)
         src/bind_convex_hull_image.cpp src/bind_convex_hull_object.cpp
         src/bind_hough_line.cpp src/bind_denoise_bilateral.cpp src/bind_regionprops_table.cpp
         src/bind_isotropic_morphology.cpp src/bind_corner_moravec.cpp
+    src/active_contour.cpp src/blob_detectors.cpp src/brief.cpp src/canny.cpp src/cascade.cpp
+    src/censure.cpp src/chan_vese.cpp src/corner_fast.cpp src/corner_orientations.cpp src/data_checkerboard.cpp
+    src/data_loaders_a.cpp src/data_loaders_b.cpp src/data_shepp_logan_phantom.cpp src/epipolar.cpp src/feature_descriptors.cpp
+    src/felzenszwalb.cpp src/fisher_vector.cpp src/future_filters.cpp src/geometric_models.cpp src/graph_paths.cpp
+    src/graph_rag.cpp src/gray_texture.cpp src/io_suite.cpp src/line_model_nd.cpp src/marching_cubes.cpp
+    src/morphological_snakes.cpp src/orb.cpp src/peak_local_max.cpp src/phase_cross_correlation.cpp src/piecewise_affine.cpp
+    src/polygon_perimeter.cpp src/polynomial.cpp src/quickshift.cpp src/random_walker.cpp src/rectangle_perimeter.cpp
+    src/registration_flows.cpp src/remove_objects_by_distance.cpp src/resize_local_mean.cpp src/restoration_denoise.cpp src/restoration_extra.cpp
+    src/sift.cpp src/slic.cpp src/thin_plate_spline.cpp src/tomography.cpp src/warp.cpp
+    src/watershed.cpp
+    src/bind_active_contour.cpp src/bind_blob_detectors.cpp src/bind_brief.cpp src/bind_canny.cpp src/bind_cascade.cpp
+    src/bind_censure.cpp src/bind_chan_vese.cpp src/bind_corner_fast.cpp src/bind_corner_orientations.cpp src/bind_data_checkerboard.cpp
+    src/bind_data_loaders_a.cpp src/bind_data_loaders_b.cpp src/bind_data_shepp_logan_phantom.cpp src/bind_epipolar.cpp src/bind_feature_descriptors.cpp
+    src/bind_felzenszwalb.cpp src/bind_fisher_vector.cpp src/bind_future_filters.cpp src/bind_geometric_models.cpp src/bind_graph_paths.cpp
+    src/bind_graph_rag.cpp src/bind_gray_texture.cpp src/bind_io_suite.cpp src/bind_line_model_nd.cpp src/bind_marching_cubes.cpp
+    src/bind_morphological_snakes.cpp src/bind_orb.cpp src/bind_peak_local_max.cpp src/bind_phase_cross_correlation.cpp src/bind_piecewise_affine.cpp
+    src/bind_polygon_perimeter.cpp src/bind_polynomial.cpp src/bind_quickshift.cpp src/bind_random_walker.cpp src/bind_rectangle_perimeter.cpp
+    src/bind_registration_flows.cpp src/bind_remove_objects_by_distance.cpp src/bind_resize_local_mean.cpp src/bind_restoration_denoise.cpp src/bind_restoration_extra.cpp
+    src/bind_sift.cpp src/bind_slic.cpp src/bind_thin_plate_spline.cpp src/bind_tomography.cpp src/bind_warp.cpp
+    src/bind_watershed.cpp
         PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "/fp:strict")
     set_source_files_properties(src/order_angles_golden_ratio.cpp src/bind_order_angles_golden_ratio.cpp
@@ -271,6 +301,26 @@ else()
         src/bind_convex_hull_image.cpp src/bind_convex_hull_object.cpp
         src/bind_hough_line.cpp src/bind_denoise_bilateral.cpp src/bind_regionprops_table.cpp
         src/bind_isotropic_morphology.cpp src/bind_corner_moravec.cpp
+    src/active_contour.cpp src/blob_detectors.cpp src/brief.cpp src/canny.cpp src/cascade.cpp
+    src/censure.cpp src/chan_vese.cpp src/corner_fast.cpp src/corner_orientations.cpp src/data_checkerboard.cpp
+    src/data_loaders_a.cpp src/data_loaders_b.cpp src/data_shepp_logan_phantom.cpp src/epipolar.cpp src/feature_descriptors.cpp
+    src/felzenszwalb.cpp src/fisher_vector.cpp src/future_filters.cpp src/geometric_models.cpp src/graph_paths.cpp
+    src/graph_rag.cpp src/gray_texture.cpp src/io_suite.cpp src/line_model_nd.cpp src/marching_cubes.cpp
+    src/morphological_snakes.cpp src/orb.cpp src/peak_local_max.cpp src/phase_cross_correlation.cpp src/piecewise_affine.cpp
+    src/polygon_perimeter.cpp src/polynomial.cpp src/quickshift.cpp src/random_walker.cpp src/rectangle_perimeter.cpp
+    src/registration_flows.cpp src/remove_objects_by_distance.cpp src/resize_local_mean.cpp src/restoration_denoise.cpp src/restoration_extra.cpp
+    src/sift.cpp src/slic.cpp src/thin_plate_spline.cpp src/tomography.cpp src/warp.cpp
+    src/watershed.cpp
+    src/bind_active_contour.cpp src/bind_blob_detectors.cpp src/bind_brief.cpp src/bind_canny.cpp src/bind_cascade.cpp
+    src/bind_censure.cpp src/bind_chan_vese.cpp src/bind_corner_fast.cpp src/bind_corner_orientations.cpp src/bind_data_checkerboard.cpp
+    src/bind_data_loaders_a.cpp src/bind_data_loaders_b.cpp src/bind_data_shepp_logan_phantom.cpp src/bind_epipolar.cpp src/bind_feature_descriptors.cpp
+    src/bind_felzenszwalb.cpp src/bind_fisher_vector.cpp src/bind_future_filters.cpp src/bind_geometric_models.cpp src/bind_graph_paths.cpp
+    src/bind_graph_rag.cpp src/bind_gray_texture.cpp src/bind_io_suite.cpp src/bind_line_model_nd.cpp src/bind_marching_cubes.cpp
+    src/bind_morphological_snakes.cpp src/bind_orb.cpp src/bind_peak_local_max.cpp src/bind_phase_cross_correlation.cpp src/bind_piecewise_affine.cpp
+    src/bind_polygon_perimeter.cpp src/bind_polynomial.cpp src/bind_quickshift.cpp src/bind_random_walker.cpp src/bind_rectangle_perimeter.cpp
+    src/bind_registration_flows.cpp src/bind_remove_objects_by_distance.cpp src/bind_resize_local_mean.cpp src/bind_restoration_denoise.cpp src/bind_restoration_extra.cpp
+    src/bind_sift.cpp src/bind_slic.cpp src/bind_thin_plate_spline.cpp src/bind_tomography.cpp src/bind_warp.cpp
+    src/bind_watershed.cpp
         PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/structural_similarity.cpp src/bind_structural_similarity.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off;-fno-fast-math;-frounding-math")
     set_source_files_properties(src/order_angles_golden_ratio.cpp src/bind_order_angles_golden_ratio.cpp
@@ -299,7 +349,17 @@ if(SKIMAGEXX_BUILD_PYTHON)
         src/bind_medial_axis.cpp
         src/bind_convex_hull_image.cpp src/bind_convex_hull_object.cpp
         src/bind_hough_line.cpp src/bind_denoise_bilateral.cpp src/bind_regionprops_table.cpp
-        src/bind_isotropic_morphology.cpp src/bind_corner_moravec.cpp)
+        src/bind_isotropic_morphology.cpp src/bind_corner_moravec.cpp
+    src/bind_active_contour.cpp src/bind_blob_detectors.cpp src/bind_brief.cpp src/bind_canny.cpp src/bind_cascade.cpp
+    src/bind_censure.cpp src/bind_chan_vese.cpp src/bind_corner_fast.cpp src/bind_corner_orientations.cpp src/bind_data_checkerboard.cpp
+    src/bind_data_loaders_a.cpp src/bind_data_loaders_b.cpp src/bind_data_shepp_logan_phantom.cpp src/bind_epipolar.cpp src/bind_feature_descriptors.cpp
+    src/bind_felzenszwalb.cpp src/bind_fisher_vector.cpp src/bind_future_filters.cpp src/bind_geometric_models.cpp src/bind_graph_paths.cpp
+    src/bind_graph_rag.cpp src/bind_gray_texture.cpp src/bind_io_suite.cpp src/bind_line_model_nd.cpp src/bind_marching_cubes.cpp
+    src/bind_morphological_snakes.cpp src/bind_orb.cpp src/bind_peak_local_max.cpp src/bind_phase_cross_correlation.cpp src/bind_piecewise_affine.cpp
+    src/bind_polygon_perimeter.cpp src/bind_polynomial.cpp src/bind_quickshift.cpp src/bind_random_walker.cpp src/bind_rectangle_perimeter.cpp
+    src/bind_registration_flows.cpp src/bind_remove_objects_by_distance.cpp src/bind_resize_local_mean.cpp src/bind_restoration_denoise.cpp src/bind_restoration_extra.cpp
+    src/bind_sift.cpp src/bind_slic.cpp src/bind_thin_plate_spline.cpp src/bind_tomography.cpp src/bind_warp.cpp
+    src/bind_watershed.cpp)
     target_sources(_core PRIVATE src/bind_structural_similarity.cpp src/bind_local_extrema.cpp
         src/bind_order_angles_golden_ratio.cpp src/bind_pearson.cpp src/bind_hausdorff.cpp
         src/bind_ellipsoid_stats.cpp src/bind_expand_labels.cpp)

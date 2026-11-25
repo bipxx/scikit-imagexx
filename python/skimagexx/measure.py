@@ -9,7 +9,15 @@ __all__ = ['label', 'intersection_coeff', 'manders_coloc_coeff', 'manders_overla
 __path__ = []
 
 
+_GEOMETRIC_MODEL_EXPORTS = ('CircleModel', 'EllipseModel', 'RansacModelProtocol', 'ransac')
+
+
 def __getattr__(name):
+    if name in _GEOMETRIC_MODEL_EXPORTS:
+        from . import _geometric_models
+        value = getattr(_geometric_models, name)
+        globals()[name] = value
+        return value
     return module_attribute('measure', name)
 
 
@@ -95,3 +103,11 @@ __all__ += ['find_contours']
 from ._regionprops_table import regionprops_table
 
 __all__ += ['regionprops_table']
+
+from ._line_model_nd import LineModelND
+from ._marching_cubes import marching_cubes
+
+__all__ += [
+    'CircleModel', 'EllipseModel', 'LineModelND', 'RansacModelProtocol',
+    'marching_cubes', 'ransac',
+]

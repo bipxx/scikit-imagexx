@@ -1433,3 +1433,7 @@ __all__.extend(("LPIFilter2D", "filter_forward", "filter_inverse", "wiener"))
 from ._window import window
 
 __all__.append("window")
+
+from ._trainable_segmenter import try_all_threshold
+
+__all__ += ['try_all_threshold']

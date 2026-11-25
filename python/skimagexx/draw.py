@@ -25,3 +25,8 @@ def __getattr__(name):
 from ._random_shapes import random_shapes
 
 __all__ += ['random_shapes']
+
+from ._polygon_perimeter import polygon_perimeter
+from ._rectangle_perimeter import rectangle_perimeter
+
+__all__ += ['polygon_perimeter', 'rectangle_perimeter']

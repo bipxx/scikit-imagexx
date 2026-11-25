@@ -43,3 +43,23 @@ def __getattr__(name):
 # Canonical identity aliases; owned traversal/writes with declared NumPy providers.
 from ._flood_fill import flood, flood_fill
 __all__ += ['flood','flood_fill']
+
+from ._active_contour import active_contour
+from ._chan_vese import chan_vese
+from ._felzenszwalb import felzenszwalb
+from ._morphological_snakes import (
+    inverse_gaussian_gradient,
+    morphological_chan_vese,
+    morphological_geodesic_active_contour,
+)
+from ._quickshift import quickshift
+from ._random_walker import random_walker
+from ._slic import slic
+from ._watershed import watershed
+
+__all__ += [
+    'active_contour', 'chan_vese', 'felzenszwalb',
+    'inverse_gaussian_gradient', 'morphological_chan_vese',
+    'morphological_geodesic_active_contour', 'quickshift', 'random_walker',
+    'slic', 'watershed',
+]

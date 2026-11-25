@@ -8,7 +8,21 @@ import numpy as np
 import warnings
 
 
+_LAZY_EXPORTS = {
+    'EssentialMatrixTransform': '._epipolar',
+    'FundamentalMatrixTransform': '._epipolar',
+    'PolynomialTransform': '._polynomial',
+}
+
+
 def __getattr__(name):
+    submod = _LAZY_EXPORTS.get(name)
+    if submod is not None:
+        import importlib
+        module = importlib.import_module(submod, __package__)
+        value = getattr(module, name)
+        globals()[name] = value
+        return value
     return module_attribute('transform', name)
 
 
@@ -254,3 +268,20 @@ from ._probabilistic_hough_line import probabilistic_hough_line
 __all__ += ['hough_circle_peaks', 'hough_ellipse', 'probabilistic_hough_line']
 from ._hough_line import hough_line
 __all__ += ['hough_line']
+
+from ._estimate_transform import estimate_transform
+from ._piecewise_affine import PiecewiseAffineTransform
+from ._resize_local_mean import resize_local_mean
+from ._rotate_swirl import rotate, swirl
+from ._thin_plate_spline import ThinPlateSplineTransform
+from ._tomography import iradon, iradon_sart, radon
+from ._warp import warp, warp_coords
+from ._warp_polar import warp_polar
+
+__all__ += [
+    'EssentialMatrixTransform', 'FundamentalMatrixTransform',
+    'PiecewiseAffineTransform', 'PolynomialTransform',
+    'ThinPlateSplineTransform', 'estimate_transform', 'iradon',
+    'iradon_sart', 'radon', 'resize_local_mean', 'rotate', 'swirl',
+    'warp', 'warp_coords', 'warp_polar',
+]

@@ -187,3 +187,7 @@ from ._isotropic_morphology import (
     isotropic_opening,
 )
 __all__ += ['isotropic_erosion', 'isotropic_dilation', 'isotropic_opening', 'isotropic_closing']
+
+from ._remove_objects_by_distance import remove_objects_by_distance
+
+__all__ += ['remove_objects_by_distance']

@@ -273,3 +273,30 @@ from ._match_descriptors import match_descriptors
 __all__ += ['match_descriptors']
 from ._corner_moravec import corner_moravec
 __all__ += ['corner_moravec']
+
+from ._blob_detectors import blob_dog, blob_doh, blob_log
+from ._brief import BRIEF
+from ._canny import canny
+from ._cascade import Cascade
+from ._censure import CENSURE
+from ._corner_fast import corner_fast
+from ._corner_orientations import corner_orientations
+from ._feature_descriptors import (
+    daisy, hog, local_binary_pattern, match_template,
+    multiblock_lbp, multiscale_basic_features,
+)
+from ._fisher_vector import fisher_vector, learn_gmm
+from ._gray_texture import graycomatrix, graycoprops
+from ._orb import ORB
+from ._peak_local_max import corner_peaks, corner_subpix, peak_local_max
+from ._plot_matched_features import plot_matched_features
+from ._sift import SIFT
+
+__all__ += [
+    'BRIEF', 'CENSURE', 'Cascade', 'ORB', 'SIFT',
+    'blob_dog', 'blob_doh', 'blob_log', 'canny', 'corner_fast',
+    'corner_orientations', 'corner_peaks', 'corner_subpix', 'daisy',
+    'fisher_vector', 'graycomatrix', 'graycoprops', 'hog', 'learn_gmm',
+    'local_binary_pattern', 'match_template', 'multiblock_lbp',
+    'multiscale_basic_features', 'peak_local_max', 'plot_matched_features',
+]

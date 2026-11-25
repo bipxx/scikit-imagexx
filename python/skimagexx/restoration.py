@@ -13,3 +13,19 @@ __all__ = ['denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipso
 
 def __getattr__(name):
     return module_attribute('restoration', name)
+
+from ._restoration_denoise import (
+    denoise_nl_means, denoise_wavelet, estimate_sigma,
+    inpaint_biharmonic, richardson_lucy, unwrap_phase,
+)
+from ._restoration_extra import (
+    calibrate_denoiser, cycle_spin, denoise_invariant,
+    unsupervised_wiener, wiener,
+)
+
+__all__ += [
+    'calibrate_denoiser', 'cycle_spin', 'denoise_invariant',
+    'denoise_nl_means', 'denoise_wavelet', 'estimate_sigma',
+    'inpaint_biharmonic', 'richardson_lucy', 'unsupervised_wiener',
+    'unwrap_phase', 'wiener',
+]

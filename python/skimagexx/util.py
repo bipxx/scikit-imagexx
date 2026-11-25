@@ -108,13 +108,21 @@ def __getattr__(name):
     if name == 'FailedEstimationAccessError':
         from ._geometric import _canonical_failure_error
         return _canonical_failure_error()
+    if name == 'PendingSkimage2Change':
+        from ._util_misc import _canonical_pending_skimage2_change
+        return _canonical_pending_skimage2_change()
     return module_attribute('util', name)
 
 
 def __dir__():
-    return sorted(set(globals()) | set(__all__) | {'FailedEstimationAccessError'})
+    return sorted(set(globals()) | set(__all__) | {'FailedEstimationAccessError', 'PendingSkimage2Change'})
 
 
 from ._random_noise import random_noise
 
 __all__ += ['random_noise']
+
+from ._apply_parallel import apply_parallel
+from ._util_misc import lookfor
+
+__all__ += ['apply_parallel', 'lookfor']

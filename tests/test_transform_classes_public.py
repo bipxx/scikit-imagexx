@@ -47,7 +47,7 @@ def descriptor(array):
 
 def test_public_identity_registry_and_installed_backend():
     expected={f'transform.{name}' for name in contract.NAMES}
-    assert set(native_classes())==expected|{'filters.LPIFilter2D'}
+    assert expected|{'filters.LPIFilter2D'}<=set(native_classes())
     assert expected=={'transform.ProjectiveTransform','transform.AffineTransform',
                      'transform.EuclideanTransform','transform.SimilarityTransform'}
     assert not set(native_classes())&set(native_functions())

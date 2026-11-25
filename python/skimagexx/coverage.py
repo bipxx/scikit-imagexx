@@ -6,23 +6,32 @@ DRAW_COORDINATE_FUNCTIONS = ('draw.line','draw.rectangle','draw.disk','draw.elli
 MOMENTS_FUNCTIONS = ('measure.moments', 'measure.moments_central', 'measure.centroid')
 DERIVED_MOMENTS_FUNCTIONS = ('measure.moments_normalized', 'measure.moments_hu')
 NATIVE_FUNCTIONS = {
-    'data': ('binary_blobs',),
-    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color','random_shapes'),
-    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball', 'denoise_bilateral'),
-    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','expand_labels'),
+    'data': ('binary_blobs', 'checkerboard', 'file_hash', 'shepp_logan_phantom'),
+    'draw': ('line','rectangle','disk','ellipse','circle_perimeter','line_aa','circle_perimeter_aa','line_nd','ellipsoid','ellipsoid_stats','ellipse_perimeter','polygon','polygon2mask','bezier_curve','set_color','random_shapes','polygon_perimeter','rectangle_perimeter'),
+    'restoration': ('denoise_tv_chambolle', 'denoise_tv_bregman', 'ball_kernel', 'ellipsoid_kernel', 'rolling_ball', 'denoise_bilateral',
+                    'denoise_nl_means', 'denoise_wavelet', 'estimate_sigma', 'inpaint_biharmonic', 'unwrap_phase', 'richardson_lucy',
+                    'wiener', 'unsupervised_wiener', 'denoise_invariant', 'calibrate_denoiser', 'cycle_spin'),
+    'segmentation': ('clear_border','relabel_sequential','checkerboard_level_set','disk_level_set','find_boundaries','join_segmentations','mark_boundaries','flood','flood_fill','expand_labels',
+                     'slic','watershed','felzenszwalb','quickshift','random_walker','active_contour','chan_vese','inverse_gaussian_gradient','morphological_chan_vese','morphological_geodesic_active_contour'),
     'filters.rank': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','autolevel_percentile','enhance_contrast_percentile','gradient_percentile','mean_percentile','pop_percentile','subtract_mean_percentile','threshold_percentile','sum_percentile','percentile','mean_bilateral','pop_bilateral','sum_bilateral','otsu','majority'),
     'filters.rank.bilateral': ('mean_bilateral','pop_bilateral','sum_bilateral'),
     'filters.rank.generic': ('minimum','maximum','mean','sum','pop','gradient','median','modal','entropy','autolevel','equalize','enhance_contrast','threshold','geometric_mean','noise_filter','subtract_mean','windowed_histogram','otsu','majority'),
-    'measure': ('regionprops','regionprops_table','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours'),
+    'future': ('fit_segmenter', 'manual_lasso_segmentation', 'manual_polygon_segmentation', 'predict_segmenter'),
+    'graph': ('central_pixel', 'cut_normalized', 'cut_threshold', 'merge_hierarchical', 'pixel_graph', 'rag_boundary', 'rag_mean_color', 'route_through_array', 'shortest_path', 'show_rag'),
+    'io': ('concatenate_images', 'imread', 'imread_collection', 'imread_collection_wrapper', 'imsave', 'load_sift', 'load_surf', 'pop', 'push'),
+    'measure': ('regionprops','regionprops_table','subdivide_polygon','approximate_polygon','blur_effect','profile_line','mesh_surface_area','points_in_poly','grid_points_in_poly','euler_number','perimeter','perimeter_crofton','block_reduce','shannon_entropy','moments_coords','moments_coords_central','moments','moments_central','centroid','inertia_tensor','inertia_tensor_eigvals','moments_normalized','moments_hu','label','intersection_coeff','manders_coloc_coeff','manders_overlap_coeff','pearson_corr_coeff','find_contours','marching_cubes','ransac'),
     'metrics': ('mean_squared_error','normalized_root_mse','peak_signal_noise_ratio','normalized_mutual_information','adapted_rand_error','contingency_table','variation_of_information','structural_similarity','hausdorff_distance','hausdorff_pair'),
-    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','corner_moravec','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord','match_descriptors'),
-    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line','hough_line_peaks','hough_circle_peaks','hough_ellipse','probabilistic_hough_line'),
-    'morphology': ('label','remove_small_objects','remove_small_holes','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
+    'feature': ('hessian_matrix_eigvals','structure_tensor_eigenvalues','structure_tensor','corner_harris','corner_shi_tomasi','corner_foerstner','corner_kitchen_rosenfeld','corner_moravec','hessian_matrix','shape_index','hessian_matrix_det','draw_multiblock_lbp','draw_haar_like_feature','haar_like_feature','haar_like_feature_coord','match_descriptors',
+                'corner_fast','corner_orientations','graycomatrix','graycoprops','canny','peak_local_max','corner_peaks','corner_subpix','blob_dog','blob_log','blob_doh','hog','daisy','local_binary_pattern','multiblock_lbp','match_template','multiscale_basic_features','plot_matched_features','fisher_vector','learn_gmm'),
+    'transform': ('frt2','ifrt2','integral_image','integrate','downscale_local_mean','resize','rescale','matrix_transform','order_angles_golden_ratio','pyramid_reduce','pyramid_expand','pyramid_gaussian','pyramid_laplacian','hough_circle','hough_line','hough_line_peaks','hough_circle_peaks','hough_ellipse','probabilistic_hough_line',
+                  'resize_local_mean','warp','warp_coords','rotate','swirl','warp_polar','estimate_transform','radon','iradon','iradon_sart'),
+    'morphology': ('label','remove_small_objects','remove_small_holes','remove_objects_by_distance','footprint_rectangle','diamond','disk','ball','mirror_footprint','pad_footprint',
                    'erosion','dilation','opening','closing','white_tophat','black_tophat',
                    'binary_erosion','binary_dilation','binary_opening','binary_closing',
                    'isotropic_erosion','isotropic_dilation','isotropic_opening','isotropic_closing',
                    'max_tree','max_tree_local_maxima','area_opening','area_closing','diameter_opening','diameter_closing','reconstruction','h_maxima','h_minima',
                    'ellipse','octagon','octahedron','star','footprint_from_sequence','flood','flood_fill','local_maxima','local_minima','thin','skeletonize','convex_hull_image','convex_hull_object','medial_axis'),
+    'registration': ('optical_flow_ilk', 'optical_flow_tvl1', 'phase_cross_correlation'),
     'exposure': ('adjust_gamma', 'adjust_log', 'adjust_sigmoid', 'rescale_intensity',
                  'histogram', 'cumulative_distribution', 'equalize_hist', 'equalize_adapthist','is_low_contrast','match_histograms'),
     'color': ('label2rgb','rgba2rgb','gray2rgba','rgb2gray', 'gray2rgb', 'rgb2yuv', 'yuv2rgb', 'rgb2yiq', 'yiq2rgb',
@@ -35,9 +44,9 @@ NATIVE_FUNCTIONS = {
     'filters': ('window','filter_forward','filter_inverse','wiener','butterworth','frangi','hessian','meijering','sato','gabor','gabor_kernel','gaussian', 'difference_of_gaussians', 'unsharp_mask', 'sobel', 'sobel_h', 'sobel_v', 'prewitt', 'prewitt_h',
                 'prewitt_v', 'scharr', 'scharr_h', 'scharr_v', 'threshold_mean', 'threshold_otsu',
                 'threshold_yen', 'threshold_triangle', 'threshold_isodata', 'threshold_minimum', 'threshold_li', 'threshold_multiotsu',
-                'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag'),
+                'threshold_niblack','threshold_sauvola','threshold_local','rank_order','apply_hysteresis_threshold','correlate_sparse','median','farid','farid_h','farid_v','laplace','roberts','roberts_pos_diag','roberts_neg_diag','try_all_threshold'),
     'util': ('slice_along_axes','view_as_blocks','view_as_windows','crop','regular_grid','montage', 'regular_seeds', 'unique_rows', 'label_points', 'map_array', 'compare_images', 'invert', 'img_as_float', 'img_as_float32', 'img_as_float64', 'img_as_ubyte',
-             'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits','random_noise'),
+             'img_as_uint', 'img_as_int', 'img_as_bool', 'dtype_limits','random_noise','apply_parallel','lookfor'),
 }
 
 
@@ -136,8 +145,13 @@ def native_functions():
 
 
 PACKAGED_ASSET_FUNCTIONS = (
-    'data.brick', 'data.camera', 'data.cat', 'data.chelsea', 'data.clock', 'data.coffee',
-    'data.grass', 'data.gravel', 'data.horse', 'data.text',
+    'data.astronaut', 'data.brain', 'data.brick', 'data.camera', 'data.cat', 'data.cell', 'data.cells3d',
+    'data.chelsea', 'data.clock', 'data.coffee', 'data.coins', 'data.colorwheel', 'data.download_all',
+    'data.eagle', 'data.grass', 'data.gravel', 'data.horse', 'data.hubble_deep_field', 'data.human_mitosis',
+    'data.immunohistochemistry', 'data.kidney', 'data.lbp_frontal_face_cascade_filename', 'data.lfw_subset',
+    'data.lily', 'data.logo', 'data.microaneurysms', 'data.moon', 'data.nickel_solidification', 'data.page',
+    'data.palisades_of_vogt', 'data.protein_transport', 'data.retina', 'data.rocket', 'data.skin',
+    'data.stereo_motorcycle', 'data.text', 'data.vortex',
 )
 
 
@@ -262,8 +276,20 @@ def rank_contract(api):
 # Classes have state, constructors and members; they are never image-call rows.
 # Populate only after the isolated public class contract is validated. The
 # implementation/provider facts below describe candidates, not passing evidence.
-NATIVE_CLASSES = {'filters': ('LPIFilter2D',), 'transform': ('ProjectiveTransform','AffineTransform','EuclideanTransform','SimilarityTransform')}
-CLASS_METADATA_PROVIDERS = {'util': ('FailedEstimationAccessError',)}
+NATIVE_CLASSES = {
+    'feature': ('BRIEF', 'CENSURE', 'Cascade', 'ORB', 'SIFT'),
+    'filters': ('LPIFilter2D',),
+    'future': ('TrainableSegmenter',),
+    'graph': ('MCP', 'MCP_Connect', 'MCP_Flexible', 'MCP_Geometric', 'RAG'),
+    'io': ('ImageCollection', 'MultiImage'),
+    'measure': ('CircleModel', 'EllipseModel', 'LineModelND', 'RansacModelProtocol'),
+    'transform': (
+        'ProjectiveTransform', 'AffineTransform', 'EuclideanTransform', 'SimilarityTransform',
+        'EssentialMatrixTransform', 'FundamentalMatrixTransform', 'PiecewiseAffineTransform',
+        'PolynomialTransform', 'ThinPlateSplineTransform',
+    ),
+}
+CLASS_METADATA_PROVIDERS = {'util': ('FailedEstimationAccessError', 'PendingSkimage2Change')}
 _CLASS_BASE_MEMBERS = ('__init__','__call__','__array__','__add__','__repr__','__nice__',
                        '__str__','identity','inverse','estimate','from_estimate',
                        'residuals','dimensionality')
@@ -325,6 +351,221 @@ def class_contract(api):
             compatibility_boundaries=['Frozen 80 source specifications on minimum and modern runtimes; extended FFT precision, other storage/protocol partitions and hostile callback mutation remain unassessed.'],
             public_parity_test='tests/test_lpi_filter_public.py', frozen_contract='tests/lpi_filter_cases.py',
             parity_evidence=None, performance_evidence=None)
+    _EXTRA_CLASS_SPECS = {
+        'util.PendingSkimage2Change': dict(
+            version='pending-skimage2-change-v1',
+            registered=api in class_metadata_providers(),
+            implementation='exception-metadata-provider',
+            members={m: 'python-pendingdeprecation-inheritance' for m in ('__getattribute__','__init__','__new__','__reduce__','__repr__','__setstate__','__str__','add_note','args','with_traceback')},
+            state=dict(args='inherited PendingDeprecationWarning constructor and pickle policy'),
+            providers=dict(exception='Canonical skimage.util.PendingSkimage2Change when installed; own subclass when absent.'),
+            workers=dict(exception='Python metadata; no C++ workers'),
+            compatibility_boundaries=['Canonical warning identity preserved for warning filters and exception handlers.'],
+            public_parity_test='tests/test_util_misc_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'feature.BRIEF': dict(
+            version='brief-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'owned-cpp-pair-offsets', 'extract': 'cpp-binary-descriptor-sampling'},
+            state=dict(descriptor_size='int', patch_size='int', mode='str', sigma='float', descriptors='bool ndarray', mask='bool ndarray'),
+            providers=dict(smoothing='C++ Gaussian filter and pair sampling', fallback='NumPy/upstream fallback on unsupported inputs or dtype tags'),
+            workers=dict(extract='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Bounded C-order uint8/float32/float64 images; unsupported dtypes/layouts use compatibility.'],
+            public_parity_test='tests/test_brief_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'feature.CENSURE': dict(
+            version='censure-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'owned-python-state', 'detect': 'cpp-censure-scale-space-extrema'},
+            state=dict(min_scale='int', max_scale='int', mode='str', keypoints='intp ndarray', scales='intp ndarray'),
+            providers=dict(filter_bank='C++ integral/filter-response Harris and extrema detection'),
+            workers=dict(detect='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Bounded C-order float32/float64/uint8 2D images for DoB/Octagon/STAR modes.'],
+            public_parity_test='tests/test_censure_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'feature.Cascade': dict(
+            version='cascade-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-cascade-classifier' if m == 'detect_multi_scale' else 'owned-state-attribute' for m in ('__init__','__new__','__reduce__','__setstate__','detect_multi_scale','eps','features_number','stages_number','stumps_number','window_height','window_width')},
+            state=dict(cascade='Parsed XML classifier tables in C++ memory'),
+            providers=dict(detection='C++ multi-scale MB-LBP/Haar stage evaluator and integral image'),
+            workers=dict(detect_multi_scale='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['C-order uint8/float inputs on parsed OpenCV/skimage cascade XML files.'],
+            public_parity_test='tests/test_cascade_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'feature.ORB': dict(
+            version='orb-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'owned-python-state', 'detect': 'cpp-fast-pyramid-detect', 'extract': 'cpp-rotated-brief', 'detect_and_extract': 'cpp-fast-harris-orb'},
+            state=dict(keypoints='float64 Nx2 ndarray', scales='float64 ndarray', orientations='float64 ndarray', responses='float64 ndarray', descriptors='bool ndarray'),
+            providers=dict(pyramid='C++ FAST/Harris pyramid, orientations and rotated BRIEF descriptors'),
+            workers=dict(detect_and_extract='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Bounded 2D C-order uint8/float32/float64 images.'],
+            public_parity_test='tests/test_orb_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'feature.SIFT': dict(
+            version='sift-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'owned-python-state', 'deltas': 'owned-state-attribute', 'detect': 'cpp-dog-scale-space', 'extract': 'cpp-sift-histograms', 'detect_and_extract': 'cpp-sift-pipeline'},
+            state=dict(keypoints='float64 ndarray', scales='float64 ndarray', octaves='int ndarray', orientations='float64 ndarray', descriptors='uint8 ndarray', sigmas='float64 ndarray'),
+            providers=dict(scale_space='C++ Gaussian DoG pyramid, keypoint refinement and 128-D descriptors'),
+            workers=dict(detect_and_extract='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Bounded 2D C-order untagged float32/float64/uint8 images.'],
+            public_parity_test='tests/test_sift_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'future.TrainableSegmenter': dict(
+            version='trainable-segmenter-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'owned-python-estimator-state', 'compute_features': 'python-feature-callback', 'fit': 'cpp-training-gather-with-clf-fit', 'predict': 'numpy-reshape-with-clf-predict'},
+            state=dict(clf='user or sklearn RandomForest classifier', features_func='feature extraction callback', features='computed feature tensor'),
+            providers=dict(gather='C++ positive-label index gather', classifier='User estimator or lazy sklearn RandomForestClassifier when available'),
+            workers=dict(fit='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Default classifier requires optional scikit-learn; custom estimators and C++ gather work without sklearn.'],
+            public_parity_test='tests/test_future_filters_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'graph.MCP': dict(
+            version='mcp-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-dijkstra-mcp' if m in ('find_costs', 'traceback', 'goal_reached') else 'owned-cpp-or-view-state' for m in ('__init__','__new__','__reduce__','__reduce_cython__','__setstate__','__setstate_cython__','find_costs','goal_reached','offsets','traceback')},
+            state=dict(costs='float64 array', offsets='intp ndarray view'),
+            providers=dict(search='C++ binary-heap Dijkstra/MCP front propagation'),
+            workers=dict(find_costs='Ordered serial priority queue, default 1'),
+            compatibility_boundaries=['1D..9D numeric cost arrays; custom Python subclasses retain hook callbacks.'],
+            public_parity_test='tests/test_graph_paths_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'graph.MCP_Connect': dict(
+            version='mcp-connect-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-dijkstra-mcp' if m in ('find_costs', 'traceback', 'goal_reached', 'create_connection') else 'owned-cpp-or-view-state' for m in ('__init__','__new__','__reduce__','__reduce_cython__','__setstate__','__setstate_cython__','create_connection','find_costs','goal_reached','offsets','traceback')},
+            state=dict(costs='float64 array', offsets='intp ndarray view'),
+            providers=dict(search='C++ multi-front MCP connection search'),
+            workers=dict(find_costs='Ordered serial priority queue, default 1'),
+            compatibility_boundaries=['1D..9D numeric cost arrays.'],
+            public_parity_test='tests/test_graph_paths_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'graph.MCP_Flexible': dict(
+            version='mcp-flexible-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-dijkstra-mcp' if m in ('find_costs', 'traceback', 'goal_reached', 'examine_neighbor', 'travel_cost', 'update_node') else 'owned-cpp-or-view-state' for m in ('__init__','__new__','__reduce__','__reduce_cython__','__setstate__','__setstate_cython__','examine_neighbor','find_costs','goal_reached','offsets','traceback','travel_cost','update_node')},
+            state=dict(costs='float64 array', offsets='intp ndarray view'),
+            providers=dict(search='C++ flexible MCP search with Python override hooks'),
+            workers=dict(find_costs='Ordered serial priority queue, default 1'),
+            compatibility_boundaries=['1D..9D numeric cost arrays.'],
+            public_parity_test='tests/test_graph_paths_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'graph.MCP_Geometric': dict(
+            version='mcp-geometric-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-dijkstra-mcp' if m in ('find_costs', 'traceback', 'goal_reached') else 'owned-cpp-or-view-state' for m in ('__init__','__new__','__reduce__','__reduce_cython__','__setstate__','__setstate_cython__','find_costs','goal_reached','offsets','traceback')},
+            state=dict(costs='float64 array', offsets='intp ndarray view'),
+            providers=dict(search='C++ geometric path-length weighted MCP search'),
+            workers=dict(find_costs='Ordered serial priority queue, default 1'),
+            compatibility_boundaries=['1D..9D numeric cost arrays.'],
+            public_parity_test='tests/test_graph_paths_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'graph.RAG': dict(
+            version='rag-class-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-rag-edge-builder' if m in ('__init__', 'merge_nodes', 'next_id') else 'networkx-graph-state' for m in ('__contains__','__getitem__','__init__','__iter__','__len__','__new__','__str__','add_edge','add_edges_from','add_node','add_nodes_from','add_weighted_edges_from','adj','adjacency','clear','clear_edges','copy','degree','edge_subgraph','edges','fresh_copy','get_edge_data','has_edge','has_node','is_directed','is_multigraph','merge_nodes','name','nbunch_iter','neighbors','next_id','nodes','number_of_edges','number_of_nodes','order','remove_edge','remove_edges_from','remove_node','remove_nodes_from','size','subgraph','to_directed','to_directed_class','to_undirected','to_undirected_class','update')},
+            state=dict(graph='NetworkX Graph subclass populated by C++ neighbor adjacency scanner'),
+            providers=dict(graph_state='NetworkX Graph base class', adjacency='C++ 1D-3D connectivity edge/node extraction'),
+            workers=dict(__init__='Single-host NetworkX graph insertion after C++ adjacency extraction'),
+            compatibility_boundaries=['Integer label_image up to 3D on native RAG edge extraction.'],
+            public_parity_test='tests/test_graph_rag_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'io.ImageCollection': dict(
+            version='io-collection-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-concatenate-or-stock-collection' if m == 'concatenate' else 'inherited-skimage-io-collection' for m in ('__getitem__','__init__','__iter__','__len__','__str__','concatenate','conserve_memory','files','reload')},
+            state=dict(files='glob pattern file list', data='cached object frame array', conserve_memory='bool'),
+            providers=dict(concatenation='C++ io_concatenate contiguous/strided fast path', collection='Inherited skimage.io.ImageCollection indexing and plugin loading'),
+            workers=dict(concatenate='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Fallback for ragged/unaligned frames and custom loader subclasses.'],
+            public_parity_test='tests/test_io_suite_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'io.MultiImage': dict(
+            version='io-multiimage-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-concatenate-or-stock-collection' if m == 'concatenate' else 'inherited-skimage-io-multiimage' for m in ('__getitem__','__init__','__iter__','__len__','__str__','concatenate','conserve_memory','filename','files','reload')},
+            state=dict(filename='multipage file path', files='frame list', data='cached frames'),
+            providers=dict(concatenation='C++ io_concatenate via ImageCollection', loader='Inherited skimage.io.MultiImage'),
+            workers=dict(concatenate='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Inherits ImageCollection concatenation and stock MultiImage reading.'],
+            public_parity_test='tests/test_io_suite_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'measure.CircleModel': dict(
+            version='circle-model-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'inherited-state', 'estimate': 'cpp-circle-fit', 'from_estimate': 'cpp-circle-fit', 'params': 'inherited-property', 'predict_xy': 'cpp-circle-predict', 'residuals': 'cpp-circle-residuals'},
+            state=dict(params='(xc, yc, r) float64 tuple/ndarray'),
+            providers=dict(kernels='C++ circle Taubin/hyper fit, distance residuals and parametric prediction'),
+            workers=dict(fit='Single-thread C++ linear least squares, default 1'),
+            compatibility_boundaries=['Real 2D finite float64 coordinate arrays without metadata tags.'],
+            public_parity_test='tests/test_geometric_models_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'measure.EllipseModel': dict(
+            version='ellipse-model-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'inherited-state', 'estimate': 'cpp-ellipse-fit', 'from_estimate': 'cpp-ellipse-fit', 'params': 'inherited-property', 'predict_xy': 'cpp-ellipse-predict', 'residuals': 'cpp-ellipse-residuals'},
+            state=dict(params='(xc, yc, a, b, theta) float64 tuple/ndarray'),
+            providers=dict(kernels='C++ conic fit, Newton orthogonal residual solver and parametric prediction; preserves complex-eigenvector NumPy error semantics when active'),
+            workers=dict(fit='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Matches upstream TypeError on NumPy builds returning complex eigensystems for real symmetric inputs unless SDK direct call is used.'],
+            public_parity_test='tests/test_geometric_models_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'measure.LineModelND': dict(
+            version='line-model-nd-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={'__init__': 'owned-python-state', 'estimate': 'cpp-or-svd-line-fit', 'from_estimate': 'cpp-or-svd-line-fit', 'params': 'tuple-property', 'predict': 'cpp-line-predict', 'predict_x': 'cpp-line-predict', 'predict_y': 'cpp-line-predict', 'residuals': 'cpp-line-residuals'},
+            state=dict(params='(origin, direction) float64 arrays'),
+            providers=dict(kernels='C++ SVD/projection residuals and coordinate prediction', fallback='Upstream compatibility on unsupported protocols/dtypes'),
+            workers=dict(residuals='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Finite ND float64 coordinates; 0.26 estimator/failure contract preserved.'],
+            public_parity_test='tests/test_line_model_nd_lifecycle.py', frozen_contract='coverage/contracts/line-model-nd-026.json', parity_evidence=None, performance_evidence=None,
+        ),
+        'measure.RansacModelProtocol': dict(
+            version='ransac-model-protocol-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'typing-protocol-contract' for m in ('__class_getitem__','__init__','__init_subclass__','__subclasshook__','from_estimate','residuals')},
+            state=dict(protocol='runtime_checkable typing.Protocol structural interface for ransac'),
+            providers=dict(protocol='Canonical skimage.measure.fit.RansacModelProtocol metadata'),
+            workers=dict(protocol='Python typing metadata only'),
+            compatibility_boundaries=['Canonical protocol class identity preserved for isinstance checks and user custom models.'],
+            public_parity_test='tests/test_geometric_models_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'transform.EssentialMatrixTransform': dict(
+            version='epipolar-transform-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-sampson-residuals-or-numpy-svd-fit' if m in ('estimate','from_estimate','residuals') else 'epipolar-matrix-state' for m in ('__call__','__init__','dimensionality','estimate','from_estimate','identity','inverse','residuals')},
+            state=dict(params='3x3 Essential matrix ndarray'),
+            providers=dict(fitting='C++ normalized 8-point build + NumPy SVD rank-2 enforcement', residuals='C++ Sampson distance'),
+            workers=dict(residuals='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Planar 2D point pairs in float64.'],
+            public_parity_test='tests/test_epipolar_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'transform.FundamentalMatrixTransform': dict(
+            version='epipolar-transform-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-sampson-residuals-or-numpy-svd-fit' if m in ('estimate','from_estimate','residuals') else 'epipolar-matrix-state' for m in ('__call__','__init__','dimensionality','estimate','from_estimate','identity','inverse','residuals')},
+            state=dict(params='3x3 Fundamental matrix ndarray'),
+            providers=dict(fitting='C++ normalized 8-point build + NumPy SVD rank-2 enforcement', residuals='C++ Sampson distance'),
+            workers=dict(residuals='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Planar 2D point pairs in float64.'],
+            public_parity_test='tests/test_epipolar_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'transform.PiecewiseAffineTransform': dict(
+            version='piecewise-affine-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-barycentric-warp-or-qhull-fit' for m in ('__call__','__init__','estimate','from_estimate','identity','inverse','residuals')},
+            state=dict(affines='list of AffineTransform simplices', inverse_affines='inverse simplex transforms'),
+            providers=dict(triangulation='SciPy Delaunay simplex ordering on public fit; C++ barycentric simplex evaluation and SDK Delaunay', transform='C++ per-coordinate simplex evaluation'),
+            workers=dict(__call__='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['Finite 2D point sets without dtype metadata tags.'],
+            public_parity_test='tests/test_piecewise_affine_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'transform.PolynomialTransform': dict(
+            version='polynomial-transform-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-horner-eval-or-numpy-svd-fit' for m in ('__call__','__init__','estimate','from_estimate','identity','inverse','residuals')},
+            state=dict(params='(2, K) float64 polynomial coefficient array'),
+            providers=dict(eval='C++ Horner/monomial coordinate evaluation', fitting='C++ design matrix + NumPy SVD'),
+            workers=dict(__call__='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['2D coordinates without dtype tags.'],
+            public_parity_test='tests/test_polynomial_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+        'transform.ThinPlateSplineTransform': dict(
+            version='tps-transform-v1', registered=api in native_classes(), implementation='native-class-partial',
+            members={m: 'cpp-tps-radial-kernel' for m in ('__call__','__init__','estimate','from_estimate','inverse')},
+            state=dict(src='control coordinates', _coeffs='spline weights ndarray'),
+            providers=dict(kernel='C++ TPS radial basis linear solve and coordinate evaluation'),
+            workers=dict(__call__='Shared process-global worker limit, default 1'),
+            compatibility_boundaries=['2D control points without dtype tags.'],
+            public_parity_test='tests/test_thin_plate_spline_public.py', frozen_contract=None, parity_evidence=None, performance_evidence=None,
+        ),
+    }
+    if api in _EXTRA_CLASS_SPECS:
+        spec = dict(_EXTRA_CLASS_SPECS[api])
+        spec['members'] = dict(spec['members'])
+        return spec
     if module!='transform' or not separator or name not in _CLASS_EXTRA_MEMBERS:
         raise KeyError(api)
     members=_CLASS_BASE_MEMBERS+_CLASS_EXTRA_MEMBERS[name]
@@ -370,6 +611,39 @@ ISOTROPIC_FUNCTIONS = (
 
 
 def native_dtypes(api):
+    if api in ('feature.local_binary_pattern', 'draw.polygon_perimeter', 'draw.rectangle_perimeter', 'filters.try_all_threshold'):
+        return ('uint8',)
+    if api == 'transform.resize_local_mean':
+        return ('uint8', 'uint16')
+    if api in ('restoration.denoise_nl_means', 'restoration.denoise_wavelet', 'restoration.inpaint_biharmonic',
+               'restoration.unwrap_phase', 'restoration.estimate_sigma', 'restoration.richardson_lucy',
+               'registration.phase_cross_correlation',
+               'segmentation.inverse_gaussian_gradient',
+               'segmentation.morphological_chan_vese', 'segmentation.morphological_geodesic_active_contour',
+               'registration.optical_flow_ilk', 'registration.optical_flow_tvl1'):
+        return ('float32', 'float64')
+    if api in ('data.checkerboard', 'data.file_hash', 'data.shepp_logan_phantom',
+               'feature.corner_subpix', 'feature.fisher_vector', 'feature.learn_gmm', 'feature.plot_matched_features',
+               'future.fit_segmenter', 'future.manual_lasso_segmentation', 'future.manual_polygon_segmentation', 'future.predict_segmenter',
+               'graph.route_through_array', 'graph.shortest_path', 'graph.pixel_graph',
+               'graph.rag_mean_color', 'graph.rag_boundary', 'graph.central_pixel', 'graph.cut_threshold', 'graph.cut_normalized', 'graph.merge_hierarchical', 'graph.show_rag',
+               'io.concatenate_images', 'io.imread', 'io.imread_collection', 'io.imread_collection_wrapper', 'io.imsave', 'io.load_sift', 'io.load_surf', 'io.pop', 'io.push',
+               'measure.marching_cubes', 'measure.ransac', 'morphology.remove_objects_by_distance',
+               'segmentation.active_contour', 'transform.estimate_transform', 'transform.radon', 'transform.iradon', 'transform.iradon_sart', 'transform.warp_coords',
+               'util.lookfor'):
+        if api == 'morphology.remove_objects_by_distance':
+            return ('uint8', 'int32')
+        return ('float64',)
+    if api in ('feature.graycomatrix', 'feature.corner_orientations', 'feature.multiblock_lbp'):
+        return ('uint8',)
+    if api in ('feature.graycoprops', 'feature.daisy', 'feature.hog', 'feature.match_template', 'feature.multiscale_basic_features',
+               'feature.canny', 'feature.peak_local_max', 'feature.corner_peaks', 'feature.corner_fast',
+               'feature.blob_dog', 'feature.blob_log', 'feature.blob_doh',
+               'restoration.wiener', 'restoration.unsupervised_wiener',
+               'restoration.denoise_invariant', 'restoration.calibrate_denoiser', 'restoration.cycle_spin',
+               'segmentation.slic', 'segmentation.watershed', 'segmentation.felzenszwalb', 'segmentation.quickshift', 'segmentation.random_walker', 'segmentation.chan_vese',
+               'transform.warp', 'transform.rotate', 'transform.swirl', 'transform.warp_polar', 'util.apply_parallel'):
+        return ('uint8', 'float64')
     if api == 'feature.match_descriptors':
         return ('bool',)
     if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, 'transform.hough_circle',
@@ -464,7 +738,7 @@ def execution_kind(api):
 
 def needs_color_input(api):
     """Default parity/benchmark sample layout, reviewed alongside the registry."""
-    return api.startswith('color.') and api not in ('color.label2rgb','color.gray2rgb','color.gray2rgba','color.xyz_tristimulus_values')
+    return (api.startswith('color.') and api not in ('color.label2rgb','color.gray2rgb','color.gray2rgba','color.xyz_tristimulus_values')) or api in ('segmentation.felzenszwalb', 'segmentation.quickshift', 'segmentation.slic')
 
 
 def flood_fill_contract():
@@ -474,7 +748,251 @@ def flood_fill_contract():
         gaps='Bool tolerance source-limit frontier, non-POD/protocol/extended types, Windows-original/fullFP/genuine/performance remain pending')
 
 
+def _final477_default_call(api, image):
+    import numpy as np
+    from pathlib import Path
+    if api in ('data.checkerboard', 'data.shepp_logan_phantom'):
+        return (), {}
+    if api == 'data.file_hash':
+        return (str(Path(__file__).resolve()),), {}
+    if api == 'draw.polygon_perimeter':
+        return ([1, 1, max(2, image.shape[0] - 2)], [1, max(2, image.shape[1] - 2), 2]), {'shape': image.shape, 'clip': True}
+    if api == 'draw.rectangle_perimeter':
+        return ((1, 1),), {'extent': (max(1, image.shape[0] - 2), max(1, image.shape[1] - 2)), 'shape': image.shape}
+    if api == 'feature.corner_fast':
+        return (image,), {'n': 9, 'threshold': 0.08 if image.dtype.kind == 'f' else 10.0}
+    if api == 'feature.corner_orientations':
+        corners = np.array([[min(3, image.shape[0] - 1), min(3, image.shape[1] - 1)]], dtype=np.intp)
+        return (image, corners, np.ones((3, 3), dtype=bool)), {}
+    if api == 'feature.graycomatrix':
+        return (image, [1], [0.0]), {'levels': 256}
+    if api == 'feature.graycoprops':
+        glcm = np.ones((4, 4, 1, 1), dtype=np.float64)
+        return (glcm, 'contrast'), {}
+    if api == 'feature.canny':
+        return (image,), {'sigma': 1.0}
+    if api in ('feature.peak_local_max', 'feature.corner_peaks'):
+        return (image,), {'min_distance': 2}
+    if api == 'feature.corner_subpix':
+        corners = np.array([[image.shape[0] // 2, image.shape[1] // 2]], dtype=np.intp)
+        return (image, corners), {'window_size': 5}
+    if api == 'feature.blob_dog':
+        return (image,), {'max_sigma': 4.0}
+    if api == 'feature.blob_log':
+        return (image,), {'max_sigma': 4.0, 'num_sigma': 3}
+    if api == 'feature.blob_doh':
+        return (image,), {'max_sigma': 2.0, 'num_sigma': 3, 'threshold': 0.05}
+    if api == 'feature.hog':
+        return (image,), {'pixels_per_cell': (4, 4), 'cells_per_block': (2, 2)}
+    if api == 'feature.daisy':
+        return (image,), {'step': 4, 'radius': 4, 'rings': 2, 'histograms': 4, 'orientations': 4}
+    if api == 'feature.local_binary_pattern':
+        return (image, 8, 1), {}
+    if api == 'feature.multiblock_lbp':
+        return (image.astype(np.uint64, copy=False), 1, 1, 2, 2), {}
+    if api == 'feature.match_template':
+        return (image, image[:min(3, image.shape[0]), :min(3, image.shape[1])].copy()), {}
+    if api == 'feature.multiscale_basic_features':
+        return (image,), {'sigma_min': 0.5, 'sigma_max': 2.0, 'num_sigma': 2}
+    if api == 'feature.plot_matched_features':
+        class _DummyAx:
+            def __init__(self):
+                self.calls = []
+            def scatter(self, *a, **k): self.calls.append(('scatter', len(a), sorted(k.keys())))
+            def imshow(self, *a, **k): self.calls.append(('imshow', a[0].shape))
+            def axis(self, *a, **k): self.calls.append(('axis', a))
+            def plot(self, *a, **k): self.calls.append(('plot', len(a)))
+        pts = np.array([[1, 2], [3, 4]], dtype=np.intp)
+        return (image, image), {'keypoints0': pts, 'keypoints1': pts, 'matches': np.array([[0, 0], [1, 1]]), 'ax': _DummyAx()}
+    if api in ('feature.fisher_vector', 'feature.learn_gmm'):
+        rng = np.random.default_rng(7)
+        desc = rng.normal(size=(24, 4))
+        if api == 'feature.learn_gmm':
+            return (desc,), {'n_modes': 2, 'gm_args': {'covariance_type': 'diag', 'random_state': 0}}
+        try:
+            from sklearn.mixture import GaussianMixture
+            gmm = GaussianMixture(n_components=2, covariance_type='diag', random_state=0).fit(desc)
+        except ImportError:
+            gmm = None
+        return (desc, gmm), {}
+    if api == 'filters.try_all_threshold':
+        return (image,), {'figsize': (6, 4), 'verbose': False}
+    if api in ('future.manual_polygon_segmentation', 'future.manual_lasso_segmentation'):
+        return (image,), {}
+    if api in ('future.fit_segmenter', 'future.predict_segmenter'):
+        class _RecClf:
+            def __init__(self): self.data = None; self.labels = None
+            def fit(self, X, y): self.data = X; self.labels = y
+            def predict(self, X): return (X[:, 0] > 0.5).astype(np.int64)
+        feats = np.arange(image.size * 2, dtype=np.float64).reshape(*image.shape[:2], 2)
+        if api == 'future.fit_segmenter':
+            labels = np.ones(image.shape[:2], dtype=np.int32)
+            return (labels, feats, _RecClf()), {}
+        clf = _RecClf()
+        return (feats, clf), {}
+    if api.startswith('graph.'):
+        h, w = image.shape[:2]
+        costs = np.ones((h, w), dtype=np.float64) + 0.1 * np.asarray(image, dtype=np.float64)
+        rgb_costs = np.stack((costs, costs, costs), axis=-1)
+        labels = np.zeros((h, w), dtype=np.int32)
+        labels[:h // 2, :] = 1
+        labels[h // 2:, w // 2:] = 2
+        if api == 'graph.route_through_array':
+            return (costs, (0, 0), (h - 1, w - 1)), {}
+        if api in ('graph.shortest_path', 'graph.pixel_graph'):
+            return (costs,), {}
+        from . import graph as gmod
+        rag = gmod.rag_mean_color(rgb_costs, labels)
+        if api == 'graph.rag_mean_color':
+            return (rgb_costs, labels), {}
+        if api == 'graph.rag_boundary':
+            return (labels, costs), {}
+        if api == 'graph.central_pixel':
+            from scipy import sparse
+            matrix = np.zeros((15, 15), dtype=np.float32)
+            for i in range(14):
+                matrix[i, i + 1] = 1
+            return (sparse.csr_array(matrix),), {'nodes': np.arange(15), 'shape': (3, 5)}
+        if api == 'graph.cut_threshold':
+            return (labels, rag, 0.5), {'in_place': False}
+        if api == 'graph.cut_normalized':
+            return (labels, rag), {'in_place': False, 'rng': 739}
+        if api == 'graph.merge_hierarchical':
+            return (labels, rag, 0.5, True, False, lambda g, s, d: {}, lambda g, s, d, n: {'weight': g[s][n].get('weight', 1.0)}), {}
+        if api == 'graph.show_rag':
+            return (labels, rag, rgb_costs), {}
+    if api.startswith('io.'):
+        import skimage
+        cam = str(Path(skimage.__file__).resolve().parent / 'data' / 'camera.png')
+        if api == 'io.concatenate_images':
+            return ([image, image[::-1].copy()],), {}
+        if api == 'io.imread':
+            return (cam,), {}
+        if api == 'io.imread_collection':
+            return ([cam],), {}
+        if api == 'io.imread_collection_wrapper':
+            from . import io as iomod
+            return (iomod.imread,), {}
+        if api == 'io.push':
+            return (image,), {}
+        if api == 'io.pop':
+            return (), {}
+        if api == 'io.imsave':
+            return ('_unused.png', np.zeros((4, 4), dtype=np.uint8)), {}
+        if api in ('io.load_sift', 'io.load_surf'):
+            return ('_unused.key',), {}
+    if api == 'measure.marching_cubes':
+        zz, yy, xx_g = np.mgrid[:8, :8, :8]
+        vol = (xx_g - 3.5) ** 2 + (yy - 3.5) ** 2 + (zz - 3.5) ** 2
+        return (vol, 5.0), {}
+    if api == 'measure.ransac':
+        from .measure import LineModelND
+        pts = np.column_stack([np.arange(12, dtype=np.float64), 2.0 * np.arange(12, dtype=np.float64) + 1.0])
+        return (pts, LineModelND, 2, 0.5), {'rng': 739, 'max_trials': 20}
+    if api == 'morphology.remove_objects_by_distance':
+        labels = np.zeros(image.shape[:2], dtype=image.dtype)
+        labels[1, 1] = 1
+        labels[image.shape[0] - 2, image.shape[1] - 2] = 2
+        return (labels, 2), {}
+    if api == 'registration.phase_cross_correlation':
+        return (image, image), {}
+    if api in ('registration.optical_flow_ilk', 'registration.optical_flow_tvl1'):
+        opts = {'num_warp': 2} if api.endswith('ilk') else {'num_warp': 2, 'num_iter': 3}
+        return (image, image), opts
+    if api.startswith('restoration.'):
+        from .restoration import denoise_tv_chambolle
+        if api == 'restoration.denoise_nl_means':
+            return (image,), {'patch_size': 3, 'patch_distance': 3}
+        if api == 'restoration.denoise_wavelet':
+            return (image,), {'wavelet': 'haar', 'wavelet_levels': 1}
+        if api == 'restoration.estimate_sigma':
+            return (image,), {}
+        if api == 'restoration.inpaint_biharmonic':
+            mask = np.zeros(image.shape[:2], dtype=bool)
+            mask[image.shape[0] // 2, image.shape[1] // 2] = True
+            return (image, mask), {}
+        if api == 'restoration.unwrap_phase':
+            return (image,), {}
+        if api == 'restoration.richardson_lucy':
+            return (image.astype(np.float64, copy=False), np.ones((3, 3), dtype=np.float64) / 9.0), {'num_iter': 3}
+        if api == 'restoration.wiener':
+            return (image, np.ones((3, 3), dtype=np.float64) / 9.0, 0.1), {}
+        if api == 'restoration.unsupervised_wiener':
+            return (image, np.ones((3, 3), dtype=np.float64) / 9.0), {'rng': 739}
+        if api == 'restoration.denoise_invariant':
+            return (image, denoise_tv_chambolle), {'stride': 2, 'denoiser_kwargs': {'weight': 0.1}}
+        if api == 'restoration.calibrate_denoiser':
+            return (image, denoise_tv_chambolle, {'weight': [0.1, 0.2]}), {'stride': 2}
+        if api == 'restoration.cycle_spin':
+            return (image, denoise_tv_chambolle, 1), {'func_kw': {'weight': 0.1}}
+    if api.startswith('segmentation.'):
+        if api == 'segmentation.slic':
+            return (image,), {'n_segments': 6, 'max_num_iter': 3}
+        if api == 'segmentation.watershed':
+            markers = np.zeros(image.shape[:2], dtype=np.int32)
+            markers[1, 1] = 1
+            markers[-2, -2] = 2
+            return (image, markers), {}
+        if api == 'segmentation.felzenszwalb':
+            return (image,), {'scale': 10, 'sigma': 0.5, 'min_size': 5}
+        if api == 'segmentation.quickshift':
+            return (image,), {'kernel_size': 3, 'max_dist': 5, 'convert2lab': False}
+        if api == 'segmentation.random_walker':
+            labels = np.zeros(image.shape[:2], dtype=np.int32)
+            labels[0, 0] = 1
+            labels[-1, -1] = 2
+            return (image, labels), {'mode': 'cg_j'}
+        if api == 'segmentation.active_contour':
+            h, w = image.shape[:2]
+            t = np.linspace(0, 2 * np.pi, 16, endpoint=False)
+            snake = np.column_stack([h / 2 + (h / 4) * np.sin(t), w / 2 + (w / 4) * np.cos(t)])
+            return (image, snake), {'max_num_iter': 10}
+        if api == 'segmentation.chan_vese':
+            return (image,), {'max_num_iter': 8}
+        if api == 'segmentation.inverse_gaussian_gradient':
+            return (image,), {}
+        if api in ('segmentation.morphological_chan_vese', 'segmentation.morphological_geodesic_active_contour'):
+            return (image, 4), {}
+    if api == 'transform.resize_local_mean':
+        h, w = image.shape[:2]
+        tiled = np.empty((2 * h, 2 * w), dtype=image.dtype)
+        tiled[:h, :w] = image
+        tiled[:h, w:] = image
+        tiled[h:, :w] = image
+        tiled[h:, w:] = image
+        return (tiled, (h, w)), {}
+    if api == 'transform.warp':
+        return (image, np.eye(3, dtype=np.float64)), {}
+    if api == 'transform.warp_coords':
+        from .transform import AffineTransform
+        return (AffineTransform(), image.shape[:2]), {}
+    if api == 'transform.rotate':
+        return (image, 15.0), {}
+    if api == 'transform.swirl':
+        return (image,), {'radius': 5.0}
+    if api == 'transform.warp_polar':
+        return (image,), {}
+    if api == 'transform.estimate_transform':
+        src = np.array([[0., 0.], [10., 0.], [0., 10.]], dtype=np.float64)
+        dst = np.array([[1., 2.], [11., 3.], [2., 12.]], dtype=np.float64)
+        return ('affine', src, dst), {}
+    if api == 'transform.radon':
+        sq = image[:min(image.shape), :min(image.shape)].copy()
+        return (sq,), {'theta': np.linspace(0., 180., 6, endpoint=False)}
+    if api in ('transform.iradon', 'transform.iradon_sart'):
+        sino = np.ones((min(image.shape), 6), dtype=np.float64)
+        return (sino, np.linspace(0., 180., 6, endpoint=False)), {}
+    if api == 'util.apply_parallel':
+        return (np.negative, image), {'chunks': image.shape}
+    if api == 'util.lookfor':
+        return ('sobel',), {}
+    return None
+
+
 def default_call(api, image):
+    custom = _final477_default_call(api, image)
+    if custom is not None:
+        return custom
     if api in HULL_FUNCTIONS:
         import numpy as np
 
@@ -1361,7 +1879,99 @@ def util_views_default_error(actual,expected):
     return 0.
 
 
+def _final477_assert_parity(api, dtype, actual, expected):
+    import numpy as np
+    if api in ('data.file_hash', 'util.lookfor', 'feature.multiblock_lbp'):
+        assert actual == expected
+        return True
+    if api == 'feature.learn_gmm':
+        assert type(actual) is type(expected)
+        np.testing.assert_allclose(actual.weights_, expected.weights_, rtol=1e-9, atol=1e-12)
+        np.testing.assert_allclose(actual.means_, expected.means_, rtol=1e-9, atol=1e-12)
+        return True
+    if api == 'future.fit_segmenter':
+        np.testing.assert_array_equal(actual.data, expected.data)
+        np.testing.assert_array_equal(actual.labels, expected.labels)
+        return True
+    if api in ('graph.rag_mean_color', 'graph.rag_boundary'):
+        assert set(actual.nodes()) == set(expected.nodes())
+        assert set(actual.edges()) == set(expected.edges())
+        return True
+    if api == 'graph.central_pixel':
+        assert type(actual) is type(expected) is tuple and len(actual) == 2
+        np.testing.assert_allclose(actual[1], expected[1], rtol=1e-12, atol=1e-12)
+        assert actual[0] == expected[0]
+        return True
+    if api == 'graph.route_through_array':
+        assert actual[0] == expected[0]
+        np.testing.assert_allclose(actual[1], expected[1], rtol=1e-12, atol=1e-12)
+        return True
+    if api == 'graph.shortest_path':
+        assert type(actual) is type(expected) is tuple and len(actual) == 2
+        np.testing.assert_allclose(actual[0], expected[0], rtol=1e-12, atol=1e-12)
+        np.testing.assert_array_equal(actual[1], expected[1])
+        return True
+    if api == 'graph.pixel_graph':
+        assert type(actual) is type(expected) is tuple and len(actual) == 2
+        assert actual[0].shape == expected[0].shape
+        np.testing.assert_allclose(actual[0].toarray(), expected[0].toarray(), rtol=1e-12, atol=1e-12)
+        np.testing.assert_array_equal(actual[1], expected[1])
+        return True
+    if api == 'io.imread_collection':
+        assert len(actual) == len(expected)
+        for a, e in zip(actual, expected):
+            np.testing.assert_array_equal(a, e)
+        return True
+    if api == 'measure.marching_cubes':
+        assert type(actual) is type(expected) is tuple and len(actual) == 4
+        for a, e in zip(actual, expected):
+            np.testing.assert_allclose(a, e, rtol=1e-5, atol=1e-5)
+        return True
+    if api == 'measure.ransac':
+        assert type(actual) is type(expected) is tuple and len(actual) == 2
+        np.testing.assert_allclose(actual[0].params, expected[0].params, rtol=1e-10, atol=1e-10)
+        np.testing.assert_array_equal(actual[1], expected[1])
+        return True
+    if api == 'registration.phase_cross_correlation':
+        assert type(actual) is type(expected) is tuple and len(actual) == 3
+        for a, e in zip(actual, expected):
+            np.testing.assert_allclose(a, e, rtol=1e-6, atol=1e-6)
+        return True
+    if api == 'restoration.unsupervised_wiener':
+        assert type(actual) is type(expected) is tuple and len(actual) == 2
+        np.testing.assert_allclose(actual[0], expected[0], rtol=1e-5, atol=1e-5)
+        return True
+    if api == 'restoration.calibrate_denoiser':
+        np.testing.assert_allclose(actual(np.ones((4, 4))), expected(np.ones((4, 4))), rtol=1e-5, atol=1e-5)
+        return True
+    if api == 'transform.estimate_transform':
+        np.testing.assert_allclose(actual.params, expected.params, rtol=1e-10, atol=1e-10)
+        return True
+    if api in ('feature.corner_subpix', 'feature.blob_dog', 'feature.blob_log', 'feature.blob_doh'):
+        np.testing.assert_allclose(actual, expected, rtol=1e-6, atol=1e-6, equal_nan=True)
+        return True
+    if api == 'feature.multiscale_basic_features':
+        single = str(dtype) == 'float32' or np.asarray(expected).dtype == np.float32
+        tol = 1e-5 if single else 1e-12
+        np.testing.assert_allclose(actual, expected, rtol=tol, atol=tol)
+        return True
+    if api in ('feature.peak_local_max', 'feature.corner_peaks', 'feature.corner_fast',
+               'graph.merge_hierarchical', 'morphology.remove_objects_by_distance', 'draw.polygon_perimeter', 'draw.rectangle_perimeter',
+               'graph.cut_threshold', 'segmentation.watershed', 'segmentation.felzenszwalb', 'segmentation.slic',
+               'segmentation.quickshift', 'segmentation.morphological_chan_vese', 'segmentation.morphological_geodesic_active_contour'):
+        if isinstance(expected, tuple):
+            assert type(actual) is type(expected) and len(actual) == len(expected)
+            for a, e in zip(actual, expected):
+                np.testing.assert_array_equal(a, e)
+        else:
+            np.testing.assert_array_equal(actual, expected)
+        return True
+    return False
+
+
 def assert_default_parity(api, dtype, actual, expected, *, image=None):
+    if _final477_assert_parity(api, dtype, actual, expected):
+        return
     if api in (*THINNING_FUNCTIONS, *HULL_FUNCTIONS, *HOUGH_FUNCTIONS, *MEDIAL_FUNCTIONS,
                *ISOTROPIC_FUNCTIONS, 'feature.match_descriptors', 'feature.corner_moravec',
                'measure.regionprops_table', 'restoration.denoise_bilateral'):
@@ -1688,6 +2298,17 @@ def parity_tolerance(api, dtype, image=None, expected=None):
         raise ValueError('Shannon entropy uses its reference-specific bound; call assert_default_parity')
     if api in COORDS_MOMENTS_FUNCTIONS or api in MOMENTS_FUNCTIONS or api in DERIVED_MOMENTS_FUNCTIONS or api == 'measure.inertia_tensor' or api == 'measure.inertia_tensor_eigvals':
         raise ValueError('Moments use cell-specific bounds; call assert_default_parity')
+    if api in ('feature.match_template', 'feature.hog', 'feature.daisy', 'feature.corner_orientations',
+               'registration.optical_flow_ilk', 'registration.optical_flow_tvl1',
+               'restoration.denoise_nl_means', 'restoration.denoise_wavelet', 'restoration.inpaint_biharmonic',
+               'restoration.unwrap_phase', 'restoration.richardson_lucy', 'restoration.wiener',
+               'restoration.denoise_invariant', 'restoration.cycle_spin', 'restoration.estimate_sigma',
+               'segmentation.active_contour', 'segmentation.chan_vese', 'segmentation.inverse_gaussian_gradient',
+               'segmentation.random_walker', 'transform.radon', 'transform.iradon', 'transform.iradon_sart',
+               'transform.warp', 'transform.rotate', 'transform.swirl', 'transform.warp_polar',
+               'transform.resize_local_mean'):
+        single = str(dtype) == 'float32'
+        return (2e-4, 2e-4) if single else (1e-8, 1e-8)
     if api == 'filters.window':
         if expected is None:
             raise ValueError('Window tolerance requires the actual reference output')

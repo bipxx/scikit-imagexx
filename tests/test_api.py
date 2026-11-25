@@ -1,4 +1,5 @@
 """Public interchangeability, native dispatch, and per-function reference tests."""
+import importlib.util
 import inspect
 import sys
 import numpy as np
@@ -18,6 +19,7 @@ from skimage import feature as reference_feature
 from skimage import metrics as reference_metrics, measure as reference_measure
 from skimage import segmentation as reference_segmentation
 from skimage import restoration as reference_restoration
+from skimage import future as reference_future, graph as reference_graph, io as reference_io, registration as reference_registration
 from skimage.filters import rank as reference_rank
 from skimage.filters.rank import generic as reference_rank_generic
 from skimage.filters.rank import bilateral as reference_rank_bilateral
@@ -30,6 +32,7 @@ MODULES = [(xx.filters, reference_filters), (xx.color, reference_color), (xx.uti
            (xx.feature,reference_feature), (xx.metrics,reference_metrics), (xx.measure,reference_measure),
            (xx.segmentation,reference_segmentation), (xx.restoration,reference_restoration),
            (xx.draw,reference_draw),
+           (xx.future, reference_future), (xx.graph, reference_graph), (xx.io, reference_io), (xx.registration, reference_registration),
            (native_rank,reference_rank),(native_rank_generic,reference_rank_generic),
            (native_rank_bilateral,reference_rank_bilateral)]
 FUNCTIONS = [(native, original, name) for native, original in MODULES for name in native.__all__
@@ -39,7 +42,8 @@ FUNCTIONS = [(native, original, name) for native, original in MODULES for name i
 FUNCTIONS += [(native_rank_generic, reference_rank_generic, name)
               for name in ('sum', 'windowed_histogram', 'majority') if name not in native_rank_generic.__all__]
 # Data resource accessors have separate packaged-asset tests.
-FUNCTIONS.append((xx.data, reference_data, "binary_blobs"))
+for _dname in ('binary_blobs', 'checkerboard', 'file_hash', 'shepp_logan_phantom'):
+    FUNCTIONS.append((xx.data, reference_data, _dname))
 CLASSES = [(native,original,name) for native,original in MODULES for name in native.__all__
            if inspect.isclass(getattr(native,name))]
 
@@ -68,6 +72,37 @@ _OWNED_ARRAY_ENTRIES = {
 # The original Bregman Cython helper has unchecked halo reads for small axes.
 # Use separately reviewed geometry for Bregman and max-tree APIs; their contracts retain
 # unsafe geometry as explicitly blocked intake metadata, never original calls.
+
+_FINAL477_APIS = frozenset({
+    'data.checkerboard', 'data.file_hash', 'data.shepp_logan_phantom',
+    'draw.polygon_perimeter', 'draw.rectangle_perimeter',
+    'feature.corner_fast', 'feature.corner_orientations', 'feature.graycomatrix', 'feature.graycoprops',
+    'feature.canny', 'feature.peak_local_max', 'feature.corner_peaks', 'feature.corner_subpix',
+    'feature.blob_dog', 'feature.blob_log', 'feature.blob_doh',
+    'feature.hog', 'feature.daisy', 'feature.local_binary_pattern', 'feature.multiblock_lbp',
+    'feature.match_template', 'feature.multiscale_basic_features', 'feature.plot_matched_features',
+    'feature.fisher_vector', 'feature.learn_gmm',
+    'filters.try_all_threshold',
+    'future.fit_segmenter', 'future.manual_lasso_segmentation', 'future.manual_polygon_segmentation', 'future.predict_segmenter',
+    'graph.central_pixel', 'graph.cut_normalized', 'graph.cut_threshold', 'graph.merge_hierarchical',
+    'graph.pixel_graph', 'graph.rag_boundary', 'graph.rag_mean_color', 'graph.route_through_array', 'graph.shortest_path', 'graph.show_rag',
+    'io.concatenate_images', 'io.imread', 'io.imread_collection', 'io.imread_collection_wrapper',
+    'io.imsave', 'io.load_sift', 'io.load_surf', 'io.pop', 'io.push',
+    'measure.marching_cubes', 'measure.ransac',
+    'morphology.remove_objects_by_distance',
+    'registration.optical_flow_ilk', 'registration.optical_flow_tvl1', 'registration.phase_cross_correlation',
+    'restoration.denoise_nl_means', 'restoration.denoise_wavelet', 'restoration.estimate_sigma',
+    'restoration.inpaint_biharmonic', 'restoration.unwrap_phase', 'restoration.richardson_lucy',
+    'restoration.wiener', 'restoration.unsupervised_wiener', 'restoration.denoise_invariant',
+    'restoration.calibrate_denoiser', 'restoration.cycle_spin',
+    'segmentation.slic', 'segmentation.watershed', 'segmentation.felzenszwalb', 'segmentation.quickshift',
+    'segmentation.random_walker', 'segmentation.active_contour', 'segmentation.chan_vese',
+    'segmentation.inverse_gaussian_gradient', 'segmentation.morphological_chan_vese', 'segmentation.morphological_geodesic_active_contour',
+    'transform.resize_local_mean', 'transform.warp', 'transform.warp_coords', 'transform.rotate', 'transform.swirl',
+    'transform.warp_polar', 'transform.estimate_transform', 'transform.radon', 'transform.iradon', 'transform.iradon_sart',
+    'util.apply_parallel', 'util.lookfor',
+})
+
 VALUE_CASES = [
     (native, original, name, dtype, shape)
     for native, original, name in FUNCTIONS
@@ -89,6 +124,8 @@ VALUE_CASES = [
                   if (native is xx.util and name == 'random_noise') or (native is xx.draw and name == 'random_shapes')
                   else tuple(np.dtype(dtype).type for dtype in native_dtypes(native.__name__.split('.', 1)[1] + '.' + name))
                   if native.__name__.split('.', 1)[1] + '.' + name in _OWNED_ARRAY_ENTRIES
+                  else tuple(np.dtype(dtype).type for dtype in native_dtypes(native.__name__.split('.', 1)[1] + '.' + name))
+                  if native.__name__.split('.', 1)[1] + '.' + name in _FINAL477_APIS
                   else (np.float32, np.float64) if native is xx.metrics and name == 'structural_similarity'
                   else (np.uint8, np.float32, np.float64))
     for shape in (((2, 2), (7, 19), (519, 521))
@@ -108,6 +145,8 @@ VALUE_CASES = [
                   if native is xx.transform and name == 'hough_ellipse'
                   else ((13, 17), (31, 49), (127, 129))
                   if native.__name__.split('.', 1)[1] + '.' + name in _OWNED_ARRAY_ENTRIES
+                  else ((13, 17), (31, 49))
+                  if native.__name__.split('.', 1)[1] + '.' + name in _FINAL477_APIS
                   else ((1, 1), (3, 19), (519, 521)))
 ]
 
@@ -117,8 +156,9 @@ def test_registry_matches_per_function_tests():
     assert tested == set(native_functions())
     tested_classes={module.__name__.split('.',1)[1]+'.'+name for module,_,name in CLASSES}
     assert tested_classes==set(native_classes())
-    assert set(class_metadata_providers())=={'util.FailedEstimationAccessError'}
+    assert set(class_metadata_providers())=={'util.FailedEstimationAccessError', 'util.PendingSkimage2Change'}
     assert inspect.isclass(xx.util.FailedEstimationAccessError)
+    assert inspect.isclass(xx.util.PendingSkimage2Change)
 
 
 @pytest.mark.parametrize('api', PYRAMID_FUNCTIONS)
@@ -596,6 +636,134 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
         actual=set_color_default_result(getattr(native,name),args,options)
         assert_default_parity(api,np.dtype(dtype),actual,expected,image=a)
         return
+    if api in ('feature.plot_matched_features', 'filters.try_all_threshold',
+               'future.manual_polygon_segmentation', 'future.manual_lasso_segmentation', 'graph.show_rag'):
+        if importlib.util.find_spec('matplotlib') is None:
+            if api in ('feature.plot_matched_features', 'graph.show_rag'):
+                # Compare fallback/missing matplotlib ImportError parity
+                with pytest.raises((ImportError, ModuleNotFoundError)):
+                    getattr(original, name)(*args, **options)
+                with pytest.raises((ImportError, ModuleNotFoundError)):
+                    getattr(native, name)(*args, **options)
+                return
+            with pytest.raises(NotImplementedError, match='fallback is disabled'):
+                getattr(native, name)(*args, **options)
+            xx.set_fallback_enabled(True)
+            try:
+                with pytest.warns(xx.FallbackWarning), pytest.raises(ImportError):
+                    getattr(native, name)(*args, **options)
+            finally:
+                xx.set_fallback_enabled(False)
+            return
+    if api in ('feature.fisher_vector', 'feature.learn_gmm'):
+        if importlib.util.find_spec('sklearn') is None:
+            with pytest.raises(NotImplementedError, match='fallback is disabled'):
+                getattr(native, name)(*args, **options)
+            xx.set_fallback_enabled(True)
+            try:
+                with pytest.warns(xx.FallbackWarning), pytest.raises((ImportError, ModuleNotFoundError)):
+                    getattr(native, name)(*args, **options)
+            finally:
+                xx.set_fallback_enabled(False)
+            return
+    if api == 'feature.plot_matched_features':
+        import copy
+        orig_args, orig_opts = args, {**options, 'ax': copy.deepcopy(options['ax'])}
+        assert getattr(original, name)(*orig_args, **orig_opts) is getattr(native, name)(*args, **options) is None
+        assert options['ax'].calls == orig_opts['ax'].calls
+        return
+    if api == 'filters.try_all_threshold':
+        from matplotlib import pyplot as plt
+        expected_fig, expected_axes = getattr(original, name)(*args, **options)
+        actual_fig, actual_axes = getattr(native, name)(*args, **options)
+        try:
+            assert [ax.get_title() for ax in actual_axes] == [ax.get_title() for ax in expected_axes]
+        finally:
+            plt.close(expected_fig)
+            plt.close(actual_fig)
+        return
+    if api in ('future.manual_polygon_segmentation', 'future.manual_lasso_segmentation'):
+        from fixtures.future_filters_gui import selections
+        mode = 'polygon' if 'polygon' in api else 'lasso'
+        verts = [[(1, 1), (8, 1), (8, 6), (1, 6)]]
+        with selections(mode, verts):
+            expected = getattr(original, name)(*args, **options)
+            actual = getattr(native, name)(*args, **options)
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=a)
+        return
+    if api == 'graph.show_rag':
+        from matplotlib import pyplot as plt
+        fig, (ax0, ax1) = plt.subplots(1, 2)
+        try:
+            e_col = getattr(original, name)(*args, ax=ax0, **options)
+            a_col = getattr(native, name)(*args, ax=ax1, **options)
+            np.testing.assert_array_equal(a_col.get_segments(), e_col.get_segments())
+        finally:
+            plt.close(fig)
+        return
+    if api == 'io.imsave':
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmpd:
+            p1 = f'{tmpd}/orig.pgm'
+            p2 = f'{tmpd}/nat.pgm'
+            getattr(original, name)(p1, args[1], check_contrast=False)
+            getattr(native, name)(p2, args[1], check_contrast=False)
+            np.testing.assert_array_equal(reference_io.imread(p2), reference_io.imread(p1))
+        return
+    if api in ('draw.polygon_perimeter', 'draw.rectangle_perimeter') and importlib.util.find_spec('matplotlib') is None:
+        with pytest.raises(ImportError, match='requires "matplotlib'):
+            getattr(original, name)(*args, **options)
+        actual = getattr(native, name)(*args, **options)
+        assert type(actual) is tuple and len(actual) == 2
+        assert all(isinstance(coord, np.ndarray) and coord.dtype == np.dtype(np.intp) and coord.flags.owndata for coord in actual)
+        return
+    if api in ('restoration.denoise_wavelet', 'restoration.estimate_sigma') and importlib.util.find_spec('pywt') is None:
+        with pytest.raises(ImportError, match='PyWavelets'):
+            getattr(original, name)(*args, **options)
+        actual = getattr(native, name)(*args, **options)
+        if api == 'restoration.denoise_wavelet':
+            assert isinstance(actual, np.ndarray) and actual.shape == a.shape and actual.dtype == np.dtype(dtype)
+            assert np.isfinite(actual).all()
+        else:
+            assert isinstance(actual, (float, np.floating)) and np.isfinite(actual)
+        return
+    if api in ('io.load_sift', 'io.load_surf'):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmpd:
+            key = f'{tmpd}/feat.key'
+            with open(key, 'w', encoding='utf-8') as stream:
+                if api == 'io.load_sift':
+                    stream.write('1 2\n1.0 2.0 1.5 0.1 10 20\n')
+                else:
+                    stream.write('3\n1\n-1 .125 2 3 4 5 6 7\n')
+            expected = getattr(original, name)(key)
+            actual = getattr(native, name)(key)
+            assert actual.dtype == expected.dtype
+            for field in expected.dtype.names:
+                np.testing.assert_allclose(actual[field], expected[field])
+        return
+    if api == 'io.imread_collection_wrapper':
+        cam = reference_io.imread.__globals__.get('camera')
+        import skimage
+        from pathlib import Path
+        cam = str(Path(skimage.__file__).resolve().parent / 'data' / 'camera.png')
+        w_orig = getattr(original, name)(reference_io.imread)
+        w_nat = getattr(native, name)(xx.io.imread)
+        assert_default_parity('io.imread_collection', np.dtype(dtype), w_nat([cam]), w_orig([cam]))
+        return
+    if api == 'io.pop':
+        expected_push = reference_io.push(a)
+        expected = reference_io.pop()
+        xx.io.push(a)
+        actual = xx.io.pop()
+        assert expected_push is None
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=a)
+        return
+    if api == 'io.push':
+        assert getattr(native, name)(*args, **options) is None
+        popped = xx.io.pop()
+        np.testing.assert_array_equal(popped, args[0])
+        return
     try:
         expected = getattr(original, name)(*args,**options)
     except (IndexError,ValueError,RuntimeError) as error:
@@ -630,6 +798,9 @@ def test_every_native_function(native, original, name, dtype, shape, monkeypatch
                'metrics.hausdorff_distance', 'metrics.hausdorff_pair', 'draw.ellipsoid_stats',
                'segmentation.expand_labels', *HAAR_FUNCTIONS):
         assert_default_parity(api, np.dtype(dtype), actual, expected)
+        return
+    if api in _FINAL477_APIS:
+        assert_default_parity(api, np.dtype(dtype), actual, expected, image=a)
         return
     if api in (*PYRAMID_GENERATOR_FUNCTIONS, 'measure.find_contours', 'draw.random_shapes', 'util.random_noise'):
         assert_default_parity(api, np.dtype(dtype), actual, expected, image=a)
