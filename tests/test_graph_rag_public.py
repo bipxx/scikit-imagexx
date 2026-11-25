@@ -1,6 +1,9 @@
 """Differential graph contracts for the family wrappers and native binding."""
 
+import importlib.util
 import inspect
+import sys
+from types import ModuleType, SimpleNamespace
 
 import networkx as nx
 import numpy as np
@@ -8,6 +11,7 @@ import pytest
 from numpy.testing import assert_array_equal
 from scipy import sparse
 from skimage import graph as original
+from skimage._shared import version_requirements
 from skimage.graph._rag import min_weight
 
 from skimagexx import FallbackWarning, _graph_rag as native, set_fallback_enabled
@@ -234,25 +238,120 @@ def test_merge_hierarchical(in_place_merge, rag_copy):
     assert_graph(a, b)
 
 
-@pytest.mark.parametrize('img_cmap,border,in_place', [('bone', 'cyan', True), (None, None, False)])
-def test_show_rag(img_cmap, border, in_place):
-    from matplotlib import pyplot as plt
+def stub_matplotlib(monkeypatch):
+    class LineCollection:
+        def __init__(self, segments, *, linewidths, cmap):
+            self.segments = segments
+            self.linewidths = linewidths
+            self.cmap = cmap
+            self.axes = None
 
+        def get_segments(self):
+            return self.segments
+
+        def get_linewidths(self):
+            return self.linewidths
+
+        def set_array(self, weights):
+            self.weights = weights
+
+        def get_array(self):
+            return self.weights
+
+    def to_rgb(color):
+        return {'cyan': (0.0, 1.0, 1.0)}[color]
+
+    def bone(gray):
+        return np.stack((gray / 2, gray, gray, np.ones_like(gray)), axis=-1)
+
+    matplotlib = ModuleType('matplotlib')
+    matplotlib.colors = ModuleType('matplotlib.colors')
+    matplotlib.colors.to_rgb = to_rgb
+    matplotlib.colors.ColorConverter = lambda: SimpleNamespace(to_rgb=to_rgb)
+    matplotlib.pyplot = ModuleType('matplotlib.pyplot')
+    colormaps = {'bone': bone, 'magma': SimpleNamespace(name='magma')}
+    matplotlib.pyplot.get_cmap = colormaps.__getitem__
+    matplotlib.collections = ModuleType('matplotlib.collections')
+    matplotlib.collections.LineCollection = LineCollection
+    for module in (matplotlib, matplotlib.colors, matplotlib.pyplot, matplotlib.collections):
+        monkeypatch.setitem(sys.modules, module.__name__, module)
+
+    is_installed = version_requirements.is_installed
+
+    def is_installed_with_stub(name, version=None):
+        if name == 'matplotlib':
+            return True
+        return is_installed(name, version)
+
+    monkeypatch.setattr(version_requirements, 'is_installed', is_installed_with_stub)
+
+
+class StubAxes:
+    def __init__(self):
+        self.images = []
+        self.collections = []
+
+    def imshow(self, image):
+        self.images.append(SimpleNamespace(get_array=lambda: image))
+
+    def add_collection(self, collection):
+        collection.axes = self
+        self.collections.append(collection)
+
+
+def assert_show_rag(axes, img_cmap, border, in_place):
     labels, image = block_image()
     a, b = (mod.rag_mean_color(image, labels) for mod in (native, original))
+    kwargs = dict(border_color=border, img_cmap=img_cmap, edge_width=3.0, in_place=in_place)
+    left = native.show_rag(labels, a, image, ax=axes[0], **kwargs)
+    right = original.show_rag(labels, b, image, ax=axes[1], **kwargs)
+    assert left.axes is axes[0]
+    assert_array_equal(left.get_segments(), right.get_segments())
+    assert_array_equal(left.get_array(), right.get_array())
+    assert_array_equal(left.get_linewidths(), right.get_linewidths())
+    assert_array_equal(axes[0].images[0].get_array(), axes[1].images[0].get_array())
+    assert_graph(a, b)
+    return left, right
+
+
+@pytest.mark.parametrize('img_cmap,border,in_place', [('bone', 'cyan', True), (None, None, False)])
+def test_show_rag(img_cmap, border, in_place, monkeypatch):
+    try:
+        matplotlib_spec = importlib.util.find_spec('matplotlib')
+    except ModuleNotFoundError as error:
+        # An import finder can actively mask matplotlib.
+        if error.name not in (None, 'matplotlib'):
+            raise
+        matplotlib_spec = None
+
+    if matplotlib_spec is None:
+        stub_matplotlib(monkeypatch)
+        axes = StubAxes(), StubAxes()
+        left, right = assert_show_rag(axes, img_cmap, border, in_place)
+        assert axes[0].collections == [left]
+        assert axes[1].collections == [right]
+        assert left.cmap.name == right.cmap.name == 'magma'
+        return
+
+    from matplotlib import pyplot as plt
+
     figure, axes = plt.subplots(1, 2)
     try:
-        kwargs = dict(border_color=border, img_cmap=img_cmap, edge_width=3.0, in_place=in_place)
-        left = native.show_rag(labels, a, image, ax=axes[0], **kwargs)
-        right = original.show_rag(labels, b, image, ax=axes[1], **kwargs)
-        assert left.axes is axes[0]
-        assert_array_equal(left.get_segments(), right.get_segments())
-        assert_array_equal(left.get_array(), right.get_array())
-        assert_array_equal(left.get_linewidths(), right.get_linewidths())
-        assert_array_equal(axes[0].images[0].get_array(), axes[1].images[0].get_array())
-        assert_graph(a, b)
+        assert_show_rag(axes, img_cmap, border, in_place)
     finally:
         plt.close(figure)
+
+
+@pytest.mark.parametrize('fallback', [False, True])
+def test_show_rag_requires_matplotlib(monkeypatch, fallback):
+    monkeypatch.setitem(sys.modules, 'matplotlib', None)
+    set_fallback_enabled(fallback)
+    labels, image = block_image()
+    requirement = r'requires "matplotlib >=3\.3"'
+    for mod in (native, original):
+        rag = mod.rag_mean_color(image, labels)
+        with pytest.raises(ImportError, match=requirement):
+            mod.show_rag(labels, rag, image)
 
 
 def test_fallback_boundary_and_policy():
