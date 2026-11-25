@@ -55,10 +55,14 @@ def test_multiblock_out_of_bounds():
 
 
 def test_multiblock_keeps_whole_table_cast_warning():
-    image = np.ones((12, 12), dtype=np.float64)
-    image[-1, -1] = 1e100
-    with pytest.warns(FallbackWarning, match="multiblock_lbp"), pytest.warns(RuntimeWarning, match="overflow"):
-        assert feature.multiblock_lbp(image, 0, 0, 2, 2) == 255
+    previous = set_fallback_enabled(True)
+    try:
+        image = np.ones((12, 12), dtype=np.float64)
+        image[-1, -1] = 1e100
+        with pytest.warns(FallbackWarning, match="multiblock_lbp"), pytest.warns(RuntimeWarning, match="overflow"):
+            assert feature.multiblock_lbp(image, 0, 0, 2, 2) == 255
+    finally:
+        set_fallback_enabled(previous)
 
 
 @pytest.mark.parametrize("norm", ("L1", "L1-sqrt", "L2", "L2-Hys"))
@@ -165,12 +169,16 @@ def test_match_template_positive_float32(strict):
 
 
 def test_match_template_high_offset_delegates():
-    rng = np.random.default_rng(228)
-    image = rng.random((37, 42), dtype=np.float32) + 100
-    patch = image[8:12, 9:14].copy()
-    with pytest.warns(FallbackWarning, match="match_template"):
-        actual = feature.match_template(image, patch)
-    np.testing.assert_array_equal(actual, original.match_template(image, patch))
+    previous = set_fallback_enabled(True)
+    try:
+        rng = np.random.default_rng(228)
+        image = rng.random((37, 42), dtype=np.float32) + 100
+        patch = image[8:12, 9:14].copy()
+        with pytest.warns(FallbackWarning, match="match_template"):
+            actual = feature.match_template(image, patch)
+        np.testing.assert_array_equal(actual, original.match_template(image, patch))
+    finally:
+        set_fallback_enabled(previous)
 
 
 @pytest.mark.parametrize("name", ("daisy", "match_template", "multiscale_basic_features"))
@@ -241,8 +249,12 @@ def test_fallback_routing(name, kind):
     else:
         image = image[:, ::2]
     args, kwargs = _routing_case(name, image)
-    with pytest.warns(FallbackWarning, match=name):
-        actual = getattr(feature, name)(*args, **kwargs)
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning, match=name):
+            actual = getattr(feature, name)(*args, **kwargs)
+    finally:
+        set_fallback_enabled(previous)
     expected = getattr(original, name)(*args, **kwargs)
     np.testing.assert_array_equal(actual, expected)
 
@@ -274,7 +286,11 @@ def test_native_entry_and_dtype_alias(strict, monkeypatch, name, symbol):
 
 
 def test_long_double_uses_fallback():
-    image = np.random.default_rng(231).random((38, 44)).astype(np.longdouble)
-    with pytest.warns(FallbackWarning, match="hog"):
-        value = feature.hog(image)
-    np.testing.assert_array_equal(value, original.hog(image))
+    previous = set_fallback_enabled(True)
+    try:
+        image = np.random.default_rng(231).random((38, 44)).astype(np.longdouble)
+        with pytest.warns(FallbackWarning, match="hog"):
+            value = feature.hog(image)
+        np.testing.assert_array_equal(value, original.hog(image))
+    finally:
+        set_fallback_enabled(previous)

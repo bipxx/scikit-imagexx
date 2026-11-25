@@ -71,8 +71,12 @@ def test_precision_and_metadata_fallback(dtype, monkeypatch):
     points = rng.normal(size=(16, 2)).astype(dtype)
     params = rng.normal(size=(2, 6))
     monkeypatch.setattr(original, "PolynomialTransform", Native)
-    with pytest.warns(FallbackWarning):
-        result = Native(params)(points)
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning):
+            result = Native(params)(points)
+    finally:
+        set_fallback_enabled(previous)
     baseline = Original(params)(points)
     assert result.dtype.metadata == baseline.dtype.metadata
     np.testing.assert_array_equal(result, baseline)

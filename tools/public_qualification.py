@@ -3039,6 +3039,7 @@ def child(out, group):
     if group == 'public-post203':
         if state['profile']!='windows':
             os.environ.update(util_views_fenv_environment(out,state))
+            os.environ['SKIMAGEXX_REFERENCE_PROFILE'] = 'minimum' if state['profile'] == 'minimum' else 'modern'
         os.environ['SKIMAGEXX_REGIONPROPS_ROWS_DIR'] = str(out / (mode + '-regionprops-state-rows'))
         os.environ['SKIMAGEXX_POINT_ROWS_DIR'] = str(out / (mode + '-regionprops-point-rows'))
         os.environ['SKIMAGEXX_REGION_PUBLIC_MUTATION_ROWS_DIR'] = str(out / (mode + '-regionprops-public-mutation-rows'))

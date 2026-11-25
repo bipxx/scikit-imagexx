@@ -97,7 +97,11 @@ def test_thin_plate_spline_validation_and_singular_fallback():
         cls.from_estimate(src, dst[:3])
     with pytest.raises(ValueError, match='Input `coords` must have shape'):
         cls.from_estimate(src, dst)([1, 2])
-    with pytest.warns(FallbackWarning):
-        failure = cls.from_estimate(np.zeros_like(src), dst)
+    before = xx.set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning):
+            failure = cls.from_estimate(np.zeros_like(src), dst)
+    finally:
+        xx.set_fallback_enabled(before)
     original = stock.ThinPlateSplineTransform.from_estimate(np.zeros_like(src), dst)
     assert not failure and str(failure) == str(original)

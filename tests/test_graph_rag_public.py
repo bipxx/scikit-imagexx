@@ -140,14 +140,24 @@ def test_rag_boundary_sparse_duplicate_reduction(dtype, shape, connectivity):
 def test_boundary_limit_matches_reference():
     labels = np.array([[0, 255]], dtype=np.uint8)
     edge_map = np.ones(labels.shape)
-    set_fallback_enabled(True)
-    with pytest.warns(RuntimeWarning, match='overflow'):
-        with pytest.raises(ValueError):
-            original.rag_boundary(labels, edge_map)
-    with pytest.warns(FallbackWarning):
-        with pytest.warns(RuntimeWarning, match='overflow'):
-            with pytest.raises(ValueError):
-                native.rag_boundary(labels, edge_map)
+    previous = set_fallback_enabled(True)
+    try:
+        try:
+            expected = original.rag_boundary(labels, edge_map)
+        except ValueError:
+            with pytest.warns(RuntimeWarning, match='overflow'):
+                with pytest.raises(ValueError):
+                    original.rag_boundary(labels, edge_map)
+            with pytest.warns(FallbackWarning):
+                with pytest.warns(RuntimeWarning, match='overflow'):
+                    with pytest.raises(ValueError):
+                        native.rag_boundary(labels, edge_map)
+        else:
+            with pytest.warns(FallbackWarning):
+                actual = native.rag_boundary(labels, edge_map)
+            assert_graph(actual, expected)
+    finally:
+        set_fallback_enabled(previous)
 
 
 @pytest.mark.parametrize('constructor', [sparse.csr_array, sparse.csr_matrix])

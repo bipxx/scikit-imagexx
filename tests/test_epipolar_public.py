@@ -79,6 +79,14 @@ def test_fit_and_deprecated_estimate(name, count, scaling):
 
 @pytest.mark.parametrize("name", NAMES)
 def test_outside_domain_metadata_and_failed_fit(name, monkeypatch):
+    previous = set_fallback_enabled(True)
+    try:
+        return _test_outside_domain_metadata_and_failed_fit_impl(name, monkeypatch)
+    finally:
+        set_fallback_enabled(previous)
+
+
+def _test_outside_domain_metadata_and_failed_fit_impl(name, monkeypatch):
     rng = np.random.default_rng(801)
     matrix = rng.normal(size=(3, 3))
     points = rng.normal(size=(12, 2)).view(np.dtype("d", metadata={"coordinates": "xy"}))

@@ -52,18 +52,22 @@ def test_fallback_routes(variant):
         image = image.view(ArraySubclass)
     else:
         image = image.astype(np.longdouble)
+    previous = set_fallback_enabled(True)
     try:
-        expected = original(image)
-    except ValueError as error:
-        assert variant == 'longdouble'
-        with pytest.warns(FallbackWarning, match='skimage.segmentation.felzenszwalb'):
-            with pytest.raises(ValueError) as caught:
-                segmentation.felzenszwalb(image)
-        assert str(caught.value) == str(error)
-    else:
-        with pytest.warns(FallbackWarning, match='skimage.segmentation.felzenszwalb'):
-            result = segmentation.felzenszwalb(image)
-        np.testing.assert_array_equal(result, expected)
+        try:
+            expected = original(image)
+        except ValueError as error:
+            assert variant == 'longdouble'
+            with pytest.warns(FallbackWarning, match='skimage.segmentation.felzenszwalb'):
+                with pytest.raises(ValueError) as caught:
+                    segmentation.felzenszwalb(image)
+            assert str(caught.value) == str(error)
+        else:
+            with pytest.warns(FallbackWarning, match='skimage.segmentation.felzenszwalb'):
+                result = segmentation.felzenszwalb(image)
+            np.testing.assert_array_equal(result, expected)
+    finally:
+        set_fallback_enabled(previous)
 
 
 def test_native_descriptor_and_storage_guard():

@@ -97,11 +97,15 @@ def test_piecewise_affine_identity_and_explicit_fallback():
     original = stock.PiecewiseAffineTransform.from_estimate(src, dst)
     model.affines[0].params[0, 2] += 3
     original.affines[0].params[0, 2] += 3
-    with pytest.warns(FallbackWarning):
-        np.testing.assert_allclose(model(src), original(src), atol=1e-12)
+    previous = xx.set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning):
+            np.testing.assert_allclose(model(src), original(src), atol=1e-12)
 
-    src3 = np.vstack([np.eye(3), np.zeros(3)])
-    with pytest.warns(FallbackWarning):
-        model3 = cls.from_estimate(src3, src3 + 1)
-    with pytest.warns(FallbackWarning):
-        np.testing.assert_allclose(model3(src3), src3 + 1, atol=1e-12)
+        src3 = np.vstack([np.eye(3), np.zeros(3)])
+        with pytest.warns(FallbackWarning):
+            model3 = cls.from_estimate(src3, src3 + 1)
+        with pytest.warns(FallbackWarning):
+            np.testing.assert_allclose(model3(src3), src3 + 1, atol=1e-12)
+    finally:
+        xx.set_fallback_enabled(previous)

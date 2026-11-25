@@ -63,8 +63,12 @@ def test_default_level_dtypes(dtype, strict):
 def test_metadata_boundary():
     volume = np.zeros((4, 4, 4), dtype=np.dtype('f4', metadata={'unit': 'voxel'}))
     volume[1:3, 1:3, 1:3] = 1
-    with pytest.warns(FallbackWarning):
-        assert_mesh(marching_cubes(volume), reference(volume))
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning):
+            assert_mesh(marching_cubes(volume), reference(volume))
+    finally:
+        set_fallback_enabled(previous)
 
 
 @pytest.mark.parametrize('options', [

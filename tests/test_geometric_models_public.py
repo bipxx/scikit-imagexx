@@ -88,26 +88,30 @@ def test_dtype_metadata_and_legacy(name, parameters):
     family = getattr(measure, name)
     data = reference(*parameters).predict_xy(np.arange(10, dtype=np.float32))
     marked = data.view(np.dtype(data.dtype, metadata={'unit': 'xy'}))
+    previous = set_fallback_enabled(True)
     try:
-        upstream = reference.from_estimate(marked)
-    except TypeError as error:
-        assert name == 'EllipseModel'
-        with pytest.warns(FallbackWarning), pytest.raises(TypeError) as native_error:
-            family.from_estimate(marked)
-        assert str(native_error.value) == str(error)
-    else:
+        try:
+            upstream = reference.from_estimate(marked)
+        except TypeError as error:
+            assert name == 'EllipseModel'
+            with pytest.warns(FallbackWarning), pytest.raises(TypeError) as native_error:
+                family.from_estimate(marked)
+            assert str(native_error.value) == str(error)
+        else:
+            with pytest.warns(FallbackWarning):
+                fitted = family.from_estimate(marked)
+            assert_allclose(fitted.center, upstream.center)
         with pytest.warns(FallbackWarning):
-            fitted = family.from_estimate(marked)
-        assert_allclose(fitted.center, upstream.center)
-    with pytest.warns(FallbackWarning):
-        failed = family.from_estimate(np.zeros((6, 2)))
-    assert not failed and type(failed) is type(reference.from_estimate(np.zeros((6, 2))))
-    with catch_warnings(record=True) as warnings:
-        simplefilter('always')
-        legacy = family()
-        with pytest.raises(ValueError, match='params'):
-            legacy.predict_xy(0.)
-    assert any(issubclass(item.category, FutureWarning) for item in warnings)
+            failed = family.from_estimate(np.zeros((6, 2)))
+        assert not failed and type(failed) is type(reference.from_estimate(np.zeros((6, 2))))
+        with catch_warnings(record=True) as warnings:
+            simplefilter('always')
+            legacy = family()
+            with pytest.raises(ValueError, match='params'):
+                legacy.predict_xy(0.)
+        assert any(issubclass(item.category, FutureWarning) for item in warnings)
+    finally:
+        set_fallback_enabled(previous)
 
 
 class OffsetModel:

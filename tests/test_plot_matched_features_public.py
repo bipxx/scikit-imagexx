@@ -104,12 +104,17 @@ def _check_matched_feature_artists(axes_pair, alignment, only_matches, matches_c
 
 
 def test_tagged_image_uses_compatibility_dispatch(axes_pair):
+    from skimagexx import set_fallback_enabled
     image = np.ones((5, 5), dtype=np.dtype(np.float32, metadata={"test": True}))
     points = np.array([[1, 2]])
     kwargs = dict(keypoints0=points, keypoints1=points, matches=np.array([[0, 0]]))
     a, b = axes_pair
-    with pytest.warns(FallbackWarning, match="plot_matched_features"):
-        assert feature.plot_matched_features(image, image, ax=a, **kwargs) is None
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning, match="plot_matched_features"):
+            assert feature.plot_matched_features(image, image, ax=a, **kwargs) is None
+    finally:
+        set_fallback_enabled(previous)
     assert original(image, image, ax=b, **kwargs) is None
     _assert_axes_parity(a, b, match_count=1)
 

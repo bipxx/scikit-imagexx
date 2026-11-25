@@ -215,12 +215,15 @@ def check(name, *args, rtol=1e-10, atol=1e-12, **options):
         expected = getattr(reference, name)(*args, **options)
     result = getattr(restoration, name)(*args, **options)
     if isinstance(expected, np.ndarray):
+        assert result.shape == expected.shape
         assert result.dtype == expected.dtype
     else:
         assert type(result) is type(expected)
         if isinstance(expected, list):
             assert [type(value) for value in result] == [type(value) for value in expected]
-    np.testing.assert_allclose(result, expected, rtol=rtol, atol=atol, strict=True)
+            assert [value.shape for value in result] == [value.shape for value in expected]
+            assert [value.dtype for value in result] == [value.dtype for value in expected]
+    np.testing.assert_allclose(result, expected, rtol=rtol, atol=atol)
     return result
 
 
@@ -363,15 +366,19 @@ def test_layout_policy(name):
                 getattr(restoration, name)(other, *extra)
         finally:
             set_fallback_enabled(previous)
-    with pytest.warns(FallbackWarning, match=name):
-        if name == 'unwrap_phase':
-            with pytest.raises(ValueError, match='read-only'):
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning, match=name):
+            if name == 'unwrap_phase':
+                with pytest.raises(ValueError, match='read-only'):
+                    getattr(restoration, name)(readonly, *extra)
+            elif not _HAS_PYWT and name in ('denoise_wavelet', 'estimate_sigma'):
+                with pytest.raises(ImportError, match='PyWavelets'):
+                    getattr(restoration, name)(readonly, *extra)
+            else:
                 getattr(restoration, name)(readonly, *extra)
-        elif not _HAS_PYWT and name in ('denoise_wavelet', 'estimate_sigma'):
-            with pytest.raises(ImportError, match='PyWavelets'):
-                getattr(restoration, name)(readonly, *extra)
-        else:
-            getattr(restoration, name)(readonly, *extra)
+    finally:
+        set_fallback_enabled(previous)
 
 
 def test_native_binding_descriptor_rejection():

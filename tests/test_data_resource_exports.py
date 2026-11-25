@@ -32,15 +32,15 @@ def test_data_resource_hot_swap_is_independent_of_upstream(monkeypatch):
 
 def test_other_data_routes_keep_compatibility_policy(monkeypatch):
     marker = object()
-    monkeypatch.setattr(skimage.data, "astronaut", lambda: marker)
+    monkeypatch.setattr(skimage.data, "compat_probe", lambda: marker, raising=False)
     previous = xx.set_fallback_enabled(False)
     try:
         assert xx.data.__path__ == []
-        with pytest.raises(NotImplementedError, match="skimage.data.astronaut"):
-            _sample(xx, "astronaut")
+        with pytest.raises(NotImplementedError, match="skimage.data.compat_probe"):
+            _sample(xx, "compat_probe")
         xx.set_fallback_enabled(True)
-        with pytest.warns(FallbackWarning, match="skimage.data.astronaut"):
-            assert _sample(xx, "astronaut") is marker
+        with pytest.warns(FallbackWarning, match="skimage.data.compat_probe"):
+            assert _sample(xx, "compat_probe") is marker
         with pytest.raises(AttributeError, match="_fetchers"):
             getattr(xx.data, "_fetchers")
     finally:

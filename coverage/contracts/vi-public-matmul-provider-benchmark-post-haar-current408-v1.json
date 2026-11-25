@@ -205,7 +205,7 @@
     "tests/test_vi_public_matmul_windows_public.py": "e0b234d470aac4d381d24162d34e717d82d9b15e2a01c2cfb2cfb07292d522e4",
     "tests/variation_of_information_matmul_controls_v1.hpp": "56d8f53d5ea02dd3fe0a53e898fb1293b69d72b4598fe73cf74dbfdbd1052391",
     "tools/montage_sustained.py": "29e5fec91dcc4b98f74b6de573ea943ef40f08c7f0187d133c06ad960ff3fd3d",
-    "tools/public_qualification.py": "67519cdd80c9c2ff28769bd88438070ed1540b7e6688c20d4b3a789c33089c99",
+    "tools/public_qualification.py": "066c3a0ac00084467ebf795d62757a75edf21ec87770f83b025b94072366a001",
     "tools/vi4_public_matmul_capture.py": "7982e9a8cad3baef0936560177854832d2958845689aef2d2908dd619f96be8d"
   },
   "common_boundary_canonical_sha256": "d236e25c277b8883c8e89deb3d5cf478187bd9c126f64945af2712c76140275a",

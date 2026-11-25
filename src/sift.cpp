@@ -1,5 +1,8 @@
 // SIFT scale-space and histogram conventions follow scikit-image 0.26.0
 // (BSD-3-Clause) and Otero & Delbracio, IPOL 2014, DOI:10.5201/ipol.2014.82.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC optimize("fp-contract=off")
+#endif
 #include "skimagexx/sift.hpp"
 
 #include "execution.hpp"

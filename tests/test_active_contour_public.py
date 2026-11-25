@@ -148,15 +148,18 @@ def test_exotic_layouts_and_dtypes_use_live_fallback(api, monkeypatch, target, c
         return marker
 
     monkeypatch.setattr(stock, 'active_contour', provider)
-    compat.set_fallback_enabled(True)
-    with pytest.warns(compat.FallbackWarning, match='skimage.segmentation.active_contour'):
-        assert public(image, snake, **options) is marker
-    assert len(seen) == 1
-    args, kwargs = seen[0]
-    assert args[0] is image and args[1] is snake
-    assert kwargs == {'boundary_condition': options['boundary_condition']}
-    assert isinstance(public(*BENCHMARK['make_case'](CASES[0])[0], **options), np.ndarray)
-    assert len(seen) == 1
+    prior_enable = compat.set_fallback_enabled(True)
+    try:
+        with pytest.warns(compat.FallbackWarning, match='skimage.segmentation.active_contour'):
+            assert public(image, snake, **options) is marker
+        assert len(seen) == 1
+        args, kwargs = seen[0]
+        assert args[0] is image and args[1] is snake
+        assert kwargs == {'boundary_condition': options['boundary_condition']}
+        assert isinstance(public(*BENCHMARK['make_case'](CASES[0])[0], **options), np.ndarray)
+        assert len(seen) == 1
+    finally:
+        compat.set_fallback_enabled(prior_enable)
 
 
 def test_outside_numerical_domain_delegates(api):

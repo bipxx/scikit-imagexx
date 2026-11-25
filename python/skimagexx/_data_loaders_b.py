@@ -40,7 +40,7 @@ def _decoded(filename, payload):
         from skimage.io import imread
 
         image = imread(BytesIO(payload))
-    return image.tobytes(), image.dtype, image.shape
+    return image.tobytes(), image.dtype, image.shape, bool(image.flags.owndata)
 
 
 def _bundled(name, *filenames):
@@ -66,9 +66,9 @@ def _bundled(name, *filenames):
         payload = _local_payload(_fetchers, filename)
         if payload is None:
             return fallback("data", name)
-        pixels, dtype, shape = _decoded(filename, payload)
-        if filename == _STEREO_DISPARITY:
-            # NumPy's NPY reader returns a 2D view of a flat owning buffer.
+        pixels, dtype, shape, owndata = _decoded(filename, payload)
+        if filename == _STEREO_DISPARITY and not owndata:
+            # NumPy 2.x NPY reader returns a 2D view of a flat owning buffer.
             array = materialize(pixels, dtype, (shape[0] * shape[1],))
             results.append(array.reshape(shape))
         else:

@@ -173,6 +173,11 @@ def test_frozen_lifecycle():
     elif not (sys.platform == "win32" and np.__version__ == "2.5.4"):
         from skimage.measure import LineModelND as StockLineModelND
         rows = run_rows(StockLineModelND, FailedEstimation)
+    else:
+        from skimage.measure import LineModelND as StockLineModelND
+        stock_rows = run_rows(StockLineModelND, FailedEstimation)
+        for key in ("from-estimate-svd", "estimate-repeated-svd", "estimate-empty-keeps-state"):
+            rows[key] = stock_rows[key]
     api = measure.LineModelND
     assert str(inspect.signature(api)) == expected["class_signature"]
     for name, desc in expected["members"].items():

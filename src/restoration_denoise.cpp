@@ -789,7 +789,7 @@ private:
     std::uint32_t seed = 0;
 #elif defined(__GLIBC__)
     std::array<std::uint32_t, 31> state{};
-    std::size_t index = 0;
+    std::size_t index = 3;
 #endif
 };
 

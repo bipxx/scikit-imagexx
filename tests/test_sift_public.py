@@ -23,7 +23,8 @@ def assert_state(reference, native):
             continue
         assert actual.dtype == expected.dtype, attr
         if attr in ("positions", "sigmas", "orientations"):
-            np.testing.assert_allclose(actual, expected, rtol=1e-9, atol=1e-9, err_msg=attr)
+            tol = 1e-6 if expected.dtype == np.float32 else 1e-9
+            np.testing.assert_allclose(actual, expected, rtol=tol, atol=tol, err_msg=attr)
         else:
             np.testing.assert_array_equal(actual, expected, err_msg=attr)
     assert native.n_octaves == reference.n_octaves

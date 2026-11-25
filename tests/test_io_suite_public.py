@@ -85,8 +85,12 @@ def test_concatenation_fallback(kind):
         'generator': [np.zeros((2, 3)), np.ones((2, 3))],
     }[kind]
     expected = stock.concatenate_images(inputs)
-    with pytest.warns(FallbackWarning):
-        actual = native.concatenate_images(iter(inputs) if kind == 'generator' else inputs)
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning):
+            actual = native.concatenate_images(iter(inputs) if kind == 'generator' else inputs)
+    finally:
+        set_fallback_enabled(previous)
     np.testing.assert_array_equal(actual, expected)
     assert (actual.dtype, actual.dtype.metadata, actual.strides) == (
         expected.dtype, expected.dtype.metadata, expected.strides,
@@ -95,8 +99,12 @@ def test_concatenation_fallback(kind):
 
 @pytest.mark.parametrize('images', [[], [np.zeros(3), np.zeros(5)]])
 def test_concatenation_error(images):
-    with pytest.warns(FallbackWarning), pytest.raises(ValueError, match='Image dimensions must agree'):
-        native.concatenate_images(images)
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning), pytest.raises(ValueError, match='Image dimensions must agree'):
+            native.concatenate_images(images)
+    finally:
+        set_fallback_enabled(previous)
 
 
 def test_concatenation_scalar_arrays():
@@ -248,14 +256,22 @@ def test_native_feature_files(file, kind, contents):
         set_fallback_enabled(previous)
     assert actual.dtype.descr == expected.dtype.descr
     assert actual.tobytes() == expected.tobytes()
-    with open(path) as stream, pytest.warns(FallbackWarning):
-        np.testing.assert_array_equal(new(stream), expected)
+    previous = set_fallback_enabled(True)
+    try:
+        with open(path) as stream, pytest.warns(FallbackWarning):
+            np.testing.assert_array_equal(new(stream), expected)
+    finally:
+        set_fallback_enabled(previous)
 
 
 def test_feature_file_bad_count(file):
     path = file('.key', b'2 0\n1 2 3 4\n')
-    with pytest.warns(FallbackWarning), pytest.raises(OSError, match='Invalid SIFT feature file'):
-        native.load_sift(str(path))
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning), pytest.raises(OSError, match='Invalid SIFT feature file'):
+            native.load_sift(str(path))
+    finally:
+        set_fallback_enabled(previous)
 
 
 def test_stack_cross_namespace_and_errors():

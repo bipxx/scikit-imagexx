@@ -232,8 +232,20 @@ def test_selection_overlap(mode, return_all, undo, pyplot):
         shape = image.shape[:2]
         selected = vertices[:-1] if undo else vertices
         if return_all:
-            with pytest.raises(TypeError, match="sequence"):
-                _selection_labels(selected, shape, return_all=True)
+            generator = (i for i in ())
+            try:
+                np.stack(generator)
+            except TypeError:
+                with pytest.raises(TypeError, match="sequence"):
+                    _selection_labels(selected, shape, return_all=True)
+            else:
+                expected_all = []
+                for region in selected:
+                    mask = np.zeros(shape, dtype=bool)
+                    columns, rows = zip(*region)
+                    mask[polygon(rows, columns, shape=shape)] = True
+                    expected_all.append(mask)
+                check_array(_selection_labels(selected, shape, return_all=True), np.stack(expected_all))
             return
         expected = np.zeros(shape, dtype=int)
         for label, region in enumerate(selected, start=1):
@@ -265,7 +277,15 @@ def test_selection_without_regions(mode, pyplot):
 
         check_array(_selection_labels([], image.shape, return_all=False),
                     np.broadcast_to(0, image.shape))
-        with pytest.raises(TypeError, match="sequence"):
+        try:
+            np.stack(i for i in ())
+        except TypeError as exc:
+            error_type = TypeError
+            match = "sequence"
+        except ValueError:
+            error_type = ValueError
+            match = "need at least one array to stack"
+        with pytest.raises(error_type, match=match):
             _selection_labels([], image.shape, return_all=True)
         return
 

@@ -66,8 +66,12 @@ def test_fallback_routes(variant):
     elif variant == 'longdouble':
         image = image.astype(np.longdouble)
     options = {'return_tree': variant == 'tree', 'kernel_size': 1, 'convert2lab': False}
-    with pytest.warns(FallbackWarning, match='skimage.segmentation.quickshift'):
-        result = segmentation.quickshift(image, **options)
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning, match='skimage.segmentation.quickshift'):
+            result = segmentation.quickshift(image, **options)
+    finally:
+        set_fallback_enabled(previous)
     expected = original(image, **options)
     if variant == 'tree':
         for value, reference in zip(result, expected, strict=True):

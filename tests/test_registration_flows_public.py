@@ -104,14 +104,18 @@ def test_unsupported_storage_falls_back(api, kind):
     if kind != "output-metadata":
         args = (True, 7, 1, False, False) if api.endswith("ilk") else (True, 15, 0.3, 1, 10, 1e-4, False)
         assert getattr(_core, api)(*images, *args) is None
-    if kind == "longdouble":
-        with pytest.raises(ValueError, match="Cannot convert"):
-            getattr(stock, api)(*images, dtype=dtype, num_warp=1)
-        with pytest.warns(FallbackWarning, match=api), pytest.raises(ValueError, match="Cannot convert"):
-            getattr(native, api)(*images, dtype=dtype, num_warp=1)
-        return
-    with pytest.warns(FallbackWarning, match=api):
-        actual = getattr(native, api)(*images, dtype=dtype, num_warp=1)
+    previous = set_fallback_enabled(True)
+    try:
+        if kind == "longdouble":
+            with pytest.raises(ValueError, match="Cannot convert"):
+                getattr(stock, api)(*images, dtype=dtype, num_warp=1)
+            with pytest.warns(FallbackWarning, match=api), pytest.raises(ValueError, match="Cannot convert"):
+                getattr(native, api)(*images, dtype=dtype, num_warp=1)
+            return
+        with pytest.warns(FallbackWarning, match=api):
+            actual = getattr(native, api)(*images, dtype=dtype, num_warp=1)
+    finally:
+        set_fallback_enabled(previous)
     expected = getattr(stock, api)(*images, dtype=dtype, num_warp=1)
     np.testing.assert_array_equal(actual, expected)
     assert actual.dtype.metadata == expected.dtype.metadata
@@ -148,6 +152,10 @@ def test_ill_conditioned_ilk_falls_back():
     reference += 0.01 * np.indices(shape).sum(axis=0)
     moving = shift(reference, (0.8, -1.25), order=1, mode="nearest")
     expected = stock.optical_flow_ilk(reference, moving, dtype=np.float64)
-    with pytest.warns(FallbackWarning, match="optical_flow_ilk"):
-        actual = native.optical_flow_ilk(reference, moving, dtype=np.float64)
+    previous = set_fallback_enabled(True)
+    try:
+        with pytest.warns(FallbackWarning, match="optical_flow_ilk"):
+            actual = native.optical_flow_ilk(reference, moving, dtype=np.float64)
+    finally:
+        set_fallback_enabled(previous)
     np.testing.assert_array_equal(actual, expected)
