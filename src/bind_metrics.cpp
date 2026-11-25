@@ -4,10 +4,32 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <algorithm>
+#include <cfenv>
+#include <cmath>
 #include <cstring>
 #include <numeric>
+#include <tuple>
 namespace py=pybind11;
+namespace skimagexx::detail {
+auto metric_fast_simd() -> std::tuple<double,double,double,double,bool> (*)(
+    const MetricImageView&,const MetricImageView&,std::size_t,MetricNormalization,bool,std::size_t);
+}
 namespace {
+using FastResult=std::tuple<double,double,double,double,bool>;
+
+class MetricEnvironment {
+public:
+    MetricEnvironment():active_(std::feholdexcept(&saved_)==0) {}
+    ~MetricEnvironment() {if(active_)std::fesetenv(&saved_);}
+    bool ready() const {return active_ && std::fegetround()==FE_TONEAREST;}
+    bool clean() const {
+        return !std::fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW|FE_UNDERFLOW);
+    }
+private:
+    std::fenv_t saved_;
+    bool active_;
+};
+
 bool swapped(const py::dtype& dtype) {
     const std::uint16_t one=1;
     const bool little=*reinterpret_cast<const unsigned char*>(&one)!=0;
@@ -47,11 +69,66 @@ std::vector<std::size_t> order(const py::array& image,bool keep) {
     std::stable_sort(axes.begin(),axes.end(),[&](auto a,auto b){return magnitude(image.strides(py::ssize_t(a)))>magnitude(image.strides(py::ssize_t(b)));});
     return axes;
 }
+
+FastResult fast_reduce(const skimagexx::MetricImageView& a,const skimagexx::MetricImageView& b,
+                       std::size_t size,bool single,skimagexx::MetricNormalization mode,
+                       bool raw_range,std::size_t block) {
+    using skimagexx::MetricNormalization;
+    const MetricEnvironment fp;
+    if(!fp.ready())return {};
+    FastResult result;
+    if(const auto simd=skimagexx::detail::metric_fast_simd())result=simd(a,b,size,mode,raw_range,block);
+    else {
+        // The SDK's scalar kernel already owns the pinned tree and replay.
+        const auto sums=skimagexx::metric_sums(a,b,single,raw_range ? MetricNormalization::min_max : mode,
+                                              false,false,block);
+        const auto aux=mode==MetricNormalization::mean ? sums.mean : sums.energy;
+        result={sums.error,aux,sums.low,sums.high,!sums.nonfinite && std::isfinite(sums.error) &&
+                std::isfinite(aux) && !sums.subtract_flags && !sums.square_flags &&
+                !sums.error_reduce_flags && !sums.energy_flags && !sums.energy_reduce_flags &&
+                !sums.mean_reduce_flags};
+    }
+    if(!fp.clean())return {};
+    return result;
+}
 }
 void bind_metrics(py::module_& module) {
     const auto numpy=py::module_::import("numpy");
     const py::object minimum=numpy.attr("minimum").attr("reduce"),maximum=numpy.attr("maximum").attr("reduce");
     const bool buffered=numpy.attr("lib").attr("NumpyVersion")(numpy.attr("__version__")).attr("__lt__")("2.3.0").cast<bool>();
+    module.def("metrics_fast_reduce",[numpy,buffered](const py::array& first,const py::array& second,
+        bool single,int normalization,bool raw_range,bool capture_underflow) -> FastResult {
+        if(capture_underflow || normalization<0 || normalization>3 || (raw_range && normalization!=0) ||
+           !first.size() || !first.ndim() || first.ndim()!=second.ndim())return {};
+        const auto dtype=first.dtype(),other_dtype=second.dtype();
+        const auto expected=single ? py::dtype::of<float>() : py::dtype::of<double>();
+        if(dtype.num()!=expected.num() || other_dtype.num()!=expected.num() ||
+           swapped(dtype) || swapped(other_dtype))return {};
+        for(py::ssize_t axis=0;axis<first.ndim();++axis)
+            if(first.shape(axis)!=second.shape(axis))return {};
+        const bool dense=(first.flags()&second.flags()&py::array::c_style)!=0;
+        if(!dense && (first.strides(first.ndim()-1)!=dtype.itemsize() ||
+                      second.strides(second.ndim()-1)!=dtype.itemsize()))return {};
+        const auto axes=dense ? std::vector<std::size_t>{}:order(first,false);
+        if(!dense) {
+            // The pinned path uses F traversal for jointly F-contiguous arrays.
+            if(first.flags()&second.flags()&py::array::f_style)return {};
+            // An auxiliary sum that needs independent K order cannot share
+            // the error scan. Extrema are independent of order except zero ties.
+            if((normalization==1 || normalization==2) && order(first,true)!=axes)return {};
+        }
+        const auto a=dense ? dense_reduction_view(first):view(first,axes);
+        const auto b=dense ? dense_reduction_view(second):view(second,axes);
+        const auto mode=static_cast<skimagexx::MetricNormalization>(normalization);
+        const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
+        const auto size=std::size_t(first.size());
+        if(size>=32768) {
+            py::gil_scoped_release release;
+            return fast_reduce(a,b,size,single,mode,raw_range,block);
+        }
+        return fast_reduce(a,b,size,single,mode,raw_range,block);
+    },py::arg("first").noconvert(),py::arg("second").noconvert(),py::arg("single"),
+      py::arg("normalization"),py::arg("raw_range"),py::arg("capture_underflow"));
     module.def("metrics_reduce",[numpy,minimum,maximum,buffered](py::array first,py::array second,bool single,int normalization,bool capture_underflow,bool scalar_power_double) {
         if(first.ndim()!=second.ndim())throw py::value_error("Input images must have the same dimensions.");
         for(py::ssize_t axis=0;axis<first.ndim();++axis)if(first.shape(axis)!=second.shape(axis))throw py::value_error("Input images must have the same dimensions.");

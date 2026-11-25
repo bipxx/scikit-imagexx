@@ -8,8 +8,11 @@ import numpy as np
 from . import _core
 from ._compat import fallback
 
-_REAL={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,np.float32,np.float64}
-_RANGES={np.bool_:(False,True),np.float16:(-1,1),np.float32:(-1,1),np.float64:(-1,1)}
+_FLOAT32,_FLOAT64,_INTP=np.float32,np.float64,np.intp
+_ARRAY_TYPES=(np.ndarray,np.memmap)
+_NORMS={'euclidean':1,'mean':2,'min-max':3}
+_REAL={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,_FLOAT32,_FLOAT64}
+_RANGES={np.bool_:(False,True),np.float16:(-1,1),_FLOAT32:(-1,1),_FLOAT64:(-1,1)}
 for _type in (np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64):
     _info=np.iinfo(_type);_RANGES[_type]=(int(_info.min),int(_info.max))
 with warnings.catch_warnings(record=True) as _mean_probe:
@@ -19,13 +22,16 @@ _EMPTY_MEAN_MESSAGE=str(_mean_probe[0].message)
 _SCALAR_POWER_DOUBLE=((np.asarray(np.float32(.5))-np.asarray(np.float32(0)))**2).dtype==np.float64
 
 
+def _known_image(image):
+    return type(image) in _ARRAY_TYPES or isinstance(image,np.generic)
+
+
 def _prepare(first,second):
     if first.shape!=second.shape:raise ValueError('Input images must have the same dimensions.')
-    if not (type(first) in (np.ndarray,np.memmap) or isinstance(first,np.generic)):return None
-    if not (type(second) in (np.ndarray,np.memmap) or isinstance(second,np.generic)):return None
+    if not _known_image(first) or not _known_image(second):return None
     if first.dtype.kind=='c' or second.dtype.kind=='c':raise ValueError('complex valued input is not supported')
     if first.dtype.type not in _REAL or second.dtype.type not in _REAL:return None
-    return np.float32 if first.dtype.char in 'ef' and second.dtype.char in 'ef' else np.float64
+    return _FLOAT32 if first.dtype.char in 'ef' and second.dtype.char in 'ef' else _FLOAT64
 
 
 def _emit(flags,operation,dtype):
@@ -57,8 +63,7 @@ def _emit(flags,operation,dtype):
 
 def _mean(total,size,dtype):
     if size==0:warnings.warn(_EMPTY_MEAN_MESSAGE,RuntimeWarning,stacklevel=3)
-    value=np.dtype(dtype).type(total)
-    return np.dtype(dtype).type(value/np.intp(size))
+    return dtype(dtype(total)/_INTP(size))
 
 
 def _casts(result):
@@ -85,18 +90,27 @@ def _error(result,size,dtype,scalar=False):
     return _mean(result['error'],size,np.float64)
 
 
-def _reduce(first,second,dtype,mode):
+def _reduce(first,second,dtype,mode,capture_underflow):
     a=np.asarray(first) if isinstance(first,np.generic) else first
     b=np.asarray(second) if isinstance(second,np.generic) else second
-    return _core.metrics_reduce(a,b,dtype is np.float32,mode,np.geterr()['under']!='ignore',
-                                bool(_SCALAR_POWER_DOUBLE and dtype is np.float32 and first.ndim==0))
+    return _core.metrics_reduce(a,b,dtype is _FLOAT32,mode,capture_underflow,
+                                bool(_SCALAR_POWER_DOUBLE and dtype is _FLOAT32 and first.ndim==0))
 
 
-def _stateful():
+def _fast_reduce(first,second,dtype,mode,capture_underflow,raw_range=False):
+    # Rank-zero retains the legacy NumPy scalar-power rule.
+    if (capture_underflow or first.ndim==0 or dtype not in (_FLOAT32,_FLOAT64) or
+            first.dtype.type is not dtype or second.dtype.type is not dtype):
+        return None
+    result=_core.metrics_fast_reduce(first,second,dtype is _FLOAT32,mode,raw_range,capture_underflow)
+    return result if result[-1] else None
+
+
+def _stateful(policies):
     # Public warning hooks can mutate inputs just like NumPy FP callbacks.
     # Preserve stage boundaries when warning dispatch has been customized.
     return (warnings.showwarning is not warnings._showwarning_orig or
-            any(policy not in ('warn','raise','ignore') for policy in np.geterr().values()))
+            any(policy not in ('warn','raise','ignore') for policy in policies.values()))
 
 
 def _stage_emit(flags,operation,dtype,scalar=False):
@@ -178,8 +192,12 @@ def _stage_nrmse(first,second,dtype,normalization):
 def mean_squared_error(image0,image1):
     dtype=_prepare(image0,image1)
     if dtype is None:return fallback('metrics','mean_squared_error',image0,image1)
-    if _stateful():return _stage_error(*_stage_pair(image0,image1,dtype),dtype)
-    data=_reduce(image0,image1,dtype,0)
+    policies=np.geterr()
+    if _stateful(policies):return _stage_error(*_stage_pair(image0,image1,dtype),dtype)
+    capture_underflow=policies['under']!='ignore'
+    fast=_fast_reduce(image0,image1,dtype,0,capture_underflow)
+    if fast is not None:return _mean(fast[0],image0.size,_FLOAT64)
+    data=_reduce(image0,image1,dtype,0,capture_underflow)
     _casts(data)
     return _error(data,image0.size,dtype,image0.ndim==0)
 
@@ -187,27 +205,33 @@ def mean_squared_error(image0,image1):
 def normalized_root_mse(image_true,image_test,*,normalization='euclidean'):
     dtype=_prepare(image_true,image_test)
     if dtype is None:return fallback('metrics','normalized_root_mse',image_true,image_test,normalization=normalization)
-    if _stateful() or type(normalization) not in (str,np.str_):
+    policies=np.geterr()
+    if _stateful(policies) or type(normalization) not in (str,np.str_):
         return _stage_nrmse(image_true,image_test,dtype,normalization)
-    modes={'euclidean':1,'min-max':3,'mean':2}
-    if type(normalization) not in (str,np.str_) or normalization.lower() not in modes:
+    capture_underflow=policies['under']!='ignore'
+    code=_NORMS.get(normalization.lower())
+    if code is None:
         # Upstream converts both arrays before inspecting this parameter.
         # Preserve possible signaling-NaN cast warnings even on an error path.
-        probe=_reduce(image_true,image_test,dtype,0)
+        probe=_reduce(image_true,image_test,dtype,0,capture_underflow)
         _casts(probe)
-    normalization=normalization.lower()
-    if normalization=='euclidean':code=1
-    elif normalization=='min-max':code=3
-    elif normalization=='mean':code=2
-    else:raise ValueError('Unsupported norm_type')
-    if normalization=='min-max' and not image_true.size:raise ValueError('zero-size array to reduction operation maximum which has no identity')
-    data=_reduce(image_true,image_test,dtype,code)
+        raise ValueError('Unsupported norm_type')
+    size=image_true.size
+    if code==3 and not size:raise ValueError('zero-size array to reduction operation maximum which has no identity')
+    fast=_fast_reduce(image_true,image_test,dtype,code,capture_underflow)
+    if fast is not None:
+        error,aux,low,high,_=fast
+        if code==1:denominator=np.sqrt(_mean(aux,size,_FLOAT64))
+        elif code==2:denominator=_mean(aux,size,dtype)
+        else:denominator=dtype(high)-dtype(low)
+        return np.sqrt(_mean(error,size,_FLOAT64))/denominator
+    data=_reduce(image_true,image_test,dtype,code,capture_underflow)
     _casts(data)
-    if normalization=='euclidean':
+    if code==1:
         _emit(data['energy_flags'],'multiply',dtype)
         _emit(data['energy_reduce_flags'],'reduce',np.float64)
         denominator=np.sqrt(_mean(data['energy'],image_true.size,np.float64))
-    elif normalization=='mean':
+    elif code==2:
         _emit(data['mean_reduce_flags'],'reduce',dtype)
         denominator=_mean(data['mean'],image_true.size,dtype)
     else:
@@ -220,17 +244,24 @@ def normalized_root_mse(image_true,image_test,*,normalization='euclidean'):
 
 def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
     if image_true.shape!=image_test.shape:raise ValueError('Input images must have the same dimensions.')
-    known=lambda image:(type(image) in (np.ndarray,np.memmap) or isinstance(image,np.generic))
-    if not known(image_true) or not known(image_test):
+    if not _known_image(image_true) or not _known_image(image_test):
         return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
-    if any(image.dtype.type not in _REAL and image.dtype.kind!='c' for image in (image_true,image_test)):
+    true_type,test_type=image_true.dtype.type,image_test.dtype.type
+    if ((true_type not in _REAL and image_true.dtype.kind!='c') or
+            (test_type not in _REAL and image_test.dtype.kind!='c')):
         return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
-    stateful=_stateful()
+    policies=np.geterr()
+    stateful=_stateful(policies)
+    capture_underflow=policies['under']!='ignore'
+    fast=None if stateful or true_type is not test_type else _fast_reduce(
+        image_true,image_test,true_type,0,capture_underflow,raw_range=data_range is None)
     if data_range is None:
         if image_true.dtype!=image_test.dtype:
             warnings.warn('Inputs have mismatched dtype.  Setting data_range based on image_true.',UserWarning,stacklevel=2)
         dmin,dmax=_RANGES[image_true.dtype.type]
-        if stateful:
+        if fast is not None:
+            true_min,true_max=fast[2],fast[3]
+        elif stateful:
             prepared=np.asarray(image_true) if isinstance(image_true,np.generic) else image_true
             true_min=_core.metrics_stage_extremum(prepared,False)
             true_max=_core.metrics_stage_extremum(prepared,True)
@@ -240,15 +271,18 @@ def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
         if true_max>dmax or true_min<dmin:
             raise ValueError('image_true has intensity values outside the range expected for its data type. Please manually specify the data_range.')
         data_range=dmax if true_min>=0 else dmax-dmin
-    dtype=_prepare(image_true,image_test)
-    if dtype is None:return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
-    if stateful:
-        first,second=_stage_pair(image_true,image_test,dtype)
-        error=mean_squared_error(first,second)
+    if fast is not None:
+        error=_mean(fast[0],image_true.size,_FLOAT64)
     else:
-        data=_reduce(image_true,image_test,dtype,0)
-        _casts(data)
-        error=_error(data,image_true.size,dtype,image_true.ndim==0)
+        dtype=_prepare(image_true,image_test)
+        if dtype is None:return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
+        if stateful:
+            first,second=_stage_pair(image_true,image_test,dtype)
+            error=mean_squared_error(first,second)
+        else:
+            data=_reduce(image_true,image_test,dtype,0,capture_underflow)
+            _casts(data)
+            error=_error(data,image_true.size,dtype,image_true.ndim==0)
     data_range=float(data_range)
     return 10*np.log10((data_range**2)/error)
 
