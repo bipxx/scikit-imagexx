@@ -1,8 +1,8 @@
 #include <skimagexx/circle_perimeter_aa.hpp>
 #include "bind_array_storage.hpp"
-#include "bind_helpers.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+#include <array>
 #include <cstdint>
 #include <cstring>
 #include <limits>
@@ -10,7 +10,6 @@
 
 namespace py=pybind11;
 namespace {
-using namespace skimagexx::bindings;
 using Int=std::intptr_t;
 template<class T> bool shape_values(const py::array& value,Int& height,Int& width) {
     const auto* data=static_cast<const unsigned char*>(value.data());
@@ -37,7 +36,7 @@ bool integer_shape(const py::object& object,Int& height,Int& width) {
     }
     if(!py::isinstance<py::array>(object))return false;
     const auto value=py::reinterpret_borrow<py::array>(object);
-    if(value.ndim()!=1||value.size()<2||!is_native_byteorder(value))return false;
+    if(value.ndim()!=1||value.size()<2||!value.dtype().attr("isnative").cast<bool>())return false;
     const auto kind=value.dtype().kind();const auto bytes=value.itemsize();
     if((kind!='i'&&kind!='u')||(bytes!=1&&bytes!=2&&bytes!=4&&bytes!=8))return false;
     skimagexx::bindings::check_array_storage(value);
@@ -52,6 +51,10 @@ bool integer_shape(const py::object& object,Int& height,Int& width) {
     if(bytes==4)return shape_values<std::uint32_t>(value,height,width);
     return shape_values<std::uint64_t>(value,height,width);
 }
+py::array output_array(std::size_t count,const py::dtype& dtype) {
+    return py::array(dtype,std::array<py::ssize_t,1>{py::ssize_t(count)},
+                     std::array<py::ssize_t,1>{count?py::ssize_t(dtype.itemsize()):0});
+}
 }
 
 void bind_circle_perimeter_aa(py::module_& module) {
@@ -64,15 +67,13 @@ void bind_circle_perimeter_aa(py::module_& module) {
         skimagexx::detail::CirclePerimeterAA prepared;
         if(!skimagexx::detail::prepare_circle_perimeter_aa(request,prepared))return py::none();
         std::size_t count;
-        const bool large=prepared.max_points>=4096;
-        {optional_gil_release release(large);count=skimagexx::detail::circle_perimeter_aa_count(prepared,workers);}
-        const py::ssize_t dimensions[]{py::ssize_t(count)};
-        auto rows=empty_c_array<Int>(dimensions,1,true),columns=empty_c_array<Int>(dimensions,1,true);
-        auto weights=empty_c_array<double>(dimensions,1,true);
+        {py::gil_scoped_release release;count=skimagexx::detail::circle_perimeter_aa_count(prepared,workers);}
+        auto rows=output_array(count,py::dtype("intp")),columns=output_array(count,py::dtype("intp"));
+        auto weights=output_array(count,py::dtype("float64"));
         const skimagexx::detail::DrawCoordinatePair output{
-            rows.mutable_data(),columns.mutable_data(),1,1};
-        auto* values=weights.mutable_data();
-        {optional_gil_release release(large);skimagexx::detail::circle_perimeter_aa_fill(prepared,output,values,1,workers);}
+            static_cast<Int*>(rows.mutable_data()),static_cast<Int*>(columns.mutable_data()),1,1};
+        auto* values=static_cast<double*>(weights.mutable_data());
+        {py::gil_scoped_release release;skimagexx::detail::circle_perimeter_aa_fill(prepared,output,values,1,workers);}
         return py::make_tuple(rows,columns,weights);
     },py::arg("row"),py::arg("column"),py::arg("radius"),py::arg("shape"),py::arg("workers"));
 }
