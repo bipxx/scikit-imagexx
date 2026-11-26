@@ -17,52 +17,71 @@ using Index = std::ptrdiff_t;
 static_assert(sizeof(double) == sizeof(std::uint64_t));
 
 struct RadixEdge {
-    std::uint64_t key;
+    std::uint32_t low;
+    std::uint32_t high;
     std::uint32_t index;
 };
 
-std::unique_ptr<Index[]> unique_cost_order(const double* costs, Index count) {
-    if (static_cast<std::uint64_t>(count) > std::numeric_limits<std::uint32_t>::max())
+std::unique_ptr<Index[]> unique_cost_order(const double* costs, Index count, bool& finite) {
+    if (!count || static_cast<std::uint64_t>(count) > std::numeric_limits<std::uint32_t>::max()) {
+        finite = std::all_of(costs, costs + count, [](double v) { return std::isfinite(v); });
         return {};
+    }
 
     constexpr unsigned bits = 11;
     constexpr unsigned buckets = 1u << bits;
-    constexpr unsigned passes = (64u + bits - 1) / bits;
-    constexpr auto mask = buckets - 1;
-    std::array<std::array<std::uint32_t, buckets>, passes> histograms{};
+    constexpr unsigned mask = buckets - 1;
+    std::array<std::array<std::uint32_t, buckets>, 6> histograms{};
     std::unique_ptr<RadixEdge[]> edges(new RadixEdge[count]);
-    std::unique_ptr<RadixEdge[]> scratch(new RadixEdge[count]);
     for (Index i = 0; i < count; ++i) {
-        // Costs are nonnegative finite square roots. Unsigned IEEE-754 bits
-        // order them numerically, and the zero check coalesces signed zeros.
-        std::uint64_t key = 0;
-        if (costs[i] != 0)
-            std::memcpy(&key, costs + i, sizeof(key));
-        edges[i] = {key, static_cast<std::uint32_t>(i)};
-        for (unsigned pass = 0; pass < passes; ++pass)
-            ++histograms[pass][(key >> (pass * bits)) & mask];
+        // Square roots of sums of squares are nonnegative, including +0.
+        // Their unsigned IEEE-754 bits have the same order as their values.
+        std::uint64_t key;
+        std::memcpy(&key, costs + i, sizeof(key));
+        const auto low = static_cast<std::uint32_t>(key);
+        const auto high = static_cast<std::uint32_t>(key >> 32);
+        if (high >= UINT32_C(0x7ff00000)) {
+            finite = false;
+            return {};
+        }
+        edges[i] = {low, high, static_cast<std::uint32_t>(i)};
+        ++histograms[0][low & mask];
+        ++histograms[1][(low >> bits) & mask];
+        ++histograms[2][low >> (2 * bits)];
+        ++histograms[3][high & mask];
+        ++histograms[4][(high >> bits) & mask];
+        ++histograms[5][high >> (2 * bits)];
     }
 
-    for (unsigned pass = 0; pass < passes; ++pass) {
+    std::unique_ptr<RadixEdge[]> scratch;
+    const auto scatter = [&](unsigned pass, unsigned shift, unsigned size, auto word) {
         auto& positions = histograms[pass];
-        if (std::find(positions.begin(), positions.end(), count) != positions.end())
-            continue;
         std::uint32_t offset = 0;
-        for (auto& position : positions) {
-            const auto frequency = position;
-            position = offset;
+        for (unsigned i = 0; i < size; ++i) {
+            const auto frequency = positions[i];
+            if (frequency == count)
+                return;
+            positions[i] = offset;
             offset += frequency;
         }
-        const auto shift = pass * bits;
+        if (!scratch)
+            scratch.reset(new RadixEdge[count]);
         for (Index i = 0; i < count; ++i) {
             const auto edge = edges[i];
-            scratch[positions[(edge.key >> shift) & mask]++] = edge;
+            scratch[positions[((edge.*word) >> shift) & mask]++] = edge;
         }
         edges.swap(scratch);
-    }
+    };
+    constexpr auto top_buckets = 1u << (32 - 2 * bits);
+    scatter(0, 0, buckets, &RadixEdge::low);
+    scatter(1, bits, buckets, &RadixEdge::low);
+    scatter(2, 2 * bits, top_buckets, &RadixEdge::low);
+    scatter(3, 0, buckets, &RadixEdge::high);
+    scatter(4, bits, buckets, &RadixEdge::high);
+    scatter(5, 2 * bits, top_buckets, &RadixEdge::high);
 
     for (Index i = 1; i < count; ++i)
-        if (edges[i - 1].key == edges[i].key)
+        if (edges[i - 1].high == edges[i].high && edges[i - 1].low == edges[i].low)
             return {};
     std::unique_ptr<Index[]> order(new Index[count]);
     for (Index i = 0; i < count; ++i)
@@ -94,14 +113,12 @@ void bind_felzenszwalb(py::module_& module) {
         py::array_t<double> costs(count);
         const auto* values = static_cast<const double*>(image.data());
         auto* weights = costs.mutable_data();
-        bool finite;
+        bool finite = true;
         std::unique_ptr<Index[]> native_order;
         {
             py::gil_scoped_release release;
             skimagexx::felzenszwalb_costs_into(values, weights, height, width, channels);
-            finite = std::all_of(weights, weights + count, [](double v) { return std::isfinite(v); });
-            if (finite)
-                native_order = unique_cost_order(weights, count);
+            native_order = unique_cost_order(weights, count, finite);
         }
         if (!finite) return py::none();
 
