@@ -7,15 +7,12 @@
 #include <limits>
 #include <numeric>
 #include <type_traits>
+#include <utility>
 
-#if defined(SKIMAGEXX_AVX2)
-#include <immintrin.h>
-#if defined(__GNUC__) || defined(__clang__)
-#define WALKER_AVX2 __attribute__((target("avx2")))
-#else
-#define WALKER_AVX2
+#if defined(__SSE2__) || defined(_M_X64)
+#include <emmintrin.h>
 #endif
-#endif
+
 
 #if defined(__clang__)
 #pragma clang fp contract(off)
@@ -156,74 +153,59 @@ auto stencil_terms(const Laplacian& laplacian) {
     }
 }
 
-template<std::size_t Rhs, std::size_t Terms>
-void apply_stencil(
-    const std::array<StencilTerm, Terms>& terms, const std::array<const double*, Rhs>& p,
-    const std::array<double*, Rhs>& ap, std::ptrdiff_t begin, std::ptrdiff_t end,
-    std::array<double, Rhs>& curvature) {
-    for (auto i = begin; i < end; ++i) {
-        std::array<double, Rhs> sum{};
-        for (const auto& term : terms) {
-            const double weight = term.weight[i];
-            for (std::size_t j = 0; j < Rhs; ++j)
-                sum[j] += weight * p[j][i + term.offset];
-        }
-        for (std::size_t j = 0; j < Rhs; ++j) {
-            ap[j][i] = sum[j];
-            curvature[j] += p[j][i] * sum[j];
-        }
-    }
+#if defined(__SSE2__) || defined(_M_X64)
+double add_in_order(double sum, __m128d lanes) {
+    sum += _mm_cvtsd_f64(lanes);
+    return sum + _mm_cvtsd_f64(_mm_unpackhi_pd(lanes, lanes));
 }
+#endif
 
-#if defined(SKIMAGEXX_AVX2)
-WALKER_AVX2 inline double add_in_order(double sum, __m256d lanes) {
-    // The original CG folds dot products in unknown-pixel order. Padding
-    // and seed rows contribute zeros; the SIMD lanes must still fold in order.
-    const auto low = _mm256_castpd256_pd128(lanes);
-    const auto high = _mm256_extractf128_pd(lanes, 1);
-    sum += _mm_cvtsd_f64(low);
-    sum += _mm_cvtsd_f64(_mm_unpackhi_pd(low, low));
-    sum += _mm_cvtsd_f64(high);
-    return sum + _mm_cvtsd_f64(_mm_unpackhi_pd(high, high));
-}
-
-template<std::size_t Rhs, std::size_t Terms>
-WALKER_AVX2 void apply_stencil_avx2(
-    const std::array<StencilTerm, Terms>& terms, const std::array<const double*, Rhs>& p,
-    const std::array<double*, Rhs>& ap, std::ptrdiff_t end,
-    std::array<double, Rhs>& curvature) {
-    std::ptrdiff_t i = 0;
-    for (; i + 4 <= end; i += 4) {
-        __m256d sum[Rhs];
-        for (std::size_t j = 0; j < Rhs; ++j) sum[j] = _mm256_setzero_pd();
-        for (const auto& term : terms) {
-            const auto weight = _mm256_loadu_pd(term.weight + i);
-            for (std::size_t j = 0; j < Rhs; ++j) {
-                const auto neighbor = _mm256_loadu_pd(p[j] + (i + term.offset));
-                sum[j] = _mm256_add_pd(sum[j], _mm256_mul_pd(weight, neighbor));
+template<bool Simd, std::size_t Terms, std::size_t... I>
+double apply_and_dot(
+    const std::array<StencilTerm, Terms>& terms, double* direction, double* product,
+    std::size_t size, double beta, bool update_direction, std::index_sequence<I...>) {
+    const std::array<const double*, Terms> neighbors{(direction + terms[I].offset)...};
+    const auto lookahead = static_cast<std::size_t>(terms.back().offset);
+    double curvature = 0;
+    std::size_t ready = 0;
+    constexpr std::size_t tile = 256;
+    for (std::size_t i = 0; i < size;) {
+        const auto end = std::min(i + tile, size);
+        // The stencil needs the new direction through its farthest neighbor.
+        // Update those entries before overwriting any of their previous products.
+        if (update_direction) {
+            const auto needed = std::min(end + lookahead, size);
+#if defined(__SSE2__) || defined(_M_X64)
+            if constexpr (Simd) {
+                const auto b = _mm_set1_pd(beta);
+                for (; ready + 2 <= needed; ready += 2) {
+                    const auto p = _mm_loadu_pd(direction + ready);
+                    const auto z = _mm_loadu_pd(product + ready);
+                    _mm_storeu_pd(direction + ready, _mm_add_pd(z, _mm_mul_pd(b, p)));
+                }
+            }
+#endif
+            for (; ready < needed; ++ready)
+                direction[ready] = product[ready] + beta * direction[ready];
+        }
+#if defined(__SSE2__) || defined(_M_X64)
+        if constexpr (Simd) {
+            for (; i + 2 <= end; i += 2) {
+                auto sum = _mm_setzero_pd();
+                ((sum = _mm_add_pd(sum, _mm_mul_pd(
+                      _mm_loadu_pd(terms[I].weight + i), _mm_loadu_pd(neighbors[I] + i)))), ...);
+                curvature = add_in_order(curvature, _mm_mul_pd(_mm_loadu_pd(direction + i), sum));
+                _mm_storeu_pd(product + i, sum);
             }
         }
-        for (std::size_t j = 0; j < Rhs; ++j) {
-            _mm256_storeu_pd(ap[j] + i, sum[j]);
-            curvature[j] = add_in_order(curvature[j], _mm256_mul_pd(_mm256_loadu_pd(p[j] + i), sum[j]));
+#endif
+        for (; i < end; ++i) {
+            double sum = 0;
+            ((sum += terms[I].weight[i] * neighbors[I][i]), ...);
+            curvature += direction[i] * sum;
+            product[i] = sum;
         }
     }
-    apply_stencil(terms, p, ap, i, end, curvature);
-}
-#endif
-
-template<std::size_t Rhs, std::size_t Terms>
-std::array<double, Rhs> apply_and_dot(
-    const std::array<StencilTerm, Terms>& terms, const std::array<const double*, Rhs>& p,
-    const std::array<double*, Rhs>& ap, std::ptrdiff_t size, [[maybe_unused]] bool simd) {
-    std::array<double, Rhs> curvature{};
-#if defined(SKIMAGEXX_AVX2)
-    if (simd) {
-        apply_stencil_avx2(terms, p, ap, size, curvature);
-        return curvature;
-    }
-#endif
-    apply_stencil(terms, p, ap, 0, size, curvature);
     return curvature;
 }
 
@@ -263,6 +245,7 @@ std::optional<Laplacian> build_laplacian(
     const auto w_x = options.spacing[shape.size() - 1];
     const auto w_y = options.spacing[shape.size() - 2];
     const auto w_z = options.spacing[0];
+    std::size_t unknown = 0;
     if (!grid.visit_pixels([&](auto i, auto padded, auto z, auto y, auto x) {
         const auto set_edge = [&](double& coefficient, std::size_t step, double spacing) {
             const T diff = data[i + step] - data[i];
@@ -270,13 +253,10 @@ std::optional<Laplacian> build_laplacian(
             coefficient = -(std::exp(scale * (gradient * gradient)) + 1e-10);
             return std::isfinite(coefficient);
         };
-        return (x + 1 == grid.width || set_edge(laplacian.w_x[padded], 1, w_x)) &&
-               (y + 1 == grid.height || set_edge(laplacian.w_y[padded], y_step, w_y)) &&
-               (z + 1 == grid.depth || set_edge(laplacian.w_z[padded], z_step, w_z));
-    })) return std::nullopt;
-
-    std::size_t unknown = 0;
-    grid.visit_pixels([&](auto i, auto padded, auto z, auto y, auto x) {
+        if ((x + 1 != grid.width && !set_edge(laplacian.w_x[padded], 1, w_x)) ||
+            (y + 1 != grid.height && !set_edge(laplacian.w_y[padded], y_step, w_y)) ||
+            (z + 1 != grid.depth && !set_edge(laplacian.w_z[padded], z_step, w_z)))
+            return false;
         const bool seeded = markers.nodes[i] > 0;
         double diagonal = 0;
         const auto add = [&](int node, double coefficient) {
@@ -303,7 +283,7 @@ std::optional<Laplacian> build_laplacian(
             laplacian.padded_unknown[unknown++] = padded;
         }
         return true;
-    });
+    })) return std::nullopt;
     return laplacian;
 }
 
@@ -312,17 +292,9 @@ struct ConjugateGradient {
     std::vector<double> residual;
     std::vector<double> direction;
     std::vector<double> product;
-    double rho = 0;
-    double norm = 0;
-    double threshold = 0;
-    double previous = 0;
-    bool active = false;
-    bool converged = false;
 
     explicit ConjugateGradient(std::size_t size)
         : solution(size), residual(size), direction(size), product(size) {}
-
-    void initialize(const Laplacian& laplacian, const double* rhs, double tolerance, bool simd);
 };
 
 struct Reductions {
@@ -330,177 +302,128 @@ struct Reductions {
     double rho = 0;
 };
 
-void initial_residual(
-    const double* inverse, const double* residual, double* direction,
-    std::size_t begin, std::size_t end, Reductions& sums) {
-    for (auto i = begin; i < end; ++i) {
-        const double r = residual[i];
-        const double z = inverse[i] * r;
-        direction[i] = z;
-        sums.norm_squared += r * r;
-        sums.rho += r * z;
-    }
-}
-
-void update_residual(
-    ConjugateGradient& cg, const double* inverse, double alpha,
-    std::size_t begin, std::size_t end, Reductions& sums) {
-    for (auto i = begin; i < end; ++i) {
-        cg.solution[i] += alpha * cg.direction[i];
-        const double r = cg.residual[i] - alpha * cg.product[i];
-        const double z = inverse[i] * r;
-        cg.residual[i] = r;
-        cg.product[i] = z;  // The stencil product is consumed above.
-        sums.norm_squared += r * r;
-        sums.rho += r * z;
-    }
-}
-
-#if defined(SKIMAGEXX_AVX2)
-WALKER_AVX2 void initial_residual_avx2(
-    const double* inverse, const double* residual, double* direction,
-    std::size_t begin, std::size_t end, Reductions& sums) {
-    auto i = begin;
-    for (; i + 4 <= end; i += 4) {
-        const auto r = _mm256_loadu_pd(residual + i);
-        const auto z = _mm256_mul_pd(_mm256_loadu_pd(inverse + i), r);
-        _mm256_storeu_pd(direction + i, z);
-        sums.norm_squared = add_in_order(sums.norm_squared, _mm256_mul_pd(r, r));
-        sums.rho = add_in_order(sums.rho, _mm256_mul_pd(r, z));
-    }
-    initial_residual(inverse, residual, direction, i, end, sums);
-}
-
-WALKER_AVX2 std::size_t update_direction_avx2(
-    double* direction, const double* scaled, double beta, std::size_t begin, std::size_t end) {
-    const auto b = _mm256_set1_pd(beta);
-    auto i = begin;
-    for (; i + 4 <= end; i += 4) {
-        const auto p = _mm256_loadu_pd(direction + i);
-        const auto z = _mm256_loadu_pd(scaled + i);
-        _mm256_storeu_pd(direction + i, _mm256_add_pd(z, _mm256_mul_pd(b, p)));
-    }
-    return i;
-}
-
-WALKER_AVX2 void update_residual_avx2(
-    ConjugateGradient& cg, const double* inverse, double alpha,
-    std::size_t begin, std::size_t end, Reductions& sums) {
-    auto* solution = cg.solution.data();
-    auto* residual = cg.residual.data();
-    auto* product = cg.product.data();
-    const auto* direction = cg.direction.data();
-    const auto a = _mm256_set1_pd(alpha);
-    auto i = begin;
-    for (; i + 4 <= end; i += 4) {
-        const auto x = _mm256_loadu_pd(solution + i);
-        const auto p = _mm256_loadu_pd(direction + i);
-        const auto ap = _mm256_loadu_pd(product + i);
-        const auto update = _mm256_sub_pd(_mm256_loadu_pd(residual + i), _mm256_mul_pd(a, ap));
-        const auto z = _mm256_mul_pd(_mm256_loadu_pd(inverse + i), update);
-        _mm256_storeu_pd(solution + i, _mm256_add_pd(x, _mm256_mul_pd(a, p)));
-        _mm256_storeu_pd(residual + i, update);
-        _mm256_storeu_pd(product + i, z);
-        sums.norm_squared = add_in_order(sums.norm_squared, _mm256_mul_pd(update, update));
-        sums.rho = add_in_order(sums.rho, _mm256_mul_pd(update, z));
-    }
-    update_residual(cg, inverse, alpha, i, end, sums);
-}
-#endif
-
-void ConjugateGradient::initialize(
-    const Laplacian& laplacian, const double* rhs, double tolerance, [[maybe_unused]] bool simd) {
-    std::fill(solution.begin(), solution.end(), 0.0);
-    std::fill(residual.begin(), residual.end(), 0.0);
-    for (std::size_t i = 0; i < laplacian.padded_unknown.size(); ++i)
-        residual[laplacian.padded_unknown[i]] = rhs[i];
-    const auto* inverse = laplacian.inv_diag.data();
-    const auto& grid = laplacian.grid;
+template<bool Simd>
+Reductions update_residual(
+    double* x, double* r, const double* p, double* ap, const double* inverse,
+    std::size_t size, double alpha) {
+    std::size_t i = 0;
     Reductions sums;
-#if defined(SKIMAGEXX_AVX2)
-    if (simd)
-        initial_residual_avx2(inverse, residual.data(), direction.data(), grid.begin, grid.end, sums);
-    else
+#if defined(__SSE2__) || defined(_M_X64)
+    if constexpr (Simd) {
+        const auto a = _mm_set1_pd(alpha);
+        auto ordered_sums = _mm_setzero_pd();
+        for (; i + 2 <= size; i += 2) {
+            const auto advance = _mm_mul_pd(a, _mm_loadu_pd(p + i));
+            const auto update = _mm_sub_pd(_mm_loadu_pd(r + i), _mm_mul_pd(a, _mm_loadu_pd(ap + i)));
+            const auto z = _mm_mul_pd(_mm_loadu_pd(inverse + i), update);
+            _mm_storeu_pd(x + i, _mm_add_pd(_mm_loadu_pd(x + i), advance));
+            _mm_storeu_pd(r + i, update);
+            _mm_storeu_pd(ap + i, z);
+            const auto squares = _mm_mul_pd(update, update);
+            const auto dots = _mm_mul_pd(update, z);
+            ordered_sums = _mm_add_pd(ordered_sums, _mm_unpacklo_pd(squares, dots));
+            ordered_sums = _mm_add_pd(ordered_sums, _mm_unpackhi_pd(squares, dots));
+        }
+        sums.norm_squared = _mm_cvtsd_f64(ordered_sums);
+        sums.rho = _mm_cvtsd_f64(_mm_unpackhi_pd(ordered_sums, ordered_sums));
+    }
 #endif
-        initial_residual(inverse, residual.data(), direction.data(), grid.begin, grid.end, sums);
-    rho = sums.rho;
-    norm = std::sqrt(sums.norm_squared);
-    threshold = tolerance * norm;
-    active = true;
-    converged = false;
+    for (; i < size; ++i) {
+        x[i] += alpha * p[i];
+        const double update = r[i] - alpha * ap[i];
+        const double z = inverse[i] * update;
+        r[i] = update;
+        ap[i] = z;  // Reuse the consumed stencil product for the next direction update.
+        sums.norm_squared += update * update;
+        sums.rho += update * z;
+    }
+    return sums;
 }
 
-template<std::size_t Rhs, std::size_t Terms>
-void advance(
+template<bool Simd, std::size_t Terms>
+bool solve_cg(
     const std::array<StencilTerm, Terms>& terms, const Laplacian& laplacian,
-    const std::array<ConjugateGradient*, Rhs>& states, bool simd) {
+    ConjugateGradient& cg, Reductions sums, double tolerance) {
     const auto& grid = laplacian.grid;
-    std::array<const double*, Rhs> direction;
-    std::array<double*, Rhs> product;
-    for (std::size_t j = 0; j < Rhs; ++j) {
-        direction[j] = states[j]->direction.data() + grid.begin;
-        product[j] = states[j]->product.data() + grid.begin;
+    auto* const x = cg.solution.data() + grid.begin;
+    auto* const r = cg.residual.data() + grid.begin;
+    auto* const p = cg.direction.data() + grid.begin;
+    auto* const ap = cg.product.data() + grid.begin;
+    const auto* const inverse = laplacian.inv_diag.data() + grid.begin;
+    const auto span = grid.end - grid.begin;
+    const auto threshold = tolerance * std::sqrt(sums.norm_squared);
+    double previous = 0;
+    for (std::size_t iteration = 0; iteration < 10 * laplacian.padded_unknown.size(); ++iteration) {
+        const auto norm = std::sqrt(sums.norm_squared);
+        if (norm < threshold || norm == 0) return true;
+        const auto beta = iteration == 0 ? 0.0 : sums.rho / previous;
+        const auto curvature = apply_and_dot<Simd>(
+            terms, p, ap, span, beta, iteration != 0, std::make_index_sequence<Terms>{});
+        if (!(curvature > 0.0) || !std::isfinite(curvature)) return false;
+        previous = sums.rho;
+        sums = update_residual<Simd>(x, r, p, ap, inverse, span, previous / curvature);
     }
-    const auto curvature = apply_and_dot(terms, direction, product, grid.end - grid.begin, simd);
-    for (std::size_t j = 0; j < Rhs; ++j) {
-        auto& cg = *states[j];
-        if (!(curvature[j] > 0.0) || !std::isfinite(curvature[j])) {
-            cg.active = false;
-            continue;
-        }
-        const auto alpha = cg.rho / curvature[j];
-        const auto* inverse = laplacian.inv_diag.data();
-        Reductions sums;
-#if defined(SKIMAGEXX_AVX2)
-        if (simd)
-            update_residual_avx2(cg, inverse, alpha, grid.begin, grid.end, sums);
-        else
-#endif
-            update_residual(cg, inverse, alpha, grid.begin, grid.end, sums);
-        cg.previous = cg.rho;
-        cg.rho = sums.rho;
-        cg.norm = std::sqrt(sums.norm_squared);
-    }
+    return false;
 }
 
-template<bool Volume>
-void solve_pair(const Laplacian& laplacian, std::array<ConjugateGradient, 2>& states, bool simd) {
+template<bool Simd, bool Volume>
+bool solve_classes(
+    const Laplacian& laplacian, const Markers& markers, const RandomWalkerOptions& options,
+    RandomWalkerResult& result) {
+    const auto size = markers.nodes.size();
+    const auto unknowns = markers.unknown.size();
     const auto terms = stencil_terms<Volume>(laplacian);
-    const auto& grid = laplacian.grid;
-    for (std::size_t iteration = 0; iteration < 10 * laplacian.padded_unknown.size(); ++iteration) {
-        for (auto& cg : states) {
-            if (!cg.active) continue;
-            if (cg.norm < cg.threshold || cg.norm == 0) {
-                cg.converged = true;
-                cg.active = false;
-                continue;
-            }
-            if (iteration != 0) {
-                const auto beta = cg.rho / cg.previous;
-                auto i = grid.begin;
-#if defined(SKIMAGEXX_AVX2)
-                if (simd)
-                    i = update_direction_avx2(cg.direction.data(), cg.product.data(), beta, i, grid.end);
-#endif
-                for (; i < grid.end; ++i)
-                    cg.direction[i] = cg.product[i] + beta * cg.direction[i];
-            }
+    ConjugateGradient cg(laplacian.grid.storage);
+    std::vector<double> best(options.return_probabilities ? 0 : unknowns);
+    for (std::size_t label = 0; label < markers.count; ++label) {
+        if (label != 0) {
+            std::fill(cg.solution.begin(), cg.solution.end(), 0.0);
+            std::fill(cg.residual.begin(), cg.residual.end(), 0.0);
+            std::fill(cg.direction.begin(), cg.direction.end(), 0.0);
         }
-        if (states[0].active && states[1].active) {
-            advance(terms, laplacian, std::array{&states[0], &states[1]}, simd);
-        } else if (states[0].active || states[1].active) {
-            auto* remaining = states[0].active ? &states[0] : &states[1];
-            advance(terms, laplacian, std::array{remaining}, simd);
-        } else {
-            break;
+        const auto* rhs = laplacian.rhs.data() + label * unknowns;
+        Reductions sums;
+        for (std::size_t i = 0; i < unknowns; ++i) {
+            const auto pixel = laplacian.padded_unknown[i];
+            const auto r = rhs[i];
+            const auto z = laplacian.inv_diag[pixel] * r;
+            cg.residual[pixel] = r;
+            cg.direction[pixel] = z;
+            sums.norm_squared += r * r;
+            sums.rho += r * z;
+        }
+        if (!solve_cg<Simd>(terms, laplacian, cg, sums, options.tolerance))
+            result.convergence_warning = true;
+        for (std::size_t i = 0; i < unknowns; ++i) {
+            const double probability = cg.solution[laplacian.padded_unknown[i]];
+            if (!std::isfinite(probability)) return false;
+            if (probability < -options.probability_tolerance ||
+                probability > 1.0 + options.probability_tolerance)
+                result.probability_warning = true;
+            const auto pixel = markers.unknown[i];
+            if (options.return_probabilities) {
+                result.probabilities[label * size + pixel] = probability;
+            } else if (label == 0 || probability > best[i]) {
+                best[i] = probability;
+                result.labels[pixel] = static_cast<std::int64_t>(label + 1);
+            }
         }
     }
+    return true;
+}
+
+template<bool Simd>
+bool solve_grid(
+    const Laplacian& laplacian, const Markers& markers, const RandomWalkerOptions& options,
+    RandomWalkerResult& result) {
+    if (laplacian.grid.depth > 1)
+        return solve_classes<Simd, true>(laplacian, markers, options, result);
+    return solve_classes<Simd, false>(laplacian, markers, options, result);
 }
 
 std::optional<RandomWalkerResult> solve(
     const Laplacian& laplacian, const Markers& markers, const RandomWalkerOptions& options) {
     const auto size = markers.nodes.size();
-    const auto unknowns = markers.unknown.size();
     RandomWalkerResult result;
     result.classes = markers.count;
     if (options.return_probabilities)
@@ -508,38 +431,15 @@ std::optional<RandomWalkerResult> solve(
     else
         result.labels.assign(markers.nodes.begin(), markers.nodes.end());
 
-    std::array states{ConjugateGradient(laplacian.grid.storage),
-                      ConjugateGradient(markers.count > 1 ? laplacian.grid.storage : 0)};
-    const bool simd = has_avx2();
-    std::vector<double> best(options.return_probabilities ? 0 : unknowns);
-    for (std::size_t label = 0; label < markers.count; label += 2) {
-        const auto count = std::min<std::size_t>(markers.count - label, 2);
-        for (std::size_t j = 0; j < count; ++j)
-            states[j].initialize(laplacian, laplacian.rhs.data() + (label + j) * unknowns,
-                                 options.tolerance, simd);
-        if (count == 1) states[1].active = false;
-        if (laplacian.grid.depth > 1)
-            solve_pair<true>(laplacian, states, simd);
-        else
-            solve_pair<false>(laplacian, states, simd);
-        for (std::size_t j = 0; j < count; ++j) {
-            if (!states[j].converged) result.convergence_warning = true;
-            for (std::size_t i = 0; i < unknowns; ++i) {
-                const double probability = states[j].solution[laplacian.padded_unknown[i]];
-                if (!std::isfinite(probability)) return std::nullopt;
-                if (probability < -options.probability_tolerance ||
-                    probability > 1.0 + options.probability_tolerance)
-                    result.probability_warning = true;
-                const auto pixel = markers.unknown[i];
-                if (options.return_probabilities) {
-                    result.probabilities[(label + j) * size + pixel] = probability;
-                } else if (label + j == 0 || probability > best[i]) {
-                    best[i] = probability;
-                    result.labels[pixel] = static_cast<std::int64_t>(label + j + 1);
-                }
-            }
-        }
-    }
+    bool solved;
+#if defined(__SSE2__) || defined(_M_X64)
+    if (has_avx2())
+        solved = solve_grid<true>(laplacian, markers, options, result);
+    else
+#endif
+        solved = solve_grid<false>(laplacian, markers, options, result);
+    if (!solved) return std::nullopt;
+
     if (options.return_probabilities)
         for (std::size_t pixel = 0; pixel < size; ++pixel)
             if (const auto label = markers.nodes[pixel]; label > 0)
