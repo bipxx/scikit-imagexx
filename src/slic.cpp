@@ -26,6 +26,18 @@
 #endif
 
 namespace skimagexx {
+#ifdef SLIC_AVX2
+namespace simd {
+extern std::ptrdiff_t slic_assign_fixed(const float* image, const float* center, const float* x_distances,
+                                       float* distances, std::int32_t* nearest, std::ptrdiff_t length,
+                                       std::ptrdiff_t pixels, std::int32_t label, float spatial_yz,
+                                       float spatial_weight, bool rgb, bool& change);
+extern std::ptrdiff_t slic_assign_fixed(const double* image, const double* center, const double* x_distances,
+                                       double* distances, std::int32_t* nearest, std::ptrdiff_t length,
+                                       std::ptrdiff_t pixels, std::int32_t label, double spatial_yz,
+                                       double spatial_weight, bool rgb, bool& change);
+}
+#endif
 namespace {
 
 using Index = std::ptrdiff_t;
@@ -340,11 +352,19 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
                         Index x = x_min;
 #ifdef SLIC_AVX2
                         if (vectorized && x_max - x_min >= Index(32 / sizeof(T))) {
-                            const auto consumed = assign_vector<T, FixedChannels, Scale>(
-                                image + offset, center + 3, x_distances.data() + x_min,
-                                distances.data() + offset, nearest + offset, x_max - x_min,
-                                channels, volume.pixels, label, color_scale, spatial_yz,
-                                spatial_weight, change);
+                            Index consumed;
+                            if constexpr (FixedChannels != 0 && !Scale) {
+                                consumed = simd::slic_assign_fixed(
+                                    image + offset, center + 3, x_distances.data() + x_min,
+                                    distances.data() + offset, nearest + offset, x_max - x_min,
+                                    volume.pixels, label, spatial_yz, spatial_weight, FixedChannels == 3, change);
+                            } else {
+                                consumed = assign_vector<T, FixedChannels, Scale>(
+                                    image + offset, center + 3, x_distances.data() + x_min,
+                                    distances.data() + offset, nearest + offset, x_max - x_min,
+                                    channels, volume.pixels, label, color_scale, spatial_yz,
+                                    spatial_weight, change);
+                            }
                             offset += consumed;
                             x += consumed;
                         }

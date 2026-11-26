@@ -14,6 +14,10 @@
 #include <type_traits>
 #include <unordered_set>
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
+
 namespace skimagexx {
 namespace {
 
@@ -108,6 +112,18 @@ public:
 
         std::size_t parent = 0;
         for (auto left = 1u + arity * parent; left < size_; left = 1u + arity * parent) {
+            if constexpr (Ordered) {
+                if (size_ - left >= arity) {
+                    const auto first = left + smaller(items[left + 1], items[left]);
+                    const auto second = left + 2 + smaller(items[left + 3], items[left + 2]);
+                    const auto best = smaller(items[second], items[first]) ? second : first;
+                    if (!smaller(items[best], last))
+                        break;
+                    items[parent] = items[best];
+                    parent = best;
+                    continue;
+                }
+            }
             // Start with the displaced entry to preserve the binary heap's
             // behavior when floating-point comparisons are unordered.
             const Entry* next = &last;
@@ -197,12 +213,24 @@ double distance(Position a, Position b, const std::vector<Index>& strides) {
 // preserves the stock conversion when the insertion counter crosses INT_MAX.
 constexpr std::uint32_t seed_age = UINT32_C(0x80000000);
 
+WATERSHED_INLINE unsigned first_active_neighbor(unsigned bits) {
+#if defined(_MSC_VER)
+    unsigned long lane;
+    _BitScanForward(&lane, bits);
+    return static_cast<unsigned>(lane);
+#else
+    return static_cast<unsigned>(__builtin_ctz(bits));
+#endif
+}
+
 template<class T, class Position, bool Compact, bool Line, class Queue>
 void flood(const double* image, T* labels,
            std::vector<std::uint8_t>& mask, const std::vector<Index>& neighbors,
            const std::vector<Index>& strides, double compactness,
            Position axis2_width, const std::vector<Position>& row_indices,
            Queue& heap) {
+    // Padding keeps all four reads in bounds, including on the image edge.
+    const Position axis2_offsets[] = {-axis2_width, -1, 1, axis2_width};
     std::uint32_t age = seed_age + 1;
     while (!heap.empty()) {
         const auto item = heap.pop();
@@ -241,8 +269,6 @@ void flood(const double* image, T* labels,
             }
         }
         const auto visit = [&](Position next, int row_step, int column_step) {
-            if (!mask[next] || (Line && labels[next]))
-                return;
             double value = image[next];
             if constexpr (Compact) {
                 double separation;
@@ -263,13 +289,31 @@ void flood(const double* image, T* labels,
             heap.push(value, ++age, next, source);
         };
         if (axis2_width) {
-            visit(item.index - axis2_width, -1, 0);
-            visit(item.index - 1, 0, -1);
-            visit(item.index + 1, 0, 1);
-            visit(item.index + axis2_width, 1, 0);
+            if constexpr (!Compact && !Line) {
+                const auto* active = mask.data() + item.index;
+                unsigned bits = unsigned(active[-axis2_width]) | (unsigned(active[-1]) << 1) |
+                                (unsigned(active[1]) << 2) | (unsigned(active[axis2_width]) << 3);
+                while (bits) {
+                    const auto lane = first_active_neighbor(bits);
+                    visit(item.index + axis2_offsets[lane], 0, 0);
+                    bits &= bits - 1;
+                }
+                continue;
+            }
+            const auto visit_active = [&](Position next, int row_step, int column_step) {
+                if (mask[next] && (!Line || !labels[next]))
+                    visit(next, row_step, column_step);
+            };
+            visit_active(item.index - axis2_width, -1, 0);
+            visit_active(item.index - 1, 0, -1);
+            visit_active(item.index + 1, 0, 1);
+            visit_active(item.index + axis2_width, 1, 0);
         } else {
-            for (const auto offset : neighbors)
-                visit(static_cast<Position>(item.index + offset), 0, 0);
+            for (const auto offset : neighbors) {
+                const auto next = static_cast<Position>(item.index + offset);
+                if (mask[next] && (!Line || !labels[next]))
+                    visit(next, 0, 0);
+            }
         }
     }
 }

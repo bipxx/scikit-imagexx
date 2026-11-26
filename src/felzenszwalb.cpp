@@ -19,6 +19,12 @@
 #endif
 
 namespace skimagexx {
+#ifdef FELZENSZWALB_AVX2
+namespace simd {
+extern std::ptrdiff_t felzenszwalb_rgb_cost_row(const double* a, const double* b,
+                                              double* out, std::ptrdiff_t cols);
+}
+#endif
 namespace {
 
 using Index = std::ptrdiff_t;
@@ -94,7 +100,10 @@ void fill_costs(const double* image, double* out, Index height, Index width, Ind
 #ifdef FELZENSZWALB_AVX2
             if constexpr (fixed_channels != 0) {
                 if (vectorized && cols >= 4) {
-                    col = fill_cost_row_avx2<fixed_channels>(a, b, out, cols);
+                    if constexpr (fixed_channels == 3)
+                        col = simd::felzenszwalb_rgb_cost_row(a, b, out, cols);
+                    else
+                        col = fill_cost_row_avx2<fixed_channels>(a, b, out, cols);
                     a += col * channels;
                     b += col * channels;
                     out += col;
@@ -119,9 +128,14 @@ void fill_costs(const double* image, double* out, Index height, Index width, Ind
 
 template<class Position>
 Position find_root(Position* parent, Position pixel) {
-    while (parent[pixel] != pixel) {
-        parent[pixel] = parent[parent[pixel]];
-        pixel = parent[pixel];
+    auto next = parent[pixel];
+    while (next != pixel) {
+        const auto grandparent = parent[next];
+        if (next == grandparent)
+            return next;
+        parent[pixel] = grandparent;
+        pixel = grandparent;
+        next = parent[pixel];
     }
     return pixel;
 }

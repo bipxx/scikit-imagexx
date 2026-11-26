@@ -10,6 +10,125 @@
 #include <vector>
 
 namespace skimagexx::simd {
+std::ptrdiff_t felzenszwalb_rgb_cost_row(const double* a, const double* b,
+                                       double* out, std::ptrdiff_t cols) {
+    const auto squared_difference = [](const double* first, const double* second) {
+        const auto difference = _mm256_sub_pd(_mm256_loadu_pd(first), _mm256_loadu_pd(second));
+        return _mm256_mul_pd(difference, difference);
+    };
+    const auto end = cols - cols % 4;
+    for (std::ptrdiff_t x = 0; x < end; x += 4, a += 12, b += 12) {
+        // Three contiguous vectors hold the squared differences of four RGB
+        // pixels. Assemble channels before adding in scalar channel order.
+        const auto first = squared_difference(a, b);
+        const auto middle = squared_difference(a + 4, b + 4);
+        const auto last = squared_difference(a + 8, b + 8);
+        const auto r = _mm256_blend_pd(_mm256_blend_pd(
+            _mm256_permute4x64_pd(first, _MM_SHUFFLE(0, 0, 3, 0)),
+            _mm256_permute4x64_pd(middle, _MM_SHUFFLE(0, 2, 0, 0)), 0x4),
+            _mm256_permute4x64_pd(last, _MM_SHUFFLE(1, 0, 0, 0)), 0x8);
+        const auto g = _mm256_blend_pd(_mm256_blend_pd(
+            _mm256_permute4x64_pd(first, _MM_SHUFFLE(0, 0, 0, 1)),
+            _mm256_permute4x64_pd(middle, _MM_SHUFFLE(0, 3, 0, 0)), 0x6),
+            _mm256_permute4x64_pd(last, _MM_SHUFFLE(2, 0, 0, 0)), 0x8);
+        const auto blue = _mm256_blend_pd(_mm256_blend_pd(
+            _mm256_permute4x64_pd(first, _MM_SHUFFLE(0, 0, 0, 2)),
+            _mm256_permute4x64_pd(middle, _MM_SHUFFLE(0, 0, 1, 0)), 0x2),
+            _mm256_permute4x64_pd(last, _MM_SHUFFLE(3, 0, 0, 0)), 0xc);
+        const auto sum = _mm256_add_pd(_mm256_add_pd(r, g), blue);
+        _mm256_storeu_pd(out + x, _mm256_sqrt_pd(sum));
+    }
+    return end;
+}
+
+namespace {
+template<bool RGB>
+std::ptrdiff_t slic_assign_float_row(const float* image, const float* center, const float* x_distances,
+                                     float* distances, std::int32_t* nearest, std::ptrdiff_t length,
+                                     std::ptrdiff_t pixels, std::int32_t label, float spatial_yz,
+                                     float spatial_weight, bool& change) {
+    const auto yz = _mm256_set1_ps(spatial_yz);
+    const auto weight = _mm256_set1_ps(spatial_weight);
+    const auto labels = _mm256_set1_epi32(label);
+    const auto c0 = _mm256_set1_ps(center[0]);
+    const auto c1 = RGB ? _mm256_set1_ps(center[1]) : _mm256_setzero_ps();
+    const auto c2 = RGB ? _mm256_set1_ps(center[2]) : _mm256_setzero_ps();
+    std::ptrdiff_t x = 0;
+    for (; x + 8 <= length; x += 8) {
+        const auto d0 = _mm256_sub_ps(_mm256_loadu_ps(image + x), c0);
+        auto color = _mm256_mul_ps(d0, d0);
+        if constexpr (RGB) {
+            const auto d1 = _mm256_sub_ps(_mm256_loadu_ps(image + pixels + x), c1);
+            const auto d2 = _mm256_sub_ps(_mm256_loadu_ps(image + 2 * pixels + x), c2);
+            color = _mm256_add_ps(_mm256_add_ps(color, _mm256_mul_ps(d1, d1)), _mm256_mul_ps(d2, d2));
+        }
+        const auto space = _mm256_add_ps(yz, _mm256_loadu_ps(x_distances + x));
+        const auto distance = _mm256_add_ps(_mm256_mul_ps(space, weight), color);
+        const auto previous = _mm256_loadu_ps(distances + x);
+        const auto mask = _mm256_cmp_ps(previous, distance, _CMP_GT_OQ);
+        if (_mm256_movemask_ps(mask)) {
+            _mm256_storeu_ps(distances + x, _mm256_blendv_ps(previous, distance, mask));
+            _mm256_maskstore_epi32(nearest + x, _mm256_castps_si256(mask), labels);
+            change = true;
+        }
+    }
+    return x;
+}
+
+template<bool RGB>
+std::ptrdiff_t slic_assign_double_row(const double* image, const double* center, const double* x_distances,
+                                      double* distances, std::int32_t* nearest, std::ptrdiff_t length,
+                                      std::ptrdiff_t pixels, std::int32_t label, double spatial_yz,
+                                      double spatial_weight, bool& change) {
+    const auto yz = _mm256_set1_pd(spatial_yz);
+    const auto weight = _mm256_set1_pd(spatial_weight);
+    const auto labels = _mm_set1_epi32(label);
+    const auto label_lanes = _mm256_setr_epi32(0, 2, 4, 6, 0, 0, 0, 0);
+    const auto c0 = _mm256_set1_pd(center[0]);
+    const auto c1 = RGB ? _mm256_set1_pd(center[1]) : _mm256_setzero_pd();
+    const auto c2 = RGB ? _mm256_set1_pd(center[2]) : _mm256_setzero_pd();
+    std::ptrdiff_t x = 0;
+    for (; x + 4 <= length; x += 4) {
+        const auto d0 = _mm256_sub_pd(_mm256_loadu_pd(image + x), c0);
+        auto color = _mm256_mul_pd(d0, d0);
+        if constexpr (RGB) {
+            const auto d1 = _mm256_sub_pd(_mm256_loadu_pd(image + pixels + x), c1);
+            const auto d2 = _mm256_sub_pd(_mm256_loadu_pd(image + 2 * pixels + x), c2);
+            color = _mm256_add_pd(_mm256_add_pd(color, _mm256_mul_pd(d1, d1)), _mm256_mul_pd(d2, d2));
+        }
+        const auto space = _mm256_add_pd(yz, _mm256_loadu_pd(x_distances + x));
+        const auto distance = _mm256_add_pd(_mm256_mul_pd(space, weight), color);
+        const auto previous = _mm256_loadu_pd(distances + x);
+        const auto mask = _mm256_cmp_pd(previous, distance, _CMP_GT_OQ);
+        if (_mm256_movemask_pd(mask)) {
+            const auto label_mask = _mm256_permutevar8x32_epi32(_mm256_castpd_si256(mask), label_lanes);
+            _mm256_storeu_pd(distances + x, _mm256_blendv_pd(previous, distance, mask));
+            _mm_maskstore_epi32(nearest + x, _mm256_castsi256_si128(label_mask), labels);
+            change = true;
+        }
+    }
+    return x;
+}
+} // namespace
+
+std::ptrdiff_t slic_assign_fixed(const float* image, const float* center, const float* x_distances,
+                                float* distances, std::int32_t* nearest, std::ptrdiff_t length,
+                                std::ptrdiff_t pixels, std::int32_t label, float spatial_yz,
+                                float spatial_weight, bool rgb, bool& change) {
+    const auto assign = rgb ? slic_assign_float_row<true> : slic_assign_float_row<false>;
+    return assign(image, center, x_distances, distances, nearest, length, pixels, label,
+                  spatial_yz, spatial_weight, change);
+}
+
+std::ptrdiff_t slic_assign_fixed(const double* image, const double* center, const double* x_distances,
+                                double* distances, std::int32_t* nearest, std::ptrdiff_t length,
+                                std::ptrdiff_t pixels, std::int32_t label, double spatial_yz,
+                                double spatial_weight, bool rgb, bool& change) {
+    const auto assign = rgb ? slic_assign_double_row<true> : slic_assign_double_row<false>;
+    return assign(image, center, x_distances, distances, nearest, length, pixels, label,
+                  spatial_yz, spatial_weight, change);
+}
+
 bool gaussian_fold_safe(const double* input,std::size_t count) {
     const double limit = std::numeric_limits<double>::max()/4;
     std::int64_t limit_bits;

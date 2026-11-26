@@ -14,10 +14,10 @@ namespace py = pybind11;
 namespace {
 
 using Index = std::ptrdiff_t;
-static_assert(sizeof(double) == sizeof(std::uint64_t));
+static_assert(std::numeric_limits<float>::is_iec559 && sizeof(float) == sizeof(std::uint32_t));
 
 struct RadixEdge {
-    std::uint64_t key;
+    std::uint32_t key;
     std::uint32_t index;
 };
 
@@ -27,17 +27,19 @@ std::unique_ptr<Index[]> unique_cost_order(const double* costs, Index count) {
 
     constexpr unsigned bits = 11;
     constexpr unsigned buckets = 1u << bits;
-    constexpr unsigned passes = (64u + bits - 1) / bits;
+    constexpr unsigned passes = 3;
     constexpr auto mask = buckets - 1;
     std::array<std::array<std::uint32_t, buckets>, passes> histograms{};
     std::unique_ptr<RadixEdge[]> edges(new RadixEdge[count]);
     std::unique_ptr<RadixEdge[]> scratch(new RadixEdge[count]);
     for (Index i = 0; i < count; ++i) {
-        // Costs are nonnegative finite square roots. Unsigned IEEE-754 bits
-        // order them numerically, and the zero check coalesces signed zeros.
-        std::uint64_t key = 0;
-        if (costs[i] != 0)
-            std::memcpy(&key, costs + i, sizeof(key));
+        // A float key orders nonnegative costs monotonically. Clamp before
+        // narrowing to avoid overflow or underflow for extreme double costs.
+        const auto cost = costs[i];
+        const float narrow = cost < std::numeric_limits<float>::min() ? 0.0f :
+            static_cast<float>(std::min(cost, double(std::numeric_limits<float>::max())));
+        std::uint32_t key;
+        std::memcpy(&key, &narrow, sizeof(key));
         edges[i] = {key, static_cast<std::uint32_t>(i)};
         for (unsigned pass = 0; pass < passes; ++pass)
             ++histograms[pass][(key >> (pass * bits)) & mask];
@@ -61,9 +63,30 @@ std::unique_ptr<Index[]> unique_cost_order(const double* costs, Index count) {
         edges.swap(scratch);
     }
 
-    for (Index i = 1; i < count; ++i)
-        if (edges[i - 1].key == edges[i].key)
-            return {};
+    // Refine float-key collisions with the original double costs. True ties
+    // require NumPy's runtime-specific argsort order across the whole array.
+    for (Index first = 0; first + 1 < count;) {
+        Index end = first + 1;
+        if (edges[first].key == edges[end].key) {
+            if (costs[edges[first].index] == costs[edges[end].index])
+                return {};
+            while (end < count && edges[first].key == edges[end].key)
+                ++end;
+            const auto less = [&](RadixEdge a, RadixEdge b) {
+                return costs[a.index] < costs[b.index];
+            };
+            if (end - first == 2) {
+                if (less(edges[first + 1], edges[first]))
+                    std::swap(edges[first], edges[first + 1]);
+            } else {
+                std::sort(edges.get() + first, edges.get() + end, less);
+            }
+            for (Index i = first + 1; i < end; ++i)
+                if (costs[edges[i - 1].index] == costs[edges[i].index])
+                    return {};
+        }
+        first = end;
+    }
     std::unique_ptr<Index[]> order(new Index[count]);
     for (Index i = 0; i < count; ++i)
         order[i] = edges[i].index;
