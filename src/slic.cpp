@@ -15,9 +15,14 @@
 #include <type_traits>
 #include <vector>
 
-#if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
-#include <emmintrin.h>
-#define SLIC_SSE2
+#if defined(SKIMAGEXX_AVX2) && (defined(__x86_64__) || defined(__i386__) || defined(_M_X64) || defined(_M_IX86))
+#include <immintrin.h>
+#define SLIC_AVX2
+#if defined(__GNUC__) || defined(__clang__)
+#define SLIC_AVX2_TARGET __attribute__((target("avx2"), noinline))
+#else
+#define SLIC_AVX2_TARGET __declspec(noinline)
+#endif
 #endif
 
 namespace skimagexx {
@@ -94,7 +99,8 @@ void connect_2d(const Volume& volume, const Label* labels, Index* output,
     const Index missing = start - 1;
     std::fill_n(output, pixels, missing);
     const auto limit = static_cast<std::size_t>(max_size);
-    std::unique_ptr<Pixel[]> queue(new Pixel[limit]);
+    std::vector<Pixel> queue;
+    queue.reserve(limit);
     Index next_label = start;
     Offset origin = 0;
     while (origin < pixels) {
@@ -104,20 +110,20 @@ void connect_2d(const Volume& volume, const Label* labels, Index* output,
                 continue;
             Index adjacent = next_label;
             output[origin] = next_label;
-            queue[0] = {origin, x};
-            std::size_t queued = 1;
+            queue.clear();
+            queue.push_back({origin, x});
             const auto visit = [&](Offset offset, Offset column) {
                 const Index previous = output[offset];
                 if (labels[offset] == label && previous == missing) {
                     output[offset] = next_label;
-                    queue[queued++] = {offset, column};
-                    return queued == limit;
+                    queue.push_back({offset, column});
+                    return queue.size() == limit;
                 }
                 if (previous != missing && previous != next_label)
                     adjacent = previous;
                 return false;
             };
-            for (std::size_t visited = 0; visited < queued && queued < limit; ++visited) {
+            for (std::size_t visited = 0; visited < queue.size() && queue.size() < limit; ++visited) {
                 const auto [offset, column] = queue[visited];
                 if ((column + 1 < width && visit(offset + 1, column + 1)) ||
                     (column > 0 && visit(offset - 1, column - 1)) ||
@@ -126,9 +132,9 @@ void connect_2d(const Volume& volume, const Label* labels, Index* output,
                 if (offset >= width)
                     visit(offset - width, column);
             }
-            if (queued < static_cast<std::size_t>(min_size)) {
-                for (std::size_t i = 0; i < queued; ++i)
-                    output[queue[i].offset] = adjacent;
+            if (queue.size() < static_cast<std::size_t>(min_size)) {
+                for (const auto& point : queue)
+                    output[point.offset] = adjacent;
             } else {
                 ++next_label;
             }
@@ -204,77 +210,60 @@ T color_distance(const T* values, const T* center, Index channels, Index plane_s
     return result;
 }
 
-#ifdef SLIC_SSE2
+#ifdef SLIC_AVX2
 template<class T, Index FixedChannels, bool Scale>
-Index assign_vector(const T* image, const T* center, const T* x_distances,
-                    T* distances, Label* nearest, Index length,
-                    Index channels, Index pixels, Label label, T color_scale,
-                    T spatial_yz, T spatial_weight, bool& change) {
-    const auto count = FixedChannels ? FixedChannels : channels;
-    const auto labels = _mm_set1_epi32(label);
-    int changed = 0;
+SLIC_AVX2_TARGET Index assign_vector(const T* image, const T* center, const T* x_distances,
+                                    T* distances, Label* nearest, Index length, Index channels,
+                                    Index pixels, Label label, T color_scale, T spatial_yz,
+                                    T spatial_weight, bool& change) {
     Index x = 0;
+    int changed = 0;
+    const auto labels = _mm256_set1_epi32(label);
+    const auto count = FixedChannels ? FixedChannels : channels;
     if constexpr (std::is_same_v<T, double>) {
-        const auto yz = _mm_set1_pd(spatial_yz);
-        const auto weight = _mm_set1_pd(spatial_weight);
-        const auto scale = _mm_set1_pd(color_scale);
-        for (; x + 2 <= length; x += 2) {
-            const auto spatial = _mm_mul_pd(_mm_add_pd(yz, _mm_loadu_pd(x_distances + x)), weight);
-            const auto previous = _mm_loadu_pd(distances + x);
-            if (!_mm_movemask_pd(_mm_cmplt_pd(spatial, previous)))
-                continue;
-            auto color = _mm_setzero_pd();
+        const auto yz = _mm256_set1_pd(spatial_yz);
+        const auto weight = _mm256_set1_pd(spatial_weight);
+        const auto scale = _mm256_set1_pd(color_scale);
+        const auto mask_lanes = _mm256_setr_epi32(0, 2, 4, 6, 0, 0, 0, 0);
+        for (; x + 4 <= length; x += 4) {
+            auto color = _mm256_setzero_pd();
             for (Index c = 0; c < count; ++c) {
-                const auto difference = _mm_sub_pd(_mm_loadu_pd(image + c * pixels + x),
-                                                   _mm_set1_pd(center[c]));
-                color = _mm_add_pd(color, _mm_mul_pd(difference, difference));
+                const auto difference = _mm256_sub_pd(_mm256_loadu_pd(image + c * pixels + x),
+                                                       _mm256_set1_pd(center[c]));
+                color = _mm256_add_pd(color, _mm256_mul_pd(difference, difference));
             }
             if constexpr (Scale)
-                color = _mm_div_pd(color, scale);
-            const auto distance = _mm_add_pd(spatial, color);
-            const auto mask = _mm_cmplt_pd(distance, previous);
-            const auto updated = _mm_movemask_pd(mask);
-            if (updated) {
-                _mm_storeu_pd(distances + x, _mm_or_pd(_mm_and_pd(mask, distance),
-                                                       _mm_andnot_pd(mask, previous)));
-                const auto label_mask = _mm_shuffle_epi32(_mm_castpd_si128(mask),
-                                                           _MM_SHUFFLE(2, 0, 2, 0));
-                auto* current = reinterpret_cast<__m128i*>(nearest + x);
-                const auto old_labels = _mm_loadl_epi64(current);
-                _mm_storel_epi64(current, _mm_or_si128(_mm_and_si128(label_mask, labels),
-                                                      _mm_andnot_si128(label_mask, old_labels)));
-                changed = 1;
-            }
+                color = _mm256_div_pd(color, scale);
+            const auto space = _mm256_add_pd(yz, _mm256_loadu_pd(x_distances + x));
+            const auto distance = _mm256_add_pd(_mm256_mul_pd(space, weight), color);
+            const auto previous = _mm256_loadu_pd(distances + x);
+            const auto mask = _mm256_cmp_pd(previous, distance, _CMP_GT_OQ);
+            const auto label_mask = _mm256_permutevar8x32_epi32(_mm256_castpd_si256(mask), mask_lanes);
+            _mm256_storeu_pd(distances + x, _mm256_blendv_pd(previous, distance, mask));
+            _mm_maskstore_epi32(nearest + x, _mm256_castsi256_si128(label_mask),
+                                _mm256_castsi256_si128(labels));
+            changed |= _mm256_movemask_pd(mask);
         }
     } else {
-        const auto yz = _mm_set1_ps(spatial_yz);
-        const auto weight = _mm_set1_ps(spatial_weight);
-        const auto scale = _mm_set1_ps(color_scale);
-        for (; x + 4 <= length; x += 4) {
-            const auto spatial = _mm_mul_ps(_mm_add_ps(yz, _mm_loadu_ps(x_distances + x)), weight);
-            const auto previous = _mm_loadu_ps(distances + x);
-            if (!_mm_movemask_ps(_mm_cmplt_ps(spatial, previous)))
-                continue;
-            auto color = _mm_setzero_ps();
+        const auto yz = _mm256_set1_ps(spatial_yz);
+        const auto weight = _mm256_set1_ps(spatial_weight);
+        const auto scale = _mm256_set1_ps(color_scale);
+        for (; x + 8 <= length; x += 8) {
+            auto color = _mm256_setzero_ps();
             for (Index c = 0; c < count; ++c) {
-                const auto difference = _mm_sub_ps(_mm_loadu_ps(image + c * pixels + x),
-                                                   _mm_set1_ps(center[c]));
-                color = _mm_add_ps(color, _mm_mul_ps(difference, difference));
+                const auto difference = _mm256_sub_ps(_mm256_loadu_ps(image + c * pixels + x),
+                                                       _mm256_set1_ps(center[c]));
+                color = _mm256_add_ps(color, _mm256_mul_ps(difference, difference));
             }
             if constexpr (Scale)
-                color = _mm_div_ps(color, scale);
-            const auto distance = _mm_add_ps(spatial, color);
-            const auto mask = _mm_cmplt_ps(distance, previous);
-            if (_mm_movemask_ps(mask)) {
-                _mm_storeu_ps(distances + x, _mm_or_ps(_mm_and_ps(mask, distance),
-                                                       _mm_andnot_ps(mask, previous)));
-                const auto label_mask = _mm_castps_si128(mask);
-                auto* current = reinterpret_cast<__m128i*>(nearest + x);
-                const auto old_labels = _mm_loadu_si128(current);
-                _mm_storeu_si128(current, _mm_or_si128(_mm_and_si128(label_mask, labels),
-                                                      _mm_andnot_si128(label_mask, old_labels)));
-                changed = 1;
-            }
+                color = _mm256_div_ps(color, scale);
+            const auto space = _mm256_add_ps(yz, _mm256_loadu_ps(x_distances + x));
+            const auto distance = _mm256_add_ps(_mm256_mul_ps(space, weight), color);
+            const auto previous = _mm256_loadu_ps(distances + x);
+            const auto mask = _mm256_cmp_ps(previous, distance, _CMP_GT_OQ);
+            _mm256_storeu_ps(distances + x, _mm256_blendv_ps(previous, distance, mask));
+            _mm256_maskstore_epi32(nearest + x, _mm256_castps_si256(mask), labels);
+            changed |= _mm256_movemask_ps(mask);
         }
     }
     change |= changed != 0;
@@ -303,7 +292,7 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
         ? std::numeric_limits<T>::infinity() : std::numeric_limits<T>::max();
     const auto start = static_cast<Label>(options.start_label);
     const Label missing = start - 1;
-#ifdef SLIC_SSE2
+#ifdef SLIC_AVX2
     const bool vectorized = has_avx2();
 #endif
 
@@ -349,8 +338,8 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
                         const T spatial_yz = dz + square(sy * (cy - T(y)));
                         Index offset = z * volume.plane + y * width + x_min;
                         Index x = x_min;
-#ifdef SLIC_SSE2
-                        if (vectorized && x_max - x_min >= Index(16 / sizeof(T))) {
+#ifdef SLIC_AVX2
+                        if (vectorized && x_max - x_min >= Index(32 / sizeof(T))) {
                             const auto consumed = assign_vector<T, FixedChannels, Scale>(
                                 image + offset, center + 3, x_distances.data() + x_min,
                                 distances.data() + offset, nearest + offset, x_max - x_min,
@@ -361,13 +350,10 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
                         }
 #endif
                         for (; x < x_max; ++x, ++offset) {
-                            const T spatial = (spatial_yz + x_distances[x]) * spatial_weight;
-                            if (spatial >= distances[offset])
-                                continue;
                             T color = color_distance(image + offset, center + 3, channels, volume.pixels);
                             if constexpr (Scale)
                                 color /= color_scale;
-                            const T distance = spatial + color;
+                            const T distance = (spatial_yz + x_distances[x]) * spatial_weight + color;
                             if (distances[offset] > distance) {
                                 nearest[offset] = label;
                                 distances[offset] = distance;

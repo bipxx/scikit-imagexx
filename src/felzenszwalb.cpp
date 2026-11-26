@@ -1,12 +1,22 @@
 #include "skimagexx/felzenszwalb.hpp"
+#include "skimagexx/image.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <limits>
 #include <memory>
+#include <numeric>
 #include <utility>
 #include <vector>
+
+#if defined(SKIMAGEXX_AVX2) && (defined(__GNUC__) || defined(__clang__))
+#include <immintrin.h>
+#define FELZENSZWALB_AVX2 __attribute__((target("avx2,no-fma"), noinline))
+#elif defined(SKIMAGEXX_AVX2) && defined(_MSC_VER)
+#include <immintrin.h>
+#define FELZENSZWALB_AVX2 __declspec(noinline)
+#endif
 
 namespace skimagexx {
 namespace {
@@ -44,49 +54,74 @@ struct GridEdges {
     }
 };
 
-template<Index FixedChannels>
-void fill_costs(const double* image, double* out, Index height, Index width, Index channels) {
-    const GridEdges edges(height, width);
-    const auto count = FixedChannels ? FixedChannels : channels;
-    const auto cost = [count](const double* a, const double* b) {
-        double squared = 0;
-        for (Index c = 0; c < count; ++c) {
-            const double difference = a[c] - b[c];
-            squared += difference * difference;
+#ifdef FELZENSZWALB_AVX2
+template<Index Channels>
+FELZENSZWALB_AVX2 Index fill_cost_row_avx2(const double* a, const double* b, double* out, Index cols) {
+    const auto offsets = _mm256_setr_epi64x(0, Channels, 2 * Channels, 3 * Channels);
+    const Index end = cols - cols % 4;
+    for (Index col = 0; col < end; col += 4, a += 4 * Channels, b += 4 * Channels) {
+        auto squared = _mm256_setzero_pd();
+        for (Index channel = 0; channel < Channels; ++channel) {
+            __m256d first, second;
+            if constexpr (Channels == 1) {
+                first = _mm256_loadu_pd(a);
+                second = _mm256_loadu_pd(b);
+            } else {
+                first = _mm256_i64gather_pd(a + channel, offsets, sizeof(double));
+                second = _mm256_i64gather_pd(b + channel, offsets, sizeof(double));
+            }
+            const auto difference = _mm256_sub_pd(first, second);
+            squared = _mm256_add_pd(squared, _mm256_mul_pd(difference, difference));
         }
-        return std::sqrt(squared);
-    };
-    auto* right = out;
-    auto* down = out + edges.right;
-    auto* diagonal = out + edges.down_end;
-    auto* other_diagonal = out + edges.diagonal_end;
-    const Index row_stride = width * channels;
-    for (Index y = 1; y < height; ++y) {
-        const auto* top = image;
-        const auto* bottom = top + row_stride;
-        for (Index x = 1; x < width; ++x, top += channels, bottom += channels) {
-            *right++ = cost(top, top + channels);
-            *down++ = cost(top, bottom);
-            *diagonal++ = cost(top, bottom + channels);
-            *other_diagonal++ = cost(top + channels, bottom);
-        }
-        *down++ = cost(top, bottom);
-        image += row_stride;
+        _mm256_storeu_pd(out + col, _mm256_sqrt_pd(squared));
     }
-    for (Index x = 1; x < width; ++x, image += channels)
-        *right++ = cost(image, image + channels);
+    return end;
+}
+#endif
+
+template<Index fixed_channels>
+void fill_costs(const double* image, double* out, Index height, Index width, Index channels) {
+    const auto count = fixed_channels ? fixed_channels : channels;
+#ifdef FELZENSZWALB_AVX2
+    const bool vectorized = fixed_channels && has_avx2();
+#endif
+    const auto fill = [&](Index rows, Index cols, Index first, Index delta) {
+        if (cols == 0) return;
+        for (Index row = 0; row < rows; ++row) {
+            const auto* a = image + (row * width + first) * channels;
+            const auto* b = a + delta * channels;
+            Index col = 0;
+#ifdef FELZENSZWALB_AVX2
+            if constexpr (fixed_channels != 0) {
+                if (vectorized && cols >= 4) {
+                    col = fill_cost_row_avx2<fixed_channels>(a, b, out, cols);
+                    a += col * channels;
+                    b += col * channels;
+                    out += col;
+                }
+            }
+#endif
+            for (; col < cols; ++col, a += channels, b += channels) {
+                double squared = 0;
+                for (Index channel = 0; channel < count; ++channel) {
+                    const double difference = a[channel] - b[channel];
+                    squared += difference * difference;
+                }
+                *out++ = std::sqrt(squared);
+            }
+        }
+    };
+    fill(height, width - 1, 0, 1);
+    fill(height - 1, width, 0, width);
+    fill(height - 1, width - 1, 0, width + 1);
+    fill(height - 1, width - 1, 1, width - 1);
 }
 
 template<class Position>
 Position find_root(Position* parent, Position pixel) {
-    auto next = parent[pixel];
-    while (next >= 0) {
-        const auto grandparent = parent[next];
-        if (grandparent < 0)
-            return next;
-        parent[pixel] = grandparent;
-        pixel = grandparent;
-        next = parent[pixel];
+    while (parent[pixel] != pixel) {
+        parent[pixel] = parent[parent[pixel]];
+        pixel = parent[pixel];
     }
     return pixel;
 }
@@ -104,15 +139,14 @@ void label_components(const double* costs, const Index* order, Index* labels,
         for (Index col = 0; col < width - 1; ++col)
             origins[origin++] = static_cast<Position>(row * width + col);
 
-    // Roots store their negated component size in the parent array.
-    std::fill_n(parent, pixels, Position{-1});
+    std::iota(parent, parent + pixels, Position{0});
+    std::vector<Position> sizes(static_cast<std::size_t>(pixels), 1);
     scale /= 255;
     std::vector<float> thresholds(static_cast<std::size_t>(pixels), static_cast<float>(0.0 + scale));
     const auto join = [&](Position a, Position b) {
         const auto root = std::min(a, b);
-        const auto size = parent[a] + parent[b];
         parent[std::max(a, b)] = root;
-        parent[root] = size;
+        sizes[root] = sizes[a] + sizes[b];
         return root;
     };
 
@@ -125,7 +159,7 @@ void label_components(const double* costs, const Index* order, Index* labels,
         const double cost = costs[edge];
         if (cost < std::min(thresholds[a], thresholds[b])) {
             const auto root = join(a, b);
-            thresholds[root] = static_cast<float>(cost + scale / static_cast<double>(-parent[root]));
+            thresholds[root] = static_cast<float>(cost + scale / static_cast<double>(sizes[root]));
         }
     }
     if (min_size > 1) {
@@ -133,7 +167,7 @@ void label_components(const double* costs, const Index* order, Index* labels,
             const auto [first, second] = edges.endpoints(order[i], origins.get());
             const auto a = find_root(parent, first);
             const auto b = find_root(parent, second);
-            if (a != b && (-parent[a] < min_size || -parent[b] < min_size)) join(a, b);
+            if (a != b && (sizes[a] < min_size || sizes[b] < min_size)) join(a, b);
         }
     }
 
@@ -141,7 +175,7 @@ void label_components(const double* costs, const Index* order, Index* labels,
     Index next = 0;
     for (Index pixel = 0; pixel < pixels; ++pixel) {
         const auto root = parent[pixel];
-        labels[pixel] = root < 0 ? next++ : labels[root];
+        labels[pixel] = root == pixel ? next++ : labels[root];
     }
 }
 

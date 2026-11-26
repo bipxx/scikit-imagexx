@@ -148,22 +148,9 @@ private:
 };
 
 template<class Position, bool TrackSource>
-struct BucketEntry {
-    unsigned priority;
-    Position index;
-    Position source;
-};
-
-template<class Position>
-struct BucketEntry<Position, false> {
-    unsigned priority;
-    Position index;
-};
-
-template<class Position, bool TrackSource>
 class FloodBuckets {
 public:
-    using Entry = BucketEntry<Position, TrackSource>;
+    using Entry = Item<Position, TrackSource, unsigned>;
 
     bool empty() {
         while (priority_ < buckets_.size() && head_ == buckets_[priority_].size()) {
@@ -176,13 +163,13 @@ public:
 
     static double value(const Entry& item) { return item.priority; }
 
-    void push(double value, std::uint32_t, Position index, Position source) {
+    void push(double value, std::uint32_t age, Position index, Position source) {
         const auto priority = static_cast<unsigned>(value);
         priority_ = std::min(priority_, priority);
         if constexpr (TrackSource)
-            buckets_[priority].push_back({priority, index, source});
+            buckets_[priority].push_back({priority, age, index, source});
         else
-            buckets_[priority].push_back({priority, index});
+            buckets_[priority].push_back({priority, age, index});
     }
 
     Entry pop() { return buckets_[priority_][head_++]; }
@@ -190,61 +177,6 @@ public:
 private:
     std::array<std::vector<Entry>, 256> buckets_;
     unsigned priority_ = 256;
-    std::size_t head_ = 0;
-};
-
-template<class Position, bool TrackSource>
-class FloodRadixQueue {
-public:
-    using Entry = BucketEntry<Position, TrackSource>;
-
-    bool empty() {
-        if (head_ < buckets_[0].size())
-            return false;
-        buckets_[0].clear();
-        head_ = 0;
-        for (std::size_t i = 1; i < buckets_.size(); ++i) {
-            auto& bucket = buckets_[i];
-            if (bucket.empty())
-                continue;
-            priority_ = std::min_element(bucket.begin(), bucket.end(),
-                [](const Entry& a, const Entry& b) { return a.priority < b.priority; })->priority;
-            // Redistribute in insertion order so equal priorities remain FIFO.
-            for (const auto& entry : bucket)
-                insert(entry);
-            bucket.clear();
-            return false;
-        }
-        return true;
-    }
-
-    static double value(const Entry& item) { return item.priority; }
-
-    void push(double value, std::uint32_t, Position index, Position source) {
-        const auto priority = static_cast<unsigned>(value);
-        if constexpr (TrackSource)
-            insert({priority, index, source});
-        else
-            insert({priority, index});
-    }
-
-    Entry pop() { return buckets_[0][head_++]; }
-
-private:
-    void insert(const Entry& entry) {
-        auto difference = entry.priority ^ priority_;
-        unsigned bucket = 0;
-        if (difference >= 256) { difference >>= 8; bucket += 8; }
-        if (difference >= 16) { difference >>= 4; bucket += 4; }
-        if (difference >= 4) { difference >>= 2; bucket += 2; }
-        if (difference >= 2) { difference >>= 1; ++bucket; }
-        buckets_[bucket + difference].push_back(entry);
-    }
-
-    // The flood never inserts a priority below the one just popped.
-    // Entries sharing the highest differing bit move to lower buckets.
-    std::array<std::vector<Entry>, 17> buckets_;
-    unsigned priority_ = 0;
     std::size_t head_ = 0;
 };
 
@@ -367,7 +299,7 @@ void run_watershed_mode(const double* elevations, T* labels,
                         const WatershedNeighborhood* neighborhood, std::size_t rank,
                         std::size_t width, std::size_t count, std::size_t padded_count,
                         std::vector<std::size_t>& coordinates, const std::vector<Index>& seeds,
-                        bool ordered, unsigned levels, VisitRows&& visit_rows) {
+                        bool ordered, bool byte_range, VisitRows&& visit_rows) {
     const auto axis2_width = static_cast<Position>(!neighborhood && rank == 2 ? strides[0] : 0);
     std::vector<Position> row_indices;
     if constexpr (Compact) {
@@ -382,18 +314,11 @@ void run_watershed_mode(const double* elevations, T* labels,
     }
     const auto capacity = std::max(seeds.size(), std::min(count, std::size_t(1024)));
     if constexpr (!Compact) {
-        if (ordered && levels) {
-            if (levels <= 256) {
-                FloodBuckets<Position, Line> buckets;
-                fill_and_flood_queue<T, Position, Compact, Line>(
-                    elevations, labels, active, offsets, strides, compactness,
-                    axis2_width, row_indices, seeds, buckets);
-            } else {
-                FloodRadixQueue<Position, Line> buckets;
-                fill_and_flood_queue<T, Position, Compact, Line>(
-                    elevations, labels, active, offsets, strides, compactness,
-                    axis2_width, row_indices, seeds, buckets);
-            }
+        if (ordered && byte_range) {
+            FloodBuckets<Position, Line> buckets;
+            fill_and_flood_queue<T, Position, Compact, Line>(
+                elevations, labels, active, offsets, strides, compactness,
+                axis2_width, row_indices, seeds, buckets);
             return;
         }
     }
@@ -480,7 +405,7 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
     };
 
     bool finite = true;
-    unsigned levels = compactness == 0 ? 1 : 0;
+    bool byte_range = compactness == 0;
     std::vector<Index> seeds;
     visit_rows([&](std::size_t start, Index row) {
         for (std::size_t column = 0; column < width; ++column) {
@@ -489,12 +414,8 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
             const double value = image[i];
             elevations[p] = value;
             finite &= std::isfinite(value);
-            if (levels) {
-                if (value >= 0 && value <= 65535 && value == static_cast<unsigned>(value))
-                    levels = std::max(levels, static_cast<unsigned>(value) + 1);
-                else
-                    levels = 0;
-            }
+            if (byte_range && !(value >= 0 && value <= 255 && value == static_cast<unsigned>(value)))
+                byte_range = false;
             const bool included = !mask || mask[i];
             const T marker = markers[i];
             active[p] = included && ((watershed_line && !(compactness > 0)) || !marker);
@@ -511,21 +432,16 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
     bool ordered = finite && std::isfinite(compactness) &&
         count <= (seed_age - 2) / max_pushes_per_pixel;
     if (ordered && seeds.size() > 1) {
-        const auto unique_levels = [&](auto& seen) {
+        if (byte_range) {
+            std::bitset<256> seen;
             for (const auto p : seeds) {
                 const auto key = static_cast<unsigned>(elevations[p]);
-                if (seen.test(key))
-                    return false;
+                if (seen.test(key)) {
+                    ordered = false;
+                    break;
+                }
                 seen.set(key);
             }
-            return true;
-        };
-        if (levels && levels <= 256) {
-            std::bitset<256> seen;
-            ordered = unique_levels(seen);
-        } else if (levels) {
-            std::bitset<65536> seen;
-            ordered = unique_levels(seen);
         } else {
             std::unordered_set<std::uint64_t> seen;
             for (const auto p : seeds) {
@@ -543,17 +459,17 @@ void watershed_into(const double* image, const T* markers, const std::uint8_t* m
             run_watershed_mode<T, Position, true, false>(
                 elevations.get(), labels.get(), active, offsets, strides, compactness,
                 neighborhood, rank, width, count, padded_count, coordinates, seeds,
-                ordered, levels, visit_rows);
+                ordered, byte_range, visit_rows);
         else if (watershed_line)
             run_watershed_mode<T, Position, false, true>(
                 elevations.get(), labels.get(), active, offsets, strides, compactness,
                 neighborhood, rank, width, count, padded_count, coordinates, seeds,
-                ordered, levels, visit_rows);
+                ordered, byte_range, visit_rows);
         else
             run_watershed_mode<T, Position, false, false>(
                 elevations.get(), labels.get(), active, offsets, strides, compactness,
                 neighborhood, rank, width, count, padded_count, coordinates, seeds,
-                ordered, levels, visit_rows);
+                ordered, byte_range, visit_rows);
     };
     if (padded_count <= static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()))
         dispatch(std::int32_t{});
