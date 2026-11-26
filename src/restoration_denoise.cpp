@@ -65,6 +65,7 @@ NLM_AVX_ENTRY int nl_prefix_avx2(const double* padded, double* sums, std::ptrdif
                                  double noise, double& running) {
     if constexpr (FixedChannels != 0) channels = FixedChannels;
     const auto variance = _mm256_set1_pd(noise);
+    auto carry = _mm_set_sd(running);
     int x = 0;
     for (; x + 4 <= end; x += 4) {
         const auto p = row + x;
@@ -78,11 +79,11 @@ NLM_AVX_ENTRY int nl_prefix_avx2(const double* padded, double* sums, std::ptrdif
         const auto values = _mm256_sub_pd(squared, variance);
         const auto lo = _mm256_castpd256_pd128(values);
         const auto hi = _mm256_extractf128_pd(values, 1);
-        const auto first = _mm_add_sd(_mm_set_sd(running), lo);
+        const auto first = _mm_add_sd(carry, lo);
         const auto second = _mm_add_sd(first, _mm_unpackhi_pd(lo, lo));
         const auto third = _mm_add_sd(second, hi);
         const auto fourth = _mm_add_sd(third, _mm_unpackhi_pd(hi, hi));
-        running = _mm_cvtsd_f64(fourth);
+        carry = fourth;
         const auto prefix_lo = _mm_unpacklo_pd(first, second);
         const auto prefix_hi = _mm_unpacklo_pd(third, fourth);
         auto sum = _mm256_insertf128_pd(_mm256_castpd128_pd256(prefix_lo), prefix_hi, 1);
@@ -94,6 +95,7 @@ NLM_AVX_ENTRY int nl_prefix_avx2(const double* padded, double* sums, std::ptrdif
         }
         _mm256_storeu_pd(sums + p, sum);
     }
+    running = _mm_cvtsd_f64(carry);
     return x;
 }
 
@@ -168,6 +170,7 @@ void nlm_prefix_row_loop(const double* padded, double* sums, int z, int y, int p
                          std::ptrdiff_t plane, std::ptrdiff_t shift, int x_last,
                          int channels, std::ptrdiff_t count, double noise,
                          bool vectorized) {
+    if constexpr (FixedChannels != 0) channels = FixedChannels;
     double running = 0;
     const std::ptrdiff_t row = z * plane + static_cast<std::ptrdiff_t>(y) * px;
     int x = 0;
@@ -245,45 +248,50 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
     const double inv_scale = 1.0 / scale;
 #ifdef SKIMAGEXX_NLM_AVX2
     const bool vectorized = has_avx2();
+#else
+    const bool vectorized = false;
 #endif
     const double noise = (2 * (sigma * sigma)) * channels;
     const Index ry = static_cast<Index>(radius) * px;
     const Index rz = Volume ? radius * plane : 0;
+    // Small padded planes already fit in cache and use a single query sweep.
+    constexpr Index band_threshold = 32768;
     for (int dz = Volume ? -search : 0; dz <= (Volume ? search : 0); ++dz) {
-        const int z_first = Volume ? std::max(0, -dz) : 0;
-        const int z_last = pz - std::max(0, dz);
         for (int dy = -search; dy <= search; ++dy) {
             const int y_first = std::max(0, -dy);
-            const int y_last = py - std::max(0, dy);
             for (int dx = 0; dx <= search; ++dx) {
                 const Index shift = dz * plane + static_cast<Index>(dy) * px + dx;
                 const int x_last = px - dx;
                 const double multiplicity = dx == 0 ? 0.5 : 1.0;
-
-                // Inclusive prefix sum over the overlap of the padded images.
-                // Each query subtracts the lower corner, so the reference's
-                // fast path effectively integrates 2*radius samples per axis.
-#ifdef SKIMAGEXX_NLM_AVX2
-                const bool use_simd = vectorized;
-#else
-                const bool use_simd = false;
-#endif
-                nlm_prefix_plane_loop<FixedChannels, true>(
-                    padded.data(), sums.get(), z_first, y_first, y_last,
-                    px, plane, shift, x_last, channels, count, noise, use_simd);
-                if constexpr (Volume) {
-                    for (int z = z_first + 1; z < z_last; ++z)
-                        nlm_prefix_plane_loop<FixedChannels, false>(
-                            padded.data(), sums.get(), z, y_first, y_last,
-                            px, plane, shift, x_last, channels, count, noise, use_simd);
+                if (shift == 0 && noise == 0) {
+                    // Every prefix term would be zero. Keep both contributions
+                    // and their original addition order at the current shift.
+                    const double w = multiplicity * nl_weight(0.0);
+                    const int first_z = Volume ? pad : 0;
+                    for (int z = first_z; z < first_z + depth; ++z) {
+                        for (int y = pad; y < pad + rows; ++y) {
+                            const Index first = z * plane + static_cast<Index>(y) * px + pad;
+                            for (Index p = first; p < first + cols; ++p) {
+                                weights[p] = (weights[p] + w) + w;
+                                for (int c = 0; c < channels; ++c) {
+                                    const auto i = c * count + p;
+                                    const double value = w * padded[i];
+                                    accum[i] = (accum[i] + value) + value;
+                                }
+                            }
+                        }
+                    }
+                    continue;
                 }
+
+                // Inclusive prefix sums cancel the lower corner, so the
+                // reference integrates 2*radius samples per axis.
                 const auto patch_sum = [&](Index p) {
                     return (sums[p + ry + radius] - sums[p + ry - radius]) -
                            (sums[p - ry + radius] - sums[p - ry - radius]);
                 };
-                for (int z = (Volume ? pad - std::max(0, dz) : 0);
-                     z < (Volume ? pad + depth - std::min(0, dz) : 1); ++z) {
-                    for (int y = pad - std::max(0, dy); y < pad + rows - std::min(0, dy); ++y) {
+                const auto query_rows = [&](int z, int begin, int end) {
+                    for (int y = begin; y < end; ++y) {
                         const Index row = z * plane + static_cast<Index>(y) * px;
                         int x = pad - dx;
 #ifdef SKIMAGEXX_NLM_AVX2
@@ -310,6 +318,43 @@ void nonlocal_means(const T* image, T* out, int depth, int rows, int cols, int c
                             }
                         }
                     }
+                };
+                const int query_first = pad - std::max(0, dy);
+                const int query_last = pad + rows - std::min(0, dy);
+                if constexpr (Volume) {
+                    const int z_first = std::max(0, -dz);
+                    const int z_last = pz - std::max(0, dz);
+                    const int y_last = py - std::max(0, dy);
+                    nlm_prefix_plane_loop<FixedChannels, true>(
+                        padded.data(), sums.get(), z_first, y_first, y_last,
+                        px, plane, shift, x_last, channels, count, noise, vectorized);
+                    for (int z = z_first + 1; z < z_last; ++z)
+                        nlm_prefix_plane_loop<FixedChannels, false>(
+                            padded.data(), sums.get(), z, y_first, y_last,
+                            px, plane, shift, x_last, channels, count, noise, vectorized);
+                    for (int z = pad - std::max(0, dz); z < pad + depth - std::min(0, dz); ++z)
+                        query_rows(z, query_first, query_last);
+                } else if (count > band_threshold) {
+                    // Produce the prefix rows needed by each band just before its
+                    // patch queries, retaining full-width prefix and update order.
+                    nlm_prefix_row_loop<FixedChannels, true, true>(
+                        padded.data(), sums.get(), 0, y_first, px, plane, shift, x_last,
+                        channels, count, noise, vectorized);
+                    int next_prefix = y_first + 1;
+                    constexpr int band_rows = 16;
+                    for (int begin = query_first; begin < query_last; begin += band_rows) {
+                        const int end = std::min(begin + band_rows, query_last);
+                        for (; next_prefix < end + radius; ++next_prefix)
+                            nlm_prefix_row_loop<FixedChannels, true, false>(
+                                padded.data(), sums.get(), 0, next_prefix, px, plane, shift,
+                                x_last, channels, count, noise, vectorized);
+                        query_rows(0, begin, end);
+                    }
+                } else {
+                    nlm_prefix_plane_loop<FixedChannels, true>(
+                        padded.data(), sums.get(), 0, y_first, py - std::max(0, dy),
+                        px, plane, shift, x_last, channels, count, noise, vectorized);
+                    query_rows(0, query_first, query_last);
                 }
             }
         }

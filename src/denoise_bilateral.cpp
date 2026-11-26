@@ -1,9 +1,22 @@
 #include "skimagexx/denoise_bilateral.hpp"
+#include "skimagexx/image.hpp"
 
 #include <algorithm>
 #include <array>
 #include <cmath>
 #include <stdexcept>
+
+#if defined(SKIMAGEXX_AVX2) && (defined(_M_X64) || defined(_M_IX86) || defined(__x86_64__) || defined(__i386__))
+#include <immintrin.h>
+#define SKIMAGEXX_BILATERAL_AVX2
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4752)
+#define BILATERAL_AVX_ENTRY __declspec(noinline)
+#else
+#define BILATERAL_AVX_ENTRY __attribute__((target("avx2"), noinline))
+#endif
+#endif
 
 namespace skimagexx {
 namespace {
@@ -48,6 +61,96 @@ void evaluate(const T* image, std::size_t height, std::size_t width,
         output[channel] = sums[channel] / total;
 }
 
+template<class T>
+void evaluate_gray_block(const T* center, std::size_t width, std::size_t window,
+                         const T* color, const T* spatial, T scale, T last_bin,
+                         T* output) {
+    constexpr std::size_t block = 4;
+    std::array<T, block> sums{}, totals{};
+    const auto radius = window / 2;
+    const auto* first = center - radius * width - radius;
+    // Each tap serves four adjacent windows, in the original tap order
+    // for every output pixel.
+    for (std::size_t kr = 0; kr < window; ++kr) {
+        const auto* line = first + kr * width;
+        for (std::size_t kc = 0; kc < window; ++kc) {
+            const T spatial_weight = *spatial++;
+            for (std::size_t lane = 0; lane < block; ++lane) {
+                const T neighbor = line[kc + lane];
+                const T difference = center[lane] - neighbor;
+                const T squared = T(0) + difference * difference;
+                const T distance = static_cast<T>(std::sqrt(static_cast<double>(squared)));
+                const auto bin = static_cast<std::size_t>(std::min(last_bin, distance * scale));
+                const T weight = spatial_weight * color[bin];
+                sums[lane] += neighbor * weight;
+                totals[lane] += weight;
+            }
+        }
+    }
+    for (std::size_t lane = 0; lane < block; ++lane)
+        output[lane] = sums[lane] / totals[lane];
+}
+
+#ifdef SKIMAGEXX_BILATERAL_AVX2
+BILATERAL_AVX_ENTRY void evaluate_gray_avx2(
+    const float* center, std::size_t width, std::size_t window, const float* color,
+    const float* spatial, float scale, float last_bin, float* output) {
+    const auto radius = window / 2;
+    const auto* first = center - radius * width - radius;
+    const auto centers = _mm_loadu_ps(center);
+    const auto scales = _mm_set1_ps(scale);
+    const auto last = _mm_set1_ps(last_bin);
+    auto sum = _mm_setzero_ps();
+    auto total = _mm_setzero_ps();
+    for (std::size_t kr = 0; kr < window; ++kr) {
+        const auto* line = first + kr * width;
+        for (std::size_t kc = 0; kc < window; ++kc) {
+            const auto neighbor = _mm_loadu_ps(line + kc);
+            const auto delta = _mm_sub_ps(centers, neighbor);
+            const auto squared = _mm_add_ps(_mm_setzero_ps(), _mm_mul_ps(delta, delta));
+            // As in the scalar path, round the squared difference to float,
+            // take the root in double, then narrow before scaling the bin.
+            const auto distance = _mm256_cvtpd_ps(_mm256_sqrt_pd(_mm256_cvtps_pd(squared)));
+            const auto bins = _mm_cvttps_epi32(_mm_min_ps(_mm_mul_ps(distance, scales), last));
+            const auto weight = _mm_mul_ps(_mm_set1_ps(*spatial++), _mm_i32gather_ps(color, bins, 4));
+            sum = _mm_add_ps(sum, _mm_mul_ps(neighbor, weight));
+            total = _mm_add_ps(total, weight);
+        }
+    }
+    _mm_storeu_ps(output, _mm_div_ps(sum, total));
+}
+
+BILATERAL_AVX_ENTRY void evaluate_gray_avx2(
+    const double* center, std::size_t width, std::size_t window, const double* color,
+    const double* spatial, double scale, double last_bin, double* output) {
+    const auto radius = window / 2;
+    const auto* first = center - radius * width - radius;
+    const auto centers = _mm256_loadu_pd(center);
+    const auto scales = _mm256_set1_pd(scale);
+    const auto last = _mm256_set1_pd(last_bin);
+    auto sum = _mm256_setzero_pd();
+    auto total = _mm256_setzero_pd();
+    for (std::size_t kr = 0; kr < window; ++kr) {
+        const auto* line = first + kr * width;
+        for (std::size_t kc = 0; kc < window; ++kc) {
+            const auto neighbor = _mm256_loadu_pd(line + kc);
+            const auto delta = _mm256_sub_pd(centers, neighbor);
+            const auto squared = _mm256_add_pd(_mm256_setzero_pd(), _mm256_mul_pd(delta, delta));
+            const auto distance = _mm256_sqrt_pd(squared);
+            const auto bins = _mm256_cvttpd_epi32(_mm256_min_pd(_mm256_mul_pd(distance, scales), last));
+            const auto weight = _mm256_mul_pd(_mm256_set1_pd(*spatial++), _mm256_i32gather_pd(color, bins, 8));
+            sum = _mm256_add_pd(sum, _mm256_mul_pd(neighbor, weight));
+            total = _mm256_add_pd(total, weight);
+        }
+    }
+    _mm256_storeu_pd(output, _mm256_div_pd(sum, total));
+}
+#undef BILATERAL_AVX_ENTRY
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#endif
+
 template<class T, std::size_t Channels>
 void stencil(const T* image, std::size_t height, std::size_t width,
              std::size_t window, T cval, const T* color, std::size_t bins,
@@ -55,16 +158,37 @@ void stencil(const T* image, std::size_t height, std::size_t width,
     const auto radius = window / 2;
     const T scale = static_cast<T>((bins / Channels) / maximum);
     const T last_bin = static_cast<T>(bins - 1);
+#ifdef SKIMAGEXX_BILATERAL_AVX2
+    const bool vectorized = Channels == 1 && has_avx2();
+#endif
     for (std::size_t row = 0; row < height; ++row) {
-        for (std::size_t col = 0; col < width; ++col) {
-            auto* output = result + (row * width + col) * Channels;
-            if (row >= radius && col >= radius && row + radius < height && col + radius < width)
-                evaluate<T, Channels, true>(image, height, width, row, col, window, cval,
-                                             color, spatial, scale, last_bin, output);
-            else
-                evaluate<T, Channels, false>(image, height, width, row, col, window, cval,
-                                              color, spatial, scale, last_bin, output);
+        const auto first = row >= radius && row + radius < height && width > 2 * radius
+            ? radius : width;
+        const auto last = first == width ? width : width - radius;
+        const auto border = [&](std::size_t col) {
+            evaluate<T, Channels, false>(image, height, width, row, col, window, cval,
+                color, spatial, scale, last_bin, result + (row * width + col) * Channels);
+        };
+        std::size_t col = 0;
+        for (; col < first; ++col) border(col);
+        if constexpr (Channels == 1) {
+            for (; col + 4 <= last; col += 4) {
+                const auto index = row * width + col;
+#ifdef SKIMAGEXX_BILATERAL_AVX2
+                if (vectorized) {
+                    evaluate_gray_avx2(image + index, width, window, color, spatial, scale,
+                                       last_bin, result + index);
+                    continue;
+                }
+#endif
+                evaluate_gray_block(image + index, width, window, color, spatial, scale,
+                                    last_bin, result + index);
+            }
         }
+        for (; col < last; ++col)
+            evaluate<T, Channels, true>(image, height, width, row, col, window, cval,
+                color, spatial, scale, last_bin, result + (row * width + col) * Channels);
+        for (; col < width; ++col) border(col);
     }
 }
 

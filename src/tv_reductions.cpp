@@ -99,14 +99,32 @@ template<class T> T pairwise(const T* a, std::size_t n) {
     const T right = pairwise(a+half, n-half);
     return T(left + right);
 }
-template<class T> std::uint64_t sum_bits(TvReductionInput input, TvReductionPlan plan) {
+template<class T> void square_values(const T* source, T* target, std::size_t count) {
+    for (std::size_t i = 0; i < count; ++i) target[i] = T(source[i] * source[i]);
+}
+template<class T> T square_pairwise(const T* source, T* target, std::size_t count) {
+    // Follow the same reduction tree as pairwise. Materialize and consume
+    // each small subtree together, keeping its squared values in cache.
+    if (count <= 1024) {
+        square_values(source, target, count);
+        return pairwise(target, count);
+    }
+    std::size_t half = count / 2;
+    half -= half % 8;
+    const T left = square_pairwise(source, target, half);
+    const T right = square_pairwise(source + half, target + half, count - half);
+    return T(left + right);
+}
+template<class T> std::uint64_t sum_bits(TvReductionInput input, TvReductionPlan plan,
+                                        T* squared = nullptr) {
     T value = T(0); // NumPy's ADD reduction identity, distinct from leaf -0.
     const auto* data = static_cast<const T*>(input.data);
     const std::size_t block = plan.profile == TvReductionProfile::numpy_1244_buffered
         ? plan.buffer_elements : input.count;
     for (std::size_t i = 0; i < input.count;) {
         const auto count = input.count-i < block ? input.count-i : block;
-        value = T(value + pairwise(data+i, count));
+        const T sum = squared ? square_pairwise(data + i, squared + i, count) : pairwise(data + i, count);
+        value = T(value + sum);
         i += count;
     }
     std::uint64_t bits = 0;
@@ -114,9 +132,7 @@ template<class T> std::uint64_t sum_bits(TvReductionInput input, TvReductionPlan
     return bits;
 }
 template<class T> void square_values(TvReductionInput input, void* output) {
-    const auto* source = static_cast<const T*>(input.data);
-    auto* target = static_cast<T*>(output);
-    for (std::size_t i = 0; i < input.count; ++i) target[i] = T(source[i] * source[i]);
+    square_values(static_cast<const T*>(input.data), static_cast<T*>(output), input.count);
 }
 std::uint64_t sum_bits(TvReductionInput input, TvReductionPlan plan) {
     return input.type == TvReductionType::float32 ? sum_bits<float>(input, plan) : sum_bits<double>(input, plan);
@@ -129,12 +145,12 @@ void square_values(TvReductionInput input, void* output) {
 
 namespace detail {
 // The finite-loop guard has already validated all descriptors and the FP
-// profile. Materialize squared exactly as before, under the same guard as its
-// sum, since the loop observes only the numerical result of this pair.
+// profile. Materialize squared under the same guard as its sum.
 std::uint64_t tv_finite_square_sum(TvReductionInput input, void* output, TvReductionPlan plan) {
     DiscardReductionStatus guard;
-    square_values(input, output);
-    return sum_bits({output, input.count, input.type}, plan);
+    return input.type == TvReductionType::float32
+        ? sum_bits<float>(input, plan, static_cast<float*>(output))
+        : sum_bits<double>(input, plan, static_cast<double*>(output));
 }
 std::uint64_t tv_finite_sum(TvReductionInput input, TvReductionPlan plan) {
     DiscardReductionStatus guard;

@@ -15,6 +15,17 @@
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
 #include <xmmintrin.h>
 #endif
+#if defined(SKIMAGEXX_AVX2) && (defined(_M_X64) || defined(_M_IX86) || defined(__x86_64__) || defined(__i386__))
+#include <immintrin.h>
+#define SKIMAGEXX_BREGMAN_AVX2_GUARD
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4752)
+#define BREGMAN_AVX_ENTRY __declspec(noinline)
+#else
+#define BREGMAN_AVX_ENTRY __attribute__((target("avx2"), noinline))
+#endif
+#endif
 
 namespace skimagexx {
 #ifdef SKIMAGEXX_AVX2
@@ -64,8 +75,38 @@ bool fp_profile() {
 #endif
     return true;
 }
+#ifdef SKIMAGEXX_BREGMAN_AVX2_GUARD
+template<class T>
+BREGMAN_AVX_ENTRY bool finite_blocks(const T* data,std::size_t n,std::size_t& i) {
+    constexpr std::size_t lanes=32/sizeof(T);
+    for(;i+lanes<=n;i+=lanes) {
+        // A finite IEEE value cannot have an all-ones exponent, including
+        // when the sign or mantissa bits are set.
+        const auto bits=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i));
+        __m256i nonfinite;
+        if constexpr(sizeof(T)==sizeof(float)) {
+            const auto exponent=_mm256_set1_epi32(0x7f800000);
+            nonfinite=_mm256_cmpeq_epi32(_mm256_and_si256(bits,exponent),exponent);
+        } else {
+            const auto exponent=_mm256_set1_epi64x(0x7ff0000000000000LL);
+            nonfinite=_mm256_cmpeq_epi64(_mm256_and_si256(bits,exponent),exponent);
+        }
+        if(_mm256_movemask_epi8(nonfinite))return false;
+    }
+    return true;
+}
+#undef BREGMAN_AVX_ENTRY
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#endif
+
 template<class T> bool finite(const T* data,std::size_t n) {
-    for(std::size_t i=0;i<n;++i)if(!std::isfinite(data[i]))return false;
+    std::size_t i=0;
+#ifdef SKIMAGEXX_BREGMAN_AVX2_GUARD
+    if(n>=32/sizeof(T) && has_avx2() && !finite_blocks(data,n,i))return false;
+#endif
+    for(;i<n;++i)if(!std::isfinite(data[i]))return false;
     return true;
 }
 template<class T> bool coefficients(double value,T& weight,T& lam,T& norm) {
@@ -100,20 +141,27 @@ template<class T> int initialize(const TvBregmanImage& image,const TvBregmanWork
         for(auto i=begin;i<end;++i){const T value=out[i];dx[i]=value;dy[i]=value;bx[i]=value;by[i]=value;}
     });
     const auto* input=static_cast<const T*>(image.data);const auto r=image.rows,c=image.cols,d=image.channels,stride=(c+2)*d;
-    for(std::size_t y=0;y<r;++y)std::memcpy(out+(y+1)*stride+d,input+y*c*d,c*d*sizeof(T));
-    // Source order: interior, top, left, bottom, right. Corners untouched.
-    std::memcpy(out+d,input+c*d,c*d*sizeof(T));
-    for(std::size_t y=0;y<r;++y)std::memcpy(out+(y+1)*stride,input+(y*c+1)*d,d*sizeof(T));
-    std::memcpy(out+(r+1)*stride+d,input+(r-1)*c*d,c*d*sizeof(T));
-    for(std::size_t y=0;y<r;++y)std::memcpy(out+(y+1)*stride+(c+1)*d,input+(y*c+c-1)*d,d*sizeof(T));
+    const auto row_width=c*d, row_bytes=row_width*sizeof(T), pixel_bytes=d*sizeof(T);
+    // Populate each interior row and its side borders together after copying
+    // the original padded workspace to the auxiliary planes. Corners stay put.
+    for(std::size_t y=0;y<r;++y) {
+        auto* destination=out+(y+1)*stride;
+        const auto* source=input+y*row_width;
+        std::memcpy(destination+d,source,row_bytes);
+        std::memcpy(destination,source+d,pixel_bytes);
+        std::memcpy(destination+row_width+d,source+row_width-d,pixel_bytes);
+    }
+    std::memcpy(out+d,input+row_width,row_bytes);
+    std::memcpy(out+(r+1)*stride+d,input+(r-1)*row_width,row_bytes);
     return actual.load();
 }
 template<class T, bool Isotropic>
 inline T sweep_pixel(T source,T* out,T* dx,T* dy,T* bx,T* by,std::ptrdiff_t i,
-                     std::ptrdiff_t step,std::ptrdiff_t stride,T weight,T lam,T norm) {
-    const T previous=out[i];
-    const T ux=T(out[i+step]-previous),uy=T(out[i+stride]-previous);
-    T total=T(out[i+stride]+out[i-stride]);total=T(total+out[i+step]);total=T(total+out[i-step]);
+                     std::ptrdiff_t step,std::ptrdiff_t stride,T weight,T lam,T norm,
+                     T previous,T left,T right) {
+    const T below=out[i+stride];
+    const T ux=T(right-previous),uy=T(below-previous);
+    T total=T(below+out[i-stride]);total=T(total+right);total=T(total+left);
     total=T(total+dx[i-step]);total=T(total-dx[i]);total=T(total+dy[i-stride]);total=T(total-dy[i]);total=T(total-bx[i-step]);total=T(total+bx[i]);total=T(total-by[i-stride]);total=T(total+by[i]);
     const T unew=T(T(T(lam*total)+T(weight*source))/norm);out[i]=unew;
     T tx=T(unew-previous);const T squared=T(tx*tx);
@@ -154,7 +202,8 @@ TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& work
                         for(auto x=begin;x<end;++x) {
                             const auto i=first+std::ptrdiff_t(lane)*stride+std::ptrdiff_t(x);
                             squared[(x+lane)*lanes+lane]=sweep_pixel<T,Isotropic>(
-                                input[(y+lane)*cols+x],out,dx,dy,bx,by,i,1,stride,weight,lam,norm);
+                                input[(y+lane)*cols+x],out,dx,dy,bx,by,i,1,stride,weight,lam,norm,
+                                out[i],out[i-1],out[i+1]);
                         }
                     };
                     // Ramp up the diagonal, then finish the right-hand triangle.
@@ -173,10 +222,21 @@ TvBregmanResult sweep(const TvBregmanImage& image,const TvBregmanWorkspace& work
         const T* source=input+y*row_width;
         std::ptrdiff_t row=std::ptrdiff_t(y+1)*stride+step;
         for(;y<image.rows;++y,row+=stride) {
-            // Visit the padded row in the original x/channel order. The
-            // grayscale instantiation has unit-offset horizontal neighbors.
-            for(std::ptrdiff_t i=row;i<row+row_width;++i,++source) {
-                rmse+=double(sweep_pixel<T,Isotropic>(*source,out,dx,dy,bx,by,i,step,stride,weight,lam,norm));
+            // Carry adjacent grayscale values through the ordered sweep.
+            // The left neighbor has been updated and the right one has not.
+            if constexpr(Grayscale) {
+                T left=out[row-1],previous=out[row];
+                for(std::ptrdiff_t i=row;i<row+row_width;++i,++source) {
+                    const T right=out[i+1];
+                    rmse+=double(sweep_pixel<T,Isotropic>(*source,out,dx,dy,bx,by,i,1,stride,
+                        weight,lam,norm,previous,left,right));
+                    left=out[i];
+                    previous=right;
+                }
+            } else {
+                for(std::ptrdiff_t i=row;i<row+row_width;++i,++source)
+                    rmse+=double(sweep_pixel<T,Isotropic>(*source,out,dx,dy,bx,by,i,step,stride,
+                        weight,lam,norm,out[i],out[i-step],out[i+step]));
             }
         }
         rmse=std::sqrt(rmse/double(image.elements));

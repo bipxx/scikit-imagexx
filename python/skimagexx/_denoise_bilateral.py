@@ -38,8 +38,7 @@ def denoise_bilateral(image, win_size=None, sigma_color=None, sigma_spatial=1,
                     values = np.linspace(0, maximum, bins, endpoint=False)
                     color = np.exp(-0.5 * (values**2 / color_sigma**2), dtype=image.dtype)
                     points = np.arange(-window // 2, window // 2 + 1)
-                    rr, cc = np.meshgrid(points, points, indexing='ij')
-                    distances = np.hypot(rr, cc)
+                    distances = np.hypot(points[:, None], points)
                     spatial = np.exp(-0.5 * (distances**2 / sigma_spatial**2), dtype=image.dtype).ravel()
                     result = _core.denoise_bilateral_constant(
                         np.atleast_3d(image), maximum, window, cval, color, spatial)

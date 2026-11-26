@@ -108,72 +108,84 @@ struct InputCursor {
 };
 template<class T> T read(const void* p,std::ptrdiff_t byte) {T x;std::memcpy(&x,static_cast<const unsigned char*>(p)+byte,sizeof(T));return x;}
 template<class T> void write(void* p,std::ptrdiff_t byte,T x) {std::memcpy(static_cast<unsigned char*>(p)+byte,&x,sizeof(T));}
-template<class T> void divergence(const TvConstPlanes& p,const TvView& d,const Layout& r,const Layout& out) {
-    detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
-        std::size_t i=begin;
+template<class T> void divergence_range(const TvConstPlanes& p,const TvView& d,const Layout& r,const Layout& out,
+    std::size_t begin,std::size_t end,[[maybe_unused]] bool vectorized) {
+    std::size_t i=begin;
 #ifdef SKIMAGEXX_AVX2
-        if(out.contiguous && has_avx2())i+=simd::tv_divergence(p.data,static_cast<unsigned char*>(d.data)+begin*sizeof(T),r.n,r.rank,begin,end-begin,r.shape.data(),r.steps.data(),std::is_same_v<T,float>);
+    if(out.contiguous && vectorized)i+=simd::tv_divergence(p.data,static_cast<unsigned char*>(d.data)+begin*sizeof(T),r.n,r.rank,begin,end-begin,r.shape.data(),r.steps.data(),std::is_same_v<T,float>);
 #endif
-        for(;i<end;++i) {
-            T value=T(0);
-            for(std::size_t a=0;a<r.rank;++a)value=T(value+read<T>(p.data,std::ptrdiff_t((a*r.n+i)*sizeof(T))));
-            value=T(-value);
-            for(std::size_t a=0;a<r.rank;++a)if((i/r.steps[a])%r.shape[a])
-                value=T(value+read<T>(p.data,std::ptrdiff_t((a*r.n+i-r.steps[a])*sizeof(T))));
-            write<T>(d.data,offset(out,i),value);
-        }
+    for(;i<end;++i) {
+        T value=T(0);
+        for(std::size_t a=0;a<r.rank;++a)value=T(value+read<T>(p.data,std::ptrdiff_t((a*r.n+i)*sizeof(T))));
+        value=T(-value);
+        for(std::size_t a=0;a<r.rank;++a)if((i/r.steps[a])%r.shape[a])
+            value=T(value+read<T>(p.data,std::ptrdiff_t((a*r.n+i-r.steps[a])*sizeof(T))));
+        write<T>(d.data,offset(out,i),value);
+    }
+}
+template<class T> void divergence(const TvConstPlanes& p,const TvView& d,const Layout& r,const Layout& out) {
+    const bool vectorized=has_avx2();
+    detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
+        divergence_range<T>(p,d,r,out,begin,end,vectorized);
     });
 }
-template<class T> void gradient(const TvConstView& out,const TvPlanes& g,const Layout& r,const Layout& input) {
+template<class T> void gradient_range(const TvConstView& out,const TvPlanes& g,const Layout& r,const Layout& input,
+    std::size_t begin,std::size_t end,[[maybe_unused]] bool vectorized) {
+    for(std::size_t a=0;a<r.rank;++a) {
+        std::size_t i=begin;
+        while(i<end) {
+            const auto position=(i/r.steps[a])%r.shape[a];
+            if(position+1==r.shape[a]) {
+                const auto stop=std::min(end,i+r.steps[a]-i%r.steps[a]);
+                for(;i<stop;++i)write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(0));
+                continue;
+            }
+            const auto stop=std::min(end,i+(r.shape[a]-position-1)*r.steps[a]-i%r.steps[a]);
 #ifdef SKIMAGEXX_AVX2
-    const bool vectorized=r.n>1 && input.contiguous && has_avx2();
+            if(vectorized) {
+                const auto* first=static_cast<const unsigned char*>(out.data)+i*sizeof(T);
+                auto* destination=static_cast<unsigned char*>(g.data)+(a*r.n+i)*sizeof(T);
+                i+=simd::tv_gradient(first,destination,r.steps[a],stop-i,std::is_same_v<T,float>);
+            }
 #endif
-    detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
-        for(std::size_t a=0;a<r.rank;++a) {
-            std::size_t i=begin;
-            while(i<end) {
-                const auto position=(i/r.steps[a])%r.shape[a];
-                if(position+1==r.shape[a]) {
-                    const auto stop=std::min(end,i+r.steps[a]-i%r.steps[a]);
-                    for(;i<stop;++i)write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(0));
-                    continue;
+            if(!input.contiguous && i<stop) {
+                InputCursor left_cursor(input,i),right_cursor(input,i+r.steps[a]);
+                for(;i<stop;++i) {
+                    const T left=read<T>(out.data,left_cursor.byte),right=read<T>(out.data,right_cursor.byte);
+                    write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
+                    if(i+1<stop){left_cursor.advance();right_cursor.advance();}
                 }
-                const auto stop=std::min(end,i+(r.shape[a]-position-1)*r.steps[a]-i%r.steps[a]);
-#ifdef SKIMAGEXX_AVX2
-                if(vectorized) {
-                    const auto* first=static_cast<const unsigned char*>(out.data)+i*sizeof(T);
-                    auto* destination=static_cast<unsigned char*>(g.data)+(a*r.n+i)*sizeof(T);
-                    i+=simd::tv_gradient(first,destination,r.steps[a],stop-i,std::is_same_v<T,float>);
-                }
-#endif
-                if(!input.contiguous && i<stop) {
-                    InputCursor left_cursor(input,i),right_cursor(input,i+r.steps[a]);
-                    for(;i<stop;++i) {
-                        const T left=read<T>(out.data,left_cursor.byte),right=read<T>(out.data,right_cursor.byte);
-                        write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
-                        if(i+1<stop){left_cursor.advance();right_cursor.advance();}
-                    }
-                } else {
-                    for(;i<stop;++i) {
-                        const T left=read<T>(out.data,offset(input,i)),right=read<T>(out.data,offset(input,i+r.steps[a]));
-                        write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
-                    }
+            } else {
+                for(;i<stop;++i) {
+                    const T left=read<T>(out.data,offset(input,i)),right=read<T>(out.data,offset(input,i+r.steps[a]));
+                    write<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)),T(right-left));
                 }
             }
         }
+    }
+}
+template<class T> void gradient(const TvConstView& out,const TvPlanes& g,const Layout& r,const Layout& input) {
+    const bool vectorized=r.n>1 && input.contiguous && has_avx2();
+    detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
+        gradient_range<T>(out,g,r,input,begin,end,vectorized);
     });
 }
-template<class T> void norm(const TvConstPlanes& g,const TvView& output,const Layout& r,const Layout& out) {
-    detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
-        std::size_t i=begin;
+template<class T> void norm_range(const TvConstPlanes& g,const TvView& output,const Layout& r,const Layout& out,
+    std::size_t begin,std::size_t end,[[maybe_unused]] bool vectorized) {
+    std::size_t i=begin;
 #ifdef SKIMAGEXX_AVX2
-        if(out.contiguous && has_avx2())i+=simd::tv_norm(static_cast<const unsigned char*>(g.data)+begin*sizeof(T),static_cast<unsigned char*>(output.data)+begin*sizeof(T),r.n,r.rank,end-begin,std::is_same_v<T,float>);
+    if(out.contiguous && vectorized)i+=simd::tv_norm(static_cast<const unsigned char*>(g.data)+begin*sizeof(T),static_cast<unsigned char*>(output.data)+begin*sizeof(T),r.n,r.rank,end-begin,std::is_same_v<T,float>);
 #endif
-        for(;i<end;++i) {
-            T value=T(0);
-            for(std::size_t a=0;a<r.rank;++a) {const T x=read<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)));const T squared=T(x*x);value=T(value+squared);}
-            write<T>(output.data,offset(out,i),T(std::sqrt(value)));
-        }
+    for(;i<end;++i) {
+        T value=T(0);
+        for(std::size_t a=0;a<r.rank;++a) {const T x=read<T>(g.data,std::ptrdiff_t((a*r.n+i)*sizeof(T)));const T squared=T(x*x);value=T(value+squared);}
+        write<T>(output.data,offset(out,i),T(std::sqrt(value)));
+    }
+}
+template<class T> void norm(const TvConstPlanes& g,const TvView& output,const Layout& r,const Layout& out) {
+    const bool vectorized=has_avx2();
+    detail::partition(r.n,detail::active_workers(r.n),[&](std::size_t begin,std::size_t end,std::size_t){
+        norm_range<T>(g,output,r,out,begin,end,vectorized);
     });
 }
 template<class T> void dual(const TvPlanes& p,const TvConstPlanes& g,const TvConstView& denominator,double tau_work,const Layout& r,const Layout& denom) {
@@ -206,6 +218,30 @@ template<class T> T scalar(std::uint64_t raw) {
     return value;
 }
 
+// A block can consume its gradients as soon as the forward output halo
+// has been written. The dual planes remain read-only until every block finishes.
+template<class T>
+void finite_stencil(const TvConstView& input,const TvDenoiseWorkspace& w,
+    const Layout& r,bool update,std::size_t block,bool vectorized) {
+    const auto* source=static_cast<const unsigned char*>(input.data);
+    const auto* d=static_cast<const T*>(w.d.data);
+    auto* out=static_cast<T*>(w.out.data);
+    const auto& values=update?w.out_read:input;
+    std::size_t written=0;
+    for(std::size_t begin=0;begin<r.n;) {
+        const auto end=std::min(begin+block,r.n);
+        if(update) {
+            const auto needed=std::min(end+r.steps[0],r.n);
+            divergence_range<T>(w.p_read,w.d,r,r,written,needed,vectorized);
+            detail::tv_finite_add(source+written*sizeof(T),d+written,out+written,needed-written);
+            written=needed;
+        }
+        gradient_range<T>(values,w.g,r,r,begin,end,vectorized);
+        norm_range<T>(w.g_read,w.norm,r,r,begin,end,vectorized);
+        begin=end;
+    }
+}
+
 template<class T,class Energy>
 TvDenoiseResult run_finite(const TvConstView& input,const TvDenoiseWorkspace& w,
     const TvDenoiseParameters& parameters,TvDenoiseTrace* trace,
@@ -219,8 +255,14 @@ TvDenoiseResult run_finite(const TvConstView& input,const TvDenoiseWorkspace& w,
     const T norm_coefficient=T(tau/parameters.weight);
     const Energy weight=Energy(parameters.weight),eps=Energy(parameters.eps),size=Energy(double(n));
     Energy initial=0,previous=0;
+    constexpr std::size_t block=2048;
+    const bool blocked=source.contiguous && n>block && contiguous.steps[0]<=block &&
+        detail::active_workers(n)==1;
+    const bool vectorized=blocked && has_avx2();
     for(std::size_t iteration=0;iteration<parameters.max_iterations;++iteration) {
-        if(iteration) {
+        if(blocked) {
+            finite_stencil<T>(input,w,contiguous,iteration!=0,block,vectorized);
+        } else if(iteration) {
             divergence<T>(w.p_read,w.d,contiguous,contiguous);
             if(source.contiguous)detail::tv_finite_add(input.data,d,out,n);
             else detail::partition(n,detail::active_workers(n),[&](std::size_t begin,std::size_t end,std::size_t){
@@ -233,8 +275,10 @@ TvDenoiseResult run_finite(const TvConstView& input,const TvDenoiseWorkspace& w,
             });
         }
         const auto squared_sum=detail::tv_finite_square_sum({d,n,type},w.squared.data,parameters.reduction);
-        gradient<T>(iteration?w.out_read:input,w.g,contiguous,iteration?contiguous:source);
-        norm<T>(w.g_read,w.norm,contiguous,contiguous);
+        if(!blocked) {
+            gradient<T>(iteration?w.out_read:input,w.g,contiguous,iteration?contiguous:source);
+            norm<T>(w.g_read,w.norm,contiguous,contiguous);
+        }
         const auto norm_sum=detail::tv_finite_sum({norm_data,n,type},parameters.reduction);
         const Energy weighted=Energy(weight*Energy(scalar<T>(norm_sum)));
         Energy energy=Energy(Energy(scalar<T>(squared_sum))+weighted);
