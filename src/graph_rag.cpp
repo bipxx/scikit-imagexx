@@ -543,14 +543,24 @@ SpectralCut spectral_cut(const double* eigenvector, const double* degrees,
     // Retain both incidences so each directed entry contributes exactly once
     // when an endpoint moves, even for asymmetric matrices.
     using Arc = std::pair<std::size_t, double>;
-    std::vector<std::vector<Arc>> incoming(nodes);
-    std::size_t entries = 0;
+    std::vector<std::size_t> incoming_offsets(nodes + 1);
     for (std::size_t i = 0; i < nodes; ++i) {
         for (auto k = columns[i]; k < columns[i + 1]; ++k) {
             const auto j = static_cast<std::size_t>(rows[k]);
             if (i != j) {
-                incoming[j].emplace_back(i, weights[k]);
-                ++entries;
+                ++incoming_offsets[j + 1];
+            }
+        }
+    }
+    std::partial_sum(incoming_offsets.begin(), incoming_offsets.end(), incoming_offsets.begin());
+    const auto entries = incoming_offsets.back();
+    std::vector<Arc> incoming(entries);
+    auto next_incoming = incoming_offsets;
+    for (std::size_t i = 0; i < nodes; ++i) {
+        for (auto k = columns[i]; k < columns[i + 1]; ++k) {
+            const auto j = static_cast<std::size_t>(rows[k]);
+            if (i != j) {
+                incoming[next_incoming[j]++] = {i, weights[k]};
             }
         }
     }
@@ -582,7 +592,8 @@ SpectralCut spectral_cut(const double* eigenvector, const double* degrees,
                     crossing += mask[j] ? weights[k] : -weights[k];
                 }
             }
-            for (const auto& [j, weight] : incoming[i]) {
+            for (auto entry = incoming_offsets[i]; entry < incoming_offsets[i + 1]; ++entry) {
+                const auto [j, weight] = incoming[entry];
                 crossing += mask[j] ? weight : -weight;
             }
         }

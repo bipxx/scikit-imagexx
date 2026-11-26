@@ -14,6 +14,9 @@ from . import _compat, _core
 _rag_lock = Lock()
 _integer_node_types = (np.intp, np.int32, np.uint32, np.uint64)
 _threshold_types = (int, float, np.float32, np.float64, np.int32, np.int64)
+_native_label_dtypes = (np.dtype(np.int32), np.dtype(np.int64))
+_graph_scalar_types = (*_integer_node_types, np.float32, np.float64)
+_arange_uses_intp = np.dtype(int) == np.dtype(np.intp)
 
 
 def _fallback(name, *args, **kwargs):
@@ -42,8 +45,11 @@ def _adjacency_labels(labels, connectivity):
     return _buffer(labels, np.int64)
 
 
-def _label_slots(labels):
+def _label_slots(labels, *, native_scan=False):
     """Bound dense tables and preserve NumPy's original max-plus-one behavior."""
+    if (native_scan and labels.dtype in _native_label_dtypes
+            and labels.flags.c_contiguous and labels.flags.aligned):
+        return _core.graph_rag_label_slots(labels) or None
     _core.graph_rag_check(labels)
     high = int(labels.max())
     overflow = high == np.iinfo(labels.dtype).max
@@ -132,16 +138,20 @@ def _rag_type():
                 if type(self) is RAG and _plain_graph(self):
                     graph = RAG()
                     graph.graph.update(self.graph)
-                    graph._node = {node: attrs.copy() for node, attrs in self._node.items()}
-                    adjacency = {node: {} for node in self._node}
+                    copied = _core.graph_rag_copy_data(self._node, self._adj, _integer_node_types)
                     # Replay the adjacency traversal order of NetworkX.copy,
                     # keeping one shallow attribute dictionary per edge.
-                    for node, neighbors in self._adj.items():
-                        target = adjacency[node]
-                        for neighbor, attrs in neighbors.items():
-                            if neighbor not in target:
-                                target[neighbor] = adjacency[neighbor][node] = attrs.copy()
-                    graph._adj = adjacency
+                    if copied is None:
+                        graph._node = {node: attrs.copy() for node, attrs in self._node.items()}
+                        adjacency = {node: {} for node in self._node}
+                        for node, neighbors in self._adj.items():
+                            target = adjacency[node]
+                            for neighbor, attrs in neighbors.items():
+                                if neighbor not in target:
+                                    target[neighbor] = adjacency[neighbor][node] = attrs.copy()
+                        graph._adj = adjacency
+                    else:
+                        graph._node, graph._adj = copied
                 else:
                     graph = super().copy()
                 graph.max_id = self.max_id
@@ -339,7 +349,7 @@ def cut_threshold(labels, rag, thresh, in_place=True):
         or type(thresh) not in _threshold_types
     ):
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
-    slots = _label_slots(labels)
+    slots = _label_slots(labels, native_scan=True)
     if slots is None:
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
     working = rag if in_place else rag.copy()
@@ -347,12 +357,12 @@ def cut_threshold(labels, rag, thresh, in_place=True):
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
     dense = (
         _plain_graph(working) and 'remove_edges_from' not in vars(working)
-        and labels.dtype in (np.dtype(np.int32), np.dtype(np.int64))
+        and labels.dtype in _native_label_dtypes
         and labels.dtype.metadata is None
     )
     result = _core.graph_rag_threshold(
         working._adj, working._node if dense else {}, thresh,
-        (*_integer_node_types, np.float32, np.float64), slots if dense else 0,
+        _integer_node_types, _graph_scalar_types, slots if dense else 0,
     )
     if result is None:
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
@@ -368,7 +378,7 @@ def cut_threshold(labels, rag, thresh, in_place=True):
     return mapping[labels]
 
 
-def _normalized_relabel(rag, thresh, num_cuts, rng, weights=None, native=False):
+def _normalized_relabel(rag, thresh, num_cuts, rng, weights=None, native=False, has_off_diagonal=None):
     import networkx as nx
     from scipy import sparse
     from scipy.sparse import linalg
@@ -378,10 +388,18 @@ def _normalized_relabel(rag, thresh, num_cuts, rng, weights=None, native=False):
     size = len(rag)
     if not native:
         weights = nx.to_scipy_sparse_array(rag, format='csc')
-    if weights is not None:
+    # A native matrix with only diagonal nonzeros equals its degree matrix.
+    if weights is not None and (not native or size > 2 and has_off_diagonal is not False):
         entries = weights.sum(axis=0)
-        degree = sparse.dia_array((entries, 0), shape=weights.shape).tocsc()
-    if weights is not None and size > 2 and (degree != weights).nnz:
+        if native:
+            # Self-edges guarantee a positive diagonal, so each column has
+            # exactly one degree entry in the reference CSC matrix.
+            diagonal = np.arange(size + 1, dtype=weights.indices.dtype)
+            degree = sparse.csc_array((entries, diagonal[:-1], diagonal), shape=weights.shape)
+        else:
+            degree = sparse.dia_array((entries, 0), shape=weights.shape).tocsc()
+    if (weights is not None and size > 2
+            and (has_off_diagonal if has_off_diagonal is not None else (degree != weights).nnz)):
         scaling = degree.copy()
         scaling.data = np.reciprocal(np.sqrt(scaling.data, out=scaling.data), out=scaling.data)
         laplacian = scaling @ (degree - weights) @ scaling
@@ -423,10 +441,11 @@ def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_ed
         or type(max_edge) not in (int, float) or not 0 < max_edge <= 1e100
     ):
         return _fallback('cut_normalized', labels, rag, thresh, num_cuts, in_place, max_edge, rng=rng)
-    slots = _label_slots(labels)
+    slots = _label_slots(labels, native_scan=True)
     if slots is None:
         return _fallback('cut_normalized', labels, rag, thresh, num_cuts, in_place, max_edge, rng=rng)
     weights = None
+    has_off_diagonal = None
     if (
         type(max_edge) is float and type(thresh) in _threshold_types
         and _plain_graph(rag)
@@ -438,6 +457,7 @@ def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_ed
         if buffers is not None:
             from scipy import sparse
 
+            buffers, has_off_diagonal = buffers
             weights = sparse.csc_array(buffers, shape=(len(rag), len(rag)))
     if weights is None and (any(
         type(attrs.get('weight', 1.0)) not in (float, int, np.float64, np.float32, np.int32, np.int64)
@@ -450,7 +470,9 @@ def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_ed
         rag = rag.copy()
     for node in rag:
         rag.add_edge(node, node, weight=max_edge)
-    _normalized_relabel(rag, thresh, num_cuts, generator, weights, weights is not None)
+    _normalized_relabel(
+        rag, thresh, num_cuts, generator, weights, weights is not None, has_off_diagonal,
+    )
     mapping = np.zeros(slots, dtype=labels.dtype)
     for _, attrs in rag.nodes(data=True):
         old_labels = attrs['labels']
@@ -468,13 +490,14 @@ def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func
     if not _integer_labels(labels, max_ndim=32) or not _is_rag(rag):
         return _fallback('merge_hierarchical', labels, rag, thresh, rag_copy, in_place_merge,
                          merge_func, weight_func)
-    slots = _label_slots(labels)
+    slots = _label_slots(labels, native_scan=True)
     if slots is None:
         return _fallback('merge_hierarchical', labels, rag, thresh, rag_copy, in_place_merge,
                          merge_func, weight_func)
     if rag_copy:
         rag = rag.copy()
     from networkx.classes.coreviews import AtlasView
+    from networkx.classes.reportviews import NodeView
 
     push, pop = heapq.heappush, heapq.heappop
     heap = None
@@ -491,12 +514,12 @@ def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func
         _, src, dst, valid = pop(heap)
         if not valid:
             continue
-        for node in (src, dst):
-            neighbors = rag.adj[node]
-            if native_heap and type(neighbors) is AtlasView and type(neighbors._atlas) is dict:
-                neighbors = neighbors._atlas
-            for attrs in neighbors.values():
-                attrs['heap item'][3] = False
+        if native_heap:
+            _core.graph_rag_invalidate_heap(rag, src, dst, AtlasView)
+        else:
+            for node in (src, dst):
+                for attrs in rag.adj[node].values():
+                    attrs['heap item'][3] = False
         if not in_place_merge:
             new = rag.next_id()
             rag._add_node_silent(new)
@@ -517,8 +540,13 @@ def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func
             item = [attrs['weight'], new, neighbor, True]
             attrs['heap item'] = item
             push(heap, item)
+    nodes = rag.nodes
+    if _arange_uses_intp and type(nodes) is NodeView and type(nodes._nodes) is dict:
+        mapping = _core.graph_rag_merge_mapping(nodes._nodes, slots, _integer_node_types)
+        if mapping is not None:
+            return mapping[labels]
     mapping = np.arange(slots)
-    for index, (_, attrs) in enumerate(rag.nodes(data=True)):
+    for index, (_, attrs) in enumerate(nodes(data=True)):
         for label in attrs['labels']:
             mapping[label] = index
     return mapping[labels]

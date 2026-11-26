@@ -73,6 +73,134 @@ bool integer_node(PyObject* node, const py::tuple& types) {
         std::any_of(types.begin(), types.end(), [&](auto type) { return exact_type(node, type); });
 }
 
+std::size_t bounded_index(PyObject* value, std::size_t slots, const py::tuple& types) {
+    py::object index;
+    if (!PyLong_CheckExact(value)) {
+        if (!integer_node(value, types)) {
+            return slots;
+        }
+        index = py::reinterpret_steal<py::object>(PyNumber_Index(value));
+        if (!index) {
+            throw py::error_already_set();
+        }
+        value = index.ptr();
+    }
+    int overflow = 0;
+    const auto number = PyLong_AsLongLongAndOverflow(value, &overflow);
+    return !overflow && number >= 0 && static_cast<unsigned long long>(number) < slots
+        ? static_cast<std::size_t>(number) : slots;
+}
+
+void set_dict_item(PyObject* dict, PyObject* key, PyObject* value) {
+    if (PyDict_SetItem(dict, key, value) < 0) {
+        throw py::error_already_set();
+    }
+}
+
+py::dict copy_dict(PyObject* source) {
+    auto copy = py::reinterpret_steal<py::dict>(PyDict_Copy(source));
+    if (!copy) {
+        throw py::error_already_set();
+    }
+    return copy;
+}
+
+py::object copy_graph_data(const py::dict& nodes, const py::dict& adjacency,
+                           const py::tuple& integer_types) {
+    py::dict node_copy, adjacency_copy;
+    Py_ssize_t cursor = 0;
+    PyObject* node = nullptr;
+    PyObject* attrs = nullptr;
+    while (PyDict_Next(nodes.ptr(), &cursor, &node, &attrs)) {
+        if (!integer_node(node, integer_types) || !PyDict_CheckExact(attrs)) {
+            return py::none();
+        }
+        set_dict_item(node_copy.ptr(), node, copy_dict(attrs).ptr());
+        set_dict_item(adjacency_copy.ptr(), node, py::dict().ptr());
+    }
+    cursor = 0;
+    PyObject* neighbors = nullptr;
+    while (PyDict_Next(adjacency.ptr(), &cursor, &node, &neighbors)) {
+        if (!integer_node(node, integer_types) || !PyDict_CheckExact(neighbors)) {
+            return py::none();
+        }
+        auto* target = dict_item(adjacency_copy.ptr(), node);
+        if (!target) {
+            return py::none();
+        }
+        Py_ssize_t edge = 0;
+        PyObject* neighbor = nullptr;
+        while (PyDict_Next(neighbors, &edge, &neighbor, &attrs)) {
+            if (!integer_node(neighbor, integer_types) || !PyDict_CheckExact(attrs)) {
+                return py::none();
+            }
+            if (dict_item(target, neighbor)) {
+                continue;
+            }
+            auto* reverse = dict_item(adjacency_copy.ptr(), neighbor);
+            if (!reverse) {
+                return py::none();
+            }
+            const auto data = copy_dict(attrs);
+            set_dict_item(target, neighbor, data.ptr());
+            set_dict_item(reverse, node, data.ptr());
+        }
+    }
+    return py::make_tuple(node_copy, adjacency_copy);
+}
+
+template<class T>
+std::size_t label_slots(const Array<T>& labels) {
+    check(labels);
+    const auto size = static_cast<std::size_t>(labels.size());
+    const auto* data = labels.data();
+    if (!size || size > (std::size_t{1} << 30)) {
+        return 0;
+    }
+    const auto scan = [&]() -> std::size_t {
+        const auto limit = 4 * std::clamp(size, std::size_t{16384}, std::size_t{1} << 18);
+        T low = data[0];
+        T high = low;
+        for (std::size_t i = 1; i < size; ++i) {
+            low = std::min(low, data[i]);
+            high = std::max(high, data[i]);
+        }
+        return low < 0 || static_cast<std::uint64_t>(high) >= limit
+            ? 0 : static_cast<std::size_t>(high) + 1;
+    };
+    if (size < 65536) {
+        return scan();
+    }
+    py::gil_scoped_release release;
+    return scan();
+}
+
+py::object merge_mapping(const py::dict& nodes, std::size_t slots,
+                         const py::tuple& integer_types) {
+    py::array_t<py::ssize_t> mapping(static_cast<py::ssize_t>(slots));
+    auto* output = mapping.mutable_data();
+    std::iota(output, output + slots, py::ssize_t{0});
+    const py::str labels("labels");
+    Py_ssize_t cursor = 0;
+    PyObject* attrs = nullptr;
+    py::ssize_t region = 0;
+    while (PyDict_Next(nodes.ptr(), &cursor, nullptr, &attrs)) {
+        auto* values = PyDict_CheckExact(attrs) ? dict_item(attrs, labels.ptr()) : nullptr;
+        if (!values || !PyList_CheckExact(values)) {
+            return py::none();
+        }
+        for (Py_ssize_t i = 0; i < PyList_GET_SIZE(values); ++i) {
+            const auto id = bounded_index(PyList_GET_ITEM(values, i), slots, integer_types);
+            if (id == slots) {
+                return py::none();
+            }
+            output[id] = region;
+        }
+        ++region;
+    }
+    return mapping;
+}
+
 py::list heap_entry(PyObject* weight, PyObject* first, PyObject* second) {
     py::list entry(4);
     PyList_SET_ITEM(entry.ptr(), 0, Py_NewRef(weight));
@@ -105,6 +233,7 @@ py::object normalized_buffers(const py::dict& adjacency, double diagonal,
     std::vector<std::int32_t> indices;
     std::vector<double> weights;
     std::vector<std::pair<std::int32_t, double>> column;
+    bool has_off_diagonal = false;
     offsets.reserve(size + 1);
     const py::str weight("weight");
     cursor = 0;
@@ -143,6 +272,7 @@ py::object normalized_buffers(const py::dict& adjacency, double diagonal,
             }
             if (row != index) {
                 column.emplace_back(row, number);
+                has_off_diagonal |= number != 0.0;
             }
         }
         if (column.size() >= limit - weights.size()) {
@@ -157,7 +287,8 @@ py::object normalized_buffers(const py::dict& adjacency, double diagonal,
         offsets.push_back(static_cast<std::int32_t>(weights.size()));
         ++index;
     }
-    return py::make_tuple(to_array(weights), to_array(indices), to_array(offsets));
+    return py::make_tuple(py::make_tuple(to_array(weights), to_array(indices), to_array(offsets)),
+                          has_off_diagonal);
 }
 
 py::object initial_heap(const py::dict& adjacency, const py::tuple& integer_types,
@@ -236,12 +367,46 @@ void refresh_heap(const py::dict& neighbors, py::handle node, const py::list& he
     }
 }
 
+void invalidate_heap(py::handle graph, py::handle src, py::handle dst, py::handle atlas_type) {
+    const py::str adjacency("adj");
+    const py::str atlas("_atlas");
+    const py::str values("values");
+    const py::str heap_item("heap item");
+    const py::int_ valid(3);
+    for (auto node : {src, dst}) {
+        py::object neighbors = graph.attr(adjacency)[node];
+        if (exact_type(neighbors.ptr(), atlas_type)) {
+            const py::object backing = neighbors.attr(atlas);
+            if (PyDict_CheckExact(backing.ptr())) {
+                neighbors = backing;
+            }
+        }
+        // Use the dict's iterator so custom attribute objects can still run
+        // Python and have size-changing mutations detected.
+        for (auto attrs : neighbors.attr(values)()) {
+            auto* item = PyDict_CheckExact(attrs.ptr()) ? dict_item(attrs.ptr(), heap_item.ptr()) : nullptr;
+            if (item && PyList_CheckExact(item) && PyList_GET_SIZE(item) > 3) {
+                if (PyList_SetItem(item, 3, Py_NewRef(Py_False)) < 0) {
+                    throw py::error_already_set();
+                }
+            } else {
+                attrs[heap_item][valid] = py::bool_(false);
+            }
+        }
+    }
+}
+
 } // namespace
 
 void bind_graph_rag(py::module_& module) {
+    module.def("graph_rag_copy_data", &copy_graph_data);
     module.def("graph_rag_normalized_buffers", &normalized_buffers);
     module.def("graph_rag_initial_heap", &initial_heap);
     module.def("graph_rag_refresh_heap", &refresh_heap);
+    module.def("graph_rag_invalidate_heap", &invalidate_heap);
+    module.def("graph_rag_merge_mapping", &merge_mapping);
+    module.def("graph_rag_label_slots", &label_slots<std::int32_t>, py::arg("labels").noconvert());
+    module.def("graph_rag_label_slots", &label_slots<std::int64_t>, py::arg("labels").noconvert());
     module.def("graph_rag_check", &skimagexx::bindings::check_array_storage,
                py::arg("array").noconvert());
     module.def("graph_rag_adjacency", [](const Array<rag::Label>& labels, int connectivity) {
@@ -378,9 +543,8 @@ void bind_graph_rag(py::module_& module) {
         return result;
     }, py::arg("labels").noconvert(), py::arg("label_count"));
     module.def("graph_rag_threshold", [](const py::dict& adjacency, const py::dict& node_data,
-                                          const py::object& threshold, const py::tuple& scalar_types,
-                                          std::size_t slots) -> py::object {
-        py::dict positions;
+                                          const py::object& threshold, const py::tuple& integer_types,
+                                          const py::tuple& scalar_types, std::size_t slots) -> py::object {
         const auto count = adjacency.size();
         std::vector<py::handle> nodes;
         nodes.reserve(count);
@@ -402,29 +566,67 @@ void bind_graph_rag(py::module_& module) {
             if (!scalar(node) || !PyDict_CheckExact(neighbors)) {
                 return py::none();
             }
-            positions[py::handle(node)] = py::int_(nodes.size());
             nodes.emplace_back(node);
         }
+        std::vector<std::size_t> ids;
+        if (slots && count <= slots && slots <= std::max<std::size_t>(64, 4 * count)) {
+            ids.reserve(count);
+            for (auto key : nodes) {
+                const auto id = bounded_index(key.ptr(), slots, integer_types);
+                if (id == slots) {
+                    ids.clear();
+                    break;
+                }
+                ids.push_back(id);
+            }
+        }
+        const bool dense = !ids.empty();
+        std::vector<std::size_t> dense_positions;
+        py::object positions;
+        if (dense) {
+            dense_positions.assign(slots, count);
+            for (std::size_t i = 0; i < count; ++i) {
+                dense_positions[ids[i]] = i;
+            }
+        }
+        const auto position_of = [&](PyObject* key) {
+            if (dense) {
+                const auto id = bounded_index(key, slots, integer_types);
+                if (id != slots && dense_positions[id] != count) {
+                    return dense_positions[id];
+                }
+            }
+            if (!scalar(key)) {
+                return count;
+            }
+            // NetworkX may retain a neighbor key such as 1.0 for an
+            // integer node 1. Resolve these aliases with Python equality.
+            if (!positions) {
+                positions = py::dict();
+                for (std::size_t i = 0; i < count; ++i) {
+                    positions[nodes[i]] = py::int_(i);
+                }
+            }
+            auto* position = dict_item(positions.ptr(), key);
+            return position ? static_cast<std::size_t>(PyLong_AsSsize_t(position)) : count;
+        };
         const py::str weight("weight");
         py::list removed;
         std::vector<rag::Edge> kept;
+        kept.reserve(count);
         iteration = 0;
         for (std::size_t i = 0; PyDict_Next(adjacency.ptr(), &iteration, &node, &neighbors); ++i) {
             PyObject* other = nullptr;
             PyObject* data = nullptr;
             Py_ssize_t neighbor_index = 0;
             while (PyDict_Next(neighbors, &neighbor_index, &other, &data)) {
-                if (!scalar(other) || !PyDict_CheckExact(data)) {
+                if (!PyDict_CheckExact(data)) {
                     return py::none();
                 }
-                auto* position = PyDict_GetItemWithError(positions.ptr(), other);
-                if (!position) {
-                    if (PyErr_Occurred()) {
-                        throw py::error_already_set();
-                    }
+                const auto j = position_of(other);
+                if (j == count) {
                     return py::none();
                 }
-                const auto j = static_cast<std::size_t>(PyLong_AsSsize_t(position));
                 if (j < i) {
                     continue;
                 }
@@ -452,30 +654,22 @@ void bind_graph_rag(py::module_& module) {
             }
         }
         const auto components = rag::components(count, kept);
-        if (slots && count <= slots) {
+        if (dense) {
             const py::str labels("labels");
-            std::vector<std::size_t> ids;
-            ids.reserve(count);
-            for (auto key : nodes) {
+            std::size_t singletons = 0;
+            for (; singletons < count; ++singletons) {
+                auto key = nodes[singletons];
                 auto* attrs = dict_item(node_data.ptr(), key.ptr());
                 auto* values = attrs && PyDict_CheckExact(attrs) ? dict_item(attrs, labels.ptr()) : nullptr;
-                if (!values || !PyList_CheckExact(values) || PyList_GET_SIZE(values) != 1 ||
-                    !PyLong_CheckExact(key.ptr())) {
+                if (!values || !PyList_CheckExact(values) || PyList_GET_SIZE(values) != 1) {
                     break;
                 }
                 auto* value = PyList_GET_ITEM(values, 0);
-                if (value != key.ptr() &&
-                    (!PyLong_CheckExact(value) || PyObject_RichCompareBool(value, key.ptr(), Py_EQ) != 1)) {
+                if (value != key.ptr() && bounded_index(value, slots, integer_types) != ids[singletons]) {
                     break;
                 }
-                int overflow = 0;
-                const auto id = PyLong_AsLongLongAndOverflow(key.ptr(), &overflow);
-                if (overflow || id < 0 || static_cast<std::size_t>(id) >= slots) {
-                    break;
-                }
-                ids.push_back(static_cast<std::size_t>(id));
             }
-            if (ids.size() == count) {
+            if (singletons == count) {
                 py::array_t<rag::Label> mapping(static_cast<py::ssize_t>(slots));
                 auto* destination = mapping.mutable_data();
                 std::iota(destination, destination + slots, rag::Label{0});
