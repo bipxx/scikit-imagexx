@@ -7,6 +7,8 @@ import numpy as np
 from . import _core, filters
 from ._compat import fallback
 
+_ndarray = np.ndarray
+
 if not hasattr(_core, "segment_gather_training"):
     try:
         import _future_filters_core as _core_family
@@ -38,11 +40,11 @@ def fit_segmenter(labels, features, clf):
 
 
 def predict_segmenter(features, clf):
-    if type(features) is not np.ndarray:
+    if type(features) is not _ndarray:
         return fallback("future", "predict_segmenter", features, clf)
     shape = features.shape
-    if features.ndim > 2:
-        features = features.reshape((-1, shape[-1]))
+    if len(shape) > 2:
+        features = features.reshape(-1, shape[-1])
     try:
         predicted = clf.predict(features)
     except Exception as error:

@@ -30,6 +30,7 @@ _imageio_collection = imageio_plugin.imread_collection
 _max_file_bytes = 64 * 1024 * 1024
 _png_header = Struct('>16sII')
 _png_prefix = b'\x89PNG\r\n\x1a\n\0\0\0\rIHDR'
+_uint8 = np.dtype(np.uint8)
 
 image_stack = _stock.image_stack
 pop, push = _core.io_stack_api(image_stack, np.ndarray, _stock.push, _stock.pop)
@@ -72,10 +73,12 @@ class MultiImage(_stock.MultiImage, ImageCollection):
 
 
 def _local_path(fname):
+    if type(fname) is str:
+        if '://' not in fname and not fname.startswith(('<', '~', 'imageio:')):
+            return fname
+        return ''
     if type(fname) in (Path, WindowsPath, PosixPath):
         return str(fname.resolve())
-    if type(fname) is str and '://' not in fname and not fname.startswith(('<', '~', 'imageio:')):
-        return fname
     return ''
 
 
@@ -84,9 +87,8 @@ def _active(kind, function):
     return plugins and plugins[0][1] is function
 
 
-def _zip_member(path):
-    path = path.lower()
-    return '.zip/' in path or '.zip\\' in path
+def _zip_member(lower_path):
+    return '.zip/' in lower_path or '.zip\\' in lower_path
 
 
 def _read_bytes(path):
@@ -121,9 +123,11 @@ def _read_png(path):
                 if (image.mode not in ('1', 'L', 'RGB', 'RGBA', 'I;16')
                         or image.custom_mimetype == 'image/apng'):
                     return None
-                image.load()
+                # Pillow exports the pixels through __array_interface__, which
+                # loads the raster and any trailing metadata.
+                pixels = np.array(image)
                 if 'exif' not in image.info:
-                    return np.array(image)
+                    return pixels
     except (OSError, SyntaxError, ValueError, Image.DecompressionBombError):
         pass
     return None
@@ -132,11 +136,13 @@ def _read_png(path):
 def imread(fname, as_gray=False, plugin=DEPRECATED, **plugin_args):
     if plugin is DEPRECATED and not plugin_args and as_gray is False and _active('imread', _imageio_read):
         path = _local_path(fname)
-        if path[-4:].lower() == '.png' and not _zip_member(path):
+        lower_path = path.lower()
+        suffix = lower_path[-4:]
+        if suffix == '.png' and not _zip_member(lower_path):
             result = _read_png(path)
             if result is not None:
                 return result
-        if path.lower().endswith(('.pgm', '.ppm', '.pnm')) and not _zip_member(path):
+        elif suffix in ('.pgm', '.ppm', '.pnm') and not _zip_member(lower_path):
             data = _read_bytes(path)
             if data:
                 limit = Image.MAX_IMAGE_PIXELS
@@ -151,21 +157,28 @@ def imread(fname, as_gray=False, plugin=DEPRECATED, **plugin_args):
 def imsave(fname, arr, plugin=DEPRECATED, *, check_contrast=True, **plugin_args):
     if (
         plugin is DEPRECATED and not plugin_args and type(check_contrast) is bool
-        and type(arr) is np.ndarray and arr.dtype == np.uint8
+        and type(arr) is np.ndarray and arr.dtype == _uint8
         and _active('imsave', _imageio_write)
     ):
         path = _local_path(fname)
-        suffix = path[-4:].lower()
-        if suffix in ('.png', '.pgm', '.ppm') and not _zip_member(path):
+        lower_path = path.lower()
+        suffix = lower_path[-4:]
+        if suffix in ('.png', '.pgm', '.ppm') and not _zip_member(lower_path):
             if suffix == '.png' and arr.size and (
                 arr.ndim == 2 or (arr.ndim == 3 and arr.shape[-1] in (3, 4))
-            ) and (not check_contrast or not is_low_contrast(arr)):
-                try:
-                    with Image.fromarray(arr) as image:
-                        image.save(path, format='PNG')
-                    return None
-                except (OSError, ValueError):
-                    pass  # Retain the provider's file error and message.
+            ):
+                low_contrast = False
+                if check_contrast:
+                    low_contrast = _core.io_gray_png_low_contrast(arr) if arr.ndim == 2 else None
+                    if low_contrast is None:
+                        low_contrast = is_low_contrast(arr)
+                if not low_contrast:
+                    try:
+                        with Image.fromarray(arr) as image:
+                            image.save(path, format='PNG')
+                        return None
+                    except (OSError, ValueError):
+                        pass  # Retain the provider's file error and message.
             elif suffix in ('.pgm', '.ppm') and not check_contrast:
                 header = _core.io_netpbm_header(arr, suffix == '.ppm')
                 if header is not None:

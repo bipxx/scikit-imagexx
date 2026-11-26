@@ -1,7 +1,9 @@
 #include "skimagexx/io_suite.hpp"
+#include "skimagexx/image.hpp"
 #include "bind_array_storage.hpp"
 
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <cstring>
 #include <limits>
@@ -172,6 +174,45 @@ void bind_io_suite(py::module_& module) {
         return py::make_tuple(std::move(pop_func), std::move(push_func));
     });
     module.def("io_concatenate", &concatenate);
+    module.def("io_gray_png_low_contrast", [](const py::array& array) -> py::object {
+        const auto count = array.size();
+        // With this sample bound, binary rounding of the stock percentile
+        // ranks cannot bridge the 0.01 spacing of the exact interpolants.
+        if (array.ndim() != 2 || count == 0 || count > (1 << 26)
+            || array.itemsize() != 1 || array.dtype().kind() != 'u'
+            || !(array.flags() & py::array::c_style) || !bounded(array, 1)) {
+            return py::none();
+        }
+        const auto* pixels = static_cast<const std::uint8_t*>(array.data());
+        const auto size = static_cast<std::size_t>(count);
+        std::array<std::uint64_t, 256> bins;
+        {
+            py::gil_scoped_release release;
+            bins = skimagexx::histogram_u8(pixels, 1, size);
+        }
+        // NumPy's default percentiles are linear between successive ranks.
+        const auto scaled_percentile = [&](std::uint64_t percent) {
+            const auto position = (size - 1) * percent;
+            const auto rank = position / 100;
+            const auto fraction = position % 100;
+            std::uint64_t below = 0;
+            std::size_t value = 0;
+            while (below + bins[value] <= rank) {
+                below += bins[value++];
+            }
+            const auto lower = value;
+            if (fraction != 0 && below + bins[value] == rank + 1) {
+                do {
+                    ++value;
+                } while (bins[value] == 0);
+            }
+            return lower * (100 - fraction) + value * fraction;
+        };
+        const auto span = scaled_percentile(99) - scaled_percentile(1);
+        // At exactly 5% of 255, defer the comparison to NumPy's rounding.
+        if (span == 1275) return py::none();
+        return py::bool_(span < 1275);
+    }, py::arg("array").noconvert());
     module.def("io_decode_netpbm", [](py::bytes bytes, std::size_t max_pixels) -> py::object {
         const auto image = io::netpbm_view(view(bytes));
         if (!image || image->height > max_pixels / image->width) return py::none();
