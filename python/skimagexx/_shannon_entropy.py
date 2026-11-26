@@ -7,12 +7,13 @@ from . import _core
 def shannon_entropy(image, base=2):
     """Calculate Shannon entropy, retaining source base-validation ordering.
 
-    Standard real images use native counts and entropy reduction. Unsigned
-    8-bit and 16-bit images count symbols directly in bounded tables.
+    Standard real images use native counts and entropy reduction. Float32
+    and float64 symbols are radix sorted. Unsigned 8-bit and signed or
+    unsigned 16-bit images count symbols directly in bounded tables.
     Unsupported unique types use NumPy unique; scalar boxing and logarithmic
     base conversion retain the source NumPy/Python operations.
     """
-    array = np.asanyarray(image)
+    array = image if type(image) is np.ndarray else np.asanyarray(image)
     workers = _core.get_num_threads()
     counts = _core.shannon_counts(array, workers) if type(array) is np.ndarray else None
     if counts is None:

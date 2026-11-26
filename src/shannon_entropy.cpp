@@ -1,14 +1,123 @@
 #include "shannon_entropy.hpp"
 #include "execution.hpp"
+#include "skimagexx/histogram_matching.hpp"
 #include <algorithm>
 #include <array>
 #include <cfenv>
 #include <cmath>
+#include <cstdint>
+#include <cstring>
 #include <limits>
+#include <memory>
 #include <stdexcept>
 #include <vector>
 namespace skimagexx::detail {
 namespace {
+template<class UInt>
+UInt float_key(UInt bits) {
+    constexpr auto sign = UInt{1} << (std::numeric_limits<UInt>::digits - 1);
+    constexpr UInt infinity = sizeof(UInt) == 4 ? UInt{0x7f800000} :
+        static_cast<UInt>(0x7ff0000000000000ULL);
+    const auto magnitude = bits & (sign - 1);
+    // Group NaNs after positive infinity and canonicalize both signed zeros.
+    // Inspect bits only, so even a signaling NaN never enters FP arithmetic.
+    if (magnitude > infinity) return std::numeric_limits<UInt>::max();
+    if (magnitude == 0) return sign;
+    return bits ^ ((bits & sign) ? std::numeric_limits<UInt>::max() : sign);
+}
+
+template<class UInt>
+std::vector<std::ptrdiff_t> radix_counts(const void* input, std::size_t size) {
+    constexpr std::size_t bins = 256;
+    std::array<std::array<std::size_t, bins>, sizeof(UInt)> offsets{};
+    std::unique_ptr<UInt[]> keys{new UInt[size]};
+    const auto* bytes = static_cast<const unsigned char*>(input);
+    for (std::size_t i = 0; i < size; ++i) {
+        UInt bits;
+        std::memcpy(&bits, bytes + i * sizeof(UInt), sizeof(UInt));
+        const auto key = float_key(bits);
+        keys[i] = key;
+        for (std::size_t digit = 0; digit < sizeof(UInt); ++digit)
+            ++offsets[digit][(key >> (digit * 8)) & 255];
+    }
+
+    std::unique_ptr<UInt[]> scratch;
+    for (std::size_t digit = 0; digit < sizeof(UInt); ++digit) {
+        // Byte frequencies are independent of all preceding scatter passes.
+        auto& next = offsets[digit];
+        if (next[(keys[0] >> (digit * 8)) & 255] == size) continue;
+        std::size_t start = 0;
+        for (auto& position : next) {
+            const auto count = position;
+            position = start;
+            start += count;
+        }
+        if (!scratch) scratch.reset(new UInt[size]);
+        const auto shift = digit * 8;
+        for (std::size_t i = 0; i < size; ++i) {
+            const auto key = keys[i];
+            scratch[next[(key >> shift) & 255]++] = key;
+        }
+        keys.swap(scratch);
+    }
+    if (!scratch) return {static_cast<std::ptrdiff_t>(size)};
+
+    std::vector<std::ptrdiff_t> counts;
+    counts.reserve(size);
+    std::size_t begin = 0;
+    for (std::size_t i = 1; i < size; ++i) {
+        if (keys[i] != keys[begin]) {
+            counts.push_back(static_cast<std::ptrdiff_t>(i - begin));
+            begin = i;
+        }
+    }
+    counts.push_back(static_cast<std::ptrdiff_t>(size - begin));
+    return counts;
+}
+
+template<class T>
+std::vector<std::ptrdiff_t> small_integer_counts(const T* input, std::size_t size) {
+    const auto populated_counts = [size](const auto& bins) {
+        std::vector<std::ptrdiff_t> counts;
+        counts.reserve(std::min(size, bins.size()));
+        for (auto count : bins)
+            if (count) counts.push_back(count);
+        return counts;
+    };
+    if constexpr (sizeof(T) == 1) {
+        std::array<std::ptrdiff_t, 256> bins{};
+        for (std::size_t i = 0; i < size; ++i) ++bins[input[i]];
+        return populated_counts(bins);
+    } else {
+        const auto [min_value, max_value] = std::minmax_element(input, input + size);
+        const int low = *min_value, high = *max_value;
+        if (low <= high) {
+            std::vector<std::ptrdiff_t> bins(std::size_t(high - low) + 1);
+            std::size_t i = 0;
+            for (; i < size; ++i) {
+                const auto index = static_cast<std::size_t>(int(input[i]) - low);
+                if (index >= bins.size()) break;
+                ++bins[index];
+            }
+            if (i == size) return populated_counts(bins);
+        }
+        // The input may be writable through another view. A changed range
+        // requires bins that can accommodate every value of the dtype.
+        constexpr int lowest = std::numeric_limits<T>::min();
+        std::vector<std::ptrdiff_t> bins(65536);
+        for (std::size_t i = 0; i < size; ++i) ++bins[std::size_t(int(input[i]) - lowest)];
+        return populated_counts(bins);
+    }
+}
+
+void validate_workers(int workers) {
+    if (workers < 1 || workers > 1024)
+        throw std::invalid_argument("entropy worker snapshot outside [1,1024]");
+#ifndef _OPENMP
+    if (workers != 1) throw std::invalid_argument("this build has no OpenMP support");
+#endif
+}
+
 // NumPy DOUBLE_pairwise_sum (128 block), same association as colocalization.
 // Primary BSD notice: third_party/numpy-LICENSE.txt.
 template<class Get>double pairwise(std::size_t start,std::size_t n,const Get& get) {
@@ -29,11 +138,28 @@ public:
     ~Capture(){std::fesetenv(&saved_);}
 };
 }
+std::vector<std::ptrdiff_t> shannon_sorted_counts(
+    const void* data, std::size_t size, PixelType type, int workers) {
+    validate_workers(workers);
+    if (size > std::size_t(std::numeric_limits<std::ptrdiff_t>::max()) / pixel_size(type)
+        || (size && !data))
+        throw std::invalid_argument("entropy input extent overflow or null storage");
+    if (size == 0) return {};
+    switch (type) {
+        case PixelType::float64: return radix_counts<std::uint64_t>(data, size);
+        case PixelType::float32: return radix_counts<std::uint32_t>(data, size);
+        case PixelType::uint8: return small_integer_counts(static_cast<const std::uint8_t*>(data), size);
+        case PixelType::int16: return small_integer_counts(static_cast<const std::int16_t*>(data), size);
+        case PixelType::uint16: return small_integer_counts(static_cast<const std::uint16_t*>(data), size);
+        default: {
+            const auto counts = histogram_sorted_counts(data, size, type, workers);
+            return {counts.begin(), counts.end()};
+        }
+    }
+}
+
 double shannon_entropy_counts(const std::ptrdiff_t* counts,std::size_t size,int workers){
-    if(workers<1||workers>1024)throw std::invalid_argument("entropy worker snapshot outside [1,1024]");
-#ifndef _OPENMP
-    if(workers!=1)throw std::invalid_argument("this build has no OpenMP support");
-#endif
+    validate_workers(workers);
     if(size>std::size_t(std::numeric_limits<std::ptrdiff_t>::max())/sizeof(double)||(size&&!counts))
         throw std::invalid_argument("entropy count extent overflow or null storage");
     std::size_t integer_total=0;
