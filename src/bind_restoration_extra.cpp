@@ -25,6 +25,11 @@ std::array<double, 3> restoration_gibbs_accumulate(const std::complex<T>*,
     const std::complex<T>*, const T*, const T*, const T*, T, T, const double*,
     std::size_t, std::size_t, std::size_t, std::complex<T>*, bool);
 
+void restoration_interpolate_phase(const float*, std::size_t, std::size_t,
+                                   std::array<std::size_t, 2>, std::size_t, float*);
+void restoration_interpolate_phase(const double*, std::size_t, std::size_t,
+                                   std::array<std::size_t, 2>, std::size_t, double*);
+
 namespace detail {
 const char* tv_denoise_try_finite_reuse_into(const TvConstView&, const TvDenoiseWorkspace&,
     const TvDenoiseParameters&, TvDenoiseResult&);
@@ -74,6 +79,20 @@ template<class Fn> auto real_dispatch(const py::array& input, Fn fn) {
     return fn(dense<double>(input));
 }
 
+template<class T>
+void report_roll_add_errors(int errors) {
+    if (!errors) return;
+    // Let NumPy apply its active errstate once, as for one in-place add.
+    // The actual accumulator is private to cycle spinning.
+    py::array_t<T> lhs(2), rhs(2);
+    auto* a = lhs.mutable_data();
+    auto* b = rhs.mutable_data();
+    a[0] = b[0] = errors & FE_OVERFLOW ? std::numeric_limits<T>::max() : T(0);
+    a[1] = errors & FE_INVALID ? std::numeric_limits<T>::infinity() : T(0);
+    b[1] = -a[1];
+    lhs.attr("__iadd__")(rhs);
+}
+
 using Phase = std::array<std::size_t, 2>;
 
 std::size_t phase_extent(std::size_t extent, std::size_t offset, std::size_t stride) {
@@ -86,18 +105,25 @@ void check_phase(const RestorationShape& shape, Phase phase, std::size_t stride)
         throw py::value_error("invalid restoration mask phase");
 }
 
+RestorationShape phase_shape(const RestorationShape& shape, Phase phase, std::size_t stride) {
+    return {phase_extent(shape[0], phase[0], stride), phase_extent(shape[1], phase[1], stride)};
+}
+
 template<class Action>
 void visit_phase(const RestorationShape& shape, Phase phase, std::size_t stride, Action action) {
     std::size_t compact = 0;
-    for (auto row = phase[0]; row < shape[0]; row += stride)
+    for (auto row = phase[0]; row < shape[0]; row += stride) {
+        const auto start = row * shape[1];
         for (auto col = phase[1]; col < shape[1]; col += stride)
-            action(row * shape[1] + col, compact++);
+            action(start + col, compact++);
+    }
 }
 
 template<class T>
 bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
               const std::vector<Phase>& jobs, std::size_t stride,
-              const skimagexx::TvDenoiseParameters& parameters, T* output, bool compact) {
+              const skimagexx::TvDenoiseParameters& parameters, T* output,
+              bool compact, bool compact_interp) {
     using namespace skimagexx;
     const auto height = shape[0], width = shape[1], size = height * width;
     const auto type = std::is_same_v<T, float> ? TvScalarType::float32 : TvScalarType::float64;
@@ -127,7 +153,9 @@ bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
         const auto [y, x] = job;
         if (interp) {
             if (!add) std::copy_n(input, size, shifted);
-            visit_phase(shape, job, stride, [&](auto i, auto) { shifted[i] = interp[i]; });
+            visit_phase(shape, job, stride, [&](auto i, auto j) {
+                shifted[i] = interp[compact_interp ? j : i];
+            });
         } else if (y || x) {
             shift[0] = y;
             shift[1] = x;
@@ -141,7 +169,7 @@ bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
         if (interp) {
             visit_phase(shape, job, stride, [&](auto i, auto j) {
                 output[compact ? j : i] = denoised[i];
-                shifted[i] = input[i];
+                if (!compact) shifted[i] = input[i];
             });
         } else if (y || x) {
             shift[0] = y ? height - y : 0;
@@ -338,16 +366,16 @@ void bind_restoration_extra(py::module_& module) {
             std::max(shape[0], shape[1]) > std::numeric_limits<std::size_t>::max() - stride)
             throw py::value_error("restoration TV batch requires a nonempty 2D job list");
         const auto interp = interpolation.is_none() ? py::array() : interpolation.cast<py::array>();
-        if (!interpolation.is_none() && !same_shape(image, interp))
-            throw py::value_error("restoration TV interpolation shape mismatch");
+        const bool compact_interp = !interpolation.is_none() && !same_shape(image, interp);
         auto output_shape = shape;
         if (compact) {
             if (interpolation.is_none() || jobs.size() != 1)
                 throw py::value_error("compact restoration output requires a single mask");
             check_phase(shape, jobs.front(), stride);
-            for (std::size_t axis = 0; axis < 2; ++axis)
-                output_shape[axis] = phase_extent(shape[axis], jobs.front()[axis], stride);
+            output_shape = phase_shape(shape, jobs.front(), stride);
         }
+        if (compact_interp && (!compact || shape_of(interp) != output_shape))
+            throw py::value_error("restoration TV interpolation shape mismatch");
         if (interpolation.is_none())
             for (const auto& job : jobs)
                 if (job[0] >= shape[0] || job[1] >= shape[1])
@@ -363,7 +391,8 @@ void bind_restoration_extra(py::module_& module) {
             bool success;
             {
                 py::gil_scoped_release release;
-                success = tv_batch(input, values, shape, jobs, stride, parameters, out, compact);
+                success = tv_batch(input, values, shape, jobs, stride, parameters,
+                                   out, compact, compact_interp);
             }
             if (!success) return py::none();
             return output;
@@ -376,7 +405,8 @@ void bind_restoration_extra(py::module_& module) {
                                                     Phase phase, std::size_t stride) {
         const auto shape = shape_of(image);
         check_phase(shape, phase, stride);
-        if (!same_shape(image, interp))
+        const bool compact_interp = !same_shape(image, interp);
+        if (compact_interp && shape_of(interp) != phase_shape(shape, phase, stride))
             throw py::value_error("restoration interpolation shape mismatch");
         const auto size = std::size_t(image.size());
         return real_dispatch(image, [&](auto input) -> py::array {
@@ -387,7 +417,9 @@ void bind_restoration_extra(py::module_& module) {
             {
                 py::gil_scoped_release release;
                 std::copy_n(input, size, out);
-                visit_phase(shape, phase, stride, [&](auto i, auto) { out[i] = interpolated[i]; });
+                visit_phase(shape, phase, stride, [&](auto i, auto j) {
+                    out[i] = interpolated[compact_interp ? j : i];
+                });
             }
             return output;
         });
@@ -398,8 +430,7 @@ void bind_restoration_extra(py::module_& module) {
         const auto shape = shape_of(denoised);
         check_phase(shape, phase, stride);
         const auto expected = compact
-            ? RestorationShape{phase_extent(shape[0], phase[0], stride),
-                               phase_extent(shape[1], phase[1], stride)}
+            ? phase_shape(shape, phase, stride)
             : shape;
         if (shape_of(output) != expected || overlaps(denoised, output))
             throw py::value_error("invalid restoration mask destination");
@@ -417,8 +448,7 @@ void bind_restoration_extra(py::module_& module) {
         using namespace skimagexx;
         const auto shape = shape_of(image);
         check_phase(shape, phase, stride);
-        const RestorationShape expected{phase_extent(shape[0], phase[0], stride),
-                                        phase_extent(shape[1], phase[1], stride)};
+        const auto expected = phase_shape(shape, phase, stride);
         if (shape_of(denoised) != expected)
             throw py::value_error("restoration loss shape mismatch");
         const auto size = std::size_t(denoised.size());
@@ -478,11 +508,37 @@ void bind_restoration_extra(py::module_& module) {
         });
     }, py::arg("image").noconvert(), py::arg("spatial_rank"));
 
-    module.def("restoration_extra_roll", [](const py::array& input, const RestorationShape& shift,
-                                            const py::object& accumulator) {
+    module.def("restoration_extra_interpolate_phase", [](const py::array& image, Phase phase,
+                                                          std::size_t stride) {
+        const auto shape = shape_of(image);
+        check_phase(shape, phase, stride);
+        const auto height = shape[0], width = shape[1];
+        return real_dispatch(image, [&](auto source) -> py::array {
+            using T = std::remove_cv_t<std::remove_pointer_t<decltype(source)>>;
+            py::array_t<T> output(phase_shape(shape, phase, stride));
+            auto* out = output.mutable_data();
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_interpolate_phase(source, height, width, phase, stride, out);
+            }
+            return output;
+        });
+    }, py::arg("image").noconvert(), py::arg("phase"), py::arg("stride"));
+
+    module.def("restoration_extra_roll", [](const py::array& input, RestorationShape shift,
+                                            const py::object& accumulator, bool inverse) {
         return real_dispatch(input, [&](auto source) -> py::array {
             using T = std::remove_cv_t<std::remove_pointer_t<decltype(source)>>;
             const auto shape = shape_of(input);
+            if (inverse) {
+                if (shift.size() != shape.size())
+                    throw py::value_error("restoration roll shift rank mismatch");
+                for (std::size_t axis = 0; axis < shape.size(); ++axis) {
+                    if (shift[axis] >= shape[axis])
+                        throw py::value_error("restoration roll shift is not reduced");
+                    if (shift[axis]) shift[axis] = shape[axis] - shift[axis];
+                }
+            }
             const bool add = !accumulator.is_none();
             auto output = add ? accumulator.cast<py::array>() : py::array(py::dtype::of<T>(), shape);
             if (add) {
@@ -493,11 +549,40 @@ void bind_restoration_extra(py::module_& module) {
                     throw py::value_error("restoration roll buffers overlap");
             }
             auto* out = static_cast<T*>(output.mutable_data());
+            int errors = 0;
+            bool rolled = false;
             {
                 py::gil_scoped_release release;
-                skimagexx::restoration_roll(source, shape, shift, out, add);
+                if (!add) {
+                    skimagexx::restoration_roll(source, shape, shift, out, false);
+                    rolled = true;
+                } else {
+                    std::fenv_t original;
+                    if (std::feholdexcept(&original) == 0) {
+                        try {
+                            skimagexx::restoration_roll(source, shape, shift, out, true);
+                        } catch (...) {
+                            std::fesetenv(&original);
+                            throw;
+                        }
+                        errors = std::fetestexcept(FE_OVERFLOW | FE_INVALID);
+                        std::fesetenv(&original);
+                        rolled = true;
+                    }
+                }
             }
+            if (!rolled) {
+                py::array_t<T> aligned(shape);
+                auto* dst = aligned.mutable_data();
+                {
+                    py::gil_scoped_release release;
+                    skimagexx::restoration_roll(source, shape, shift, dst, false);
+                }
+                output.attr("__iadd__")(aligned);
+            }
+            report_roll_add_errors<T>(errors);
             return output;
         });
-    }, py::arg("input").noconvert(), py::arg("shift"), py::arg("accumulator") = py::none());
+    }, py::arg("input").noconvert(), py::arg("shift"), py::arg("accumulator") = py::none(),
+       py::arg("inverse") = false);
 }

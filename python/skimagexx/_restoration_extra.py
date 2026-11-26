@@ -214,11 +214,12 @@ def _tv_batch_parameters(image, denoise_function, kwargs):
 
 
 def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks, interp=None,
-            generated_phase=None, compact=False):
+            generated_phase=None, compact=False, phase_source_shape=None):
     if interp is None:
         interp = _core.restoration_extra_interpolate(_native_dense(image), spatial_rank)
     generated_2d = (image.ndim == spatial_rank == 2 and stride <= 64
-                    and (masks is None or generated_phase is not None) and _spin_dense(image))
+                    and (masks is None or generated_phase is not None) and _spin_dense(image)
+                    and (phase_source_shape is None or image.shape == phase_source_shape))
     if generated_2d:
         parameters = _tv_batch_parameters(image, denoise_function, kwargs)
         if parameters is not None:
@@ -233,7 +234,7 @@ def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks, interp
              and _original_tv(denoise_function) and _tv_chambolle._providers_pristine())
     if generated_2d and not reuse:
         return _masked_dense_2d(image, denoise_function, kwargs, stride, interp,
-                                generated_phase, compact)
+                                generated_phase, compact, phase_source_shape is not None)
     output = (np.empty(image[masks[0]].shape, dtype=image.dtype) if compact
               else np.zeros_like(image))
     if masks is None:
@@ -244,14 +245,15 @@ def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks, interp
     for mask in masks:
         if not reuse:
             input_image = image.copy()
-        input_image[mask] = interp[mask]
+        input_image[mask] = interp[mask] if phase_source_shape is None else interp
         output[Ellipsis if compact else mask] = denoise_function(input_image, **kwargs)[mask]
         if reuse:
             input_image[mask] = image[mask]
     return output
 
 
-def _masked_dense_2d(image, denoise_function, kwargs, stride, interp, phase, compact):
+def _masked_dense_2d(image, denoise_function, kwargs, stride, interp, phase, compact,
+                     compact_interp):
     initial_shape = image.shape
     if compact:
         output = np.empty(image[_grid(phase, 2, stride)].shape, dtype=image.dtype)
@@ -266,7 +268,7 @@ def _masked_dense_2d(image, denoise_function, kwargs, stride, interp, phase, com
         else:
             mask = tuple(slice(offset, None, stride) for offset in job)
             input_image = image.copy()
-            input_image[mask] = interp[mask]
+            input_image[mask] = interp if compact_interp else interp[mask]
         result = denoise_function(input_image, **kwargs)
         if (_spin_dense(result) and result.flags.owndata and result.shape == initial_shape
                 and result.dtype == output.dtype and output.size):
@@ -300,15 +302,28 @@ def calibrate_denoiser(
                         extra_output=extra_output)
 
     image = img_as_float(image)
-    prepared = _j_image(image)
+    prepared = image.astype(_float_dtype(image), copy=False)
     parameters = [dict(zip(denoise_parameters, values))
                   for values in product(*denoise_parameters.values())]
     ranks = [image.ndim - int(kwargs.get('channel_axis') is not None) for kwargs in parameters]
-    source = _native_dense(prepared)
-    interpolated = {rank: _core.restoration_extra_interpolate(source, rank)
-                    for rank in dict.fromkeys(ranks) if rank > 0}
-    losses = []
     stride_int = int(stride)
+    source = _native_dense(prepared)
+    interpolated = {}
+    phase_source_shape = None
+    for rank in dict.fromkeys(ranks):
+        if rank <= 0:
+            continue
+        if (approximate_loss is True and prepared.ndim == rank == 2 and stride_int <= 64
+                and _spin_dense(prepared)):
+            phase_job = divmod(stride_int**2 // 2, stride_int)
+            if all(offset < extent for offset, extent in zip(phase_job, prepared.shape)):
+                phase_source_shape = prepared.shape
+                interpolated[rank] = _core.restoration_extra_interpolate_phase(
+                    source, phase_job, stride_int,
+                )
+                continue
+        interpolated[rank] = _core.restoration_extra_interpolate(source, rank)
+    losses = []
     for kwargs, spatial_rank in zip(parameters, ranks):
         compact = False
         if approximate_loss:
@@ -326,7 +341,8 @@ def calibrate_denoiser(
                                          masks=masks, denoiser_kwargs=kwargs)
         else:
             denoised = _masked(prepared, denoise_function, kwargs, spatial_rank, stride_int, masks,
-                               interpolated[spatial_rank], phase, compact)
+                               interpolated[spatial_rank], phase, compact,
+                               phase_source_shape if spatial_rank == 2 else None)
         values = denoised if compact else denoised[mask]
         squared = None
         if (_spin_dense(image) and image.flags.owndata and _spin_dense(values)
@@ -422,7 +438,6 @@ def cycle_spin(
     mean = None
     count = 0
     kwargs = {} if func_kw is None else func_kw
-    dense = _spin_dense(x)
     roll = _core.restoration_extra_roll
     if (x.ndim == 2 and all(ranges) and len(ranges[0]) * len(ranges[1]) <= 4096):
         parameters = _tv_batch_parameters(x, func, kwargs)
@@ -434,21 +449,23 @@ def cycle_spin(
                 return batch
     for shift in product(*ranges):
         shape = x.shape
-        reduced = tuple(s % n for s, n in zip(shift, shape)) if dense else None
-        if shift == (0, 0):
+        reduced = (tuple(s % n for s, n in zip(shift, shape))
+                   if len(shape) == len(axes) and _spin_dense(x) else None)
+        if shift == (0, 0) and len(shape) == 2:
             shifted = x.copy(order='K')
         else:
-            shifted = (roll(x, reduced) if dense
+            shifted = (roll(x, reduced) if reduced is not None
                        else np.roll(x, shift, axis=axes))
         result = func(shifted, **kwargs)
-        if (_spin_dense(result) and result.shape == x.shape
+        if (_spin_dense(result) and result.ndim == len(axes) and result.shape == x.shape
                 and (mean is None or (_spin_dense(mean) and mean.shape == x.shape
                                       and mean.dtype == result.dtype))):
-            inverse = (tuple(n - s if s else 0 for s, n in zip(reduced, shape))
-                       if dense and x.shape == shape
-                       else tuple(-s % n for s, n in zip(shift, x.shape)))
-            mean = (result.copy() if shift == (0, 0) and mean is None else
-                    roll(result, inverse, mean))
+            if shift == (0, 0) and mean is None:
+                mean = result.copy()
+            elif reduced is not None and x.shape == shape:
+                mean = roll(result, reduced, mean, True)
+            else:
+                mean = roll(result, tuple(-s % n for s, n in zip(shift, x.shape)), mean)
         else:
             aligned = np.roll(result, tuple(-s for s in shift), axis=axes)
             if mean is None:

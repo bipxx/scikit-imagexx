@@ -57,7 +57,7 @@ void advance_row(RestorationShape& coordinates, const RestorationShape& shape) {
 
 #ifdef RESTORATION_AVX2
 template<class T>
-RESTORATION_AVX_TARGET std::size_t add_span_avx2(const T* input, T* output, std::size_t size) {
+RESTORATION_AVX_TARGET std::size_t add_span_simd(const T* input, T* output, std::size_t size) {
     constexpr std::size_t lanes = 32 / sizeof(T);
     std::size_t i = 0;
     for (; size - i >= lanes; i += lanes) {
@@ -79,7 +79,7 @@ RESTORATION_AVX_TARGET __m256d interpolate_load_avx2(const T* p) {
 }
 
 template<class T>
-RESTORATION_AVX_TARGET std::size_t interpolate_span_avx2(const T* up, const T* left,
+RESTORATION_AVX_TARGET std::size_t interpolate_span_simd(const T* up, const T* left,
     const T* right, const T* down, T* output, std::size_t size) {
     const auto weight = _mm256_set1_pd(0.25);
     std::size_t i = 0;
@@ -94,13 +94,53 @@ RESTORATION_AVX_TARGET std::size_t interpolate_span_avx2(const T* up, const T* l
     }
     return i;
 }
+#elif defined(RESTORATION_SSE2)
+template<class T>
+std::size_t add_span_simd(const T* input, T* output, std::size_t size) {
+    constexpr std::size_t lanes = 16 / sizeof(T);
+    std::size_t i = 0;
+    for (; size - i >= lanes; i += lanes) {
+        if constexpr (std::is_same_v<T, float>) {
+            _mm_storeu_ps(output + i, _mm_add_ps(_mm_loadu_ps(output + i),
+                                                 _mm_loadu_ps(input + i)));
+        } else {
+            _mm_storeu_pd(output + i, _mm_add_pd(_mm_loadu_pd(output + i),
+                                                 _mm_loadu_pd(input + i)));
+        }
+    }
+    return i;
+}
+
+std::size_t interpolate_span_simd(const double* up, const double* left, const double* right,
+                                   const double* down, double* output, std::size_t size) {
+    const auto weight = _mm_set1_pd(0.25);
+    std::size_t i = 0;
+    for (; size - i >= 2; i += 2) {
+        auto sum = _mm_add_pd(_mm_setzero_pd(), _mm_mul_pd(_mm_loadu_pd(up + i), weight));
+        sum = _mm_add_pd(sum, _mm_mul_pd(_mm_loadu_pd(left + i), weight));
+        sum = _mm_add_pd(sum, _mm_mul_pd(_mm_loadu_pd(right + i), weight));
+        sum = _mm_add_pd(sum, _mm_mul_pd(_mm_loadu_pd(down + i), weight));
+        _mm_storeu_pd(output + i, sum);
+    }
+    return i;
+}
 #endif
+
+template<class T>
+T interpolate_pixel(T up, T left, T right, T down) {
+    double sum = 0;
+    sum += double(up) * 0.25;
+    sum += double(left) * 0.25;
+    sum += double(right) * 0.25;
+    sum += double(down) * 0.25;
+    return T(sum);
+}
 
 template<class T>
 void interpolate_2d(const T* image, const RestorationShape& shape,
                     std::size_t block, T* output) {
     const auto width = shape[1], row_size = width * block;
-#ifdef RESTORATION_AVX2
+#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
     const bool vectorize = has_avx2();
 #endif
     for (std::size_t y = 0; y < shape[0]; ++y) {
@@ -113,22 +153,36 @@ void interpolate_2d(const T* image, const RestorationShape& shape,
             std::size_t i = 0;
 #ifdef RESTORATION_AVX2
             if (vectorize)
-                i = interpolate_span_avx2(up + start, row + left, row + right, down + start, out, count);
-#endif
-            for (; i < count; ++i) {
-                double sum = 0;
-                sum += double(up[start + i]) * 0.25;
-                sum += double(row[left + i]) * 0.25;
-                sum += double(row[right + i]) * 0.25;
-                sum += double(down[start + i]) * 0.25;
-                out[i] = T(sum);
+                i = interpolate_span_simd(up + start, row + left, row + right, down + start, out, count);
+#elif defined(RESTORATION_SSE2)
+            if constexpr (std::is_same_v<T, double>) {
+                if (vectorize)
+                    i = interpolate_span_simd(up + start, row + left, row + right, down + start, out, count);
             }
+#endif
+            for (; i < count; ++i)
+                out[i] = interpolate_pixel(up[start + i], row[left + i], row[right + i], down[start + i]);
         };
         if (width == 1) span(0, 0, 0, block);
         else {
             span(0, block, block, block);
             span(block, 0, 2 * block, row_size - 2 * block);
             span(row_size - block, row_size - 2 * block, row_size - 2 * block, block);
+        }
+    }
+}
+
+template<class T>
+void interpolate_phase_2d(const T* image, std::size_t height, std::size_t width,
+                          std::array<std::size_t, 2> phase, std::size_t stride, T* output) {
+    for (auto y = phase[0]; y < height; y += stride) {
+        const auto* row = image + y * width;
+        const auto* up = height == 1 ? row : y == 0 ? row + width : row - width;
+        const auto* down = height == 1 ? row : y + 1 == height ? row - width : row + width;
+        for (auto x = phase[1]; x < width; x += stride) {
+            const auto left = width == 1 ? x : x == 0 ? x + 1 : x - 1;
+            const auto right = width == 1 ? x : x + 1 == width ? x - 1 : x + 1;
+            *output++ = interpolate_pixel(up[x], row[left], row[right], down[x]);
         }
     }
 }
@@ -300,14 +354,15 @@ struct GibbsStep {
     const double* normal_imag;
     std::complex<T>* total;
     T noise, prior;
-    std::size_t count;
+    T previous, divisor;
+    bool accumulate;
     bool measure_delta;
 };
 
 template<class T>
 void gibbs_scalar(const GibbsStep<T>& step, std::size_t i, GibbsSums& sums) {
-    const auto [data, transfer, reg, power, reg_power, nr, ni, total, noise, prior, count,
-                measure_delta] = step;
+    const auto [data, transfer, reg, power, reg_power, nr, ni, total, noise, prior,
+                previous, divisor, accumulate, measure_delta] = step;
     const T precision = noise * power[i] + prior * reg_power[i];
     const T reciprocal = T(1) / precision;
     const T hr = transfer[i].real(), hi = transfer[i].imag();
@@ -325,11 +380,10 @@ void gibbs_scalar(const GibbsStep<T>& step, std::size_t i, GibbsSums& sums) {
     const T pr = sr * reg[i], pi = si * reg[i];
     sums.noise += rr * rr + ri * ri;
     sums.prior += pr * pr + pi * pi;
-    if (count) {
+    if (accumulate) {
         const auto old = total[i];
         total[i] = {old.real() + sr, old.imag() + si};
         if (measure_delta) {
-            const auto previous = T(count - 1), divisor = T(count) * previous;
             const T dr = (previous * sr - old.real()) / divisor;
             const T di = (previous * si - old.imag()) / divisor;
             sums.change += std::hypot(dr, di);
@@ -341,6 +395,14 @@ void gibbs_scalar(const GibbsStep<T>& step, std::size_t i, GibbsSums& sums) {
 #if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
 template<class T> struct GibbsVector;
 
+#ifdef RESTORATION_AVX2
+#define GIBBS_NORMAL_RECIPROCAL(SUFFIX, VALUE, LOW, HIGH) \
+    _mm256_movemask_##SUFFIX(_mm256_and_##SUFFIX( \
+        _mm256_cmp_##SUFFIX(VALUE, LOW, _CMP_GE_OQ), _mm256_cmp_##SUFFIX(VALUE, HIGH, _CMP_LE_OQ)))
+#else
+#define GIBBS_NORMAL_RECIPROCAL(SUFFIX, VALUE, LOW, HIGH) \
+    _mm_movemask_##SUFFIX(_mm_and_##SUFFIX(_mm_cmpge_##SUFFIX(VALUE, LOW), _mm_cmple_##SUFFIX(VALUE, HIGH)))
+#endif
 #define GIBBS_VECTOR_OPS(PREFIX, SUFFIX, LANES) \
     static constexpr std::size_t lanes = LANES; \
     static V set(T x) { return PREFIX##_set1_##SUFFIX(x); } \
@@ -350,6 +412,13 @@ template<class T> struct GibbsVector;
     static V mul(V a, V b) { return PREFIX##_mul_##SUFFIX(a, b); } \
     static V div(V a, V b) { return PREFIX##_div_##SUFFIX(a, b); } \
     static V sqrt(V a) { return PREFIX##_sqrt_##SUFFIX(a); } \
+    static V variance(V reciprocal, V precision, V half) { \
+        const auto low = set(T(2) * std::numeric_limits<T>::min()); \
+        const auto high = set(std::numeric_limits<T>::max()); \
+        if (GIBBS_NORMAL_RECIPROCAL(SUFFIX, reciprocal, low, high) == (1 << lanes) - 1) \
+            return mul(half, reciprocal); \
+        return div(half, precision); \
+    } \
     static V norm2(V re, V im) { return add(mul(re, re), mul(im, im)); } \
     static double sum(V a) { \
         T values[lanes]; \
@@ -445,6 +514,7 @@ template<> struct GibbsVector<float> {
 };
 #endif
 #undef GIBBS_VECTOR_OPS
+#undef GIBBS_NORMAL_RECIPROCAL
 
 template<class T>
 std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
@@ -452,12 +522,11 @@ std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
     using A = GibbsVector<T>;
     using V = typename A::V;
     constexpr auto lanes = A::lanes;
-    const auto [data, transfer, reg, power, reg_power, nr, ni, total, noise, prior, count,
-                measure_delta] = step;
+    const auto [data, transfer, reg, power, reg_power, nr, ni, total, noise, prior,
+                previous_count, delta_divisor, accumulate, measure_delta] = step;
     const auto one = A::set(1), half = A::set(0.5);
     const auto noise_work = A::set(noise), neg_noise = A::set(-noise), prior_work = A::set(prior);
-    const auto previous = A::set(T(count ? count - 1 : 0));
-    const auto divisor = A::mul(A::set(T(count)), previous);
+    const auto previous = A::set(previous_count), divisor = A::set(delta_divisor);
     auto rn = A::set(0), pn = rn, change = rn, magnitude = rn;
     for (; end - i >= lanes; i += lanes) {
         V hr, hi, re, im;
@@ -468,7 +537,7 @@ std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
         const auto reciprocal = A::div(one, precision);
         const auto fr = A::mul(A::mul(noise_work, hr), reciprocal);
         const auto fi = A::mul(A::mul(neg_noise, hi), reciprocal);
-        const auto scale = A::sqrt(A::div(half, precision));
+        const auto scale = A::sqrt(A::variance(reciprocal, precision, half));
         const auto sr = A::add(A::sub(A::mul(fr, re), A::mul(fi, im)),
                                A::mul(scale, A::normals(nr + i)));
         const auto si = A::add(A::add(A::mul(fr, im), A::mul(fi, re)),
@@ -478,7 +547,7 @@ std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
         const auto regularizer = A::load(reg + i);
         rn = A::add(rn, A::norm2(rr, ri));
         pn = A::add(pn, A::norm2(A::mul(sr, regularizer), A::mul(si, regularizer)));
-        if (count) {
+        if (accumulate) {
             V old_re, old_im;
             A::complex_load(total + i, old_re, old_im);
             const auto new_re = A::add(old_re, sr), new_im = A::add(old_im, si);
@@ -493,8 +562,10 @@ std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
     }
     sums.noise += A::sum(rn);
     sums.prior += A::sum(pn);
-    sums.change += A::sum(change);
-    sums.magnitude += A::sum(magnitude);
+    if (measure_delta) {
+        sums.change += A::sum(change);
+        sums.magnitude += A::sum(magnitude);
+    }
     return i;
 }
 #endif
@@ -509,8 +580,11 @@ std::array<double, 3> restoration_gibbs_accumulate(const std::complex<T>* data,
 #if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
     const bool vectorize = has_avx2();
 #endif
+    const auto previous = measure_delta ? T(count - 1) : T(0);
+    const auto divisor = measure_delta ? T(count) * previous : T(0);
     const GibbsStep<T> step{data, transfer, reg, power, reg_power, normals,
-                            normals + height * width, total, noise, prior, count, measure_delta};
+                            normals + height * width, total, noise, prior, previous, divisor,
+                            count != 0, measure_delta};
     const bool half_weight = height != width;
     GibbsSums sums, first_column;
     for (std::size_t row = 0; row < height; ++row) {
@@ -590,16 +664,29 @@ void restoration_interpolate(const T* image, const RestorationShape& shape,
     }
 }
 
+void restoration_interpolate_phase(const float* image, std::size_t height, std::size_t width,
+                                   std::array<std::size_t, 2> phase, std::size_t stride, float* out) {
+    interpolate_phase_2d(image, height, width, phase, stride, out);
+}
+
+void restoration_interpolate_phase(const double* image, std::size_t height, std::size_t width,
+                                   std::array<std::size_t, 2> phase, std::size_t stride, double* out) {
+    interpolate_phase_2d(image, height, width, phase, stride, out);
+}
+
 template<class T>
 void restoration_roll(const T* image, const RestorationShape& shape,
                       const RestorationShape& shifts, T* output, bool add) {
     const auto size = size_of(shape);
     if (!image || !output || shifts.size() != shape.size())
         throw std::invalid_argument("invalid restoration roll buffers or rank");
-    for (std::size_t axis = 0; axis < shape.size(); ++axis)
+    std::size_t last = 0;
+    for (std::size_t axis = 0; axis < shape.size(); ++axis) {
         if (shifts[axis] >= shape[axis])
             throw std::invalid_argument("restoration roll shift is not reduced");
-#ifdef RESTORATION_AVX2
+        if (shifts[axis]) last = axis;
+    }
+#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
     const bool vectorize = add && has_avx2();
 #endif
     const auto span = [&](const T* input, T* out, std::size_t count) {
@@ -608,20 +695,22 @@ void restoration_roll(const T* image, const RestorationShape& shape,
             return;
         }
         std::size_t i = 0;
-#ifdef RESTORATION_AVX2
-        if (vectorize) i = add_span_avx2(input, out, count);
+#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
+        if (vectorize) i = add_span_simd(input, out, count);
 #endif
         for (; i < count; ++i) out[i] += input[i];
     };
-    if (shape.size() == 2) {
-        const auto height = shape[0], width = shape[1], split = shifts[1];
+    if (last == 0) {
+        const auto split = shifts[0] * (size / shape[0]);
+        if (split) span(image + size - split, output, split);
+        span(image, output + split, size - split);
+        return;
+    }
+    if (last == 1) {
+        const auto height = shape[0], width = size / height;
+        const auto split = shifts[1] * (width / shape[1]);
         const auto tail = width - split;
         const auto first = shifts[0] ? height - shifts[0] : 0;
-        if (!split) {
-            span(image + first * width, output, (height - first) * width);
-            if (first) span(image, output + (height - first) * width, first * width);
-            return;
-        }
         auto source = first;
         for (std::size_t row = 0; row < size; row += width) {
             const auto* input = image + source * width;
@@ -632,9 +721,6 @@ void restoration_roll(const T* image, const RestorationShape& shape,
         return;
     }
     const auto strides = element_strides(shape);
-    auto last = shape.size() - 1;
-    // Coalesce every trailing unshifted axis with the last shifted axis.
-    while (last > 0 && shifts[last] == 0) --last;
     const auto row_size = shape[last] * strides[last];
     const auto split = shifts[last] * strides[last];
     RestorationShape coordinates(last);
@@ -645,7 +731,7 @@ void restoration_roll(const T* image, const RestorationShape& shape,
     }
     for (std::size_t row = 0; row < size; row += row_size) {
         const auto tail = row_size - split;
-        span(image + source + tail, output + row, split);
+        if (split) span(image + source + tail, output + row, split);
         span(image + source, output + row + split, tail);
         // Source wrapping and destination carry occur at different positions.
         for (auto axis = last; axis-- > 0;) {
