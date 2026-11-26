@@ -9,6 +9,8 @@
 #include <atomic>
 #include <cmath>
 #include <limits>
+#include <memory>
+#include <new>
 #include <numeric>
 #include <stdexcept>
 #include <type_traits>
@@ -304,55 +306,73 @@ template<class T>
 void regularize(const T* auxiliary, T* current, T* vertical, T* horizontal,
                 Shape shape, T factor, int workers) {
     constexpr T time_step = T(0.25);
-    for (int iteration = 0; iteration < 2; ++iteration) {
-        const auto* prior = iteration == 0 ? auxiliary : current;
-        const auto dual = [&](std::size_t i, bool bottom, bool right) {
-            const T dy = bottom ? T(0) : prior[i + shape.width] - prior[i];
-            const T dx = right ? T(0) : prior[i + 1] - prior[i];
+    const auto width = shape.width;
+    const auto last = width - 1;
+    const auto dual_row = [&](const T* prior, std::size_t y) {
+        const auto base = y * width;
+        const bool bottom = y + 1 == shape.height;
+        const auto update = [&](std::size_t i, T dx) {
+            const T dy = bottom ? T(0) : prior[i + width] - prior[i];
             const T norm = std::sqrt(dy * dy + dx * dx) * factor + T(1);
             vertical[i] = (vertical[i] - time_step * dy) / norm;
             horizontal[i] = (horizontal[i] - time_step * dx) / norm;
         };
-        const auto primal = [&](std::size_t i, bool top, bool left) {
-            T divergence = -(vertical[i] + horizontal[i]);
-            if (!top) divergence += vertical[i - shape.width];
-            if (!left) divergence += horizontal[i - 1];
-            current[i] = auxiliary[i] + divergence;
+        for (std::size_t x = 0; x < last; ++x)
+            update(base + x, prior[base + x + 1] - prior[base + x]);
+        update(base + last, T(0));
+    };
+    const auto primal_row = [&](std::size_t y) {
+        const auto base = y * width;
+        const auto divergence = [&](std::size_t i) {
+            T value = -(vertical[i] + horizontal[i]);
+            if (y != 0) value += vertical[i - width];
+            return value;
         };
-        // In raster order the dual step reads the untouched right and bottom
-        // neighbors, while the primal step uses the updated left and top duals.
-        if (workers == 1) {
-            for (std::size_t y = 0; y < shape.height; ++y) {
-                for (std::size_t x = 0; x < shape.width; ++x) {
-                    const auto i = y * shape.width + x;
-                    dual(i, y + 1 == shape.height, x + 1 == shape.width);
-                    primal(i, y == 0, x == 0);
-                }
-            }
-            continue;
+        current[base] = auxiliary[base] + divergence(base);
+        for (std::size_t x = 1; x < width; ++x) {
+            const auto i = base + x;
+            current[i] = auxiliary[i] + (divergence(i) + horizontal[i - 1]);
         }
+    };
+
+    if (workers == 1) {
+        // Once the first update has written row y, the second can consume
+        // row y-1. The first update still needs the first-pass duals on row y.
+        dual_row(auxiliary, 0);
+        primal_row(0);
+        for (std::size_t y = 1; y < shape.height; ++y) {
+            dual_row(auxiliary, y);
+            primal_row(y);
+            dual_row(current, y - 1);
+            primal_row(y - 1);
+        }
+        dual_row(current, shape.height - 1);
+        primal_row(shape.height - 1);
+        return;
+    }
+
+    for (int iteration = 0; iteration < 2; ++iteration) {
+        const auto* prior = iteration == 0 ? auxiliary : current;
         detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
-            for (auto y = begin; y < end; ++y) {
-                const auto base = y * shape.width;
-                const bool bottom = y + 1 == shape.height;
-                for (std::size_t x = 0; x < shape.width; ++x)
-                    dual(base + x, bottom, x + 1 == shape.width);
-            }
+            for (auto y = begin; y < end; ++y) dual_row(prior, y);
         });
         detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
-            for (auto y = begin; y < end; ++y) {
-                const auto base = y * shape.width;
-                for (std::size_t x = 0; x < shape.width; ++x)
-                    primal(base + x, y == 0, x == 0);
-            }
+            for (auto y = begin; y < end; ++y) primal_row(y);
         });
     }
 }
 
 template<class T>
 struct Tvl1Scratch {
-    std::vector<T> warped, strength, rho0, gy, gx;
-    std::vector<T> auxiliary, previous, projection;
+    // Five image planes, two two-component flows, and four dual planes.
+    static constexpr std::size_t planes = 13;
+    std::unique_ptr<T[]> storage;
+
+    explicit Tvl1Scratch(std::size_t count) {
+        if (count > std::numeric_limits<std::size_t>::max() / (planes * sizeof(T)))
+            throw std::bad_alloc();
+        if (count) storage.reset(new T[planes * count]);
+    }
 };
 
 template<class T>
@@ -363,16 +383,23 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
     const auto count = shape.count();
     const auto extrema = std::minmax_element(moving, moving + count);
     const auto range = std::make_pair(*extrema.first, *extrema.second);
-    auto& [warped, strength, rho0, gy, gx, auxiliary, previous, projection] = scratch;
-    std::fill_n(projection.data(), 4 * count, T(0));
+    auto* warped = scratch.storage.get();
+    auto* strength = warped + count;
+    auto* rho0 = strength + count;
+    auto* gy = rho0 + count;
+    auto* gx = gy + count;
+    auto* auxiliary = gx + count;
+    auto* previous = auxiliary + 2 * count;
+    auto* projection = previous + 2 * count;
+    std::fill_n(projection, 4 * count, T(0));
 
     for (int step = 0; step < num_warp; ++step) {
         if (prefilter) {
-            std::copy_n(flow, 2 * count, previous.data());
-            prefilter_flow(previous.data(), flow, shape);
+            std::copy_n(flow, 2 * count, previous);
+            prefilter_flow(previous, flow, shape);
         }
-        warp(moving, flow, warped.data(), shape, range, workers);
-        gradients(warped.data(), shape, workers, [&](std::size_t i, T y, T x) {
+        warp(moving, flow, warped, shape, range, workers);
+        gradients(warped, shape, workers, [&](std::size_t i, T y, T x) {
             gy[i] = y;
             gx[i] = x;
             const T norm = y * y + x * x;
@@ -405,8 +432,8 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
             });
             for (std::size_t component = 0; component < 2; ++component) {
                 const auto offset = component * count;
-                regularize(auxiliary.data() + offset, flow + offset,
-                           projection.data() + 2 * offset, projection.data() + 2 * offset + count,
+                regularize(auxiliary + offset, flow + offset,
+                           projection + 2 * offset, projection + 2 * offset + count,
                            shape, regularization, workers);
             }
         }
@@ -552,18 +579,7 @@ void optical_flow_tvl1_into(const T* reference, const T* moving, T* flow, std::s
     if (num_warp < 0 || num_iter < 0 || !std::isfinite(attachment) || attachment <= 0 ||
         !std::isfinite(tightness) || tightness <= 0 || !std::isfinite(tol) || tol < 0)
         throw std::invalid_argument("invalid TV-L1 solver parameters");
-    Tvl1Scratch<T> scratch;
-    if (num_warp) {
-        const auto count = shape.count();
-        scratch.warped.resize(count);
-        scratch.strength.resize(count);
-        scratch.rho0.resize(count);
-        scratch.gy.resize(count);
-        scratch.gx.resize(count);
-        scratch.auxiliary.resize(2 * count);
-        scratch.previous.resize(2 * count);
-        scratch.projection.resize(4 * count);
-    }
+    Tvl1Scratch<T> scratch(num_warp ? shape.count() : 0);
     coarse_to_fine(reference, moving, flow, shape,
                    [&](const T* ref, const T* mov, T* level, Shape dims, int workers) {
         solve_tvl1(ref, mov, level, dims, workers, T(attachment * tightness), T(0.25 / tightness),

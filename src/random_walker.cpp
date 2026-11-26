@@ -10,7 +10,7 @@
 #include <utility>
 
 #if defined(__SSE2__) || defined(_M_X64)
-#include <emmintrin.h>
+#include <immintrin.h>
 #endif
 
 
@@ -153,11 +153,36 @@ auto stencil_terms(const Laplacian& laplacian) {
     }
 }
 
-#if defined(__SSE2__) || defined(_M_X64)
-double add_in_order(double sum, __m128d lanes) {
-    sum += _mm_cvtsd_f64(lanes);
-    return sum + _mm_cvtsd_f64(_mm_unpackhi_pd(lanes, lanes));
+#if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
+#if defined(_MSC_VER) && !defined(__clang__)
+#define SKIMAGEXX_WALKER_AVX2 __declspec(noinline)
+#else
+#define SKIMAGEXX_WALKER_AVX2 __attribute__((target("avx2"), noinline))
+#endif
+
+template<std::size_t Terms, std::size_t... I>
+SKIMAGEXX_WALKER_AVX2 double apply_stencil_tile(
+    const std::array<StencilTerm, Terms>& terms,
+    const std::array<const double*, Terms>& neighbors, const double* direction, double* product,
+    std::size_t begin, std::size_t end, double curvature, std::index_sequence<I...>) {
+    for (auto i = begin; i < end; i += 4) {
+        auto sum = _mm256_setzero_pd();
+        ((sum = _mm256_add_pd(sum, _mm256_mul_pd(
+              _mm256_loadu_pd(terms[I].weight + i), _mm256_loadu_pd(neighbors[I] + i)))), ...);
+        _mm256_storeu_pd(product + i, sum);
+        const auto dots = _mm256_mul_pd(_mm256_loadu_pd(direction + i), sum);
+        const auto low = _mm256_castpd256_pd128(dots);
+        const auto high = _mm256_extractf128_pd(dots, 1);
+        // Keep the scalar summation order so convergence and class ties agree.
+        curvature += _mm_cvtsd_f64(low);
+        curvature += _mm_cvtsd_f64(_mm_unpackhi_pd(low, low));
+        curvature += _mm_cvtsd_f64(high);
+        curvature += _mm_cvtsd_f64(_mm_unpackhi_pd(high, high));
+    }
+    return curvature;
 }
+
+#undef SKIMAGEXX_WALKER_AVX2
 #endif
 
 template<bool Simd, std::size_t Terms, std::size_t... I>
@@ -188,14 +213,14 @@ double apply_and_dot(
             for (; ready < needed; ++ready)
                 direction[ready] = product[ready] + beta * direction[ready];
         }
-#if defined(__SSE2__) || defined(_M_X64)
+#if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
         if constexpr (Simd) {
-            for (; i + 2 <= end; i += 2) {
-                auto sum = _mm_setzero_pd();
-                ((sum = _mm_add_pd(sum, _mm_mul_pd(
-                      _mm_loadu_pd(terms[I].weight + i), _mm_loadu_pd(neighbors[I] + i)))), ...);
-                curvature = add_in_order(curvature, _mm_mul_pd(_mm_loadu_pd(direction + i), sum));
-                _mm_storeu_pd(product + i, sum);
+            const auto vector_end = end - (end - i) % 4;
+            if (vector_end != i) {
+                curvature = apply_stencil_tile(
+                    terms, neighbors, direction, product, i, vector_end, curvature,
+                    std::index_sequence<I...>{});
+                i = vector_end;
             }
         }
 #endif
@@ -432,7 +457,7 @@ std::optional<RandomWalkerResult> solve(
         result.labels.assign(markers.nodes.begin(), markers.nodes.end());
 
     bool solved;
-#if defined(__SSE2__) || defined(_M_X64)
+#if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
     if (has_avx2())
         solved = solve_grid<true>(laplacian, markers, options, result);
     else
