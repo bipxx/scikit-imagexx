@@ -9,9 +9,13 @@
 #include <pybind11/stl.h>
 #include <algorithm>
 #include <array>
+#include <cfenv>
 #include <cstdint>
+#include <cstring>
 #include <functional>
 #include <limits>
+#include <memory>
+#include <new>
 #include <type_traits>
 #include <vector>
 
@@ -19,7 +23,7 @@ namespace skimagexx {
 template<class T>
 std::array<double, 3> restoration_gibbs_accumulate(const std::complex<T>*,
     const std::complex<T>*, const T*, const T*, const T*, T, T, const double*,
-    std::size_t, std::size_t, std::size_t, std::complex<T>*);
+    std::size_t, std::size_t, std::size_t, std::complex<T>*, bool);
 
 namespace detail {
 const char* tv_denoise_try_finite_reuse_into(const TvConstView&, const TvDenoiseWorkspace&,
@@ -70,47 +74,73 @@ template<class Fn> auto real_dispatch(const py::array& input, Fn fn) {
     return fn(dense<double>(input));
 }
 
+using Phase = std::array<std::size_t, 2>;
+
+std::size_t phase_extent(std::size_t extent, std::size_t offset, std::size_t stride) {
+    return offset < extent ? 1 + (extent - 1 - offset) / stride : 0;
+}
+
+void check_phase(const RestorationShape& shape, Phase phase, std::size_t stride) {
+    if (shape.size() != 2 || !stride || std::max(phase[0], phase[1]) >= stride ||
+        std::max(shape[0], shape[1]) > std::numeric_limits<std::size_t>::max() - stride)
+        throw py::value_error("invalid restoration mask phase");
+}
+
+template<class Action>
+void visit_phase(const RestorationShape& shape, Phase phase, std::size_t stride, Action action) {
+    std::size_t compact = 0;
+    for (auto row = phase[0]; row < shape[0]; row += stride)
+        for (auto col = phase[1]; col < shape[1]; col += stride)
+            action(row * shape[1] + col, compact++);
+}
+
 template<class T>
 bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
-              const std::vector<std::array<std::size_t, 2>>& jobs, std::size_t stride,
-              const skimagexx::TvDenoiseParameters& parameters, T* output) {
+              const std::vector<Phase>& jobs, std::size_t stride,
+              const skimagexx::TvDenoiseParameters& parameters, T* output, bool compact) {
     using namespace skimagexx;
     const auto height = shape[0], width = shape[1], size = height * width;
     const auto type = std::is_same_v<T, float> ? TvScalarType::float32 : TvScalarType::float64;
     const std::vector<std::ptrdiff_t> strides{std::ptrdiff_t(width * sizeof(T)), sizeof(T)};
-    std::vector<T> shifted(size), p(2 * size), g(2 * size), d(size), out(size), squared(size), norm(size);
+    if (size > std::numeric_limits<std::size_t>::max() / 9)
+        throw std::bad_array_new_length();
+    // The reuse entry point resets p/g/d. The other scratch planes are
+    // written before use, and shifted is populated only when the job needs it.
+    const std::unique_ptr<T[]> scratch(new T[9 * size]);
+    auto* shifted = scratch.get();
+    auto* p = shifted + size;
+    auto* g = p + 2 * size;
+    auto* d = g + 2 * size;
+    auto* out = d + size;
+    auto* squared = out + size;
+    auto* norm = squared + size;
     const TvDenoiseWorkspace workspace{
-        {p.data(), type, shape}, {g.data(), type, shape}, {d.data(), type, shape, strides},
-        {out.data(), type, shape, strides}, {squared.data(), type, shape, strides},
-        {norm.data(), type, shape, strides}, {p.data(), type, shape}, {g.data(), type, shape},
-        {out.data(), type, shape, strides}, {norm.data(), type, shape, strides}};
-    TvConstView source{shifted.data(), type, shape, strides};
+        {p, type, shape}, {g, type, shape}, {d, type, shape, strides},
+        {out, type, shape, strides}, {squared, type, shape, strides},
+        {norm, type, shape, strides}, {p, type, shape}, {g, type, shape},
+        {out, type, shape, strides}, {norm, type, shape, strides}};
+    TvConstView source{shifted, type, shape, strides};
     RestorationShape shift(2);
     bool add = false;
-    if (interp) std::fill_n(output, size, T(0));
+    if (interp && !compact) std::fill_n(output, size, T(0));
     for (const auto& job : jobs) {
         const auto [y, x] = job;
-        const auto each_masked = [&](const auto& action) {
-            for (auto row = y; row < height; row += stride)
-                for (auto col = x; col < width; col += stride)
-                    action(row * width + col);
-        };
         if (interp) {
-            if (!add) std::copy_n(input, size, shifted.data());
-            each_masked([&](auto i) { shifted[i] = interp[i]; });
+            if (!add) std::copy_n(input, size, shifted);
+            visit_phase(shape, job, stride, [&](auto i, auto) { shifted[i] = interp[i]; });
         } else if (y || x) {
             shift[0] = y;
             shift[1] = x;
-            restoration_roll(input, shape, shift, shifted.data(), false);
+            restoration_roll(input, shape, shift, shifted, false);
         }
-        source.data = interp || y || x ? shifted.data() : input;
+        source.data = interp || y || x ? shifted : input;
         TvDenoiseResult result{};
         if (detail::tv_denoise_try_finite_reuse_into(source, workspace, parameters, result))
             return false;
-        const auto* denoised = result.input_alias ? static_cast<const T*>(source.data) : out.data();
+        const auto* denoised = result.input_alias ? static_cast<const T*>(source.data) : out;
         if (interp) {
-            each_masked([&](auto i) {
-                output[i] = denoised[i];
+            visit_phase(shape, job, stride, [&](auto i, auto j) {
+                output[compact ? j : i] = denoised[i];
                 shifted[i] = input[i];
             });
         } else if (y || x) {
@@ -136,8 +166,10 @@ void bind_restoration_extra(py::module_& module) {
             py::array_t<std::complex<T>> output(spectrum_of(shape));
             auto* out = output.mutable_data();
             const int workers = skimagexx::get_num_threads();
-            py::gil_scoped_release release;
-            skimagexx::restoration_transfer(kernel, kernel_shape, shape, out, workers);
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_transfer(kernel, kernel_shape, shape, out, workers);
+            }
             return output;
         });
     }, py::arg("input").noconvert(), py::arg("shape"));
@@ -146,14 +178,18 @@ void bind_restoration_extra(py::module_& module) {
         if (single) {
             py::array_t<float> output(spectrum_of(shape));
             auto* out = output.mutable_data();
-            py::gil_scoped_release release;
-            skimagexx::restoration_laplacian(shape, out);
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_laplacian(shape, out);
+            }
             return output;
         }
         py::array_t<double> output(spectrum_of(shape));
         auto* out = output.mutable_data();
-        py::gil_scoped_release release;
-        skimagexx::restoration_laplacian(shape, out);
+        {
+            py::gil_scoped_release release;
+            skimagexx::restoration_laplacian(shape, out);
+        }
         return output;
     });
 
@@ -195,8 +231,10 @@ void bind_restoration_extra(py::module_& module) {
             py::array_t<std::complex<T>> output(spectrum_of(shape));
             auto* out = output.mutable_data();
             const int workers = skimagexx::get_num_threads();
-            py::gil_scoped_release release;
-            skimagexx::restoration_gibbs_forward(source, shape, out, workers);
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_gibbs_forward(source, shape, out, workers);
+            }
             return output;
         });
     }, py::arg("image").noconvert());
@@ -210,8 +248,10 @@ void bind_restoration_extra(py::module_& module) {
             py::array_t<T> output(shape);
             auto* out = output.mutable_data();
             const int workers = skimagexx::get_num_threads();
-            py::gil_scoped_release release;
-            skimagexx::restoration_gibbs_inverse(source, shape, out, workers);
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_gibbs_inverse(source, shape, out, workers);
+            }
             return output;
         };
         if (data.dtype().num() == py::dtype::of<std::complex<float>>().num()) return inverse(float{});
@@ -259,7 +299,7 @@ void bind_restoration_extra(py::module_& module) {
     module.def("restoration_extra_gibbs_accumulate", [](
         const py::array& data, const py::array& transfer, const py::array& reg,
         const py::array& power, const py::array& reg_power, double noise, double prior,
-        const py::array& normals, py::array& total, std::size_t count) {
+        const py::array& normals, py::array& total, std::size_t count, bool measure_delta) {
         if (data.ndim() != 2 || !same_shape(data, transfer) || !same_shape(data, reg) ||
             !same_shape(data, power) || !same_shape(data, reg_power) || !same_shape(data, total) ||
             normals.ndim() != 3 || normals.shape(0) != 2 || normals.shape(1) != data.shape(0) ||
@@ -281,15 +321,17 @@ void bind_restoration_extra(py::module_& module) {
             auto* out = static_cast<C*>(total.mutable_data());
             py::gil_scoped_release release;
             return skimagexx::restoration_gibbs_accumulate(y, h, regularizer, p, rp,
-                T(noise), T(prior), draws, height, width, count, out);
+                T(noise), T(prior), draws, height, width, count, out, measure_delta);
         });
     }, py::arg("data").noconvert(), py::arg("transfer").noconvert(), py::arg("reg").noconvert(),
        py::arg("power").noconvert(), py::arg("reg_power").noconvert(), py::arg("noise"),
-       py::arg("prior"), py::arg("normals").noconvert(), py::arg("total").noconvert(), py::arg("count"));
+       py::arg("prior"), py::arg("normals").noconvert(), py::arg("total").noconvert(), py::arg("count"),
+       py::arg("measure_delta") = true);
 
     module.def("restoration_extra_tv_batch", [](const py::array& image, const py::object& interpolation,
-        const std::vector<std::array<std::size_t, 2>>& jobs, std::size_t stride, double weight,
-        double eps, std::size_t iterations, bool modern, std::size_t buffer_elements) -> py::object {
+        const std::vector<Phase>& jobs, std::size_t stride, double weight,
+        double eps, std::size_t iterations, bool modern, std::size_t buffer_elements,
+        bool compact) -> py::object {
         using namespace skimagexx;
         const auto shape = shape_of(image);
         if (shape.size() != 2 || jobs.empty() || !stride ||
@@ -298,6 +340,14 @@ void bind_restoration_extra(py::module_& module) {
         const auto interp = interpolation.is_none() ? py::array() : interpolation.cast<py::array>();
         if (!interpolation.is_none() && !same_shape(image, interp))
             throw py::value_error("restoration TV interpolation shape mismatch");
+        auto output_shape = shape;
+        if (compact) {
+            if (interpolation.is_none() || jobs.size() != 1)
+                throw py::value_error("compact restoration output requires a single mask");
+            check_phase(shape, jobs.front(), stride);
+            for (std::size_t axis = 0; axis < 2; ++axis)
+                output_shape[axis] = phase_extent(shape[axis], jobs.front()[axis], stride);
+        }
         if (interpolation.is_none())
             for (const auto& job : jobs)
                 if (job[0] >= shape[0] || job[1] >= shape[1])
@@ -308,19 +358,111 @@ void bind_restoration_extra(py::module_& module) {
         return real_dispatch(image, [&](auto input) -> py::object {
             using T = std::remove_cv_t<std::remove_pointer_t<decltype(input)>>;
             const auto* values = interpolation.is_none() ? nullptr : dense<T>(interp);
-            py::array_t<T> output(shape);
+            py::array_t<T> output(output_shape);
             auto* out = output.mutable_data();
             bool success;
             {
                 py::gil_scoped_release release;
-                success = tv_batch(input, values, shape, jobs, stride, parameters, out);
+                success = tv_batch(input, values, shape, jobs, stride, parameters, out, compact);
             }
             if (!success) return py::none();
             return output;
         });
     }, py::arg("image").noconvert(), py::arg("interpolation"), py::arg("jobs"), py::arg("stride"),
        py::arg("weight"), py::arg("eps"), py::arg("iterations"), py::arg("modern"),
-       py::arg("buffer_elements"));
+       py::arg("buffer_elements"), py::arg("compact") = false);
+
+    module.def("restoration_extra_phase_input", [](const py::array& image, const py::array& interp,
+                                                    Phase phase, std::size_t stride) {
+        const auto shape = shape_of(image);
+        check_phase(shape, phase, stride);
+        if (!same_shape(image, interp))
+            throw py::value_error("restoration interpolation shape mismatch");
+        const auto size = std::size_t(image.size());
+        return real_dispatch(image, [&](auto input) -> py::array {
+            using T = std::remove_cv_t<std::remove_pointer_t<decltype(input)>>;
+            const auto* interpolated = dense<T>(interp);
+            py::array_t<T> output(shape);
+            auto* out = output.mutable_data();
+            {
+                py::gil_scoped_release release;
+                std::copy_n(input, size, out);
+                visit_phase(shape, phase, stride, [&](auto i, auto) { out[i] = interpolated[i]; });
+            }
+            return output;
+        });
+    });
+
+    module.def("restoration_extra_phase_store", [](const py::array& denoised, py::array& output,
+                                                    Phase phase, std::size_t stride, bool compact) {
+        const auto shape = shape_of(denoised);
+        check_phase(shape, phase, stride);
+        const auto expected = compact
+            ? RestorationShape{phase_extent(shape[0], phase[0], stride),
+                               phase_extent(shape[1], phase[1], stride)}
+            : shape;
+        if (shape_of(output) != expected || overlaps(denoised, output))
+            throw py::value_error("invalid restoration mask destination");
+        real_dispatch(denoised, [&](auto input) {
+            using T = std::remove_cv_t<std::remove_pointer_t<decltype(input)>>;
+            dense<T>(output);
+            auto* out = static_cast<T*>(output.mutable_data());
+            py::gil_scoped_release release;
+            visit_phase(shape, phase, stride, [&](auto i, auto j) { out[compact ? j : i] = input[i]; });
+        });
+    });
+
+    module.def("restoration_extra_squared_error", [](const py::array& image, const py::array& denoised,
+        Phase phase, std::size_t stride, bool modern_mean) -> py::object {
+        using namespace skimagexx;
+        const auto shape = shape_of(image);
+        check_phase(shape, phase, stride);
+        const RestorationShape expected{phase_extent(shape[0], phase[0], stride),
+                                        phase_extent(shape[1], phase[1], stride)};
+        if (shape_of(denoised) != expected)
+            throw py::value_error("restoration loss shape mismatch");
+        const auto size = std::size_t(denoised.size());
+        return real_dispatch(image, [&](auto input) -> py::object {
+            using T = std::remove_cv_t<std::remove_pointer_t<decltype(input)>>;
+            const auto* values = dense<T>(denoised);
+            py::array_t<T> squared(size);
+            auto* out = squared.mutable_data();
+            bool success = false;
+            double mean = 0;
+            const bool reduce = modern_mean && std::is_same_v<T, double>;
+            {
+                py::gil_scoped_release release;
+                std::fenv_t original;
+                if (std::feholdexcept(&original) == 0) {
+                    visit_phase(shape, phase, stride, [&](auto i, auto j) {
+                        const T diff = input[i] - values[j];
+                        out[j] = diff * diff;
+                    });
+                    success = !std::fetestexcept(FE_INVALID | FE_OVERFLOW | FE_UNDERFLOW);
+                    std::fesetenv(&original);
+                }
+                if (success && reduce) {
+                    // Match the audited contiguous float64 NumPy sum association.
+                    try {
+                        const auto sum = tv_sum_contiguous({out, size, TvReductionType::float64},
+                            {TvReductionProfile::numpy_254_aligned_contiguous, size});
+                        double value;
+                        std::memcpy(&value, &sum.bits, sizeof(value));
+                        const auto count = static_cast<double>(size);
+                        success = sum.fp_status == 0 &&
+                            (value == 0 || value >= std::numeric_limits<double>::min() * count);
+                        if (success) mean = value / count;
+                    } catch (const std::invalid_argument&) {
+                        // Keep NumPy's reducer for unsupported floating environments.
+                        success = false;
+                    }
+                }
+            }
+            if (!success) return py::none();
+            if (reduce) return py::float_(mean);
+            return squared;
+        });
+    });
 
     module.def("restoration_extra_interpolate", [](const py::array& image, std::size_t spatial_rank) {
         return real_dispatch(image, [&](auto source) -> py::array {
@@ -328,8 +470,10 @@ void bind_restoration_extra(py::module_& module) {
             const auto shape = shape_of(image);
             py::array_t<T> output(shape);
             auto* out = output.mutable_data();
-            py::gil_scoped_release release;
-            skimagexx::restoration_interpolate(source, shape, spatial_rank, out);
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_interpolate(source, shape, spatial_rank, out);
+            }
             return output;
         });
     }, py::arg("image").noconvert(), py::arg("spatial_rank"));
@@ -349,8 +493,10 @@ void bind_restoration_extra(py::module_& module) {
                     throw py::value_error("restoration roll buffers overlap");
             }
             auto* out = static_cast<T*>(output.mutable_data());
-            py::gil_scoped_release release;
-            skimagexx::restoration_roll(source, shape, shift, out, add);
+            {
+                py::gil_scoped_release release;
+                skimagexx::restoration_roll(source, shape, shift, out, add);
+            }
             return output;
         });
     }, py::arg("input").noconvert(), py::arg("shift"), py::arg("accumulator") = py::none());

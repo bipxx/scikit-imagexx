@@ -21,6 +21,7 @@ from ._tv_bregman import _channel_as_last_axis, img_as_float
 
 _DASK_AVAILABLE = find_spec('dask') is not None
 _TV_CHAMBOLLE = _tv_chambolle.denoise_tv_chambolle
+_NUMPY_MEAN = np.mean
 
 
 def _plain_numeric(value):
@@ -90,10 +91,11 @@ class _GibbsWorkspace:
         self.scalar = data.real.dtype.type
         self.kernel = _core.restoration_extra_gibbs_accumulate
 
-    def step(self, data, transfer, regularizer, power, reg_power, noise, prior, count):
+    def step(self, data, transfer, regularizer, power, reg_power, noise, prior, count,
+             measure_delta):
         noise_norm, prior_norm, delta = self.kernel(
             data, transfer, regularizer, power, reg_power, noise, prior,
-            self.normals, self.total, max(0, count),
+            self.normals, self.total, max(0, count), measure_delta,
         )
         return self.scalar(noise_norm), self.scalar(prior_norm), delta
 
@@ -134,19 +136,25 @@ def unsupervised_wiener(
     workspace = _GibbsWorkspace(data)
     draw_normal = generator.standard_normal
     draw_gamma = generator.gamma
+    combined_draw = type(generator) is np.random.Generator
     noise_shape, prior_shape = image.size / 2, (image.size - 1) / 2
     noise, prior = [1], [1]
     for iteration in range(maximum):
         # Keep the reference's float64 fills and noise-before-prior gamma draws.
-        draw_normal(out=workspace.real)
-        draw_normal(out=workspace.imag)
+        if combined_draw:
+            draw_normal(out=workspace.normals)
+        else:
+            draw_normal(out=workspace.real)
+            draw_normal(out=workspace.imag)
         count = iteration - burnin
+        measure_delta = iteration > minimum and threshold > 0
         noise_norm, prior_norm, delta = workspace.step(
-            data, transfer, regularizer, power, reg_power, noise[-1], prior[-1], count
+            data, transfer, regularizer, power, reg_power, noise[-1], prior[-1], count,
+            measure_delta,
         )
         noise.append(draw_gamma(noise_shape, 2 / noise_norm))
         prior.append(draw_gamma(prior_shape, 2 / prior_norm))
-        if iteration > minimum and delta < threshold:
+        if measure_delta and delta < threshold:
             break
     np.divide(workspace.total, count, out=workspace.total)
     result = _core.restoration_extra_gibbs_inverse(workspace.total, image.shape)
@@ -206,21 +214,28 @@ def _tv_batch_parameters(image, denoise_function, kwargs):
 
 
 def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks, interp=None,
-            generated_phase=None):
+            generated_phase=None, compact=False):
     if interp is None:
         interp = _core.restoration_extra_interpolate(_native_dense(image), spatial_rank)
-    if spatial_rank == 2 and (masks is None or generated_phase is not None):
+    generated_2d = (image.ndim == spatial_rank == 2 and stride <= 64
+                    and (masks is None or generated_phase is not None) and _spin_dense(image))
+    if generated_2d:
         parameters = _tv_batch_parameters(image, denoise_function, kwargs)
-        if parameters is not None and stride * stride <= 4096:
+        if parameters is not None:
             jobs = (list(product(range(stride), repeat=2)) if generated_phase is None
                     else [divmod(generated_phase, stride)])
-            result = _core.restoration_extra_tv_batch(image, interp, jobs, stride, *parameters)
+            result = _core.restoration_extra_tv_batch(image, interp, jobs, stride, *parameters,
+                                                      compact)
             if result is not None:
                 return result
-    output = np.zeros_like(image)
     # Explicit mask iterators may have side effects between yields.
     reuse = ((masks is None or generated_phase is not None)
              and _original_tv(denoise_function) and _tv_chambolle._providers_pristine())
+    if generated_2d and not reuse:
+        return _masked_dense_2d(image, denoise_function, kwargs, stride, interp,
+                                generated_phase, compact)
+    output = (np.empty(image[masks[0]].shape, dtype=image.dtype) if compact
+              else np.zeros_like(image))
     if masks is None:
         masks = (_grid(i, spatial_rank, stride) for i in range(stride**spatial_rank))
     # A custom callback can mutate or retain its argument across calls.
@@ -230,9 +245,35 @@ def _masked(image, denoise_function, kwargs, spatial_rank, stride, masks, interp
         if not reuse:
             input_image = image.copy()
         input_image[mask] = interp[mask]
-        output[mask] = denoise_function(input_image, **kwargs)[mask]
+        output[Ellipsis if compact else mask] = denoise_function(input_image, **kwargs)[mask]
         if reuse:
             input_image[mask] = image[mask]
+    return output
+
+
+def _masked_dense_2d(image, denoise_function, kwargs, stride, interp, phase, compact):
+    initial_shape = image.shape
+    if compact:
+        output = np.empty(image[_grid(phase, 2, stride)].shape, dtype=image.dtype)
+    else:
+        output = np.empty_like(image) if phase is None else np.zeros_like(image)
+    jobs = product(range(stride), repeat=2) if phase is None else (divmod(phase, stride),)
+    prepare = _core.restoration_extra_phase_input
+    store = _core.restoration_extra_phase_store
+    for job in jobs:
+        if image.shape == initial_shape and _spin_dense(image) and image.dtype == output.dtype:
+            input_image = prepare(image, interp, job, stride)
+        else:
+            mask = tuple(slice(offset, None, stride) for offset in job)
+            input_image = image.copy()
+            input_image[mask] = interp[mask]
+        result = denoise_function(input_image, **kwargs)
+        if (_spin_dense(result) and result.flags.owndata and result.shape == initial_shape
+                and result.dtype == output.dtype and output.size):
+            store(result, output, job, stride, compact)
+        else:
+            mask = tuple(slice(offset, None, stride) for offset in job)
+            output[Ellipsis if compact else mask] = result[mask]
     return output
 
 
@@ -269,10 +310,13 @@ def calibrate_denoiser(
     losses = []
     stride_int = int(stride)
     for kwargs, spatial_rank in zip(parameters, ranks):
+        compact = False
         if approximate_loss:
             phase = stride_int**spatial_rank // 2
             mask = _grid(phase, spatial_rank, stride_int)
             masks = [mask]
+            compact = (prepared.ndim == spatial_rank == 2 and stride_int <= 64
+                       and _spin_dense(prepared))
         else:
             phase = None
             mask = Ellipsis
@@ -282,10 +326,25 @@ def calibrate_denoiser(
                                          masks=masks, denoiser_kwargs=kwargs)
         else:
             denoised = _masked(prepared, denoise_function, kwargs, spatial_rank, stride_int, masks,
-                               interpolated[spatial_rank], phase)
-        # MSE subtracts in image precision and accumulates in float64.
-        losses.append(np.mean((image[mask].astype(prepared.dtype, copy=False) - denoised[mask])
-                              ** 2, dtype=np.float64))
+                               interpolated[spatial_rank], phase, compact)
+        values = denoised if compact else denoised[mask]
+        squared = None
+        if (_spin_dense(image) and image.flags.owndata and _spin_dense(values)
+                and image.dtype == values.dtype
+                and image.ndim == 2 and (compact or phase is None)
+                and (compact or image.shape == values.shape)):
+            loss_phase = divmod(phase, stride_int) if compact else (0, 0)
+            squared = _core.restoration_extra_squared_error(
+                image, values, loss_phase, stride_int if compact else 1,
+                np.__version__ == '2.5.4' and np.mean is _NUMPY_MEAN,
+            )
+            if type(squared) is float:
+                losses.append(np.float64(squared))
+                continue
+        # Use NumPy's warnings/errstate handling for exceptional arithmetic.
+        if squared is None:
+            squared = (image[mask].astype(prepared.dtype, copy=False) - values) ** 2
+        losses.append(np.mean(squared, dtype=np.float64))
     result = partial(denoise_invariant, denoise_function=denoise_function, stride=stride,
                      denoiser_kwargs=parameters[np.argmin(losses)])
     return (result, (parameters, losses)) if extra_output else result
@@ -374,17 +433,22 @@ def cycle_spin(
                 batch /= len(jobs)
                 return batch
     for shift in product(*ranges):
+        shape = x.shape
+        reduced = tuple(s % n for s, n in zip(shift, shape)) if dense else None
         if shift == (0, 0):
             shifted = x.copy(order='K')
         else:
-            shifted = (roll(x, tuple(s % n for s, n in zip(shift, x.shape))) if dense
+            shifted = (roll(x, reduced) if dense
                        else np.roll(x, shift, axis=axes))
         result = func(shifted, **kwargs)
         if (_spin_dense(result) and result.shape == x.shape
                 and (mean is None or (_spin_dense(mean) and mean.shape == x.shape
                                       and mean.dtype == result.dtype))):
+            inverse = (tuple(n - s if s else 0 for s, n in zip(reduced, shape))
+                       if dense and x.shape == shape
+                       else tuple(-s % n for s, n in zip(shift, x.shape)))
             mean = (result.copy() if shift == (0, 0) and mean is None else
-                    roll(result, tuple(-s % n for s, n in zip(shift, x.shape)), mean))
+                    roll(result, inverse, mean))
         else:
             aligned = np.roll(result, tuple(-s for s in shift), axis=axes)
             if mean is None:
