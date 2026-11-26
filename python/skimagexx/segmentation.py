@@ -19,12 +19,6 @@ from ._expand_labels import expand_labels
 __all__ += ['expand_labels']
 
 
-def _dense_labels(source, kinds):
-    return (type(source) is np.ndarray and source.flags.c_contiguous and source.flags.aligned
-            and source.dtype.kind in kinds and source.dtype.isnative
-            and source.dtype.itemsize in (1, 2, 4, 8) and source.dtype.metadata is None)
-
-
 @wraps(_consumers.clear_border)
 def clear_border(*args,**kwargs):
     source=args[0] if args else kwargs.get('labels')
@@ -33,14 +27,14 @@ def clear_border(*args,**kwargs):
     if source is not None and any(value is not None and type(value) is not np.ndarray for value in arrays):
         return fallback('segmentation','clear_border',*args,**kwargs)
     positional = ('labels', 'buffer_size', 'bgval', 'mask')
-    if (mask is None and kwargs.get('out') is None and _dense_labels(source, 'biu')
+    if (mask is None and kwargs.get('out') is None and type(source) is np.ndarray
             and len(args) <= 4 and not any(key in kwargs for key in positional[:len(args)])
             and kwargs.keys() <= {'labels', 'buffer_size', 'bgval', 'mask', 'out'}):
         buffer = args[1] if len(args) > 1 else kwargs.get('buffer_size', 0)
         bgval = args[2] if len(args) > 2 else kwargs.get('bgval', 0)
         fast = getattr(_consumers._core, 'components_clear_border_fast', None)
-        if (fast is not None and source.ndim == 2 and type(buffer) is int
-                and 0 <= buffer < min(source.shape) and type(bgval) is int and bgval == 0):
+        if (fast is not None and type(buffer) is int and 0 <= buffer < 2**63
+                and type(bgval) is int and bgval == 0):
             result = fast(source, buffer)
             if result is not None:
                 return result
@@ -52,7 +46,7 @@ def relabel_sequential(*args,**kwargs):
     source=args[0] if args else kwargs.get('label_field')
     if source is not None and type(source) is not np.ndarray:
         return fallback('segmentation','relabel_sequential',*args,**kwargs)
-    if (_dense_labels(source, 'iu') and source.size and source.flags.writeable and len(args) <= 2
+    if (type(source) is np.ndarray and len(args) <= 2
             and not (args and 'label_field' in kwargs or len(args) == 2 and 'offset' in kwargs)
             and kwargs.keys() <= {'label_field', 'offset'}):
         offset = args[1] if len(args) == 2 else kwargs.get('offset', 1)

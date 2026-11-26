@@ -14,6 +14,12 @@
 #include <unordered_map>
 
 namespace skimagexx {
+#ifdef SKIMAGEXX_AVX2
+namespace simd {
+std::size_t components_float_prefix(const void*,std::size_t,PixelType,bool binary);
+std::size_t components_canonical_bool_prefix(const std::uint8_t*,std::size_t);
+}
+#endif
 namespace {
 std::size_t count_of(const std::vector<std::size_t>& shape) {
     if(std::find(shape.begin(),shape.end(),0)!=shape.end())return 0;
@@ -159,7 +165,8 @@ template<class T> std::size_t equal_prefix(const T* input,std::size_t count,T va
     if(count==3 || input[3]!=value)return 3;
     std::size_t n=4;
 #ifdef SKIMAGEXX_AVX2
-    if(vectorized && count>=8*(32/sizeof(T)))n=simd::components_equal_prefix(input,count,&value,sizeof(T));
+    if(vectorized && count>4 && count>=32/sizeof(T) && input[4]==value)
+        n=simd::components_equal_prefix(input,count,&value,sizeof(T));
 #else
     (void)vectorized;
 #endif
@@ -226,9 +233,10 @@ template<class Input,class Index> std::size_t label_2d(const Input* input,Index*
                             ++left;
                             continue;
                         }
-                        const auto previous=previous_ids[left];
-                        unite(forest,id,std::uint32_t(previous));
-                        left+=equal_prefix(previous_ids+left,right-left,previous,vectorized);
+                        const auto previous=std::uint32_t(previous_ids[left]);
+                        if(forest[id]==id)forest[id]=root(forest,previous);
+                        else if(previous!=forest[id])unite(forest,id,previous);
+                        left+=equal_prefix(previous_ids+left,right-left,Index(previous),vectorized);
                     }
                 }
             }
@@ -238,12 +246,63 @@ template<class Input,class Index> std::size_t label_2d(const Input* input,Index*
     // Union links always point to an earlier run, whose final ID is ready
     // when reached in C order. Only run starts have initialized parents.
     std::uint32_t number=0;
-    for(std::size_t i=0;i<count;) {
+    for(std::size_t i=0;i<count;++i) {
         const auto id=std::uint32_t(output[i]);
-        if(id)forest[id]=forest[id]==id ? ++number : forest[forest[id]];
-        i+=equal_prefix(output+i,count-i,Index(id),vectorized);
+        if(id==i+1)forest[id]=forest[id]==id ? ++number : forest[forest[id]];
+        output[i]=Index(forest[id]);
     }
-    for(std::size_t i=0;i<count;++i)output[i]=Index(forest[std::uint32_t(output[i])]);
+    return number;
+}
+
+template<class Input,class Index>
+std::size_t label_binary_2d(const Input* input,Index* output,std::size_t rows,
+                            std::size_t width,Input background) {
+    const auto columns=(width+1)/2;
+    const auto count=((rows+1)/2)*columns;
+    std::unique_ptr<std::uint8_t[]> masks(new std::uint8_t[count]);
+    std::unique_ptr<std::int32_t[]> parents(new std::int32_t[count+1]);
+    auto* forest=parents.get();
+    // Under 8-connectivity all foreground pixels in a 2x2 block are
+    // connected. Only blocks with touching edge or corner pixels unite.
+    for(std::size_t y=0;y<rows;y+=2) {
+        const auto* top=input+y*width;
+        const auto* bottom=y+1<rows ? top+width : nullptr;
+        const auto first=(y/2)*columns;
+        for(std::size_t x=0;x<width;x+=2) {
+            const auto block=first+x/2;
+            const auto mask=unsigned(top[x]!=background) |
+                (unsigned(x+1<width && top[x+1]!=background)<<1) |
+                (unsigned(bottom && bottom[x]!=background)<<2) |
+                (unsigned(bottom && x+1<width && bottom[x+1]!=background)<<3);
+            masks[block]=std::uint8_t(mask);
+            if(!mask)continue;
+            const auto id=std::int32_t(block+1);
+            forest[id]=id;
+            if(x && (mask&5) && (masks[block-1]&10))unite(forest,id,id-1);
+            if(y && (mask&3)) {
+                const auto above=block-columns;
+                const auto up=std::int32_t(above+1);
+                if(masks[above]&12)unite(forest,id,up);
+                if(x && (mask&1) && (masks[above-1]&8))unite(forest,id,up-1);
+                if(x+2<width && (mask&2) && (masks[above+1]&4))unite(forest,id,up+1);
+            }
+        }
+    }
+    std::size_t number=0;
+    // Visit pixels in C order so a block whose first pixel lies in its
+    // bottom row does not take an ID before intervening top-row pixels.
+    for(std::size_t y=0;y<rows;++y) {
+        const auto* row=masks.get()+(y/2)*columns;
+        auto* ids=output+y*width;
+        const auto shift=2*(y%2);
+        for(std::size_t x=0;x<width;x+=2) {
+            const auto bits=(row[x/2]>>shift)&3;
+            const auto block=(y/2)*columns+x/2;
+            const auto id=bits ? Index(canonical(forest,std::int32_t(block+1),number)) : Index{0};
+            ids[x]=(bits&1) ? id : Index{0};
+            if(x+1<width)ids[x+1]=(bits&2) ? id : Index{0};
+        }
+    }
     return number;
 }
 template<class Input,class Index> std::size_t label(const Input* input,Index* output,const std::vector<std::size_t>& shape,
@@ -404,7 +463,14 @@ template<class T> std::size_t label_dense_integer(const void* input,std::intptr_
     // The cast round trip is the same one used by index preparation. For
     // example, UINT64_MAX matches background=-1 on a 64-bit platform.
     const bool has_background=index_value(key,invalid)==background;
-    return label(static_cast<const T*>(input),output,shape,key,connectivity,has_background);
+    const auto* source=static_cast<const T*>(input);
+    if(background==0 && shape.size()==2 && connectivity==2) {
+        const auto count=count_of(shape);
+        if(count && count<std::size_t(INT32_MAX) && detail::active_workers(count)==1 &&
+           std::all_of(source,source+count,[](T value){return value==0 || value==1;}))
+            return label_binary_2d(source,output,shape[0],shape[1],T{0});
+    }
+    return label(source,output,shape,key,connectivity,has_background);
 }
 }
 // Binding-only entry point for aligned, native-endian C integer images.
@@ -441,17 +507,84 @@ template<class F> decltype(auto) integer_width(std::size_t bytes,F visit) {
 }
 }
 
+bool components_canonical_bool(const std::uint8_t* input,std::size_t count) {
+    std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+    if(count>=32 && has_avx2())i=simd::components_canonical_bool_prefix(input,count);
+#endif
+    for(;i<count;++i)if(input[i]>1)return false;
+    return true;
+}
+
+std::size_t components_label_dense_bool(const std::uint8_t* input,void* output,bool wide,
+    const std::vector<std::size_t>& shape,std::uint8_t background,int connectivity) {
+    if(shape.size()==2 && connectivity==2) {
+        const auto count=count_of(shape);
+        if(count && count<std::size_t(INT32_MAX)-2 && detail::active_workers(count)==1) {
+            if(wide)return label_binary_2d(input,static_cast<std::intptr_t*>(output),
+                shape[0],shape[1],background);
+            return label_binary_2d(input,static_cast<std::int32_t*>(output),
+                shape[0],shape[1],background);
+        }
+    }
+    return components_label_bool_into(input,output,wide,shape,background,connectivity);
+}
+
+namespace {
+template<class Float,class Word> std::size_t float_prefix(const Float* input,std::size_t count,
+    const Word one,PixelType type,bool binary) {
+    std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2())i=simd::components_float_prefix(input,count,type,binary);
+#else
+    (void)type;
+#endif
+    constexpr Word sign=Word{1}<<(sizeof(Word)*8-1);
+    for(;i<count;++i) {
+        const auto bits=read<Word>(reinterpret_cast<const char*>(input+i),false);
+        const auto magnitude=bits&~sign;
+        if(binary ? magnitude!=0 && bits!=one : magnitude>=one)break;
+    }
+    return i;
+}
+}
+
+bool components_label_dense_float(const void* input,std::intptr_t* output,
+    const std::vector<std::size_t>& shape,PixelType type,std::size_t& number) {
+    const auto count=count_of(shape);
+    if(!count || count>=std::size_t(INT32_MAX) || detail::active_workers(count)!=1)return false;
+    if(type==PixelType::float32) {
+        const auto* source=static_cast<const float*>(input);
+        if(float_prefix(source,count,std::uint32_t{0x3f800000},type,true)!=count)return false;
+        number=label_binary_2d(source,output,shape[0],shape[1],0.0f);
+    } else {
+        const auto* source=static_cast<const double*>(input);
+        if(float_prefix(source,count,std::uint64_t{0x3ff0000000000000ULL},type,true)!=count)return false;
+        number=label_binary_2d(source,output,shape[0],shape[1],0.0);
+    }
+    return true;
+}
+
 // Binding-only kernels. The binding admits native C-order arrays and allocates
 // disjoint outputs with the public API's dtype and shape.
 std::vector<std::uint64_t> components_relabel_sequential_fast(const void* input,std::size_t count,
     std::size_t bytes,bool signed_input,std::unordered_map<std::uint64_t,std::uint64_t>& mapping) {
     std::vector<std::uint64_t> keys;
+    if(bytes==1) {
+        std::array<bool,256> present{};
+        const auto* source=static_cast<const std::uint8_t*>(input);
+        for(std::size_t i=0;i<count;++i)present[source[i]]=true;
+        const std::size_t limit=signed_input ? 128 : 256;
+        for(std::size_t key=limit;key<present.size();++key)if(present[key])return {};
+        for(std::size_t key=0;key<limit;++key)if(present[key])keys.push_back(key);
+        return keys;
+    }
     const bool admitted=integer_width(bytes,[&](auto tag) {
         using T=decltype(tag);
         const auto* source=static_cast<const char*>(input);
         for(std::size_t i=0;i<count;++i) {
             const auto key=read<T>(source+i*sizeof(T),false);
-            if(signed_input && key>std::numeric_limits<std::make_signed_t<T>>::max())return false;
+            if(signed_input && key>T(std::numeric_limits<std::make_signed_t<T>>::max()))return false;
             if(mapping.try_emplace(key,0).second)keys.push_back(key);
         }
         return true;
@@ -473,6 +606,24 @@ void components_relabel_write_fast(const void* input,std::size_t count,std::size
             using Output=decltype(output_tag);
             auto* values=static_cast<char*>(new_values);
             auto* result=static_cast<char*>(output);
+            if constexpr(sizeof(Input)==1) {
+                std::array<Output,256> lookup{};
+                for(std::size_t k=0;k<keys.size();++k) {
+                    const auto key=Input(keys[k]);
+                    const auto value=key ? Output(offset++) : Output{0};
+                    lookup[key]=value;
+                    old[k]=static_cast<char>(key);
+                    std::memcpy(values+k*sizeof(Output),&value,sizeof(Output));
+                }
+                const auto* keys_in=static_cast<const std::uint8_t*>(input);
+                detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
+                    for(auto i=begin;i<end;++i) {
+                        const auto value=lookup[keys_in[i]];
+                        std::memcpy(result+i*sizeof(Output),&value,sizeof(Output));
+                    }
+                });
+                return;
+            }
             for(std::size_t k=0;k<keys.size();++k) {
                 const auto key=keys[k];
                 const auto value=key ? offset++ : 0;
@@ -495,46 +646,120 @@ void components_relabel_write_fast(const void* input,std::size_t count,std::size
     });
 }
 
-void components_clear_border_fast(const ComponentsView& view,void* output,
-    std::size_t bytes,std::size_t border) {
-    const auto count=count_of(view.shape);
-    const auto rows=view.shape[0],width=view.shape[1];
+namespace {
+template<class Word,class Key>
+void clear_border_runs(const void* input,void* output,std::size_t rows,std::size_t width,
+                       std::size_t border,const Key& key) {
+    const auto count=rows*width;
     if(border>=rows-border || border>=width-border) {
-        std::memset(output,0,count*bytes);
+        std::memset(output,0,count*sizeof(Word));
         return;
     }
-    std::unique_ptr<std::intptr_t[]> labels(new std::intptr_t[count]);
-    std::size_t number;
-    if(view.type==PixelType::boolean) {
-        std::unique_ptr<std::uint8_t[]> keys(new std::uint8_t[count]);
-        components_prepare_bool_into(view,keys.get());
-        number=label(keys.get(),labels.get(),view.shape,std::uint8_t{0},2);
-    } else {
-        number=components_label_dense_integer_into(view.data,labels.get(),view.shape,0,2,view.type);
-    }
-    std::vector<std::uint8_t> remove(number+1);
+    std::memcpy(output,input,count*sizeof(Word));
+    auto* words=static_cast<char*>(output);
+    const auto present=[&](std::size_t i){return read<Word>(words+i*sizeof(Word),false)!=0;};
+    // A cleared nonzero key always has a zero output word. Background
+    // belongs to a single label even when its pixels are disconnected.
+    struct Run {std::size_t row,left,right;};
+    std::vector<Run> pending;
+    bool clear_background=false;
+    const auto seed=[&](std::size_t row,std::size_t col) {
+        const auto value=key(row*width+col);
+        if(!value) {
+            clear_background=true;
+            return;
+        }
+        if(!present(row*width+col))return;
+        const auto enqueue=[&](std::size_t y,std::size_t x) {
+            const auto base=y*width;
+            const auto matches=[&](std::size_t i){return present(base+i) && key(base+i)==value;};
+            auto left=x,right=x+1;
+            while(left && matches(left-1))--left;
+            while(right<width && matches(right))++right;
+            std::memset(words+(base+left)*sizeof(Word),0,(right-left)*sizeof(Word));
+            pending.push_back({y,left,right});
+            return right;
+        };
+        enqueue(row,col);
+        while(!pending.empty()) {
+            const auto run=pending.back();
+            pending.pop_back();
+            const auto left=run.left-std::size_t(run.left>0);
+            const auto right=run.right+std::size_t(run.right<width);
+            const auto scan=[&](std::size_t y) {
+                const auto base=y*width;
+                for(auto x=left;x<right;) {
+                    if(present(base+x) && key(base+x)==value)x=enqueue(y,x);
+                    else ++x;
+                }
+            };
+            if(run.row)scan(run.row-1);
+            if(run.row+1<rows)scan(run.row+1);
+        }
+    };
     for(std::size_t y=0;y<rows;++y) {
-        const auto* ids=labels.get()+y*width;
-        if(y<border || rows-y<=border) {
-            for(std::size_t x=0;x<width;++x)remove[ids[x]]=1;
+        if(y<border || y>=rows-border) {
+            for(std::size_t x=0;x<width;++x)seed(y,x);
         } else {
             for(std::size_t x=0;x<border;++x) {
-                remove[ids[x]]=1;
-                remove[ids[width-1-x]]=1;
+                seed(y,x);
+                seed(y,width-1-x);
             }
         }
     }
+    if constexpr(!std::is_unsigned_v<std::invoke_result_t<Key,std::size_t>>) {
+        if(clear_background)
+            for(std::size_t i=0;i<count;++i)if(!key(i))std::memset(words+i*sizeof(Word),0,sizeof(Word));
+    }
+}
+
+template<class Float,class Word>
+bool clear_border_float(const ComponentsView& view,void* output,std::size_t count,std::size_t border) {
+    const auto* input=static_cast<const Float*>(view.data);
+    // All values truncate to the same background label in this case.
+    constexpr Word one=[] {
+        if constexpr(sizeof(Word)==4)return Word{0x3f800000u};
+        else return Word{0x3ff0000000000000ULL};
+    }();
+    const auto prefix=float_prefix(input,count,one,view.type,false);
+    if(prefix==count) {
+        std::memset(output,0,count*sizeof(Float));
+        return true;
+    }
+    std::unique_ptr<std::intptr_t[]> keys(new std::intptr_t[count]);
+    std::fill_n(keys.get(),prefix,0);
+    std::size_t i=prefix;
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2())i+=simd::components_prepare_index(input+i,keys.get()+i,count-i,view.type,false);
+#endif
+    for(;i<count;++i) {
+        bool invalid=false;
+        keys[i]=index_value(input[i],invalid);
+        if(invalid)return false; // Compatibility path observes NumPy's cast policy.
+    }
+    clear_border_runs<Word>(view.data,output,
+        view.shape[0],view.shape[1],border,[&](std::size_t j){return keys[j];});
+    return true;
+}
+}
+
+bool components_clear_border_fast(const ComponentsView& view,void* output,
+    std::size_t bytes,std::size_t border) {
+    if(view.type==PixelType::float32)
+        return clear_border_float<float,std::uint32_t>(view,output,count_of(view.shape),border);
+    if(view.type==PixelType::float64)
+        return clear_border_float<double,std::uint64_t>(view,output,count_of(view.shape),border);
     integer_width(bytes,[&](auto tag) {
         using T=decltype(tag);
-        const auto* source=static_cast<const char*>(view.data);
-        auto* result=static_cast<char*>(output);
-        detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
-            for(auto i=begin;i<end;++i) {
-                const auto value=remove[labels[i]] ? T{0} : read<T>(source+i*sizeof(T),false);
-                std::memcpy(result+i*sizeof(T),&value,sizeof(T));
-            }
-        });
+        const auto* input=static_cast<const T*>(view.data);
+        if(view.type==PixelType::boolean)
+            clear_border_runs<T>(input,output,view.shape[0],view.shape[1],border,
+                [&](std::size_t i){return unsigned(input[i]!=0);});
+        else
+            clear_border_runs<T>(input,output,view.shape[0],view.shape[1],border,
+                [&](std::size_t i){return input[i];});
     });
+    return true;
 }
 
 bool components_remove_small_objects_fast(const ComponentsView& view,void* output,
@@ -547,41 +772,61 @@ bool components_remove_small_objects_fast(const ComponentsView& view,void* outpu
         std::memcpy(result,input,count*bytes);
         return false;
     }
-    const bool boolean=view.type==PixelType::boolean;
-    std::unique_ptr<std::intptr_t[]> labels(new std::intptr_t[count]);
-    std::size_t maximum=0;
-    if(boolean) {
-        std::unique_ptr<std::uint8_t[]> keys(new std::uint8_t[count]);
-        components_prepare_bool_into(view,keys.get());
-        maximum=label(keys.get(),labels.get(),view.shape,std::uint8_t{0},connectivity);
-    } else {
-        components_prepare_index_into(view,labels.get());
-        for(std::size_t i=0;i<count;++i) {
-            const auto key=labels[i];
-            if(key<0)throw std::invalid_argument("Negative value labels are not supported. Try relabeling the input with `scipy.ndimage.label` or `skimage.morphology.label`.");
-            maximum=std::max(maximum,std::size_t(key));
+    if(view.type==PixelType::boolean) {
+        auto* target=static_cast<std::uint8_t*>(output);
+        const auto* source=static_cast<const std::uint8_t*>(view.data);
+        const auto* keys=source;
+        if(!components_canonical_bool(source,count)) {
+            for(std::size_t i=0;i<count;++i)target[i]=source[i]!=0;
+            keys=target;
         }
+        const auto filter=[&](auto index) {
+            using Index=decltype(index);
+            std::unique_ptr<Index[]> ids(new Index[count]);
+            const auto maximum=label(keys,ids.get(),view.shape,std::uint8_t{0},connectivity);
+            std::vector<std::size_t> sizes(maximum+1);
+            for(std::size_t i=0;i<count;++i)++sizes[ids[i]];
+            for(std::size_t i=0;i<count;++i)
+                target[i]=double(sizes[ids[i]])<=threshold ? 0 : source[i];
+        };
+        if(count<std::size_t(INT32_MAX))filter(std::int32_t{});
+        else filter(std::intptr_t{});
+        return false;
     }
-    const auto filter=[&](const auto& size_of) {
-        integer_width(bytes,[&](auto tag) {
-            using T=decltype(tag);
-            detail::partition(count,detail::active_workers(count),[&](auto begin,auto end,auto) {
-                for(auto i=begin;i<end;++i) {
-                    const auto value=double(size_of(std::size_t(labels[i])))<=threshold ? T{0} : read<T>(input+i*sizeof(T),false);
-                    std::memcpy(result+i*sizeof(T),&value,sizeof(T));
-                }
-            });
-        });
+    const bool signed_input=view.type==PixelType::int8 || view.type==PixelType::int16 ||
+                            view.type==PixelType::int32 || view.type==PixelType::int64;
+    const auto negative=[] {
+        throw std::invalid_argument("Negative value labels are not supported. Try relabeling the input with `scipy.ndimage.label` or `skimage.morphology.label`.");
     };
-    if(boolean || (maximum<=16*1024*1024 && maximum<=count+1024)) {
-        std::vector<std::size_t> sizes(maximum+1);
-        for(std::size_t i=0;i<count;++i)++sizes[std::size_t(labels[i])];
-        filter([&](std::size_t key){return sizes[key];});
-    } else {
-        std::unordered_map<std::size_t,std::size_t> sizes;
-        for(std::size_t i=0;i<count;++i)++sizes[std::size_t(labels[i])];
-        filter([&](std::size_t key){return sizes.at(key);});
-    }
-    return !boolean && maximum==1;
+    return integer_width(bytes,[&](auto tag) {
+        using T=decltype(tag);
+        const auto* keys=static_cast<const T*>(view.data);
+        auto* target=static_cast<T*>(output);
+        if constexpr(sizeof(T)==1) {
+            std::array<std::size_t,256> sizes{};
+            for(std::size_t i=0;i<count;++i)++sizes[keys[i]];
+            if(signed_input && std::any_of(sizes.begin()+128,sizes.end(),[](auto n){return n!=0;}))
+                negative();
+            std::array<T,256> lookup{};
+            for(std::size_t i=1;i<sizes.size();++i)if(double(sizes[i])>threshold)lookup[i]=T(i);
+            for(std::size_t i=0;i<count;++i)target[i]=lookup[keys[i]];
+            return sizes[1] && sizes[0]+sizes[1]==count;
+        } else {
+            const auto maximum=*std::max_element(keys,keys+count);
+            if(signed_input && maximum>T(std::numeric_limits<std::make_signed_t<T>>::max()))negative();
+            if(maximum<=16*1024*1024 && maximum<=count+1024) {
+                std::vector<std::size_t> sizes(std::size_t(maximum)+1);
+                for(std::size_t i=0;i<count;++i)++sizes[keys[i]];
+                for(std::size_t i=0;i<count;++i)
+                    target[i]=double(sizes[keys[i]])<=threshold ? T{0} : keys[i];
+            } else {
+                std::unordered_map<T,std::size_t> sizes;
+                for(std::size_t i=0;i<count;++i)++sizes[keys[i]];
+                for(std::size_t i=0;i<count;++i)
+                    target[i]=double(sizes.at(keys[i]))<=threshold ? T{0} : keys[i];
+            }
+            return maximum==1;
+        }
+    });
 }
 }

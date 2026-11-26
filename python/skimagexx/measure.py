@@ -1,5 +1,7 @@
 """Native labels, partial colocalization and explicit compatibility APIs."""
-from ._components import label
+from functools import wraps
+import numpy as np
+from . import _component_consumers, _components
 from ._colocalization import intersection_coeff, manders_coloc_coeff, manders_overlap_coeff
 from ._compat import module_attribute
 
@@ -7,6 +9,40 @@ __all__ = ['label', 'intersection_coeff', 'manders_coloc_coeff', 'manders_overla
 
 # Public compatibility submodules are resolved by the policy-aware importer.
 __path__ = []
+
+_label_fallback = getattr(_components.label, '__wrapped__', _components.label)
+_dense_label = getattr(_components._core, 'components_label_dense', None)
+_INDEX_DTYPE = np.dtype(np.intp)
+_BOOL_LABEL_DTYPE = np.dtype(np.int32)
+_INDEX_LIMIT = 1 << (8 * _INDEX_DTYPE.itemsize - 1)
+
+
+@wraps(_label_fallback)
+def label(label_image, background=None, return_num=False, connectivity=None):
+    if (_dense_label is not None and type(label_image) is np.ndarray and label_image.ndim == 2
+            and label_image.shape[0] > 1 and label_image.shape[1] > 1
+            and (connectivity is None or type(connectivity) is int and 1 <= connectivity <= 2)
+            and (background is None or type(background) in (int, bool))
+            and type(return_num) is bool):
+        descriptor = label_image.dtype
+        if descriptor.kind == 'b':
+            key = int(background == 1)
+            dtype = _BOOL_LABEL_DTYPE if label_image.size < 2**31 - 2 else _INDEX_DTYPE
+        elif (descriptor.kind in 'iu' and (background is None or -_INDEX_LIMIT <= background < _INDEX_LIMIT)
+              or descriptor.char in 'fd'
+              and background in (None, 0) and connectivity in (None, 2)):
+            key = 0 if background is None else background
+            dtype = descriptor if descriptor == _INDEX_DTYPE else _INDEX_DTYPE
+        else:
+            return _label_fallback(label_image, background, return_num, connectivity)
+        result = _dense_label(label_image, key, 2 if connectivity is None else connectivity, dtype)
+        if result is not None:
+            return result if return_num else result[0]
+    return _label_fallback(label_image, background, return_num, connectivity)
+
+
+# Publish one callable even if the consumers imported the original first.
+_components.label = _component_consumers._label = label
 
 
 _GEOMETRIC_MODEL_EXPORTS = ('CircleModel', 'EllipseModel', 'RansacModelProtocol', 'ransac')

@@ -88,9 +88,47 @@ std::size_t components_prepare_bool(const std::uint8_t* input,std::uint8_t* outp
     }
     return i;
 }
+std::size_t components_canonical_bool_prefix(const std::uint8_t* input,std::size_t count) {
+    const auto noncanonical=_mm256_set1_epi8(-2);
+    std::size_t i=0;
+    for(;i+32<=count;i+=32) {
+        const auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i));
+        if(!_mm256_testz_si256(words,noncanonical))break;
+    }
+    return i;
+}
+
+std::size_t components_float_prefix(const void* input,std::size_t count,PixelType type,bool binary) {
+    std::size_t i=0;
+    if(type==PixelType::float32) {
+        const auto* source=static_cast<const float*>(input);
+        const auto signless=_mm256_set1_epi32(0x7fffffff);
+        const auto one=_mm256_set1_epi32(0x3f800000);
+        for(;i+8<=count;i+=8) {
+            const auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(source+i));
+            const auto magnitude=_mm256_and_si256(words,signless);
+            const auto valid=binary ? _mm256_or_si256(_mm256_cmpeq_epi32(words,one),
+                _mm256_cmpeq_epi32(magnitude,_mm256_setzero_si256())) : _mm256_cmpgt_epi32(one,magnitude);
+            if(unsigned(_mm256_movemask_epi8(valid))!=0xffffffffu)break;
+        }
+    } else {
+        const auto* source=static_cast<const double*>(input);
+        const auto signless=_mm256_set1_epi64x(0x7fffffffffffffffLL);
+        const auto one=_mm256_set1_epi64x(0x3ff0000000000000LL);
+        for(;i+4<=count;i+=4) {
+            const auto words=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(source+i));
+            const auto magnitude=_mm256_and_si256(words,signless);
+            const auto valid=binary ? _mm256_or_si256(_mm256_cmpeq_epi64(words,one),
+                _mm256_cmpeq_epi64(magnitude,_mm256_setzero_si256())) : _mm256_cmpgt_epi64(one,magnitude);
+            if(unsigned(_mm256_movemask_epi8(valid))!=0xffffffffu)break;
+        }
+    }
+    return i;
+}
+
 std::size_t components_equal_prefix(const void* input,std::size_t count,const void* scalar,std::size_t bytes) {
     // Callers check AVX2 availability and finish the unprocessed suffix.
-    if((bytes!=1 && bytes!=2 && bytes!=4 && bytes!=8) || count<8*(32/bytes))return 0;
+    if((bytes!=1 && bytes!=2 && bytes!=4 && bytes!=8) || count<32/bytes)return 0;
     std::size_t i=0;
     if(bytes==1) {
         const auto value=_mm256_set1_epi8(char(*static_cast<const std::uint8_t*>(scalar)));

@@ -9,7 +9,7 @@ from ._compat import fallback, module_attribute
 from ._footprint_decomposition import footprint_rectangle, diamond, disk, ball
 from ._footprint_util import mirror_footprint, pad_footprint
 from ._footprint_shapes import ellipse, octagon, octahedron, star, footprint_from_sequence
-from ._components import label
+from .measure import label
 from . import _component_consumers as _consumers
 from ._reconstruction import reconstruction
 from ._h_extrema import h_maxima, h_minima
@@ -45,6 +45,21 @@ def remove_small_objects(*args,**kwargs):
     if source is not None and (type(source) is not np.ndarray or
                               out is not None and type(out) is not np.ndarray):
         return fallback('morphology','remove_small_objects',*args,**kwargs)
+    if (type(source) is np.ndarray and out is None and len(args) <= 1
+            and not (args and 'ar' in kwargs)
+            and kwargs.keys() <= {'ar', 'connectivity', 'max_size', 'out'}):
+        threshold = kwargs.get('max_size', 64)
+        connectivity = kwargs.get('connectivity', 1)
+        fast = getattr(_core, 'components_remove_small_objects_fast', None)
+        if (fast is not None and type(threshold) is int and 0 <= threshold < 2**63
+                and type(connectivity) is int and -2**31 <= connectivity < 2**31):
+            result = fast(source, threshold, connectivity)
+            if result is not None:
+                output, single_label = result
+                if single_label:
+                    warnings.warn('Only one label was provided to `remove_small_objects`. Did you mean to use a boolean array?',
+                                  UserWarning, stacklevel=2)
+                return output
     return _consumers.remove_small_objects(*args,**kwargs)
 
 
