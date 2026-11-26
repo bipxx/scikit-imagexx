@@ -22,20 +22,36 @@ __all__ = ['slice_along_axes', 'view_as_blocks', 'view_as_windows', 'crop', 'reg
 
 _SUPPORTED = {np.bool_, np.uint8, np.int8, np.uint16, np.int16, np.uint32, np.int32,
               np.uint64, np.int64, np.float32, np.float64}
+_DTYPE_BOOL = np.dtype(np.bool_)
+_DTYPE_FLOAT64 = np.dtype(np.float64)
+_DTYPE_FLOAT32 = np.dtype(np.float32)
+_DTYPE_UINT8 = np.dtype(np.uint8)
+_DTYPE_UINT16 = np.dtype(np.uint16)
+_DTYPE_INT16 = np.dtype(np.int16)
 _LIMITS = {dtype: (int(np.iinfo(dtype).min), int(np.iinfo(dtype).max))
            for dtype in _SUPPORTED if np.issubdtype(dtype, np.integer)}
 _LIMITS.update({np.bool_: (False, True), np.float16: (-1, 1), np.float32: (-1, 1), np.float64: (-1, 1)})
 
 
 def _convert(image, dtype, force_copy, name):
-    image = np.asarray(image)
-    # Upstream's identity check is on dtype.type, including nonnative byte order.
-    if dtype is None and image.dtype.kind == 'f' or dtype is not None and image.dtype.type is np.dtype(dtype).type:
+    if type(image) is not np.ndarray:
+        image = np.asarray(image)
+    source = image.dtype
+    if source is dtype:
         return image.copy() if force_copy else image
-    target = np.dtype(np.float64 if dtype is None else dtype)
-    if image.dtype.type not in _SUPPORTED or not image.dtype.isnative:
+    # Upstream's identity check is on dtype.type, including nonnative byte order.
+    if (dtype is None and source.kind == 'f') or (dtype is not None and source.type is dtype.type):
+        return image.copy() if force_copy else image
+    target = _DTYPE_FLOAT64 if dtype is None else dtype
+    if source.type not in _SUPPORTED or not source.isnative:
         return fallback('util', name, image, force_copy)
+    if target is _DTYPE_BOOL:
+        # The Boolean threshold kernel has no conversion warnings to replay.
+        result = _core.convert(image, target)[0]
+        return result if image.ndim else result[()]
     result, downcast, nan, overflow, underflow, invalid_cast, maximum = _core.convert(image, target)
+    if not (downcast or nan or overflow or underflow or invalid_cast) and image.ndim:
+        return result
     if image.ndim == 0 and image.dtype.kind == 'f' and target.kind in 'ui':
         # Preserve the pinned upstream scalar/out= behavior (after range checks).
         raise TypeError('return arrays must be of ArrayType')
@@ -60,7 +76,7 @@ def _convert(image, dtype, force_copy, name):
     elif invalid_cast:
         bits = np.array([0x7f800001], dtype=np.uint32) if image.dtype.itemsize == 4 else np.array([0x7ff0000000000001], dtype=np.uint64)
         bits.view(image.dtype).astype(target)
-    return result[()] if image.ndim == 0 and target.kind == 'b' else result
+    return result
 
 
 def img_as_float(image, force_copy=False):
@@ -68,27 +84,27 @@ def img_as_float(image, force_copy=False):
 
 
 def img_as_float32(image, force_copy=False):
-    return _convert(image, np.float32, force_copy, 'img_as_float32')
+    return _convert(image, _DTYPE_FLOAT32, force_copy, 'img_as_float32')
 
 
 def img_as_float64(image, force_copy=False):
-    return _convert(image, np.float64, force_copy, 'img_as_float64')
+    return _convert(image, _DTYPE_FLOAT64, force_copy, 'img_as_float64')
 
 
 def img_as_ubyte(image, force_copy=False):
-    return _convert(image, np.uint8, force_copy, 'img_as_ubyte')
+    return _convert(image, _DTYPE_UINT8, force_copy, 'img_as_ubyte')
 
 
 def img_as_uint(image, force_copy=False):
-    return _convert(image, np.uint16, force_copy, 'img_as_uint')
+    return _convert(image, _DTYPE_UINT16, force_copy, 'img_as_uint')
 
 
 def img_as_int(image, force_copy=False):
-    return _convert(image, np.int16, force_copy, 'img_as_int')
+    return _convert(image, _DTYPE_INT16, force_copy, 'img_as_int')
 
 
 def img_as_bool(image, force_copy=False):
-    return _convert(image, np.bool_, force_copy, 'img_as_bool')
+    return _convert(image, _DTYPE_BOOL, force_copy, 'img_as_bool')
 
 
 def dtype_limits(image, clip_negative=False):

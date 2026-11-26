@@ -1,4 +1,5 @@
 #include "skimagexx/metrics.hpp"
+#include "bind_helpers.hpp"
 #include "bind_numeric.hpp"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -16,6 +17,8 @@ auto metric_fast_simd() -> std::tuple<double,double,double,double,bool> (*)(
 }
 namespace {
 using FastResult=std::tuple<double,double,double,double,bool>;
+using skimagexx::bindings::optional_gil_release;
+constexpr std::size_t metric_gil_threshold=16384;
 
 class MetricEnvironment {
 public:
@@ -80,7 +83,15 @@ FastResult fast_reduce(const skimagexx::MetricImageView& a,const skimagexx::Metr
     if(const auto simd=skimagexx::detail::metric_fast_simd())result=simd(a,b,size,mode,raw_range,block);
     else {
         // The SDK's scalar kernel already owns the pinned tree and replay.
-        const auto sums=skimagexx::metric_sums(a,b,single,raw_range ? MetricNormalization::min_max : mode,
+        skimagexx::MetricImageView dense_a,dense_b;
+        if(a.shape.empty()) {
+            const auto stride=std::ptrdiff_t(single ? sizeof(float):sizeof(double));
+            dense_a={a.data,a.type,false,false,{size},{stride}};
+            dense_b={b.data,b.type,false,false,{size},{stride}};
+        }
+        const auto sums=skimagexx::metric_sums(a.shape.empty() ? dense_a:a,
+                                              b.shape.empty() ? dense_b:b,
+                                              single,raw_range ? MetricNormalization::min_max : mode,
                                               false,false,block);
         const auto aux=mode==MetricNormalization::mean ? sums.mean : sums.energy;
         result={sums.error,aux,sums.low,sums.high,!sums.nonfinite && std::isfinite(sums.error) &&
@@ -96,36 +107,45 @@ void bind_metrics(py::module_& module) {
     const auto numpy=py::module_::import("numpy");
     const py::object minimum=numpy.attr("minimum").attr("reduce"),maximum=numpy.attr("maximum").attr("reduce");
     const bool buffered=numpy.attr("lib").attr("NumpyVersion")(numpy.attr("__version__")).attr("__lt__")("2.3.0").cast<bool>();
-    module.def("metrics_fast_reduce",[numpy,buffered](const py::array& first,const py::array& second,
+    const auto float_num=py::dtype::of<float>().num(),double_num=py::dtype::of<double>().num();
+    module.def("metrics_fast_reduce",[numpy,buffered,float_num,double_num](const py::array& first,const py::array& second,
         bool single,int normalization,bool raw_range,bool capture_underflow) -> FastResult {
+        const auto rank=first.ndim();
+        const auto shape=first.shape();
         if(capture_underflow || normalization<0 || normalization>3 || (raw_range && normalization!=0) ||
-           !first.size() || !first.ndim() || first.ndim()!=second.ndim())return {};
+           !rank || rank!=second.ndim() || !std::equal(shape,shape+rank,second.shape()))return {};
+        const auto size=std::size_t(first.size());
+        if(!size)return {};
         const auto dtype=first.dtype(),other_dtype=second.dtype();
-        const auto expected=single ? py::dtype::of<float>() : py::dtype::of<double>();
-        if(dtype.num()!=expected.num() || other_dtype.num()!=expected.num() ||
-           swapped(dtype) || swapped(other_dtype))return {};
-        for(py::ssize_t axis=0;axis<first.ndim();++axis)
-            if(first.shape(axis)!=second.shape(axis))return {};
-        const bool dense=(first.flags()&second.flags()&py::array::c_style)!=0;
-        if(!dense && (first.strides(first.ndim()-1)!=dtype.itemsize() ||
-                      second.strides(second.ndim()-1)!=dtype.itemsize()))return {};
-        const auto axes=dense ? std::vector<std::size_t>{}:order(first,false);
-        if(!dense) {
+        const auto expected=single ? float_num:double_num;
+        if(dtype.num()!=expected || other_dtype.num()!=expected ||
+           !skimagexx::bindings::is_native_byteorder(dtype) ||
+           (dtype.ptr()!=other_dtype.ptr() && !skimagexx::bindings::is_native_byteorder(other_dtype)))return {};
+        const auto first_flags=first.flags();
+        const auto common_flags=first_flags&second.flags();
+        const auto type=single ? skimagexx::PixelType::float32:skimagexx::PixelType::float64;
+        // An empty shape marks flat storage in the fast kernel. The size is
+        // passed separately, so contiguous calls need no shape/stride vectors.
+        skimagexx::MetricImageView a{first.data(),type,false,false,{},{}};
+        skimagexx::MetricImageView b{second.data(),type,false,false,{},{}};
+        if(!(common_flags&py::array::c_style)) {
+            const auto itemsize=py::ssize_t(single ? sizeof(float):sizeof(double));
+            const auto a_strides=first.strides(),b_strides=second.strides();
+            if(a_strides[rank-1]!=itemsize || b_strides[rank-1]!=itemsize)return {};
             // The pinned path uses F traversal for jointly F-contiguous arrays.
-            if(first.flags()&second.flags()&py::array::f_style)return {};
+            if(common_flags&py::array::f_style)return {};
             // An auxiliary sum that needs independent K order cannot share
             // the error scan. Extrema are independent of order except zero ties.
-            if((normalization==1 || normalization==2) && order(first,true)!=axes)return {};
+            if((normalization==1 || normalization==2) && !(first_flags&py::array::c_style) &&
+               order(first,true)!=order(first,false))return {};
+            a.shape.assign(shape,shape+rank);
+            b.shape=a.shape;
+            a.strides.assign(a_strides,a_strides+rank);
+            b.strides.assign(b_strides,b_strides+rank);
         }
-        const auto a=dense ? dense_reduction_view(first):view(first,axes);
-        const auto b=dense ? dense_reduction_view(second):view(second,axes);
         const auto mode=static_cast<skimagexx::MetricNormalization>(normalization);
         const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
-        const auto size=std::size_t(first.size());
-        if(size>=32768) {
-            py::gil_scoped_release release;
-            return fast_reduce(a,b,size,single,mode,raw_range,block);
-        }
+        const optional_gil_release release(size>=metric_gil_threshold);
         return fast_reduce(a,b,size,single,mode,raw_range,block);
     },py::arg("first").noconvert(),py::arg("second").noconvert(),py::arg("single"),
       py::arg("normalization"),py::arg("raw_range"),py::arg("capture_underflow"));
@@ -156,9 +176,10 @@ void bind_metrics(py::module_& module) {
             if(separate)normalized=view(first,true_axes);
         }
         const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
+        const auto size=std::size_t(first.size());
         skimagexx::MetricSums result;
         {
-            py::gil_scoped_release release;
+            const optional_gil_release release(size>=metric_gil_threshold);
             result=skimagexx::metric_sums(a,b,single,mode,capture_underflow,scalar_power_double,block);
             if(separate) {
                 const auto stats=skimagexx::metric_sums(normalized,normalized,single,mode,capture_underflow,false,block);
@@ -213,25 +234,28 @@ void bind_metrics(py::module_& module) {
             return result;
         };
         const auto a=broadcast(first),b=broadcast(second);
+        const auto size=std::size_t(output.size());
         unsigned flags;
-        {py::gil_scoped_release release;flags=skimagexx::metric_stage_into(a,b,out,operation,single);}
+        {const optional_gil_release release(size>=metric_gil_threshold);flags=skimagexx::metric_stage_into(a,b,out,operation,single);}
         return py::make_tuple(output,flags);
     });
     module.def("metrics_stage_sum",[numpy,buffered](py::array first,bool single) {
         const auto input=view(first,order(first,true));
         const auto block=buffered ? numpy.attr("getbufsize")().cast<std::size_t>():std::size_t{0};
+        const auto size=std::size_t(first.size());
         skimagexx::MetricSums result;
-        {py::gil_scoped_release release;result=skimagexx::metric_sums(input,input,single,skimagexx::MetricNormalization::mean,true,false,block);}
+        {const optional_gil_release release(size>=metric_gil_threshold);result=skimagexx::metric_sums(input,input,single,skimagexx::MetricNormalization::mean,true,false,block);}
         return py::make_tuple(result.mean,result.mean_reduce_flags);
     });
     module.def("metrics_stage_extremum",[minimum,maximum](py::array first,bool largest) {
         return (largest ? maximum:minimum)(first,py::arg("axis")=py::none());
     });
     module.def("metrics_raw_range",[](py::array image) {
-        if(!image.size())throw py::value_error("zero-size array to reduction operation minimum which has no identity");
+        const auto size=std::size_t(image.size());
+        if(!size)throw py::value_error("zero-size array to reduction operation minimum which has no identity");
         const auto input=view(image,order(image,false));
         skimagexx::MetricRawRange result;
-        {py::gil_scoped_release release;result=skimagexx::metric_raw_range(input);}
+        {const optional_gil_release release(size>=metric_gil_threshold);result=skimagexx::metric_raw_range(input);}
         const auto dtype=py::dtype::from_args(image.dtype().attr("type"));
         py::array low(dtype,std::vector<py::ssize_t>{}),high(dtype,std::vector<py::ssize_t>{});
         std::memcpy(low.mutable_data(),&result.low,std::size_t(image.itemsize()));std::memcpy(high.mutable_data(),&result.high,std::size_t(image.itemsize()));

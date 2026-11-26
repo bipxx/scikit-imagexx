@@ -9,7 +9,9 @@ from . import _core
 from ._compat import fallback
 
 _FLOAT32,_FLOAT64,_INTP=np.float32,np.float64,np.intp
+_DTYPE_FLOAT32,_DTYPE_FLOAT64=np.dtype(_FLOAT32),np.dtype(_FLOAT64)
 _ARRAY_TYPES=(np.ndarray,np.memmap)
+_SIMPLE_POLICIES={'warn','raise','ignore'}
 _NORMS={'euclidean':1,'mean':2,'min-max':3}
 _REAL={np.bool_,np.uint8,np.int8,np.uint16,np.int16,np.uint32,np.int32,np.uint64,np.int64,np.float16,_FLOAT32,_FLOAT64}
 _RANGES={np.bool_:(False,True),np.float16:(-1,1),_FLOAT32:(-1,1),_FLOAT64:(-1,1)}
@@ -28,10 +30,15 @@ def _known_image(image):
 
 def _prepare(first,second):
     if first.shape!=second.shape:raise ValueError('Input images must have the same dimensions.')
-    if not _known_image(first) or not _known_image(second):return None
-    if first.dtype.kind=='c' or second.dtype.kind=='c':raise ValueError('complex valued input is not supported')
-    if first.dtype.type not in _REAL or second.dtype.type not in _REAL:return None
-    return _FLOAT32 if first.dtype.char in 'ef' and second.dtype.char in 'ef' else _FLOAT64
+    if not (type(first) is np.ndarray and type(second) is np.ndarray):
+        if not _known_image(first) or not _known_image(second):return None
+    a,b=first.dtype,second.dtype
+    if a is b:
+        if a is _DTYPE_FLOAT64:return _FLOAT64
+        if a is _DTYPE_FLOAT32:return _FLOAT32
+    if a.kind=='c' or b.kind=='c':raise ValueError('complex valued input is not supported')
+    if a.type not in _REAL or b.type not in _REAL:return None
+    return _FLOAT32 if a.char in 'ef' and b.char in 'ef' else _FLOAT64
 
 
 def _emit(flags,operation,dtype):
@@ -98,11 +105,13 @@ def _reduce(first,second,dtype,mode,capture_underflow):
 
 
 def _fast_reduce(first,second,dtype,mode,capture_underflow,raw_range=False):
-    # Rank-zero retains the legacy NumPy scalar-power rule.
-    if (capture_underflow or first.ndim==0 or dtype not in (_FLOAT32,_FLOAT64) or
-            first.dtype.type is not dtype or second.dtype.type is not dtype):
+    if capture_underflow or (dtype is not _FLOAT32 and dtype is not _FLOAT64):
         return None
-    result=_core.metrics_fast_reduce(first,second,dtype is _FLOAT32,mode,raw_range,capture_underflow)
+    # NumPy scalars use the legacy scalar-power path. The binding checks
+    # array rank, dtype and layout directly, including for ndarray inputs.
+    if type(first) is not np.ndarray or type(second) is not np.ndarray:
+        if first.ndim==0:return None
+    result=_core.metrics_fast_reduce(first,second,dtype is _FLOAT32,mode,raw_range,False)
     return result if result[-1] else None
 
 
@@ -110,7 +119,7 @@ def _stateful(policies):
     # Public warning hooks can mutate inputs just like NumPy FP callbacks.
     # Preserve stage boundaries when warning dispatch has been customized.
     return (warnings.showwarning is not warnings._showwarning_orig or
-            any(policy not in ('warn','raise','ignore') for policy in policies.values()))
+            not _SIMPLE_POLICIES.issuperset(policies.values()))
 
 
 def _stage_emit(flags,operation,dtype,scalar=False):
@@ -244,11 +253,13 @@ def normalized_root_mse(image_true,image_test,*,normalization='euclidean'):
 
 def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
     if image_true.shape!=image_test.shape:raise ValueError('Input images must have the same dimensions.')
-    if not _known_image(image_true) or not _known_image(image_test):
-        return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
-    true_type,test_type=image_true.dtype.type,image_test.dtype.type
-    if ((true_type not in _REAL and image_true.dtype.kind!='c') or
-            (test_type not in _REAL and image_test.dtype.kind!='c')):
+    if not (type(image_true) is np.ndarray and type(image_test) is np.ndarray):
+        if not _known_image(image_true) or not _known_image(image_test):
+            return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
+    true_dtype,test_dtype=image_true.dtype,image_test.dtype
+    true_type,test_type=true_dtype.type,test_dtype.type
+    if ((true_type not in _REAL and true_dtype.kind!='c') or
+            (test_type not in _REAL and test_dtype.kind!='c')):
         return fallback('metrics','peak_signal_noise_ratio',image_true,image_test,data_range=data_range)
     policies=np.geterr()
     stateful=_stateful(policies)
@@ -256,9 +267,10 @@ def peak_signal_noise_ratio(image_true,image_test,*,data_range=None):
     fast=None if stateful or true_type is not test_type else _fast_reduce(
         image_true,image_test,true_type,0,capture_underflow,raw_range=data_range is None)
     if data_range is None:
-        if image_true.dtype!=image_test.dtype:
+        if true_dtype!=test_dtype:
             warnings.warn('Inputs have mismatched dtype.  Setting data_range based on image_true.',UserWarning,stacklevel=2)
-        dmin,dmax=_RANGES[image_true.dtype.type]
+            true_type=image_true.dtype.type
+        dmin,dmax=_RANGES[true_type]
         if fast is not None:
             true_min,true_max=fast[2],fast[3]
         elif stateful:

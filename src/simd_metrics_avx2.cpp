@@ -3,10 +3,14 @@
 #include <algorithm>
 #include <cstring>
 #include <cmath>
+#include <limits>
 #include <tuple>
 #include <type_traits>
 namespace skimagexx::simd {
 namespace {
+// The Windows CRT's INFINITY macro can raise overflow under /fp:strict.
+constexpr double metric_infinity=std::numeric_limits<double>::infinity();
+
 __m128i low32(__m256i x){x=_mm256_shuffle_epi32(x,_MM_SHUFFLE(2,0,2,0));return _mm_unpacklo_epi64(_mm256_castsi256_si128(x),_mm256_extracti128_si256(x,1));}
 __m256d unsigned32(__m128i value){return _mm256_add_pd(_mm256_cvtepi32_pd(value),_mm256_mul_pd(_mm256_cvtepi32_pd(_mm_srli_epi32(value,31)),_mm256_set1_pd(4294967296.)));}
 __m256d wide(__m256i value,bool is_signed) {
@@ -153,7 +157,8 @@ bool metric_swapped_f32_range(const unsigned char* data,std::size_t count,Metric
         const auto exp=bits&0x7f800000u;
         if(exp==0 || exp==0x7f800000u)return false;
         const auto key=bits^((bits&0x80000000u) ? 0xffffffffu:0x80000000u);
-        if(key<minimum)minimum=key;if(key>maximum)maximum=key;
+        if(key<minimum)minimum=key;
+        if(key>maximum)maximum=key;
     }
     result.low=minimum^((minimum&0x80000000u) ? 0x80000000u:0xffffffffu);
     result.high=maximum^((maximum&0x80000000u) ? 0x80000000u:0xffffffffu);
@@ -168,7 +173,7 @@ bool metric_leaf_classify(const double* error,const double* energy,const double*
     const auto magnitude=_mm256_set1_epi64x(0x7fffffffffffffffLL);
     const bool range=mode==MetricNormalization::min_max,euclidean=mode==MetricNormalization::euclidean;
     auto invalid=_mm256_setzero_si256(),zeros=_mm256_setzero_si256();
-    auto low=_mm256_set1_pd(INFINITY),high=_mm256_set1_pd(-INFINITY);
+    auto low=_mm256_set1_pd(metric_infinity),high=_mm256_set1_pd(-metric_infinity);
     std::size_t i=0;
     for(;i+4<=count;i+=4) {
         const auto value=_mm256_loadu_pd(values+i),err=_mm256_loadu_pd(error+i);
@@ -183,7 +188,7 @@ bool metric_leaf_classify(const double* error,const double* energy,const double*
         }
     }
     if(_mm256_movemask_pd(_mm256_castsi256_pd(invalid)) || (range && _mm256_movemask_pd(_mm256_castsi256_pd(zeros))))return false;
-    double minimum=INFINITY,maximum=-INFINITY;
+    double minimum=metric_infinity,maximum=-metric_infinity;
     if(range) {
         alignas(32) double lows[4],highs[4];_mm256_store_pd(lows,low);_mm256_store_pd(highs,high);
         for(int j=0;j<4;++j){if(lows[j]<minimum)minimum=lows[j];if(highs[j]>maximum)maximum=highs[j];}
@@ -299,9 +304,16 @@ float horizontal_sum(__m256 x) {
 
 template<class T,bool Dense> class MetricCursor {
 public:
-    MetricCursor(const MetricImageView& view,std::size_t begin):view_(view),index_(begin) {
+    MetricCursor(const MetricImageView& view,std::size_t begin)
+        :view_(&view),data_(static_cast<const unsigned char*>(view.data)),index_(begin) {
         if constexpr(!Dense) row();
     }
+
+    explicit MetricCursor(const unsigned char* data):data_(data),index_(0) {
+        static_assert(Dense);
+    }
+
+    const unsigned char* position() {return take(0);}
 
     T scalar() {
         T value;
@@ -331,14 +343,13 @@ private:
     }
 
     const unsigned char* take(std::size_t count) {
-        const auto* data=static_cast<const unsigned char*>(view_.data);
         if constexpr(Dense) {
-            const auto* ptr=data+index_*sizeof(T);
+            const auto* ptr=data_+index_*sizeof(T);
             index_+=count;
             return ptr;
         } else {
             if(!remaining_)row();
-            const auto* ptr=data+offset_;
+            const auto* ptr=data_+offset_;
             remaining_-=count;
             index_+=count;
             offset_+=std::ptrdiff_t(count*sizeof(T));
@@ -347,18 +358,19 @@ private:
     }
 
     void row() {
-        const auto width=view_.shape.back(), column=index_%width;
+        const auto width=view_->shape.back(), column=index_%width;
         auto outer=index_/width;
         remaining_=width-column;
         offset_=std::ptrdiff_t(column*sizeof(T));
-        for(std::size_t axis=view_.shape.size()-1;axis>0;) {
+        for(std::size_t axis=view_->shape.size()-1;axis>0;) {
             --axis;
-            offset_+=std::ptrdiff_t(outer%view_.shape[axis])*view_.strides[axis];
-            outer/=view_.shape[axis];
+            offset_+=std::ptrdiff_t(outer%view_->shape[axis])*view_->strides[axis];
+            outer/=view_->shape[axis];
         }
     }
 
-    const MetricImageView& view_;
+    const MetricImageView* view_=nullptr;
+    const unsigned char* data_;
     std::size_t index_,remaining_=0;
     std::ptrdiff_t offset_=0;
 };
@@ -368,7 +380,12 @@ template<class T,MetricNormalization Mode,bool Dense> class FastMetricTree {
     static constexpr bool mean=Mode==MetricNormalization::mean;
     static constexpr bool range=Mode==MetricNormalization::min_max;
     using Aux=std::conditional_t<mean,T,double>;
+    static constexpr std::size_t leaf_width=128;
     struct Sums {double error=0;Aux aux=0;};
+    struct LeafLanes {
+        DoubleLanes error,energy;
+        WorkLanes<T> mean;
+    };
 
 public:
     FastMetricTree(const MetricImageView& a,const MetricImageView& b):a_(a),b_(b) {}
@@ -391,7 +408,8 @@ public:
             for(int i=0;i<8;++i)bounds(lo[i],hi[i]);
             // The pinned range retains the first zero on a tie across leaves.
             // Replay signed-zero endpoints instead of choosing a SIMD lane.
-            if((low_scalar_==0 || high_scalar_==0) && negative_zero_)return {};
+            if((low_scalar_==0 || high_scalar_==0) &&
+               (negative_zero_ || _mm256_movemask_epi8(negative_zero_lanes_)!=0))return {};
         }
         // NaN or infinity in either operand also makes its squared error
         // nonfinite, and nonnegative errors cannot cancel in the tree.
@@ -403,7 +421,13 @@ private:
     static Sums merge(Sums a,Sums b) {return {a.error+b.error,Aux(a.aux+b.aux)};}
 
     Sums tree(std::size_t begin,std::size_t n) {
-        if(n<=128)return leaf(begin,n);
+        if(n<=leaf_width)return leaf(begin,n);
+        if(n==4*leaf_width) {
+            if constexpr(Dense)return four_leaves(begin);
+            // With aligned leaf starts and row widths, each leaf can walk
+            // contiguous columns even if the outer strides run backwards.
+            else if(begin%leaf_width==0 && a_.shape.back()%leaf_width==0)return four_leaves(begin);
+        }
         const auto half=(n/2)&~std::size_t{7};
         const auto left=tree(begin,half);
         return merge(left,tree(begin+half,n-half));
@@ -421,7 +445,59 @@ private:
         const auto is_minus_zero=_mm256_or_si256(
             _mm256_cmpeq_epi64(_mm256_castpd_si256(x.lo),minus_zero),
             _mm256_cmpeq_epi64(_mm256_castpd_si256(x.hi),minus_zero));
-        negative_zero_ |= _mm256_movemask_epi8(is_minus_zero)!=0;
+        negative_zero_lanes_=_mm256_or_si256(negative_zero_lanes_,is_minus_zero);
+    }
+
+    template<bool Seed,bool Flat>
+    void group(LeafLanes& lanes,MetricCursor<T,Flat>& a,MetricCursor<T,Flat>& b) {
+        const auto x=a.vector(),y=b.vector();
+        DoubleLanes err,en;
+        if constexpr(std::is_same_v<T,float>) {
+            const auto delta=_mm256_sub_ps(x,y);
+            err=widened(_mm256_mul_ps(delta,delta));
+            if constexpr(energy)en=widened(_mm256_mul_ps(x,x));
+        } else {
+            err=(x-y).square();
+            if constexpr(energy)en=x.square();
+        }
+        lanes.error=Seed ? err : lanes.error+err;
+        if constexpr(energy)lanes.energy=Seed ? en : lanes.energy+en;
+        if constexpr(mean) {
+            if constexpr(std::is_same_v<T,float>)lanes.mean=Seed ? x : _mm256_add_ps(lanes.mean,x);
+            else lanes.mean=Seed ? x : lanes.mean+x;
+        }
+        if constexpr(range)bounds(widened(x));
+    }
+
+    static Sums finish(const LeafLanes& lanes) {
+        Sums sum{horizontal_sum(lanes.error),-Aux(0)};
+        if constexpr(energy)sum.aux=horizontal_sum(lanes.energy);
+        if constexpr(mean)sum.aux=horizontal_sum(lanes.mean);
+        return sum;
+    }
+
+    Sums four_leaves(std::size_t begin) {
+        const auto cursor=[](const MetricImageView& view,std::size_t index) {
+            return MetricCursor<T,true>(MetricCursor<T,Dense>(view,index).position());
+        };
+        auto a0=cursor(a_,begin),a1=cursor(a_,begin+leaf_width);
+        auto a2=cursor(a_,begin+2*leaf_width),a3=cursor(a_,begin+3*leaf_width);
+        auto b0=cursor(b_,begin),b1=cursor(b_,begin+leaf_width);
+        auto b2=cursor(b_,begin+2*leaf_width),b3=cursor(b_,begin+3*leaf_width);
+        LeafLanes v0,v1,v2,v3;
+        // Interleave four independent leaves without changing the order of
+        // additions inside each leaf or the tree that merges their results.
+        group<true>(v0,a0,b0);
+        group<true>(v1,a1,b1);
+        group<true>(v2,a2,b2);
+        group<true>(v3,a3,b3);
+        for(std::size_t i=8;i<leaf_width;i+=8) {
+            group<false>(v0,a0,b0);
+            group<false>(v1,a1,b1);
+            group<false>(v2,a2,b2);
+            group<false>(v3,a3,b3);
+        }
+        return merge(merge(finish(v0),finish(v1)),merge(finish(v2),finish(v3)));
     }
 
     Sums leaf(std::size_t begin,std::size_t n) {
@@ -429,34 +505,12 @@ private:
         Sums sum{-0.0,-Aux(0)};
         std::size_t i=0;
         if(n>=8) {
-            DoubleLanes errors,energies;
-            WorkLanes<T> means;
+            LeafLanes lanes;
             // Seed the lanes with the first eight values, matching the
             // pinned tree even for signed zeros. Products round before add.
-            const auto group=[&](bool seed) {
-                const auto x=a.vector(),y=b.vector();
-                DoubleLanes err,en;
-                if constexpr(std::is_same_v<T,float>) {
-                    const auto delta=_mm256_sub_ps(x,y);
-                    err=widened(_mm256_mul_ps(delta,delta));
-                    if constexpr(energy)en=widened(_mm256_mul_ps(x,x));
-                } else {
-                    err=(x-y).square();
-                    if constexpr(energy)en=x.square();
-                }
-                errors=seed ? err : errors+err;
-                if constexpr(energy)energies=seed ? en : energies+en;
-                if constexpr(mean) {
-                    if constexpr(std::is_same_v<T,float>)means=seed ? x : _mm256_add_ps(means,x);
-                    else means=seed ? x : means+x;
-                }
-                if constexpr(range)bounds(widened(x));
-            };
-            group(true);
-            for(i=8;i+8<=n;i+=8)group(false);
-            sum.error=horizontal_sum(errors);
-            if constexpr(energy)sum.aux=horizontal_sum(energies);
-            if constexpr(mean)sum.aux=horizontal_sum(means);
+            group<true>(lanes,a,b);
+            for(i=8;i+8<=n;i+=8)group<false>(lanes,a,b);
+            sum=finish(lanes);
         }
         for(;i<n;++i) {
             const T x=a.scalar(),delta=x-b.scalar();
@@ -472,9 +526,10 @@ private:
     }
 
     const MetricImageView &a_,&b_;
-    double low_scalar_=INFINITY,high_scalar_=-INFINITY;
-    DoubleLanes low_{_mm256_set1_pd(INFINITY),_mm256_set1_pd(INFINITY)};
-    DoubleLanes high_{_mm256_set1_pd(-INFINITY),_mm256_set1_pd(-INFINITY)};
+    double low_scalar_=metric_infinity,high_scalar_=-metric_infinity;
+    DoubleLanes low_{_mm256_set1_pd(metric_infinity),_mm256_set1_pd(metric_infinity)};
+    DoubleLanes high_{_mm256_set1_pd(-metric_infinity),_mm256_set1_pd(-metric_infinity)};
+    __m256i negative_zero_lanes_=_mm256_setzero_si256();
     bool negative_zero_=false;
 };
 
@@ -495,7 +550,7 @@ std::tuple<double,double,double,double,bool> metric_fast_reduce(
     bool raw_range,std::size_t block) {
     if(_mm_getcsr() & (_MM_FLUSH_ZERO_MASK | _MM_DENORMALS_ZERO_MASK))return {};
     if(raw_range)mode=MetricNormalization::min_max;
-    const bool dense=a.shape.size()==1 && b.shape.size()==1;
+    const bool dense=a.shape.empty() && b.shape.empty();
     if(a.type==PixelType::float32)
         return dense ? fast_tree<float,true>(a,b,n,mode,block) : fast_tree<float,false>(a,b,n,mode,block);
     return dense ? fast_tree<double,true>(a,b,n,mode,block) : fast_tree<double,false>(a,b,n,mode,block);
