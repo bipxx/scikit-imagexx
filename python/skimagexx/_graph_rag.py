@@ -12,6 +12,8 @@ from . import _compat, _core
 
 
 _rag_lock = Lock()
+_integer_node_types = (np.intp, np.int32, np.uint32, np.uint64)
+_threshold_types = (int, float, np.float32, np.float64, np.int32, np.int64)
 
 
 def _fallback(name, *args, **kwargs):
@@ -89,18 +91,23 @@ def _rag_type():
                 self, src, dst, weight_func=min_weight, in_place=True,
                 extra_arguments=None, extra_keywords=None,
             ):
-                if extra_arguments is None:
-                    extra_arguments = []
-                if extra_keywords is None:
-                    extra_keywords = {}
                 neighbors = (set(self.neighbors(src)) | set(self.neighbors(dst))) - {src, dst}
                 new = dst
                 if not in_place:
                     new = self.next_id()
                     self.add_node(new)
-                for neighbor in neighbors:
-                    attrs = weight_func(self, src, dst, neighbor, *extra_arguments, **extra_keywords)
-                    self.add_edge(neighbor, new, attr_dict=attrs)
+                if extra_arguments is None and extra_keywords is None:
+                    for neighbor in neighbors:
+                        attrs = weight_func(self, src, dst, neighbor)
+                        self.add_edge(neighbor, new, attr_dict=attrs)
+                else:
+                    if extra_arguments is None:
+                        extra_arguments = ()
+                    if extra_keywords is None:
+                        extra_keywords = {}
+                    for neighbor in neighbors:
+                        attrs = weight_func(self, src, dst, neighbor, *extra_arguments, **extra_keywords)
+                        self.add_edge(neighbor, new, attr_dict=attrs)
                 self.nodes[new]['labels'] = self.nodes[src]['labels'] + self.nodes[dst]['labels']
                 self.remove_node(src)
                 if not in_place:
@@ -225,8 +232,12 @@ def rag_mean_color(image, labels, connectivity=2, mode='distance', sigma=255.0):
         count, total = totals[n]
         attrs.update(labels=[n], **{'pixel count': count, 'total color': total,
                                     'mean color': total / count})
+    nodes = graph._node
+    sqrt = np.sqrt
     for first, second, attrs in graph.edges(data=True):
-        distance = np.linalg.norm(graph.nodes[first]['mean color'] - graph.nodes[second]['mean color'])
+        delta = nodes[first]['mean color'] - nodes[second]['mean color']
+        # Match the one-dimensional float64 norm's dot and square root.
+        distance = sqrt(delta.dot(delta))
         if mode == 'similarity':
             attrs['weight'] = math.e ** (-(distance**2) / sigma)
         elif mode == 'distance':
@@ -275,7 +286,8 @@ def rag_boundary(labels, edge_map, connectivity=2):
         weights.data /= counts.data
         weighted = (
             (row, weights.indices[i], {'weight': weights.data[i], 'count': counts.data[i]})
-            for row in range(weights.shape[0]) for i in range(weights.indptr[row], weights.indptr[row + 1])
+            for row in np.flatnonzero(np.diff(weights.indptr)).tolist()
+            for i in range(weights.indptr[row], weights.indptr[row + 1])
         )
     else:
         return _fallback('rag_boundary', labels, edge_map, connectivity)
@@ -324,7 +336,7 @@ def cut_threshold(labels, rag, thresh, in_place=True):
     """Remove edges at or above the threshold and identify components."""
     if (
         not _integer_labels(labels, max_ndim=32) or not _is_rag(rag)
-        or type(thresh) not in (int, float, np.float32, np.float64, np.int32, np.int64)
+        or type(thresh) not in _threshold_types
     ):
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
     slots = _label_slots(labels)
@@ -333,13 +345,21 @@ def cut_threshold(labels, rag, thresh, in_place=True):
     working = rag if in_place else rag.copy()
     if type(working._adj) is not dict:
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
+    dense = (
+        _plain_graph(working) and 'remove_edges_from' not in vars(working)
+        and labels.dtype in (np.dtype(np.int32), np.dtype(np.int64))
+        and labels.dtype.metadata is None
+    )
     result = _core.graph_rag_threshold(
-        working._adj, thresh, (np.intp, np.int32, np.uint32, np.uint64, np.float32, np.float64),
+        working._adj, working._node if dense else {}, thresh,
+        (*_integer_node_types, np.float32, np.float64), slots if dense else 0,
     )
     if result is None:
         return _fallback('cut_threshold', labels, rag, thresh, in_place)
     removed, assignments = result
     working.remove_edges_from(removed)
+    if type(assignments) is np.ndarray:
+        return assignments.astype(labels.dtype, copy=False)[labels]
     mapping = np.arange(slots, dtype=labels.dtype)
     # Assign in component order, including graphs with overlapping label lists.
     for node, component in assignments:
@@ -348,18 +368,20 @@ def cut_threshold(labels, rag, thresh, in_place=True):
     return mapping[labels]
 
 
-def _normalized_relabel(rag, thresh, num_cuts, rng):
+def _normalized_relabel(rag, thresh, num_cuts, rng, weights=None, native=False):
     import networkx as nx
     from scipy import sparse
     from scipy.sparse import linalg
     from skimage._shared.compat import SCIPY_GE_1_17_0_DEV0
     from skimage.graph._ncut_cy import argmin2
 
-    weights = nx.to_scipy_sparse_array(rag, format='csc')
-    entries = weights.sum(axis=0)
-    degree = sparse.dia_array((entries, 0), shape=weights.shape).tocsc()
-    size = weights.shape[0]
-    if size > 2 and (degree != weights).nnz:
+    size = len(rag)
+    if not native:
+        weights = nx.to_scipy_sparse_array(rag, format='csc')
+    if weights is not None:
+        entries = weights.sum(axis=0)
+        degree = sparse.dia_array((entries, 0), shape=weights.shape).tocsc()
+    if weights is not None and size > 2 and (degree != weights).nnz:
         scaling = degree.copy()
         scaling.data = np.reciprocal(np.sqrt(scaling.data, out=scaling.data), out=scaling.data)
         laplacian = scaling @ (degree - weights) @ scaling
@@ -376,8 +398,17 @@ def _normalized_relabel(rag, thresh, num_cuts, rng):
             left, right = [], []
             for node, selected in zip(rag, mask):
                 (left if selected else right).append(node)
-            _normalized_relabel(rag.subgraph(left), thresh, num_cuts, rng)
-            _normalized_relabel(rag.subgraph(right), thresh, num_cuts, rng)
+            if native:
+                positions = {node: index for index, node in enumerate(rag)}
+            for group in (left, right):
+                child = rag.subgraph(group)
+                child_weights = None
+                if native and len(group) > 2:
+                    # NetworkX subgraph views may change node order as they shrink.
+                    order = [positions[node] for node in child]
+                    child_weights = weights[:, order][order, :]
+                    child_weights.sort_indices()
+                _normalized_relabel(child, thresh, num_cuts, rng, child_weights, native)
             return
     label = rag.nodes[min(rag)]['labels'][0]
     for _, attrs in rag.nodes(data=True):
@@ -393,18 +424,33 @@ def cut_normalized(labels, rag, thresh=0.001, num_cuts=10, in_place=True, max_ed
     ):
         return _fallback('cut_normalized', labels, rag, thresh, num_cuts, in_place, max_edge, rng=rng)
     slots = _label_slots(labels)
-    if slots is None or any(
+    if slots is None:
+        return _fallback('cut_normalized', labels, rag, thresh, num_cuts, in_place, max_edge, rng=rng)
+    weights = None
+    if (
+        type(max_edge) is float and type(thresh) in _threshold_types
+        and _plain_graph(rag)
+        and not {'copy', 'add_edge', 'subgraph'}.intersection(vars(rag))
+    ):
+        buffers = _core.graph_rag_normalized_buffers(
+            rag._adj, max_edge, _integer_node_types, np.float32, np.float64,
+        )
+        if buffers is not None:
+            from scipy import sparse
+
+            weights = sparse.csc_array(buffers, shape=(len(rag), len(rag)))
+    if weights is None and (any(
         type(attrs.get('weight', 1.0)) not in (float, int, np.float64, np.float32, np.int32, np.int64)
         or not 0 <= attrs.get('weight', 1.0) <= 1e100
         for _, _, attrs in rag.edges(data=True)
-    ) or rag.number_of_edges() + len(rag) >= 2**30:
+    ) or rag.number_of_edges() + len(rag) >= 2**30):
         return _fallback('cut_normalized', labels, rag, thresh, num_cuts, in_place, max_edge, rng=rng)
     generator = np.random.default_rng(rng)
     if not in_place:
         rag = rag.copy()
     for node in rag:
         rag.add_edge(node, node, weight=max_edge)
-    _normalized_relabel(rag, thresh, num_cuts, generator)
+    _normalized_relabel(rag, thresh, num_cuts, generator, weights, weights is not None)
     mapping = np.zeros(slots, dtype=labels.dtype)
     for _, attrs in rag.nodes(data=True):
         old_labels = attrs['labels']
@@ -428,18 +474,28 @@ def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func
                          merge_func, weight_func)
     if rag_copy:
         rag = rag.copy()
-    heap = []
+    from networkx.classes.coreviews import AtlasView
+
     push, pop = heapq.heappush, heapq.heappop
-    for first, second, attrs in rag.edges(data=True):
-        item = [attrs['weight'], first, second, True]
-        push(heap, item)
-        attrs['heap item'] = item
+    heap = None
+    if _plain_graph(rag) and type(thresh) in _threshold_types:
+        heap = _core.graph_rag_initial_heap(rag._adj, (np.intp, np.int32), np.float64, heapq.heapify)
+    native_heap = heap is not None
+    if heap is None:
+        heap = []
+        for first, second, attrs in rag.edges(data=True):
+            item = [attrs['weight'], first, second, True]
+            push(heap, item)
+            attrs['heap item'] = item
     while heap and heap[0][0] < thresh:
         _, src, dst, valid = pop(heap)
         if not valid:
             continue
         for node in (src, dst):
-            for attrs in rag.adj[node].values():
+            neighbors = rag.adj[node]
+            if native_heap and type(neighbors) is AtlasView and type(neighbors._atlas) is dict:
+                neighbors = neighbors._atlas
+            for attrs in neighbors.values():
                 attrs['heap item'][3] = False
         if not in_place_merge:
             new = rag.next_id()
@@ -451,7 +507,11 @@ def merge_hierarchical(labels, rag, thresh, rag_copy, in_place_merge, merge_func
             dst = new
         merge_func(rag, src, dst)
         new = rag.merge_nodes(src, dst, weight_func)
-        for neighbor, attrs in rag.adj[new].items():
+        neighbors = rag.adj[new]
+        if native_heap and type(neighbors) is AtlasView and type(neighbors._atlas) is dict:
+            _core.graph_rag_refresh_heap(neighbors._atlas, new, heap, push)
+            continue
+        for neighbor, attrs in neighbors.items():
             if 'heap item' in attrs:
                 attrs['heap item'][3] = False
             item = [attrs['weight'], new, neighbor, True]

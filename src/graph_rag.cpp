@@ -319,6 +319,19 @@ std::vector<Label> components(std::size_t node_count, const std::vector<Edge>& e
     return numbered;
 }
 
+std::vector<std::size_t> component_order(const std::vector<Label>& components) {
+    std::vector<std::size_t> offsets(components.size() + 1);
+    for (auto component : components) {
+        ++offsets[static_cast<std::size_t>(component) + 1];
+    }
+    std::partial_sum(offsets.begin(), offsets.end(), offsets.begin());
+    std::vector<std::size_t> order(components.size());
+    for (std::size_t i = 0; i < components.size(); ++i) {
+        order[offsets[static_cast<std::size_t>(components[i])]++] = i;
+    }
+    return order;
+}
+
 std::vector<double> central_distances(std::size_t nodes, const std::int32_t* rows,
                                       const std::int32_t* columns,
                                       const double* weights, std::size_t entries) {
