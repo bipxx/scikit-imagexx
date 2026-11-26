@@ -29,6 +29,8 @@ py::object run(const py::array& image, const py::array& noise, T kernel, T cutof
     const auto height = image.shape(0);
     const auto width = image.shape(1);
     const auto channels = image.shape(2);
+    const auto image_size = image.size();
+    const auto noise_size = noise.size();
     const auto* values = static_cast<const T*>(image.data());
     const auto* jitter = static_cast<const T*>(noise.data());
     py::array_t<std::ptrdiff_t> output({height, width});
@@ -36,8 +38,8 @@ py::object run(const py::array& image, const py::array& noise, T kernel, T cutof
     bool finite;
     {
         py::gil_scoped_release release;
-        finite = std::all_of(values, values + image.size(), [](T v) { return std::isfinite(v); }) &&
-                 std::all_of(jitter, jitter + noise.size(), [](T v) { return std::isfinite(v); });
+        finite = std::all_of(values, values + image_size, [](T v) { return std::isfinite(v); }) &&
+                 std::all_of(jitter, jitter + noise_size, [](T v) { return std::isfinite(v); });
         if (finite) skimagexx::quickshift_into(values, jitter, labels, height, width, channels, kernel, cutoff);
     }
     if (!finite) return py::none();

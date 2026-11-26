@@ -477,4 +477,355 @@ void rescale(const float* p, float* out, std::size_t n, double imin, double imax
         out[i] = imin != imax ? ((value-float(imin))/float(imax-imin))*float(omax-omin)+float(omin) : std::min(std::max(value,float(omin)),float(omax));
     }
 }
+
+#ifdef SKIMAGEXX_AVX2
+namespace {
+
+using Index = std::ptrdiff_t;
+
+template<class T>
+void quickshift_add_weight(T& density, T& neighbor, double weight) {
+    density = static_cast<T>(density + weight);
+    neighbor = static_cast<T>(neighbor + weight);
 }
+
+unsigned first_lane(unsigned mask) {
+    unsigned lane = (mask & 0xfu) ? 0 : 4;
+    if (!(mask & (3u << lane))) lane += 2;
+    return lane + !(mask & (1u << lane));
+}
+
+__m256d finish_exp(__m256d x, __m256d normal, __m256d result) {
+    if (_mm256_movemask_pd(normal) == 15) return result;
+    alignas(32) double arguments[4], weights[4];
+    _mm256_store_pd(arguments, x);
+    _mm256_store_pd(weights, result);
+    for (int lane = 0; lane < 4; ++lane)
+        if (!(arguments[lane] >= -700)) weights[lane] = std::exp(arguments[lane]);
+    return _mm256_load_pd(weights);
+}
+
+// For n = round(x / (log(2) / 16)), reduce to r in [-log(2)/32, log(2)/32].
+// The table holds the rounded 2**(k/16) and the relative rounding error,
+// where k = n modulo 16. Reconstruct with head + head * (tail + expm1(r)).
+__m256d exp_pd(__m256d x) {
+    alignas(32) static constexpr double heads[] = {
+        0x1p+0, 0x1.0b5586cf9890fp+0, 0x1.172b83c7d517bp+0, 0x1.2387a6e756238p+0,
+        0x1.306fe0a31b715p+0, 0x1.3dea64c123422p+0, 0x1.4bfdad5362a27p+0, 0x1.5ab07dd485429p+0,
+        0x1.6a09e667f3bcdp+0, 0x1.7a11473eb0187p+0, 0x1.8ace5422aa0dbp+0, 0x1.9c49182a3f090p+0,
+        0x1.ae89f995ad3adp+0, 0x1.c199bdd85529cp+0, 0x1.d5818dcfba487p+0, 0x1.ea4afa2a490dap+0,
+    };
+    alignas(32) static constexpr double tails[] = {
+        0x0p+0, 0x1.79aa65d837b6dp-54, -0x1.01b15eaa59348p-55, 0x1.68efde3a8a894p-54,
+        0x1.34d754db0abb6p-55, 0x1.59f48a72a4c6dp-55, 0x1.690cebb7aafb0p-56, 0x1.063e1e21c5409p-54,
+        -0x1.3b3efbf5e2228p-54, -0x1.b32dcb94da51dp-56, 0x1.db72fc1f0eab4p-55, 0x1.1affc2b91ce27p-56,
+        0x1.c1a7792cb3387p-55, 0x1.36eae30af0cb3p-56, 0x1.4a385a63d07a7p-56, -0x1.ff7128fd391f0p-55,
+    };
+
+    // Leave the underflow range and -infinity to the scalar library.
+    const auto normal = _mm256_cmp_pd(x, _mm256_set1_pd(-700), _CMP_GE_OQ);
+    const auto reduced_input = _mm256_and_pd(x, normal);
+    const auto n = _mm256_round_pd(_mm256_mul_pd(reduced_input, _mm256_set1_pd(0x1.71547652b82fep+4)),
+                                   _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
+    const auto k = _mm256_cvtepi32_epi64(_mm256_cvttpd_epi32(n));
+    const auto index = _mm256_and_si256(k, _mm256_set1_epi64x(15));
+    const auto head = _mm256_i64gather_pd(heads, index, 8);
+    const auto tail = _mm256_i64gather_pd(tails, index, 8);
+    const auto r = _mm256_sub_pd(
+        _mm256_sub_pd(reduced_input, _mm256_mul_pd(n, _mm256_set1_pd(0x1.62e42fefa0000p-5))),
+        _mm256_mul_pd(n, _mm256_set1_pd(0x1.cf79abc9e3b3ap-44)));
+
+    // Degree-five minimax fit to (exp(r) - 1 - r) / r**2 on the reduced
+    // interval. Its absolute approximation error is below 8.1e-17.
+    auto p = _mm256_set1_pd(0x1.a01b65093a453p-13);
+    p = _mm256_add_pd(_mm256_set1_pd(0x1.6c17ed4cc84ebp-10), _mm256_mul_pd(p, r));
+    p = _mm256_add_pd(_mm256_set1_pd(0x1.11111110abadcp-7), _mm256_mul_pd(p, r));
+    p = _mm256_add_pd(_mm256_set1_pd(0x1.55555554e9467p-5), _mm256_mul_pd(p, r));
+    p = _mm256_add_pd(_mm256_set1_pd(0x1.5555555555557p-3), _mm256_mul_pd(p, r));
+    p = _mm256_add_pd(_mm256_set1_pd(0x1.0000000000001p-1), _mm256_mul_pd(p, r));
+    const auto expm1 = _mm256_add_pd(r, _mm256_mul_pd(_mm256_mul_pd(r, r), p));
+    const auto value = _mm256_add_pd(head, _mm256_mul_pd(head, _mm256_add_pd(tail, expm1)));
+    const auto adjust = _mm256_slli_epi64(_mm256_and_si256(k, _mm256_set1_epi64x(-16)), 48);
+    const auto result = _mm256_castsi256_pd(_mm256_add_epi64(_mm256_castpd_si256(value), adjust));
+
+    return finish_exp(x, normal, result);
+}
+
+void exp_ps(__m256 x, double* weights) {
+    // The float32 reference promotes each exponent and adds its weight in
+    // double precision before storing density back to float.
+    _mm256_store_pd(weights, exp_pd(_mm256_cvtps_pd(_mm256_castps256_ps128(x))));
+    _mm256_store_pd(weights + 4, exp_pd(_mm256_cvtps_pd(_mm256_extractf128_ps(x, 1))));
+}
+
+template<class T> struct Vector;
+
+template<> struct Vector<double> {
+    using Pack = __m256d;
+    static constexpr Index width = 4;
+    static Pack load(const double* p) { return _mm256_loadu_pd(p); }
+    static Pack set(double value) { return _mm256_set1_pd(value); }
+    static Pack add(Pack a, Pack b) { return _mm256_add_pd(a, b); }
+    static Pack sub(Pack a, Pack b) { return _mm256_sub_pd(a, b); }
+    static Pack mul(Pack a, Pack b) { return _mm256_mul_pd(a, b); }
+    static Pack minimum(Pack a, Pack b) { return _mm256_min_pd(a, b); }
+    static Pack minimum(Pack x) {
+        x = minimum(x, _mm256_permute2f128_pd(x, x, 1));
+        return minimum(x, _mm256_permute_pd(x, 5));
+    }
+    static Pack eligible(Pack x, Pack best, Pack densities, Pack density) {
+        return _mm256_and_pd(_mm256_cmp_pd(x, best, _CMP_LT_OQ),
+                             _mm256_cmp_pd(densities, density, _CMP_GT_OQ));
+    }
+    static Pack select(Pack best, Pack x, Pack mask) {
+        return _mm256_blendv_pd(best, x, mask);
+    }
+    static unsigned mask(Pack x) { return _mm256_movemask_pd(x); }
+    static unsigned matches(Pack x, Pack best, Pack eligible) {
+        return _mm256_movemask_pd(_mm256_and_pd(_mm256_cmp_pd(x, best, _CMP_EQ_OQ), eligible));
+    }
+    static double first(Pack x) { return _mm256_cvtsd_f64(x); }
+};
+
+template<> struct Vector<float> {
+    using Pack = __m256;
+    static constexpr Index width = 8;
+    static Pack load(const float* p) { return _mm256_loadu_ps(p); }
+    static Pack set(float value) { return _mm256_set1_ps(value); }
+    static Pack add(Pack a, Pack b) { return _mm256_add_ps(a, b); }
+    static Pack sub(Pack a, Pack b) { return _mm256_sub_ps(a, b); }
+    static Pack mul(Pack a, Pack b) { return _mm256_mul_ps(a, b); }
+    static Pack minimum(Pack a, Pack b) { return _mm256_min_ps(a, b); }
+    static Pack minimum(Pack x) {
+        x = minimum(x, _mm256_permute2f128_ps(x, x, 1));
+        x = minimum(x, _mm256_permute_ps(x, 0x4e));
+        return minimum(x, _mm256_permute_ps(x, 0xb1));
+    }
+    static Pack eligible(Pack x, Pack best, Pack densities, Pack density) {
+        return _mm256_and_ps(_mm256_cmp_ps(x, best, _CMP_LT_OQ),
+                             _mm256_cmp_ps(densities, density, _CMP_GT_OQ));
+    }
+    static Pack select(Pack best, Pack x, Pack mask) {
+        return _mm256_blendv_ps(best, x, mask);
+    }
+    static unsigned mask(Pack x) { return _mm256_movemask_ps(x); }
+    static unsigned matches(Pack x, Pack best, Pack eligible) {
+        return _mm256_movemask_ps(_mm256_and_ps(_mm256_cmp_ps(x, best, _CMP_EQ_OQ), eligible));
+    }
+    static float first(Pack x) { return _mm256_cvtss_f32(x); }
+};
+
+template<class T, Index fixed_channels>
+typename Vector<T>::Pack distances(
+        const T* a, const T* b, T row_squared, const T* col_squared,
+        Index pixels, Index channels) {
+    using V = Vector<T>;
+    auto result = V::set(0);
+    const auto count = fixed_channels ? fixed_channels : channels;
+    for (Index channel = 0; channel < count; ++channel) {
+        const auto difference = V::sub(V::set(a[channel * pixels]), V::load(b + channel * pixels));
+        result = V::add(result, V::mul(difference, difference));
+    }
+    return V::add(V::add(result, V::set(row_squared)), V::load(col_squared));
+}
+
+// Absolute error is below 2e-14 for x <= 0, including range reduction and
+// polynomial evaluation. The density pass checks ordering with this bound.
+inline __m256d density_exp(__m256d x) {
+    const auto normal = _mm256_cmp_pd(x, _mm256_set1_pd(-700), _CMP_GE_OQ);
+    const auto input = _mm256_and_pd(x, normal);
+    const auto n = _mm256_round_pd(_mm256_mul_pd(input, _mm256_set1_pd(0x1.71547652b82fep+0)),
+                                   _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
+    const auto r = _mm256_sub_pd(
+        _mm256_sub_pd(input, _mm256_mul_pd(n, _mm256_set1_pd(0x1.62e42fefa0000p-1))),
+        _mm256_mul_pd(n, _mm256_set1_pd(0x1.cf79abc9e3b3ap-40)));
+    const auto r2 = _mm256_mul_pd(r, r);
+    const auto r4 = _mm256_mul_pd(r2, r2);
+    const auto r8 = _mm256_mul_pd(r4, r4);
+    // Evaluate the degree-eleven Taylor polynomial for exp(r) in groups
+    // on |r| <= log(2)/2. The truncation error is below 1e-14.
+    const auto pair = [r] (double a, double b) {
+        return _mm256_add_pd(_mm256_set1_pd(a), _mm256_mul_pd(r, _mm256_set1_pd(b)));
+    };
+    const auto a = _mm256_add_pd(pair(1.0 / 2, 1.0 / 6),
+                                _mm256_mul_pd(r2, pair(1.0 / 24, 1.0 / 120)));
+    const auto b = _mm256_add_pd(pair(1.0 / 720, 1.0 / 5040),
+                                _mm256_mul_pd(r2, pair(1.0 / 40320, 1.0 / 362880)));
+    const auto c = pair(1.0 / 3628800, 1.0 / 39916800);
+    const auto p = _mm256_add_pd(a, _mm256_add_pd(_mm256_mul_pd(r4, b), _mm256_mul_pd(r8, c)));
+    const auto value = _mm256_add_pd(_mm256_set1_pd(1), _mm256_add_pd(r, _mm256_mul_pd(r2, p)));
+    const auto scale = _mm256_slli_epi64(_mm256_cvtepi32_epi64(_mm256_cvttpd_epi32(n)), 52);
+    const auto result = _mm256_castsi256_pd(_mm256_add_epi64(_mm256_castpd_si256(value), scale));
+    return finish_exp(x, normal, result);
+}
+
+// Factor the Gaussian into spatial and color terms. With normalized color
+// and |inverse| <= 1/16, the degree-seven Taylor remainder is < 7e-15.
+// Separating the rounded spatial and color exponents costs O(epsilon) in
+// absolute weight: the sensitivity |x| * exp(x) for x <= 0 is at most 1/e.
+inline __m256d factored_density_weight(
+        double center, const double* values, const double* spatial, double inverse) {
+    const auto delta = _mm256_sub_pd(_mm256_set1_pd(center), _mm256_loadu_pd(values));
+    const auto r = _mm256_mul_pd(_mm256_mul_pd(delta, delta), _mm256_set1_pd(inverse));
+    const auto r2 = _mm256_mul_pd(r, r);
+    const auto r4 = _mm256_mul_pd(r2, r2);
+    constexpr double c3 = 1.0 / 6, c4 = 1.0 / 24, c5 = 1.0 / 120;
+    constexpr double c6 = 1.0 / 720, c7 = 1.0 / 5040;
+    const auto a = _mm256_add_pd(_mm256_set1_pd(0.5), _mm256_mul_pd(r, _mm256_set1_pd(c3)));
+    const auto b = _mm256_add_pd(_mm256_set1_pd(c4), _mm256_mul_pd(r, _mm256_set1_pd(c5)));
+    const auto c = _mm256_add_pd(_mm256_set1_pd(c6), _mm256_mul_pd(r, _mm256_set1_pd(c7)));
+    const auto p = _mm256_add_pd(a, _mm256_add_pd(_mm256_mul_pd(r2, b), _mm256_mul_pd(r4, c)));
+    const auto color = _mm256_add_pd(_mm256_set1_pd(1), _mm256_add_pd(r, _mm256_mul_pd(r2, p)));
+    return _mm256_mul_pd(_mm256_loadu_pd(spatial), color);
+}
+
+inline void add_density_lanes(__m256 x, float& density, float* neighbors) {
+    alignas(32) float arguments[8];
+    alignas(32) double weights[8];
+    _mm256_store_ps(arguments, x);
+    exp_ps(x, weights);
+    for (Index lane = 0; lane < 8; ++lane) {
+        double weight = weights[lane];
+        auto& neighbor = neighbors[lane];
+        // Recompute with the scalar library when an adjacent weight
+        // could change either rounded sum and therefore a density tie.
+        if (arguments[lane] < 0 && arguments[lane] >= -700) {
+            std::uint64_t bits;
+            std::memcpy(&bits, &weight, sizeof(bits));
+            const auto low_bits = bits - 1, high_bits = bits + 1;
+            double low, high;
+            std::memcpy(&low, &low_bits, sizeof(low));
+            std::memcpy(&high, &high_bits, sizeof(high));
+            if (static_cast<float>(density + low) != static_cast<float>(density + high) ||
+                static_cast<float>(neighbor + low) != static_cast<float>(neighbor + high)) {
+                weight = std::exp(static_cast<double>(arguments[lane]));
+            }
+        }
+        quickshift_add_weight(density, neighbor, weight);
+    }
+}
+
+template<Index fixed_channels, bool factored>
+Index density_row_double(const double* a, const double* b, double& density, double* neighbors,
+                         double row_squared, const double* col_squared, Index count,
+                         Index pixels, Index channels, double inverse, const double* spatial_weights) {
+    const auto weights_at = [&](Index offset) {
+        if constexpr (factored) {
+            return factored_density_weight(*a, b + offset, spatial_weights + offset, inverse);
+        } else {
+            const auto d = distances<double, fixed_channels>(
+                a, b + offset, row_squared, col_squared + offset, pixels, channels);
+            return density_exp(_mm256_mul_pd(d, _mm256_set1_pd(inverse)));
+        }
+    };
+    constexpr Index width = Vector<double>::width;
+    auto sum = _mm256_setzero_pd();
+    Index i = 0;
+    for (; i + width <= count; i += width) {
+        const auto weight = weights_at(i);
+        _mm256_storeu_pd(neighbors + i, _mm256_add_pd(_mm256_loadu_pd(neighbors + i), weight));
+        sum = _mm256_add_pd(sum, weight);
+    }
+    if (i == 0) return i;
+    const auto halves = _mm_add_pd(_mm256_castpd256_pd128(sum), _mm256_extractf128_pd(sum, 1));
+    density += _mm_cvtsd_f64(_mm_add_sd(halves, _mm_unpackhi_pd(halves, halves)));
+    // Reuse a full in-bounds load for the tail and accumulate only
+    // the lanes to the right of the last processed block.
+    if (i < count) {
+        const auto start = count - width;
+        alignas(32) double weights[width];
+        _mm256_store_pd(weights, weights_at(start));
+        for (; i < count; ++i) quickshift_add_weight(density, neighbors[i], weights[i - start]);
+    }
+    return i;
+}
+
+} // namespace
+
+template<class T, Index fixed_channels>
+Index quickshift_density_row(
+        const T* a, const T* b, T& density, T* neighbors, T row_squared,
+        const T* col_squared, Index count, Index pixels, Index channels, T inverse,
+        const double* spatial_weights) {
+    if constexpr (std::is_same_v<T, double>) {
+        if constexpr (fixed_channels == 1) {
+            if (spatial_weights) {
+                return density_row_double<1, true>(
+                    a, b, density, neighbors, row_squared, col_squared, count, pixels, channels,
+                    inverse, spatial_weights);
+            }
+        }
+        return density_row_double<fixed_channels, false>(
+            a, b, density, neighbors, row_squared, col_squared, count, pixels, channels,
+            inverse, spatial_weights);
+    } else {
+        using V = Vector<T>;
+        Index i = 0;
+        T center = density;
+        for (; i + V::width <= count; i += V::width) {
+            const auto x = V::mul(distances<T, fixed_channels>(
+                a, b + i, row_squared, col_squared + i, pixels, channels), V::set(inverse));
+            add_density_lanes(x, center, neighbors + i);
+        }
+        density = center;
+        return i;
+    }
+}
+
+template<class T, Index fixed_channels>
+Index quickshift_parent_row(
+        const T* a, const T* b, const T* neighbors, T density, T row_squared,
+        const T* col_squared, Index count, Index pixels, Index channels, Index start,
+        T& closest, Index& parent) {
+    using V = Vector<T>;
+    const auto center_density = V::set(density);
+    auto best = V::set(closest);
+    Index i = 0;
+    for (; i + V::width <= count; i += V::width) {
+        const auto neighbor_densities = V::load(neighbors + i);
+        const auto spatial = V::add(V::set(row_squared), V::load(col_squared + i));
+        const auto possible = V::eligible(spatial, best, neighbor_densities, center_density);
+        if (!V::mask(possible)) continue;
+        const auto d = distances<T, fixed_channels>(a, b + i, row_squared, col_squared + i, pixels, channels);
+        const auto valid = V::eligible(d, best, neighbor_densities, center_density);
+        if (!V::mask(valid)) continue;
+        best = V::minimum(V::select(best, d, valid));
+        const auto choice = V::matches(d, best, valid);
+        parent = start + i + first_lane(choice);
+    }
+    closest = V::first(best);
+    return i;
+}
+
+template Index quickshift_density_row<float, 0>(
+    const float*, const float*, float&, float*, float, const float*, Index, Index, Index, float, const double*);
+template Index quickshift_parent_row<float, 0>(
+    const float*, const float*, const float*, float, float, const float*,
+    Index, Index, Index, Index, float&, Index&);
+template Index quickshift_density_row<float, 1>(
+    const float*, const float*, float&, float*, float, const float*, Index, Index, Index, float, const double*);
+template Index quickshift_parent_row<float, 1>(
+    const float*, const float*, const float*, float, float, const float*,
+    Index, Index, Index, Index, float&, Index&);
+template Index quickshift_density_row<float, 3>(
+    const float*, const float*, float&, float*, float, const float*, Index, Index, Index, float, const double*);
+template Index quickshift_parent_row<float, 3>(
+    const float*, const float*, const float*, float, float, const float*,
+    Index, Index, Index, Index, float&, Index&);
+template Index quickshift_density_row<double, 0>(
+    const double*, const double*, double&, double*, double, const double*, Index, Index, Index, double, const double*);
+template Index quickshift_parent_row<double, 0>(
+    const double*, const double*, const double*, double, double, const double*,
+    Index, Index, Index, Index, double&, Index&);
+template Index quickshift_density_row<double, 1>(
+    const double*, const double*, double&, double*, double, const double*, Index, Index, Index, double, const double*);
+template Index quickshift_parent_row<double, 1>(
+    const double*, const double*, const double*, double, double, const double*,
+    Index, Index, Index, Index, double&, Index&);
+template Index quickshift_density_row<double, 3>(
+    const double*, const double*, double&, double*, double, const double*, Index, Index, Index, double, const double*);
+template Index quickshift_parent_row<double, 3>(
+    const double*, const double*, const double*, double, double, const double*,
+    Index, Index, Index, Index, double&, Index&);
+#endif
+} // namespace skimagexx::simd
