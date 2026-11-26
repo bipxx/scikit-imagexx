@@ -30,9 +30,11 @@ bool supported_costs(const double* values, graph::Index size) {
 }
 
 py::tuple point(const graph::Grid& grid, graph::Index node) {
-    auto coordinates = grid.coordinates(node);
-    py::tuple result(coordinates.size());
-    for (std::size_t i = 0; i < coordinates.size(); ++i) result[i] = py::int_(coordinates[i]);
+    std::array<graph::Index, 9> coordinates;
+    grid.coordinates(node, coordinates.data());
+    const auto dimensions = grid.shape().size();
+    py::tuple result(dimensions);
+    for (std::size_t i = 0; i < dimensions; ++i) result[i] = py::int_(coordinates[i]);
     return result;
 }
 
@@ -157,6 +159,26 @@ py::list trace(const graph::Grid& grid, const Flat<double>& distance,
     return points(grid, graph::traceback(grid, distance.data(), predecessor.data(), end));
 }
 
+py::object route(const graph::Grid& grid, const Flat<double>& costs, graph::Index start,
+                 graph::Index end, bool geometric) {
+    const auto size = grid.size();
+    check_flat(costs, size);
+    if (start < 0 || start >= size || end < 0 || end >= size) {
+        throw py::value_error("graph index out of bounds");
+    }
+    const auto* cost_data = costs.data();
+    if (!supported_costs(cost_data, size)) return py::none();
+
+    const graph::Search options{geometric ? graph::Cost::geometric : graph::Cost::destination,
+                                true, true, size};
+    // find_costs initializes both buffers before reading them.
+    const std::unique_ptr<double[]> distance(new double[size]);
+    const std::unique_ptr<graph::Offset[]> predecessor(new graph::Offset[size]);
+    graph::find_costs(grid, cost_data, {start}, {end}, options, distance.get(), predecessor.get());
+    auto path = graph::traceback(grid, distance.get(), predecessor.get(), end);
+    return py::make_tuple(points(grid, path), distance[end]);
+}
+
 py::object shortest(const Flat<double>& costs, const graph::Shape& shape, int reach,
                     int axis, bool output_indexlist) {
     if (shape.size() < 2 || axis < 0 || static_cast<std::size_t>(axis) >= shape.size()
@@ -193,8 +215,9 @@ py::object shortest(const Flat<double>& costs, const graph::Shape& shape, int re
     const py::ssize_t output_shape[]{static_cast<py::ssize_t>(result.first.size()), dimensions};
     auto path = skimagexx::bindings::empty_c_array<py::ssize_t>(output_shape);
     auto* out = path.mutable_data();
+    std::array<graph::Index, 9> coordinates;
     for (const auto node : result.first) {
-        auto coordinates = grid.coordinates(node);
+        grid.coordinates(node, coordinates.data());
         for (std::size_t i = 0; i < shape.size(); ++i) {
             if (i != static_cast<std::size_t>(axis)) *out++ = coordinates[i];
         }
@@ -247,6 +270,8 @@ void bind_graph_paths(py::module_& module) {
     module.def("graph_paths_offsets", &graph::lattice_offsets);
     module.def("graph_paths_check_storage", &skimagexx::bindings::check_array_storage,
                py::arg("array").noconvert());
+    module.def("graph_paths_route", &route, py::arg("grid"), py::arg("costs").noconvert(),
+               py::arg("start"), py::arg("end"), py::arg("geometric"));
     module.def("graph_paths_shortest", &shortest, py::arg("costs").noconvert(), py::arg("shape"),
                py::arg("reach"), py::arg("axis"), py::arg("output_indexlist"));
     module.def("graph_paths_pixel", &pixel);

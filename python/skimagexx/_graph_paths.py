@@ -368,6 +368,19 @@ class MCP_Geometric(MCP):
 def route_through_array(array, start, end, fully_connected=True, geometric=True):
     """Return a minimum-cost path between two coordinates."""
     start, end = tuple(start), tuple(end)
+    if (type(array) is np.ndarray and type(fully_connected) is bool and type(geometric) is bool
+            and _shape_supported(array) and np.can_cast(array.dtype, np.float64)
+            and all(type(i) is int for i in start) and all(type(i) is int for i in end)
+            and _bounded(array)):
+        shape = array.shape
+        endpoints = _flat_indices((start, end), shape)
+        if endpoints is not None:
+            result = _core.graph_paths_route(
+                _default_grid(shape, fully_connected), _cost_buffer(array), *endpoints, geometric
+            )
+            if result is not None:
+                path, cost = result
+                return path, np.float64(cost)
     cls = MCP_Geometric if geometric else MCP
     solver = cls(array, fully_connected=fully_connected)
     costs, _ = solver.find_costs([start], [end])

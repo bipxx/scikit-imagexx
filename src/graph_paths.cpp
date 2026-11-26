@@ -2,8 +2,12 @@
 
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <numeric>
 #include <stdexcept>
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
 
 namespace skimagexx::graph_paths {
 namespace {
@@ -11,12 +15,23 @@ namespace {
 constexpr auto infinity = std::numeric_limits<double>::infinity();
 constexpr auto max_size = std::numeric_limits<Index>::max() / 2;
 
-// A binary tournament over dense slots. Equal priorities choose the leftmost
-// slot and extraction moves the last slot into the vacancy. These two rules
-// are observable in scikit-image's traceback and callback order.
+unsigned first_move(std::uint64_t mask) {
+#ifdef _MSC_VER
+    unsigned long move;
+    _BitScanForward64(&move, mask);
+    return static_cast<unsigned>(move);
+#else
+    return static_cast<unsigned>(__builtin_ctzll(mask));
+#endif
+}
+
+// A flat four-way tournament heap. The leaves and nodes_ hold the costs and
+// indices of dense slots in separate arrays, avoiding padding between them.
+// Equal priorities choose the leftmost slot and extraction moves the last slot
+// into the vacancy, preserving scikit-image's traceback and callback order.
 class Frontier {
 public:
-    explicit Frontier(Index size) : positions_(size, -1), tree_(256, infinity) {}
+    explicit Frontier(Index size) : positions_(size, -1), tree_(first_leaf_ + capacity_, infinity) {}
 
     bool empty() const { return nodes_.empty(); }
     void reset_slots(Shape slots) {
@@ -32,27 +47,24 @@ public:
             slot = static_cast<Index>(nodes_.size());
             positions_[node] = slot;
             nodes_.push_back(node);
-        } else if (!replace && !(value < tree_[capacity_ + slot])) {
+        } else if (!replace && !(value < tree_[first_leaf_ + slot])) {
             return false;
         }
-        const auto leaf = capacity_ + slot;
+        const auto leaf = first_leaf_ + slot;
         tree_[leaf] = value;
         propagate(leaf);
         return true;
     }
 
     std::pair<Index, double> pop() {
-        std::size_t leaf = 2;
-        while (leaf < capacity_) {
-            leaf = (leaf + (tree_[leaf] <= tree_[leaf + 1] ? 0 : 1)) * 2;
-        }
-        leaf += tree_[leaf] <= tree_[leaf + 1] ? 0 : 1;
+        auto leaf = best_child(0);
+        while (leaf < first_leaf_) leaf = best_child(leaf);
         const auto value = tree_[leaf];
         // An all-infinite front still has a valid leftmost slot. NaN inputs
         // are screened at the Python boundary.
-        const auto slot = leaf - capacity_;
+        const auto slot = leaf - first_leaf_;
         const auto node = nodes_[slot];
-        const auto last = capacity_ + nodes_.size() - 1;
+        const auto last = first_leaf_ + nodes_.size() - 1;
         const auto moved = nodes_.back();
         positions_[moved] = static_cast<Index>(slot);
         nodes_[slot] = moved;
@@ -66,9 +78,21 @@ public:
     }
 
 private:
+    std::size_t best_child(std::size_t parent) const {
+        const auto first = 4 * parent + 1;
+        const auto left = first + (tree_[first] <= tree_[first + 1] ? 0 : 1);
+        const auto right = first + (tree_[first + 2] <= tree_[first + 3] ? 2 : 3);
+        return tree_[left] <= tree_[right] ? left : right;
+    }
+
+    double minimum_child(std::size_t parent) const {
+        const auto* children = tree_.data() + 4 * parent + 1;
+        return std::min(std::min(children[0], children[1]), std::min(children[2], children[3]));
+    }
+
     void propagate(std::size_t leaf) {
-        for (auto parent = leaf / 2; parent > 1; parent /= 2) {
-            const auto value = std::min(tree_[2 * parent], tree_[2 * parent + 1]);
+        for (auto parent = (leaf - 1) / 4; parent != 0; parent = (parent - 1) / 4) {
+            const auto value = minimum_child(parent);
             if (value == tree_[parent]) break;
             tree_[parent] = value;
         }
@@ -76,17 +100,20 @@ private:
 
     void grow() {
         const auto old_capacity = capacity_;
-        capacity_ *= 2;
-        tree_.resize(capacity_ * 2, infinity);
-        std::copy_n(tree_.data() + old_capacity, old_capacity, tree_.data() + capacity_);
-        for (auto parent = capacity_ - 1; parent > 1; --parent) {
-            tree_[parent] = std::min(tree_[2 * parent], tree_[2 * parent + 1]);
+        const auto old_first_leaf = first_leaf_;
+        capacity_ *= 4;
+        first_leaf_ += old_capacity;
+        tree_.resize(first_leaf_ + capacity_, infinity);
+        std::copy_n(tree_.data() + old_first_leaf, old_capacity, tree_.data() + first_leaf_);
+        for (auto parent = first_leaf_ - 1; parent != 0; --parent) {
+            tree_[parent] = minimum_child(parent);
         }
     }
 
     std::vector<Index> positions_, nodes_;
+    std::size_t capacity_ = 64;
+    std::size_t first_leaf_ = (capacity_ - 1) / 3;
     std::vector<double> tree_;
-    std::size_t capacity_ = 128;
 };
 
 template<class Visit>
@@ -96,14 +123,15 @@ void visit_moves(const Grid& grid, Index node, Visit visit) {
         const auto stride = std::max(grid.strides()[0], grid.strides()[1]);
         const auto slow = node / stride;
         const auto fast = node - slow * stride;
-        const auto mask = grid.strides()[0] == 1 ? grid.moves_2d(fast, slow)
-                                                 : grid.moves_2d(slow, fast);
+        auto mask = grid.strides()[0] == 1 ? grid.moves_2d(fast, slow)
+                                            : grid.moves_2d(slow, fast);
         const auto all = std::numeric_limits<std::uint64_t>::max() >> (64 - count);
         if (mask == all) {
             for (std::size_t move = 0; move < count; ++move) visit(move);
         } else {
-            for (std::size_t move = 0; move < count; ++move) {
-                if ((mask >> move) & 1) visit(move);
+            while (mask != 0) {
+                visit(first_move(mask));
+                mask &= mask - 1;
             }
         }
     } else {
@@ -326,12 +354,13 @@ std::pair<Shape, double> shortest_path(const Grid& grid, const double* costs, in
             ends.push_back(slab_start + offset + slab - stride);
         }
     }
-    std::vector<double> distance(grid.size());
-    std::vector<Offset> predecessor(grid.size());
+    // find_costs initializes both buffers before reading them.
+    const std::unique_ptr<double[]> distance(new double[grid.size()]);
+    const std::unique_ptr<Offset[]> predecessor(new Offset[grid.size()]);
     const Search options{Cost::difference, false, true};
-    const auto end = find_costs(grid, costs, starts, ends, options, distance.data(), predecessor.data());
+    const auto end = find_costs(grid, costs, starts, ends, options, distance.get(), predecessor.get());
     if (end < 0) throw std::invalid_argument("no minimum-cost path was found to the specified end point");
-    return {traceback(grid, distance.data(), predecessor.data(), end), distance[end]};
+    return {traceback(grid, distance.get(), predecessor.get(), end), distance[end]};
 }
 
 PixelEdges pixel_edges(const Grid& grid, const std::uint8_t* mask) {
