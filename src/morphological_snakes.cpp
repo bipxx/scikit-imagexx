@@ -239,6 +239,22 @@ double gaussian_pair(double left, double right) {
         return left + right;
 }
 
+enum class GaussianOutput { filtered, square, accumulate, inverse_magnitude };
+
+template<GaussianOutput Mode, class T>
+void gaussian_result(T& target, T value, T alpha) {
+    if constexpr (Mode == GaussianOutput::filtered) {
+        target = value;
+    } else if constexpr (Mode == GaussianOutput::square) {
+        target = T(0) + value * value;
+    } else if constexpr (Mode == GaussianOutput::accumulate) {
+        target += value * value;
+    } else {
+        const T squared = target + value * value;
+        target = T(1) / std::sqrt(T(1) + alpha * std::sqrt(squared));
+    }
+}
+
 #ifdef SKIMAGEXX_SNAKES_AVX2
 #if defined(_MSC_VER)
 // The rest of this translation unit must retain the baseline ISA.
@@ -259,12 +275,37 @@ SNAKES_AVX_INLINE __m256d gaussian_load(const T* input) {
         return _mm256_loadu_pd(input);
 }
 
-template<class T>
-SNAKES_AVX_INLINE void gaussian_store(T* output, __m256d values) {
-    if constexpr (sizeof(T) == sizeof(float))
-        _mm_storeu_ps(output, _mm256_cvtpd_ps(values));
-    else
-        _mm256_storeu_pd(output, values);
+template<GaussianOutput Mode, class T>
+SNAKES_AVX_INLINE void gaussian_store(T* output, __m256d values, T alpha) {
+    if constexpr (sizeof(T) == sizeof(float)) {
+        auto result = _mm256_cvtpd_ps(values);
+        if constexpr (Mode != GaussianOutput::filtered)
+            result = _mm_mul_ps(result, result);
+        if constexpr (Mode == GaussianOutput::square)
+            result = _mm_add_ps(_mm_setzero_ps(), result);
+        if constexpr (Mode == GaussianOutput::accumulate || Mode == GaussianOutput::inverse_magnitude)
+            result = _mm_add_ps(_mm_loadu_ps(output), result);
+        if constexpr (Mode == GaussianOutput::inverse_magnitude) {
+            const auto one = _mm_set1_ps(1.0f);
+            const auto scaled = _mm_mul_ps(_mm_set1_ps(alpha), _mm_sqrt_ps(result));
+            result = _mm_div_ps(one, _mm_sqrt_ps(_mm_add_ps(one, scaled)));
+        }
+        _mm_storeu_ps(output, result);
+    } else {
+        auto result = values;
+        if constexpr (Mode != GaussianOutput::filtered)
+            result = _mm256_mul_pd(result, result);
+        if constexpr (Mode == GaussianOutput::square)
+            result = _mm256_add_pd(_mm256_setzero_pd(), result);
+        if constexpr (Mode == GaussianOutput::accumulate || Mode == GaussianOutput::inverse_magnitude)
+            result = _mm256_add_pd(_mm256_loadu_pd(output), result);
+        if constexpr (Mode == GaussianOutput::inverse_magnitude) {
+            const auto one = _mm256_set1_pd(1.0);
+            const auto scaled = _mm256_mul_pd(_mm256_set1_pd(alpha), _mm256_sqrt_pd(result));
+            result = _mm256_div_pd(one, _mm256_sqrt_pd(_mm256_add_pd(one, scaled)));
+        }
+        _mm256_storeu_pd(output, result);
+    }
 }
 
 template<bool Derivative, class T>
@@ -283,10 +324,10 @@ SNAKES_AVX_INLINE __m256d gaussian_add(__m256d sum, const T* left, const T* righ
     return _mm256_add_pd(sum, _mm256_mul_pd(pair, weight));
 }
 
-template<bool Derivative, class T>
+template<bool Derivative, GaussianOutput Mode, class T>
 SNAKES_AVX_ENTRY std::size_t gaussian_span_avx2(
     const T* input, T* output, std::size_t count, const T* const* lower,
-    const T* const* upper, std::size_t radius, const double* weights) {
+    const T* const* upper, std::size_t radius, const double* weights, T alpha) {
     const auto center = _mm256_set1_pd(weights[0]);
     std::size_t i = 0;
     for (; i + 16 <= count; i += 16) {
@@ -303,17 +344,17 @@ SNAKES_AVX_ENTRY std::size_t gaussian_span_avx2(
             c = gaussian_add<Derivative>(c, left + 8, right + 8, weight);
             d = gaussian_add<Derivative>(d, left + 12, right + 12, weight);
         }
-        gaussian_store(output + i, a);
-        gaussian_store(output + i + 4, b);
-        gaussian_store(output + i + 8, c);
-        gaussian_store(output + i + 12, d);
+        gaussian_store<Mode>(output + i, a, alpha);
+        gaussian_store<Mode>(output + i + 4, b, alpha);
+        gaussian_store<Mode>(output + i + 8, c, alpha);
+        gaussian_store<Mode>(output + i + 12, d, alpha);
     }
     for (; i + 4 <= count; i += 4) {
         auto sum = gaussian_initial<Derivative>(input + i, center);
         for (auto k = radius; k > 0; --k)
             sum = gaussian_add<Derivative>(sum, lower[k - 1] + i, upper[k - 1] + i,
                                            _mm256_set1_pd(weights[k]));
-        gaussian_store(output + i, sum);
+        gaussian_store<Mode>(output + i, sum, alpha);
     }
     _mm256_zeroupper();
     return i;
@@ -328,10 +369,10 @@ SNAKES_AVX_ENTRY std::size_t gaussian_span_avx2(
 
 // Each span has fixed offsets, including when a tap clamps to the edge.
 // Evaluate several independent accumulators without reordering any sum.
-template<bool Derivative, class T>
+template<bool Derivative, GaussianOutput Mode, class T>
 void gaussian_span(const T* input, T* output, std::size_t count, std::size_t stride,
                    std::size_t left, std::size_t right, const std::vector<double>& weights,
-                   bool vectorize) {
+                   bool vectorize, T alpha) {
     constexpr std::size_t lanes = 8;
     std::array<const T*, 64> lower, upper;
     const auto radius = weights.size() - 1;
@@ -349,8 +390,8 @@ void gaussian_span(const T* input, T* output, std::size_t count, std::size_t str
     std::size_t i = 0;
 #ifdef SKIMAGEXX_SNAKES_AVX2
     if (vectorize && count >= 4)
-        i = gaussian_span_avx2<Derivative>(input, output, count, lower.data(), upper.data(),
-                                           radius, weights.data());
+        i = gaussian_span_avx2<Derivative, Mode>(input, output, count, lower.data(), upper.data(),
+                                                 radius, weights.data(), alpha);
 #else
     (void)vectorize;
 #endif
@@ -366,19 +407,19 @@ void gaussian_span(const T* input, T* output, std::size_t count, std::size_t str
                 sum[lane] += gaussian_pair<Derivative>(a[lane], b[lane]) * weight;
         }
         for (std::size_t lane = 0; lane < lanes; ++lane)
-            output[i + lane] = T(sum[lane]);
+            gaussian_result<Mode>(output[i + lane], T(sum[lane]), alpha);
     }
     for (; i < count; ++i) {
         auto sum = initial(i);
         for (auto d = radius; d > 0; --d)
             sum += gaussian_pair<Derivative>(lower[d - 1][i], upper[d - 1][i]) * weights[d];
-        output[i] = T(sum);
+        gaussian_result<Mode>(output[i], T(sum), alpha);
     }
 }
 
-template<bool Derivative, class T>
+template<bool Derivative, GaussianOutput Mode = GaussianOutput::filtered, class T>
 void gaussian_axis(const T* input, T* output, const Grid& grid, std::size_t length,
-                   std::size_t stride, const std::vector<double>& weights) {
+                   std::size_t stride, const std::vector<double>& weights, T alpha = T(0)) {
     const std::size_t period = length * stride;
     const std::size_t radius = weights.size() - 1;
     const auto unclamped_begin = std::min(radius, length) * stride;
@@ -398,8 +439,9 @@ void gaussian_axis(const T* input, T* output, const Grid& grid, std::size_t leng
                 const bool unclamped = offset >= unclamped_begin && offset < unclamped_end;
                 const auto span_end = unclamped ? unclamped_end : (coordinate + 1) * stride;
                 const auto next = std::min(stop, block + span_end);
-                gaussian_span<Derivative>(input + begin, output + begin, next - begin, stride,
-                                          coordinate, length - 1 - coordinate, weights, vectorize);
+                gaussian_span<Derivative, Mode>(input + begin, output + begin, next - begin, stride,
+                                                coordinate, length - 1 - coordinate, weights,
+                                                vectorize, alpha);
                 begin = next;
             }
         }
@@ -414,20 +456,19 @@ void inverse_gaussian_gradient_into(const T* image, T* output,
     const Grid grid(shape, 1);
     const GaussianWeights weights(sigma);
     const auto rank = shape.size();
-    std::vector<T> first(grid.size), second(grid.size);
-    std::vector<T> smooth_first(rank == 3 ? grid.size : 0);
+    std::vector<T> first(grid.size);
+    std::vector<T> second(rank == 3 ? grid.size : 0), smooth_first(rank == 3 ? grid.size : 0);
     const auto first_stride = grid.size / shape[0];
     if (rank == 3)
         gaussian_axis<false>(image, smooth_first.data(), grid, shape[0], first_stride, weights.smooth);
 
-    std::fill_n(output, grid.size, T(0));
     for (std::size_t differentiated = 0; differentiated < rank; ++differentiated) {
         const bool shared_first = rank == 3 && differentiated > 0;
         const T* source = shared_first ? smooth_first.data() : image;
         T* target = first.data();
         std::size_t stride = shared_first ? first_stride : grid.size;
         // Preserve the provider's axis order and round each pass to T.
-        for (std::size_t axis = shared_first ? 1 : 0; axis < rank; ++axis) {
+        for (std::size_t axis = shared_first ? 1 : 0; axis + 1 < rank; ++axis) {
             stride /= shape[axis];
             if (axis == differentiated)
                 gaussian_axis<true>(source, target, grid, shape[axis], stride, weights.derivative);
@@ -436,15 +477,18 @@ void inverse_gaussian_gradient_into(const T* image, T* output,
             source = target;
             target = target == first.data() ? second.data() : first.data();
         }
-        detail::partition(grid.size, grid.workers, [&](auto begin, auto end, auto) {
-            for (auto i = begin; i < end; ++i)
-                output[i] += source[i] * source[i];
-        });
+        // Round the last convolution to T before squaring, just like the
+        // stored intermediate. Combine components in derivative-axis order.
+        if (differentiated == 0)
+            gaussian_axis<false, GaussianOutput::square>(source, output, grid, shape.back(), 1,
+                                                          weights.smooth);
+        else if (differentiated + 1 == rank)
+            gaussian_axis<true, GaussianOutput::inverse_magnitude>(source, output, grid, shape.back(), 1,
+                                                                   weights.derivative, T(alpha));
+        else
+            gaussian_axis<false, GaussianOutput::accumulate>(source, output, grid, shape.back(), 1,
+                                                              weights.smooth);
     }
-    detail::partition(grid.size, grid.workers, [&](auto begin, auto end, auto) {
-        for (auto i = begin; i < end; ++i)
-            output[i] = T(1) / std::sqrt(T(1) + T(alpha) * std::sqrt(output[i]));
-    });
 }
 
 template<class T>

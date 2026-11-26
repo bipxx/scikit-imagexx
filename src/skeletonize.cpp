@@ -28,28 +28,45 @@ constexpr std::array<std::uint8_t, 256> classes{
     3, 3, 0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0
 };
 
+unsigned neighborhood(const std::uint8_t* middle, std::ptrdiff_t pitch) {
+    const auto* above = middle - pitch;
+    const auto* below = middle + pitch;
+    return above[-1] | (above[0] << 1) | (above[1] << 2)
+        | (middle[1] << 3) | (below[1] << 4) | (below[0] << 5)
+        | (below[-1] << 6) | (middle[-1] << 7);
+}
+
+using Frontier = std::array<std::vector<std::uint32_t>, 2>;
+
 bool remove_phase(std::vector<std::uint8_t>& state, std::ptrdiff_t pitch, unsigned phase,
-                  std::vector<std::uint32_t>& live, std::vector<std::uint32_t>& removed) {
+                  Frontier& frontier, std::vector<std::uint8_t>& pending,
+                  std::vector<std::uint32_t>& removed) {
     removed.clear();
-    auto survivor = live.begin();
-    // Keep the remaining foreground in row-major order. Defer changes to
-    // state until every center has read the original phase neighborhood.
-    for (auto index : live) {
-        const auto* middle = state.data() + index;
-        const auto* above = middle - pitch;
-        const auto* below = middle + pitch;
-        const auto code = above[-1] | (above[0] << 1) | (above[1] << 2)
-            | (middle[1] << 3) | (below[1] << 4) | (below[0] << 5)
-            | (below[-1] << 6) | (middle[-1] << 7);
-        if (classes[code] & phase) {
+    const auto mask = 1u << phase;
+    for (auto index : frontier[phase]) {
+        pending[index] &= static_cast<std::uint8_t>(~mask);
+        if (state[index] && (classes[neighborhood(state.data() + index, pitch)] & mask))
             removed.push_back(index);
-        } else {
-            *survivor++ = index;
-        }
     }
-    live.erase(survivor, live.end());
-    for (auto index : removed) {
+    frontier[phase].clear();
+
+    // Apply the whole phase at once, then revisit only surviving centers
+    // whose neighborhood changed since their last check in either phase.
+    for (auto index : removed)
         state[index] = 0;
+    const std::ptrdiff_t offsets[]{-pitch - 1, -pitch, -pitch + 1, -1,
+                                    1, pitch - 1, pitch, pitch + 1};
+    for (auto index : removed) {
+        for (auto offset : offsets) {
+            const auto neighbor = static_cast<std::uint32_t>(index + offset);
+            if (!state[neighbor] || pending[neighbor] == 3)
+                continue;
+            if (!(pending[neighbor] & 1))
+                frontier[0].push_back(neighbor);
+            if (!(pending[neighbor] & 2))
+                frontier[1].push_back(neighbor);
+            pending[neighbor] = 3;
+        }
     }
     return !removed.empty();
 }
@@ -78,17 +95,24 @@ bool detail::skeletonize_zhang_padded(
         }
     }
 
-    std::vector<std::uint32_t> live;
-    live.reserve(rows * columns);
-    for (std::size_t index = 0; index < state.size(); ++index) {
-        if (state[index]) {
-            live.push_back(static_cast<std::uint32_t>(index));
-        }
+    Frontier frontier;
+    std::vector<std::uint8_t> pending(state.size());
+    const auto stride = static_cast<std::ptrdiff_t>(pitch);
+    for (std::uint32_t index = static_cast<std::uint32_t>(pitch + 1);
+         index < state.size() - pitch; ++index) {
+        if (!state[index])
+            continue;
+        const auto phases = classes[neighborhood(state.data() + index, stride)];
+        if (phases & 1)
+            frontier[0].push_back(index);
+        if (phases & 2)
+            frontier[1].push_back(index);
+        pending[index] = phases;
     }
     std::vector<std::uint32_t> removed;
     while (true) {
-        const bool first = remove_phase(state, std::ptrdiff_t(pitch), 1, live, removed);
-        const bool second = remove_phase(state, std::ptrdiff_t(pitch), 2, live, removed);
+        const bool first = remove_phase(state, stride, 0, frontier, pending, removed);
+        const bool second = remove_phase(state, stride, 1, frontier, pending, removed);
         if (!first && !second) {
             break;
         }
