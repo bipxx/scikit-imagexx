@@ -1,5 +1,6 @@
 #include "skimagexx/random_noise.hpp"
 
+#include <algorithm>
 #include <cfenv>
 #include <cstdint>
 #include <limits>
@@ -41,10 +42,6 @@ Span draw_span(RandomNoiseDraw draw, std::size_t count) {
     return span(draw.values, draw.count);
 }
 
-bool hit(RandomNoiseDraw draw, std::size_t index) {
-    return draw.probability == 1 || (draw.values && draw.values[index] <= draw.probability);
-}
-
 }  // namespace
 
 void random_noise_normal_into(const double* image, const double* noise, double* output,
@@ -73,8 +70,25 @@ void random_noise_impulse_into(const double* image, double* output, std::size_t 
     disjoint(target, span(image, count));
     disjoint(target, draw_span(flipped, count));
     disjoint(target, draw_span(salted, count));
-    for (std::size_t i = 0; i < count; ++i)
-        output[i] = hit(flipped, i) ? (hit(salted, i) ? 1.0 : low) : image[i];
+    if (flipped.probability == 0) {
+        std::copy_n(image, count, output);
+    } else if (!salted.values) {
+        const double value = salted.probability == 1 ? 1.0 : low;
+        if (!flipped.values) {
+            std::fill_n(output, count, value);
+        } else {
+            for (std::size_t i = 0; i < count; ++i)
+                output[i] = flipped.values[i] <= flipped.probability ? value : image[i];
+        }
+    } else if (!flipped.values) {
+        for (std::size_t i = 0; i < count; ++i)
+            output[i] = salted.values[i] <= salted.probability ? 1.0 : low;
+    } else {
+        for (std::size_t i = 0; i < count; ++i) {
+            output[i] = flipped.values[i] <= flipped.probability ?
+                (salted.values[i] <= salted.probability ? 1.0 : low) : image[i];
+        }
+    }
 }
 
 }  // namespace skimagexx

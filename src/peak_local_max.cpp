@@ -87,14 +87,30 @@ auto sort_intensity(T value) {
 }
 
 template<class Get>
-void sort_cells(std::vector<Cell>& cells, Get value_at) {
-    std::sort(cells.begin(), cells.end(), [value_at](Cell a, Cell b) {
+void sort_cells(std::vector<Cell>& cells, Get value_at,
+                std::size_t count = (std::numeric_limits<std::size_t>::max)()) {
+    const auto less = [value_at](Cell a, Cell b) {
         const auto x = sort_intensity(value_at(a.row, a.column));
         const auto y = sort_intensity(value_at(b.row, b.column));
         if (x != y)
             return x < y;
         return a.row == b.row ? a.column < b.column : a.row < b.row;
-    });
+    };
+    if (count < cells.size()) {
+        std::partial_sort(cells.begin(), cells.begin() + count, cells.end(), less);
+        cells.resize(count);
+    } else {
+        std::sort(cells.begin(), cells.end(), less);
+    }
+}
+
+template<class T>
+bool is_interior_maximum_3x3(const T* center, std::ptrdiff_t width, T value) {
+    const auto* above = center - width;
+    const auto* below = center + width;
+    return center[-1] <= value && center[1] <= value &&
+           above[-1] <= value && above[0] <= value && above[1] <= value &&
+           below[-1] <= value && below[0] <= value && below[1] <= value;
 }
 
 template<class Get, class T>
@@ -352,13 +368,21 @@ std::vector<PeakCoordinate> peak_local_max(const T* image, int height, int width
         for (int r = inside.top; r < inside.bottom; ++r) {
             for (int c = inside.left; c < inside.right; ++c) {
                 const auto value = at(r, c);
-                if (value > threshold && is_maximum(at, full, radius, r, c, value))
+                if (value <= threshold)
+                    continue;
+                const bool interior = radius == 1 && r > 0 && r + 1 < height && c > 0 && c + 1 < width;
+                if (interior ? is_interior_maximum_3x3(image + offset(r, c, width), width, value)
+                             : is_maximum(at, full, radius, r, c, value))
                     cells.push_back({r, c});
             }
         }
-        sort_cells(cells, at);
-        cells = suppress(cells, inside, radius, options.suppress_connected ? PeakNorm::chebyshev : options.norm,
-                         options.minkowski_p, false, options.suppress_connected ? cells.size() : options.max_peaks);
+        if (radius == 1) {
+            sort_cells(cells, at, options.suppress_connected ? cells.size() : options.max_peaks);
+        } else {
+            sort_cells(cells, at);
+            cells = suppress(cells, inside, radius, options.suppress_connected ? PeakNorm::chebyshev : options.norm,
+                             options.minkowski_p, false, options.suppress_connected ? cells.size() : options.max_peaks);
+        }
     } else {
         cells = std::visit([&](auto view) -> std::vector<Cell> {
             if constexpr (std::is_same_v<decltype(view), std::monostate>) {

@@ -173,18 +173,24 @@ template<class T> bool keep_peak(const T* magnitude, T dy, T dx, std::ptrdiff_t 
 void connect_edges(std::uint8_t* states, std::size_t size, std::size_t cols) {
     if (std::find(states, states + size, std::uint8_t(2)) == states + size) return;
     std::vector<std::size_t> frontier;
-    const auto visit = [&](std::size_t id) {
-        for (const auto row : {id - cols, id, id + cols}) {
-            for (auto j = row - 1; j <= row + 1; ++j) {
-                if (states[j] == 2) {
-                    states[j] = 1;
-                    frontier.push_back(j);
-                }
-            }
+    const auto promote = [&](std::size_t index) {
+        if (states[index] == 2) {
+            states[index] = 3;
+            frontier.push_back(index);
         }
     };
+    const auto visit = [&](std::size_t id) {
+        promote(id - cols - 1);
+        promote(id - cols);
+        promote(id - cols + 1);
+        promote(id - 1);
+        promote(id + 1);
+        promote(id + cols - 1);
+        promote(id + cols);
+        promote(id + cols + 1);
+    };
     // Border pixels never enter the frontier. Every weak edge transitions at
-    // most once, and all strong edges remain valid without component labels.
+    // most once. Promoted edges are distinct from the original strong seeds.
     for (std::size_t i = cols + 1; i < size - cols - 1; ++i) {
         if (states[i] != 1) continue;
         visit(i);
@@ -194,7 +200,8 @@ void connect_edges(std::uint8_t* states, std::size_t size, std::size_t cols) {
             visit(next);
         }
     }
-    std::replace(states, states + size, std::uint8_t(2), std::uint8_t(0));
+    for (std::size_t i = 0; i < size; ++i)
+        states[i] &= 1;
 }
 
 template<class T> bool detect(const void* image, PixelType type, const std::uint8_t* mask,

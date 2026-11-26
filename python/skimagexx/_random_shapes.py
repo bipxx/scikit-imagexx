@@ -6,15 +6,28 @@ import numpy as np
 
 from . import _core
 from ._compat import fallback
-from ._draw_coordinates import disk, ellipse
+from ._draw_coordinates import ellipse
 from ._draw_polygon import polygon
 
 
 def _rectangle(row, column, height, width, lo, hi, rng):
     dx = lo + rng.integers(max(1, min(height - row, hi) - lo)) - 1
     dy = lo + rng.integers(max(1, min(width - column, hi) - lo)) - 1
-    points = polygon([row, row + dx, row + dx, row], [column, column, column + dy, column + dy])
+    if dx and dy:
+        rows = np.arange(row, row + dx + 1, dtype=np.intp)
+        columns = np.arange(column, column + dy + 1, dtype=np.intp)
+        points = rows.repeat(dy + 1), np.tile(columns, dx + 1)
+    else:
+        points = polygon([row, row + dx, row + dx, row], [column, column, column + dy, column + dy])
     return points, ('rectangle', ((row, row + dx + 1), (column, column + dy + 1)))
+
+
+def _circle_offsets(radius):
+    # Use the same division and squared-distance test as an unrotated disk.
+    offsets = np.arange(1 - radius, radius, dtype=np.float64)
+    squared = (offsets / radius) ** 2
+    rr, cc = np.nonzero(squared[:, None] + squared < 1)
+    return rr - (radius - 1), cc - (radius - 1)
 
 
 def _circle(row, column, height, width, lo, hi, rng):
@@ -25,7 +38,8 @@ def _circle(row, column, height, width, lo, hi, rng):
     if available < 0:
         raise ArithmeticError('cannot fit shape to image')
     radius = int(minimum + rng.integers(max(1, available)))
-    points = disk((row, column), radius)
+    rr, cc = _circle_offsets(radius)
+    points = rr + row, cc + column
     return points, ('circle', ((row - radius + 1, row + radius), (column - radius + 1, column + radius)))
 
 
@@ -54,7 +68,7 @@ def _ellipse(row, column, height, width, lo, hi, rng):
 
 
 _GENERATORS = dict(rectangle=_rectangle, circle=_circle, triangle=_triangle, ellipse=_ellipse)
-_CHOICES = np.array(list(_GENERATORS.values()), dtype=object)
+_CHOICES = tuple(_GENERATORS.values())
 _TRIANGLE_RISE = np.sqrt(3 / 4.0)
 
 
@@ -106,19 +120,22 @@ def random_shapes(image_shape, max_shapes, min_shapes=1, min_size=2, max_size=No
     if len(ranges) == 1:
         ranges = ranges * channels
 
-    generator = np.random.default_rng(rng)
+    generator = rng if type(rng) is np.random.Generator else np.random.default_rng(rng)
+    integers = generator.integers
     image = np.full((height, width, channels), 255, dtype=np.uint8)
     occupied = np.zeros((height, width), dtype=np.uint8)
     labels = []
-    count = generator.integers(min_shapes, max_shapes + 1)
-    colors = np.transpose([generator.integers(lo, high + 1, size=count) for lo, high in ranges])
+    count = integers(min_shapes, max_shapes + 1)
+    colors = np.transpose([integers(lo, high + 1, size=count) for lo, high in ranges])
     colors = colors.astype(np.uint8, order='C')
     generate = _GENERATORS[shape] if count and shape is not None else None
+    row_limit = max(1, height - min_size)
+    column_limit = max(1, width - min_size)
     for index in range(count):
-        place_shape = generator.choice(_CHOICES) if generate is None else generate
+        place_shape = _CHOICES[integers(len(_CHOICES))] if generate is None else generate
         for _ in range(num_trials):
-            column = generator.integers(max(1, width - min_size))
-            row = generator.integers(max(1, height - min_size))
+            column = integers(column_limit)
+            row = integers(row_limit)
             try:
                 (rr, cc), label = place_shape(row, column, height, width, min_size, hi, generator)
             except ArithmeticError:

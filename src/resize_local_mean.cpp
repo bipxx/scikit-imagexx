@@ -32,10 +32,12 @@ void normalized_two_by_two(const Word* source, int width, double* output, int ro
             const double bottom_left = double(second[left]) * scale;
             const double top_right = double(first[right]) * scale;
             const double bottom_right = double(second[right]) * scale;
-            // Stock converts each input, then contracts y before x using two dyadic terms.
-            const double column_left = top_left * 0.5 + bottom_left * 0.5;
-            const double column_right = top_right * 0.5 + bottom_right * 0.5;
-            output[y * columns + x] = column_left * 0.5 + column_right * 0.5;
+            // Stock contracts y before x. Halving commutes with each rounded
+            // sum here because all nonzero normalized words are normal and
+            // all intermediate values are in [0, 4].
+            const double column_left = top_left + bottom_left;
+            const double column_right = top_right + bottom_right;
+            output[y * columns + x] = (column_left + column_right) * 0.25;
         }
     }
 }

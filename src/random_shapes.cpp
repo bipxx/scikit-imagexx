@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstring>
 #include <limits>
 #include <stdexcept>
 
@@ -26,6 +27,18 @@ Span extent(const T* data, std::size_t count) {
 
 bool overlaps(Span a, Span b) {
     return a.begin < b.end && b.begin < a.end;
+}
+
+template<int Channels>
+void paint(std::uint8_t* image, std::uint8_t* occupied, int width, int channels,
+           RandomShapeIndexView rows, RandomShapeIndexView columns, std::size_t count,
+           const std::uint8_t* color) {
+    const int pixel_size = Channels ? Channels : channels;
+    for (std::size_t i = 0; i < count; ++i) {
+        const auto index = rows.data[i * rows.stride] * width + columns.data[i * columns.stride];
+        std::memcpy(image + index * pixel_size, color, pixel_size);
+        occupied[index] = 1;
+    }
 }
 
 }  // namespace
@@ -56,16 +69,17 @@ bool random_shape_paint_into(std::uint8_t* image, std::size_t image_count,
         const auto y = rows.data[i * rows.stride], x = columns.data[i * columns.stride];
         if (y < 0 || y >= height || x < 0 || x >= width)
             throw std::invalid_argument("random_shapes coordinate is outside the image");
-        if (!allow_overlap && occupied[y * width + x])
+        if (!allow_overlap && !conflict && occupied[y * width + x])
             conflict = true;
     }
     if (conflict)
         return false;
-    for (std::size_t i = 0; i < count; ++i) {
-        const auto index = rows.data[i * rows.stride] * width + columns.data[i * columns.stride];
-        std::copy_n(color, channels, image + index * channels);
-        occupied[index] = 1;
-    }
+    if (channels == 3)
+        paint<3>(image, occupied, width, channels, rows, columns, count, color);
+    else if (channels == 1)
+        paint<1>(image, occupied, width, channels, rows, columns, count, color);
+    else
+        paint<0>(image, occupied, width, channels, rows, columns, count, color);
     return true;
 }
 

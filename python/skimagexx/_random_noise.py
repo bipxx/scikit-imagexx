@@ -18,7 +18,12 @@ def _number_in(value, lower, upper):
 
 
 def _controls(mode, kwargs):
-    if mode not in _KWARGS or any(key not in _KWARGS[mode] for key in kwargs):
+    allowed = _KWARGS.get(mode)
+    if allowed is None:
+        return False
+    if not kwargs:
+        return True
+    if any(key not in allowed for key in kwargs):
         return False
     if mode in ('gaussian', 'speckle'):
         return _number_in(kwargs.get('mean', 0.0), -1.0, 1.0) and _number_in(kwargs.get('var', 0.01), 0.0, 1.0)
@@ -36,7 +41,8 @@ def random_noise(image, mode='gaussian', rng=None, clip=True, **kwargs):
             and (type(rng) is int and 0 <= rng < 2**64
                  or type(rng) is np.random.Generator and type(rng.bit_generator) is np.random.PCG64)
             and np.geterr()['under'] == 'ignore' and _core.random_noise_round_to_nearest()):
-        if image.dtype in _UNSIGNED:
+        unsigned = image.dtype in _UNSIGNED
+        if unsigned:
             minimum = 0.0
             bounded = True
         else:
@@ -44,8 +50,8 @@ def random_noise(image, mode='gaussian', rng=None, clip=True, **kwargs):
             bounded = -1.0 <= minimum <= image.max() <= 1.0
         if bounded:
             low = -1.0 if minimum < 0 else 0.0
-            values = util.img_as_float(image)
-            generator = np.random.default_rng(rng)
+            values = util.img_as_float(image) if unsigned else image
+            generator = rng if type(rng) is np.random.Generator else np.random.default_rng(rng)
             if name in ('gaussian', 'speckle'):
                 noise = generator.normal(kwargs.get('mean', 0.0), kwargs.get('var', 0.01) ** 0.5, values.shape)
                 result = _core.random_noise_apply_normal(values, noise, name == 'speckle')
@@ -55,6 +61,8 @@ def random_noise(image, mode='gaussian', rng=None, clip=True, **kwargs):
                 flipped = None if p in (0, 1) else generator.random(values.shape)
                 salted = None if q in (0, 1) else generator.random(values.shape)
                 result = _core.random_noise_apply_impulse(values, flipped, salted, p, q, low)
+                if unsigned:
+                    return result
             if clip:
                 np.clip(result, low, 1.0, out=result)
             return result
