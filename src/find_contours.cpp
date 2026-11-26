@@ -6,13 +6,17 @@
 #include <cstring>
 #include <limits>
 #include <type_traits>
+#include <utility>
 
 namespace skimagexx {
 namespace {
 
 constexpr std::size_t max_pixels = 131072;
 constexpr double magnitude = 0x1p40;
-constexpr auto no_path = std::numeric_limits<std::size_t>::max();
+// A cell emits at most two segments and a segment adds at most two vertices.
+using Index = std::uint32_t;
+constexpr auto no_path = std::numeric_limits<Index>::max();
+static_assert(4 * max_pixels < no_path);
 
 struct EqualPoint {
     bool operator()(ContourPoint a, ContourPoint b) const noexcept {
@@ -27,50 +31,59 @@ struct HashPoint {
         return value == 0.0 ? 0 : result;
     }
 
-    std::size_t operator()(ContourPoint point) const noexcept {
+    std::uint32_t operator()(ContourPoint point) const noexcept {
         const auto row = bits(point.row);
         const auto column = bits(point.column);
         auto hash = row ^ ((column << 29) | (column >> 35));
         // Integer coordinates concentrate their entropy in the high bits.
         hash = (hash ^ (hash >> 33)) * 0xff51afd7ed558ccdULL;
-        return static_cast<std::size_t>(hash ^ (hash >> 33));
+        return static_cast<std::uint32_t>(hash ^ (hash >> 33));
     }
 };
 
 class Endpoints {
     struct Entry {
         ContourPoint point{};
-        std::size_t path = no_path;
+        Index path = no_path;
+        std::uint32_t hash = 0;
     };
     std::vector<Entry> entries_;
     std::size_t size_ = 0;
 
-    std::size_t find(ContourPoint point) const {
+    std::size_t find(ContourPoint point, std::uint32_t hash) const {
         const auto mask = entries_.size() - 1;
-        auto slot = HashPoint{}(point) & mask;
-        while (entries_[slot].path != no_path && !EqualPoint{}(entries_[slot].point, point)) {
+        auto slot = hash & mask;
+        while (entries_[slot].path != no_path
+               && (entries_[slot].hash != hash || !EqualPoint{}(entries_[slot].point, point))) {
             slot = (slot + 1) & mask;
         }
         return slot;
     }
 
 public:
-    void set(ContourPoint point, std::size_t path) {
+    void set(ContourPoint point, Index path) {
+        if (entries_.empty()) entries_.resize(16);
+        const auto hash = HashPoint{}(point);
+        auto slot = find(point, hash);
+        if (entries_[slot].path != no_path) {
+            entries_[slot].path = path;
+            return;
+        }
         if (size_ >= entries_.size() / 2) {
-            std::vector<Entry> larger(entries_.empty() ? 16 : entries_.size() * 2);
+            std::vector<Entry> larger(entries_.size() * 2);
             entries_.swap(larger);
             for (const auto& entry : larger) {
-                if (entry.path != no_path) entries_[find(entry.point)] = entry;
+                if (entry.path != no_path) entries_[find(entry.point, entry.hash)] = entry;
             }
+            slot = find(point, hash);
         }
-        auto& entry = entries_[find(point)];
-        size_ += entry.path == no_path;
-        entry = {point, path};
+        ++size_;
+        entries_[slot] = {point, path, hash};
     }
 
-    std::size_t take(ContourPoint point) {
+    Index take(ContourPoint point) {
         if (!size_) return no_path;
-        auto hole = find(point);
+        auto hole = find(point, HashPoint{}(point));
         const auto path = entries_[hole].path;
         if (path == no_path) return no_path;
         --size_;
@@ -79,7 +92,7 @@ public:
         const auto mask = entries_.size() - 1;
         for (auto slot = (hole + 1) & mask; entries_[slot].path != no_path;
              slot = (slot + 1) & mask) {
-            const auto home = HashPoint{}(entries_[slot].point) & mask;
+            const auto home = entries_[slot].hash & mask;
             if (((hole - home) & mask) < ((slot - home) & mask)) {
                 entries_[hole] = entries_[slot];
                 hole = slot;
@@ -99,7 +112,7 @@ public:
         const auto tail = starts_.take(to);
         const auto head = ends_.take(from);
         if (tail == no_path && head == no_path) {
-            const auto index = paths_.size();
+            const auto index = static_cast<Index>(paths_.size());
             const auto first = add_vertex(from);
             const auto last = add_vertex(to);
             vertices_[first].next = last;
@@ -138,25 +151,24 @@ public:
     }
 
 private:
-    struct Vertex { ContourPoint point; std::size_t next; };
-    struct Path { std::size_t first, last, size; };
+    struct Vertex { ContourPoint point; Index next; };
+    struct Path { Index first, last, size; };
     Endpoints starts_;
     Endpoints ends_;
     std::vector<Vertex> vertices_;
     std::vector<Path> paths_;
 
-    std::size_t add_vertex(ContourPoint point, std::size_t next = no_path) {
-        const auto index = vertices_.size();
+    Index add_vertex(ContourPoint point, Index next = no_path) {
+        const auto index = static_cast<Index>(vertices_.size());
         vertices_.push_back({point, next});
         return index;
     }
 
-    void join(std::size_t head, std::size_t tail) {
+    void join(Index head, Index tail) {
         // Keep the earlier creation index regardless of geometric direction.
         auto& left = paths_[head];
         auto& right = paths_[tail];
         const auto first = vertices_[left.first].point;
-        if (head > tail) starts_.take(first);
         vertices_[left.last].next = right.first;
         const Path merged{left.first, right.last, left.size + right.size};
         const auto keep = std::min(head, tail);
@@ -217,6 +229,82 @@ bool in_numeric_range(double value) {
     return value >= -magnitude && value <= magnitude;
 }
 
+constexpr unsigned block_width = 16;
+constexpr unsigned block_mask = (1u << block_width) - 1;
+
+template <class Pixel, class Threshold, std::size_t... Bit>
+unsigned classify_block(const Pixel* pixels, Threshold level, std::index_sequence<Bit...>) {
+    return ((unsigned(pixels[Bit] > level) << Bit) | ...);
+}
+
+template <class Pixel, class Threshold>
+void classify_row(const Pixel* pixels, std::size_t columns, Threshold level,
+                  std::vector<unsigned>& blocks) {
+    std::size_t column = 0;
+    for (; column + block_width <= columns; column += block_width) {
+        blocks[column / block_width] =
+            classify_block(pixels + column, level, std::make_index_sequence<block_width>{});
+    }
+    if (column < columns) {
+        unsigned tail = 0;
+        for (std::size_t i = 0; i < columns - column; ++i) {
+            tail |= unsigned(pixels[column + i] > level) << i;
+        }
+        blocks[column / block_width] = tail;
+    }
+}
+
+constexpr unsigned crossing_index(std::uint32_t bit) {
+    // The shifted De Bruijn product gives a distinct index for each set bit.
+    return std::uint32_t(bit * 0x077cb531u) >> 27;
+}
+
+constexpr auto crossing_positions() {
+    std::array<unsigned, 32> positions{};
+    for (unsigned bit = 0; bit < block_width; ++bit) {
+        positions[crossing_index(1u << bit)] = bit;
+    }
+    return positions;
+}
+
+constexpr auto positions = crossing_positions();
+
+template <class Pixel, class Threshold>
+Contours trace(const Pixel* image, const std::uint8_t* mask, std::size_t rows,
+               std::size_t columns, double level, Threshold threshold, bool connect_high) {
+    OrderedContours paths;
+    // The trailing zero supplies the lookahead bit for the last block.
+    const auto blocks = (columns + block_width - 1) / block_width + 1;
+    std::vector<unsigned> above(blocks), below(blocks);
+    classify_row(image, columns, threshold, above);
+    for (std::size_t row = 0; row + 1 < rows; ++row) {
+        const auto row_start = row * columns;
+        classify_row(image + row_start + columns, columns, threshold, below);
+        for (std::size_t base = 0, block = 0; base < columns - 1; base += block_width, ++block) {
+            const auto top_bits = above[block] | ((above[block + 1] & 1u) << block_width);
+            const auto bottom_bits = below[block] | ((below[block + 1] & 1u) << block_width);
+            // A cell crosses the level if its upper-left sample disagrees
+            // with any other corner. Skip uniform blocks in one bit test.
+            const auto valid = block_mask >> (block_width - std::min<std::size_t>(block_width, columns - 1 - base));
+            auto crossings = ((top_bits ^ (top_bits >> 1)) | (top_bits ^ bottom_bits)
+                              | (top_bits ^ (bottom_bits >> 1))) & valid;
+            while (crossings) {
+                const auto bit = positions[crossing_index(crossings & (0u - crossings))];
+                crossings &= crossings - 1;
+                const auto column = base + bit;
+                const auto a = row_start + column;
+                const auto b = a + columns;
+                if (mask && !(mask[a] && mask[a + 1] && mask[b] && mask[b + 1])) continue;
+                const auto code = ((top_bits >> bit) & 3u) | (((bottom_bits >> bit) & 3u) << 2);
+                connect_cell(paths, double(row), double(column), level, connect_high,
+                             code, image[a], image[a + 1], image[b], image[b + 1]);
+            }
+        }
+        above.swap(below);
+    }
+    return paths.finish();
+}
+
 template <class Pixel>
 bool contours(const Pixel* image, const std::uint8_t* mask, std::size_t rows,
               std::size_t columns, ContourOptions options, Contours& output) {
@@ -241,30 +329,25 @@ bool contours(const Pixel* image, const std::uint8_t* mask, std::size_t rows,
             }
         }
         if (options.default_level) {
+            if (low == high) {
+                output.clear();
+                return true;
+            }
             level = (low + high) / 2.0;
         }
     }
 
-    OrderedContours paths;
-    for (std::size_t row = 0; row + 1 < rows; ++row) {
-        const auto row_start = row * columns;
-        auto left_code = unsigned(image[row_start] > level)
-            | (unsigned(image[row_start + columns] > level) << 2);
-        for (std::size_t column = 0; column + 1 < columns; ++column) {
-            const auto a = row_start + column;
-            const auto b = a + columns;
-            const auto right_code = unsigned(image[a + 1] > level)
-                | (unsigned(image[b + 1] > level) << 2);
-            const auto code = left_code | (right_code << 1);
-            left_code = right_code;
-            if (code != 0 && code != 15
-                && (!mask || (mask[a] && mask[a + 1] && mask[b] && mask[b + 1]))) {
-                connect_cell(paths, double(row), double(column), level, options.connect_high,
-                             code, image[a], image[a + 1], image[b], image[b + 1]);
-            }
+    if constexpr (std::is_same_v<Pixel, std::uint8_t>) {
+        if (level < 0 || level >= 255) {
+            output.clear();
+            return true;
         }
+        // Comparing an integer sample to a fractional threshold gives the
+        // same classification as comparing it to the floored threshold.
+        output = trace(image, mask, rows, columns, level, static_cast<std::uint8_t>(level), options.connect_high);
+    } else {
+        output = trace(image, mask, rows, columns, level, level, options.connect_high);
     }
-    output = paths.finish();
     return true;
 }
 
