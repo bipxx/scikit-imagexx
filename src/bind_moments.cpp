@@ -21,17 +21,29 @@ namespace bindings = skimagexx::bindings;
 namespace {
 constexpr auto max_rank = bindings::numpy_max_rank;
 template<class T> using Array = py::array_t<T, py::array::c_style | py::array::forcecast>;
+
+void check_storage(const py::array& value) {
+    // A contiguous owning root already spans its full logical buffer.
+    if (value.owndata() && (value.flags() & (py::array::c_style | py::array::f_style))
+        && !value.base())
+        return;
+    bindings::check_array_storage(value);
+}
+
 template<class T> void check(const py::array& value, const py::ssize_t* shape,
                              std::size_t rank, bool aligned = true) {
-    bindings::check_array_storage(value);
+    check_storage(value);
     if (std::size_t(value.ndim()) != rank ||
         !std::equal(shape, shape + rank, value.shape()) || !Array<T>::check_(value) ||
         (aligned && reinterpret_cast<std::uintptr_t>(value.data()) % alignof(T)))
         throw py::value_error("moments input changed during allocation");
 }
 template<class T> Array<T> prepare(const py::array& value) {
-    bindings::check_array_storage(value);
-    Array<T> result(value);
+    check_storage(value);
+    const auto* array_type = py::detail::npy_api::get().PyArray_Type_;
+    const bool prepared = Py_TYPE(value.ptr()) == array_type && Array<T>::check_(value)
+        && bindings::is_native_byteorder(value);
+    auto result = prepared ? py::reinterpret_borrow<Array<T>>(value) : Array<T>(value);
     if (reinterpret_cast<std::uintptr_t>(result.data()) % alignof(T)) {
         py::ssize_t shape[max_rank];
         const auto rank = result.ndim();
@@ -39,7 +51,7 @@ template<class T> Array<T> prepare(const py::array& value) {
         auto aligned = bindings::empty_c_array<T>(shape, static_cast<int>(rank));
         check<T>(result, shape, std::size_t(rank), false);
         std::memcpy(aligned.mutable_data(), result.data(), std::size_t(result.nbytes()));
-        return Array<T>(aligned);
+        return py::reinterpret_steal<Array<T>>(aligned.release());
     }
     return result;
 }
@@ -60,11 +72,14 @@ template<class T> py::tuple project(const py::array& calc, const py::array& powe
     check<T>(values, shape, rank);
     check<T>(weights, power_shape, 2);
     const std::vector<std::size_t> native_shape(shape, shape + rank);
+    const auto* input = values.data();
+    const auto* power_data = weights.data();
+    auto* result = output.mutable_data();
     unsigned status;
     {
         py::gil_scoped_release release;
-        status = skimagexx::detail::moments_project(values.data(), native_shape, weights.data(),
-            std::size_t(power_shape[1]), axis, output.mutable_data(), workers);
+        status = skimagexx::detail::moments_project(input, native_shape, power_data,
+            std::size_t(power_shape[1]), axis, result, workers);
     }
     return py::make_tuple(output, status);
 }
@@ -108,17 +123,18 @@ template<class T> py::object inertia_eigenvalues(const py::array& input) {
     const auto n=values.shape(0),count=n*(n+1)/2;
     const py::ssize_t output_shape[]{n}, input_shape[]{n,n};
     auto output=bindings::empty_c_array<T>(output_shape);
-    std::vector<T> packed(static_cast<std::size_t>(count));
-    std::vector<const void*> fields(static_cast<std::size_t>(count));
+    const void* small_fields[6];
+    std::vector<const void*> large_fields;
+    if(count>6) large_fields.resize(static_cast<std::size_t>(count));
+    auto* fields=count>6 ? large_fields.data() : small_fields;
     // Preparation/output allocation is the last callback boundary before
     // reading the established typed C buffer. The tiny solve retains the GIL.
     check<T>(values,input_shape,2);
     const auto* data=values.data();
     std::size_t field=0;
-    for(py::ssize_t r=0;r<n;++r)for(py::ssize_t c=r;c<n;++c,++field) {
-        packed[field]=data[c*n+r];fields[field]=packed.data()+field;
-    }
-    if(!skimagexx::symmetric_eigenvalues_into(fields.data(),output.mutable_data(),
+    for(py::ssize_t r=0;r<n;++r)for(py::ssize_t c=r;c<n;++c,++field)
+        fields[field]=data+c*n+r;
+    if(!skimagexx::symmetric_eigenvalues_into(fields,output.mutable_data(),
         1,std::size_t(n),std::is_same_v<T,float>,false))return py::none();
     return output;
 }

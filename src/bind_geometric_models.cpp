@@ -3,8 +3,13 @@
 #include "bind_helpers.hpp"
 
 #include <algorithm>
+#include <cfenv>
 #include <cmath>
 #include <pybind11/stl.h>
+
+namespace skimagexx::detail {
+bool ransac_finite_score(const double*, std::size_t, double, double*, bool*, std::size_t&);
+}
 
 namespace py = pybind11;
 namespace bindings = skimagexx::bindings;
@@ -107,6 +112,12 @@ bool truth(const py::handle& value) {
 }
 
 py::tuple select(const py::object& data, const py::object& indices) {
+    if (PyTuple_CheckExact(data.ptr())) {
+        const auto arrays = py::reinterpret_borrow<py::tuple>(data);
+        py::tuple arguments(arrays.size());
+        for (std::size_t i = 0; i < arrays.size(); ++i) arguments[i] = arrays[i][indices];
+        return arguments;
+    }
     // Keep the application's list live across callbacks, just as the public
     // reference loop does. Only a trial's selected arrays are snapshotted.
     py::list arguments;
@@ -121,6 +132,30 @@ py::tuple prepend(const py::object& value, const py::tuple& rest) {
     return arguments;
 }
 
+bool finite_score(const py::object& raw, double threshold, py::object& residual,
+                  py::object& inliers, std::size_t& count) {
+    if (Py_TYPE(raw.ptr()) != py::detail::npy_api::get().PyArray_Type_
+        || Py_REFCNT(raw.ptr()) != 1) return false;
+    const auto values = py::reinterpret_borrow<py::array>(raw);
+    if (values.ndim() != 1 || values.shape(0) < 64 || !values.owndata()
+        || !real_buffer(values)) return false;
+    const py::ssize_t shape[]{values.shape(0)};
+    auto magnitudes = bindings::empty_c_array<double>(shape);
+    auto mask = bindings::empty_c_array<bool>(shape);
+    // The allocations may run finalizers. Recheck storage before reading it.
+    if (values.ndim() != 1 || values.shape(0) != shape[0] || !values.owndata()
+        || !real_buffer(values)) return false;
+    if (!skimagexx::detail::ransac_finite_score(
+            static_cast<const double*>(values.data()), static_cast<std::size_t>(shape[0]),
+            threshold, magnitudes.mutable_data(), mask.mutable_data(), count)) return false;
+    // The skipped NumPy ufuncs clear these flags before the dot product.
+    constexpr auto flags = FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW;
+    if (std::fetestexcept(flags)) std::feclearexcept(flags);
+    residual = std::move(magnitudes);
+    inliers = std::move(mask);
+    return true;
+}
+
 // Keep NumPy as the RNG and residual reduction provider. Python callbacks
 // run in the reference order, including the draw before each validation.
 py::tuple ransac(const py::object& data, const py::object& model_class,
@@ -128,9 +163,16 @@ py::tuple ransac(const py::object& data, const py::object& model_class,
                  std::size_t minimum, const py::object& threshold, double trials,
                  double stop_samples, const py::object& stop_residuals, double probability,
                  const py::object& validate_data, const py::object& validate_model,
-                 const py::object& warn, const py::module_& numpy, const py::module_& builtins) {
+                 const py::object& warn, const py::object& native_residuals,
+                 const py::module_& numpy, const py::module_& builtins,
+                 const py::object& numpy_abs, const py::object& numpy_count, bool fixed_compare) {
     const auto absolute = numpy.attr("abs");
     const auto count_nonzero = numpy.attr("count_nonzero");
+    // NumPy 1.x can override ndarray rich comparisons via set_numeric_ops.
+    const bool plain_score = !native_residuals.is_none() && fixed_compare
+        && PyFloat_CheckExact(threshold.ptr());
+    const double cutoff = plain_score ? PyFloat_AS_DOUBLE(threshold.ptr()) : 0;
+    const bool fast_score = plain_score && std::isfinite(cutoff);
     const auto choice = rng.attr("choice");
     py::object best = py::none();
     auto best_count = std::size_t{0};
@@ -143,12 +185,27 @@ py::tuple ransac(const py::object& data, const py::object& model_class,
         if (!truth(model)) continue;
         if (!validate_model.is_none() && !truth(validate_model(*prepend(model, subset)))) continue;
 
-        const auto residual = absolute(model.attr("residuals")(*data));
-        const auto inliers = py::reinterpret_steal<py::object>(
-            PyObject_RichCompare(residual.ptr(), threshold.ptr(), Py_LT));
-        if (!inliers) throw py::error_already_set();
+        py::object residual, inliers;
+        std::size_t count = 0;
+        bool native = false;
+        if (fast_score && reinterpret_cast<PyObject*>(Py_TYPE(model.ptr())) == model_class.ptr()) {
+            const py::object method = model.attr("residuals");
+            const auto raw = method(*data);
+            native = PyMethod_Check(method.ptr())
+                && PyMethod_GET_FUNCTION(method.ptr()) == native_residuals.ptr()
+                && absolute.ptr() == numpy_abs.ptr() && count_nonzero.ptr() == numpy_count.ptr()
+                && finite_score(raw, cutoff, residual, inliers, count);
+            if (!native) residual = absolute(raw);
+        } else {
+            residual = absolute(model.attr("residuals")(*data));
+        }
+        if (!native) {
+            inliers = py::reinterpret_steal<py::object>(
+                PyObject_RichCompare(residual.ptr(), threshold.ptr(), Py_LT));
+            if (!inliers) throw py::error_already_set();
+        }
         const auto error = residual.attr("dot")(residual);
-        const auto count = count_nonzero(inliers).cast<std::size_t>();
+        if (!native) count = count_nonzero(inliers).cast<std::size_t>();
         if (count > best_count || (count == best_count && error < best_error)) {
             best = inliers;
             best_count = count;
@@ -179,13 +236,17 @@ void bind_geometric_models(py::module_& module) {
     module.def("measure_geometric_predict", &predict);
     const auto numpy = py::module_::import("numpy");
     const auto builtins = py::module_::import("builtins");
-    module.def("measure_ransac_loop", [numpy, builtins](
+    const py::object numpy_abs = numpy.attr("abs");
+    const py::object numpy_count = numpy.attr("count_nonzero");
+    const bool fixed_compare = !py::hasattr(numpy, "set_numeric_ops");
+    module.def("measure_ransac_loop", [numpy, builtins, numpy_abs, numpy_count, fixed_compare](
         const py::object& data, const py::object& model_class, const py::object& rng,
         py::object indices, std::size_t samples, std::size_t minimum, const py::object& threshold,
         double trials, double stop_samples, const py::object& stop_residuals, double probability,
-        const py::object& validate_data, const py::object& validate_model, const py::object& warn) {
+        const py::object& validate_data, const py::object& validate_model, const py::object& warn,
+        const py::object& native_residuals) {
         return ransac(data, model_class, rng, std::move(indices), samples, minimum, threshold,
                      trials, stop_samples, stop_residuals, probability, validate_data, validate_model,
-                     warn, numpy, builtins);
+                     warn, native_residuals, numpy, builtins, numpy_abs, numpy_count, fixed_compare);
     });
 }

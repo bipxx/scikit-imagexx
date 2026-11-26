@@ -24,11 +24,22 @@ from . import _core
 _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
           (4, "under", "underflow"), (8, "invalid", "invalid value"))
 _FLOAT_TYPES = {"e": np.float32, "f": np.float32, "d": np.float64}
+_PROJECT_DTYPES = {dtype.char: dtype for dtype in map(np.dtype, ("f4", "f8", "c8", "c16"))}
 _ORIGINS = ((), (0,), (0, 0), (0, 0, 0))
+_PROJECT_AXES = {
+    (2, 1): ((1, 0), (1, 0)),
+    (3, 1): ((1, 0, 2), (1, 0, 2)),
+    (3, 2): ((2, 0, 1), (1, 2, 0)),
+}
 _FIRST_ORDER_INDICES = {
     1: (np.array([1]),),
     2: (np.array([1, 0]), np.array([0, 1])),
     3: (np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])),
+}
+_INERTIA_INDICES = {
+    2: (tuple(np.array([[2, 0], [0, 2]])), tuple(np.array([[1], [1]]))),
+    3: (tuple(np.array([[2, 0, 0], [0, 2, 0], [0, 0, 2]])),
+        tuple(np.array([[1, 1, 0], [1, 0, 1], [0, 1, 1]]))),
 }
 
 # Detect the installed source route before any test traps. This inspects only
@@ -71,16 +82,18 @@ def _dispatch_matmul(flags, snapshot):
 
 
 def _project(calc, powers, axis):
-    # Coordinate callbacks can invalidate the image view retained as calc.
-    # Validate before the shell's dtype conversion reads that external data;
-    # the binding handles the later contiguous/output allocation boundary.
-    _check_array(calc)
-    _check_array(powers)
-    dtype = np.result_type(calc.dtype, powers.dtype)
-    if not dtype.isnative:
-        dtype = dtype.newbyteorder("=")
-    calc = calc.astype(dtype, copy=False)
-    powers = powers.astype(dtype, copy=False)
+    if (type(calc) is not np.ndarray or type(powers) is not np.ndarray
+            or (calc_dtype := calc.dtype) is not powers.dtype
+            or calc_dtype is not _PROJECT_DTYPES.get(calc_dtype.char)):
+        # Validate before dtype conversion reads external data that a coordinate
+        # callback could have changed. Typed operands are checked in the binding.
+        _check_array(calc)
+        _check_array(powers)
+        dtype = np.result_type(calc.dtype, powers.dtype)
+        if not dtype.isnative:
+            dtype = dtype.newbyteorder("=")
+        calc = calc.astype(dtype, copy=False)
+        powers = powers.astype(dtype, copy=False)
     snapshot = (np.geterr(), np.geterrcall()) if _MATMUL_ERRORS else None
     logical, flags = _core.moments_project(calc, powers, axis, _core.get_num_threads())
     if snapshot is not None:
@@ -88,6 +101,12 @@ def _project(calc, powers, axis):
     # Both source optimized einsum routes pop the powers operand first. Their
     # contraction stores (order, remaining axes) and returns a transposed view.
     # Keep that public ownership/stride contract without a second contraction.
+    if axis == 0:
+        return logical.view()
+    permutations = _PROJECT_AXES.get((logical.ndim, axis))
+    if permutations is not None:
+        permutation, inverse = permutations
+        return np.ascontiguousarray(logical.transpose(permutation)).transpose(inverse)
     storage = np.ascontiguousarray(np.moveaxis(logical, axis, 0))
     return np.moveaxis(storage, 0, axis)
 
@@ -105,7 +124,9 @@ def moments_central(image, center=None, order=3, *, spacing=None, **kwargs):
         moments_raw = moments(image, order=order, spacing=spacing)
         return moments_raw_to_central(moments_raw)
     float_dtype = _supported_float_type(image.dtype)
-    if spacing is None:
+    unit_origin = (spacing is None and type(image) is np.ndarray and type(order) is int
+                   and image.ndim < len(_ORIGINS) and center is _ORIGINS[image.ndim])
+    if spacing is None and not unit_origin:
         spacing = np.ones(image.ndim, dtype=float_dtype)
     _check_array(image)
     calc = image.astype(float_dtype, copy=False)
@@ -113,11 +134,12 @@ def moments_central(image, center=None, order=3, *, spacing=None, **kwargs):
     for dim, dim_length in enumerate(image.shape):
         # Keep the literal multiply then subtract order. Between those reads
         # a parameter/warning callback can change the next external array.
-        coordinates = np.arange(dim_length, dtype=float_dtype)
-        _check_array(spacing)
-        delta = coordinates * spacing[dim]
-        _check_array(center)
-        delta = delta - center[dim]
+        delta = np.arange(dim_length, dtype=float_dtype)
+        if not unit_origin:
+            _check_array(spacing)
+            delta = delta * spacing[dim]
+            _check_array(center)
+            delta = delta - center[dim]
         powers_of_delta = delta[:, np.newaxis] ** orders
         calc = _project(calc, powers_of_delta, dim)
     return calc
@@ -303,35 +325,57 @@ def inertia_tensor(image, mu=None, *, spacing=None):
     """
     if mu is None:
         mu = moments_central(image, order=2, spacing=spacing)
-    mu0 = mu[(0,) * image.ndim]
-    result = np.zeros((image.ndim, image.ndim), dtype=mu.dtype)
-    corners2 = tuple(2 * np.eye(image.ndim, dtype=int))
-    d = np.diag(result)
-    d.flags.writeable = True
+    indices = None
+    if type(image) is np.ndarray and type(mu) is np.ndarray:
+        ndim = image.ndim
+        dtype = mu.dtype
+        if (ndim in _INERTIA_INDICES and mu.ndim == ndim and min(mu.shape) >= 3
+                and dtype.char in ("f", "d") and dtype is _PROJECT_DTYPES[dtype.char]):
+            indices = _INERTIA_INDICES[ndim]
+    result = None
+    if indices is None:
+        mu0 = mu[(0,) * image.ndim]
+        result = np.zeros((image.ndim, image.ndim), dtype=mu.dtype)
+        corners2 = tuple(2 * np.eye(image.ndim, dtype=int))
+        d = np.diag(result)
+        d.flags.writeable = True
+    else:
+        mu0 = mu[_ORIGINS[ndim]]
+        corners2 = indices[0]
     diagonal = mu[corners2]
     total = np.sum(diagonal)
     if type(mu) is not np.ndarray:
         diagonal = mu[corners2]
-    if (type(mu) is np.ndarray and mu.dtype.char in ('f', 'd')
-            and np.ndim(mu0) == 0 and np.isfinite(mu0) and mu0 != 0
-            and np.isfinite(total) and np.all(np.isfinite(diagonal))):
-        values = []
-        for dims in itertools.combinations(range(image.ndim), 2):
-            mu_index = np.zeros(image.ndim, dtype=int)
-            mu_index[list(dims)] = 1
-            values.append(mu[tuple(mu_index)])
-        dtype = mu.dtype.newbyteorder('=')
-        mixed = np.asarray(values, dtype=dtype)
-        if np.all(np.isfinite(mixed)):
-            tensor = _core.inertia_tensor(np.ascontiguousarray(diagonal, dtype=dtype),
-                                          mixed, total, mu0)
+    if ((indices is not None or (type(mu) is np.ndarray and mu.dtype.char in ('f', 'd')
+                                  and np.ndim(mu0) == 0))
+            and np.isfinite(mu0) and mu0 != 0
+            and np.isfinite(total) and np.isfinite(diagonal).all()):
+        if indices is None:
+            values = []
+            for dims in itertools.combinations(range(image.ndim), 2):
+                mu_index = np.zeros(image.ndim, dtype=int)
+                mu_index[list(dims)] = 1
+                values.append(mu[tuple(mu_index)])
+            native_dtype = mu.dtype.newbyteorder('=')
+            mixed = np.asarray(values, dtype=native_dtype)
+        else:
+            mixed = mu[indices[1]]
+        if np.isfinite(mixed).all():
+            native_diagonal = diagonal if indices is not None else np.ascontiguousarray(
+                diagonal, dtype=native_dtype)
+            tensor = _core.inertia_tensor(native_diagonal, mixed, total, mu0)
             if tensor is not None:
-                # Keep the original early allocation, including byte order,
-                # dtype metadata and owning C-contiguous storage.
+                if result is None:
+                    return tensor
+                # Keep the early allocation with the original dtype descriptor.
                 result[...] = tensor
                 return result
-    # A native FP-status refusal publishes no result. Keep the original
-    # NumPy operation/warning order, including the two scalar pair expressions.
+    # Keep the source operation order, including the two scalar expressions per
+    # pair when nonfinite values or native FP status require NumPy.
+    if result is None:
+        result = np.zeros((ndim, ndim), dtype=dtype)
+        d = np.diag(result)
+        d.flags.writeable = True
     d[:] = (total - diagonal) / mu0
     for dims in itertools.combinations(range(image.ndim), 2):
         mu_index = np.zeros(image.ndim, dtype=int)
@@ -349,11 +393,11 @@ def inertia_tensor_eigvals(image, mu=None, T=None, *, spacing=None):
     """
     if T is None:
         T = inertia_tensor(image, mu, spacing=spacing)
-    eigvals = None
     if type(T) is np.ndarray and T.dtype.char in ('f', 'd'):
         eigvals = _core.inertia_eigvals(T)
-    if eigvals is None:
-        eigvals = np.linalg.eigvalsh(T)
+        if eigvals is not None:
+            return sorted(eigvals.clip(0, None, out=eigvals), reverse=True)
+    eigvals = np.linalg.eigvalsh(T)
     eigvals = np.clip(eigvals, 0, None, out=eigvals)
     return sorted(eigvals, reverse=True)
 

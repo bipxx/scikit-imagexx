@@ -130,6 +130,9 @@ class EllipseModel(_reference.EllipseModel):
         return _predict(self, t, params, True)
 
 
+_CIRCLE_RESIDUALS = CircleModel.residuals
+
+
 def ransac(
     data,
     model_class,
@@ -187,8 +190,11 @@ def ransac(
         raise TypeError(
             f'`model_class` {model_class} should be of (protocol) type RansacModelProtocol'
         )
+    native_residuals = None
+    if model_class is CircleModel and is_data_valid is None and is_model_valid is None:
+        native_residuals = _CIRCLE_RESIDUALS
     return _core.measure_ransac_loop(
         arrays, model_class, generator, indices, samples, min_samples, residual_threshold,
         max_trials, stop_sample_num, stop_residuals_sum, stop_probability,
-        is_data_valid, is_model_valid, warn,
+        is_data_valid, is_model_valid, warn, native_residuals,
     )

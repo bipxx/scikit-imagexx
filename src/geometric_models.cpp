@@ -325,4 +325,22 @@ double ransac_trial_limit(std::size_t inliers, std::size_t samples, std::size_t 
     return std::ceil(std::log(numerator) / std::log(denominator));
 }
 
+namespace detail {
+
+bool ransac_finite_score(const double* raw, std::size_t size, double threshold,
+                         double* residual, bool* inliers, std::size_t& count) {
+    count = 0;
+    for (std::size_t i = 0; i < size; ++i) {
+        const double magnitude = std::abs(raw[i]);
+        if (!std::isfinite(magnitude)) return false;
+        residual[i] = magnitude;
+        const bool inside = magnitude < threshold;
+        inliers[i] = inside;
+        count += inside;
+    }
+    return true;
+}
+
+}  // namespace detail
+
 }  // namespace skimagexx

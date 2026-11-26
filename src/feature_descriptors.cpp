@@ -2,6 +2,7 @@
 
 #include "execution.hpp"
 #include "fft_internal.hpp"
+#include "simd.hpp"
 #include "skimagexx/draw_coordinates.hpp"
 
 #include <algorithm>
@@ -10,6 +11,7 @@
 #include <complex>
 #include <limits>
 #include <memory>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
@@ -341,59 +343,255 @@ void hog_into(const Input* image, const HogOptions& o, Output* features, Output*
     });
 }
 
+namespace {
+
+struct DaisySample {
+    std::ptrdiff_t image_offset;
+    int descriptor_offset;
+    int row_offset;
+};
+
+struct DaisyScale {
+    double sigma;
+    std::vector<DaisySample> samples;
+    std::vector<double> weights;
+    std::vector<int> sampled_rows;
+    std::vector<int> top, bottom, left, right;
+
+    DaisyScale(double sigma, int rows, int cols) : sigma(sigma) {
+        if (!std::isfinite(sigma) || sigma < 0)
+            throw std::invalid_argument("sigma and truncate must be finite and nonnegative");
+        const auto reach = std::floor(4 * sigma + 0.5);
+        if (!std::isfinite(reach) || reach > 100000)
+            throw std::invalid_argument("Gaussian radius exceeds the supported limit (100000)");
+        const auto radius = static_cast<int>(reach);
+        if (radius == 0) return;
+        weights.reserve(2 * radius + 1);
+        double sum = 0;
+        for (int i = -radius; i <= radius; ++i) {
+            const double distance = double(i) / sigma;
+            const double weight = std::exp(-0.5 * distance * distance);
+            weights.push_back(weight);
+            sum += weight;
+        }
+        for (auto& weight : weights) weight /= sum;
+
+        const auto reflect = [](std::ptrdiff_t index, std::ptrdiff_t extent) {
+            const auto period = 2 * extent;
+            index %= period;
+            if (index < 0) index += period;
+            return static_cast<int>(index < extent ? index : period - 1 - index);
+        };
+        for (int i = 0; i < radius; ++i) {
+            top.push_back(reflect(i - radius, rows));
+            bottom.push_back(reflect(std::ptrdiff_t(rows) + i, rows));
+            left.push_back(reflect(i - radius, cols));
+            right.push_back(reflect(std::ptrdiff_t(cols) + i, cols));
+        }
+    }
+};
+
+template<class T>
+void daisy_convolve(const T* const* sources, T* output, int cols, const std::vector<double>& weights,
+                    bool vectorized) {
+#ifdef SKIMAGEXX_AVX2
+    if (vectorized) {
+        simd::convolve(sources, output, cols, weights.data(), weights.size(), 1.0);
+        return;
+    }
+#else
+    (void)vectorized;
+#endif
+    // Match the SIMD primitive's symmetric accumulation for full eight-pixel
+    // blocks and its ordered accumulation for the tail.
+    const auto middle = weights.size() / 2;
+    const int full = cols - cols % 8;
+    for (int c = 0; c < full; ++c) {
+        double sum = 0;
+        sum += double(sources[middle][c]) * weights[middle];
+        for (std::size_t k = 0; k < middle; ++k) {
+            const double pair = double(sources[k][c]) + double(sources[2 * middle - k][c]);
+            sum += pair * weights[k];
+        }
+        output[c] = static_cast<T>(sum);
+    }
+    for (int c = full; c < cols; ++c) {
+        double sum = 0;
+        for (std::size_t k = 0; k < weights.size(); ++k) sum += sources[k][c] * weights[k];
+        output[c] = static_cast<T>(sum);
+    }
+}
+
+template<class T>
+void daisy_smooth(const T* histogram, T* vertical, T* filtered, const DaisyOptions& o,
+                  const DaisyScale& scale, const T** row_sources, T* padded_rows,
+                  std::size_t padded_stride, int threads, bool vectorized) {
+    const auto taps = scale.weights.size();
+    const auto radius = static_cast<std::ptrdiff_t>(taps / 2);
+    detail::partition(scale.sampled_rows.size(), threads, [&](auto begin, auto end, auto worker) {
+        auto* sources = row_sources + worker * taps;
+        for (auto i = begin; i < end; ++i) {
+            const auto r = scale.sampled_rows[i];
+            const auto first = static_cast<std::ptrdiff_t>(r) - radius;
+            const auto last = first + static_cast<std::ptrdiff_t>(taps);
+            for (auto y = first; y < last; ++y) {
+                const auto reflected = y < 0 ? scale.top[y + radius] :
+                    y >= o.rows ? scale.bottom[y - o.rows] : y;
+                sources[y - first] = histogram + std::size_t(reflected) * o.cols;
+            }
+            daisy_convolve(sources, vertical + std::size_t(r) * o.cols, o.cols, scale.weights, vectorized);
+        }
+    });
+    detail::partition(scale.sampled_rows.size(), threads, [&](auto begin, auto end, auto worker) {
+        auto* sources = row_sources + worker * taps;
+        auto* padded = padded_rows + worker * padded_stride;
+        for (std::size_t k = 0; k < taps; ++k) sources[k] = padded + k;
+        for (auto i = begin; i < end; ++i) {
+            const auto offset = std::size_t(scale.sampled_rows[i]) * o.cols;
+            const auto* row = vertical + offset;
+            std::copy_n(row, o.cols, padded + radius);
+            for (std::ptrdiff_t k = 0; k < radius; ++k) {
+                padded[k] = row[scale.left[k]];
+                padded[radius + o.cols + k] = row[scale.right[k]];
+            }
+            daisy_convolve(sources, filtered + offset, o.cols, scale.weights, vectorized);
+        }
+    });
+}
+
+template<class T> struct DaisyGradient { T magnitude, angle; };
+
+template<class Input, class Output>
+void daisy_gradients(const Input* row, const Input* below, int first, int last, int cols,
+                     DaisyGradient<Output>* gradients) {
+    constexpr auto scale = std::is_same_v<Input, std::uint8_t> ? Output(1.0 / 255.0) : Output{1};
+    for (int c = first; c < last; ++c) {
+        const auto center = Output(row[c]) * scale;
+        const auto dx = c + 1 < cols ? Output(row[c + 1]) * scale - center : Output{0};
+        const auto dy = below ? Output(below[c]) * scale - center : Output{0};
+        gradients[c - first] = {std::sqrt(dx * dx + dy * dy), std::atan2(dy, dx)};
+    }
+}
+
+} // namespace
+
 template<class Input, class Output>
 void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
                 const double* radii, Output* output) {
+    if (o.orientations <= 0) return;
+    if (!image || o.rows <= 0 || o.cols <= 0)
+        throw std::invalid_argument("image must be nonempty and nonnull");
+    constexpr auto size_limit = std::size_t(std::numeric_limits<std::ptrdiff_t>::max()) / sizeof(double);
+    if (std::size_t(o.rows) > size_limit / o.cols)
+        throw std::overflow_error("image dimensions overflow");
     const auto size = std::size_t(o.rows) * o.cols;
     const int oh = 1 + (o.rows - 2 * o.radius - 1) / o.step;
     const int ow = 1 + (o.cols - 2 * o.radius - 1) / o.step;
-    const int groups = 1 + o.rings * o.histograms, width = groups * o.orientations;
-    std::vector<Output> magnitudes(size), angles(size), histogram(size), filtered(size);
-    const auto scale = std::is_same_v<Input, std::uint8_t> ? Output(1.0 / 255.0) : Output{1};
-    for (int r = 0; r < o.rows; ++r) {
-        const auto offset = std::size_t(r) * o.cols;
-        const auto* row = image + offset;
-        const auto* below = r + 1 < o.rows ? row + o.cols : nullptr;
-        auto* magnitude = magnitudes.data() + offset;
-        auto* angle = angles.data() + offset;
-        for (int c = 0; c < o.cols; ++c) {
-            const auto center = Output(row[c]) * scale;
-            const auto dx = c + 1 < o.cols ? Output(row[c + 1]) * scale - center : Output{0};
-            const auto dy = below ? Output(below[c]) * scale - center : Output{0};
-            magnitude[c] = std::sqrt(dx * dx + dy * dy);
-            angle[c] = std::atan2(dy, dx);
+    const int width = (1 + o.rings * o.histograms) * o.orientations;
+    std::vector<DaisyScale> scales;
+    std::size_t max_taps = 0;
+    for (int ring = 0; ring <= o.rings; ++ring) {
+        const auto sigma = sigmas[ring];
+        auto it = std::find_if(scales.begin(), scales.end(), [sigma](const auto& scale) {
+            return scale.sigma == sigma;
+        });
+        auto& scale = it == scales.end() ? scales.emplace_back(sigma, o.rows, o.cols) : *it;
+        max_taps = std::max(max_taps, scale.weights.size());
+        if (ring == 0) {
+            scale.samples.push_back({0, 0, 0});
+            continue;
         }
-    }
-    std::vector<int> y(groups), x(groups);
-    for (int ring = 0; ring < o.rings; ++ring) {
         for (int j = 0; j < o.histograms; ++j) {
             const double theta = 2 * pi * j / o.histograms;
-            const auto group = 1 + ring * o.histograms + j;
-            y[group] = static_cast<int>(std::nearbyint(radii[ring] * std::sin(theta)));
-            x[group] = static_cast<int>(std::nearbyint(radii[ring] * std::cos(theta)));
+            const auto y = static_cast<int>(std::nearbyint(radii[ring - 1] * std::sin(theta)));
+            const auto x = static_cast<int>(std::nearbyint(radii[ring - 1] * std::cos(theta)));
+            const int group = 1 + (ring - 1) * o.histograms + j;
+            scale.samples.push_back({std::ptrdiff_t(y) * o.cols + x, group * o.orientations, y});
         }
     }
+    for (auto& scale : scales) {
+        if (scale.weights.empty()) continue;
+        // Both passes produce the same set of output rows because the second
+        // pass is horizontal. Rows outside the ring grid are never sampled.
+        std::vector<bool> sampled(o.rows);
+        for (const auto& sample : scale.samples) {
+            const auto first = o.radius + sample.row_offset;
+            for (int r = 0; r < oh; ++r) sampled[first + r * o.step] = true;
+        }
+        for (int r = 0; r < o.rows; ++r) {
+            if (sampled[r]) scale.sampled_rows.push_back(r);
+        }
+    }
+
     const auto kappa = Output(o.orientations / pi);
-    std::vector<const Output*> sample_rows(groups);
-    for (int bin = 0; bin < o.orientations; ++bin) {
-        const auto orientation = Output(2 * bin * pi / o.orientations - pi);
-        for (std::size_t i = 0; i < size; ++i)
-            histogram[i] = std::exp(kappa * std::cos(angles[i] - orientation)) * magnitudes[i];
-        for (int ring = 0; ring <= o.rings; ++ring) {
-            if (ring == 0 || sigmas[ring] != sigmas[ring - 1])
-                gaussian_into(histogram.data(), filtered.data(), o.rows, o.cols, sigmas[ring], Border::reflect);
-            const int first = ring == 0 ? 0 : 1 + (ring - 1) * o.histograms;
-            const int last = ring == 0 ? 1 : first + o.histograms;
-            for (int r = 0; r < oh; ++r) {
-                for (int group = first; group < last; ++group) {
-                    const auto row = std::size_t(r * o.step + o.radius + y[group]);
-                    sample_rows[group] = filtered.data() + row * o.cols;
+    // Keep adjacent planes contiguous while bounding scratch for large inputs.
+    constexpr std::size_t plane_budget = 16 * 1024 * 1024;
+    const auto batch = static_cast<int>(std::clamp(plane_budget / sizeof(Output) / size,
+                                                  std::size_t{1}, std::size_t(o.orientations)));
+    const int threads = std::min(o.rows, detail::active_workers(size));
+    std::unique_ptr<Output[]> planes(new Output[size * batch]);
+    std::unique_ptr<DaisyGradient<Output>[]> gradients;
+    if (batch < o.orientations) {
+        gradients.reset(new DaisyGradient<Output>[size]);
+        detail::partition(o.rows, threads, [&](auto begin, auto end, auto) {
+            for (auto r = begin; r < end; ++r) {
+                const auto* row = image + r * o.cols;
+                const auto* below = r + 1 < std::size_t(o.rows) ? row + o.cols : nullptr;
+                daisy_gradients(row, below, 0, o.cols, o.cols, gradients.get() + r * o.cols);
+            }
+        });
+    }
+    const auto padded_stride = o.cols + (max_taps ? max_taps - 1 : 0);
+    std::vector<const Output*> row_sources(max_taps * threads);
+    std::unique_ptr<Output[]> vertical, filtered, padded_rows;
+    if (max_taps) {
+        vertical.reset(new Output[size]);
+        filtered.reset(new Output[size]);
+        padded_rows.reset(new Output[padded_stride * threads]);
+    }
+    const bool vectorized = max_taps && has_avx2();
+    for (int first_bin = 0; first_bin < o.orientations; first_bin += batch) {
+        const int count = std::min(batch, o.orientations - first_bin);
+        std::vector<Output> orientations(count);
+        for (int b = 0; b < count; ++b)
+            orientations[b] = Output(2 * (first_bin + b) * pi / o.orientations - pi);
+        detail::partition(o.rows, threads, [&](auto begin, auto end, auto) {
+            std::array<DaisyGradient<Output>, 128> tile;
+            for (auto r = begin; r < end; ++r) {
+                const auto offset = r * o.cols;
+                const auto* row = image + offset;
+                const auto* below = r + 1 < std::size_t(o.rows) ? row + o.cols : nullptr;
+                for (int c = 0; c < o.cols;) {
+                    const int last = c + std::min(o.cols - c, static_cast<int>(tile.size()));
+                    const auto* local = gradients ? gradients.get() + offset + c : tile.data();
+                    if (!gradients) daisy_gradients(row, below, c, last, o.cols, tile.data());
+                    for (int b = 0; b < count; ++b) {
+                        auto* dest = planes.get() + b * size + offset + c;
+                        const auto angle = orientations[b];
+                        for (int i = 0; i < last - c; ++i)
+                            dest[i] = std::exp(kappa * std::cos(local[i].angle - angle)) * local[i].magnitude;
+                    }
+                    c = last;
                 }
-                for (int c = 0; c < ow; ++c) {
-                    auto* dest = output + (std::size_t(r) * ow + c) * width + bin;
-                    const int col = c * o.step + o.radius;
-                    for (int group = first; group < last; ++group) {
-                        dest[group * o.orientations] = sample_rows[group][col + x[group]];
+            }
+        });
+        for (int b = 0; b < count; ++b) {
+            const auto* histogram = planes.get() + b * size;
+            for (const auto& scale : scales) {
+                const auto* smoothed = histogram;
+                if (!scale.weights.empty()) {
+                    daisy_smooth(histogram, vertical.get(), filtered.get(), o, scale, row_sources.data(),
+                                 padded_rows.get(), padded_stride, threads, vectorized);
+                    smoothed = filtered.get();
+                }
+                for (int r = 0; r < oh; ++r) {
+                    const auto* row = smoothed + std::size_t(r * o.step + o.radius) * o.cols + o.radius;
+                    auto* dest = output + std::size_t(r) * ow * width;
+                    for (int c = 0; c < ow; ++c) {
+                        const auto* center = row + c * o.step;
+                        for (const auto& sample : scale.samples)
+                            dest[sample.descriptor_offset + first_bin + b] = center[sample.image_offset];
+                        dest += width;
                     }
                 }
             }
