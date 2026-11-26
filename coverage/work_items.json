@@ -17864,7 +17864,7 @@
             "linux-modern",
             "linux-minimum"
           ],
-          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8×5795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
+          "scope": "Frozen advertised consumer and returned-map cases through actual public exports;8\u00d75795 mixed public/shared scopes. Raw defined dtype errors, alias/ownership/state, worker1/4, SIMDdisabled and Debug GIL assertions. Unrepresented protocols remain explicit, no full-library claim."
         }
       },
       "checkpoint": {
@@ -17886,7 +17886,7 @@
           42763,
           48108
         ],
-        "public_gates": "All8profiles5795pass;3×474 inventory resolution checks; parent484 inventory/class checks pass.",
+        "public_gates": "All8profiles5795pass;3\u00d7474 inventory resolution checks; parent484 inventory/class checks pass.",
         "broader_combined_core": "Separately tracked main-core-combined-validation remains live; no timings or global completion claim."
       },
       "integration_files": [
@@ -26878,7 +26878,7 @@
             "path": "build/decisions-readiness/counts-campaign-root-audit/manifest.json",
             "sha256": "db3636fcffe91560284927ffe3cb9d3711c16af7046f778931b44a7260cda9ad"
           },
-          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs×7paired rounds×3profiles; one worker, all regressions retained."
+          "scope": "Exact668before/94after190-path pair; four canonical rank APIs,376timed IDs\u00d77paired rounds\u00d73profiles; one worker, all regressions retained."
         }
       }
     },
@@ -32171,7 +32171,7 @@
           },
           "native_contract_checks": 184,
           "native_pending": 0,
-          "scope": "184 actual installed C++SDK consumer tests:23families×normal/scalar×4profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
+          "scope": "184 actual installed C++SDK consumer tests:23families\u00d7normal/scalar\u00d74profiles, alongside full fixed public203parity. Bounded native-partial contracts only; providers/unsupported/full477/performance remain incomplete."
         }
       }
     },
@@ -35334,7 +35334,7 @@
           "acceptance_pass": false
         }
       },
-      "native_check_unit": "946 case/worker combinations per mode×6=5676;25,836 grouped assertions each mode, not independent-case credit.",
+      "native_check_unit": "946 case/worker combinations per mode\u00d76=5676;25,836 grouped assertions each mode, not independent-case credit.",
       "genuine_preparation": {
         "status": "verified_private_prepare_only",
         "run": 40790763016,
@@ -36377,7 +36377,7 @@
         "draw-polygon-reference-v1"
       ],
       "acceptance": "Roottypedreviewd11f4d48 accepteded8f; existing24referenceIDs/profile,17success/7sourceprefixerrors. Exactc,r classifierreuse, singlelabelsraster/rowprefix, scalar/SIMD/optionalworkers/default1/FENV/refusal/analyticparallelcontrols andactualMSVC. No neworiginal/fullSDK/core/env/timing; explicitnumericboundsprovider/generalcontractgapsstayopen.",
-      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs×workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
+      "current_checkpoint": "Nativeb8ae4e7a (bc14production/385fPIC) independentlyacceptede319ad96:17originalsuccessIDs\u00d7workers1/4 across4modes,1580041controls/mode;61+55+16smallproofs. OneMXCSRmask fix+portableUCRTtestdelta targeted16controls/mode, oldmath/golds reused. No platform/genuine/API/performancecredit.",
       "next_gate": {
         "owner": "qualification251_readiness",
         "action": "Restoreonlyaccepted4nativepaths into260candidate; strictFP/unit/exportsourceclosure andgenuineplatform/performance gates remain."
@@ -36392,7 +36392,7 @@
           },
           "native_contract_checks": 136,
           "native_pending": 0,
-          "scope": "17savedreturnIDs×workers1/4×4modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
+          "scope": "17savedreturnIDs\u00d7workers1/4\u00d74modes; zero pending onlyinthisboundednativepartition. BroaderAPI/provider/FP/SDK/platform/genuine/performance completion remainsopen."
         }
       }
     },
@@ -36493,7 +36493,7 @@
         "draw-polygon-sdk-v1",
         "draw-polygon-benchmark-v1"
       ],
-      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14–1.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
+      "current_checkpoint": "bd16 genuine42027790280 admitted98576c94/195product92SDK16882XML0bad/core dcb2/PF74f929. Fixedv3run42032588452 scientificDISCARD independently16e3691b/f06426ad:1568samples5032events,5failedpairs8inequalities; sparse2DctorCPP+10.6/+12.3%,large3Dsparse+5.7%onepair,twoflatCPPstainnormalizedfails. Warmtargets1.14\u20131.23xgains cannotwaive;8wins20originallosses eachpass,24rawCPPincreases. No260shipping/fourprofile/speedacceptance.",
       "next_gate": {
         "owner": "root",
         "action": "Publish everyrawsample/journal/ratio/loss in existingDISCARDcapsule; no retry/noiseattribution/waiver. A source+profile constructorbottleneck review: preparealreadystridedwalk and1609bytes/15relocations identical, no divisionpatch. LocalcProfile metadata~71%isdiagnostic only, nothostcausereproduction. Newmaterialproposal requirespeer/genuine/newfixedexperiment; polygon12measurement/full4release remain."
@@ -39800,7 +39800,7 @@
           "GO_state": "All retained SDK stage GOs are consumed historical evidence.",
           "root_terminal_receipt": "coverage/evidence/mark-lbp-private-sdk-modes-root-terminal-admission-v8.json"
         },
-        "private_runtime_closed_scope": "Retained normal/runtime-disabled752 plus current compiler-scalar/ASanUBSan752 for94recipes×2profiles×workers1/4;1504entries across8cells, no fullAPI/wholemodecore/SDK/speed claim.",
+        "private_runtime_closed_scope": "Retained normal/runtime-disabled752 plus current compiler-scalar/ASanUBSan752 for94recipes\u00d72profiles\u00d7workers1/4;1504entries across8cells, no fullAPI/wholemodecore/SDK/speed claim.",
         "qualification_successor": {
           "source": "16a5b50193125199ad26cf5a89acec5babf5290c",
           "branch": "fix/mark-lbp-portable-sourceguard-v1",
@@ -41385,7 +41385,7 @@
               "status": "ROOT_ADMITTED_FINAL3_SOURCE_AND_DIAGNOSTIC_FIX_NO_NUMERICAL_EXECUTION",
               "finding": "Actualcurrent43765280748 onminimumAVX512 returnedreference9b... vsoldscalar9a...; newpublicfrontend now delegatescurrentNumPylog2. Unchanged tests/test_variation_of_information_large_saved.py hardcodesold9a per NumPyversion only and seedsretainedtargetsemanticFP. It would rejectcorrectnewprovider9b onthatCPU; oldSDKscalarfixedgold remainsvalid.",
               "effect": "No hostednewrelease dispatched; finalsourcefreeze/barrier held for scopedtestcorrection. Private4pairPASS/source/SDK compile+currentruntime work staysvalid,4productionbytes unchanged.",
-              "scope": "Preservealloldlarge functionassertions/records as explicit hash-bound legacy scalarSDKgateway test. Add freshcurrentpublic original/native4case×workers1,4 test oncurrentruntime withnatural incomingtargetFP, exactwords/fullmetadata/input/policy/ownership/hotswap/nativephases/caller restoration. Newsourceguardbothversions, no numericalbodies untilfreshGO.",
+              "scope": "Preservealloldlarge functionassertions/records as explicit hash-bound legacy scalarSDKgateway test. Add freshcurrentpublic original/native4case\u00d7workers1,4 test oncurrentruntime withnatural incomingtargetFP, exactwords/fullmetadata/input/policy/ownership/hotswap/nativephases/caller restoration. Newsourceguardbothversions, no numericalbodies untilfreshGO.",
               "paths": [
                 "tests/test_variation_of_information_large_saved.py",
                 "tests/test_vi_public_log2_provider_large.py",
@@ -49138,7 +49138,7 @@
                       "pearson_native": "Linux minimum profile and dependent stager",
                       "root": "Debug, Windows profile and stager, whole run and shipping checks"
                     },
-                    "capacity": "About 19.3GB free C and 72.8GiB free RAM at admission setup. Prior profiles retained 72–277MB each; only verified membership retained, archive buffers in RAM.",
+                    "capacity": "About 19.3GB free C and 72.8GiB free RAM at admission setup. Prior profiles retained 72\u2013277MB each; only verified membership retained, archive buffers in RAM.",
                     "next_gate": "Delivered. Obsolete checkout cache cleanup is manual-only after policy rejection; none removed.",
                     "failed_reader": "build/evidence/u182-haar-features/read-completed-294-profile-v1.py",
                     "diagnosis": "build/evidence/u182-haar-features/hosted-45041856008-modern-namespace-v2/alias-map.json",
@@ -50179,7 +50179,7 @@
             "scope": "One shared integration author after familyfreeze. Root retains independent admission/maindelivery; preserve numericalhandoffbytes. Existingcontext/history/collector/guards/workflow current-successor metadata only, no mathchange.",
             "current_head": "75b219475ade7ad575f3ce82f569200d85329067",
             "source_import_admission": "build/speed-parity-root-v1/family-source-admission-v1.json",
-            "flood": "Rootaccepted535proofs/currentguard24BOTH/private8targetpassed; imported6718fa→525e526adeafce2cf14dfb19dabf9df6d473e9a3",
+            "flood": "Rootaccepted535proofs/currentguard24BOTH/private8targetpassed; imported6718fa\u2192525e526adeafce2cf14dfb19dabf9df6d473e9a3",
             "source_import_admissions": [
               "build/speed-parity-root-v1/family-source-admission-v1.json",
               "build/speed-parity-root-v1/flood-family-source-admission-v1.json"
@@ -51042,7 +51042,7 @@
                 "Crop8cases:copy/view paths;8losses. Own sharedcropcopykernel andcropbinder; coordinate sharedfrontend with root.",
                 "Slice8cases:metadata/view roundtrip andcopy paths;8losses. Ownutilviewbinder whileprotecting8blocks/windowswins; sharednativecopy/frontend hasone author atatime."
               ],
-              "unchanged_source_review": "C inspected relevant DDA→e8 kernels/binders/frontends/headers/components/image/execution with emptyfamily diff. This supports priority only; no performancegate closed.",
+              "unchanged_source_review": "C inspected relevant DDA\u2192e8 kernels/binders/frontends/headers/components/image/execution with emptyfamily diff. This supports priority only; no performancegate closed.",
               "superseded_priority": "Olda6 34loss/34win report remains historical; its0.033/0.037reversecopy losses were improved by delivered code and do not describe currentfamily. DDA22losses is the later priority basis.",
               "implementation_dispatch": null
             },
@@ -51955,8 +51955,8 @@
                         "complete183": "Pending and outside this registered private experiment. Needs fresh root GO only for a release candidate.",
                         "x86_v4_speed": {
                           "status": "FAIL exact b71 target scope (1/2 f32, 3/6 all selected)",
-                          "success_scope": "XYZ->Lab f32 1.008761×; packed uint8 cases 5.629246× and 1.320000× in measured profile",
-                          "remaining": "RGB->Lab f32 0.990199×, XYZ->Lab f64 0.758239× and RGB->Lab f64 0.796028×. f64 code did not receive the f32 optimization.",
+                          "success_scope": "XYZ->Lab f32 1.008761\u00d7; packed uint8 cases 5.629246\u00d7 and 1.320000\u00d7 in measured profile",
+                          "remaining": "RGB->Lab f32 0.990199\u00d7, XYZ->Lab f64 0.758239\u00d7 and RGB->Lab f64 0.796028\u00d7. f64 code did not receive the f32 optimization.",
                           "preflight_failure": {
                             "path": "build/ci26-f32-v4-speed-44230430319-v1/root-admission-v1.json",
                             "sha256": "ca4e614f2527c9a6aabb1d2482211bea46d6fcab8c8e412e763f1e1761c12686"
@@ -52058,7 +52058,7 @@
                             "driver": "build/ci26-cie-f64-same-host-direct-v1/handoff-v1.json",
                             "terminal": "build/ci26-cie-f64-same-host-direct-v1/actual-run44244965094-v1/root-comparison-decision-v1.json",
                             "terminal_sha256": "4b9eee8d09280f9fa86d6c08103f896e85f30fe4c91ff3943622e801a85b1d66",
-                            "results": "Xeon Platinum 8573C, pinned CPU0, 32 batches and zero upstream calls. Wide lost all eight pairs for each API. XYZ 94.916→171.411 us, RGB 200.882→337.079 us. Use the private baseline for further f64 work, preserve the exact experiment and no microarchitectural cause inferred.",
+                            "results": "Xeon Platinum 8573C, pinned CPU0, 32 batches and zero upstream calls. Wide lost all eight pairs for each API. XYZ 94.916\u2192171.411 us, RGB 200.882\u2192337.079 us. Use the private baseline for further f64 work, preserve the exact experiment and no microarchitectural cause inferred.",
                             "next": "No unchanged timing replay. Keep both wide branches private. A future f32-only route requires removing the rejected f64 branch, authenticating it on an eligible host and measuring that exact successor."
                           },
                           "fp32_followup": {
@@ -52284,7 +52284,7 @@
                         "base": "7a9bdee6c7e3a06179bae923796abae090a579f6",
                         "crop_owner": "ci_entry_audit owns tests/test_crop_saved_reference.py",
                         "li_owner": "release_stager_intake owns tests/test_li_observer_collection.py",
-                        "leaf_gate": "Crop Windows both + WSL 3.11 target/pass and tamper controls. Li nine tests per mode on Windows and WSL both retained versions. Exact current leaf raw pins c1f40ded… and adcb3ac6… verified by root. Shared V25 source lineage owner release_profile_intake.",
+                        "leaf_gate": "Crop Windows both + WSL 3.11 target/pass and tamper controls. Li nine tests per mode on Windows and WSL both retained versions. Exact current leaf raw pins c1f40ded\u2026 and adcb3ac6\u2026 verified by root. Shared V25 source lineage owner release_profile_intake.",
                         "next_gate": "All affected normal-plugin source-only guards on both retained interpreters after the minimal shared proof rebind, then an ordinary CI-only successor. Keep installed and qualified production bytes unchanged."
                       },
                       "trigger": "Close the exact three assertions on both platforms, push the checked native CI-only successor and inspect its real ordinary CI. DDA32 use remains gated."
@@ -52553,7 +52553,7 @@
                     "installed_sdk_initial": {
                       "path": "build/speed-parity-ci-correction-v1/release-entry-v1/main-ci-run44264846992-v1/scalar-tail-v28/openmp-native-preflight-v1/root-installed-sdk-first-results-v1.json",
                       "sha256": "b27b21154dac9b7905c145b8a9f23e9a0a6005a9cee50d864e54aaf3f42a9ded",
-                      "scope": "Independent installed and relocated native package passed 50/50 and version rejection. Portable installed linked successfully, then 14 of 50 consumer tests requested unsupported workers. A owns consumers 1 and 37–43, C owns 44–50, compiled ABI stays exact. Reuse the two relocated SDKs and compiled unchanged objects."
+                      "scope": "Independent installed and relocated native package passed 50/50 and version rejection. Portable installed linked successfully, then 14 of 50 consumer tests requested unsupported workers. A owns consumers 1 and 37\u201343, C owns 44\u201350, compiled ABI stays exact. Reuse the two relocated SDKs and compiled unchanged objects."
                     },
                     "initial_source_guard": {
                       "path": "build/speed-parity-ci-correction-v1/release-entry-v1/main-ci-run44264846992-v1/scalar-tail-v28/native-source-lineage-v29/root-v29-initial-affected-terminal-v1.json",
@@ -52588,7 +52588,7 @@
                       "status": "Both exact workflow processes terminal exit 1. Identical collection and 26 failures, 4720 passing tests, 8 subtests, 44 normal plugin entries on each. No scientific imports or source mutations.",
                       "terminal": "build/speed-parity-ci-correction-v1/release-entry-v1/main-ci-run44264846992-v1/scalar-tail-v28/v29-complete-source-v1/root-source-barrier-failed-v29-v1.json",
                       "terminal_sha256": "49edbe27f667b31c21ecc2c41756cb12ec2890396f5b563c0bb5807b09f76ef9",
-                      "cleanup": "C:/n29/a–h pending manual only after automatic policy denial. Root attempt on g/h rejected before execution; no removals."
+                      "cleanup": "C:/n29/a\u2013h pending manual only after automatic policy denial. Root attempt on g/h rejected before execution; no removals."
                     },
                     "next": "Both complete source failures retained at terminal. Source-lineage owner corrects demonstrated guards while DDA owner corrects the frozen observer intake on independent branches. Root verifies the integrated constrained Windows successor and exact SDK/native dependency scopes, then both complete source commands, then dispatches ordinary and qualification together. Exact Ubuntu package precedes rescale worker1 timing."
                   },
@@ -53315,7 +53315,7 @@
         "actual_exit": 0,
         "calls": 8,
         "C_entries": 16,
-        "result": "Attributiononly; assignment0.384714–0.449367ms. No parity/speed credit. Root owns next bounded indexing fix dispatch after MARK review, independent source/native/performance gates remain.",
+        "result": "Attributiononly; assignment0.384714\u20130.449367ms. No parity/speed credit. Root owns next bounded indexing fix dispatch after MARK review, independent source/native/performance gates remain.",
         "waste_review": "Used once-restored ownwheel and existing cProfile, helper/runtime; eight calls only, no warmup/fullbuild/duplicate archive/core authentication. Cold copy outlier remains visible; no retiming for favorable result."
       },
       "mark_wide_corrected_native": {
@@ -54888,178 +54888,200 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "aceb39b526913ff124f908fe316b185034558276",
-    "source_tree": "d3183b91723a5a870c7efc1a0e4849142bbd2d06",
-    "run": 45732125393,
-    "prior_failed_runs": [
-      {
-        "run": 45714742225,
-        "source": "0898c137d85056bf04b7dc92c8c88da215994b27",
-        "failed_profile": "debug",
-        "job_id": 139557803248,
-        "cause": "pybind11 debug PyGILState_Check() failure in components_clear_border_fast calling image.itemsize() inside py::gil_scoped_release; resolved in aceb39b5"
-      }
-    ],
+    "source": "02555c92697e1c16477068529dbfd51de2ff363c",
+    "source_tree": "a378c72fcfa1e844bafbc66c8bf94300cfd352ce",
+    "run": 45788671362,
     "image_paths": 408,
     "packaged_assets": 37,
     "native_class_paths": 27,
     "metadata_paths": 3,
     "exception_metadata_providers": 2,
     "upstream_only": 0,
-    "receipt": "build/evidence/u182-post-haar/opt-wave3-v1/whole-product-root-admission-v1.json",
-    "sha256": "e688cdb7bd117de878ab6d377e0cc69538ae67c1d704b65715b68f6f5bb0b505",
-    "benchmark_comparison": "build/evidence/u182-post-haar/opt-wave3-v1/benchmark-comparison.json",
+    "receipt": "build/evidence/u182-post-haar/opt-wave4-v1/whole-product-root-admission-v1.json",
+    "sha256": "1a3d2d0c434cc4208f0e8516f7bd40cf7546c698c77c9b650e11432f823abeb8",
+    "benchmark_comparison": "build/evidence/u182-post-haar/opt-wave4-v1/benchmark-comparison.json",
     "archive_retained": false,
-    "scope": "Wave 3 optimization across 12 parallel Codex CLI scopes on 477/477 shipped inventory: CMAKE_CXX_VISIBILITY_PRESET=hidden, bind_helpers.hpp, SIMD AVX2/SWAR, PocketFFT tile transpose; 1-thread slower APIs 72->43->32, median 2.387x->2.522x->3.183x, geomean 2.557x->2.996x->3.48x (measured on c9c2203e). Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46873/48950/46738/45589 rehashed manifest records.",
-    "main_delivery": "aceb39b526913ff124f908fe316b185034558276",
-    "delivery_status": "PASS_EXACT_OPT_WAVE3_MAIN_DELIVERED",
+    "scope": "Wave 4 optimization across 11 retained parallel Codex CLI scopes (44 modified files; opt4-w06 reverted in 5ae97b7f) on 477/477 shipped inventory: 1-thread slower APIs 72->43->32->26, median 2.387x->2.522x->3.183x->3.359x, geomean 2.557x->2.996x->3.48x->3.692x. Exact four profiles (modern 139801868012/15105558696, minimum 139801867217/15106402725, debug 139801867821/15105519842, windows 139801867841/15109445078), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46875/48950/46738/45588 rehashed manifest records; D:/Scratch/opt-wave4 retired (+39271710720 B, 360122306560 B free).",
+    "main_delivery": "02555c92697e1c16477068529dbfd51de2ff363c",
+    "delivery_status": "PASS_EXACT_OPT_WAVE4_MAIN_DELIVERED",
     "previous": {
-    "source": "15a291dad7de274e2db6462a8bf862951a32ddd8",
-    "source_tree": "3cd9d866e9823e6633c97da8e74290b6693eed09",
-    "run": 45644063673,
-    "image_paths": 408,
-    "packaged_assets": 37,
-    "native_class_paths": 27,
-    "metadata_paths": 3,
-    "exception_metadata_providers": 2,
-    "upstream_only": 0,
-    "receipt": "build/evidence/u182-post-haar/opt-wave2-v1/whole-product-root-admission-v1.json",
-    "sha256": "6047afe87a5693286b5c1022c32acafbe22467c1d7495fe73fd25b92edb53166",
-    "benchmark_comparison": "build/evidence/u182-post-haar/opt-wave2-v1/benchmark-comparison.json",
-    "archive_retained": false,
-    "scope": "Wave 2 optimization and waste reduction on 477/477 shipped inventory: 21 unreferenced benchmarks/*.zip removed (-16.08 MiB), slower APIs 72->43, median 2.387x->2.522x, geomean 2.557x->2.996x. Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46871/48946/46738/45589 rehashed manifest records.",
-    "main_delivery": "15a291dad7de274e2db6462a8bf862951a32ddd8",
-    "delivery_status": "PASS_EXACT_OPT_WAVE2_MAIN_DELIVERED",
-    "previous": {
-    "source": "c4135c8d38603c1fc51f3d100431a754f9d6196f",
-    "source_tree": "04b563bf34767d036e832e470ff251218f12a4f4",
-    "run": 45609669785,
-    "image_paths": 408,
-    "packaged_assets": 37,
-    "native_class_paths": 27,
-    "metadata_paths": 3,
-    "exception_metadata_providers": 2,
-    "upstream_only": 0,
-    "receipt": "build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json",
-    "sha256": "71839ff454e4878d1ce202148de4434d6c47d1927fb9f67d290ab5f6b7c851c3",
-    "archive_retained": false,
-    "scope": "Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46869/48944/46738/45588 rehashed manifest records. Closes all 477/477 inventoried public APIs (0 upstream-only).",
-    "main_delivery": "c4135c8d38603c1fc51f3d100431a754f9d6196f",
-    "delivery_status": "PASS_EXACT_CURRENT408_ALL477_MAIN_DELIVERED",
-    "previous": {
-      "source": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
-      "source_tree": "6259f876460a5e2bc9ebc2a51852ebcabcbaf23f",
-      "run": 45344078252,
-      "image_paths": 312,
-      "packaged_assets": 10,
-      "upstream_only": 146,
-      "receipt": "build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json",
-      "sha256": "42162fabce0d3318d045198e57d6d999ec836242a11c2c422a761302c40e132e",
+      "source": "aceb39b526913ff124f908fe316b185034558276",
+      "source_tree": "d3183b91723a5a870c7efc1a0e4849142bbd2d06",
+      "run": 45732125393,
+      "prior_failed_runs": [
+        {
+          "run": 45714742225,
+          "source": "0898c137d85056bf04b7dc92c8c88da215994b27",
+          "failed_profile": "debug",
+          "job_id": 139557803248,
+          "cause": "pybind11 debug PyGILState_Check() failure in components_clear_border_fast calling image.itemsize() inside py::gil_scoped_release; resolved in aceb39b5"
+        }
+      ],
+      "image_paths": 408,
+      "packaged_assets": 37,
+      "native_class_paths": 27,
+      "metadata_paths": 3,
+      "exception_metadata_providers": 2,
+      "upstream_only": 0,
+      "receipt": "build/evidence/u182-post-haar/opt-wave3-v1/whole-product-root-admission-v1.json",
+      "sha256": "e688cdb7bd117de878ab6d377e0cc69538ae67c1d704b65715b68f6f5bb0b505",
+      "benchmark_comparison": "build/evidence/u182-post-haar/opt-wave3-v1/benchmark-comparison.json",
       "archive_retained": false,
-      "windows_focus_timing_receipt": "build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json",
-      "windows_focus_timing_run": 45340574164,
-      "source_barrier_receipt": "build/evidence/u182-post-haar/current312-source-barrier-v4/complete-312-intake-readback-v4.json",
-      "source_barrier_run": 45340542569,
-      "scope": "Exact four profiles and three relocated products, 1,008,468 public outcomes and 488 installed SDK checks (122 per profile across 61 families). Bounded hough_circle_peaks, hough_ellipse, probabilistic_hough_line, and medial_axis added; 36 of 182 original upstream-only gaps closed.",
-      "main_delivery": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
-      "delivery_status": "PASS_EXACT_CURRENT312_MAIN_DELIVERED",
+      "scope": "Wave 3 optimization across 12 parallel Codex CLI scopes on 477/477 shipped inventory: CMAKE_CXX_VISIBILITY_PRESET=hidden, bind_helpers.hpp, SIMD AVX2/SWAR, PocketFFT tile transpose; 1-thread slower APIs 72->43->32, median 2.387x->2.522x->3.183x, geomean 2.557x->2.996x->3.48x (measured on c9c2203e). Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46873/48950/46738/45589 rehashed manifest records.",
+      "main_delivery": "aceb39b526913ff124f908fe316b185034558276",
+      "delivery_status": "PASS_EXACT_OPT_WAVE3_MAIN_DELIVERED",
       "previous": {
-      "source": "b1d67cc0a50029b80c23bc90d5acab6c932b9609",
-      "source_tree": "24119004362d729c1c5d7b57fc794e8717839193",
-      "run": 45219397159,
-      "image_paths": 308,
-      "packaged_assets": 10,
-      "upstream_only": 150,
-      "receipt": "build/evidence/u182-post-haar/next-hull-release-reader-v1/hosted-current308-45219397159/whole-product-root-admission-v1.json",
-      "sha256": "e98be398d24c24484a2ea3c35011d5b93c9bfcb245db1b9d2cf96649a07e794b",
-      "scope": "Exact four profiles and three relocated products, 1,007,220 public outcomes and 456 SDK checks. Bounded convex_hull_image and convex_hull_object added; 32 of 182 original upstream-only gaps closed.",
-      "main_delivery": "b1d67cc0a50029b80c23bc90d5acab6c932b9609",
-      "delivery_receipt": "build/evidence/u182-post-haar/next-hull-release-reader-v1/hosted-current308-45219397159/root-main-delivery-v1.json",
-      "delivery_sha256": "1bdcb1c39546749d9018c9b1dc3b973668d4b21b9453aa096a2ab8ffb517ea51",
-      "delivery_status": "PASS_EXACT_CURRENT308_MAIN_DELIVERED",
-      "previous": {
-      "source": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
-      "source_tree": "2ab7c8bd13965df3d48e565b1c6b779739d0974c",
-      "run": 45098117810,
-      "image_paths": 306,
-      "packaged_assets": 10,
-      "upstream_only": 152,
-      "receipt": "build/evidence/u182-post-haar/next-five-release-reader-v1/hosted-current306-45098117810/whole-product-root-admission-v1.json",
-      "sha256": "1fa9d5d8700f301521aedfc5835d50ce240dd2bfa8a7e564c03856e3ad6a0da4",
-      "scope": "Exact four profiles and three relocated products, 1,006,572 public outcomes and 440 SDK checks.",
-      "main_delivery": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
-      "delivery_receipt": "build/evidence/u182-post-haar/next-five-release-reader-v1/hosted-current306-45098117810/root-main-delivery-v1.json",
-      "delivery_sha256": "954d121993d6f416f4cb1bba535833000102c477aec26bfd57ab25311c078788",
-      "delivery_status": "PASS_EXACT_CURRENT306_MAIN_DELIVERED",
-      "previous": {
-        "source": "a80be03438ee8d00c9a5ebcec2845f24e53e6f5b",
-        "source_tree": "00ae30c4c7d29d8d5013adc36e417ca0ae43b316",
-        "run": 45090228543,
-        "image_paths": 301,
-        "packaged_assets": 10,
-        "upstream_only": 157,
-        "receipt": "build/evidence/u182-post-haar/hosted-current301-45090228543/whole-product-root-admission-v1.json",
-        "sha256": "9f14224c486b502fa852ac440ce8a0e8037780b650213a981d6a6b537783cb1e",
-        "scope": "Exact four profiles and three relocated products, 1,004,764 public outcomes and 400 SDK checks.",
-        "main_delivery": "a80be03438ee8d00c9a5ebcec2845f24e53e6f5b",
-        "delivery_receipt": "build/evidence/u182-post-haar/hosted-current301-45090228543/root-main-delivery-v1.json",
-        "delivery_sha256": "5e15f431ecfd273a960beeb748c78e088b5f5b2428060e96f3b709b7dfe4fbcd",
-        "delivery_status": "PASS_EXACT_CURRENT301_MAIN_DELIVERED",
+        "source": "15a291dad7de274e2db6462a8bf862951a32ddd8",
+        "source_tree": "3cd9d866e9823e6633c97da8e74290b6693eed09",
+        "run": 45644063673,
+        "image_paths": 408,
+        "packaged_assets": 37,
+        "native_class_paths": 27,
+        "metadata_paths": 3,
+        "exception_metadata_providers": 2,
+        "upstream_only": 0,
+        "receipt": "build/evidence/u182-post-haar/opt-wave2-v1/whole-product-root-admission-v1.json",
+        "sha256": "6047afe87a5693286b5c1022c32acafbe22467c1d7495fe73fd25b92edb53166",
+        "benchmark_comparison": "build/evidence/u182-post-haar/opt-wave2-v1/benchmark-comparison.json",
+        "archive_retained": false,
+        "scope": "Wave 2 optimization and waste reduction on 477/477 shipped inventory: 21 unreferenced benchmarks/*.zip removed (-16.08 MiB), slower APIs 72->43, median 2.387x->2.522x, geomean 2.557x->2.996x. Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46871/48946/46738/45589 rehashed manifest records.",
+        "main_delivery": "15a291dad7de274e2db6462a8bf862951a32ddd8",
+        "delivery_status": "PASS_EXACT_OPT_WAVE2_MAIN_DELIVERED",
         "previous": {
-          "source": "94522169d6111a6dcf5f7b044d6d267773e27de6",
-          "source_tree": "1939643448b968ddc0e14ed61b7d42e1c4e9fd3e",
-          "run": 45070502340,
-          "image_paths": 296,
-          "packaged_assets": 10,
-          "upstream_only": 162,
-          "receipt": "build/evidence/u182-post-haar/hosted-current296-corrected-45070502340/whole-product-root-admission-v1.json",
-          "sha256": "fe5f196345945871223061b2fd3501742335c757f467bfd230f0e8f0ee92b4f8",
-          "scope": "Exact four profiles and three relocated products, 1,001,988 public outcomes and 376 SDK checks. Only declared bounded image and asset scopes.",
-          "main_delivery": "94522169d6111a6dcf5f7b044d6d267773e27de6",
-          "delivery_receipt": "build/evidence/u182-post-haar/hosted-current296-corrected-45070502340/root-main-delivery-v1.json",
-          "delivery_sha256": "c255d3aaa86692d7025725bf15beaaf5955f6d2b5d282917b96b676382dda266",
-          "delivery_status": "PASS_EXACT_CURRENT296_MAIN_DELIVERED",
+          "source": "c4135c8d38603c1fc51f3d100431a754f9d6196f",
+          "source_tree": "04b563bf34767d036e832e470ff251218f12a4f4",
+          "run": 45609669785,
+          "image_paths": 408,
+          "packaged_assets": 37,
+          "native_class_paths": 27,
+          "metadata_paths": 3,
+          "exception_metadata_providers": 2,
+          "upstream_only": 0,
+          "receipt": "build/evidence/u182-post-haar/current408-qualification-v1/whole-product-root-admission-v1.json",
+          "sha256": "71839ff454e4878d1ce202148de4434d6c47d1927fb9f67d290ab5f6b7c851c3",
+          "archive_retained": false,
+          "scope": "Exact four profiles (modern, minimum, debug, windows), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46869/48944/46738/45588 rehashed manifest records. Closes all 477/477 inventoried public APIs (0 upstream-only).",
+          "main_delivery": "c4135c8d38603c1fc51f3d100431a754f9d6196f",
+          "delivery_status": "PASS_EXACT_CURRENT408_ALL477_MAIN_DELIVERED",
           "previous": {
-            "source": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
-            "source_tree": "2e896a309f6f129e053bafdd9412d0bc3fe0d399",
-            "run": 45020725998,
-            "image_paths": 291,
-            "packaged_assets": 8,
-            "upstream_only": 169,
-            "receipt": "build/evidence/u182-next-data-integration/hosted-45020725998/whole-product-root-admission-v1.json",
-            "sha256": "503b2b4b685ddb265a1eccbb956e2e7b097d2f49860fc2e9f417f0830e7b9ef4",
-            "scope": "Exact four hosted profiles, 997,948 public outcomes, 360 SDK checks and three stagers. This is the measured bounded native and packaged public scope.",
-            "main_delivery": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
-            "delivery_receipt": "build/evidence/u182-next-data-integration/hosted-45020725998/main-delivery-root-v1.json",
-            "delivery_sha256": "097a124cf7d032b0158e0c75406fac8fe661ac03ea9c30a66dae43f7335b2ee0",
-            "delivery_status": "PASS_EXACT_DATA_MAIN_DELIVERED",
+            "source": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
+            "source_tree": "6259f876460a5e2bc9ebc2a51852ebcabcbaf23f",
+            "run": 45344078252,
+            "image_paths": 312,
+            "packaged_assets": 10,
+            "upstream_only": 146,
+            "receipt": "build/evidence/u182-post-haar/current312-qualification-v1/whole-product-root-admission-v1.json",
+            "sha256": "42162fabce0d3318d045198e57d6d999ec836242a11c2c422a761302c40e132e",
+            "archive_retained": false,
+            "windows_focus_timing_receipt": "build/evidence/u182-post-haar/current312-windows-focus-v1/root-focus-timing-admission-v1.json",
+            "windows_focus_timing_run": 45340574164,
+            "source_barrier_receipt": "build/evidence/u182-post-haar/current312-source-barrier-v4/complete-312-intake-readback-v4.json",
+            "source_barrier_run": 45340542569,
+            "scope": "Exact four profiles and three relocated products, 1,008,468 public outcomes and 488 installed SDK checks (122 per profile across 61 families). Bounded hough_circle_peaks, hough_ellipse, probabilistic_hough_line, and medial_axis added; 36 of 182 original upstream-only gaps closed.",
+            "main_delivery": "1d9a0bbfd06bf715cc4508a50dc2fac429078981",
+            "delivery_status": "PASS_EXACT_CURRENT312_MAIN_DELIVERED",
             "previous": {
-              "source": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
-              "run": 45004954877,
-              "image_paths": 290,
-              "upstream_only": 178,
-              "receipt": "build/evidence/u182-first-integration/hosted-45004954877/whole-product-root-admission-v1.json",
-              "sha256": "5448f7559efedfe2a7792cd6c765f390f40893110fbd7d52f23b31c9337e45ab",
+              "source": "b1d67cc0a50029b80c23bc90d5acab6c932b9609",
+              "source_tree": "24119004362d729c1c5d7b57fc794e8717839193",
+              "run": 45219397159,
+              "image_paths": 308,
+              "packaged_assets": 10,
+              "upstream_only": 150,
+              "receipt": "build/evidence/u182-post-haar/next-hull-release-reader-v1/hosted-current308-45219397159/whole-product-root-admission-v1.json",
+              "sha256": "e98be398d24c24484a2ea3c35011d5b93c9bfcb245db1b9d2cf96649a07e794b",
+              "scope": "Exact four profiles and three relocated products, 1,007,220 public outcomes and 456 SDK checks. Bounded convex_hull_image and convex_hull_object added; 32 of 182 original upstream-only gaps closed.",
+              "main_delivery": "b1d67cc0a50029b80c23bc90d5acab6c932b9609",
+              "delivery_receipt": "build/evidence/u182-post-haar/next-hull-release-reader-v1/hosted-current308-45219397159/root-main-delivery-v1.json",
+              "delivery_sha256": "1bdcb1c39546749d9018c9b1dc3b973668d4b21b9453aa096a2ab8ffb517ea51",
+              "delivery_status": "PASS_EXACT_CURRENT308_MAIN_DELIVERED",
               "previous": {
-                "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
-                "run": 43949036485,
-                "image_paths": 281,
-                "receipt": "coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json",
-                "scope": "ExactAA genuine4profiles/304SDK/48corpora/3stagers isdelivered through mainf62c97dc. CurrentVI4four-case publicperformance independentlyadmitted; olderlosses retainoriginalscopes. Full477/classes/domains/providers/libraryspeed closure remainsopen.",
-                "production_source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
-                "main_delivery": "f62c97dc653e95ce88de83a764afbcf9a3377106",
-                "delivery_receipt": "coverage/evidence/current281-main-delivery-v1.json",
-                "delivery_status": "PASS_MAIN281_SOURCE_DELIVERED_AND_CLOSEOUT_RECORDED",
+                "source": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
+                "source_tree": "2ab7c8bd13965df3d48e565b1c6b779739d0974c",
+                "run": 45098117810,
+                "image_paths": 306,
+                "packaged_assets": 10,
+                "upstream_only": 152,
+                "receipt": "build/evidence/u182-post-haar/next-five-release-reader-v1/hosted-current306-45098117810/whole-product-root-admission-v1.json",
+                "sha256": "1fa9d5d8700f301521aedfc5835d50ce240dd2bfa8a7e564c03856e3ad6a0da4",
+                "scope": "Exact four profiles and three relocated products, 1,006,572 public outcomes and 440 SDK checks.",
+                "main_delivery": "5b94b20d30e572164a6473c8bb029e18d4a7e706",
+                "delivery_receipt": "build/evidence/u182-post-haar/next-five-release-reader-v1/hosted-current306-45098117810/root-main-delivery-v1.json",
+                "delivery_sha256": "954d121993d6f416f4cb1bba535833000102c477aec26bfd57ab25311c078788",
+                "delivery_status": "PASS_EXACT_CURRENT306_MAIN_DELIVERED",
                 "previous": {
-                  "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
-                  "run": 42262940227,
-                  "image_paths": 271,
-                  "receipt": {
-                    "path": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
-                    "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96"
-                  },
-                  "main_delivery": "ef4650275c3a78759c771649373ca79767c7064b",
-                  "delivery_receipt": "coverage/evidence/join-util-views-main-delivery-v1.json"
+                  "source": "a80be03438ee8d00c9a5ebcec2845f24e53e6f5b",
+                  "source_tree": "00ae30c4c7d29d8d5013adc36e417ca0ae43b316",
+                  "run": 45090228543,
+                  "image_paths": 301,
+                  "packaged_assets": 10,
+                  "upstream_only": 157,
+                  "receipt": "build/evidence/u182-post-haar/hosted-current301-45090228543/whole-product-root-admission-v1.json",
+                  "sha256": "9f14224c486b502fa852ac440ce8a0e8037780b650213a981d6a6b537783cb1e",
+                  "scope": "Exact four profiles and three relocated products, 1,004,764 public outcomes and 400 SDK checks.",
+                  "main_delivery": "a80be03438ee8d00c9a5ebcec2845f24e53e6f5b",
+                  "delivery_receipt": "build/evidence/u182-post-haar/hosted-current301-45090228543/root-main-delivery-v1.json",
+                  "delivery_sha256": "5e15f431ecfd273a960beeb748c78e088b5f5b2428060e96f3b709b7dfe4fbcd",
+                  "delivery_status": "PASS_EXACT_CURRENT301_MAIN_DELIVERED",
+                  "previous": {
+                    "source": "94522169d6111a6dcf5f7b044d6d267773e27de6",
+                    "source_tree": "1939643448b968ddc0e14ed61b7d42e1c4e9fd3e",
+                    "run": 45070502340,
+                    "image_paths": 296,
+                    "packaged_assets": 10,
+                    "upstream_only": 162,
+                    "receipt": "build/evidence/u182-post-haar/hosted-current296-corrected-45070502340/whole-product-root-admission-v1.json",
+                    "sha256": "fe5f196345945871223061b2fd3501742335c757f467bfd230f0e8f0ee92b4f8",
+                    "scope": "Exact four profiles and three relocated products, 1,001,988 public outcomes and 376 SDK checks. Only declared bounded image and asset scopes.",
+                    "main_delivery": "94522169d6111a6dcf5f7b044d6d267773e27de6",
+                    "delivery_receipt": "build/evidence/u182-post-haar/hosted-current296-corrected-45070502340/root-main-delivery-v1.json",
+                    "delivery_sha256": "c255d3aaa86692d7025725bf15beaaf5955f6d2b5d282917b96b676382dda266",
+                    "delivery_status": "PASS_EXACT_CURRENT296_MAIN_DELIVERED",
+                    "previous": {
+                      "source": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+                      "source_tree": "2e896a309f6f129e053bafdd9412d0bc3fe0d399",
+                      "run": 45020725998,
+                      "image_paths": 291,
+                      "packaged_assets": 8,
+                      "upstream_only": 169,
+                      "receipt": "build/evidence/u182-next-data-integration/hosted-45020725998/whole-product-root-admission-v1.json",
+                      "sha256": "503b2b4b685ddb265a1eccbb956e2e7b097d2f49860fc2e9f417f0830e7b9ef4",
+                      "scope": "Exact four hosted profiles, 997,948 public outcomes, 360 SDK checks and three stagers. This is the measured bounded native and packaged public scope.",
+                      "main_delivery": "3a1e341cef14d143ebd055e40750be2cfe6012f9",
+                      "delivery_receipt": "build/evidence/u182-next-data-integration/hosted-45020725998/main-delivery-root-v1.json",
+                      "delivery_sha256": "097a124cf7d032b0158e0c75406fac8fe661ac03ea9c30a66dae43f7335b2ee0",
+                      "delivery_status": "PASS_EXACT_DATA_MAIN_DELIVERED",
+                      "previous": {
+                        "source": "152832eb98cc746c36b25a6a16c319b83cc5a5f1",
+                        "run": 45004954877,
+                        "image_paths": 290,
+                        "upstream_only": 178,
+                        "receipt": "build/evidence/u182-first-integration/hosted-45004954877/whole-product-root-admission-v1.json",
+                        "sha256": "5448f7559efedfe2a7792cd6c765f390f40893110fbd7d52f23b31c9337e45ab",
+                        "previous": {
+                          "source": "aaea1b060e8acb4df08e855a6574e1449416ee42",
+                          "run": 43949036485,
+                          "image_paths": 281,
+                          "receipt": "coverage/evidence/vi-public-matmul-whole-product-root-admission-v1.json",
+                          "scope": "ExactAA genuine4profiles/304SDK/48corpora/3stagers isdelivered through mainf62c97dc. CurrentVI4four-case publicperformance independentlyadmitted; olderlosses retainoriginalscopes. Full477/classes/domains/providers/libraryspeed closure remainsopen.",
+                          "production_source_sha256": "5c0475cd7e2c00a0cc2a3bbc6e3dbd9fab4f1efb4b8b5f94f8f9ae3fa1c6da1f",
+                          "main_delivery": "f62c97dc653e95ce88de83a764afbcf9a3377106",
+                          "delivery_receipt": "coverage/evidence/current281-main-delivery-v1.json",
+                          "delivery_status": "PASS_MAIN281_SOURCE_DELIVERED_AND_CLOSEOUT_RECORDED",
+                          "previous": {
+                            "source": "a6bae9ac86dbba362537758784edf06c973e9c53",
+                            "run": 42262940227,
+                            "image_paths": 271,
+                            "receipt": {
+                              "path": "coverage/evidence/join-util-views-whole-product-admission-v1.json",
+                              "sha256": "15030efe83283c9bb29043150612b32501128c8028ce19b1c58c2454837dcd96"
+                            },
+                            "main_delivery": "ef4650275c3a78759c771649373ca79767c7064b",
+                            "delivery_receipt": "coverage/evidence/join-util-views-main-delivery-v1.json"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -55067,10 +55089,6 @@
         }
       }
     }
-  }
-  }
-  }
-  }
   },
   "rolling_source_retirement": {
     "path": "build/rolling-source-retirement-v1.json",
