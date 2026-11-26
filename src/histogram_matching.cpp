@@ -10,15 +10,16 @@
 #include <cstring>
 #include <limits>
 #include <memory>
-#include <numeric>
 #include <stdexcept>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 namespace skimagexx {
 #ifdef SKIMAGEXX_AVX2
 namespace simd {
 std::size_t histogram_keys(const void*,std::uint64_t*,std::size_t,PixelType,std::size_t,unsigned&);
+void histogram_key_bounds(const std::uint64_t*,std::size_t,std::uint64_t&,std::uint64_t&);
 std::size_t rank_dense_labels(const void*,void*,std::size_t,std::uint64_t,const std::size_t*,PixelType,std::size_t);
 }
 #endif
@@ -80,13 +81,23 @@ struct WideEntry {
     std::size_t position;
     std::uint64_t key() const {return bits;}
 };
+struct CompactEntry {
+    std::uint32_t bits;
+    std::uint32_t position;
+    std::uint64_t key() const {return bits;}
+};
+static_assert(sizeof(CompactEntry)==8);
+bool compact_keys(PixelType type) {
+    return type==PixelType::float32 || type==PixelType::uint32 || type==PixelType::uint16 ||
+        type==PixelType::uint8 || type==PixelType::boolean;
+}
 template<class Entry> Entry indexed_key(std::uint64_t key,std::size_t position) {
     if constexpr(std::is_same_v<Entry,Packed>) {
         Packed entry;
         std::memcpy(entry.words.data(),&key,sizeof(key));
         entry.position=std::uint32_t(position);
         return entry;
-    } else return {key,position};
+    } else return {decltype(Entry::bits)(key),decltype(Entry::position)(position)};
 }
 constexpr auto entry_key=[](const auto& entry){return entry.key();};
 double value_from_key(std::uint64_t key,PixelType type) {
@@ -112,7 +123,7 @@ struct Distribution {
     std::uint64_t low=0;
     std::uint64_t high=0;
     bool dense=false;
-    std::vector<std::uint64_t> hash_keys;
+    std::vector<std::uint16_t> slots;
     std::vector<std::size_t> hash_positions;
 };
 
@@ -214,68 +225,75 @@ template<class KeyAt> bool high_cardinality(KeyAt key_at,bool require_wide_span=
     return false;
 }
 
-template<class T,class Key>
-int scatter_msd(const T* values,T* target,std::size_t count,std::array<std::size_t,256>& ends,Key key) {
-    const auto first=key(values[0]);
-    std::uint64_t differences=0;
-    for(std::size_t i=0;i<count;++i)differences|=first^key(values[i]);
-    if(!differences)return -1;
-    int shift=56;
-    while(!(differences>>shift))shift-=8;
-    for(std::size_t i=0;i<count;++i)++ends[(key(values[i])>>shift)&255];
-    std::array<std::size_t,256> next;
-    std::exclusive_scan(ends.begin(),ends.end(),next.begin(),std::size_t(0));
-    for(std::size_t bin=0;bin<256;++bin)ends[bin]+=next[bin];
-    for(std::size_t i=0;i<count;++i)target[next[(key(values[i])>>shift)&255]++]=values[i];
-    return shift;
+template<unsigned DigitBits,class Offset,std::size_t... Pass>
+void count_radix_digits(std::uint64_t key,std::uint64_t different,
+    std::array<std::array<Offset,std::size_t(1)<<DigitBits>,sizeof...(Pass)>& histograms,
+    std::index_sequence<Pass...>) {
+    constexpr auto mask=(std::size_t(1)<<DigitBits)-1;
+    const auto count_digit=[&](auto pass) {
+        constexpr auto shift=decltype(pass)::value*DigitBits;
+        if((different>>shift)&mask)++histograms[decltype(pass)::value][(key>>shift)&mask];
+    };
+    (count_digit(std::integral_constant<std::size_t,Pass>{}),...);
 }
 
-template<class T,class Key>
-void radix_msd(T* values,T* scratch,std::size_t count,Key key) {
-    std::array<std::size_t,256> ends{};
-    const int shift=scatter_msd(values,scratch,count,ends,key);
-    if(shift<0)return;
-    if(!shift) {
-        std::copy_n(scratch,count,values);
-        return;
+template<unsigned DigitBits,unsigned KeyBits,class T,class Key>
+void radix_serial(std::vector<T>& values,Key key) {
+    constexpr std::size_t bins=std::size_t(1)<<DigitBits;
+    constexpr auto mask=bins-1;
+    constexpr auto max_passes=(KeyBits+DigitBits-1)/DigitBits;
+    using Offset=std::conditional_t<DigitBits==11,std::uint32_t,std::size_t>;
+    const auto count=values.size();
+    const auto first=key(values.front());
+    auto previous=first;
+    std::uint64_t different=0;
+    bool unordered=false;
+    for(const auto& entry:values) {
+        const auto current=key(entry);
+        different|=first^current;
+        unordered|=current<previous;
+        previous=current;
     }
-    const auto compare=[&](const auto& a,const auto& b){return key(a)<key(b);};
-    std::size_t begin=0;
-    for(auto end:ends) {
-        const auto size=end-begin;
-        if(size>64) {
-            std::array<std::size_t,256> inner_ends{};
-            const int inner_shift=scatter_msd(scratch+begin,values+begin,size,inner_ends,key);
-            if(inner_shift<0)std::copy_n(scratch+begin,size,values+begin);
-            if(inner_shift>0) {
-                auto start=begin;
-                for(auto offset:inner_ends) {
-                    const auto stop=begin+offset;
-                    if(stop-start>1)std::sort(values+start,values+stop,compare);
-                    start=stop;
-                }
-            }
-        } else if(size) {
-            std::copy_n(scratch+begin,size,values+begin);
-            if(size>1)std::sort(values+begin,values+end,compare);
+    if(!unordered)return;
+
+    // All digit histograms are invariant under permutation. Count them from
+    // the input once and omit digits that cannot change the order.
+    std::array<std::array<Offset,bins>,max_passes> histograms{};
+    for(const auto& entry:values)
+        count_radix_digits<DigitBits>(key(entry),different,histograms,std::make_index_sequence<max_passes>{});
+
+    std::unique_ptr<T[]> temporary(new T[count]);
+    auto* source=values.data();
+    auto* target=temporary.get();
+    for(unsigned shift=0;shift<KeyBits && different>>shift;shift+=DigitBits) {
+        if(!((different>>shift)&mask))continue;
+        auto& offsets=histograms[shift/DigitBits];
+        Offset position=0;
+        for(auto& offset:offsets) {
+            const auto frequency=offset;
+            offset=position;
+            position+=frequency;
         }
-        begin=end;
+        for(std::size_t i=0;i<count;++i)target[offsets[(key(source[i])>>shift)&mask]++]=source[i];
+        std::swap(source,target);
     }
+    if(source!=values.data())std::copy_n(source,count,values.data());
 }
 
-template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,Key key,int bytes=8) {
-    if(values.size()<2048) {
-        std::sort(values.begin(),values.end(),[&](const auto& a,const auto& b){return key(a)<key(b);});return;
-    }
+template<class T,class Key> void radix_sort(std::vector<T>& values,int workers,Key key,unsigned bits=64) {
+    if(values.size()<2)return;
     if(workers==1) {
-        std::unique_ptr<T[]> temporary(new T[values.size()]);
-        radix_msd(values.data(),temporary.get(),values.size(),key);
+        if(bits<=32) {
+            if(values.size()>=4096 && values.size()<=UINT32_MAX)radix_serial<11,32>(values,key);
+            else radix_serial<8,32>(values,key);
+        } else if(values.size()>=4096 && values.size()<65536)radix_serial<11,64>(values,key);
+        else radix_serial<8,64>(values,key);
         return;
     }
     std::vector<T> temporary(values.size());
     std::vector<std::size_t> counts(std::size_t(workers)*256),offsets(counts.size());
     std::vector<std::pair<std::size_t,std::size_t>> segments(std::size_t(workers),{0,0});
-    for(int shift=0;shift<bytes*8;shift+=8) {
+    for(unsigned shift=0;shift<bits;shift+=8) {
         std::fill(counts.begin(),counts.end(),0);
         std::fill(segments.begin(),segments.end(),std::pair<std::size_t,std::size_t>{0,0});
         detail::partition(values.size(),workers,[&](auto begin,auto end,auto worker) {
@@ -339,8 +357,14 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         result.low=type==PixelType::int8 ? sign64-128 : type==PixelType::int16 ? sign64-32768 : 0;
         result.high=type==PixelType::boolean ? 1 : type==PixelType::int8 ? sign64+127 : sign64+32767;
     } else {
-        const auto bounds=std::minmax_element(result.keys.begin(),result.keys.end());
-        result.low=*bounds.first;result.high=*bounds.second;
+#ifdef SKIMAGEXX_AVX2
+        if(count>=32 && has_avx2())simd::histogram_key_bounds(result.keys.data(),count,result.low,result.high);
+        else
+#endif
+        {
+            const auto bounds=std::minmax_element(result.keys.begin(),result.keys.end());
+            result.low=*bounds.first;result.high=*bounds.second;
+        }
     }
     require_nonnegative_keys(result.keys,type,require_nonnegative);
     const auto span=result.high-result.low;
@@ -360,32 +384,40 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         return result;
     }
     if(count>=4096 && !high_cardinality([&](auto i){return result.keys[i];})) {
-        result.hash_keys.resize(8192);result.hash_positions.assign(8192,0);
+        std::vector<std::uint64_t> hash_keys(8192);
+        std::vector<std::size_t> positions(8192);
+        if(source)result.slots.resize(count);
         bool complete=true;
-        for(auto key:result.keys) {
-            const auto slot=hash_slot(key,result.hash_keys,result.hash_positions);
-            if(!result.hash_positions[slot]) {
+        for(std::size_t i=0;i<count;++i) {
+            const auto key=result.keys[i];
+            const auto slot=hash_slot(key,hash_keys,positions);
+            if(!positions[slot]) {
                 if(result.counts.size()==4096){complete=false;break;}
-                result.hash_keys[slot]=key;result.hash_positions[slot]=result.counts.size()+1;
+                hash_keys[slot]=key;positions[slot]=result.counts.size()+1;
                 result.counts.push_back(0);
             }
-            ++result.counts[result.hash_positions[slot]-1];
+            ++result.counts[positions[slot]-1];
+            if(source)result.slots[i]=std::uint16_t(slot);
         }
         if(complete) {
             std::vector<std::uint64_t> unique;
-            for(std::size_t i=0;i<result.hash_keys.size();++i)if(result.hash_positions[i])unique.push_back(result.hash_keys[i]);
-            std::sort(unique.begin(),unique.end());
+            unique.reserve(result.counts.size());
+            for(std::size_t i=0;i<hash_keys.size();++i)if(positions[i])unique.push_back(hash_keys[i]);
+            radix_sort(unique,1,[](auto key){return key;});
             auto previous=std::move(result.counts);result.counts.clear();result.counts.reserve(unique.size());
             if(!source && values)result.values.reserve(unique.size());
             for(std::size_t i=0;i<unique.size();++i) {
-                const auto slot=hash_slot(unique[i],result.hash_keys,result.hash_positions);
-                result.counts.push_back(previous[result.hash_positions[slot]-1]);
+                const auto slot=hash_slot(unique[i],hash_keys,positions);
+                result.counts.push_back(previous[positions[slot]-1]);
                 if(!source && values)result.values.push_back(value_from_key(unique[i],type));
-                result.hash_positions[slot]=i+1;
+                positions[slot]=i+1;
             }
+            if(source)result.hash_positions=std::move(positions);
+            std::vector<std::uint64_t>().swap(result.keys);
             return result;
         }
-        result.hash_keys.clear();result.hash_positions.clear();result.counts.clear();
+        std::vector<std::uint16_t>().swap(result.slots);
+        result.counts.clear();
     }
     if(source) {
         result.counts.reserve(count);result.ends.reserve(count);
@@ -393,7 +425,7 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
             std::vector<std::uint64_t> packed(count);
             for(std::size_t i=0;i<count;++i)packed[i]=((result.keys[i]-result.low)<<32)|std::uint64_t(i);
             std::vector<std::uint64_t>().swap(result.keys);
-            radix_sort(packed,workers,[](auto value){return value>>32;},4);
+            radix_sort(packed,workers,[](auto value){return value>>32;},32);
             result.order.resize(count);
             for(std::size_t i=0;i<count;) {
                 const auto start=i,key=packed[i]>>32;
@@ -415,7 +447,7 @@ Distribution distribution(const void* input,std::size_t count,std::ptrdiff_t pix
         }
     } else {
         result.counts.reserve(count);if(values)result.values.reserve(count);
-        radix_sort(result.keys,workers,[](auto key){return key;},result.high<=UINT32_MAX ? 4 : 8);
+        radix_sort(result.keys,workers,[](auto key){return key;},result.high<=UINT32_MAX ? 32 : 64);
         for(std::size_t i=0;i<count;) {
             const auto start=i,key=result.keys[i];
             while(i<count && result.keys[i]==key)++i;
@@ -574,10 +606,11 @@ std::vector<double> interpolate_quantiles(const Distribution& source,const Distr
     return mapped;
 }
 
+template<class Entry>
 unsigned match_sorted(const void* source,const void* reference,void* output,std::size_t count,std::size_t reference_count,
     std::size_t channels,std::size_t channel,PixelType st,PixelType rt,HistogramMatchingStrides strides,
     bool unsigned_source,Writer write,bool half_round,bool swap_output) {
-    std::vector<Packed> entries;
+    std::vector<Entry> entries;
     entries.reserve(count);
     std::uint64_t source_keys[1024];
     const auto source_offset=std::ptrdiff_t(channel)*strides.source_channels;
@@ -585,16 +618,16 @@ unsigned match_sorted(const void* source,const void* reference,void* output,std:
         const auto size=std::min(std::size(source_keys),count-begin);
         fill_keys(source,source_keys,size,strides.source_pixels,
             std::ptrdiff_t(begin)*strides.source_pixels+source_offset,st,1);
-        for(std::size_t i=0;i<size;++i)entries.push_back(indexed_key<Packed>(source_keys[i],begin+i));
+        for(std::size_t i=0;i<size;++i)entries.push_back(indexed_key<Entry>(source_keys[i],begin+i));
         begin+=size;
     }
-    radix_sort(entries,1,entry_key);
+    radix_sort(entries,1,entry_key,std::is_same_v<Entry,CompactEntry> ? 32 : 64);
 
     std::vector<std::uint64_t> keys(reference_count);
     fill_keys(reference,keys.data(),reference_count,strides.reference_pixels,
         std::ptrdiff_t(channel)*strides.reference_channels,rt,1);
     require_nonnegative_keys(keys,rt,unsigned_source);
-    radix_sort(keys,1,[](auto key){return key;});
+    radix_sort(keys,1,[](auto key){return key;},compact_keys(rt) ? 32 : 64);
     auto interpolate=quantile_interpolator(reference_count,[&,end=std::size_t(0)]() mutable {
         const auto key=keys[end++];
         while(end<keys.size() && keys[end]==key)++end;
@@ -635,10 +668,8 @@ template<class T> void apply_floating(const Distribution& source,const T* mapped
         });
     } else if(!source.hash_positions.empty()) {
         detail::partition(count,workers,[&](auto begin,auto end,auto) {
-            for(auto i=begin;i<end;++i) {
-                const auto slot=hash_slot(source.keys[i],source.hash_keys,source.hash_positions);
-                output[i*channels+channel]=mapped[source.hash_positions[slot]-1];
-            }
+            for(auto i=begin;i<end;++i)
+                output[i*channels+channel]=mapped[source.hash_positions[source.slots[i]]-1];
         });
     } else {
         detail::partition(groups,workers,[&](auto begin,auto end,auto) {
@@ -701,7 +732,8 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
             fill_keys(source,sample,std::size(sample),strides.source_pixels,source_offset,st,1);
             if(high_cardinality([&](auto i){return sample[i];},true)) {
                 const auto sorted_write=ot==PixelType::float64 && !half_round && !swap_output ? nullptr : write;
-                const auto notice=match_sorted(source,reference,output,count,reference_count,channels,channel,st,rt,
+                const auto match=compact_keys(st) ? match_sorted<CompactEntry> : match_sorted<Packed>;
+                const auto notice=match(source,reference,output,count,reference_count,channels,channel,st,rt,
                     strides,unsigned_source,sorted_write,half_round,swap_output);
                 if(channel_flags)channel_flags[channel]=notice;
                 flags|=notice;
@@ -711,8 +743,6 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
         auto a=distribution(source,count,strides.source_pixels,strides.source_channels,channel,st,true,false,workers);
         auto b=distribution(reference,reference_count,strides.reference_pixels,strides.reference_channels,channel,rt,false,unsigned_source,workers);
         std::vector<std::uint64_t>().swap(b.keys);
-        std::vector<std::uint64_t>().swap(b.hash_keys);
-        std::vector<std::size_t>().swap(b.hash_positions);
         auto mapped=interpolate_quantiles(a,b,count,reference_count);
         std::vector<std::size_t>().swap(b.counts);
         std::vector<std::size_t>().swap(a.counts);
@@ -766,8 +796,7 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
             detail::partition(count,workers,[&](auto begin,auto end,auto worker) {
                 unsigned local=0;
                 for(auto i=begin;i<end;++i) {
-                    const auto slot=hash_slot(a.keys[i],a.hash_keys,a.hash_positions);
-                    local|=write(output,i*channels+channel,mapped[a.hash_positions[slot]-1],half_round,swap_output);
+                    local|=write(output,i*channels+channel,mapped[a.hash_positions[a.slots[i]]-1],half_round,swap_output);
                 }
                 notices[worker]=local;
             });
@@ -801,9 +830,11 @@ template<class Assign> void with_rank_labels(PixelType type,void* output,Assign 
 template<class Entry>
 void rank_sort_and_emit(std::vector<Entry>& entries,int workers,PixelType label_type,void* output,
     std::vector<std::size_t>& representatives) {
-    radix_sort(entries,workers,entry_key);
+    constexpr auto bits=std::is_same_v<Entry,CompactEntry> ? 32 : 64;
+    radix_sort(entries,workers,entry_key,bits);
     const auto count=entries.size();
     if(workers==1) {
+        representatives.reserve(count);
         with_rank_labels(label_type,output,[&](auto* labels) {
             using U=std::remove_pointer_t<decltype(labels)>;
             auto previous=entries.front().key();
@@ -813,8 +844,6 @@ void rank_sort_and_emit(std::vector<Entry>& entries,int workers,PixelType label_
                 if(key!=previous) {
                     representatives.push_back(entry.position);
                     previous=key;
-                } else if(count>=2048) {
-                    representatives.back()=std::min(representatives.back(),std::size_t(entry.position));
                 }
                 labels[entry.position]=U(representatives.size()-1);
             }
@@ -921,27 +950,32 @@ bool rank_entries(const void* input,std::size_t count,PixelType type,KeyReader r
         if(!high_cardinality([&](auto i){return entries[i].key();})) {
             std::vector<std::uint64_t> keys(8192);
             std::vector<std::size_t> positions(8192,0);
-            std::size_t unique_count=0;
-            for(const auto& entry:entries) {
+            std::size_t unique_count=0,visited=0;
+            for(;visited<count;++visited) {
+                auto& entry=entries[visited];
                 const auto key=entry.key();
                 const auto slot=hash_slot(key,keys,positions);
                 if(!positions[slot]) {
-                    if(unique_count==4096){++unique_count;break;}
-                    keys[slot]=key;positions[slot]=std::size_t(entry.position)+1;++unique_count;
+                    if(unique_count==4096)break;
+                    keys[slot]=key;positions[slot]=visited+1;++unique_count;
                 }
+                entry.position=decltype(entry.position)(slot);
             }
-            if(unique_count<=4096) {
+            if(visited==count) {
                 std::vector<Entry> unique;unique.reserve(unique_count);
                 for(std::size_t slot=0;slot<keys.size();++slot)
                     if(positions[slot])unique.push_back(indexed_key<Entry>(keys[slot],positions[slot]-1));
-                std::sort(unique.begin(),unique.end(),[](const auto& a,const auto& b){return a.key()<b.key();});
+                radix_sort(unique,1,entry_key,std::is_same_v<Entry,CompactEntry> ? 32 : 64);
                 for(const auto& entry:unique) {
                     representatives.push_back(entry.position);
                     positions[hash_slot(entry.key(),keys,positions)]=representatives.size();
                 }
-                emit_table([&](auto i){return positions[hash_slot(entries[i].key(),keys,positions)]-1;});
+                emit_table([&](auto i){return positions[entries[i].position]-1;});
                 return true;
             }
+            // The sample underestimated cardinality. Restore the original
+            // positions before passing the records to the stable sort.
+            for(std::size_t i=0;i<visited;++i)entries[i].position=decltype(entries[i].position)(i);
         }
     }
     rank_sort_and_emit(entries,workers,label_type,output,representatives);
@@ -968,7 +1002,10 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
 #endif
     for(std::size_t i=1;i<count;++i)if(std::memcmp(input,static_cast<const unsigned char*>(input)+i*bytes,bytes)){uniform=false;break;}
     if(uniform){std::memset(output,0,count*pixel_size(label_type));representatives.assign(1,0);return true;}
-    if(count<=UINT32_MAX)return rank_entries<Packed>(input,count,type,read,workers,output,label_type,representatives);
+    if(count<=UINT32_MAX) {
+        if(compact_keys(type))return rank_entries<CompactEntry>(input,count,type,read,workers,output,label_type,representatives);
+        return rank_entries<Packed>(input,count,type,read,workers,output,label_type,representatives);
+    }
     return rank_entries<WideEntry>(input,count,type,read,workers,output,label_type,representatives);
 }
 }

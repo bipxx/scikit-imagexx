@@ -1,4 +1,5 @@
 #include "simd.hpp"
+#include <algorithm>
 #include <immintrin.h>
 #include <cstring>
 #include <limits>
@@ -11,9 +12,11 @@ std::size_t rank_dense_labels(const void* input,void* output,std::size_t count,s
     if(type!=PixelType::uint16 && type!=PixelType::uint32 && type!=PixelType::uint64)return 0;
     const auto step=static_cast<long long>(entry_bytes);
     const auto offsets=_mm256_set_epi64x(3*step,2*step,step,0),base=_mm256_set1_epi64x(static_cast<long long>(low));
+    const auto key_mask=_mm256_set1_epi64x(entry_bytes==8 ? UINT32_MAX : -1LL);
     const auto* entries=static_cast<const unsigned char*>(input);std::size_t i=0;
     for(;i+4<=count;i+=4) {
-        const auto keys=_mm256_i64gather_epi64(reinterpret_cast<const long long*>(entries+i*entry_bytes),offsets,1);
+        const auto keys=_mm256_and_si256(key_mask,
+            _mm256_i64gather_epi64(reinterpret_cast<const long long*>(entries+i*entry_bytes),offsets,1));
         const auto ranks=_mm256_i64gather_epi64(reinterpret_cast<const long long*>(table),_mm256_sub_epi64(keys,base),8);
         if(type==PixelType::uint64)_mm256_storeu_si256(reinterpret_cast<__m256i*>(static_cast<std::uint64_t*>(output)+i),ranks);
         else {
@@ -70,6 +73,15 @@ template<class T> std::size_t lookup(const std::uint64_t* input,void* output,std
     for(;i+4<=count;i+=4) {
         const auto indices=_mm256_sub_epi64(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(input+i)),base);
         const auto values=_mm256_i64gather_pd(table,indices,8);
+        if(stride==1) {
+            if constexpr(std::is_same_v<T,double>) {
+                _mm256_storeu_pd(target+i,values);
+                continue;
+            } else if constexpr(std::is_same_v<T,float>) {
+                _mm_storeu_ps(target+i,_mm256_cvtpd_ps(values));
+                continue;
+            }
+        }
         alignas(32) T lanes[4];
         if constexpr(std::is_same_v<T,double>)_mm256_store_pd(lanes,values);
         else if constexpr(std::is_same_v<T,float>)_mm_store_ps(lanes,_mm256_cvtpd_ps(values));
@@ -101,6 +113,32 @@ void rank_edges(__m256i zero,__m256i nan,__m256i negative,
     }
 }
 
+template<class T>
+std::size_t integer_keys(const void* source,std::uint64_t* output,std::size_t count,std::size_t stride) {
+    const auto* input=static_cast<const unsigned char*>(source);
+    const auto step=static_cast<long long>(stride);
+    const auto offsets64=_mm256_setr_epi64x(0,step,2*step,3*step);
+    const auto offsets32=_mm_setr_epi32(0,int(step),int(2*step),int(3*step));
+    const auto sign=_mm256_set1_epi64x(INT64_MIN);
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto* block=input+i*stride*sizeof(T);
+        __m256i keys;
+        if constexpr(sizeof(T)==4) {
+            const auto bits=stride==1 ? _mm_loadu_si128(reinterpret_cast<const __m128i*>(block)) :
+                _mm_i32gather_epi32(reinterpret_cast<const int*>(block),offsets32,4);
+            if constexpr(std::is_signed_v<T>)keys=_mm256_cvtepi32_epi64(bits);
+            else keys=_mm256_cvtepu32_epi64(bits);
+        } else {
+            keys=stride==1 ? _mm256_loadu_si256(reinterpret_cast<const __m256i*>(block)) :
+                _mm256_i64gather_epi64(reinterpret_cast<const long long*>(block),offsets64,8);
+        }
+        if constexpr(std::is_signed_v<T>)keys=_mm256_xor_si256(keys,sign);
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),keys);
+    }
+    return i;
+}
+
 template<bool DetectRankEdges>
 std::size_t histogram_keys_impl(const void* input,std::uint64_t* output,std::size_t count,PixelType type,
     std::size_t stride,unsigned* flags) {
@@ -110,6 +148,10 @@ std::size_t histogram_keys_impl(const void* input,std::uint64_t* output,std::siz
     case PixelType::int8:return small_keys<std::int8_t>(input,output,count,stride);
     case PixelType::uint16:return small_keys<std::uint16_t>(input,output,count,stride);
     case PixelType::int16:return small_keys<std::int16_t>(input,output,count,stride);
+    case PixelType::uint32:return integer_keys<std::uint32_t>(input,output,count,stride);
+    case PixelType::int32:return integer_keys<std::int32_t>(input,output,count,stride);
+    case PixelType::uint64:return integer_keys<std::uint64_t>(input,output,count,stride);
+    case PixelType::int64:return integer_keys<std::int64_t>(input,output,count,stride);
     default:break;
     }
     std::size_t i=0;
@@ -162,6 +204,25 @@ std::size_t histogram_keys(const void* input,std::uint64_t* output,std::size_t c
 std::size_t histogram_keys(const void* input,std::uint64_t* output,std::size_t count,PixelType type,
     std::size_t stride,unsigned& flags) {
     return histogram_keys_impl<true>(input,output,count,type,stride,&flags);
+}
+void histogram_key_bounds(const std::uint64_t* keys,std::size_t count,std::uint64_t& low,std::uint64_t& high) {
+    const auto sign=_mm256_set1_epi64x(INT64_MIN);
+    auto minimum=_mm256_set1_epi64x(INT64_MAX),maximum=sign;
+    std::size_t i=0;
+    for(;i+4<=count;i+=4) {
+        const auto biased=_mm256_xor_si256(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(keys+i)),sign);
+        minimum=_mm256_blendv_epi8(minimum,biased,_mm256_cmpgt_epi64(minimum,biased));
+        maximum=_mm256_blendv_epi8(maximum,biased,_mm256_cmpgt_epi64(biased,maximum));
+    }
+    alignas(32) std::uint64_t lows[4],highs[4];
+    _mm256_store_si256(reinterpret_cast<__m256i*>(lows),_mm256_xor_si256(minimum,sign));
+    _mm256_store_si256(reinterpret_cast<__m256i*>(highs),_mm256_xor_si256(maximum,sign));
+    low=*std::min_element(lows,lows+4);
+    high=*std::max_element(highs,highs+4);
+    for(;i<count;++i) {
+        low=std::min(low,keys[i]);
+        high=std::max(high,keys[i]);
+    }
 }
 std::size_t histogram_lookup(const std::uint64_t* keys,void* output,std::size_t count,std::uint64_t low,
     const double* table,PixelType type,std::size_t stride) {
