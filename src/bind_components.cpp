@@ -160,10 +160,14 @@ void bind_components(py::module_& module) {
         py::array old_keys(dtype,map_shape);
         py::array values(output_dtype,map_shape);
         py::array output(output_dtype,dimensions(image));
+        auto* old_keys_data=old_keys.mutable_data();
+        auto* values_data=values.mutable_data();
+        auto* output_data=output.mutable_data();
+        const auto output_bytes=std::size_t(output_dtype.itemsize());
         {
             py::gil_scoped_release release;
             skimagexx::components_relabel_write_fast(input,count,bytes,keys,std::uint64_t(offset),mapping,
-                old_keys.mutable_data(),values.mutable_data(),output.mutable_data(),std::size_t(output_dtype.itemsize()));
+                old_keys_data,values_data,output_data,output_bytes);
         }
         return py::make_tuple(output,old_keys,values);
     },py::arg("image").noconvert(),py::arg("offset"));
@@ -172,9 +176,11 @@ void bind_components(py::module_& module) {
            image.itemsize()>py::ssize_t(sizeof(std::intptr_t)) || !fast_consumer_input(image,true))return py::none();
         const auto plan=view(image,image.dtype().kind()=='b');
         py::array output(image.dtype(),dimensions(image));
+        const auto item_bytes=std::size_t(image.itemsize());
+        auto* out_data=output.mutable_data();
         {
             py::gil_scoped_release release;
-            skimagexx::components_clear_border_fast(plan,output.mutable_data(),std::size_t(image.itemsize()),std::size_t(buffer)+1);
+            skimagexx::components_clear_border_fast(plan,out_data,item_bytes,std::size_t(buffer)+1);
         }
         return output;
     },py::arg("image").noconvert(),py::arg("buffer_size"));
@@ -187,11 +193,13 @@ void bind_components(py::module_& module) {
            dtype.itemsize()>py::ssize_t(sizeof(std::intptr_t)))return py::none();
         const auto plan=view(image,boolean);
         py::array output(dtype,dimensions(image));
+        const auto item_bytes=std::size_t(dtype.itemsize());
+        auto* out_data=output.mutable_data();
         bool single_label;
         {
             py::gil_scoped_release release;
-            single_label=skimagexx::components_remove_small_objects_fast(plan,output.mutable_data(),
-                std::size_t(dtype.itemsize()),double(threshold),connectivity);
+            single_label=skimagexx::components_remove_small_objects_fast(plan,out_data,
+                item_bytes,double(threshold),connectivity);
         }
         return py::make_tuple(output,single_label);
     },py::arg("image").noconvert(),py::arg("max_size"),py::arg("connectivity"));
