@@ -10,11 +10,6 @@
 namespace skimagexx {
 namespace {
 
-struct Pixel {
-    int row;
-    int column;
-};
-
 constexpr int max_circle_radius = 64;
 constexpr std::size_t max_circle_taps = 8 * (max_circle_radius + 1);
 
@@ -63,12 +58,17 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
         (output_begin < radii_end && reinterpret_cast<std::uintptr_t>(radii.data()) < output_end))
         throw std::invalid_argument("hough_circle output overlaps an input");
 
-    std::vector<Pixel> nonzero;
+    // A halo also handles clipped votes without a bounds check on each tap.
+    const int pad = *std::max_element(radii.begin(), radii.end());
+    const int pitch = width + 2 * pad;
+    const int area = plane->height * plane->width;
+    std::vector<int> nonzero;
     for (int row = 0; row < height; ++row) {
         const auto* image_row = image + row * width;
+        const int origin = (row + pad) * pitch + pad;
         for (int col = 0; col < width; ++col) {
             if (image_row[col])
-                nonzero.push_back({row, col});
+                nonzero.push_back(origin + col);
         }
     }
     if (nonzero.empty()) {
@@ -76,11 +76,11 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
         return;
     }
 
-    const int pitch = plane->width;
-    const int area = plane->height * pitch;
+    std::vector<std::uint16_t> counts;
     std::array<const double*, max_circle_radius + 1> completed{};
     std::array<std::intptr_t, max_circle_taps> rows, columns;
     std::array<int, max_circle_taps> shifts;
+    std::array<double, max_circle_taps + 1> values;
     for (std::size_t i = 0; i < radii.size(); ++i) {
         const int radius = radii[i];
         auto* layer = output + i * area;
@@ -89,7 +89,6 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
             continue;
         }
         completed[radius] = layer;
-        std::fill_n(layer, area, 0.0);
 
         detail::CirclePerimeter circle;
         if (!detail::prepare_circle_perimeter({0, 0, radius}, circle))
@@ -99,21 +98,33 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
         for (std::size_t k = 0; k < taps; ++k)
             shifts[k] = int(rows[k]) * pitch + int(columns[k]);
         const double increment = normalize ? 1.0 / double(taps) : 1.0;
-        for (const auto& pixel : nonzero) {
-            auto* center = layer + (pixel.row + plane->padding) * pitch + pixel.column + plane->padding;
-            if (plane->padding ||
-                (pixel.row >= radius && pixel.row < height - radius &&
-                 pixel.column >= radius && pixel.column < width - radius)) {
-                for (std::size_t k = 0; k < taps; ++k)
-                    center[shifts[k]] += increment;
+        // Each tap contributes at most once to any cell. Repeated addition
+        // gives each count the same rounding as the floating-point vote loop.
+        values[0] = 0.0;
+        for (std::size_t k = 0; k < taps; ++k)
+            values[k + 1] = values[k] + increment;
+        if (radius == 0) {
+            if (full_output) {
+                std::fill_n(layer, area, 0.0);
+                for (int center : nonzero) layer[center] = values[taps];
             } else {
-                for (std::size_t k = 0; k < taps; ++k) {
-                    const int row = pixel.row + int(rows[k]);
-                    const int col = pixel.column + int(columns[k]);
-                    if (unsigned(row) < unsigned(height) && unsigned(col) < unsigned(width))
-                        center[shifts[k]] += increment;
-                }
+                for (std::size_t p = 0; p < image_count; ++p)
+                    layer[p] = image[p] ? values[taps] : 0.0;
             }
+            continue;
+        }
+        counts.assign(std::size_t(height + 2 * pad) * pitch, 0);
+        for (int index : nonzero) {
+            auto* center = counts.data() + index;
+            for (std::size_t k = 0; k < taps; ++k)
+                ++center[shifts[k]];
+        }
+        const int crop = full_output ? 0 : pad;
+        for (int row = 0; row < plane->height; ++row) {
+            const auto* source = counts.data() + (row + crop) * pitch + crop;
+            auto* dest = layer + row * plane->width;
+            for (int col = 0; col < plane->width; ++col)
+                dest[col] = values[source[col]];
         }
     }
 }

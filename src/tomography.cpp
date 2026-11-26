@@ -6,6 +6,7 @@
 #include "fft_internal.hpp"
 
 #include <algorithm>
+#include <cfenv>
 #include <cmath>
 #include <complex>
 #include <cstdint>
@@ -68,29 +69,13 @@ std::pair<int, int> axis_span(int size, T lower, T upper, const Coordinate& coor
 }
 
 template<class T>
-T bilinear(const T* square, int size, T r, T c) {
+T bilinear(const T* square, int pitch, T r, T c) {
     const int row = floor_index(r);
     const int column = floor_index(c);
     const T dr = r - T(row), dc = c - T(column);
-    T tl, tr, bl, br;
-    if (unsigned(row) < unsigned(size - 1) && unsigned(column) < unsigned(size - 1)) {
-        const auto* top = square + std::size_t(row) * size + column;
-        tl = top[0];
-        tr = top[1];
-        bl = top[size];
-        br = top[size + 1];
-    } else {
-        const auto read = [&](int y, int x) {
-            if (unsigned(y) >= unsigned(size) || unsigned(x) >= unsigned(size)) return T(0);
-            return square[std::size_t(y) * size + x];
-        };
-        tl = read(row, column);
-        tr = read(row, column + 1);
-        bl = read(row + 1, column);
-        br = read(row + 1, column + 1);
-    }
-    const double top = (T(1) - dc) * tl + dc * tr;
-    const double bottom = (T(1) - dc) * bl + dc * br;
+    const auto* pixels = square + std::ptrdiff_t(row) * pitch + column;
+    const double top = (T(1) - dc) * pixels[0] + dc * pixels[1];
+    const double bottom = (T(1) - dc) * pixels[pitch] + dc * pixels[pitch + 1];
     return T((T(1) - dr) * top + dr * bottom);
 }
 
@@ -424,52 +409,79 @@ template<class T>
 void radon_into(const T* image, int rows, int columns, const RadonRotation* rotations,
                 int angles, bool circle, T* sinogram) {
     const int size = radon_detector_size(rows, columns, circle);
-    std::vector<T> prepared;
-    if (rows != size || columns != size) {
-        prepared.resize(std::size_t(size) * size);
-        if (circle) {
-            const int r0 = (rows - size + 1) / 2, c0 = (columns - size + 1) / 2;
-            for (int r = 0; r < size; ++r) {
-                std::copy_n(image + std::size_t(r + r0) * columns + c0, size,
-                            prepared.data() + std::size_t(r) * size);
-            }
-        } else {
-            const int r0 = size / 2 - rows / 2, c0 = size / 2 - columns / 2;
-            for (int r = 0; r < rows; ++r) {
-                std::copy_n(image + std::size_t(r) * columns, columns,
-                            prepared.data() + std::size_t(r + r0) * size + c0);
-            }
-        }
-        image = prepared.data();
+    const int pitch = size + 2;
+    std::vector<T> prepared(std::size_t(pitch) * pitch);
+    auto* square = prepared.data() + pitch + 1;
+    const int source_row = circle ? (rows - size + 1) / 2 : 0;
+    const int source_col = circle ? (columns - size + 1) / 2 : 0;
+    const int target_row = circle ? 0 : size / 2 - rows / 2;
+    const int target_col = circle ? 0 : size / 2 - columns / 2;
+    const int copied_rows = circle ? size : rows, copied_cols = circle ? size : columns;
+    for (int r = 0; r < copied_rows; ++r) {
+        std::copy_n(image + std::size_t(r + source_row) * columns + source_col, copied_cols,
+                    square + std::size_t(r + target_row) * pitch + target_col);
     }
-    const int workers = detail::active_workers(std::size_t(size) * size * angles);
-    std::vector<T> workspace(std::size_t(workers) * size * 3);
+    int left = 0, top = 0, right = size - 1, bottom = size - 1;
+    if (std::fegetround() == FE_TONEAREST) {
+        // Inverse mapping can skip the zero exterior of the nonzero bounds.
+        // Keep a one-pixel margin for the bilinear interpolation taps.
+        left = size;
+        top = size;
+        right = bottom = -1;
+        for (int r = target_row; r < target_row + copied_rows; ++r) {
+            const auto* row = square + std::size_t(r) * pitch;
+            int first = target_col, last = target_col + copied_cols - 1;
+            while (first <= last && row[first] == T(0)) ++first;
+            if (first > last) continue;
+            while (row[last] == T(0)) --last;
+            left = std::min(left, first);
+            right = std::max(right, last);
+            top = std::min(top, r);
+            bottom = r;
+        }
+        if (bottom < 0) {
+            std::fill_n(sinogram, std::size_t(size) * angles, T(0));
+            return;
+        }
+    }
+    constexpr int cache_budget = 24 * 1024;
+    const int tile_size = std::min(angles, std::clamp(
+        cache_budget / (int(sizeof(T)) * size) - 2, 1, 8));
+    const int workers = std::min(angles, detail::active_workers(std::size_t(size) * size * angles));
+    std::vector<T> workspace(std::size_t(workers) * size * (tile_size + 2));
     detail::partition(std::size_t(angles), workers,
         [&](std::size_t begin, std::size_t end, std::size_t worker) {
-            auto* sums = workspace.data() + worker * size * 3;
-            auto* column_x = sums + size;
+            auto* tile = workspace.data() + worker * size * (tile_size + 2);
+            auto* column_x = tile + tile_size * size;
             auto* column_y = column_x + size;
-            for (auto k = begin; k < end; ++k) {
-                const auto& rotation = rotations[k];
-                const T cosine = T(rotation.cosine), sine = T(rotation.sine);
-                const T offset_x = T(rotation.column_offset), offset_y = T(rotation.row_offset);
-                std::fill_n(sums, size, T(0));
-                for (int c = 0; c < size; ++c) {
-                    column_x[c] = cosine * T(c);
-                    column_y[c] = -sine * T(c);
-                }
-                for (int r = 0; r < size; ++r) {
-                    const T row_x = sine * T(r), row_y = cosine * T(r);
-                    const auto x = [&](int c) { return (column_x[c] + row_x) + offset_x; };
-                    const auto y = [&](int c) { return (column_y[c] + row_y) + offset_y; };
-                    const auto [x_begin, x_end] = axis_span<false>(size, T(-1), T(size), x);
-                    const auto [y_begin, y_end] = axis_span<false>(size, T(-1), T(size), y);
-                    const int end = std::min(x_end, y_end);
-                    for (int c = std::max(x_begin, y_begin); c < end; ++c) {
-                        sums[c] += bilinear(image, size, y(c), x(c));
+            for (auto first = begin; first < end; first += tile_size) {
+                const auto last = std::min(first + tile_size, end);
+                for (auto k = first; k < last; ++k) {
+                    auto* sums = tile + (k - first) * size;
+                    const auto& rotation = rotations[k];
+                    const T cosine = T(rotation.cosine), sine = T(rotation.sine);
+                    const T offset_x = T(rotation.column_offset), offset_y = T(rotation.row_offset);
+                    std::fill_n(sums, size, T(0));
+                    for (int c = 0; c < size; ++c) {
+                        column_x[c] = cosine * T(c);
+                        column_y[c] = -sine * T(c);
+                    }
+                    for (int r = 0; r < size; ++r) {
+                        const T row_x = sine * T(r), row_y = cosine * T(r);
+                        const auto x = [&](int c) { return (column_x[c] + row_x) + offset_x; };
+                        const auto y = [&](int c) { return (column_y[c] + row_y) + offset_y; };
+                        const auto [x_begin, x_end] = axis_span<false>(size, T(left - 1), T(right + 1), x);
+                        const auto [y_begin, y_end] = axis_span<false>(size, T(top - 1), T(bottom + 1), y);
+                        const int stop = std::min(x_end, y_end);
+                        for (int c = std::max(x_begin, y_begin); c < stop; ++c) {
+                            sums[c] += bilinear(square, pitch, y(c), x(c));
+                        }
                     }
                 }
-                for (int c = 0; c < size; ++c) sinogram[std::size_t(c) * angles + k] = sums[c];
+                for (int c = 0; c < size; ++c) {
+                    auto* out = sinogram + std::size_t(c) * angles + first;
+                    for (auto k = first; k < last; ++k) out[k - first] = tile[(k - first) * size + c];
+                }
             }
         });
 }
@@ -508,33 +520,60 @@ void iradon_sart_into(const T* sinogram, int detectors, int angles, const T* the
     std::vector<std::size_t> window_offsets(std::size_t(detectors) + 1);
     const T center = T(detectors / 2), radius = T(detectors / 2 - 1);
     const auto windows = ray_windows(shifts, angles, detectors, center, radius, window_offsets);
-    std::vector<RayChord<T>> chords(detectors);
+    struct ActiveRay {
+        int detector;
+        RayChord<T> chord;
+    };
+    std::vector<ActiveRay> rays;
+    rays.reserve(detectors);
     const T* previous_shift = nullptr;
-    for (const auto k : order) {
-        const T radians = T(theta[k] / 180.0 * pi);
-        const double cosine = std::cos(double(radians)), sine = std::sin(double(radians));
-        if (!previous_shift || *previous_shift != shifts[k]) {
+    constexpr std::size_t cache_budget = 16 * 1024;
+    const auto input_address = reinterpret_cast<std::uintptr_t>(sinogram);
+    const auto image_address = reinterpret_cast<std::uintptr_t>(image);
+    const bool overlaps = input_address < image_address + count * sizeof(T) &&
+        image_address < input_address + std::size_t(detectors) * angles * sizeof(T);
+    const auto tile_size = overlaps ? std::size_t{1} : std::min(order.size(), std::clamp(
+        cache_budget / (sizeof(T) * detectors), std::size_t{1}, std::size_t{16}));
+    std::vector<T> projections(tile_size * detectors);
+    // Pack projections in golden-ratio order. Each still observes the image
+    // after the preceding projection has completed its update and clipping.
+    for (std::size_t first = 0; first < order.size(); first += tile_size) {
+        const auto block = std::min(tile_size, order.size() - first);
+        for (std::size_t i = 0; i < block; ++i) {
+            const auto k = order[first + i];
+            auto* projection = projections.data() + i * detectors;
             for (int detector = 0; detector < detectors; ++detector) {
-                chords[detector] = ray_chord(T(detector) + shifts[k], center, radius);
+                projection[detector] = sinogram[std::size_t(detector) * angles + k];
             }
-            previous_shift = shifts + k;
         }
-        for (int detector = 0; detector < detectors; ++detector) {
-            const auto& chord = chords[detector];
-            if (!chord.steps) continue;
-            const auto* window = windows.data() + window_offsets[std::size_t(chord.steps) / 2];
-            project_ray<true>(image, update.data(), detectors, cosine, sine, chord,
-                              sinogram[std::size_t(detector) * angles + k], samples.get(), window);
-        }
-        for (std::size_t i = 0; i < count; ++i) {
-            image[i] += relaxation * update[i];
-            update[i] = T(0);
-        }
-        if (clip) {
+        for (std::size_t j = 0; j < block; ++j) {
+            const auto k = order[first + j];
+            const auto* projection = projections.data() + j * detectors;
+            const T radians = T(theta[k] / 180.0 * pi);
+            const double cosine = std::cos(double(radians)), sine = std::sin(double(radians));
+            if (!previous_shift || *previous_shift != shifts[k]) {
+                rays.clear();
+                for (int detector = 0; detector < detectors; ++detector) {
+                    const auto chord = ray_chord(T(detector) + shifts[k], center, radius);
+                    if (chord.steps) rays.push_back({detector, chord});
+                }
+                previous_shift = shifts + k;
+            }
+            for (const auto& [detector, chord] : rays) {
+                const auto* window = windows.data() + window_offsets[std::size_t(chord.steps) / 2];
+                project_ray<true>(image, update.data(), detectors, cosine, sine, chord,
+                                  projection[detector], samples.get(), window);
+            }
             for (std::size_t i = 0; i < count; ++i) {
-                clipped_image[i] = std::min(std::max(image[i], clip[0]), clip[1]);
+                image[i] += relaxation * update[i];
+                update[i] = T(0);
             }
-            image = clipped_image;
+            if (clip) {
+                for (std::size_t i = 0; i < count; ++i) {
+                    clipped_image[i] = std::min(std::max(image[i], clip[0]), clip[1]);
+                }
+                image = clipped_image;
+            }
         }
     }
 }

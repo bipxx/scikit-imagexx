@@ -345,17 +345,16 @@ void hog_into(const Input* image, const HogOptions& o, Output* features, Output*
 
 namespace {
 
-struct DaisySample {
-    std::ptrdiff_t image_offset;
-    int descriptor_offset;
-    int row_offset;
+struct DaisyRowSample {
+    int row, column;
+    std::size_t descriptor_offset;
 };
 
 struct DaisyScale {
     double sigma;
-    std::vector<DaisySample> samples;
+    std::vector<DaisyRowSample> samples;
     std::vector<double> weights;
-    std::vector<int> sampled_rows;
+    std::vector<std::size_t> row_starts;
     std::vector<int> top, bottom, left, right;
 
     DaisyScale(double sigma, int rows, int cols) : sigma(sigma) {
@@ -423,38 +422,48 @@ void daisy_convolve(const T* const* sources, T* output, int cols, const std::vec
 }
 
 template<class T>
-void daisy_smooth(const T* histogram, T* vertical, T* filtered, const DaisyOptions& o,
-                  const DaisyScale& scale, const T** row_sources, T* padded_rows,
-                  std::size_t padded_stride, int threads, bool vectorized) {
+void daisy_sample_rows(const T* histogram, const DaisyOptions& o, const DaisyScale& scale,
+                       const T** row_sources, T* scratch, std::size_t scratch_stride,
+                       int output_columns, int width, T* output, int threads, bool vectorized) {
     const auto taps = scale.weights.size();
     const auto radius = static_cast<std::ptrdiff_t>(taps / 2);
-    detail::partition(scale.sampled_rows.size(), threads, [&](auto begin, auto end, auto worker) {
-        auto* sources = row_sources + worker * taps;
+    const bool normalize = o.norm != DaisyNorm::off;
+    detail::partition(scale.row_starts.size() - 1, threads, [&](auto begin, auto end, auto worker) {
         for (auto i = begin; i < end; ++i) {
-            const auto r = scale.sampled_rows[i];
-            const auto first = static_cast<std::ptrdiff_t>(r) - radius;
-            const auto last = first + static_cast<std::ptrdiff_t>(taps);
-            for (auto y = first; y < last; ++y) {
-                const auto reflected = y < 0 ? scale.top[y + radius] :
-                    y >= o.rows ? scale.bottom[y - o.rows] : y;
-                sources[y - first] = histogram + std::size_t(reflected) * o.cols;
+            const auto first_sample = scale.row_starts[i];
+            const int r = scale.samples[first_sample].row;
+            const auto* row = histogram + std::size_t(r) * o.cols;
+            if (taps) {
+                auto* sources = row_sources + worker * taps;
+                auto* padded = scratch + worker * scratch_stride;
+                auto* vertical = padded + radius;
+                auto* filtered = padded + o.cols + 2 * radius;
+                const auto first = static_cast<std::ptrdiff_t>(r) - radius;
+                for (std::size_t k = 0; k < taps; ++k) {
+                    const auto y = first + static_cast<std::ptrdiff_t>(k);
+                    const auto reflected = y < 0 ? scale.top[y + radius] :
+                        y >= o.rows ? scale.bottom[y - o.rows] : y;
+                    sources[k] = histogram + std::size_t(reflected) * o.cols;
+                }
+                daisy_convolve(sources, vertical, o.cols, scale.weights, vectorized);
+                for (std::ptrdiff_t k = 0; k < radius; ++k) {
+                    padded[k] = vertical[scale.left[k]];
+                    vertical[o.cols + k] = vertical[scale.right[k]];
+                }
+                for (std::size_t k = 0; k < taps; ++k) sources[k] = padded + k;
+                daisy_convolve(sources, filtered, o.cols, scale.weights, vectorized);
+                row = filtered;
             }
-            daisy_convolve(sources, vertical + std::size_t(r) * o.cols, o.cols, scale.weights, vectorized);
-        }
-    });
-    detail::partition(scale.sampled_rows.size(), threads, [&](auto begin, auto end, auto worker) {
-        auto* sources = row_sources + worker * taps;
-        auto* padded = padded_rows + worker * padded_stride;
-        for (std::size_t k = 0; k < taps; ++k) sources[k] = padded + k;
-        for (auto i = begin; i < end; ++i) {
-            const auto offset = std::size_t(scale.sampled_rows[i]) * o.cols;
-            const auto* row = vertical + offset;
-            std::copy_n(row, o.cols, padded + radius);
-            for (std::ptrdiff_t k = 0; k < radius; ++k) {
-                padded[k] = row[scale.left[k]];
-                padded[radius + o.cols + k] = row[scale.right[k]];
+            // Sample the filtered row while it is hot and apply the
+            // normalization offset before writing the descriptor.
+            for (auto j = first_sample; j < scale.row_starts[i + 1]; ++j) {
+                const auto& sample = scale.samples[j];
+                auto* dest = output + sample.descriptor_offset;
+                for (int c = 0; c < output_columns; ++c) {
+                    const T value = row[sample.column + c * o.step];
+                    dest[std::size_t(c) * width] = normalize ? value + T(1e-10) : value;
+                }
             }
-            daisy_convolve(sources, filtered + offset, o.cols, scale.weights, vectorized);
         }
     });
 }
@@ -497,8 +506,14 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
         });
         auto& scale = it == scales.end() ? scales.emplace_back(sigma, o.rows, o.cols) : *it;
         max_taps = std::max(max_taps, scale.weights.size());
+        const auto add_sample = [&](int y, int x, int group) {
+            for (int r = 0; r < oh; ++r) {
+                scale.samples.push_back({o.radius + y + r * o.step, o.radius + x,
+                                         std::size_t(r) * ow * width + group * o.orientations});
+            }
+        };
         if (ring == 0) {
-            scale.samples.push_back({0, 0, 0});
+            add_sample(0, 0, 0);
             continue;
         }
         for (int j = 0; j < o.histograms; ++j) {
@@ -506,21 +521,17 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
             const auto y = static_cast<int>(std::nearbyint(radii[ring - 1] * std::sin(theta)));
             const auto x = static_cast<int>(std::nearbyint(radii[ring - 1] * std::cos(theta)));
             const int group = 1 + (ring - 1) * o.histograms + j;
-            scale.samples.push_back({std::ptrdiff_t(y) * o.cols + x, group * o.orientations, y});
+            add_sample(y, x, group);
         }
     }
     for (auto& scale : scales) {
-        if (scale.weights.empty()) continue;
-        // Both passes produce the same set of output rows because the second
-        // pass is horizontal. Rows outside the ring grid are never sampled.
-        std::vector<bool> sampled(o.rows);
-        for (const auto& sample : scale.samples) {
-            const auto first = o.radius + sample.row_offset;
-            for (int r = 0; r < oh; ++r) sampled[first + r * o.step] = true;
+        std::sort(scale.samples.begin(), scale.samples.end(), [](const auto& a, const auto& b) {
+            return a.row < b.row;
+        });
+        for (std::size_t i = 0; i < scale.samples.size(); ++i) {
+            if (i == 0 || scale.samples[i - 1].row != scale.samples[i].row) scale.row_starts.push_back(i);
         }
-        for (int r = 0; r < o.rows; ++r) {
-            if (sampled[r]) scale.sampled_rows.push_back(r);
-        }
+        scale.row_starts.push_back(scale.samples.size());
     }
 
     const auto kappa = Output(o.orientations / pi);
@@ -541,14 +552,10 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
             }
         });
     }
-    const auto padded_stride = o.cols + (max_taps ? max_taps - 1 : 0);
+    const auto scratch_stride = max_taps ? 2 * std::size_t(o.cols) + max_taps - 1 : 0;
     std::vector<const Output*> row_sources(max_taps * threads);
-    std::unique_ptr<Output[]> vertical, filtered, padded_rows;
-    if (max_taps) {
-        vertical.reset(new Output[size]);
-        filtered.reset(new Output[size]);
-        padded_rows.reset(new Output[padded_stride * threads]);
-    }
+    std::unique_ptr<Output[]> scratch;
+    if (max_taps) scratch.reset(new Output[scratch_stride * threads]);
     const bool vectorized = max_taps && has_avx2();
     for (int first_bin = 0; first_bin < o.orientations; first_bin += batch) {
         const int count = std::min(batch, o.orientations - first_bin);
@@ -578,22 +585,8 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
         for (int b = 0; b < count; ++b) {
             const auto* histogram = planes.get() + b * size;
             for (const auto& scale : scales) {
-                const auto* smoothed = histogram;
-                if (!scale.weights.empty()) {
-                    daisy_smooth(histogram, vertical.get(), filtered.get(), o, scale, row_sources.data(),
-                                 padded_rows.get(), padded_stride, threads, vectorized);
-                    smoothed = filtered.get();
-                }
-                for (int r = 0; r < oh; ++r) {
-                    const auto* row = smoothed + std::size_t(r * o.step + o.radius) * o.cols + o.radius;
-                    auto* dest = output + std::size_t(r) * ow * width;
-                    for (int c = 0; c < ow; ++c) {
-                        const auto* center = row + c * o.step;
-                        for (const auto& sample : scale.samples)
-                            dest[sample.descriptor_offset + first_bin + b] = center[sample.image_offset];
-                        dest += width;
-                    }
-                }
+                daisy_sample_rows(histogram, o, scale, row_sources.data(), scratch.get(), scratch_stride,
+                                  ow, width, output + first_bin + b, threads, vectorized);
             }
         }
     }
@@ -603,7 +596,6 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
         auto* dest = output + i;
         Output total = 0;
         for (int k = 0; k < chunk; ++k) {
-            dest[k] += Output(1e-10);
             total += o.norm == DaisyNorm::l1 ? dest[k] : dest[k] * dest[k];
         }
         if (o.norm != DaisyNorm::l1) total = std::sqrt(total);

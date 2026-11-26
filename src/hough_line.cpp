@@ -148,8 +148,9 @@ void hough_line_dense(const std::vector<NonzeroRow>& rows,
     const auto num_distances = std::size_t(2 * offset + 1);
     constexpr auto cache_budget = 24 * 1024;
     const auto block_size = std::min(angles, std::clamp(
-        cache_budget / (num_distances * sizeof(std::uint32_t)), std::size_t(1), std::size_t(8)));
-    std::vector<std::uint32_t> votes(num_distances * block_size);
+        cache_budget / (num_distances * sizeof(std::uint32_t) * (use_simd ? 2 : 1)),
+        std::size_t(1), std::size_t(8)));
+    std::vector<std::uint32_t> votes(num_distances * block_size * (use_simd ? 2 : 1));
 #if SKIMAGEXX_HL_SSE2
     const __m128d sign_mask = _mm_set1_pd(-0.0);
     const __m128d half_v = _mm_set1_pd(0.5);
@@ -166,6 +167,8 @@ void hough_line_dense(const std::vector<NonzeroRow>& rows,
             const double sine = sines[angle];
 #if SKIMAGEXX_HL_SSE2
             const __m128d cos_v = _mm_set1_pd(cosine);
+            auto* HOUGH_LINE_RESTRICT odd_accum = votes.data() +
+                (use_simd ? block_size + local : local) * num_distances;
 #endif
             const double* col_ptr = columns;
             for (const auto& entry : rows) {
@@ -181,7 +184,8 @@ void hough_line_dense(const std::vector<NonzeroRow>& rows,
                         std::size_t d1 = 0;
                         distance_two(proj, offset_v, sign_mask, half_v, d0, d1);
                         ++col_accum[d0];
-                        ++col_accum[d1];
+                        // Separate adjacent pixels that frequently land in the same bin.
+                        ++odd_accum[d1];
                     }
                 }
 #endif
@@ -200,7 +204,13 @@ void hough_line_dense(const std::vector<NonzeroRow>& rows,
             auto* output = accumulator + distance * angles + first;
             for (std::size_t local = 0; local < block; ++local) {
                 auto& value = votes[local * num_distances + distance];
-                output[local] = value;
+                if (use_simd) {
+                    auto& odd = votes[(block_size + local) * num_distances + distance];
+                    output[local] = value + odd;
+                    odd = 0;
+                } else {
+                    output[local] = value;
+                }
                 value = 0;
             }
         }
