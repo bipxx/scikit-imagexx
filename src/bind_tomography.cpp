@@ -64,10 +64,11 @@ py::object forward(const py::array& a, const py::array& coordinates, bool circle
     auto* out = output.mutable_data();
     const auto* input = data<T>(a);
     const auto* values = data<double>(coordinates);
+    const auto input_count = a.size(), coordinate_count = coordinates.size();
     bool warn = false;
     const bool admissible = [&] {
         py::gil_scoped_release release;
-        if (!finite(input, a.size()) || !finite(values, coordinates.size())) return false;
+        if (!finite(input, input_count) || !finite(values, coordinate_count)) return false;
         std::vector<RadonRotation> rotations;
         rotations.reserve(angles);
         for (int k = 0; k < angles; ++k) {
@@ -99,10 +100,11 @@ py::object inverse(const py::array& a, const py::array& coordinates, int size, T
     auto* out = output.mutable_data();
     const auto* input = data<T>(a);
     const auto* values = data<double>(coordinates);
+    const auto input_count = a.size(), coordinate_count = coordinates.size();
     bool admissible;
     {
         py::gil_scoped_release release;
-        admissible = finite(input, a.size()) && finite(values, coordinates.size());
+        admissible = finite(input, input_count) && finite(values, coordinate_count);
         if (admissible) {
             iradon_into(input, detectors, angles, values, values + angles, size, filter, interpolation, circle, out);
         }
@@ -149,10 +151,11 @@ py::object sart(const py::array& a, const py::array& theta, const py::array& shi
     const auto* input = data<T>(a);
     const auto* angle_values = data<T>(theta);
     const auto* shift_values = data<T>(shifts);
+    const auto input_count = a.size(), image_count = image.size();
     bool admissible;
     {
         py::gil_scoped_release release;
-        admissible = finite(input, a.size()) && (!has_initial || finite(estimate, image.size()))
+        admissible = finite(input, input_count) && (!has_initial || finite(estimate, image_count))
             && (!has_clip || finite(bounds, 2))
             && std::all_of(angle_values, angle_values + angles, [](T x) { return std::abs(x) <= T(360); })
             && std::all_of(shift_values, shift_values + angles, [=](T x) { return std::abs(x) <= T(size); });

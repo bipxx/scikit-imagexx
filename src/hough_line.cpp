@@ -4,8 +4,8 @@
 #include <cfenv>
 #include <cmath>
 #include <cstdlib>
+#include <cstring>
 #include <limits>
-#include <memory>
 #include <stdexcept>
 #include <vector>
 
@@ -67,8 +67,35 @@ void distance_two(__m128d proj, __m128i offset_v, __m128d sign_mask, __m128d hal
 }
 #endif
 
-void hough_line_sparse(const std::uint8_t* HOUGH_LINE_RESTRICT image,
-                       std::size_t height, std::size_t width, int offset,
+struct NonzeroRow {
+    double row;
+    std::size_t count;
+};
+
+void extract_nonzeros(const std::uint8_t* image, std::size_t height, std::size_t width,
+                      std::vector<NonzeroRow>& rows, std::vector<double>& columns) {
+    rows.reserve(height);
+    for (std::size_t row = 0; row < height; ++row) {
+        const auto* pixels = image + row * width;
+        const auto start = columns.size();
+        std::size_t column = 0;
+        for (; column + sizeof(std::uint64_t) <= width; column += sizeof(std::uint64_t)) {
+            std::uint64_t word;
+            std::memcpy(&word, pixels + column, sizeof(word));
+            if (word) {
+                for (std::size_t i = 0; i < sizeof(word); ++i) {
+                    if (pixels[column + i]) columns.push_back(double(column + i));
+                }
+            }
+        }
+        for (; column < width; ++column) {
+            if (pixels[column]) columns.push_back(double(column));
+        }
+        if (columns.size() != start) rows.push_back({double(row), columns.size() - start});
+    }
+}
+
+void hough_line_sparse(const std::vector<NonzeroRow>& rows, const double* columns, int offset,
                        const double* HOUGH_LINE_RESTRICT cosines,
                        const double* HOUGH_LINE_RESTRICT sines, std::size_t angles,
                        std::uint64_t* HOUGH_LINE_RESTRICT accumulator,
@@ -81,13 +108,10 @@ void hough_line_sparse(const std::uint8_t* HOUGH_LINE_RESTRICT image,
 #else
     (void)use_simd;
 #endif
-    for (std::size_t row = 0; row < height; ++row) {
-        const auto* pixels = image + row * width;
-        const double drow = double(row);
-        for (std::size_t column = 0; column < width; ++column) {
-            if (pixels[column] == 0)
-                continue;
-            const double dcol = double(column);
+    for (const auto& entry : rows) {
+        const double drow = entry.row;
+        for (std::size_t i = 0; i < entry.count; ++i) {
+            const double dcol = *columns++;
             std::size_t angle = 0;
 #if SKIMAGEXX_HL_SSE2
             if (use_simd && angles >= 2) {
@@ -116,36 +140,16 @@ void hough_line_sparse(const std::uint8_t* HOUGH_LINE_RESTRICT image,
     }
 }
 
-void hough_line_dense(const std::uint8_t* HOUGH_LINE_RESTRICT image,
-                      std::size_t height, std::size_t width,
-                      std::size_t nz_count, int offset,
+void hough_line_dense(const std::vector<NonzeroRow>& rows,
+                      const double* columns, int offset,
                       const double* HOUGH_LINE_RESTRICT cosines,
                       const double* HOUGH_LINE_RESTRICT sines, std::size_t angles,
                       std::uint64_t* HOUGH_LINE_RESTRICT accumulator, bool use_simd) {
-    struct NonzeroRow {
-        double row;
-        std::size_t count;
-    };
-    std::unique_ptr<double[]> nz_cols(new double[nz_count]);
-    std::vector<NonzeroRow> nz_rows;
-    nz_rows.reserve(height);
-    double* HOUGH_LINE_RESTRICT cols_out = nz_cols.get();
-    std::size_t written = 0;
-    for (std::size_t row = 0; row < height; ++row) {
-        const auto* pixels = image + row * width;
-        const std::size_t start = written;
-        for (std::size_t column = 0; column < width; ++column) {
-            if (pixels[column] != 0)
-                cols_out[written++] = double(column);
-        }
-        if (written != start)
-            nz_rows.push_back({double(row), written - start});
-    }
-
     const auto num_distances = std::size_t(2 * offset + 1);
-    std::vector<std::uint32_t> col_accum_vec(num_distances, 0);
-    std::uint32_t* HOUGH_LINE_RESTRICT col_accum = col_accum_vec.data();
-    const double* HOUGH_LINE_RESTRICT cols_data = nz_cols.get();
+    constexpr auto cache_budget = 24 * 1024;
+    const auto block_size = std::min(angles, std::clamp(
+        cache_budget / (num_distances * sizeof(std::uint32_t)), std::size_t(1), std::size_t(8)));
+    std::vector<std::uint32_t> votes(num_distances * block_size);
 #if SKIMAGEXX_HL_SSE2
     const __m128d sign_mask = _mm_set1_pd(-0.0);
     const __m128d half_v = _mm_set1_pd(0.5);
@@ -153,42 +157,52 @@ void hough_line_dense(const std::uint8_t* HOUGH_LINE_RESTRICT image,
 #else
     (void)use_simd;
 #endif
-    for (std::size_t angle = 0; angle < angles; ++angle) {
-        const double cosine = cosines[angle];
-        const double sine = sines[angle];
+    for (std::size_t first = 0; first < angles; first += block_size) {
+        const auto block = std::min(block_size, angles - first);
+        for (std::size_t local = 0; local < block; ++local) {
+            const auto angle = first + local;
+            auto* HOUGH_LINE_RESTRICT col_accum = votes.data() + local * num_distances;
+            const double cosine = cosines[angle];
+            const double sine = sines[angle];
 #if SKIMAGEXX_HL_SSE2
-        const __m128d cos_v = _mm_set1_pd(cosine);
+            const __m128d cos_v = _mm_set1_pd(cosine);
 #endif
-        const double* col_ptr = cols_data;
-        for (const auto& entry : nz_rows) {
-            const double sin_row = sine * entry.row;
-            const std::size_t count = entry.count;
-            std::size_t i = 0;
+            const double* col_ptr = columns;
+            for (const auto& entry : rows) {
+                const double sin_row = sine * entry.row;
+                const std::size_t count = entry.count;
+                std::size_t i = 0;
 #if SKIMAGEXX_HL_SSE2
-            if (use_simd && count >= 2) {
-                const __m128d sin_row_v = _mm_set1_pd(sin_row);
-                for (; i + 1 < count; i += 2) {
-                    const __m128d proj = _mm_add_pd(_mm_mul_pd(cos_v, _mm_loadu_pd(col_ptr + i)), sin_row_v);
-                    std::size_t d0 = 0;
-                    std::size_t d1 = 0;
-                    distance_two(proj, offset_v, sign_mask, half_v, d0, d1);
-                    ++col_accum[d0];
-                    ++col_accum[d1];
+                if (use_simd && count >= 2) {
+                    const __m128d sin_row_v = _mm_set1_pd(sin_row);
+                    for (; i + 1 < count; i += 2) {
+                        const __m128d proj = _mm_add_pd(_mm_mul_pd(cos_v, _mm_loadu_pd(col_ptr + i)), sin_row_v);
+                        std::size_t d0 = 0;
+                        std::size_t d1 = 0;
+                        distance_two(proj, offset_v, sign_mask, half_v, d0, d1);
+                        ++col_accum[d0];
+                        ++col_accum[d1];
+                    }
                 }
-            }
 #endif
-            for (; i < count; ++i) {
-                // The pinned rounding helper separately adjusts by half before truncating.
-                const double projection = cosine * col_ptr[i] + sin_row;
-                const double adjusted = projection > 0.0 ? projection + 0.5 : projection - 0.5;
-                const auto distance = std::size_t(offset + static_cast<std::int64_t>(adjusted));
-                ++col_accum[distance];
+                for (; i < count; ++i) {
+                    // The pinned rounding helper separately adjusts by half before truncating.
+                    const double projection = cosine * col_ptr[i] + sin_row;
+                    const double adjusted = projection > 0.0 ? projection + 0.5 : projection - 0.5;
+                    const auto distance = std::size_t(offset + static_cast<std::int64_t>(adjusted));
+                    ++col_accum[distance];
+                }
+                col_ptr += count;
             }
-            col_ptr += count;
         }
+        // Write adjacent public angle columns together while the block is hot.
         for (std::size_t distance = 0; distance < num_distances; ++distance) {
-            accumulator[distance * angles + angle] = col_accum[distance];
-            col_accum[distance] = 0;
+            auto* output = accumulator + distance * angles + first;
+            for (std::size_t local = 0; local < block; ++local) {
+                auto& value = votes[local * num_distances + distance];
+                output[local] = value;
+                value = 0;
+            }
         }
     }
 }
@@ -224,22 +238,21 @@ void hough_line_into(const std::uint8_t* image, std::size_t image_count,
             throw std::invalid_argument("hough_line coefficients exceed the distance grid");
     }
 
-    std::size_t nz_count = 0;
-    for (std::size_t i = 0; i < image_count; ++i) {
-        nz_count += (image[i] != 0);
-    }
-    if (nz_count == 0) {
+    std::vector<NonzeroRow> rows;
+    std::vector<double> columns;
+    extract_nonzeros(image, height, width, rows, columns);
+    if (columns.empty()) {
         std::fill_n(accumulator, accumulator_count, std::uint64_t{0});
         return;
     }
 
     const bool use_simd = simd_allowed();
     const auto num_distances = std::size_t(2 * offset + 1);
-    if (nz_count < 2 * num_distances) {
-        hough_line_sparse(image, height, width, offset, cosines, sines, angles,
+    if (columns.size() < 2 * num_distances) {
+        hough_line_sparse(rows, columns.data(), offset, cosines, sines, angles,
                           accumulator, accumulator_count, use_simd);
     } else {
-        hough_line_dense(image, height, width, nz_count, offset, cosines, sines, angles,
+        hough_line_dense(rows, columns.data(), offset, cosines, sines, angles,
                          accumulator, use_simd);
     }
 }

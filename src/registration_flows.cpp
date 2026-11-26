@@ -5,6 +5,7 @@
 #include "skimagexx/adaptive.hpp"
 
 #include <algorithm>
+#include <array>
 #include <atomic>
 #include <cmath>
 #include <limits>
@@ -67,6 +68,11 @@ struct LinearPoint {
 };
 
 LinearPoint edge_point(double coordinate, std::size_t last) {
+    if (coordinate >= 0 && coordinate < double(last)) {
+        const auto base = static_cast<std::size_t>(coordinate);
+        const double low = 1 - (coordinate - double(base));
+        return {base, base + 1, low, 1 - low};
+    }
     // Extend the two taps independently to preserve interpolation arithmetic
     // for fractional coordinates outside of the image.
     double integral;
@@ -74,9 +80,7 @@ LinearPoint edge_point(double coordinate, std::size_t last) {
     const double low_weight = 1 - (fraction < 0 ? fraction + 1 : fraction);
     const double high_weight = 1 - low_weight;
     if (coordinate < 0) return {0, 0, low_weight, high_weight};
-    if (coordinate >= double(last)) return {last, last, low_weight, high_weight};
-    const auto base = static_cast<std::size_t>(integral);
-    return {base, base + 1, low_weight, high_weight};
+    return {last, last, low_weight, high_weight};
 }
 
 template<class T>
@@ -161,44 +165,127 @@ bool solve_local_system(T a, T b, T d, T rhs_y, T rhs_x, T& y, T& x) {
 }
 
 template<class T>
+struct IlkScratch {
+    std::vector<T> warped, median, unfiltered, filtered;
+    std::vector<std::size_t> rows, columns;
+};
+
+void mirror_indices(std::vector<std::size_t>& indices, std::size_t length, int radius) {
+    indices.resize(length + 2 * std::size_t(radius));
+    const auto period = 2 * (length - 1);
+    const auto shift = std::size_t(radius) % period;
+    for (std::size_t i = 0; i < indices.size(); ++i) {
+        const auto x = (i + period - shift) % period;
+        indices[i] = x < length ? x : period - x;
+    }
+}
+
+template<class T>
+bool mean_tensor_solve(const T* input, T* vertical, T* flow, Shape shape, int radius,
+                       const std::vector<std::size_t>& rows,
+                       const std::vector<std::size_t>& columns, int workers) {
+    const auto count = shape.count();
+    const auto window = 2 * std::size_t(radius) + 1;
+    // Match the separable uniform filter's rolling double sums and its cast
+    // between axes. Keep all five tensor terms together for each local solve.
+    detail::partition(shape.width, workers, [&](auto begin, auto end, auto) {
+        for (auto x = begin; x < end; ++x) {
+            std::array<double, 5> total{};
+            for (std::size_t k = 0; k < window; ++k) {
+                const auto* row = input + 5 * (rows[k] * shape.width + x);
+                for (std::size_t c = 0; c < 5; ++c) total[c] += row[c];
+            }
+            auto* dst = vertical + 5 * x;
+            for (std::size_t c = 0; c < 5; ++c) dst[c] = T(total[c] / double(window));
+            for (std::size_t y = 1; y < shape.height; ++y) {
+                const auto* head = input + 5 * (rows[y + window - 1] * shape.width + x);
+                const auto* tail = input + 5 * (rows[y - 1] * shape.width + x);
+                dst += 5 * shape.width;
+                for (std::size_t c = 0; c < 5; ++c) {
+                    total[c] += double(head[c]) - double(tail[c]);
+                    dst[c] = T(total[c] / double(window));
+                }
+            }
+        }
+    });
+    std::atomic<bool> stable{true};
+    detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
+        for (auto y = begin; y < end; ++y) {
+            const auto base = y * shape.width;
+            const auto* row = vertical + 5 * base;
+            std::array<double, 5> total{};
+            for (std::size_t k = 0; k < window; ++k)
+                for (std::size_t c = 0; c < 5; ++c) total[c] += row[5 * columns[k] + c];
+            for (std::size_t x = 0; x < shape.width; ++x) {
+                if (x) {
+                    const auto* head = row + 5 * columns[x + window - 1];
+                    const auto* tail = row + 5 * columns[x - 1];
+                    for (std::size_t c = 0; c < 5; ++c) total[c] += double(head[c]) - double(tail[c]);
+                }
+                if (!solve_local_system(T(total[0] / double(window)), T(total[1] / double(window)),
+                                        T(total[2] / double(window)), T(total[3] / double(window)),
+                                        T(total[4] / double(window)), flow[base + x], flow[count + base + x])) {
+                    stable.store(false, std::memory_order_relaxed);
+                    return;
+                }
+            }
+        }
+    });
+    return stable.load(std::memory_order_relaxed);
+}
+
+template<class T>
 bool solve_ilk(const T* reference, const T* moving, T* flow, Shape shape, int workers,
                int radius, int num_warp, bool gaussian, bool prefilter,
-               const std::vector<GaussianPass>& passes) {
+               const std::vector<GaussianPass>& passes, IlkScratch<T>& scratch) {
     if (!num_warp) return true;
     const auto count = shape.count();
     const auto axes = shape.axes();
-    const std::vector<std::size_t> window(2, 2 * std::size_t(radius) + 1);
-    const std::vector<GaussianBorder> borders(2, GaussianBorder::mirror);
     const auto extrema = std::minmax_element(moving, moving + count);
     const auto range = std::make_pair(*extrema.first, *extrema.second);
-    std::vector<T> warped(count);
-    std::vector<T> filtered(5 * count), unfiltered(5 * count);
-    std::vector<T> median(prefilter ? 2 * count : 0);
+    auto* warped = scratch.warped.data();
+    auto* unfiltered = scratch.unfiltered.data();
+    auto* filtered = scratch.filtered.data();
+    if (!gaussian && radius) {
+        mirror_indices(scratch.rows, shape.height, radius);
+        mirror_indices(scratch.columns, shape.width, radius);
+    }
 
     for (int step = 0; step < num_warp; ++step) {
         const auto* current = flow;
         if (prefilter) {
-            prefilter_flow(flow, median.data(), shape);
-            current = median.data();
+            prefilter_flow(flow, scratch.median.data(), shape);
+            current = scratch.median.data();
         }
-        warp(moving, current, warped.data(), shape, range, workers);
-        gradients(warped.data(), shape, workers, [&](std::size_t i, T y, T x) {
-            const T residual = ((y * current[i] + x * current[count + i]) + reference[i]) - warped[i];
-            unfiltered[i] = y * y;
-            unfiltered[count + i] = y * x;
-            unfiltered[2 * count + i] = x * x;
-            unfiltered[3 * count + i] = y * residual;
-            unfiltered[4 * count + i] = x * residual;
-        });
-        for (std::size_t channel = 0; channel < 5; ++channel) {
-            const auto* input = unfiltered.data() + channel * count;
-            auto* output = filtered.data() + channel * count;
-            if (gaussian)
-                gaussian_nd_into(input, output, pixel_type<T>, pixel_type<T>, axes, passes);
-            else
-                adaptive_filter_into(input, output, pixel_type<T>, axes, window, borders, AdaptiveMethod::mean);
-        }
+        warp(moving, current, warped, shape, range, workers);
         std::atomic<bool> stable{true};
+        gradients(warped, shape, workers, [&](std::size_t i, T y, T x) {
+            const T residual = ((y * current[i] + x * current[count + i]) + reference[i]) - warped[i];
+            if (!gaussian && !radius) {
+                if (!solve_local_system(y * y, y * x, x * x, y * residual, x * residual,
+                                        flow[i], flow[count + i]))
+                    stable.store(false, std::memory_order_relaxed);
+                return;
+            }
+            auto* tensor = unfiltered + (gaussian ? i : 5 * i);
+            const auto stride = gaussian ? count : 1;
+            tensor[0] = y * y;
+            tensor[stride] = y * x;
+            tensor[2 * stride] = x * x;
+            tensor[3 * stride] = y * residual;
+            tensor[4 * stride] = x * residual;
+        });
+        if (!gaussian) {
+            if (!stable.load(std::memory_order_relaxed) ||
+                (radius && !mean_tensor_solve(unfiltered, filtered, flow, shape, radius,
+                                              scratch.rows, scratch.columns, workers)))
+                return false;
+            continue;
+        }
+        for (std::size_t channel = 0; channel < 5; ++channel) {
+            gaussian_nd_into(unfiltered + channel * count, filtered + channel * count,
+                             pixel_type<T>, pixel_type<T>, axes, passes);
+        }
         detail::partition(count, workers, [&](auto begin, auto end, auto) {
             for (auto i = begin; i < end; ++i) {
                 if (!solve_local_system(filtered[i], filtered[count + i], filtered[2 * count + i],
@@ -218,45 +305,66 @@ void regularize(const T* auxiliary, T* current, T* vertical, T* horizontal,
                 Shape shape, T factor, int workers) {
     constexpr T time_step = T(0.25);
     for (int iteration = 0; iteration < 2; ++iteration) {
+        const auto* prior = iteration == 0 ? auxiliary : current;
+        const auto dual = [&](std::size_t i, bool bottom, bool right) {
+            const T dy = bottom ? T(0) : prior[i + shape.width] - prior[i];
+            const T dx = right ? T(0) : prior[i + 1] - prior[i];
+            const T norm = std::sqrt(dy * dy + dx * dx) * factor + T(1);
+            vertical[i] = (vertical[i] - time_step * dy) / norm;
+            horizontal[i] = (horizontal[i] - time_step * dx) / norm;
+        };
+        const auto primal = [&](std::size_t i, bool top, bool left) {
+            T divergence = -(vertical[i] + horizontal[i]);
+            if (!top) divergence += vertical[i - shape.width];
+            if (!left) divergence += horizontal[i - 1];
+            current[i] = auxiliary[i] + divergence;
+        };
+        // In raster order the dual step reads the untouched right and bottom
+        // neighbors, while the primal step uses the updated left and top duals.
+        if (workers == 1) {
+            for (std::size_t y = 0; y < shape.height; ++y) {
+                for (std::size_t x = 0; x < shape.width; ++x) {
+                    const auto i = y * shape.width + x;
+                    dual(i, y + 1 == shape.height, x + 1 == shape.width);
+                    primal(i, y == 0, x == 0);
+                }
+            }
+            continue;
+        }
         detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
             for (auto y = begin; y < end; ++y) {
                 const auto base = y * shape.width;
                 const bool bottom = y + 1 == shape.height;
-                for (std::size_t x = 0; x < shape.width; ++x) {
-                    const auto i = base + x;
-                    const T dy = bottom ? T(0) : current[i + shape.width] - current[i];
-                    const T dx = x + 1 == shape.width ? T(0) : current[i + 1] - current[i];
-                    const T norm = std::sqrt(dy * dy + dx * dx) * factor + T(1);
-                    vertical[i] = (vertical[i] - time_step * dy) / norm;
-                    horizontal[i] = (horizontal[i] - time_step * dx) / norm;
-                }
+                for (std::size_t x = 0; x < shape.width; ++x)
+                    dual(base + x, bottom, x + 1 == shape.width);
             }
         });
         detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
             for (auto y = begin; y < end; ++y) {
                 const auto base = y * shape.width;
-                for (std::size_t x = 0; x < shape.width; ++x) {
-                    const auto i = base + x;
-                    T divergence = -(vertical[i] + horizontal[i]);
-                    if (y) divergence += vertical[i - shape.width];
-                    if (x) divergence += horizontal[i - 1];
-                    current[i] = auxiliary[i] + divergence;
-                }
+                for (std::size_t x = 0; x < shape.width; ++x)
+                    primal(base + x, y == 0, x == 0);
             }
         });
     }
 }
 
 template<class T>
+struct Tvl1Scratch {
+    std::vector<T> warped, strength, rho0, gy, gx;
+    std::vector<T> auxiliary, previous, projection;
+};
+
+template<class T>
 void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int workers,
                 T attachment, T regularization, int num_warp, int num_iter, double tolerance,
-                bool prefilter) {
+                bool prefilter, Tvl1Scratch<T>& scratch) {
     if (!num_warp) return;
     const auto count = shape.count();
     const auto extrema = std::minmax_element(moving, moving + count);
     const auto range = std::make_pair(*extrema.first, *extrema.second);
-    std::vector<T> warped(count), strength(count), rho0(count), gy(count), gx(count);
-    std::vector<T> auxiliary(2 * count), previous(2 * count), projection(4 * count, T(0));
+    auto& [warped, strength, rho0, gy, gx, auxiliary, previous, projection] = scratch;
+    std::fill_n(projection.data(), 4 * count, T(0));
 
     for (int step = 0; step < num_warp; ++step) {
         if (prefilter) {
@@ -272,6 +380,9 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
             rho0[i] = (warped[i] - reference[i]) - (y * flow[i] + x * flow[count + i]);
         });
         for (int iter = 0; iter < num_iter; ++iter) {
+            // Stock's previous flow aliases the first data update of this
+            // warp when prefiltering is disabled.
+            const bool save_previous = !prefilter && iter == 0;
             detail::partition(count, workers, [&](auto begin, auto end, auto) {
                 for (auto i = begin; i < end; ++i) {
                     const T rho = rho0[i] + (gy[i] * flow[i] + gx[i] * flow[count + i]);
@@ -286,12 +397,12 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
                     }
                     auxiliary[i] = flow[i] - delta_y;
                     auxiliary[count + i] = flow[count + i] - delta_x;
+                    if (save_previous) {
+                        previous[i] = auxiliary[i];
+                        previous[count + i] = auxiliary[count + i];
+                    }
                 }
             });
-            // Without the prefilter, stock's previous flow aliases the first
-            // data update of this warp until regularization replaces it.
-            if (!prefilter && iter == 0) std::copy(auxiliary.begin(), auxiliary.end(), previous.begin());
-            std::copy(auxiliary.begin(), auxiliary.end(), flow);
             for (std::size_t component = 0; component < 2; ++component) {
                 const auto offset = component * count;
                 regularize(auxiliary.data() + offset, flow + offset,
@@ -320,18 +431,19 @@ std::vector<T> reduce_image(const T* image, Shape input, Shape output,
     const auto input_axes = input.axes();
     gaussian_nd_into(image, smoothed.data(), pixel_type<T>, pixel_type<T>, input_axes, passes);
     detail::zoom_typed_into(smoothed.data(), reduced.data(), pixel_type<T>, input_axes, output.axes(), {});
-    const auto extrema = std::minmax_element(smoothed.begin(), smoothed.end());
+    const auto extrema = std::minmax_element(smoothed.data(), smoothed.data() + input.count());
     for (auto& value : reduced) value = std::clamp(value, *extrema.first, *extrema.second);
     return reduced;
 }
 
 template<class T>
-void expand_flow(const T* source, T* target, Shape from, Shape to, int workers) {
+void expand_flow(const T* source, T* target, Shape from, Shape to, int workers,
+                 std::vector<std::size_t>& columns) {
     const auto y_ratio = double(from.height - 1) / double(to.height - 1);
     const auto x_ratio = double(from.width - 1) / double(to.width - 1);
     const auto y_scale = T(double(to.height) / double(from.height));
     const auto x_scale = T(double(to.width) / double(from.width));
-    std::vector<std::size_t> columns(to.width);
+    columns.resize(to.width);
     for (std::size_t x = 0; x < to.width; ++x)
         columns[x] = static_cast<std::size_t>(double(x) * x_ratio + 0.5);
     const auto* source_horizontal = source + from.count();
@@ -365,9 +477,9 @@ bool coarse_to_fine(const T* reference, const T* moving, T* output, Shape shape,
         const auto* previous_reference = reference;
         const auto* previous_moving = moving;
         const auto passes = gaussian_passes(2.0 / 3.0, GaussianBorder::reflect);
+        std::vector<T> smoothed(current.count());
         for (int level = 1; level < 10 && std::min(current.height, current.width) > 32; ++level) {
             const Shape next{(current.height + 1) / 2, (current.width + 1) / 2};
-            std::vector<T> smoothed(current.count());
             auto ref_reduced = reduce_image(previous_reference, current, next, passes, smoothed);
             auto moving_reduced = reduce_image(previous_moving, current, next, passes, smoothed);
             pyramid.push_back({next, std::move(ref_reduced), std::move(moving_reduced)});
@@ -383,18 +495,24 @@ bool coarse_to_fine(const T* reference, const T* moving, T* output, Shape shape,
         return solve(reference, moving, output, shape, layer_workers(shape));
     }
     std::vector<T> flow(2 * current.count(), T(0)), next_flow;
+    std::vector<std::size_t> columns;
+    columns.reserve(shape.width);
+    // Intermediate flow alternates between two buffers until the final
+    // expansion can write directly to the caller's output.
+    flow.reserve(2 * pyramid.front().shape.count());
+    next_flow.reserve(2 * pyramid.front().shape.count());
     for (auto level = pyramid.rbegin(); level != pyramid.rend(); ++level) {
         const auto threads = layer_workers(level->shape);
         if (level->shape.height != current.height || level->shape.width != current.width) {
             next_flow.resize(2 * level->shape.count());
-            expand_flow(flow.data(), next_flow.data(), current, level->shape, threads);
+            expand_flow(flow.data(), next_flow.data(), current, level->shape, threads, columns);
             flow.swap(next_flow);
         }
         if (!solve(level->reference.data(), level->moving.data(), flow.data(), level->shape, threads))
             return false;
         current = level->shape;
     }
-    expand_flow(flow.data(), output, current, shape, layer_workers(shape));
+    expand_flow(flow.data(), output, current, shape, layer_workers(shape), columns);
     return solve(reference, moving, output, shape, layer_workers(shape));
 }
 
@@ -409,9 +527,19 @@ bool optical_flow_ilk_into(const T* reference, const T* moving, T* flow, std::si
         throw std::invalid_argument("invalid Lucas-Kanade radius or warp count");
     const auto passes = gaussian && num_warp ? gaussian_passes((2.0 * radius + 1) / 4, GaussianBorder::mirror)
                                              : std::vector<GaussianPass>{};
+    IlkScratch<T> scratch;
+    if (num_warp) {
+        const auto count = shape.count();
+        scratch.warped.resize(count);
+        if (prefilter) scratch.median.resize(2 * count);
+        if (gaussian || radius) {
+            scratch.unfiltered.resize(5 * count);
+            scratch.filtered.resize(5 * count);
+        }
+    }
     return coarse_to_fine(reference, moving, flow, shape,
                    [&](const T* ref, const T* mov, T* level, Shape dims, int workers) {
-        return solve_ilk(ref, mov, level, dims, workers, radius, num_warp, gaussian, prefilter, passes);
+        return solve_ilk(ref, mov, level, dims, workers, radius, num_warp, gaussian, prefilter, passes, scratch);
     });
 }
 
@@ -424,10 +552,22 @@ void optical_flow_tvl1_into(const T* reference, const T* moving, T* flow, std::s
     if (num_warp < 0 || num_iter < 0 || !std::isfinite(attachment) || attachment <= 0 ||
         !std::isfinite(tightness) || tightness <= 0 || !std::isfinite(tol) || tol < 0)
         throw std::invalid_argument("invalid TV-L1 solver parameters");
+    Tvl1Scratch<T> scratch;
+    if (num_warp) {
+        const auto count = shape.count();
+        scratch.warped.resize(count);
+        scratch.strength.resize(count);
+        scratch.rho0.resize(count);
+        scratch.gy.resize(count);
+        scratch.gx.resize(count);
+        scratch.auxiliary.resize(2 * count);
+        scratch.previous.resize(2 * count);
+        scratch.projection.resize(4 * count);
+    }
     coarse_to_fine(reference, moving, flow, shape,
                    [&](const T* ref, const T* mov, T* level, Shape dims, int workers) {
         solve_tvl1(ref, mov, level, dims, workers, T(attachment * tightness), T(0.25 / tightness),
-                   num_warp, num_iter, tol * double(dims.count()), prefilter);
+                   num_warp, num_iter, tol * double(dims.count()), prefilter, scratch);
         return true;
     });
 }

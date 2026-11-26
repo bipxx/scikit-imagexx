@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <memory>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 namespace skimagexx {
@@ -35,6 +36,35 @@ bool outside_circle(const T* image, int rows, int columns) {
 template<class T> int floor_index(T coordinate) {
     const int truncated = static_cast<int>(coordinate);
     return truncated - (coordinate < T(truncated));
+}
+
+template<class Predicate>
+int first_true(int begin, int end, const Predicate& predicate) {
+    while (begin < end) {
+        const int middle = begin + (end - begin) / 2;
+        if (predicate(middle)) end = middle;
+        else begin = middle + 1;
+    }
+    return begin;
+}
+
+template<bool inclusive, class T, class Coordinate>
+std::pair<int, int> axis_span(int size, T lower, T upper, const Coordinate& coordinate) {
+    const auto below = [=](T value) { return inclusive ? value < lower : value <= lower; };
+    const auto above = [=](T value) { return inclusive ? value > upper : value >= upper; };
+    const T first = coordinate(0), last = coordinate(size - 1);
+    // Search the sampled coordinates using the same rounded expression as
+    // interpolation. Inverting that expression can shift a boundary by a tap.
+    if (first <= last) {
+        if (above(first) || below(last)) return {0, 0};
+        const int begin = below(first) ? first_true(0, size, [&](int i) { return !below(coordinate(i)); }) : 0;
+        const int end = above(last) ? first_true(begin, size, [&](int i) { return above(coordinate(i)); }) : size;
+        return {begin, end};
+    }
+    if (below(first) || above(last)) return {0, 0};
+    const int begin = above(first) ? first_true(0, size, [&](int i) { return !above(coordinate(i)); }) : 0;
+    const int end = below(last) ? first_true(begin, size, [&](int i) { return below(coordinate(i)); }) : size;
+    return {begin, end};
 }
 
 template<class T>
@@ -214,9 +244,10 @@ void backproject(const std::vector<double>& projections, int detectors, int angl
                 for (auto r = first; r < last; ++r) {
                     const double vertical = (double(r) - radius) * sine;
                     auto* row = image + r * size;
-                    for (int c = 0; c < size; ++c) {
-                        const double t = column_coordinates[c] - vertical;
-                        if (t < lower || t > upper) continue;
+                    const auto coordinate = [&](int c) { return column_coordinates[c] - vertical; };
+                    const auto [first_column, last_column] = axis_span<true>(size, lower, upper, coordinate);
+                    for (int c = first_column; c < last_column; ++c) {
+                        const double t = coordinate(c);
                         const int left = floor_index(t);
                         const int i = left + center;
                         double value;
@@ -305,7 +336,7 @@ std::vector<T> ray_windows(const T* shifts, int angles, int detectors, T center,
     return windows;
 }
 
-template<class T>
+template<bool interior, class T>
 void project_ray(const T* image, T* update, int size, double cosine, double sine,
                  const RayChord<T>& chord, T projection, RaySample<T>* samples,
                  const T* window) {
@@ -320,6 +351,21 @@ void project_ray(const T* image, T* update, int size, double cosine, double sine
         total += weight * image[index];
         norm += weight * weight;
     };
+    // The circular chord already clips the ray to the grid. Its sampled
+    // endpoints can touch the final grid line, so only interior chords can
+    // drop the neighbor predicates.
+    if constexpr (interior) {
+        const T row_first = x0 + center, row_last = (x0 + T(steps) * dx) + center;
+        const T col_first = y0 + center, col_last = (y0 + T(steps) * dy) + center;
+        const T last = T(size - 1);
+        const auto inside = [last](T a, T b) {
+            return std::min(a, b) >= T(1) && std::max(a, b) < last;
+        };
+        if (!inside(row_first, row_last) || !inside(col_first, col_last)) {
+            project_ray<false>(image, update, size, cosine, sine, chord, projection, samples, window);
+            return;
+        }
+    }
     for (int k = 0; k <= steps; ++k) {
         const T row = (x0 + T(k) * dx) + center, col = (y0 + T(k) * dy) + center;
         // The chord lies inside the detector grid. Its endpoint can land on
@@ -327,27 +373,37 @@ void project_ray(const T* image, T* update, int size, double cosine, double sine
         const int i = static_cast<int>(row), j = static_cast<int>(col);
         const T di = row - T(i), dj = col - T(j);
         const auto base = std::size_t(i) * size + j;
-        samples[k] = {base, di, dj, i > 0, j > 0, i < size - 1, j < size - 1};
-        if (i > 0 && j > 0) accumulate(base, T((1.0 - di) * (1.0 - dj) * ds));
-        if (i > 0 && j < size - 1) accumulate(base + 1, T((1.0 - di) * dj * ds));
-        if (i < size - 1 && j > 0) accumulate(base + size, di * (T(1) - dj) * ds);
-        if (i < size - 1 && j < size - 1) accumulate(base + size + 1, di * dj * ds);
+        auto& sample = samples[k];
+        sample.base = base;
+        sample.di = di;
+        sample.dj = dj;
+        if constexpr (!interior) {
+            sample.has_top = i > 0;
+            sample.has_left = j > 0;
+            sample.has_bottom = i < size - 1;
+            sample.has_right = j < size - 1;
+        }
+        if (interior || (sample.has_top && sample.has_left)) accumulate(base, T((1.0 - di) * (1.0 - dj) * ds));
+        if (interior || (sample.has_top && sample.has_right)) accumulate(base + 1, T((1.0 - di) * dj * ds));
+        if (interior || (sample.has_bottom && sample.has_left)) accumulate(base + size, di * (T(1) - dj) * ds);
+        if (interior || (sample.has_bottom && sample.has_right)) accumulate(base + size + 1, di * dj * ds);
     }
     const T deviation = norm > T(0) ? -(total - projection) / norm : T(0);
     for (int k = 0; k <= steps; ++k) {
         const auto& sample = samples[k];
         const auto base = sample.base;
         const T di = sample.di, dj = sample.dj, w = window[k];
-        if (sample.has_top && sample.has_left) {
+        if (interior || (sample.has_top && sample.has_left)) {
             update[base] = T(update[base] + deviation * (1.0 - di) * (1.0 - dj) * ds * w);
         }
-        if (sample.has_top && sample.has_right) {
+        if (interior || (sample.has_top && sample.has_right)) {
             update[base + 1] = T(update[base + 1] + deviation * (1.0 - di) * dj * ds * w);
         }
-        if (sample.has_bottom && sample.has_left) {
+        if (interior || (sample.has_bottom && sample.has_left)) {
             update[base + size] += deviation * di * (T(1) - dj) * ds * w;
         }
-        if (sample.has_bottom && sample.has_right) update[base + size + 1] += deviation * di * dj * ds * w;
+        if (interior || (sample.has_bottom && sample.has_right))
+            update[base + size + 1] += deviation * di * dj * ds * w;
     }
 }
 }
@@ -404,9 +460,13 @@ void radon_into(const T* image, int rows, int columns, const RadonRotation* rota
                 }
                 for (int r = 0; r < size; ++r) {
                     const T row_x = sine * T(r), row_y = cosine * T(r);
-                    for (int c = 0; c < size; ++c) {
-                        sums[c] += bilinear(image, size, (column_y[c] + row_y) + offset_y,
-                                                       (column_x[c] + row_x) + offset_x);
+                    const auto x = [&](int c) { return (column_x[c] + row_x) + offset_x; };
+                    const auto y = [&](int c) { return (column_y[c] + row_y) + offset_y; };
+                    const auto [x_begin, x_end] = axis_span<false>(size, T(-1), T(size), x);
+                    const auto [y_begin, y_end] = axis_span<false>(size, T(-1), T(size), y);
+                    const int end = std::min(x_end, y_end);
+                    for (int c = std::max(x_begin, y_begin); c < end; ++c) {
+                        sums[c] += bilinear(image, size, y(c), x(c));
                     }
                 }
                 for (int c = 0; c < size; ++c) sinogram[std::size_t(c) * angles + k] = sums[c];
@@ -459,15 +519,17 @@ void iradon_sart_into(const T* sinogram, int detectors, int angles, const T* the
             }
             previous_shift = shifts + k;
         }
-        std::fill(update.begin(), update.end(), T(0));
         for (int detector = 0; detector < detectors; ++detector) {
             const auto& chord = chords[detector];
             if (!chord.steps) continue;
             const auto* window = windows.data() + window_offsets[std::size_t(chord.steps) / 2];
-            project_ray(image, update.data(), detectors, cosine, sine, chord,
-                        sinogram[std::size_t(detector) * angles + k], samples.get(), window);
+            project_ray<true>(image, update.data(), detectors, cosine, sine, chord,
+                              sinogram[std::size_t(detector) * angles + k], samples.get(), window);
         }
-        for (std::size_t i = 0; i < count; ++i) image[i] += relaxation * update[i];
+        for (std::size_t i = 0; i < count; ++i) {
+            image[i] += relaxation * update[i];
+            update[i] = T(0);
+        }
         if (clip) {
             for (std::size_t i = 0; i < count; ++i) {
                 clipped_image[i] = std::min(std::max(image[i], clip[0]), clip[1]);
