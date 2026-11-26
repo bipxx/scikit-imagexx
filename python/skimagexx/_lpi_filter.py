@@ -48,10 +48,11 @@ def _inverse_fft(spectrum, shape):
 
 
 def _shifted_magnitude(spectrum, shape, output_shape):
-    shifted = _ifftshift(_inverse_fft(spectrum, shape))
     if shape is None:
-        return _center(np.abs(shifted), output_shape)
-    out = _center(shifted, output_shape)
+        # Magnitude commutes with the shift. Permute the smaller real buffer.
+        magnitude = np.abs(_inverse_fft(spectrum, shape))
+        return _center(_ifftshift(magnitude), output_shape)
+    out = _center(_ifftshift(_inverse_fft(spectrum, shape)), output_shape)
     np.abs(out, out=out)
     return out
 
@@ -82,12 +83,25 @@ def _min_limit(x, val=np.finfo(float).eps):
 
 
 def _center(x, oshape):
+    if x.ndim == 2 and len(oshape) == 2:
+        rows, cols = oshape
+        row = (x.shape[0] - rows) // 2
+        col = (x.shape[1] - cols) // 2
+        return x[row:row + rows, col:col + cols]
     start = (np.array(x.shape) - np.array(oshape)) // 2
     return x[tuple(slice(s, s + n) for s, n in zip(start, oshape))]
 
 
 def _pad(data, shape):
-    out = np.zeros(shape, dtype=data.dtype)
+    dtype = data.dtype
+    # Cast directly into the padded buffer for dtypes that PocketFFT would
+    # otherwise convert across the entire padded extent.
+    if type(data) is np.ndarray:
+        if dtype.kind in "biu":
+            dtype = np.float64
+        elif dtype.char == "e":
+            dtype = np.float32
+    out = np.zeros(shape, dtype=dtype)
     # Allocation and the preceding impulse callback can invalidate an earlier
     # view. Validate the current allocation immediately before this copy.
     if isinstance(data, np.ndarray):
@@ -100,6 +114,23 @@ def _ifftshift(array):
     # NumPy's permutation only; no NumPy/SciPy transform entrypoint is called.
     axes = tuple(range(array.ndim))
     return np.roll(array, tuple(-(n // 2) for n in array.shape), axes)
+
+
+def _coordinates(dshape, even_offset, dtype):
+    rows, cols = map(int, dshape)
+    row = np.arange(rows) + (even_offset[0] - (rows - 1) / 2.0)
+    col = np.arange(cols) + (even_offset[1] - (cols - 1) / 2.0)
+    if dtype is np.float32:
+        # Match the callback's coordinate views and their owning array.
+        size = rows * cols
+        coords = np.empty((size, 2), dtype=dtype, order="F" if size > 1 else "C")
+        coords[:, 0].reshape(rows, cols)[:] = row[:, None]
+        coords[:, 1].reshape(rows, cols)[:] = col
+        return coords
+    grid = np.empty((2, rows, cols), dtype=dtype)
+    grid[0] = row[:, None]
+    grid[1] = col
+    return grid.reshape(2, -1).T
 
 
 class LPIFilter2D:
@@ -128,15 +159,7 @@ class LPIFilter2D:
         data = data.astype(float_dtype, copy=False)
 
         if half or self._cache is None or np.any(self._cache.shape != oshape):
-            coords = np.mgrid[
-                [slice(0 + offset, float(n + offset))
-                 for n, offset in zip(dshape, even_offset)]
-            ]
-            for k, coord in enumerate(coords):
-                coord -= (dshape[k] - 1) / 2.0
-            coords = coords.reshape(2, -1).T
-            coords = coords.astype(float_dtype, copy=False)
-
+            coords = _coordinates(dshape, even_offset, float_dtype)
             f = self.impulse_response(
                 coords[:, 0], coords[:, 1], **self.filter_params
             ).reshape(dshape)
@@ -188,7 +211,11 @@ def filter_forward(data, impulse_response=None, filter_params=None, predefined_f
     if predefined_filter is None:
         filt = _new_filter(impulse_response, filter_params)
         F, G, shape = filt._prepare_spectra(data, half=True)
-        return np.abs(_center(_inverse_fft(F * G, shape), data.shape))
+        if shape is not None and F.dtype == G.dtype:
+            np.multiply(F, G, out=G)
+        else:
+            G = F * G
+        return np.abs(_center(_inverse_fft(G, shape), data.shape))
     return predefined_filter(data)
 
 
@@ -207,11 +234,22 @@ def filter_inverse(data, impulse_response=None, filter_params=None, max_gain=2,
         shape = None
 
     F, G, shape = _limit_spectra(F, G, shape)
-    _min_limit(F, val=np.finfo(F.real.dtype).eps)
-    F = 1 / F
-    mask = np.abs(F) > max_gain
+    magnitude = _min_limit(F, val=np.finfo(F.real.dtype).eps)
+    if shape is None:
+        # F can still be the predefined filter's public cache.
+        del magnitude
+        F = 1 / F
+        magnitude = np.abs(F)
+    else:
+        np.divide(1, F, out=F)
+        np.abs(F, out=magnitude)
+    mask = magnitude > max_gain
     F[mask] = np.sign(F[mask]) * max_gain
-    return _shifted_magnitude(G * F, shape, data.shape)
+    if shape is not None and F.dtype == G.dtype:
+        np.multiply(G, F, out=G)
+    else:
+        G = G * F
+    return _shifted_magnitude(G, shape, data.shape)
 
 
 def wiener(data, impulse_response=None, filter_params=None, K=0.25, predefined_filter=None):
@@ -241,7 +279,19 @@ def wiener(data, impulse_response=None, filter_params=None, K=0.25, predefined_f
         # original floating-point warnings for exceptional inputs.
         H_mag_sqr = np.abs(F)
         np.square(H_mag_sqr, out=H_mag_sqr)
-    F = 1 / F
+    if shape is None:
+        F = 1 / F
+    else:
+        np.divide(1, F, out=F)
     F *= H_mag_sqr
-    F = F / (H_mag_sqr + K)
-    return _shifted_magnitude(G * F, shape, data.shape)
+    denominator = H_mag_sqr + K
+    if shape is not None and denominator.dtype == F.real.dtype:
+        np.divide(F, denominator, out=F)
+    else:
+        F = F / denominator
+    del denominator
+    if shape is not None and F.dtype == G.dtype:
+        np.multiply(G, F, out=G)
+    else:
+        G = G * F
+    return _shifted_magnitude(G, shape, data.shape)
