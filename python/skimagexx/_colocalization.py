@@ -25,6 +25,8 @@ _GETERRCALL = np.geterrcall
 _SUM = np.sum
 _SQUARE = np.square
 _MULTIPLY = np.multiply
+_COUNT_NONZERO = np.count_nonzero
+_LOGICAL_AND = np.logical_and
 _FLAGS = ((1, "divide", "divide by zero"), (2, "over", "overflow"),
           (4, "under", "underflow"), (8, "invalid", "invalid value"))
 
@@ -199,10 +201,13 @@ def _shape(*arrays):
 
 
 def intersection_coeff(image0_mask, image1_mask, mask=None):
-    if (_PROFILE and np.asarray is _ASARRAY and type(image0_mask) is np.ndarray
-            and image0_mask.size >= 128 and type(image1_mask) is np.ndarray
-            and (mask is None or type(mask) is np.ndarray)):
-        counts = _core.coloc_dense_intersection(image0_mask, image1_mask, mask)
+    if _PROFILE and np.asarray is _ASARRAY:
+        counts = None
+        if mask is None and np.count_nonzero is _COUNT_NONZERO and np.logical_and is _LOGICAL_AND:
+            counts = _core.coloc_contiguous_intersection(image0_mask, image1_mask)
+        if (counts is None and type(image0_mask) is np.ndarray and image0_mask.size >= 128
+                and type(image1_mask) is np.ndarray and (mask is None or type(mask) is np.ndarray)):
+            counts = _core.coloc_dense_intersection(image0_mask, image1_mask, mask)
         if counts is not None:
             total, joint = counts
             if total == 0:
@@ -228,8 +233,15 @@ def intersection_coeff(image0_mask, image1_mask, mask=None):
 def _dense_manders(image0, image1, mask, overlap):
     if (not _PROFILE or np.asarray is not _ASARRAY or np.geterr is not _GETERR
             or np.getbufsize is not _GETBUFSIZE or np.geterrcall is not _GETERRCALL
-            or np.sum is not _SUM or np.square is not _SQUARE or np.multiply is not _MULTIPLY
-            or type(image0) is not np.ndarray or type(image1) is not np.ndarray
+            or np.sum is not _SUM or np.square is not _SQUARE or np.multiply is not _MULTIPLY):
+        return None
+    if mask is None and type(image0) is np.ndarray and type(image1) is np.ndarray:
+        result = _core.coloc_contiguous_manders(image0, image1, _PROFILE, np.getbufsize(), overlap)
+        # False means the array layout or dtype needs the guarded route.
+        # None requests source-ordered replay after speculative arithmetic.
+        if result is not False:
+            return result
+    if (type(image0) is not np.ndarray or type(image1) is not np.ndarray
             or image0.dtype not in _FLOATS
             or image1.dtype != (image0.dtype if overlap else _BOOL)
             or image0.shape != image1.shape
@@ -239,14 +251,20 @@ def _dense_manders(image0, image1, mask, overlap):
     if not all(method in ("ignore", "warn", "raise", "call") for method in np.geterr().values()):
         return None
     native = (_core.coloc_dense_manders_overlap if overlap else _core.coloc_dense_manders_coloc)
-    return native(image0, image1, mask, _PROFILE, np.getbufsize())
+    values = native(image0, image1, mask, _PROFILE, np.getbufsize())
+    if values is None:
+        return None
+    if overlap:
+        square0, square1, numerator = values
+        return numerator / ((square0 * square1) ** 0.5)
+    total, joint = values
+    return 0 if total == 0 else joint / total
 
 
 def manders_coloc_coeff(image0, image1_mask, mask=None):
     dense = _dense_manders(image0, image1_mask, mask, False)
     if dense is not None:
-        total, joint = dense
-        return 0 if total == 0 else joint / total
+        return dense
     context = _Context()
     image0 = context.array(image0)
     image1_mask = context.binary(image1_mask, "image1_mask")
@@ -269,8 +287,7 @@ def manders_coloc_coeff(image0, image1_mask, mask=None):
 def manders_overlap_coeff(image0, image1, mask=None):
     dense = _dense_manders(image0, image1, mask, True)
     if dense is not None:
-        square0, square1, numerator = dense
-        return numerator / ((square0 * square1) ** 0.5)
+        return dense
     context = _Context()
     image0 = context.array(image0)
     image1 = context.array(image1)

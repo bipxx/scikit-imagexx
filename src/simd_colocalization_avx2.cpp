@@ -1,8 +1,8 @@
 #include <immintrin.h>
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
-#include <type_traits>
 namespace skimagexx::simd {
 // Separate optional TU. Caller has authenticated spans and runtime AVX2.
 // Boolean storage is nonzero truth, never raw-byte bitwise conjunction.
@@ -20,10 +20,106 @@ std::uint64_t coloc_bool_count(const unsigned char* a,const unsigned char* b,std
     return count;
 }
 
+namespace {
+void store_counts(__m256i total,__m256i joint,std::array<std::uint64_t,3>& counts) {
+    std::uint64_t lanes[4];
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(lanes),total);
+    for(const auto lane:lanes)counts[0]+=lane;
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(lanes),joint);
+    for(const auto lane:lanes)counts[1]+=lane;
+}
+}
+
+void coloc_intersection_reverse_avx2(const unsigned char* first,const unsigned char* second,
+    std::size_t rows,std::size_t width,std::array<std::uint64_t,3>& counts) {
+    const auto zero=_mm256_setzero_si256(),one=_mm256_set1_epi8(1);
+    auto total=zero,joint=zero;
+    for(std::size_t row=0;row<rows;++row) {
+        const auto* a=first+row*width;
+        const auto* b=second-row*width;
+        for(std::size_t i=0;i<width;i+=32) {
+            const auto x=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(a+i));
+            const auto y=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(b+i));
+            const auto selected=_mm256_andnot_si256(_mm256_cmpeq_epi8(x,zero),one);
+            total=_mm256_add_epi64(total,_mm256_sad_epu8(selected,zero));
+            joint=_mm256_add_epi64(joint,_mm256_sad_epu8(
+                _mm256_andnot_si256(_mm256_cmpeq_epi8(y,zero),selected),zero));
+        }
+    }
+    store_counts(total,joint,counts);
+}
+
+std::size_t coloc_intersection_avx2(const unsigned char* first,const unsigned char* second,
+    const unsigned char* mask,std::size_t n,unsigned integer_inputs,std::array<std::uint64_t,3>& counts) {
+    const auto zero=_mm256_setzero_si256(),one=_mm256_set1_epi8(1),invalid_bits=_mm256_set1_epi8(-2);
+    auto total=zero,joint=zero,invalid=zero;
+    std::size_t i=0;
+    for(;n-i>=32;i+=32) {
+        const auto a=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(first+i));
+        const auto b=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(second+i));
+        const auto selection=mask ? _mm256_loadu_si256(reinterpret_cast<const __m256i*>(mask+i)):one;
+        if(integer_inputs&1)invalid=_mm256_or_si256(invalid,a);
+        if(integer_inputs&2)invalid=_mm256_or_si256(invalid,b);
+        if(integer_inputs&4)invalid=_mm256_or_si256(invalid,selection);
+        const auto excluded=_mm256_or_si256(_mm256_cmpeq_epi8(a,zero),_mm256_cmpeq_epi8(selection,zero));
+        const auto selected=_mm256_andnot_si256(excluded,one);
+        total=_mm256_add_epi64(total,_mm256_sad_epu8(selected,zero));
+        joint=_mm256_add_epi64(joint,_mm256_sad_epu8(_mm256_andnot_si256(_mm256_cmpeq_epi8(b,zero),selected),zero));
+    }
+    store_counts(total,joint,counts);
+    counts[2]=!_mm256_testz_si256(invalid,invalid_bits);
+    return i;
+}
+
+namespace {
+template<class U> __m256i equal_words(__m256i a,__m256i b) {
+    if constexpr(sizeof(U)==8)return _mm256_cmpeq_epi64(a,b);
+    else if constexpr(sizeof(U)==4)return _mm256_cmpeq_epi32(a,b);
+    else return _mm256_cmpeq_epi16(a,b);
+}
+template<class U> __m256i broadcast(U value) {
+    if constexpr(sizeof(U)==8)return _mm256_set1_epi64x(static_cast<std::int64_t>(value));
+    else if constexpr(sizeof(U)==4)return _mm256_set1_epi32(static_cast<std::int32_t>(value));
+    else return _mm256_set1_epi16(static_cast<std::int16_t>(value));
+}
+template<class U> std::size_t intersection_wide(const unsigned char* a,const unsigned char* b,
+    std::size_t n,U one_bits,U value_bits,std::array<std::uint64_t,3>& counts) {
+    constexpr std::size_t width=32/sizeof(U);
+    const auto zero=_mm256_setzero_si256(),one=broadcast(one_bits),mask=broadcast(value_bits);
+    const auto unit=broadcast(U(1));
+    auto total=zero,joint=zero,invalid=zero;
+    std::size_t i=0;
+    for(;n-i>=width;i+=width) {
+        const auto x=_mm256_and_si256(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(a+i*sizeof(U))),mask);
+        const auto y=_mm256_and_si256(_mm256_loadu_si256(reinterpret_cast<const __m256i*>(b+i*sizeof(U))),mask);
+        const auto hit0=equal_words<U>(x,one),hit1=equal_words<U>(y,one);
+        invalid=_mm256_or_si256(invalid,_mm256_or_si256(
+            _mm256_andnot_si256(hit0,x),_mm256_andnot_si256(hit1,y)));
+        const auto selected=_mm256_and_si256(hit0,unit);
+        total=_mm256_add_epi64(total,_mm256_sad_epu8(selected,zero));
+        joint=_mm256_add_epi64(joint,_mm256_sad_epu8(_mm256_and_si256(selected,hit1),zero));
+    }
+    store_counts(total,joint,counts);
+    counts[2]=!_mm256_testz_si256(invalid,invalid);
+    return i;
+}
+}
+
+std::size_t coloc_intersection_wide_avx2(const unsigned char* a,const unsigned char* b,
+    std::size_t n,std::size_t item,std::uint64_t one,std::uint64_t mask,
+    std::array<std::uint64_t,3>& counts) {
+    if(item==8)return intersection_wide(a,b,n,one,mask,counts);
+    if(item==4)return intersection_wide(a,b,n,std::uint32_t(one),std::uint32_t(mask),counts);
+    return intersection_wide(a,b,n,std::uint16_t(one),std::uint16_t(mask),counts);
+}
+
 // A NumPy pairwise leaf starts eight independent chains, then folds them
 // in a fixed tree before adding the tail. The caller owns the recursive
 // splits and the floating environment. This TU is built with contraction off.
-template<class T> using MandersVec = std::conditional_t<sizeof(T) == 8, __m256d, __m256>;
+template<class T> struct MandersVector;
+template<> struct MandersVector<double> {using Type=__m256d;};
+template<> struct MandersVector<float> {using Type=__m256;};
+template<class T> using MandersVec=typename MandersVector<T>::Type;
 template<class T> inline MandersVec<T> manders_load(const unsigned char* p) {
     if constexpr (sizeof(T) == 8) return _mm256_loadu_pd(reinterpret_cast<const double*>(p));
     else return _mm256_loadu_ps(reinterpret_cast<const float*>(p));
@@ -63,7 +159,7 @@ template<class T,bool Overlap> void manders_leaf(const unsigned char* first,
     using Vec=MandersVec<T>;
     const auto zero=_mm256_setzero_si256();
     auto nonfinite=zero,negative0=zero,negative1=zero;
-    Vec acc[Overlap ? 3:2][vectors];
+    Vec acc[Overlap ? 3:2][vectors]{};
     for(std::size_t i=0;i<n;i+=8) {
         for(std::size_t j=0;j<vectors;++j) {
             const auto k=i+j*lanes;

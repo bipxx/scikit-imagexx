@@ -13,6 +13,10 @@ namespace py=pybind11;
 namespace skimagexx {
 std::array<std::uint64_t,3> coloc_intersection_strided(const ColocView&,const ColocView&,
     const ColocView*,unsigned);
+std::array<std::uint64_t,3> coloc_intersection_dense(const void*,const void*,std::size_t,ColocType,ColocType);
+std::array<std::uint64_t,3> coloc_intersection_reverse_rows(const void*,const void*,std::size_t,std::size_t);
+int coloc_contiguous_manders(const void*,const void*,std::size_t,ColocType,ColocReductionPlan,
+                             bool,std::array<ColocScalar,3>&);
 int coloc_finite_min_negative(const ColocView&);
 ColocScalar coloc_product_sum(const ColocView&,const ColocView*,ColocReductionPlan);
 int coloc_dense_manders(const ColocView&,const ColocView&,const ColocView*,ColocReductionPlan,
@@ -169,15 +173,14 @@ public:
     void check()const{for(const auto& owner:owners_)owner->check();}
 };
 
-bool real_type(const py::array& array,Type& result) {
-    const auto dtype=array.dtype();
+bool real_dtype(const py::dtype& dtype,Type& result) {
     if(dtype.has_fields())return false;
     // Only NumPy's legacy builtin real descriptors. A user DType with the same
     // kind/itemsize must not inherit the builtin loop contract. NPY_HALF=23 is
     // the stable public NumPy1/2 legacy type number; LONGDOUBLE is not float64.
     const int number=dtype.num();
     if(!((number>=0 && number<=12) || number==23))return false;
-    const auto size=array.itemsize();
+    const auto size=dtype.itemsize();
     switch(dtype.kind()) {
     case 'b':if(size==1){result=Type::boolean;return true;}return false;
     case 'u':
@@ -193,6 +196,81 @@ bool real_type(const py::array& array,Type& result) {
     default:return false;
     }
 }
+bool real_type(const py::array& array,Type& result) {return real_dtype(array.dtype(),result);}
+
+// Authenticate a C-contiguous span without following arbitrary owner objects.
+// The caller holds the GIL and enters no Python callbacks before the scan.
+using ArraySlots=py::detail::PyArray_Proxy;
+bool dense_bytes(const ArraySlots& a,std::size_t item,std::size_t& bytes,
+                 std::size_t* reversed_row=nullptr) {
+    if(a.nd<0 || a.nd>int(skimagexx::colocalization_max_rank))return false;
+    if(a.nd && (!a.dimensions || !a.strides))return false;
+    bytes=item;
+    for(int axis=a.nd;axis-->0;) {
+        const auto length=a.dimensions[axis];
+        if(length<=0)return false;
+        if(length>1) {
+            if(std::size_t(length)>size_limit/bytes)return false;
+            const auto stride=py::ssize_t(bytes);
+            if(a.strides[axis]!=stride) {
+                if(!reversed_row || axis!=0 || a.strides[axis]!=-stride)return false;
+                *reversed_row=bytes;
+            }
+        }
+        bytes*=std::size_t(length);
+    }
+    const auto data=reinterpret_cast<std::uintptr_t>(a.data);
+    return data && bytes<=std::numeric_limits<std::uintptr_t>::max()-data;
+}
+struct DenseSpan {
+    const void* data;
+    std::size_t size;
+    Type type;
+    std::size_t reversed_row=0;
+};
+bool dense_span(const ArraySlots& raw,PyTypeObject* ndarray,DenseSpan& span,bool reverse_bool=false) {
+    using Api=py::detail::npy_api;
+    if(!(raw.flags&Api::NPY_ARRAY_ALIGNED_))return false;
+    const bool reversed=reverse_bool && !(raw.flags&Api::NPY_ARRAY_C_CONTIGUOUS_);
+    if(!(raw.flags&Api::NPY_ARRAY_C_CONTIGUOUS_) && !reversed)return false;
+    const auto dtype=py::reinterpret_borrow<py::dtype>(raw.descr);
+    if(!real_dtype(dtype,span.type) || span.type==Type::float16 ||
+       (reversed && span.type!=Type::boolean))return false;
+    const auto order=dtype.byteorder();
+    const std::uint16_t one=1;
+    const bool little=*reinterpret_cast<const unsigned char*>(&one)!=0;
+    if((order=='>' && little) || (order=='<' && !little))return false;
+    const auto item=skimagexx::coloc_itemsize(span.type);
+    std::size_t bytes;
+    const auto data=reinterpret_cast<std::uintptr_t>(raw.data);
+    if(!dense_bytes(raw,item,bytes,reversed ? &span.reversed_row:nullptr) || data%item)return false;
+    if(reversed && (!raw.base || !span.reversed_row || bytes-span.reversed_row>data))return false;
+    if(raw.base) {
+        if(Py_TYPE(raw.base)!=ndarray)return false;
+        const auto& root=*py::detail::array_proxy(raw.base);
+        if(root.base || !(root.flags&Api::NPY_ARRAY_OWNDATA_) ||
+           !(root.flags&Api::NPY_ARRAY_C_CONTIGUOUS_))return false;
+        const auto root_item=py::reinterpret_borrow<py::dtype>(root.descr).itemsize();
+        std::size_t root_bytes;
+        if(root_item<=0 || !dense_bytes(root,std::size_t(root_item),root_bytes))return false;
+        const auto first=reversed ? data-(bytes-span.reversed_row):data;
+        const auto base=reinterpret_cast<std::uintptr_t>(root.data);
+        if(first<base || first-base>root_bytes || bytes>root_bytes-(first-base))return false;
+    } else if(!(raw.flags&Api::NPY_ARRAY_OWNDATA_))return false;
+    span.data=raw.data;
+    span.size=bytes/item;
+    return true;
+}
+bool dense_pair(py::handle a,py::handle b,DenseSpan& first,DenseSpan& second,bool reverse_bool=false) {
+    auto* ndarray=py::detail::npy_api::get().PyArray_Type_;
+    if(Py_TYPE(a.ptr())!=ndarray || Py_TYPE(b.ptr())!=ndarray)return false;
+    const auto& x=*py::detail::array_proxy(a.ptr());
+    const auto& y=*py::detail::array_proxy(b.ptr());
+    if(x.nd!=y.nd || !dense_span(x,ndarray,first) || !dense_span(y,ndarray,second,reverse_bool && first.type==Type::boolean))return false;
+    for(int axis=0;axis<x.nd;++axis)if(x.dimensions[axis]!=y.dimensions[axis])return false;
+    return true;
+}
+
 const char* dtype_name(Type type) {
     switch(type) {
     case Type::boolean:return "bool";case Type::uint8:return "uint8";case Type::int8:return "int8";
@@ -233,9 +311,8 @@ skimagexx::ColocBuffer buffer(py::array& array) {
     if(array.nbytes()<0)throw py::value_error("colocalization negative output bytes");
     return {array.mutable_data(),std::size_t(array.nbytes())};
 }
-py::object scalar(const skimagexx::ColocScalar& value) {
+py::object scalar(const skimagexx::ColocScalar& value,const py::dtype& dtype) {
     // NumPy's scalar constructor consumes exact raw storage; it is not float().
-    const auto dtype=py::dtype(dtype_name(value.type));
     std::array<unsigned char,8> raw{};
     const auto item=skimagexx::coloc_itemsize(value.type);
     if(item==2){const auto bits=std::uint16_t(value.bits);std::memcpy(raw.data(),&bits,2);}
@@ -245,6 +322,13 @@ py::object scalar(const skimagexx::ColocScalar& value) {
     auto result=py::reinterpret_steal<py::object>(py::detail::npy_api::get().PyArray_Scalar_(raw.data(),dtype.ptr(),nullptr));
     if(!result)throw py::error_already_set();
     return result;
+}
+py::object scalar(const skimagexx::ColocScalar& value) {
+    return scalar(value,py::dtype(dtype_name(value.type)));
+}
+py::object number_result(PyObject* result) {
+    if(!result)throw py::error_already_set();
+    return py::reinterpret_steal<py::object>(result);
 }
 skimagexx::ColocReductionPlan reduction(int profile,std::size_t buffer_elements) {
     if(profile!=1 && profile!=2)throw py::value_error("colocalization requires an audited NumPy profile");
@@ -259,6 +343,52 @@ void bind_colocalization(py::module_& module) {
         .def("add",[](Guards& guards,py::array array){guards.add(array);guards.check();},py::arg("array").noconvert())
         .def("check",&Guards::check);
     module.attr("colocalization_interface")=skimagexx::colocalization_interface;
+    module.def("coloc_contiguous_intersection",[](py::handle a,py::handle b)->py::object {
+        DenseSpan first,second;
+        if(!dense_pair(a,b,first,second,true))return py::none();
+        std::array<std::uint64_t,3> counts;
+        {
+            // The caller already excludes concurrent external writes/resizes.
+            auto release=release_large(py::ssize_t(first.size));
+            counts=second.reversed_row
+                ? skimagexx::coloc_intersection_reverse_rows(first.data,second.data,first.size,second.reversed_row)
+                : skimagexx::coloc_intersection_dense(first.data,second.data,first.size,first.type,second.type);
+        }
+        if(counts[2])return py::none();
+        return py::make_tuple(counts[0],counts[1]);
+    });
+    module.def("coloc_contiguous_manders",
+        [f32=py::dtype::of<float>(),f64=py::dtype::of<double>(),half=py::float_(0.5)](
+            py::handle a,py::handle b,int profile,std::size_t buffer_elements,bool overlap)->py::object {
+            DenseSpan first,second;
+            if(!dense_pair(a,b,first,second) ||
+               (first.type!=Type::float32 && first.type!=Type::float64) ||
+               second.type!=(overlap ? first.type:Type::boolean))return py::bool_(false);
+            const auto plan=reduction(profile,buffer_elements);
+            std::array<skimagexx::ColocScalar,3> values;
+            int status;
+            {
+                auto release=release_large(py::ssize_t(first.size));
+                status=skimagexx::coloc_contiguous_manders(first.data,second.data,first.size,
+                                                           first.type,plan,overlap,values);
+            }
+            if(status==0)return py::none();
+            if(status==1)throw py::value_error(overlap ? "image0 contains negative values":"image contains negative values");
+            if(status==2)throw py::value_error("image1 contains negative values");
+            const auto& dtype=first.type==Type::float32 ? f32:f64;
+            if(!overlap) {
+                const auto magnitude=first.type==Type::float32 ? 0x7fffffffULL:0x7fffffffffffffffULL;
+                if(!(values[0].bits&magnitude))return py::int_(0);
+            }
+            const auto first_sum=scalar(values[0],dtype),second_sum=scalar(values[1],dtype);
+            if(!overlap)return number_result(PyNumber_TrueDivide(second_sum.ptr(),first_sum.ptr()));
+
+            // Retain NumPy's exact scalar promotion and power implementation.
+            const auto product=number_result(PyNumber_Multiply(first_sum.ptr(),second_sum.ptr()));
+            const auto denominator=number_result(PyNumber_Power(product.ptr(),half.ptr(),Py_None));
+            const auto numerator=scalar(values[2],dtype);
+            return number_result(PyNumber_TrueDivide(numerator.ptr(),denominator.ptr()));
+        });
     module.def("coloc_dense_intersection",[mmap_type](const py::array& a,const py::array& b,const py::object& mask)->py::object {
         const bool masked=!mask.is_none();
         if(masked && !py::isinstance<py::array>(mask))return py::none();

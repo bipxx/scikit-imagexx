@@ -15,9 +15,6 @@
 #if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)
 #include <xmmintrin.h>
 #endif
-#ifdef SKIMAGEXX_AVX2
-#include <immintrin.h>
-#endif
 #if defined(_MSC_VER)
 #pragma fenv_access(on)
 #elif defined(__clang__)
@@ -26,6 +23,12 @@
 
 #ifdef SKIMAGEXX_AVX2
 namespace skimagexx::simd {
+std::size_t coloc_intersection_avx2(const unsigned char*,const unsigned char*,
+    const unsigned char*,std::size_t,unsigned,std::array<std::uint64_t,3>&);
+void coloc_intersection_reverse_avx2(const unsigned char*,const unsigned char*,
+    std::size_t,std::size_t,std::array<std::uint64_t,3>&);
+std::size_t coloc_intersection_wide_avx2(const unsigned char*,const unsigned char*,
+    std::size_t,std::size_t,std::uint64_t,std::uint64_t,std::array<std::uint64_t,3>&);
 std::uint64_t coloc_bool_count(const unsigned char*,const unsigned char*,std::size_t);
 void coloc_manders_leaf(const unsigned char*,const unsigned char*,std::size_t,bool,double*,unsigned&);
 void coloc_manders_leaf(const unsigned char*,const unsigned char*,std::size_t,bool,float*,unsigned&);
@@ -466,39 +469,6 @@ std::uint64_t coloc_count_nonzero(const ColocView& v) {return count_impl(v,nullp
 std::uint64_t coloc_joint_count(const ColocView& a,const ColocView& b) {return count_impl(a,&b);}
 namespace {
 using IntersectionCounts=std::array<std::uint64_t,3>;
-#ifdef SKIMAGEXX_AVX2
-// Keep AVX instructions out of the dispatcher and scalar path.
-#if defined(_MSC_VER)
-__declspec(noinline)
-#else
-__attribute__((target("avx2"),noinline))
-#endif
-std::size_t intersection_avx2(const unsigned char* first,const unsigned char* second,
-    const unsigned char* mask,std::size_t n,unsigned integer_inputs,IntersectionCounts& counts) {
-    const auto zero=_mm256_setzero_si256(),one=_mm256_set1_epi8(1),invalid_bits=_mm256_set1_epi8(-2);
-    auto total=zero,joint=zero,invalid=zero;
-    std::size_t i=0;
-    for(;n-i>=32;i+=32) {
-        const auto a=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(first+i));
-        const auto b=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(second+i));
-        const auto selection=mask ? _mm256_loadu_si256(reinterpret_cast<const __m256i*>(mask+i)):one;
-        if(integer_inputs&1)invalid=_mm256_or_si256(invalid,a);
-        if(integer_inputs&2)invalid=_mm256_or_si256(invalid,b);
-        if(integer_inputs&4)invalid=_mm256_or_si256(invalid,selection);
-        const auto excluded=_mm256_or_si256(_mm256_cmpeq_epi8(a,zero),_mm256_cmpeq_epi8(selection,zero));
-        const auto selected=_mm256_andnot_si256(excluded,one);
-        total=_mm256_add_epi64(total,_mm256_sad_epu8(selected,zero));
-        joint=_mm256_add_epi64(joint,_mm256_sad_epu8(_mm256_andnot_si256(_mm256_cmpeq_epi8(b,zero),selected),zero));
-    }
-    std::uint64_t lanes[4];
-    _mm256_storeu_si256(reinterpret_cast<__m256i*>(lanes),total);
-    for(const auto lane:lanes)counts[0]+=lane;
-    _mm256_storeu_si256(reinterpret_cast<__m256i*>(lanes),joint);
-    for(const auto lane:lanes)counts[1]+=lane;
-    counts[2]=!_mm256_testz_si256(invalid,invalid_bits);
-    return i;
-}
-#endif
 // All byte spans and common traversal order have been checked by the
 // binding. The third result flags invalid integer binary controls.
 IntersectionCounts coloc_intersection_bytes(const unsigned char* first,
@@ -517,7 +487,7 @@ IntersectionCounts coloc_intersection_bytes(const unsigned char* first,
         auto& counts=workers==1 ? single:partial[worker];
         std::uint64_t invalid=0;
 #ifdef SKIMAGEXX_AVX2
-        if(has_avx2())i+=intersection_avx2(first+i,second+i,mask ? mask+i:nullptr,end-i,integer_inputs,counts);
+        if(has_avx2())i+=simd::coloc_intersection_avx2(first+i,second+i,mask ? mask+i:nullptr,end-i,integer_inputs,counts);
 #endif
         while(end-i>=8) {
             // Each byte lane can accumulate up to 255 independent words.
@@ -555,6 +525,101 @@ IntersectionCounts coloc_intersection_bytes(const unsigned char* first,
     return single;
 }
 }
+// Dense spans have been authenticated by the binding. Each operand is
+// classified independently, so different builtin dtypes can share the loop.
+IntersectionCounts coloc_intersection_dense(const void* first,const void* second,
+    std::size_t n,Type a,Type b) {
+    const auto* x=static_cast<const unsigned char*>(first);
+    const auto* y=static_cast<const unsigned char*>(second);
+    const auto item0=coloc_itemsize(a),item1=coloc_itemsize(b);
+    if(item0==1 && item1==1)
+        return coloc_intersection_bytes(x,y,nullptr,n,unsigned(a!=Type::boolean)|unsigned(b!=Type::boolean)*2);
+
+    // Float binary controls use integer operations throughout. In particular,
+    // signed zero is valid, and a signaling NaN reaches the staged path unread
+    // by any floating-point comparison here.
+    const auto one=[](Type type) -> std::uint64_t {
+        if(type==Type::float32)return 0x3f800000;
+        if(type==Type::float64)return 0x3ff0000000000000ULL;
+        return 1;
+    };
+    const auto one0=one(a),one1=one(b);
+    const auto flags0=low_bits_mask(item0) >> unsigned(floating(a));
+    const auto flags1=low_bits_mask(item1) >> unsigned(floating(b));
+    const int workers=detail::active_workers(n);
+    IntersectionCounts single{};
+    std::vector<IntersectionCounts> partial(workers>1 ? std::size_t(workers):0);
+    detail::partition(n,workers,[&](auto begin,auto end,auto worker) {
+        auto& counts=workers==1 ? single:partial[worker];
+#ifdef SKIMAGEXX_AVX2
+        if(a==b && has_avx2())
+            begin+=simd::coloc_intersection_wide_avx2(x+begin*item0,y+begin*item1,
+                end-begin,item0,one0,flags0,counts);
+#endif
+        const auto scan=[&](const auto& load0,const auto& load1) {
+            for(auto i=begin;i<end;++i) {
+                const auto v=load0(i)&flags0,w=load1(i)&flags1;
+                const bool hit0=a==Type::boolean ? v!=0:v==one0;
+                const bool hit1=b==Type::boolean ? w!=0:w==one1;
+                counts[2]|=(a!=Type::boolean && v && !hit0) || (b!=Type::boolean && w && !hit1);
+                counts[0]+=hit0;
+                counts[1]+=hit0 && hit1;
+            }
+        };
+        const auto load=[](const unsigned char* data,std::size_t item,std::size_t i) -> std::uint64_t {
+            switch(item) {
+            case 1:return data[i];
+            case 2:return read<std::uint16_t>(data+i*2,false);
+            case 4:return read<std::uint32_t>(data+i*4,false);
+            default:return read<std::uint64_t>(data+i*8,false);
+            }
+        };
+        const auto scan_fixed=[&](auto width) {
+            scan([&](auto i){return load(x,width,i);},[&](auto i){return load(y,width,i);});
+        };
+        if(item0==8 && item1==8)scan_fixed(std::integral_constant<std::size_t,8>{});
+        else if(item0==4 && item1==4)scan_fixed(std::integral_constant<std::size_t,4>{});
+        else if(item0==2 && item1==2)scan_fixed(std::integral_constant<std::size_t,2>{});
+        else scan([&](auto i){return load(x,item0,i);},[&](auto i){return load(y,item1,i);});
+    });
+    for(const auto& counts:partial) {
+        single[0]+=counts[0];single[1]+=counts[1];single[2]|=counts[2];
+    }
+    return single;
+}
+
+// A dense bool image against the same layout with its leading axis reversed.
+IntersectionCounts coloc_intersection_reverse_rows(const void* first,const void* second,
+    std::size_t n,std::size_t width) {
+    const auto* x=static_cast<const unsigned char*>(first);
+    const auto* y=static_cast<const unsigned char*>(second);
+    const auto workers=detail::active_workers(n);
+    IntersectionCounts single{};
+    std::vector<IntersectionCounts> partial(workers>1 ? std::size_t(workers):0);
+    detail::partition(n/width,workers,[&](auto begin,auto end,auto worker) {
+        if(begin==end)return;
+        auto& counts=workers==1 ? single:partial[worker];
+#ifdef SKIMAGEXX_AVX2
+        if(width%32==0 && has_avx2()) {
+            simd::coloc_intersection_reverse_avx2(x+begin*width,y-begin*width,end-begin,width,counts);
+            return;
+        }
+#endif
+        for(auto row=begin;row<end;++row) {
+            const auto* a=x+row*width;
+            const auto* b=y-row*width;
+            for(std::size_t i=0;i<width;++i) {
+                counts[0]+=a[i]!=0;
+                counts[1]+=a[i]!=0 && b[i]!=0;
+            }
+        }
+    });
+    for(const auto& counts:partial) {
+        single[0]+=counts[0];single[1]+=counts[1];
+    }
+    return single;
+}
+
 IntersectionCounts coloc_intersection_strided(const ColocView& a,const ColocView& b,
     const ColocView* mask,unsigned integer_inputs) {
     const auto n=coloc_validate(a);coloc_validate(b);shapes(a,b);
@@ -838,6 +903,49 @@ ColocScalar coloc_product_sum(const ColocView& a,const ColocView* b,ColocReducti
     return product_sum<double>(a,b,n,block,step0,step1);
 }
 namespace {
+template<class T,bool Overlap>
+auto manders_leaf(const unsigned char* first,const unsigned char* second,
+                  std::size_t length,unsigned& status,[[maybe_unused]] bool avx2)
+    -> std::array<T,Overlap ? 3:2> {
+    using Sums=std::array<T,Overlap ? 3:2>;
+    const auto read_terms=[&](std::size_t i) -> Sums {
+        const T x=read<T>(first+i*sizeof(T),false);
+        status|=!std::isfinite(x) ? 1u:0u;
+        status|=x<T(0) ? 2u:0u;
+        if constexpr(Overlap) {
+            const T y=read<T>(second+i*sizeof(T),false);
+            status|=!std::isfinite(y) ? 1u:0u;
+            status|=y<T(0) ? 4u:0u;
+            return {T(x*x),T(y*y),T(x*y)};
+        } else return {x,T(x*T(second[i]!=0))};
+    };
+    const auto add_terms=[](Sums& sums,const Sums& terms) {
+        for(std::size_t j=0;j<sums.size();++j)sums[j]+=terms[j];
+    };
+    Sums sums;
+    std::size_t i=0;
+    if(length<8)sums.fill(-T(0));
+    else {
+        const auto full=length&~std::size_t(7);
+#ifdef SKIMAGEXX_AVX2
+        if(avx2)simd::coloc_manders_leaf(first,second,full,Overlap,sums.data(),status);
+        else
+#endif
+        {
+            Sums lanes[8];
+            for(std::size_t k=0;k<8;++k)lanes[k]=read_terms(k);
+            for(std::size_t j=8;j<full;j+=8)
+                for(std::size_t k=0;k<8;++k)add_terms(lanes[k],read_terms(j+k));
+            for(std::size_t j=0;j<sums.size();++j)
+                sums[j]=((lanes[0][j]+lanes[1][j])+(lanes[2][j]+lanes[3][j]))+
+                        ((lanes[4][j]+lanes[5][j])+(lanes[6][j]+lanes[7][j]));
+        }
+        i=full;
+    }
+    for(;i<length;++i)add_terms(sums,read_terms(i));
+    return sums;
+}
+
 template<class T,bool Overlap,class Leaf>
 auto manders_pairwise(std::size_t n,const Leaf& leaf) -> std::array<T,Overlap ? 3:2> {
     if(n<=128)return leaf(n);
@@ -847,17 +955,76 @@ auto manders_pairwise(std::size_t n,const Leaf& leaf) -> std::array<T,Overlap ? 
     for(std::size_t j=0;j<a.size();++j)a[j]+=b[j];
     return a;
 }
+template<class T,bool Overlap,class Leaf>
+int manders_reduce(std::size_t selected,std::size_t block,const Leaf& leaf,
+                   const unsigned& status,const Capture& capture,Type type,
+                   std::array<ColocScalar,3>& result,bool product_only) {
+    using Sums=std::array<T,Overlap ? 3:2>;
+    Sums sums{};
+    while(selected) {
+        const auto take=std::min(block,selected);
+        const auto partial=manders_pairwise<T,Overlap>(take,leaf);
+        for(std::size_t j=0;j<sums.size();++j)sums[j]+=partial[j];
+        selected-=take;
+    }
+    if((status&1) || capture.flags())return 0;
+    if(product_only) {
+        if(!std::isfinite(sums[1]))return 0;
+        result[1]=packed_scalar(type,sums[1]);
+        return 3;
+    }
+    if(status&2)return 1;
+    if(status&4)return 2;
+    for(const auto sum:sums)if(!std::isfinite(sum))return 0;
+    // Scalar arithmetic stays in Python with its exact NumPy promotion and
+    // pow behavior. Only admit results for which it cannot call an error
+    // handler before the original method would have read the dot operands.
+    if constexpr(Overlap) {
+        const T product=sums[0]*sums[1];
+        if(!std::isnormal(product))return 0;
+        if(sums[2]!=T(0)) {
+            const T quotient=sums[2]/std::sqrt(product);
+            if(!(quotient>=2*std::numeric_limits<T>::min()) || !std::isfinite(quotient))return 0;
+        }
+    } else if(sums[0]!=T(0)) {
+        const T quotient=sums[1]/sums[0];
+        if(!std::isfinite(quotient))return 0;
+    }
+    if(capture.flags())return 0;
+    for(std::size_t j=0;j<sums.size();++j)result[j]=packed_scalar(type,sums[j]);
+    return 3;
+}
+
+template<class T,bool Overlap>
+int manders_contiguous(const unsigned char* first,const unsigned char* second,
+                       std::size_t n,std::size_t block,Type type,
+                       std::array<ColocScalar,3>& result) {
+    Capture capture;
+    unsigned status=0;
+    bool avx2=false;
+#ifdef SKIMAGEXX_AVX2
+    avx2=has_avx2();
+#endif
+    const auto leaf=[&](std::size_t length) {
+        const auto sums=manders_leaf<T,Overlap>(first,second,length,status,avx2);
+        first+=length*sizeof(T);
+        second+=length*(Overlap ? sizeof(T):1);
+        return sums;
+    };
+    return manders_reduce<T,Overlap>(n,block,leaf,status,capture,type,result,false);
+}
+
 template<class T,bool Overlap>
 int manders(const ColocView& a,const ColocView& b,const ColocView* mask,
             const ColocOrder& order,std::size_t n,std::size_t selected,
             std::size_t block,bool dense,std::array<ColocScalar,3>& result,bool product_only) {
     constexpr auto second_item=Overlap ? sizeof(T):1;
-    using Sums=std::array<T,Overlap ? 3:2>;
     Rows<3> row(a,order,{&a,&b,mask},0,n,dense);
     unsigned status=0;
     Capture capture;
+    bool avx2=false;
 #ifdef SKIMAGEXX_AVX2
-    const bool avx2=has_avx2();
+    avx2=has_avx2();
 #endif
     const auto leaf=[&](std::size_t length) {
         std::array<unsigned char,128*sizeof(T)> first_buffer,second_buffer;
@@ -891,77 +1058,23 @@ int manders(const ColocView& a,const ColocView& b,const ColocView* mask,
             }
             first=first_buffer.data();second=second_buffer.data();
         }
-        const auto read_terms=[&](std::size_t i) -> Sums {
-            const T x=read<T>(first+i*sizeof(T),false);
-            status|=!std::isfinite(x) ? 1u:0u;
-            status|=x<T(0) ? 2u:0u;
-            if constexpr(Overlap) {
-                const T y=read<T>(second+i*sizeof(T),false);
-                status|=!std::isfinite(y) ? 1u:0u;
-                status|=y<T(0) ? 4u:0u;
-                return {T(x*x),T(y*y),T(x*y)};
-            } else return {x,T(x*T(second[i]!=0))};
-        };
-        const auto add_terms=[](Sums& sums,const Sums& terms) {
-            for(std::size_t j=0;j<sums.size();++j)sums[j]+=terms[j];
-        };
-        Sums sums;
-        std::size_t i=0;
-        if(length<8)sums.fill(-T(0));
-        else {
-            const auto full=length&~std::size_t(7);
-#ifdef SKIMAGEXX_AVX2
-            if(avx2)simd::coloc_manders_leaf(first,second,full,Overlap,sums.data(),status);
-            else
-#endif
-            {
-                Sums lanes[8];
-                for(std::size_t k=0;k<8;++k)lanes[k]=read_terms(k);
-                for(std::size_t j=8;j<full;j+=8)
-                    for(std::size_t k=0;k<8;++k)add_terms(lanes[k],read_terms(j+k));
-                for(std::size_t j=0;j<sums.size();++j)
-                    sums[j]=((lanes[0][j]+lanes[1][j])+(lanes[2][j]+lanes[3][j]))+
-                            ((lanes[4][j]+lanes[5][j])+(lanes[6][j]+lanes[7][j]));
-            }
-            i=full;
-        }
-        for(;i<length;++i)add_terms(sums,read_terms(i));
-        return sums;
+        return manders_leaf<T,Overlap>(first,second,length,status,avx2);
     };
-    Sums sums{};
-    while(selected) {
-        const auto take=std::min(block,selected);
-        const auto partial=manders_pairwise<T,Overlap>(take,leaf);
-        for(std::size_t j=0;j<sums.size();++j)sums[j]+=partial[j];
-        selected-=take;
-    }
-    if((status&1) || capture.flags())return 0;
-    if(product_only) {
-        if(!std::isfinite(sums[1]))return 0;
-        result[1]=packed_scalar(a.type,sums[1]);
-        return 3;
-    }
-    if(status&2)return 1;
-    if(status&4)return 2;
-    for(const auto sum:sums)if(!std::isfinite(sum))return 0;
-    // Scalar arithmetic stays in Python with its exact NumPy promotion and
-    // pow behavior. Only admit results for which it cannot call an error
-    // handler before the original method would have read the dot operands.
-    if constexpr(Overlap) {
-        const T product=sums[0]*sums[1];
-        if(!std::isnormal(product))return 0;
-        if(sums[2]!=T(0)) {
-            const T quotient=sums[2]/std::sqrt(product);
-            if(!(quotient>=2*std::numeric_limits<T>::min()) || !std::isfinite(quotient))return 0;
-        }
-    } else if(sums[0]!=T(0)) {
-        const T quotient=sums[1]/sums[0];
-        if(!std::isfinite(quotient))return 0;
-    }
-    if(capture.flags())return 0;
-    for(std::size_t j=0;j<sums.size();++j)result[j]=packed_scalar(a.type,sums[j]);
-    return 3;
+    return manders_reduce<T,Overlap>(selected,block,leaf,status,capture,a.type,result,product_only);
 }
+}
+
+int coloc_contiguous_manders(const void* a,const void* b,std::size_t n,Type type,
+                             ColocReductionPlan plan,bool overlap,std::array<ColocScalar,3>& result) {
+    if(!n || !plan.buffer_elements || !coloc_fp_supported())return 0;
+    const auto block=plan.profile==ColocProfile::numpy_1244 ? plan.buffer_elements:n;
+    const auto* first=static_cast<const unsigned char*>(a);
+    const auto* second=static_cast<const unsigned char*>(b);
+    if(type==Type::float32)
+        return overlap ? manders_contiguous<float,true>(first,second,n,block,type,result)
+                       : manders_contiguous<float,false>(first,second,n,block,type,result);
+    return overlap ? manders_contiguous<double,true>(first,second,n,block,type,result)
+                   : manders_contiguous<double,false>(first,second,n,block,type,result);
 }
 
 // Private fused route. Zero requests staged replay, including exceptional
