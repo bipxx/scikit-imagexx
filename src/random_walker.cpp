@@ -163,14 +163,34 @@ auto stencil_terms(const Laplacian& laplacian) {
 template<std::size_t Terms, std::size_t... I>
 SKIMAGEXX_WALKER_AVX2 double apply_stencil_tile(
     const std::array<StencilTerm, Terms>& terms,
-    const std::array<const double*, Terms>& neighbors, const double* direction, double* product,
-    std::size_t begin, std::size_t end, double curvature, std::index_sequence<I...>) {
+    const std::array<const double*, Terms>& neighbors, double* solution, double* direction,
+    double* product, std::size_t ready, std::size_t needed, double alpha, double beta,
+    std::size_t begin, std::size_t end, double curvature,
+    std::index_sequence<I...>) {
+    const auto a = _mm256_set1_pd(alpha);
+    const auto b = _mm256_set1_pd(beta);
+    for (; ready + 4 <= needed; ready += 4) {
+        const auto p = _mm256_loadu_pd(direction + ready);
+        const auto z = _mm256_loadu_pd(product + ready);
+        const auto x = _mm256_loadu_pd(solution + ready);
+        _mm256_storeu_pd(solution + ready, _mm256_add_pd(x, _mm256_mul_pd(a, p)));
+        _mm256_storeu_pd(direction + ready, _mm256_add_pd(z, _mm256_mul_pd(b, p)));
+    }
+    for (; ready < needed; ++ready) {
+        solution[ready] += alpha * direction[ready];
+        direction[ready] = product[ready] + beta * direction[ready];
+    }
+
+    // Copy the pointer arrays before storing products so their fields can stay
+    // in registers throughout the stencil loop.
+    const std::array weights{terms[I].weight...};
+    const auto inputs = neighbors;
     for (auto i = begin; i < end; i += 4) {
         auto sum = _mm256_setzero_pd();
         ((sum = _mm256_add_pd(sum, _mm256_mul_pd(
-              _mm256_loadu_pd(terms[I].weight + i), _mm256_loadu_pd(neighbors[I] + i)))), ...);
+              _mm256_loadu_pd(weights[I] + i), _mm256_loadu_pd(inputs[I] + i)))), ...);
         _mm256_storeu_pd(product + i, sum);
-        const auto dots = _mm256_mul_pd(_mm256_loadu_pd(direction + i), sum);
+        const auto dots = _mm256_mul_pd(_mm256_loadu_pd(inputs[Terms / 2] + i), sum);
         const auto low = _mm256_castpd256_pd128(dots);
         const auto high = _mm256_extractf128_pd(dots, 1);
         // Keep the scalar summation order so convergence and class ties agree.
@@ -181,14 +201,13 @@ SKIMAGEXX_WALKER_AVX2 double apply_stencil_tile(
     }
     return curvature;
 }
-
-#undef SKIMAGEXX_WALKER_AVX2
 #endif
 
 template<bool Simd, std::size_t Terms, std::size_t... I>
 double apply_and_dot(
-    const std::array<StencilTerm, Terms>& terms, double* direction, double* product,
-    std::size_t size, double beta, bool update_direction, std::index_sequence<I...>) {
+    const std::array<StencilTerm, Terms>& terms, double* solution, double* direction,
+    double* product, std::size_t size, double alpha, double beta, bool update_direction,
+    std::index_sequence<I...>) {
     const std::array<const double*, Terms> neighbors{(direction + terms[I].offset)...};
     const auto lookahead = static_cast<std::size_t>(terms.back().offset);
     double curvature = 0;
@@ -198,32 +217,23 @@ double apply_and_dot(
         const auto end = std::min(i + tile, size);
         // The stencil needs the new direction through its farthest neighbor.
         // Update those entries before overwriting any of their previous products.
-        if (update_direction) {
-            const auto needed = std::min(end + lookahead, size);
-#if defined(__SSE2__) || defined(_M_X64)
-            if constexpr (Simd) {
-                const auto b = _mm_set1_pd(beta);
-                for (; ready + 2 <= needed; ready += 2) {
-                    const auto p = _mm_loadu_pd(direction + ready);
-                    const auto z = _mm_loadu_pd(product + ready);
-                    _mm_storeu_pd(direction + ready, _mm_add_pd(z, _mm_mul_pd(b, p)));
-                }
-            }
-#endif
-            for (; ready < needed; ++ready)
-                direction[ready] = product[ready] + beta * direction[ready];
-        }
+        const auto needed = update_direction ? std::min(end + lookahead, size) : ready;
 #if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
         if constexpr (Simd) {
             const auto vector_end = end - (end - i) % 4;
             if (vector_end != i) {
                 curvature = apply_stencil_tile(
-                    terms, neighbors, direction, product, i, vector_end, curvature,
-                    std::index_sequence<I...>{});
+                    terms, neighbors, solution, direction, product, ready, needed, alpha, beta,
+                    i, vector_end, curvature, std::index_sequence<I...>{});
+                ready = needed;
                 i = vector_end;
             }
         }
 #endif
+        for (; ready < needed; ++ready) {
+            solution[ready] += alpha * direction[ready];
+            direction[ready] = product[ready] + beta * direction[ready];
+        }
         for (; i < end; ++i) {
             double sum = 0;
             ((sum += terms[I].weight[i] * neighbors[I][i]), ...);
@@ -327,34 +337,45 @@ struct Reductions {
     double rho = 0;
 };
 
+#if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
+SKIMAGEXX_WALKER_AVX2 Reductions update_residual_vectors(
+    double* r, double* ap, const double* inverse, std::size_t size, double alpha) {
+    const auto a = _mm256_set1_pd(alpha);
+    auto ordered_sums = _mm_setzero_pd();
+    for (std::size_t i = 0; i < size; i += 4) {
+        const auto update = _mm256_sub_pd(_mm256_loadu_pd(r + i),
+                                          _mm256_mul_pd(a, _mm256_loadu_pd(ap + i)));
+        const auto z = _mm256_mul_pd(_mm256_loadu_pd(inverse + i), update);
+        _mm256_storeu_pd(r + i, update);
+        _mm256_storeu_pd(ap + i, z);
+        const auto squares = _mm256_mul_pd(update, update);
+        const auto dots = _mm256_mul_pd(update, z);
+        const auto square_lo = _mm256_castpd256_pd128(squares);
+        const auto square_hi = _mm256_extractf128_pd(squares, 1);
+        const auto dot_lo = _mm256_castpd256_pd128(dots);
+        const auto dot_hi = _mm256_extractf128_pd(dots, 1);
+        ordered_sums = _mm_add_pd(ordered_sums, _mm_unpacklo_pd(square_lo, dot_lo));
+        ordered_sums = _mm_add_pd(ordered_sums, _mm_unpackhi_pd(square_lo, dot_lo));
+        ordered_sums = _mm_add_pd(ordered_sums, _mm_unpacklo_pd(square_hi, dot_hi));
+        ordered_sums = _mm_add_pd(ordered_sums, _mm_unpackhi_pd(square_hi, dot_hi));
+    }
+    return {_mm_cvtsd_f64(ordered_sums), _mm_cvtsd_f64(_mm_unpackhi_pd(ordered_sums, ordered_sums))};
+}
+#undef SKIMAGEXX_WALKER_AVX2
+#endif
+
 template<bool Simd>
 Reductions update_residual(
-    double* x, double* r, const double* p, double* ap, const double* inverse,
-    std::size_t size, double alpha) {
+    double* r, double* ap, const double* inverse, std::size_t size, double alpha) {
     std::size_t i = 0;
     Reductions sums;
-#if defined(__SSE2__) || defined(_M_X64)
+#if defined(SKIMAGEXX_AVX2) && (defined(__SSE2__) || defined(_M_X64))
     if constexpr (Simd) {
-        const auto a = _mm_set1_pd(alpha);
-        auto ordered_sums = _mm_setzero_pd();
-        for (; i + 2 <= size; i += 2) {
-            const auto advance = _mm_mul_pd(a, _mm_loadu_pd(p + i));
-            const auto update = _mm_sub_pd(_mm_loadu_pd(r + i), _mm_mul_pd(a, _mm_loadu_pd(ap + i)));
-            const auto z = _mm_mul_pd(_mm_loadu_pd(inverse + i), update);
-            _mm_storeu_pd(x + i, _mm_add_pd(_mm_loadu_pd(x + i), advance));
-            _mm_storeu_pd(r + i, update);
-            _mm_storeu_pd(ap + i, z);
-            const auto squares = _mm_mul_pd(update, update);
-            const auto dots = _mm_mul_pd(update, z);
-            ordered_sums = _mm_add_pd(ordered_sums, _mm_unpacklo_pd(squares, dots));
-            ordered_sums = _mm_add_pd(ordered_sums, _mm_unpackhi_pd(squares, dots));
-        }
-        sums.norm_squared = _mm_cvtsd_f64(ordered_sums);
-        sums.rho = _mm_cvtsd_f64(_mm_unpackhi_pd(ordered_sums, ordered_sums));
+        i = size - size % 4;
+        sums = update_residual_vectors(r, ap, inverse, i, alpha);
     }
 #endif
     for (; i < size; ++i) {
-        x[i] += alpha * p[i];
         const double update = r[i] - alpha * ap[i];
         const double z = inverse[i] * update;
         r[i] = update;
@@ -378,16 +399,27 @@ bool solve_cg(
     const auto span = grid.end - grid.begin;
     const auto threshold = tolerance * std::sqrt(sums.norm_squared);
     double previous = 0;
+    double alpha = 0;
+    // Apply each solution update while the old direction is still in registers.
+    // If the solve ends before a new direction is needed, apply the last update here.
+    const auto finish_solution = [&] {
+        for (std::size_t i = 0; i < span; ++i) x[i] += alpha * p[i];
+    };
     for (std::size_t iteration = 0; iteration < 10 * laplacian.padded_unknown.size(); ++iteration) {
         const auto norm = std::sqrt(sums.norm_squared);
-        if (norm < threshold || norm == 0) return true;
+        if (norm < threshold || norm == 0) {
+            if (iteration != 0) finish_solution();
+            return true;
+        }
         const auto beta = iteration == 0 ? 0.0 : sums.rho / previous;
         const auto curvature = apply_and_dot<Simd>(
-            terms, p, ap, span, beta, iteration != 0, std::make_index_sequence<Terms>{});
+            terms, x, p, ap, span, alpha, beta, iteration != 0, std::make_index_sequence<Terms>{});
         if (!(curvature > 0.0) || !std::isfinite(curvature)) return false;
         previous = sums.rho;
-        sums = update_residual<Simd>(x, r, p, ap, inverse, span, previous / curvature);
+        alpha = previous / curvature;
+        sums = update_residual<Simd>(r, ap, inverse, span, alpha);
     }
+    finish_solution();
     return false;
 }
 
