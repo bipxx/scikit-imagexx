@@ -13,6 +13,18 @@ namespace {
 constexpr int max_circle_radius = 64;
 constexpr std::size_t max_circle_taps = 8 * (max_circle_radius + 1);
 
+#ifdef _MSC_VER
+#define HOUGH_CIRCLE_RESTRICT __restrict
+#else
+#define HOUGH_CIRCLE_RESTRICT __restrict__
+#endif
+
+void add_mask(std::uint16_t* HOUGH_CIRCLE_RESTRICT counts,
+              const std::uint16_t* HOUGH_CIRCLE_RESTRICT mask, std::size_t size) {
+    for (std::size_t i = 0; i < size; ++i)
+        counts[i] += mask[i];
+}
+
 template<class T>
 std::uintptr_t span_end(const T* data, std::size_t count) {
     const auto begin = reinterpret_cast<std::uintptr_t>(data);
@@ -62,18 +74,36 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
     const int pad = *std::max_element(radii.begin(), radii.end());
     const int pitch = width + 2 * pad;
     const int area = plane->height * plane->width;
-    std::vector<int> nonzero;
-    for (int row = 0; row < height; ++row) {
-        const auto* image_row = image + row * width;
-        const int origin = (row + pad) * pitch + pad;
-        for (int col = 0; col < width; ++col) {
-            if (image_row[col])
-                nonzero.push_back(origin + col);
-        }
-    }
-    if (nonzero.empty()) {
+    std::size_t foreground = 0;
+    for (std::size_t p = 0; p < image_count; ++p)
+        foreground += image[p] != 0;
+    if (!foreground) {
         std::fill_n(output, output_count, 0.0);
         return;
+    }
+
+    const int first_center = pad * pitch + pad;
+    const auto mask_span = std::size_t(height - 1) * pitch + width;
+    // For dense masks, each shift can add a contiguous span to the halo.
+    // Compare against the padded span because its row gaps are also processed.
+    const bool dense = foreground > mask_span / 2;
+    std::vector<std::uint16_t> mask(dense ? mask_span : 0);
+    std::vector<int> nonzero;
+    if (!dense)
+        nonzero.reserve(foreground);
+    for (int row = 0; row < height; ++row) {
+        const auto* image_row = image + row * width;
+        if (dense) {
+            auto* mask_row = mask.data() + row * pitch;
+            for (int col = 0; col < width; ++col)
+                mask_row[col] = image_row[col] != 0;
+        } else {
+            const int origin = first_center + row * pitch;
+            for (int col = 0; col < width; ++col) {
+                if (image_row[col])
+                    nonzero.push_back(origin + col);
+            }
+        }
     }
 
     std::vector<std::uint16_t> counts;
@@ -104,9 +134,14 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
         for (std::size_t k = 0; k < taps; ++k)
             values[k + 1] = values[k] + increment;
         if (radius == 0) {
-            if (full_output) {
+            if (full_output && !dense) {
                 std::fill_n(layer, area, 0.0);
                 for (int center : nonzero) layer[center] = values[taps];
+            } else if (full_output) {
+                std::fill_n(layer, area, 0.0);
+                auto* dest = layer + first_center;
+                for (std::size_t p = 0; p < mask_span; ++p)
+                    dest[p] = mask[p] ? values[taps] : 0.0;
             } else {
                 for (std::size_t p = 0; p < image_count; ++p)
                     layer[p] = image[p] ? values[taps] : 0.0;
@@ -114,10 +149,15 @@ void hough_circle_into(const std::uint8_t* image, std::size_t image_count, int h
             continue;
         }
         counts.assign(std::size_t(height + 2 * pad) * pitch, 0);
-        for (int index : nonzero) {
-            auto* center = counts.data() + index;
+        if (dense) {
             for (std::size_t k = 0; k < taps; ++k)
-                ++center[shifts[k]];
+                add_mask(counts.data() + first_center + shifts[k], mask.data(), mask_span);
+        } else {
+            for (int index : nonzero) {
+                auto* center = counts.data() + index;
+                for (std::size_t k = 0; k < taps; ++k)
+                    ++center[shifts[k]];
+            }
         }
         const int crop = full_output ? 0 : pad;
         for (int row = 0; row < plane->height; ++row) {

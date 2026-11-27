@@ -22,8 +22,9 @@ void bind_probabilistic_hough_line(py::module_& module) {
         if (std::fegetround() != FE_TONEAREST)
             return py::none();
         const auto* bytes = static_cast<const std::uint8_t*>(image.data());
+        const auto size = image.size();
         std::size_t count = 0;
-        for (py::ssize_t i = 0; i < image.size(); ++i)
+        for (py::ssize_t i = 0; i < size; ++i)
             count += bytes[i] != 0;
         if (count > 4096)
             return py::none();

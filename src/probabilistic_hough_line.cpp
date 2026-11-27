@@ -20,6 +20,7 @@ namespace skimagexx {
 namespace {
 
 constexpr std::size_t foreground_limit = 4096;
+constexpr int dimension_limit = 256;
 constexpr int fixed_unit = 1 << 16;
 
 bool simd_allowed() {
@@ -103,7 +104,8 @@ std::vector<ProbabilisticHoughSegment> probabilistic_hough_line_ordered(
     const std::uint8_t* image, std::size_t image_count, int height, int width,
     const double* cosines, const double* sines, std::size_t angle_count,
     const std::intptr_t* permutation, std::size_t count, int threshold, int line_length, int line_gap) {
-    if (height < 1 || height > 256 || width < 1 || width > 256 || image_count != std::size_t(height * width) ||
+    if (height < 1 || height > dimension_limit || width < 1 || width > dimension_limit ||
+        image_count != std::size_t(height * width) ||
         count > foreground_limit || angle_count > 256 || threshold < 1 || threshold > 4096 ||
         line_length < 0 || line_length > 256 || line_gap < 0 || line_gap > 256 ||
         invalid_span(image, image_count) || invalid_span(permutation, count) ||
@@ -150,11 +152,10 @@ std::vector<ProbabilisticHoughSegment> probabilistic_hough_line_ordered(
     std::vector<std::int16_t> accumulator(angle_count * stride, 0);
     std::int16_t* const accum_zero = accumulator.data() + offset;
 
-    const std::size_t line_cap = std::min<std::size_t>(count, std::size_t(height + width));
-    std::vector<double> removed_x;
-    std::vector<double> removed_y;
-    removed_x.reserve(line_cap);
-    removed_y.reserve(line_cap);
+    // The walk advances one pixel per step on its major axis. Each in-bounds
+    // major-axis coordinate is visited once, except the shared start.
+    std::array<double, dimension_limit> removed_x;
+    std::array<double, dimension_limit> removed_y;
 
     while (count > 0) {
         const Point start = points[std::size_t(permutation[--count])];
@@ -223,15 +224,15 @@ std::vector<ProbabilisticHoughSegment> probabilistic_hough_line_ordered(
             continue;
 
         // Collect newly cleared line pixels once, then decrement each angle row contiguously.
-        removed_x.clear();
-        removed_y.clear();
+        std::size_t removed_count = 0;
         const auto collect_removed = [&](int direction, Point end) {
             follow(walk, direction, [&](Point point) {
                 auto& marked = mask[point.y * width + point.x];
                 if (marked) {
                     marked = 0;
-                    removed_x.push_back(double(point.x));
-                    removed_y.push_back(double(point.y));
+                    removed_x[removed_count] = double(point.x);
+                    removed_y[removed_count] = double(point.y);
+                    ++removed_count;
                 }
                 return point.x != end.x || point.y != end.y;
             });
@@ -239,7 +240,6 @@ std::vector<ProbabilisticHoughSegment> probabilistic_hough_line_ordered(
         collect_removed(1, first);
         collect_removed(-1, second);
 
-        const std::size_t removed_count = removed_x.size();
         const double* const rx = removed_x.data();
         const double* const ry = removed_y.data();
         for (std::size_t angle = 0; angle < angle_count; ++angle) {

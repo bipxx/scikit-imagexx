@@ -1,6 +1,8 @@
 #include "skimagexx/hough_line.hpp"
+#include "skimagexx/image.hpp"
 
 #include <algorithm>
+#include <array>
 #include <cfenv>
 #include <cmath>
 #include <cstdlib>
@@ -14,6 +16,20 @@
 #define SKIMAGEXX_HL_SSE2 1
 #else
 #define SKIMAGEXX_HL_SSE2 0
+#endif
+
+#if SKIMAGEXX_HL_SSE2 && defined(SKIMAGEXX_AVX2)
+#include <immintrin.h>
+#define SKIMAGEXX_HL_AVX2 1
+#if defined(_MSC_VER) && !defined(__clang__)
+#define HOUGH_LINE_AVX2 __declspec(noinline)
+#define HOUGH_LINE_AVX2_INLINE __forceinline
+#else
+#define HOUGH_LINE_AVX2 __attribute__((target("avx2"), noinline))
+#define HOUGH_LINE_AVX2_INLINE __attribute__((target("avx2"), always_inline)) inline
+#endif
+#else
+#define SKIMAGEXX_HL_AVX2 0
 #endif
 
 #ifdef _MSC_VER
@@ -140,80 +156,186 @@ void hough_line_sparse(const std::vector<NonzeroRow>& rows, const double* column
     }
 }
 
-void hough_line_dense(const std::vector<NonzeroRow>& rows,
-                      const double* columns, int offset,
-                      const double* HOUGH_LINE_RESTRICT cosines,
-                      const double* HOUGH_LINE_RESTRICT sines, std::size_t angles,
-                      std::uint64_t* HOUGH_LINE_RESTRICT accumulator, bool use_simd) {
-    const auto num_distances = std::size_t(2 * offset + 1);
-    constexpr auto cache_budget = 24 * 1024;
-    const auto block_size = std::min(angles, std::clamp(
-        cache_budget / (num_distances * sizeof(std::uint32_t) * (use_simd ? 2 : 1)),
-        std::size_t(1), std::size_t(8)));
-    std::vector<std::uint32_t> votes(num_distances * block_size * (use_simd ? 2 : 1));
+int rounded_distance(double projection, int offset) {
+    const double adjusted = projection > 0.0 ? projection + 0.5 : projection - 0.5;
+    return offset + static_cast<int>(adjusted);
+}
+
+#if SKIMAGEXX_HL_AVX2
+template<bool mixed_sign>
+HOUGH_LINE_AVX2_INLINE __m128i project_four(const double* columns, __m256d cosine, __m256d sin_row,
+                                          __m256d half, __m256d sign) {
+    const auto projection = _mm256_add_pd(_mm256_mul_pd(cosine, _mm256_loadu_pd(columns)), sin_row);
+    if constexpr (mixed_sign)
+        half = _mm256_or_pd(_mm256_and_pd(projection, sign), half);
+    // Scale each signed rho to index an eight-counter group.
+    return _mm_slli_epi32(_mm256_cvttpd_epi32(_mm256_add_pd(projection, half)), 3);
+}
+
+template<bool mixed_sign>
+HOUGH_LINE_AVX2
+void vote_angle_avx2(const std::vector<NonzeroRow>& rows, const double* columns,
+                     double cosine, double sine, int offset, double half,
+                     std::uint32_t* HOUGH_LINE_RESTRICT histogram) {
+    constexpr std::size_t batch_size = 128;
+    alignas(16) std::array<std::int16_t, batch_size> distances;
+    const auto cos_v = _mm256_set1_pd(cosine);
+    const auto sign_mask = _mm256_set1_pd(-0.0);
+    const auto half_v = _mm256_set1_pd(half);
+    auto* const center = histogram + 8 * offset;
+    for (const auto& row : rows) {
+        const double sin_row = sine * row.row;
+        const auto sin_row_v = _mm256_set1_pd(sin_row);
+        const auto* const row_end = columns + row.count;
+        std::size_t remaining = row.count - row.count % 4;
+        while (remaining) {
+            const auto batch = std::min(remaining, batch_size);
+            const auto paired = batch - batch % 8;
+            for (std::size_t i = 0; i < paired; i += 8) {
+                const auto first = project_four<mixed_sign>(
+                    columns + i, cos_v, sin_row_v, half_v, sign_mask);
+                const auto second = project_four<mixed_sign>(
+                    columns + i + 4, cos_v, sin_row_v, half_v, sign_mask);
+                _mm_store_si128(reinterpret_cast<__m128i*>(distances.data() + i),
+                                _mm_packs_epi32(first, second));
+            }
+            if (paired < batch) {
+                const auto tail = project_four<mixed_sign>(
+                    columns + paired, cos_v, sin_row_v, half_v, sign_mask);
+                _mm_storel_epi64(reinterpret_cast<__m128i*>(distances.data() + paired),
+                                 _mm_packs_epi32(tail, tail));
+            }
+            // The scaled rho grid fits in int16_t. Scatter after storing whole
+            // vectors of these indices instead of extracting each SIMD lane.
+            for (std::size_t i = 0; i < paired; i += 8) {
+                ++center[distances[i]];
+                ++center[distances[i + 1] + 1];
+                ++center[distances[i + 2] + 2];
+                ++center[distances[i + 3] + 3];
+                ++center[distances[i + 4] + 4];
+                ++center[distances[i + 5] + 5];
+                ++center[distances[i + 6] + 6];
+                ++center[distances[i + 7] + 7];
+            }
+            for (std::size_t i = paired; i < batch; ++i)
+                ++center[distances[i] + static_cast<int>(i - paired)];
+            columns += batch;
+            remaining -= batch;
+        }
+        for (; columns != row_end; ++columns)
+            ++histogram[8 * rounded_distance(cosine * *columns + sin_row, offset)];
+    }
+}
+
+HOUGH_LINE_AVX2
+void merge_vote_banks(std::uint32_t* HOUGH_LINE_RESTRICT votes,
+                      const std::uint32_t* HOUGH_LINE_RESTRICT histogram, std::size_t size) {
+    std::size_t i = 0;
+    for (; i + 1 < size; i += 2) {
+        const auto first = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(histogram + i * 8));
+        const auto second = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(histogram + (i + 1) * 8));
+        const auto pairs = _mm256_hadd_epi32(first, second);
+        const auto groups = _mm256_hadd_epi32(pairs, pairs);
+        const auto sums = _mm_add_epi32(_mm256_castsi256_si128(groups), _mm256_extracti128_si256(groups, 1));
+        _mm_storel_epi64(reinterpret_cast<__m128i*>(votes + i), sums);
+    }
+    if (i < size) {
+        std::uint32_t sum = 0;
+        for (std::size_t lane = 0; lane < 8; ++lane)
+            sum += histogram[i * 8 + lane];
+        votes[i] = sum;
+    }
+}
+#endif
+
+void vote_angle(const std::vector<NonzeroRow>& rows, const double* columns,
+                double cosine, double sine, int offset, bool use_simd,
+                std::uint32_t* HOUGH_LINE_RESTRICT votes,
+                std::uint32_t* HOUGH_LINE_RESTRICT extra) {
 #if SKIMAGEXX_HL_SSE2
+    const __m128d cos_v = _mm_set1_pd(cosine);
     const __m128d sign_mask = _mm_set1_pd(-0.0);
     const __m128d half_v = _mm_set1_pd(0.5);
     const __m128i offset_v = _mm_set1_epi32(offset);
 #else
     (void)use_simd;
+    (void)extra;
 #endif
-    for (std::size_t first = 0; first < angles; first += block_size) {
-        const auto block = std::min(block_size, angles - first);
+    for (const auto& row : rows) {
+        const double sin_row = sine * row.row;
+        std::size_t i = 0;
+#if SKIMAGEXX_HL_SSE2
+        if (use_simd) {
+            const __m128d sin_row_v = _mm_set1_pd(sin_row);
+            for (; i + 1 < row.count; i += 2) {
+                const auto projection = _mm_add_pd(
+                    _mm_mul_pd(cos_v, _mm_loadu_pd(columns + i)), sin_row_v);
+                std::size_t d0, d1;
+                distance_two(projection, offset_v, sign_mask, half_v, d0, d1);
+                ++votes[d0];
+                ++extra[d1];
+            }
+        }
+#endif
+        for (; i < row.count; ++i)
+            ++votes[rounded_distance(cosine * columns[i] + sin_row, offset)];
+        columns += row.count;
+    }
+}
+
+void hough_line_dense(const std::vector<NonzeroRow>& rows, const double* columns, int offset,
+                      const double* cosines, const double* sines, std::size_t angles,
+                      std::uint64_t* accumulator, bool use_simd) {
+    const auto num_distances = std::size_t(2 * offset + 1);
+    const auto column_bytes = num_distances * sizeof(std::uint32_t);
+    const auto tile_size = std::clamp(24 * 1024 / column_bytes, std::size_t(16), std::size_t(32));
+#if SKIMAGEXX_HL_AVX2
+    const bool use_avx2 = use_simd && offset <= std::numeric_limits<std::int16_t>::max() / 8 && has_avx2();
+#else
+    constexpr bool use_avx2 = false;
+#endif
+    // Each SIMD lane updates a separate histogram to break same-bin dependencies.
+    // Only the active angle needs these extra histograms.
+    const std::size_t extra_columns = use_avx2 ? 8 : use_simd ? 1 : 0;
+    const auto tile_columns = std::min(angles, tile_size);
+    std::vector<std::uint32_t> bins(num_distances * (tile_columns + extra_columns));
+    auto* extra = bins.data() + tile_columns * num_distances;
+    for (std::size_t first = 0; first < angles; first += tile_columns) {
+        const auto block = std::min(tile_columns, angles - first);
         for (std::size_t local = 0; local < block; ++local) {
             const auto angle = first + local;
-            auto* HOUGH_LINE_RESTRICT col_accum = votes.data() + local * num_distances;
-            const double cosine = cosines[angle];
-            const double sine = sines[angle];
-#if SKIMAGEXX_HL_SSE2
-            const __m128d cos_v = _mm_set1_pd(cosine);
-            auto* HOUGH_LINE_RESTRICT odd_accum = votes.data() +
-                (use_simd ? block_size + local : local) * num_distances;
-#endif
-            const double* col_ptr = columns;
-            for (const auto& entry : rows) {
-                const double sin_row = sine * entry.row;
-                const std::size_t count = entry.count;
-                std::size_t i = 0;
-#if SKIMAGEXX_HL_SSE2
-                if (use_simd && count >= 2) {
-                    const __m128d sin_row_v = _mm_set1_pd(sin_row);
-                    for (; i + 1 < count; i += 2) {
-                        const __m128d proj = _mm_add_pd(_mm_mul_pd(cos_v, _mm_loadu_pd(col_ptr + i)), sin_row_v);
-                        std::size_t d0 = 0;
-                        std::size_t d1 = 0;
-                        distance_two(proj, offset_v, sign_mask, half_v, d0, d1);
-                        ++col_accum[d0];
-                        // Separate adjacent pixels that frequently land in the same bin.
-                        ++odd_accum[d1];
-                    }
+            auto* votes = bins.data() + local * num_distances;
+#if SKIMAGEXX_HL_AVX2
+            if (use_avx2) {
+                const double cosine = cosines[angle];
+                const double sine = sines[angle];
+                if (cosine >= 0.0 && sine >= 0.0) {
+                    vote_angle_avx2<false>(rows, columns, cosine, sine, offset, 0.5, extra);
+                } else if (cosine <= 0.0 && sine <= 0.0) {
+                    vote_angle_avx2<false>(rows, columns, cosine, sine, offset, -0.5, extra);
+                } else {
+                    vote_angle_avx2<true>(rows, columns, cosine, sine, offset, 0.5, extra);
                 }
+                merge_vote_banks(votes, extra, num_distances);
+            } else
 #endif
-                for (; i < count; ++i) {
-                    // The pinned rounding helper separately adjusts by half before truncating.
-                    const double projection = cosine * col_ptr[i] + sin_row;
-                    const double adjusted = projection > 0.0 ? projection + 0.5 : projection - 0.5;
-                    const auto distance = std::size_t(offset + static_cast<std::int64_t>(adjusted));
-                    ++col_accum[distance];
+            {
+                vote_angle(rows, columns, cosines[angle], sines[angle], offset, use_simd, votes, extra);
+                if (use_simd) {
+                    for (std::size_t distance = 0; distance < num_distances; ++distance)
+                        votes[distance] += extra[distance];
                 }
-                col_ptr += count;
             }
+            std::fill_n(extra, extra_columns * num_distances, std::uint32_t{0});
         }
-        // Write adjacent public angle columns together while the block is hot.
+        // Store adjacent public angle columns together.
         for (std::size_t distance = 0; distance < num_distances; ++distance) {
             auto* output = accumulator + distance * angles + first;
-            for (std::size_t local = 0; local < block; ++local) {
-                auto& value = votes[local * num_distances + distance];
-                if (use_simd) {
-                    auto& odd = votes[(block_size + local) * num_distances + distance];
-                    output[local] = value + odd;
-                    odd = 0;
-                } else {
-                    output[local] = value;
-                }
-                value = 0;
-            }
+            for (std::size_t local = 0; local < block; ++local)
+                output[local] = bins[local * num_distances + distance];
         }
+        if (!use_avx2)
+            std::fill_n(bins.data(), block * num_distances, std::uint32_t{0});
     }
 }
 
