@@ -32,9 +32,14 @@ unsigned first_move(std::uint64_t mask) {
 // indices of dense slots in separate arrays, avoiding padding between them.
 // Equal priorities choose the leftmost slot and extraction moves the last slot
 // into the vacancy, preserving scikit-image's traceback and callback order.
+// Public path searches cache the winning leaf at each parent to avoid a
+// second walk down the tree on every extraction.
+template<bool cache_winner = false>
 class Frontier {
 public:
-    explicit Frontier(Index size) : positions_(size, absent), tree_(first_leaf_ + capacity_, infinity) {}
+    explicit Frontier(Index size) : positions_(size, absent), tree_(first_leaf_ + capacity_, infinity) {
+        if constexpr (cache_winner) rebuild();
+    }
 
     bool empty() const { return nodes_.empty(); }
     void reset_slots(Shape slots) {
@@ -61,8 +66,13 @@ public:
     }
 
     std::pair<Index, double> pop() {
-        auto leaf = best_child(0);
-        while (leaf < first_leaf_) leaf = best_child(leaf);
+        std::size_t leaf;
+        if constexpr (cache_winner) {
+            leaf = winners_[0];
+        } else {
+            leaf = best_child(0);
+            while (leaf < first_leaf_) leaf = best_child(leaf);
+        }
         const auto value = tree_[leaf];
         // An all-infinite front still has a valid leftmost slot. NaN inputs
         // are screened at the Python boundary.
@@ -77,7 +87,15 @@ public:
         tree_[leaf] = tree_[last];
         tree_[last] = infinity;
         propagate(leaf);
-        if ((leaf - 1) / 4 != (last - 1) / 4) propagate(last);
+        const auto last_parent = (last - 1) / 4;
+        if ((leaf - 1) / 4 != last_parent) {
+            if constexpr (cache_winner) {
+                // Removing a losing leaf leaves its subtree priority unchanged.
+                if (winners_[last_parent] == last) propagate(last);
+            } else {
+                propagate(last);
+            }
+        }
         return {node, value};
     }
 
@@ -95,9 +113,15 @@ private:
     void decrease(double value, Index node, Node slot) {
         const auto leaf = leaf_of(node, slot);
         tree_[leaf] = value;
-        for (auto parent = (leaf - 1) / 4; parent != 0 && value < tree_[parent];
-             parent = (parent - 1) / 4) {
+        for (auto parent = (leaf - 1) / 4;; parent = (parent - 1) / 4) {
+            if constexpr (cache_winner) {
+                if (!(value < tree_[parent] || (value == tree_[parent] && leaf < winners_[parent]))) break;
+                winners_[parent] = static_cast<Node>(leaf);
+            } else if (parent == 0 || !(value < tree_[parent])) {
+                break;
+            }
             tree_[parent] = value;
+            if (parent == 0) break;
         }
     }
 
@@ -113,11 +137,41 @@ private:
         return std::min(std::min(children[0], children[1]), std::min(children[2], children[3]));
     }
 
+    Node winner_of(std::size_t child) const {
+        return child < first_leaf_ ? winners_[child] : static_cast<Node>(child);
+    }
+
     void propagate(std::size_t leaf) {
-        for (auto parent = (leaf - 1) / 4; parent != 0; parent = (parent - 1) / 4) {
-            const auto value = minimum_child(parent);
-            if (value == tree_[parent]) break;
-            tree_[parent] = value;
+        for (auto parent = (leaf - 1) / 4;; parent = (parent - 1) / 4) {
+            if constexpr (cache_winner) {
+                const auto child = best_child(parent);
+                const auto winner = winner_of(child);
+                if (winner == winners_[parent] && tree_[child] == tree_[parent]) break;
+                winners_[parent] = winner;
+                tree_[parent] = tree_[child];
+            } else {
+                if (parent == 0) break;
+                const auto value = minimum_child(parent);
+                if (value == tree_[parent]) break;
+                tree_[parent] = value;
+            }
+            if (parent == 0) break;
+        }
+    }
+
+    void rebuild() {
+        if constexpr (cache_winner) {
+            winners_.resize(first_leaf_);
+            for (auto parent = first_leaf_; parent != 0;) {
+                --parent;
+                const auto child = best_child(parent);
+                winners_[parent] = winner_of(child);
+                tree_[parent] = tree_[child];
+            }
+        } else {
+            for (auto parent = first_leaf_ - 1; parent != 0; --parent) {
+                tree_[parent] = minimum_child(parent);
+            }
         }
     }
 
@@ -128,13 +182,12 @@ private:
         first_leaf_ += old_capacity;
         tree_.resize(first_leaf_ + capacity_, infinity);
         std::copy_n(tree_.data() + old_first_leaf, old_capacity, tree_.data() + first_leaf_);
-        for (auto parent = first_leaf_ - 1; parent != 0; --parent) {
-            tree_[parent] = minimum_child(parent);
-        }
+        rebuild();
     }
 
     std::vector<Node> positions_;
     Shape nodes_;
+    std::vector<Node> winners_;
     std::size_t capacity_ = 64;
     std::size_t first_leaf_ = (capacity_ - 1) / 3;
     std::vector<double> tree_;
@@ -173,7 +226,7 @@ Index search(const Grid& grid, const double* costs, const Shape& starts,
              Offset* predecessor, const Hooks& hooks, Shape* pending) {
     std::fill_n(distance, grid.size(), infinity);
     std::fill_n(predecessor, grid.size(), Offset{-2});
-    Frontier queue(grid.size());
+    Frontier<> queue(grid.size());
     // The upstream reset clears priorities and cross references while keeping
     // the dense slots occupied by a prior early-stop search. Reused slots
     // can change the order in which equal priorities are extracted.
@@ -267,14 +320,16 @@ std::pair<Shape, double> search_path_2d(const Grid& grid, const double* costs, c
         if constexpr (cost_mode == Cost::geometric) half_lengths[move] = grid.length(move) * 0.5;
     }
     std::vector<double> tentative(size, infinity);
-    std::vector<std::uint8_t> closed(size);
+    const std::unique_ptr<std::uint8_t[]> closed(new std::uint8_t[size]);
     // Block invalid destinations before traversal. Start nodes are still
     // queued with the reference start cost even if they are blocked.
     for (Node node = 0; node < size; ++node) {
         closed[node] = !(costs[node] >= 0 && costs[node] < infinity);
     }
+    const bool power_of_two = (width & (width - 1)) == 0;
+    const auto width_shift = first_move(width);
     const std::unique_ptr<Offset[]> predecessor(new Offset[size]);
-    Frontier queue(grid.size());
+    Frontier<true> queue(grid.size());
     for (const auto start : starts) {
         const auto value = cost_mode == Cost::destination ? costs[start] : 0.0;
         tentative[start] = value;
@@ -285,7 +340,7 @@ std::pair<Shape, double> search_path_2d(const Grid& grid, const double* costs, c
         const auto entry = queue.pop();
         const auto node = static_cast<Node>(entry.first);
         const auto cumulative = entry.second;
-        const auto slow = node / width;
+        const auto slow = power_of_two ? node >> width_shift : node / width;
         const auto fast = node - slow * width;
         const bool reached = cost_mode == Cost::difference
             ? (end_on_fast_axis ? fast == width - 1 : node >= size - width)
@@ -465,6 +520,7 @@ std::pair<Shape, double> shortest_path(const Grid& grid, const double* costs, in
     const auto stride = grid.strides()[axis];
     const auto extent = grid.shape()[axis];
     const auto slab = stride * extent;
+    const auto moves = grid.offsets().size();
     Shape starts, ends;
     starts.reserve(grid.size() / extent);
     for (Index slab_start = 0; slab_start < grid.size(); slab_start += slab) {
@@ -473,7 +529,7 @@ std::pair<Shape, double> shortest_path(const Grid& grid, const double* costs, in
         }
     }
     if (grid.has_move_masks()) {
-        switch (grid.offsets().size()) {
+        switch (moves) {
         case 3: return search_path_2d<Cost::difference, 3>(grid, costs, starts, -1, axis);
         case 5: return search_path_2d<Cost::difference, 5>(grid, costs, starts, -1, axis);
         }
