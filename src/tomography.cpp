@@ -15,6 +15,16 @@
 #include <utility>
 #include <vector>
 
+#if defined(SKIMAGEXX_AVX2) && (defined(_M_X64) || defined(__x86_64__))
+#include <immintrin.h>
+#define SKIMAGEXX_TOMOGRAPHY_SIMD
+#ifdef _MSC_VER
+#define SKIMAGEXX_TOMOGRAPHY_AVX2 __declspec(noinline)
+#else
+#define SKIMAGEXX_TOMOGRAPHY_AVX2 __attribute__((target("avx2"), noinline))
+#endif
+#endif
+
 namespace skimagexx {
 namespace {
 constexpr double pi = 3.14159265358979323846;
@@ -49,10 +59,10 @@ int first_true(int begin, int end, const Predicate& predicate) {
     return begin;
 }
 
-template<bool inclusive, class T, class Coordinate>
+template<bool lower_inclusive, bool upper_inclusive = lower_inclusive, class T, class Coordinate>
 std::pair<int, int> axis_span(int size, T lower, T upper, const Coordinate& coordinate) {
-    const auto below = [=](T value) { return inclusive ? value < lower : value <= lower; };
-    const auto above = [=](T value) { return inclusive ? value > upper : value >= upper; };
+    const auto below = [=](T value) { return lower_inclusive ? value < lower : value <= lower; };
+    const auto above = [=](T value) { return upper_inclusive ? value > upper : value >= upper; };
     const T first = coordinate(0), last = coordinate(size - 1);
     // Search the sampled coordinates using the same rounded expression as
     // interpolation. Inverting that expression can shift a boundary by a tap.
@@ -78,6 +88,37 @@ T bilinear(const T* square, int pitch, T r, T c) {
     const double bottom = (T(1) - dc) * pixels[pitch] + dc * pixels[pitch + 1];
     return T((T(1) - dr) * top + dr * bottom);
 }
+
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+SKIMAGEXX_TOMOGRAPHY_AVX2
+int radon_span(const double* square, int pitch, const double* column_x, const double* column_y,
+               double row_x, double row_y, double offset_x, double offset_y,
+               double* sums, int begin, int end) {
+    const auto one = _mm256_set1_pd(1.0);
+    const auto stride = _mm_set1_epi32(pitch);
+    const auto next = _mm_set1_epi32(1);
+    const auto x_row = _mm256_set1_pd(row_x), y_row = _mm256_set1_pd(row_y);
+    const auto x_offset = _mm256_set1_pd(offset_x), y_offset = _mm256_set1_pd(offset_y);
+    for (; begin + 4 <= end; begin += 4) {
+        const auto x = _mm256_add_pd(_mm256_add_pd(_mm256_loadu_pd(column_x + begin), x_row), x_offset);
+        const auto y = _mm256_add_pd(_mm256_add_pd(_mm256_loadu_pd(column_y + begin), y_row), y_offset);
+        const auto left = _mm256_cvttpd_epi32(_mm256_floor_pd(x));
+        const auto top = _mm256_cvttpd_epi32(_mm256_floor_pd(y));
+        const auto index = _mm_add_epi32(_mm_mullo_epi32(top, stride), left);
+        const auto below = _mm_add_epi32(index, stride);
+        const auto dc = _mm256_sub_pd(x, _mm256_cvtepi32_pd(left));
+        const auto dr = _mm256_sub_pd(y, _mm256_cvtepi32_pd(top));
+        const auto lc = _mm256_sub_pd(one, dc);
+        const auto a = _mm256_add_pd(_mm256_mul_pd(lc, _mm256_i32gather_pd(square, index, 8)),
+                                     _mm256_mul_pd(dc, _mm256_i32gather_pd(square, _mm_add_epi32(index, next), 8)));
+        const auto b = _mm256_add_pd(_mm256_mul_pd(lc, _mm256_i32gather_pd(square, below, 8)),
+                                     _mm256_mul_pd(dc, _mm256_i32gather_pd(square, _mm_add_epi32(below, next), 8)));
+        const auto value = _mm256_add_pd(_mm256_mul_pd(_mm256_sub_pd(one, dr), a), _mm256_mul_pd(dr, b));
+        _mm256_storeu_pd(sums + begin, _mm256_add_pd(_mm256_loadu_pd(sums + begin), value));
+    }
+    return begin;
+}
+#endif
 
 std::vector<double> frequency_filter(std::size_t size, TomographyFilter filter) {
     std::vector<double> result(size / 2 + 1, 1.0);
@@ -207,11 +248,21 @@ void backproject(const std::vector<double>& projections, int detectors, int angl
     const T scale = T(2.0 * angles);
     const auto radius_squared = std::int64_t(radius) * radius;
     // Keep strips of the output in cache while accumulating angles in their
-    // original order. Reuse the column coordinates for all rows of a strip.
+    // original order. Reuse the column coordinates and circular row limits.
     constexpr std::size_t strip_height = 16;
     const auto strips = (std::size_t(size) + strip_height - 1) / strip_height;
     const int strip_workers = static_cast<int>(std::min(strips, std::size_t(workers)));
     const std::unique_ptr<double[]> horizontal(new double[std::size_t(strip_workers) * size]);
+    std::vector<std::pair<int, int>> row_limits(size, {0, size});
+    if (circle) {
+        for (int r = 0; r < size; ++r) {
+            const std::int64_t y = r - radius;
+            const auto remaining = radius_squared - y * y;
+            int x = static_cast<int>(std::sqrt(double(remaining)));
+            if (std::int64_t(x) * x > remaining) --x;
+            row_limits[r] = {radius - x, std::min(size, radius + x + 1)};
+        }
+    }
     detail::partition(strips, strip_workers, [&](std::size_t begin, std::size_t end, std::size_t worker) {
         auto* column_coordinates = horizontal.get() + worker * size;
         for (auto strip = begin; strip < end; ++strip) {
@@ -231,7 +282,8 @@ void backproject(const std::vector<double>& projections, int detectors, int angl
                     auto* row = image + r * size;
                     const auto coordinate = [&](int c) { return column_coordinates[c] - vertical; };
                     const auto [first_column, last_column] = axis_span<true>(size, lower, upper, coordinate);
-                    for (int c = first_column; c < last_column; ++c) {
+                    const auto [row_begin, row_end] = row_limits[r];
+                    for (int c = std::max(first_column, row_begin); c < std::min(last_column, row_end); ++c) {
                         const double t = coordinate(c);
                         const int left = floor_index(t);
                         const int i = left + center;
@@ -253,13 +305,9 @@ void backproject(const std::vector<double>& projections, int detectors, int angl
                 }
             }
             for (auto r = first; r < last; ++r) {
-                const std::int64_t y = std::int64_t(r) - radius;
                 auto* row = image + r * size;
-                for (int c = 0; c < size; ++c) {
-                    const std::int64_t x = c - radius;
-                    row[c] = circle && x * x + y * y > radius_squared
-                        ? T(0) : (row[c] * T(pi)) / scale;
-                }
+                const auto [row_begin, row_end] = row_limits[r];
+                for (int c = row_begin; c < row_end; ++c) row[c] = (row[c] * T(pi)) / scale;
             }
         }
     });
@@ -286,8 +334,16 @@ RayChord<T> ray_chord(T ray_position, T center, T radius) {
 }
 
 template<class T>
-std::vector<T> ray_windows(const T* shifts, int angles, int detectors, T center, T radius,
-                           std::vector<std::size_t>& offsets) {
+struct RayWindows {
+    std::vector<std::size_t> offsets;
+    std::vector<T> values;
+};
+
+template<class T>
+RayWindows<T> ray_windows(const T* shifts, int angles, int detectors, T center, T radius) {
+    RayWindows<T> table;
+    table.offsets.resize(std::size_t(detectors) + 1);
+    auto& offsets = table.offsets;
     std::vector<T> distinct;
     distinct.reserve(angles);
     for (int k = 0; k < angles; ++k) {
@@ -307,7 +363,7 @@ std::vector<T> ray_windows(const T* shifts, int angles, int detectors, T center,
     for (std::size_t i = 1; i < offsets.size(); ++i) {
         if (offsets[i]) count += 2 * i + 1;
     }
-    std::vector<T> windows;
+    auto& windows = table.values;
     windows.reserve(count);
     const T beta = T(0.46164);
     for (std::size_t i = 1; i < offsets.size(); ++i) {
@@ -318,10 +374,10 @@ std::vector<T> ray_windows(const T* shifts, int angles, int detectors, T center,
             windows.push_back(T((T(1) - beta) - beta * std::cos(2 * pi * k / (steps - 1))));
         }
     }
-    return windows;
+    return table;
 }
 
-template<bool interior, class T>
+template<bool vector_taps, class T>
 void project_ray(const T* image, T* update, int size, double cosine, double sine,
                  const RayChord<T>& chord, T projection, RaySample<T>* samples,
                  const T* window) {
@@ -336,60 +392,110 @@ void project_ray(const T* image, T* update, int size, double cosine, double sine
         total += weight * image[index];
         norm += weight * weight;
     };
-    // The circular chord already clips the ray to the grid. Its sampled
-    // endpoints can touch the final grid line, so only interior chords can
-    // drop the neighbor predicates.
-    if constexpr (interior) {
-        const T row_first = x0 + center, row_last = (x0 + T(steps) * dx) + center;
-        const T col_first = y0 + center, col_last = (y0 + T(steps) * dy) + center;
-        const T last = T(size - 1);
-        const auto inside = [last](T a, T b) {
-            return std::min(a, b) >= T(1) && std::max(a, b) < last;
-        };
-        if (!inside(row_first, row_last) || !inside(col_first, col_last)) {
-            project_ray<false>(image, update, size, cosine, sine, chord, projection, samples, window);
-            return;
+    // Only the chord's ends can cross a grid line with missing taps.
+    // Clip the full-tap span using the original rounded sample coordinates.
+    const auto row_at = [&](int k) { return (x0 + T(k) * dx) + center; };
+    const auto col_at = [&](int k) { return (y0 + T(k) * dy) + center; };
+    const int end = steps + 1;
+    // The upstream top and left predicates use truncated indices.
+    const auto [row_begin, row_end] = axis_span<true, false>(end, T(1), T(size - 1), row_at);
+    const auto [col_begin, col_end] = axis_span<true, false>(end, T(1), T(size - 1), col_at);
+    const int begin = std::max(row_begin, col_begin);
+    const int stop = std::max(begin, std::min(row_end, col_end));
+    const auto forward = [&](auto full_taps, int first, int last) {
+        constexpr bool interior = decltype(full_taps)::value;
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+        __m128d sums;
+        if constexpr (interior && vector_taps) sums = _mm_set_pd(norm, total);
+#endif
+        for (int k = first; k < last; ++k) {
+            const T row = row_at(k), col = col_at(k);
+            // The chord lies inside the detector grid. Its endpoint can land on
+            // the last grid line, where there is no bilinear neighbor beyond it.
+            const int i = static_cast<int>(row), j = static_cast<int>(col);
+            const T di = row - T(i), dj = col - T(j);
+            const auto base = std::size_t(i) * size + j;
+            auto& sample = samples[k];
+            sample.base = base;
+            sample.di = di;
+            sample.dj = dj;
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+            if constexpr (interior && vector_taps) {
+                const auto columns = _mm_set_pd(dj, 1.0 - dj);
+                const auto spacing = _mm_set1_pd(ds);
+                const auto top = _mm_mul_pd(_mm_mul_pd(_mm_set1_pd(1.0 - di), columns), spacing);
+                const auto bottom = _mm_mul_pd(_mm_mul_pd(_mm_set1_pd(di), columns), spacing);
+                const auto top_values = _mm_mul_pd(top, _mm_loadu_pd(image + base));
+                const auto bottom_values = _mm_mul_pd(bottom, _mm_loadu_pd(image + base + size));
+                const auto top_norm = _mm_mul_pd(top, top), bottom_norm = _mm_mul_pd(bottom, bottom);
+                // Each lane is one accumulator. Both retain the original tap order.
+                sums = _mm_add_pd(sums, _mm_unpacklo_pd(top_values, top_norm));
+                sums = _mm_add_pd(sums, _mm_unpackhi_pd(top_values, top_norm));
+                sums = _mm_add_pd(sums, _mm_unpacklo_pd(bottom_values, bottom_norm));
+                sums = _mm_add_pd(sums, _mm_unpackhi_pd(bottom_values, bottom_norm));
+            } else
+#endif
+            {
+                if constexpr (!interior) {
+                    sample.has_top = i > 0;
+                    sample.has_left = j > 0;
+                    sample.has_bottom = i < size - 1;
+                    sample.has_right = j < size - 1;
+                }
+                if (interior || (sample.has_top && sample.has_left)) accumulate(base, T((1.0 - di) * (1.0 - dj) * ds));
+                if (interior || (sample.has_top && sample.has_right)) accumulate(base + 1, T((1.0 - di) * dj * ds));
+                if (interior || (sample.has_bottom && sample.has_left)) accumulate(base + size, di * (T(1) - dj) * ds);
+                if (interior || (sample.has_bottom && sample.has_right)) accumulate(base + size + 1, di * dj * ds);
+            }
         }
-    }
-    for (int k = 0; k <= steps; ++k) {
-        const T row = (x0 + T(k) * dx) + center, col = (y0 + T(k) * dy) + center;
-        // The chord lies inside the detector grid. Its endpoint can land on
-        // the last grid line, where there is no bilinear neighbor beyond it.
-        const int i = static_cast<int>(row), j = static_cast<int>(col);
-        const T di = row - T(i), dj = col - T(j);
-        const auto base = std::size_t(i) * size + j;
-        auto& sample = samples[k];
-        sample.base = base;
-        sample.di = di;
-        sample.dj = dj;
-        if constexpr (!interior) {
-            sample.has_top = i > 0;
-            sample.has_left = j > 0;
-            sample.has_bottom = i < size - 1;
-            sample.has_right = j < size - 1;
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+        if constexpr (interior && vector_taps) {
+            total = _mm_cvtsd_f64(sums);
+            norm = _mm_cvtsd_f64(_mm_unpackhi_pd(sums, sums));
         }
-        if (interior || (sample.has_top && sample.has_left)) accumulate(base, T((1.0 - di) * (1.0 - dj) * ds));
-        if (interior || (sample.has_top && sample.has_right)) accumulate(base + 1, T((1.0 - di) * dj * ds));
-        if (interior || (sample.has_bottom && sample.has_left)) accumulate(base + size, di * (T(1) - dj) * ds);
-        if (interior || (sample.has_bottom && sample.has_right)) accumulate(base + size + 1, di * dj * ds);
-    }
+#endif
+    };
+    forward(std::false_type{}, 0, begin);
+    forward(std::true_type{}, begin, stop);
+    forward(std::false_type{}, stop, end);
     const T deviation = norm > T(0) ? -(total - projection) / norm : T(0);
-    for (int k = 0; k <= steps; ++k) {
-        const auto& sample = samples[k];
-        const auto base = sample.base;
-        const T di = sample.di, dj = sample.dj, w = window[k];
-        if (interior || (sample.has_top && sample.has_left)) {
-            update[base] = T(update[base] + deviation * (1.0 - di) * (1.0 - dj) * ds * w);
+    const auto back = [&](auto full_taps, int first, int last) {
+        constexpr bool interior = decltype(full_taps)::value;
+        for (int k = first; k < last; ++k) {
+            const auto& sample = samples[k];
+            const auto base = sample.base;
+            const T di = sample.di, dj = sample.dj, w = window[k];
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+            if constexpr (interior && vector_taps) {
+                const auto columns = _mm_set_pd(dj, 1.0 - dj);
+                const auto spacing = _mm_set1_pd(ds), weight = _mm_set1_pd(w);
+                const auto increment = [&](double row) {
+                    return _mm_mul_pd(_mm_mul_pd(_mm_mul_pd(_mm_set1_pd(deviation * row), columns), spacing), weight);
+                };
+                auto* out = update + base;
+                _mm_storeu_pd(out, _mm_add_pd(_mm_loadu_pd(out), increment(1.0 - di)));
+                out += size;
+                _mm_storeu_pd(out, _mm_add_pd(_mm_loadu_pd(out), increment(di)));
+            } else
+#endif
+            {
+                if (interior || (sample.has_top && sample.has_left)) {
+                    update[base] = T(update[base] + deviation * (1.0 - di) * (1.0 - dj) * ds * w);
+                }
+                if (interior || (sample.has_top && sample.has_right)) {
+                    update[base + 1] = T(update[base + 1] + deviation * (1.0 - di) * dj * ds * w);
+                }
+                if (interior || (sample.has_bottom && sample.has_left)) {
+                    update[base + size] += deviation * di * (T(1) - dj) * ds * w;
+                }
+                if (interior || (sample.has_bottom && sample.has_right))
+                    update[base + size + 1] += deviation * di * dj * ds * w;
+            }
         }
-        if (interior || (sample.has_top && sample.has_right)) {
-            update[base + 1] = T(update[base + 1] + deviation * (1.0 - di) * dj * ds * w);
-        }
-        if (interior || (sample.has_bottom && sample.has_left)) {
-            update[base + size] += deviation * di * (T(1) - dj) * ds * w;
-        }
-        if (interior || (sample.has_bottom && sample.has_right))
-            update[base + size + 1] += deviation * di * dj * ds * w;
-    }
+    };
+    back(std::false_type{}, 0, begin);
+    back(std::true_type{}, begin, stop);
+    back(std::false_type{}, stop, end);
 }
 }
 
@@ -422,7 +528,8 @@ void radon_into(const T* image, int rows, int columns, const RadonRotation* rota
                     square + std::size_t(r + target_row) * pitch + target_col);
     }
     int left = 0, top = 0, right = size - 1, bottom = size - 1;
-    if (std::fegetround() == FE_TONEAREST) {
+    const bool round_to_nearest = std::fegetround() == FE_TONEAREST;
+    if (round_to_nearest) {
         // Inverse mapping can skip the zero exterior of the nonzero bounds.
         // Keep a one-pixel margin for the bilinear interpolation taps.
         left = size;
@@ -449,6 +556,9 @@ void radon_into(const T* image, int rows, int columns, const RadonRotation* rota
         cache_budget / (int(sizeof(T)) * size) - 2, 1, 8));
     const int workers = std::min(angles, detail::active_workers(std::size_t(size) * size * angles));
     std::vector<T> workspace(std::size_t(workers) * size * (tile_size + 2));
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+    const bool vector_spans = std::is_same_v<T, double> && pitch <= 32768 && has_avx2();
+#endif
     detail::partition(std::size_t(angles), workers,
         [&](std::size_t begin, std::size_t end, std::size_t worker) {
             auto* tile = workspace.data() + worker * size * (tile_size + 2);
@@ -462,6 +572,15 @@ void radon_into(const T* image, int rows, int columns, const RadonRotation* rota
                     const T cosine = T(rotation.cosine), sine = T(rotation.sine);
                     const T offset_x = T(rotation.column_offset), offset_y = T(rotation.row_offset);
                     std::fill_n(sums, size, T(0));
+                    // At the exact identity, every bilinear sample is a grid value.
+                    if (round_to_nearest && cosine == T(1) && sine == T(0)
+                        && offset_x == T(0) && offset_y == T(0)) {
+                        for (int r = top; r <= bottom; ++r) {
+                            const auto* row = square + std::size_t(r) * pitch;
+                            for (int c = left; c <= right; ++c) sums[c] += row[c];
+                        }
+                        continue;
+                    }
                     for (int c = 0; c < size; ++c) {
                         column_x[c] = cosine * T(c);
                         column_y[c] = -sine * T(c);
@@ -473,7 +592,16 @@ void radon_into(const T* image, int rows, int columns, const RadonRotation* rota
                         const auto [x_begin, x_end] = axis_span<false>(size, T(left - 1), T(right + 1), x);
                         const auto [y_begin, y_end] = axis_span<false>(size, T(top - 1), T(bottom + 1), y);
                         const int stop = std::min(x_end, y_end);
-                        for (int c = std::max(x_begin, y_begin); c < stop; ++c) {
+                        int c = std::max(x_begin, y_begin);
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+                        if constexpr (std::is_same_v<T, double>) {
+                            if (vector_spans && stop - c >= 4) {
+                                c = radon_span(square, pitch, column_x, column_y, row_x, row_y,
+                                               offset_x, offset_y, sums, c, stop);
+                            }
+                        }
+#endif
+                        for (; c < stop; ++c) {
                             sums[c] += bilinear(square, pitch, y(c), x(c));
                         }
                     }
@@ -517,9 +645,22 @@ void iradon_sart_into(const T* sinogram, int detectors, int angles, const T* the
         ? GoldenScalarPolicy::weak_input : GoldenScalarPolicy::wide);
     std::vector<T> update(count);
     const std::unique_ptr<RaySample<T>[]> samples(new RaySample<T>[std::size_t(detectors) * 2 + 1]);
-    std::vector<std::size_t> window_offsets(std::size_t(detectors) + 1);
     const T center = T(detectors / 2), radius = T(detectors / 2 - 1);
-    const auto windows = ray_windows(shifts, angles, detectors, center, radius, window_offsets);
+    RayWindows<T> temporary_windows;
+    const RayWindows<T>* windows;
+    // Retain one small, unshifted table per thread for repeated reconstructions.
+    // Other rounding modes and shifted projections build their own exact table.
+    if (detectors <= 256 && std::fegetround() == FE_TONEAREST &&
+        std::all_of(shifts, shifts + angles, [](T shift) { return shift == T(0); })) {
+        static thread_local RayWindows<T> unshifted;
+        if (unshifted.offsets.size() != std::size_t(detectors) + 1) {
+            unshifted = ray_windows(shifts, angles, detectors, center, radius);
+        }
+        windows = &unshifted;
+    } else {
+        temporary_windows = ray_windows(shifts, angles, detectors, center, radius);
+        windows = &temporary_windows;
+    }
     struct ActiveRay {
         int detector;
         RayChord<T> chord;
@@ -535,6 +676,9 @@ void iradon_sart_into(const T* sinogram, int detectors, int angles, const T* the
     const auto tile_size = overlaps ? std::size_t{1} : std::min(order.size(), std::clamp(
         cache_budget / (sizeof(T) * detectors), std::size_t{1}, std::size_t{16}));
     std::vector<T> projections(tile_size * detectors);
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+    const bool vector_taps = std::is_same_v<T, double> && has_avx2();
+#endif
     // Pack projections in golden-ratio order. Each still observes the image
     // after the preceding projection has completed its update and clipping.
     for (std::size_t first = 0; first < order.size(); first += tile_size) {
@@ -560,8 +704,17 @@ void iradon_sart_into(const T* sinogram, int detectors, int angles, const T* the
                 previous_shift = shifts + k;
             }
             for (const auto& [detector, chord] : rays) {
-                const auto* window = windows.data() + window_offsets[std::size_t(chord.steps) / 2];
-                project_ray<true>(image, update.data(), detectors, cosine, sine, chord,
+                const auto* window = windows->values.data() + windows->offsets[std::size_t(chord.steps) / 2];
+#ifdef SKIMAGEXX_TOMOGRAPHY_SIMD
+                if constexpr (std::is_same_v<T, double>) {
+                    if (vector_taps) {
+                        project_ray<true>(image, update.data(), detectors, cosine, sine, chord,
+                                          projection[detector], samples.get(), window);
+                        continue;
+                    }
+                }
+#endif
+                project_ray<false>(image, update.data(), detectors, cosine, sine, chord,
                                   projection[detector], samples.get(), window);
             }
             for (std::size_t i = 0; i < count; ++i) {
