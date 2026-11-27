@@ -174,7 +174,8 @@ void interpolate_2d(const T* image, const RestorationShape& shape,
 
 template<class T>
 void interpolate_phase_2d(const T* image, std::size_t height, std::size_t width,
-                          std::array<std::size_t, 2> phase, std::size_t stride, T* output) {
+                          std::array<std::size_t, 2> phase, std::size_t stride, T* output,
+                          bool compact = true) {
     for (auto y = phase[0]; y < height; y += stride) {
         const auto* row = image + y * width;
         const auto* up = height == 1 ? row : y == 0 ? row + width : row - width;
@@ -182,7 +183,8 @@ void interpolate_phase_2d(const T* image, std::size_t height, std::size_t width,
         for (auto x = phase[1]; x < width; x += stride) {
             const auto left = width == 1 ? x : x == 0 ? x + 1 : x - 1;
             const auto right = width == 1 ? x : x + 1 == width ? x - 1 : x + 1;
-            *output++ = interpolate_pixel(up[x], row[left], row[right], down[x]);
+            auto* target = compact ? output++ : output + y * width + x;
+            *target = interpolate_pixel(up[x], row[left], row[right], down[x]);
         }
     }
 }
@@ -355,14 +357,12 @@ struct GibbsStep {
     std::complex<T>* total;
     T noise, prior;
     T previous, divisor;
-    bool accumulate;
-    bool measure_delta;
 };
 
-template<class T>
+template<bool Accumulate, bool MeasureDelta, class T>
 void gibbs_scalar(const GibbsStep<T>& step, std::size_t i, GibbsSums& sums) {
     const auto [data, transfer, reg, power, reg_power, nr, ni, total, noise, prior,
-                previous, divisor, accumulate, measure_delta] = step;
+                previous, divisor] = step;
     const T precision = noise * power[i] + prior * reg_power[i];
     const T reciprocal = T(1) / precision;
     const T hr = transfer[i].real(), hi = transfer[i].imag();
@@ -380,10 +380,10 @@ void gibbs_scalar(const GibbsStep<T>& step, std::size_t i, GibbsSums& sums) {
     const T pr = sr * reg[i], pi = si * reg[i];
     sums.noise += rr * rr + ri * ri;
     sums.prior += pr * pr + pi * pi;
-    if (accumulate) {
+    if constexpr (Accumulate) {
         const auto old = total[i];
         total[i] = {old.real() + sr, old.imag() + si};
-        if (measure_delta) {
+        if constexpr (MeasureDelta) {
             const T dr = (previous * sr - old.real()) / divisor;
             const T di = (previous * si - old.imag()) / divisor;
             sums.change += std::hypot(dr, di);
@@ -516,14 +516,14 @@ template<> struct GibbsVector<float> {
 #undef GIBBS_VECTOR_OPS
 #undef GIBBS_NORMAL_RECIPROCAL
 
-template<class T>
+template<bool Accumulate, bool MeasureDelta, class T>
 std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
                          std::size_t end, GibbsSums& sums) {
     using A = GibbsVector<T>;
     using V = typename A::V;
     constexpr auto lanes = A::lanes;
     const auto [data, transfer, reg, power, reg_power, nr, ni, total, noise, prior,
-                previous_count, delta_divisor, accumulate, measure_delta] = step;
+                previous_count, delta_divisor] = step;
     const auto one = A::set(1), half = A::set(0.5);
     const auto noise_work = A::set(noise), neg_noise = A::set(-noise), prior_work = A::set(prior);
     const auto previous = A::set(previous_count), divisor = A::set(delta_divisor);
@@ -547,12 +547,12 @@ std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
         const auto regularizer = A::load(reg + i);
         rn = A::add(rn, A::norm2(rr, ri));
         pn = A::add(pn, A::norm2(A::mul(sr, regularizer), A::mul(si, regularizer)));
-        if (accumulate) {
+        if constexpr (Accumulate) {
             V old_re, old_im;
             A::complex_load(total + i, old_re, old_im);
             const auto new_re = A::add(old_re, sr), new_im = A::add(old_im, si);
             A::complex_store(total + i, new_re, new_im);
-            if (measure_delta) {
+            if constexpr (MeasureDelta) {
                 const auto dr = A::div(A::sub(A::mul(previous, sr), old_re), divisor);
                 const auto di = A::div(A::sub(A::mul(previous, si), old_im), divisor);
                 change = A::add(change, A::sqrt(A::norm2(dr, di)));
@@ -562,13 +562,38 @@ std::size_t gibbs_vector(const GibbsStep<T>& step, std::size_t i,
     }
     sums.noise += A::sum(rn);
     sums.prior += A::sum(pn);
-    if (measure_delta) {
+    if constexpr (MeasureDelta) {
         sums.change += A::sum(change);
         sums.magnitude += A::sum(magnitude);
     }
     return i;
 }
 #endif
+
+template<bool Accumulate, bool MeasureDelta, class T>
+std::array<double, 3> gibbs_rows(const GibbsStep<T>& step, std::size_t height, std::size_t width,
+                                 std::size_t count) {
+#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
+    const bool vectorize = has_avx2();
+#endif
+    const bool half_weight = height != width;
+    GibbsSums sums, first_column;
+    for (std::size_t row = 0; row < height; ++row) {
+        auto i = row * width;
+        const auto end = i + width;
+        if (half_weight) gibbs_scalar<Accumulate, MeasureDelta>(step, i++, first_column);
+#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
+        if (vectorize) i = gibbs_vector<Accumulate, MeasureDelta>(step, i, end, sums);
+#endif
+        for (; i < end; ++i) gibbs_scalar<Accumulate, MeasureDelta>(step, i, sums);
+    }
+    const auto weight = half_weight ? 2 : 1;
+    const auto delta = MeasureDelta
+        ? (sums.change + first_column.change) / (sums.magnitude + first_column.magnitude) / count
+        : std::numeric_limits<double>::quiet_NaN();
+    return {double(T(weight * sums.noise + first_column.noise)),
+            double(T(weight * sums.prior + first_column.prior)), delta};
+}
 } // namespace
 
 template<class T>
@@ -577,31 +602,13 @@ std::array<double, 3> restoration_gibbs_accumulate(const std::complex<T>* data,
     T noise, T prior, const double* normals, std::size_t height, std::size_t width,
     std::size_t count, std::complex<T>* total, bool measure_delta) {
     measure_delta = measure_delta && count > 1;
-#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
-    const bool vectorize = has_avx2();
-#endif
     const auto previous = measure_delta ? T(count - 1) : T(0);
     const auto divisor = measure_delta ? T(count) * previous : T(0);
     const GibbsStep<T> step{data, transfer, reg, power, reg_power, normals,
-                            normals + height * width, total, noise, prior, previous, divisor,
-                            count != 0, measure_delta};
-    const bool half_weight = height != width;
-    GibbsSums sums, first_column;
-    for (std::size_t row = 0; row < height; ++row) {
-        auto i = row * width;
-        const auto end = i + width;
-        if (half_weight) gibbs_scalar(step, i++, first_column);
-#if defined(RESTORATION_AVX2) || defined(RESTORATION_SSE2)
-        if (vectorize) i = gibbs_vector(step, i, end, sums);
-#endif
-        for (; i < end; ++i) gibbs_scalar(step, i, sums);
-    }
-    const auto weight = half_weight ? 2 : 1;
-    const auto delta = measure_delta
-        ? (sums.change + first_column.change) / (sums.magnitude + first_column.magnitude) / count
-        : std::numeric_limits<double>::quiet_NaN();
-    return {double(T(weight * sums.noise + first_column.noise)),
-            double(T(weight * sums.prior + first_column.prior)), delta};
+                            normals + height * width, total, noise, prior, previous, divisor};
+    if (measure_delta) return gibbs_rows<true, true>(step, height, width, count);
+    if (count) return gibbs_rows<true, false>(step, height, width, count);
+    return gibbs_rows<false, false>(step, height, width, count);
 }
 
 template<class T>
@@ -673,6 +680,17 @@ void restoration_interpolate_phase(const double* image, std::size_t height, std:
                                    std::array<std::size_t, 2> phase, std::size_t stride, double* out) {
     interpolate_phase_2d(image, height, width, phase, stride, out);
 }
+
+template<class T>
+void restoration_replace_phase(const T* image, std::size_t height, std::size_t width,
+                               std::array<std::size_t, 2> phase, std::size_t stride, T* out) {
+    interpolate_phase_2d(image, height, width, phase, stride, out, false);
+}
+
+template void restoration_replace_phase(const float*, std::size_t, std::size_t,
+                                        std::array<std::size_t, 2>, std::size_t, float*);
+template void restoration_replace_phase(const double*, std::size_t, std::size_t,
+                                        std::array<std::size_t, 2>, std::size_t, double*);
 
 template<class T>
 void restoration_roll(const T* image, const RestorationShape& shape,

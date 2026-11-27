@@ -1,6 +1,7 @@
 #include <skimagexx/image.hpp>
 #include <skimagexx/restoration_extra.hpp>
 #include <skimagexx/tv_denoise.hpp>
+#include <skimagexx/tv_bregman.hpp>
 #include "bind_array_storage.hpp"
 #include "bind_helpers.hpp"
 
@@ -10,6 +11,7 @@
 #include <algorithm>
 #include <array>
 #include <cfenv>
+#include <cmath>
 #include <cstdint>
 #include <cstring>
 #include <functional>
@@ -29,6 +31,10 @@ void restoration_interpolate_phase(const float*, std::size_t, std::size_t,
                                    std::array<std::size_t, 2>, std::size_t, float*);
 void restoration_interpolate_phase(const double*, std::size_t, std::size_t,
                                    std::array<std::size_t, 2>, std::size_t, double*);
+
+template<class T>
+void restoration_replace_phase(const T*, std::size_t, std::size_t,
+                               std::array<std::size_t, 2>, std::size_t, T*);
 
 namespace detail {
 const char* tv_denoise_try_finite_reuse_into(const TvConstView&, const TvDenoiseWorkspace&,
@@ -119,57 +125,37 @@ void visit_phase(const RestorationShape& shape, Phase phase, std::size_t stride,
     }
 }
 
-template<class T>
-bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
-              const std::vector<Phase>& jobs, std::size_t stride,
-              const skimagexx::TvDenoiseParameters& parameters, T* output,
-              bool compact, bool compact_interp) {
+template<class T, class Denoise>
+bool denoise_batch(const T* input, const T* interp, const RestorationShape& shape,
+                   const std::vector<Phase>& jobs, std::size_t stride, T* shifted, T* output,
+                   bool masked, bool compact, bool compact_interp, Denoise denoise) {
     using namespace skimagexx;
     const auto height = shape[0], width = shape[1], size = height * width;
-    const auto type = std::is_same_v<T, float> ? TvScalarType::float32 : TvScalarType::float64;
-    const std::vector<std::ptrdiff_t> strides{std::ptrdiff_t(width * sizeof(T)), sizeof(T)};
-    if (size > std::numeric_limits<std::size_t>::max() / 9)
-        throw std::bad_array_new_length();
-    // The reuse entry point resets p/g/d. The other scratch planes are
-    // written before use, and shifted is populated only when the job needs it.
-    const std::unique_ptr<T[]> scratch(new T[9 * size]);
-    auto* shifted = scratch.get();
-    auto* p = shifted + size;
-    auto* g = p + 2 * size;
-    auto* d = g + 2 * size;
-    auto* out = d + size;
-    auto* squared = out + size;
-    auto* norm = squared + size;
-    const TvDenoiseWorkspace workspace{
-        {p, type, shape}, {g, type, shape}, {d, type, shape, strides},
-        {out, type, shape, strides}, {squared, type, shape, strides},
-        {norm, type, shape, strides}, {p, type, shape}, {g, type, shape},
-        {out, type, shape, strides}, {norm, type, shape, strides}};
-    TvConstView source{shifted, type, shape, strides};
+    if (masked) {
+        std::copy_n(input, size, shifted);
+        if (!compact && jobs.size() == 1) std::fill_n(output, size, T(0));
+    }
     RestorationShape shift(2);
     bool add = false;
-    if (interp && !compact) std::fill_n(output, size, T(0));
     for (const auto& job : jobs) {
         const auto [y, x] = job;
         if (interp) {
-            if (!add) std::copy_n(input, size, shifted);
             visit_phase(shape, job, stride, [&](auto i, auto j) {
                 shifted[i] = interp[compact_interp ? j : i];
             });
+        } else if (masked) {
+            restoration_replace_phase(input, height, width, job, stride, shifted);
         } else if (y || x) {
             shift[0] = y;
             shift[1] = x;
             restoration_roll(input, shape, shift, shifted, false);
         }
-        source.data = interp || y || x ? shifted : input;
-        TvDenoiseResult result{};
-        if (detail::tv_denoise_try_finite_reuse_into(source, workspace, parameters, result))
-            return false;
-        const auto* denoised = result.input_alias ? static_cast<const T*>(source.data) : out;
-        if (interp) {
+        const auto* denoised = denoise(masked || y || x ? shifted : input);
+        if (!denoised) return false;
+        if (masked) {
             visit_phase(shape, job, stride, [&](auto i, auto j) {
                 output[compact ? j : i] = denoised[i];
-                if (!compact) shifted[i] = input[i];
+                shifted[i] = input[i];
             });
         } else if (y || x) {
             shift[0] = y ? height - y : 0;
@@ -183,6 +169,86 @@ bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
         add = true;
     }
     return true;
+}
+
+template<class T>
+bool tv_batch(const T* input, const T* interp, const RestorationShape& shape,
+              const std::vector<Phase>& jobs, std::size_t stride,
+              const skimagexx::TvDenoiseParameters& parameters, T* output,
+              bool masked, bool compact, bool compact_interp) {
+    using namespace skimagexx;
+    const auto size = shape[0] * shape[1];
+    const auto type = std::is_same_v<T, float> ? TvScalarType::float32 : TvScalarType::float64;
+    const std::vector<std::ptrdiff_t> strides{std::ptrdiff_t(shape[1] * sizeof(T)), sizeof(T)};
+    if (size > std::numeric_limits<std::size_t>::max() / sizeof(T) / 9)
+        throw std::bad_array_new_length();
+    const std::unique_ptr<T[]> scratch(new T[9 * size]);
+    auto* shifted = scratch.get();
+    auto* p = shifted + size;
+    auto* g = p + 2 * size;
+    auto* d = g + 2 * size;
+    auto* out = d + size;
+    auto* squared = out + size;
+    auto* norm = squared + size;
+    const TvDenoiseWorkspace workspace{
+        {p, type, shape}, {g, type, shape}, {d, type, shape, strides},
+        {out, type, shape, strides}, {squared, type, shape, strides},
+        {norm, type, shape, strides}, {p, type, shape}, {g, type, shape},
+        {out, type, shape, strides}, {norm, type, shape, strides}};
+    TvConstView source{input, type, shape, strides};
+    return denoise_batch(input, interp, shape, jobs, stride, shifted, output,
+                         masked, compact, compact_interp,
+                         [&](const T* values) -> const T* {
+        source.data = values;
+        TvDenoiseResult result{};
+        if (detail::tv_denoise_try_finite_reuse_into(source, workspace, parameters, result))
+            return nullptr;
+        return result.input_alias ? values : out;
+    });
+}
+
+template<class T>
+bool bregman_batch(const T* input, const T* interp, const RestorationShape& shape,
+                   const std::vector<Phase>& jobs, std::size_t stride,
+                   skimagexx::TvBregmanParameters parameters, T* output,
+                   bool masked, bool compact, bool compact_interp) {
+    using namespace skimagexx;
+    const auto height = shape[0], width = shape[1], size = height * width;
+    if (height < 2 || width < 2) return false;
+    const auto limit = std::numeric_limits<std::size_t>::max() / sizeof(T) / 5;
+    if (height + 2 > limit / (width + 2)) throw std::bad_array_new_length();
+    const auto padded = (height + 2) * (width + 2);
+    const std::unique_ptr<T[]> scratch(new T[5 * padded]);
+    const std::unique_ptr<T[]> images(new T[2 * size]);
+    auto* shifted = images.get();
+    auto* denoised = shifted + size;
+    auto* out = scratch.get();
+    const TvBregmanWorkspace workspace{
+        {out, padded}, {out + padded, padded}, {out + 2 * padded, padded},
+        {out + 3 * padded, padded}, {out + 4 * padded, padded}};
+    const auto type = std::is_same_v<T, float> ? TvBregmanType::float32 : TvBregmanType::float64;
+    parameters.weight = T(parameters.weight);
+    return denoise_batch(input, interp, shape, jobs, stride, shifted, output,
+                         masked, compact, compact_interp,
+                         [&](const T* values) -> const T* {
+        std::fill_n(out, padded, T(0));
+        // The native solver rejects an unsupported input before writing.
+        try {
+            tv_bregman_into({values, type, height, width, 1, size}, workspace, parameters);
+        } catch (const std::invalid_argument&) {
+            return nullptr;
+        }
+        for (std::size_t row = 0; row < height; ++row) {
+            const auto* interior = out + (row + 1) * (width + 2) + 1;
+            for (std::size_t col = 0; col < width; ++col) {
+                const auto value = interior[col];
+                // Keep exceptional cycle-spin additions on NumPy's errstate path.
+                if (!(std::abs(value) <= T(1048576))) return nullptr;
+                denoised[row * width + col] = value;
+            }
+        }
+        return denoised;
+    });
 }
 } // namespace
 
@@ -356,50 +422,59 @@ void bind_restoration_extra(py::module_& module) {
        py::arg("prior"), py::arg("normals").noconvert(), py::arg("total").noconvert(), py::arg("count"),
        py::arg("measure_delta") = true);
 
-    module.def("restoration_extra_tv_batch", [](const py::array& image, const py::object& interpolation,
-        const std::vector<Phase>& jobs, std::size_t stride, double weight,
-        double eps, std::size_t iterations, bool modern, std::size_t buffer_elements,
-        bool compact) -> py::object {
+    module.def("restoration_extra_denoise_batch", [](const py::array& image,
+        const py::object& interpolation, std::vector<Phase> jobs, std::size_t stride, bool masked, bool compact,
+        bool bregman, double weight, double eps, int iterations,
+        bool profile_or_isotropic, std::size_t buffer_elements) -> py::object {
         using namespace skimagexx;
         const auto shape = shape_of(image);
-        if (shape.size() != 2 || jobs.empty() || !stride ||
+        if (shape.size() != 2 || !stride || stride > 64 || iterations < 1 ||
             std::max(shape[0], shape[1]) > std::numeric_limits<std::size_t>::max() - stride)
-            throw py::value_error("restoration TV batch requires a nonempty 2D job list");
-        const auto interp = interpolation.is_none() ? py::array() : interpolation.cast<py::array>();
-        const bool compact_interp = !interpolation.is_none() && !same_shape(image, interp);
+            throw py::value_error("invalid restoration denoise batch");
         auto output_shape = shape;
-        if (compact) {
-            if (interpolation.is_none() || jobs.size() != 1)
-                throw py::value_error("compact restoration output requires a single mask");
+        if (masked && jobs.empty() && !compact) {
+            jobs.reserve(stride * stride);
+            for (std::size_t row = 0; row < stride; ++row)
+                for (std::size_t col = 0; col < stride; ++col)
+                    jobs.push_back({row, col});
+        } else if (masked && jobs.size() == 1) {
             check_phase(shape, jobs.front(), stride);
-            output_shape = phase_shape(shape, jobs.front(), stride);
-        }
-        if (compact_interp && (!compact || shape_of(interp) != output_shape))
-            throw py::value_error("restoration TV interpolation shape mismatch");
-        if (interpolation.is_none())
+            if (compact) output_shape = phase_shape(shape, jobs.front(), stride);
+        } else if (masked || compact || jobs.empty()) {
+            throw py::value_error("invalid restoration denoise jobs");
+        } else {
             for (const auto& job : jobs)
                 if (job[0] >= shape[0] || job[1] >= shape[1])
-                    throw py::value_error("restoration TV shift is not reduced");
-        const auto profile = modern ? TvReductionProfile::numpy_254_aligned_contiguous
-                                    : TvReductionProfile::numpy_1244_buffered;
-        const TvDenoiseParameters parameters{weight, eps, iterations, {profile, buffer_elements}};
+                    throw py::value_error("restoration denoise shift is not reduced");
+        }
+        const bool has_interp = !interpolation.is_none();
+        const auto interp = has_interp ? interpolation.cast<py::array>() : py::array();
+        const bool compact_interp = has_interp && !same_shape(image, interp);
+        if (has_interp && (!masked || (compact_interp && (!compact || shape_of(interp) != output_shape))))
+            throw py::value_error("restoration denoise interpolation shape mismatch");
+        const auto profile = profile_or_isotropic ? TvReductionProfile::numpy_254_aligned_contiguous
+                                                  : TvReductionProfile::numpy_1244_buffered;
+        const TvDenoiseParameters tv{weight, eps, std::size_t(iterations),
+                                     {profile, buffer_elements}};
+        const TvBregmanParameters bg{weight, iterations, eps, profile_or_isotropic};
         return real_dispatch(image, [&](auto input) -> py::object {
             using T = std::remove_cv_t<std::remove_pointer_t<decltype(input)>>;
-            const auto* values = interpolation.is_none() ? nullptr : dense<T>(interp);
+            const auto* values = has_interp ? dense<T>(interp) : nullptr;
             py::array_t<T> output(output_shape);
             auto* out = output.mutable_data();
             bool success;
             {
                 py::gil_scoped_release release;
-                success = tv_batch(input, values, shape, jobs, stride, parameters,
-                                   out, compact, compact_interp);
+                success = bregman
+                    ? bregman_batch(input, values, shape, jobs, stride, bg, out, masked, compact, compact_interp)
+                    : tv_batch(input, values, shape, jobs, stride, tv, out, masked, compact, compact_interp);
             }
             if (!success) return py::none();
             return output;
         });
-    }, py::arg("image").noconvert(), py::arg("interpolation"), py::arg("jobs"), py::arg("stride"),
-       py::arg("weight"), py::arg("eps"), py::arg("iterations"), py::arg("modern"),
-       py::arg("buffer_elements"), py::arg("compact") = false);
+    }, py::arg("image").noconvert(), py::arg("interpolation"), py::arg("jobs"), py::arg("stride"), py::arg("masked"),
+       py::arg("compact"), py::arg("bregman"), py::arg("weight"), py::arg("eps"),
+       py::arg("iterations"), py::arg("profile_or_isotropic"), py::arg("buffer_elements"));
 
     module.def("restoration_extra_phase_input", [](const py::array& image, const py::array& interp,
                                                     Phase phase, std::size_t stride) {
