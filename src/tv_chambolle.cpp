@@ -10,6 +10,11 @@
 #include <stdexcept>
 #include <type_traits>
 
+#if defined(SKIMAGEXX_AVX2) && (defined(_M_X64) || defined(_M_IX86) || defined(__x86_64__) || defined(__i386__))
+#include <immintrin.h>
+#define SKIMAGEXX_TV_ROW_AVX2
+#endif
+
 namespace skimagexx {
 namespace detail {
 // Finite reductions retain the profile's exact ordering and discard FP status.
@@ -218,6 +223,151 @@ template<class T> T scalar(std::uint64_t raw) {
     return value;
 }
 
+#ifdef SKIMAGEXX_TV_ROW_AVX2
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4752)
+#define TV_ROW_INLINE __forceinline
+#define TV_ROW_ENTRY __declspec(noinline)
+#else
+#define TV_ROW_INLINE __attribute__((target("avx2"), always_inline)) inline
+#define TV_ROW_ENTRY __attribute__((target("avx2"), noinline))
+#endif
+
+template<class T> struct RowVector;
+template<> struct RowVector<float> {
+    static constexpr std::size_t lanes=8;
+    static TV_ROW_INLINE auto load(const void* p) {return _mm256_loadu_ps(static_cast<const float*>(p));}
+    static TV_ROW_INLINE void store(float* p,__m256 v) {_mm256_storeu_ps(p,v);}
+    static TV_ROW_INLINE auto zero() {return _mm256_setzero_ps();}
+    static TV_ROW_INLINE auto add(__m256 a,__m256 b) {return _mm256_add_ps(a,b);}
+    static TV_ROW_INLINE auto sub(__m256 a,__m256 b) {return _mm256_sub_ps(a,b);}
+    static TV_ROW_INLINE auto mul(__m256 a,__m256 b) {return _mm256_mul_ps(a,b);}
+    static TV_ROW_INLINE auto neg(__m256 a) {return _mm256_xor_ps(a,_mm256_set1_ps(-0.0f));}
+    static TV_ROW_INLINE auto root(__m256 a) {return _mm256_sqrt_ps(a);}
+};
+template<> struct RowVector<double> {
+    static constexpr std::size_t lanes=4;
+    static TV_ROW_INLINE auto load(const void* p) {return _mm256_loadu_pd(static_cast<const double*>(p));}
+    static TV_ROW_INLINE void store(double* p,__m256d v) {_mm256_storeu_pd(p,v);}
+    static TV_ROW_INLINE auto zero() {return _mm256_setzero_pd();}
+    static TV_ROW_INLINE auto add(__m256d a,__m256d b) {return _mm256_add_pd(a,b);}
+    static TV_ROW_INLINE auto sub(__m256d a,__m256d b) {return _mm256_sub_pd(a,b);}
+    static TV_ROW_INLINE auto mul(__m256d a,__m256d b) {return _mm256_mul_pd(a,b);}
+    static TV_ROW_INLINE auto neg(__m256d a) {return _mm256_xor_pd(a,_mm256_set1_pd(-0.0));}
+    static TV_ROW_INLINE auto root(__m256d a) {return _mm256_sqrt_pd(a);}
+};
+
+template<class T>
+TV_ROW_ENTRY std::size_t primal_row_avx2(const unsigned char* source,const T* py,const T* px,
+    const T* above,T* d,T* out,std::size_t cols) {
+    using V=RowVector<T>;
+    std::size_t x=1;
+    for(;x+V::lanes<=cols;x+=V::lanes) {
+        auto value=V::neg(V::add(V::add(V::zero(),V::load(py+x)),V::load(px+x)));
+        if(above)value=V::add(value,V::load(above+x));
+        value=V::add(value,V::load(px+x-1));
+        V::store(d+x,value);
+        V::store(out+x,V::add(V::load(source+x*sizeof(T)),value));
+    }
+    return x;
+}
+
+template<class T>
+TV_ROW_ENTRY std::size_t gradient_norm_row_avx2(const unsigned char* row,const unsigned char* below,
+    T* gy,T* gx,T* norm,std::size_t cols) {
+    using V=RowVector<T>;
+    std::size_t x=0;
+    for(;x+V::lanes<cols;x+=V::lanes) {
+        const auto byte=x*sizeof(T);
+        const auto center=V::load(row+byte);
+        const auto dy=below?V::sub(V::load(below+byte),center):V::zero();
+        const auto dx=V::sub(V::load(row+byte+sizeof(T)),center);
+        V::store(gy+x,dy);
+        V::store(gx+x,dx);
+        V::store(norm+x,V::root(V::add(V::add(V::zero(),V::mul(dy,dy)),V::mul(dx,dx))));
+    }
+    return x;
+}
+
+#undef TV_ROW_INLINE
+#undef TV_ROW_ENTRY
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#endif
+
+template<class T>
+void primal_row(const unsigned char* source,const T* py,const T* px,const T* above,
+    T* d,T* out,std::size_t cols,[[maybe_unused]] bool vectorized) {
+    const auto update=[&](std::size_t x,bool left) {
+        T value=-T(T(T(0)+py[x])+px[x]);
+        if(above)value=T(value+above[x]);
+        if(left)value=T(value+px[x-1]);
+        d[x]=value;
+        out[x]=T(read<T>(source,x*sizeof(T))+value);
+    };
+    update(0,false);
+    std::size_t x=1;
+#ifdef SKIMAGEXX_TV_ROW_AVX2
+    if(vectorized)x=primal_row_avx2(source,py,px,above,d,out,cols);
+#endif
+    for(;x<cols;++x)update(x,true);
+}
+
+template<class T>
+void gradient_norm_row(const unsigned char* row,const unsigned char* below,
+    T* gy,T* gx,T* norm,std::size_t cols,[[maybe_unused]] bool vectorized) {
+    std::size_t x=0;
+#ifdef SKIMAGEXX_TV_ROW_AVX2
+    if(vectorized)x=gradient_norm_row_avx2(row,below,gy,gx,norm,cols);
+#endif
+    for(;x<cols;++x) {
+        const auto byte=x*sizeof(T);
+        const T center=read<T>(row,byte);
+        const T dy=below?T(read<T>(below,byte)-center):T(0);
+        const T dx=x+1<cols?T(read<T>(row,byte+sizeof(T))-center):T(0);
+        gy[x]=dy;
+        gx[x]=dx;
+        norm[x]=T(std::sqrt(T(T(T(0)+T(dy*dy))+T(dx*dx))));
+    }
+}
+
+template<class T>
+void finite_stencil_2d(const TvConstView& input,const TvDenoiseWorkspace& w,
+    const Layout& r,bool update,std::size_t block,bool vectorized) {
+    const auto rows=r.shape[0],cols=r.shape[1];
+    const auto block_rows=std::max(std::size_t(1),block/cols);
+    const auto* source=static_cast<const unsigned char*>(input.data);
+    const auto* p=static_cast<const T*>(w.p.data);
+    auto* d=static_cast<T*>(w.d.data);
+    auto* out=static_cast<T*>(w.out.data);
+    auto* g=static_cast<T*>(w.g.data);
+    auto* norm=static_cast<T*>(w.norm.data);
+    const auto* values=update?reinterpret_cast<const unsigned char*>(out):source;
+    std::size_t written=0;
+    for(std::size_t begin=0;begin<rows;) {
+        const auto end=std::min(begin+block_rows,rows);
+        if(update) {
+            const auto needed=std::min(end+1,rows);
+            // The next output row is the forward gradient halo. Keep both
+            // dual planes intact until all primal and gradient rows finish.
+            for(;written<needed;++written) {
+                const auto i=written*cols;
+                primal_row(source+i*sizeof(T),p+i,p+r.n+i,written?p+i-cols:nullptr,
+                    d+i,out+i,cols,vectorized);
+            }
+        }
+        for(auto y=begin;y<end;++y) {
+            const auto i=y*cols;
+            const auto* row=values+i*sizeof(T);
+            gradient_norm_row(row,y+1<rows?row+cols*sizeof(T):nullptr,
+                g+i,g+r.n+i,norm+i,cols,vectorized);
+        }
+        begin=end;
+    }
+}
+
 // A block can consume its gradients as soon as the forward output halo
 // has been written. The dual planes remain read-only until every block finishes.
 template<class T>
@@ -258,9 +408,12 @@ TvDenoiseResult run_finite(const TvConstView& input,const TvDenoiseWorkspace& w,
     constexpr std::size_t block=2048;
     const bool blocked=source.contiguous && n>block && contiguous.steps[0]<=block &&
         detail::active_workers(n)==1;
+    const bool fused_rows=blocked && source.rank==2 && source.shape[1]>=16;
     const bool vectorized=blocked && has_avx2();
     for(std::size_t iteration=0;iteration<parameters.max_iterations;++iteration) {
-        if(blocked) {
+        if(fused_rows) {
+            finite_stencil_2d<T>(input,w,contiguous,iteration!=0,block,vectorized);
+        } else if(blocked) {
             finite_stencil<T>(input,w,contiguous,iteration!=0,block,vectorized);
         } else if(iteration) {
             divergence<T>(w.p_read,w.d,contiguous,contiguous);
