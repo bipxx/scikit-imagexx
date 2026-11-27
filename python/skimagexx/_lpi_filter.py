@@ -47,6 +47,32 @@ def _inverse_fft(spectrum, shape):
     return _core.fft_c2r(spectrum, shape, (0, 1), _core.get_num_threads())
 
 
+def _real_spectrum(data, shape, impulse=False):
+    rows = data.shape[0]
+    if shape[0] < 64:
+        return _core.fft_r2c(_pad(data, shape), (0, 1), _core.get_num_threads())
+
+    # Rows in the spatial padding are zero, so their horizontal FFTs are
+    # zero too. Add those rows only before the vertical FFT.
+    spatial = _pad(data, (rows, shape[1]))
+    start = 0
+    if impulse and spatial.dtype.char in "fd":
+        # Trim all-zero outer rows of a localized impulse. Inspect bits so
+        # negative zero and NaN rows still go through the FFT.
+        bits = spatial.view(np.uint32 if spatial.itemsize == 4 else np.uint64)
+        occupied = np.flatnonzero(bits[:, :data.shape[1]].any(axis=1))
+        if occupied.size:
+            start = occupied[0]
+            spatial = spatial[start:occupied[-1] + 1]
+    horizontal = _core.fft_r2c(spatial, (1,), _core.get_num_threads())
+    padded = np.empty((shape[0], horizontal.shape[1]), dtype=horizontal.dtype)
+    end = start + horizontal.shape[0]
+    padded[:start] = 0
+    padded[start:end] = horizontal
+    padded[end:] = 0
+    return _core.fft_c2c(padded, (0,), True, _core.get_num_threads())
+
+
 def _shifted_magnitude(spectrum, shape, output_shape):
     if shape is None:
         # Magnitude commutes with the shift. Permute the smaller real buffer.
@@ -112,6 +138,16 @@ def _pad(data, shape):
 
 def _ifftshift(array):
     # NumPy's permutation only; no NumPy/SciPy transform entrypoint is called.
+    if array.ndim == 2:
+        rows, cols = array.shape
+        row, col = rows // 2, cols // 2
+        top, left = rows - row, cols - col
+        shifted = np.empty_like(array)
+        shifted[:top, :left] = array[row:, col:]
+        shifted[:top, left:] = array[row:, :col]
+        shifted[top:, :left] = array[:row, col:]
+        shifted[top:, left:] = array[:row, :col]
+        return shifted
     axes = tuple(range(array.ndim))
     return np.roll(array, tuple(-(n // 2) for n in array.shape), axes)
 
@@ -133,6 +169,26 @@ def _coordinates(dshape, even_offset, dtype):
     return grid.reshape(2, -1).T
 
 
+def _forward_shape(data, impulse, shape):
+    if (type(data) is not np.ndarray or type(impulse) is not np.ndarray
+            or data.dtype.char not in "fd" or impulse.dtype.char not in "fd"
+            or np.geterr()["under"] != "ignore"):
+        return shape
+    # On power-of-two image axes the extra FFT sample is cheap and prevents
+    # linear convolution from wrapping at index zero, outside the crop.
+    padded = tuple(n + 1 if n >= 7 and (n & (n + 1)) == 0 else n for n in shape)
+    if padded != shape:
+        maximum = min(np.finfo(data.dtype).max, np.finfo(impulse.dtype).max)
+        count = padded[0] * padded[1]
+        bound = float(maximum) ** 0.5 / (4 * count ** 1.5)
+        for array in (impulse, data):
+            _core.fft_check(array)
+            if not (-bound <= array.min() and array.max() <= bound):
+                return shape
+        return padded
+    return shape
+
+
 class LPIFilter2D:
     """Linear Position-Invariant Filter (2-dimensional)."""
 
@@ -147,7 +203,7 @@ class LPIFilter2D:
         F, G, _ = self._prepare_spectra(data)
         return F, G
 
-    def _prepare_spectra(self, data, half=False):
+    def _prepare_spectra(self, data, half=False, forward=False):
         dshape = np.array(data.shape)
         even_offset = (dshape % 2 == 0).astype(int)
         dshape += even_offset
@@ -163,13 +219,17 @@ class LPIFilter2D:
             f = self.impulse_response(
                 coords[:, 0], coords[:, 1], **self.filter_params
             ).reshape(dshape)
+            if half and type(f) is np.ndarray and f.dtype.kind in "biuf":
+                shape = tuple(oshape)
+                if forward:
+                    shape = _forward_shape(data, f, shape)
+                return _real_spectrum(f, shape, impulse=True), _real_spectrum(data, shape), shape
             f = _pad(f, oshape)
             if half and f.dtype.kind in "biuf":
-                axes = (0, 1)
-                F = _core.fft_r2c(f, axes, _core.get_num_threads())
-                data = _pad(data, oshape)
-                G = _core.fft_r2c(data, axes, _core.get_num_threads())
-                return F, G, tuple(oshape)
+                shape = tuple(oshape)
+                F = _core.fft_r2c(f, (0, 1), _core.get_num_threads())
+                G = _core.fft_r2c(_pad(data, shape), (0, 1), _core.get_num_threads())
+                return F, G, shape
             F = _fft(f, True)
             self._cache = F
         else:
@@ -210,12 +270,14 @@ def filter_forward(data, impulse_response=None, filter_params=None, predefined_f
     _check_2d(data, "data")
     if predefined_filter is None:
         filt = _new_filter(impulse_response, filter_params)
-        F, G, shape = filt._prepare_spectra(data, half=True)
+        F, G, shape = filt._prepare_spectra(data, half=True, forward=True)
         if shape is not None and F.dtype == G.dtype:
             np.multiply(F, G, out=G)
         else:
             G = F * G
-        return np.abs(_center(_inverse_fft(G, shape), data.shape))
+        spatial = _inverse_fft(G, shape)
+        rows, cols = data.shape
+        return np.abs(_center(spatial[:2 * rows - 1, :2 * cols - 1], data.shape))
     return predefined_filter(data)
 
 
@@ -234,7 +296,16 @@ def filter_inverse(data, impulse_response=None, filter_params=None, max_gain=2,
         shape = None
 
     F, G, shape = _limit_spectra(F, G, shape)
-    magnitude = _min_limit(F, val=np.finfo(F.real.dtype).eps)
+    limits = np.finfo(F.real.dtype)
+    magnitude = _min_limit(F, val=limits.eps)
+    if (shape is not None and not _LEGACY_COMPLEX_SIGN
+            and type(max_gain) in (int, float) and float(limits.eps) <= max_gain <= 1 / float(limits.eps)
+            and _can_fuse_gain(magnitude, G, limits)):
+        # conj(F) / (abs(F) * max(abs(F), 1 / max_gain)) is the
+        # reciprocal with its magnitude capped, with the same phase.
+        denominator = np.maximum(magnitude, 1 / max_gain)
+        denominator *= magnitude
+        return _apply_conjugate_gain(F, G, denominator, shape, data.shape)
     if shape is None:
         # F can still be the predefined filter's public cache.
         del magnitude
@@ -250,6 +321,28 @@ def filter_inverse(data, impulse_response=None, filter_params=None, max_gain=2,
     else:
         G = G * F
     return _shifted_magnitude(G, shape, data.shape)
+
+
+def _can_fuse_gain(magnitude, image_spectrum, limits):
+    # Keep the source arithmetic for values subject to epsilon limiting,
+    # nonfinite values, and values near overflow in the quotient or product.
+    if (np.geterr()["under"] != "ignore"
+            or not (limits.eps <= magnitude.min() and magnitude.max() <= float(limits.max) ** 0.5 * 0.5)):
+        return False
+    components = image_spectrum.view(image_spectrum.real.dtype)
+    bound = float(np.finfo(components.dtype).max) ** 0.5
+    return -bound <= components.min() and components.max() <= bound
+
+
+def _apply_conjugate_gain(F, G, denominator, shape, output_shape):
+    np.divide(F.real, denominator, out=F.real)
+    np.divide(F.imag, denominator, out=F.imag)
+    np.negative(F.imag, out=F.imag)
+    if F.dtype == G.dtype:
+        np.multiply(G, F, out=G)
+    else:
+        G = G * F
+    return _shifted_magnitude(G, shape, output_shape)
 
 
 def wiener(data, impulse_response=None, filter_params=None, K=0.25, predefined_filter=None):
@@ -268,6 +361,11 @@ def wiener(data, impulse_response=None, filter_params=None, K=0.25, predefined_f
     F, G, shape = _limit_spectra(F, G, shape)
     limits = np.finfo(F.real.dtype)
     H_mag_sqr = _min_limit(F, val=limits.eps)
+    if (shape is not None and type(K) is float and 0 < K <= float(limits.max) * 0.5
+            and np.result_type(F, G, K) == F.dtype and _can_fuse_gain(H_mag_sqr, G, limits)):
+        np.square(H_mag_sqr, out=H_mag_sqr)
+        H_mag_sqr += K
+        return _apply_conjugate_gain(F, G, H_mag_sqr, shape, data.shape)
     if isinstance(K, np.ndarray):
         _core.fft_check(K)
     if (np.result_type(F, G, K) == F.dtype and np.geterr()["under"] == "ignore"
