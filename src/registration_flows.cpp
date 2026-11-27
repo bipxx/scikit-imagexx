@@ -17,6 +17,17 @@
 #include <utility>
 #include <vector>
 
+#ifdef SKIMAGEXX_AVX2
+#include <immintrin.h>
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4752)
+#define FLOW_AVX2 __declspec(noinline)
+#else
+#define FLOW_AVX2 __attribute__((target("avx2,no-fma"), noinline))
+#endif
+#endif
+
 namespace skimagexx {
 namespace {
 
@@ -188,24 +199,35 @@ bool mean_tensor_solve(const T* input, T* vertical, T* flow, Shape shape, int ra
                        const std::vector<std::size_t>& columns, int workers) {
     const auto count = shape.count();
     const auto window = 2 * std::size_t(radius) + 1;
+    const double divisor = double(window);
     // Match the separable uniform filter's rolling double sums and its cast
     // between axes. Keep all five tensor terms together for each local solve.
-    detail::partition(shape.width, workers, [&](auto begin, auto end, auto) {
-        for (auto x = begin; x < end; ++x) {
-            std::array<double, 5> total{};
+    constexpr std::size_t max_block_width = 32;
+    using StripSums = std::array<double, 5 * max_block_width>;
+    const auto block_width = std::min(max_block_width, 1 + (shape.width - 1) / std::size_t(workers));
+    const auto blocks = 1 + (shape.width - 1) / block_width;
+    detail::partition(blocks, workers, [&](auto begin, auto end, auto) {
+        for (auto block = begin; block < end; ++block) {
+            const auto x = block * block_width;
+            const auto terms = 5 * std::min(block_width, shape.width - x);
+            const auto row_at = [&](std::size_t k) {
+                return input + 5 * (rows[k] * shape.width + x);
+            };
+            // Advance whole strips to load and store adjacent tensor terms.
+            StripSums total{};
             for (std::size_t k = 0; k < window; ++k) {
-                const auto* row = input + 5 * (rows[k] * shape.width + x);
-                for (std::size_t c = 0; c < 5; ++c) total[c] += row[c];
+                const auto* row = row_at(k);
+                for (std::size_t c = 0; c < terms; ++c) total[c] += row[c];
             }
             auto* dst = vertical + 5 * x;
-            for (std::size_t c = 0; c < 5; ++c) dst[c] = T(total[c] / double(window));
+            for (std::size_t c = 0; c < terms; ++c) dst[c] = T(total[c] / divisor);
             for (std::size_t y = 1; y < shape.height; ++y) {
-                const auto* head = input + 5 * (rows[y + window - 1] * shape.width + x);
-                const auto* tail = input + 5 * (rows[y - 1] * shape.width + x);
+                const auto* head = row_at(y + window - 1);
+                const auto* tail = row_at(y - 1);
                 dst += 5 * shape.width;
-                for (std::size_t c = 0; c < 5; ++c) {
+                for (std::size_t c = 0; c < terms; ++c) {
                     total[c] += double(head[c]) - double(tail[c]);
-                    dst[c] = T(total[c] / double(window));
+                    dst[c] = T(total[c] / divisor);
                 }
             }
         }
@@ -224,9 +246,9 @@ bool mean_tensor_solve(const T* input, T* vertical, T* flow, Shape shape, int ra
                     const auto* tail = row + 5 * columns[x - 1];
                     for (std::size_t c = 0; c < 5; ++c) total[c] += double(head[c]) - double(tail[c]);
                 }
-                if (!solve_local_system(T(total[0] / double(window)), T(total[1] / double(window)),
-                                        T(total[2] / double(window)), T(total[3] / double(window)),
-                                        T(total[4] / double(window)), flow[base + x], flow[count + base + x])) {
+                if (!solve_local_system(T(total[0] / divisor), T(total[1] / divisor),
+                                        T(total[2] / divisor), T(total[3] / divisor),
+                                        T(total[4] / divisor), flow[base + x], flow[count + base + x])) {
                     stable.store(false, std::memory_order_relaxed);
                     return;
                 }
@@ -303,69 +325,174 @@ bool solve_ilk(const T* reference, const T* moving, T* flow, Shape shape, int wo
 }
 
 template<class T>
+void tvl1_data_pixel(T flow_y, T flow_x, T y, T x, T rho0, T strength, T cutoff,
+                     T attachment, T& auxiliary_y, T& auxiliary_x) {
+    const T rho = rho0 + (y * flow_y + x * flow_x);
+    T delta_y, delta_x;
+    if (std::abs(rho) <= cutoff) {
+        delta_y = (rho * y) / strength;
+        delta_x = (rho * x) / strength;
+    } else {
+        const T signed_attachment = std::isnan(rho) ? rho : std::copysign(attachment, rho);
+        delta_y = signed_attachment * y;
+        delta_x = signed_attachment * x;
+    }
+    auxiliary_y = flow_y - delta_y;
+    auxiliary_x = flow_x - delta_x;
+}
+
+#ifdef SKIMAGEXX_AVX2
+template<bool fused>
+FLOW_AVX2 std::size_t regularize_float_row(
+    const float* prior, const float* auxiliary, float* current, float* vertical, float* horizontal,
+    Shape shape, std::size_t y, float factor) {
+    const auto width = shape.width;
+    const auto base = y * width;
+    const bool bottom = y + 1 == shape.height;
+    const auto zero = _mm256_setzero_ps();
+    const auto sign = _mm256_set1_ps(-0.0f);
+    const auto step = _mm256_set1_ps(0.25f);
+    const auto scale = _mm256_set1_ps(factor);
+    const auto one = _mm256_set1_ps(1);
+    const auto shift = _mm256_setr_epi32(0, 0, 1, 2, 3, 4, 5, 6);
+    const auto last_lane = _mm256_set1_epi32(7);
+    auto left = fused ? _mm256_set1_ps(horizontal[base]) : zero;
+    std::size_t x = 1;
+    for (; x + 8 < width; x += 8) {
+        const auto i = base + x;
+        const auto center = _mm256_loadu_ps(prior + i);
+        const auto dy = bottom ? zero : _mm256_sub_ps(_mm256_loadu_ps(prior + i + width), center);
+        const auto dx = _mm256_sub_ps(_mm256_loadu_ps(prior + i + 1), center);
+        const auto square = _mm256_add_ps(_mm256_mul_ps(dy, dy), _mm256_mul_ps(dx, dx));
+        const auto norm = _mm256_add_ps(_mm256_mul_ps(_mm256_sqrt_ps(square), scale), one);
+        const auto v = _mm256_div_ps(_mm256_sub_ps(_mm256_loadu_ps(vertical + i), _mm256_mul_ps(step, dy)), norm);
+        const auto h = _mm256_div_ps(_mm256_sub_ps(_mm256_loadu_ps(horizontal + i), _mm256_mul_ps(step, dx)), norm);
+        _mm256_storeu_ps(vertical + i, v);
+        _mm256_storeu_ps(horizontal + i, h);
+        if constexpr (fused) {
+            auto divergence = _mm256_xor_ps(_mm256_add_ps(v, h), sign);
+            if (y != 0) divergence = _mm256_add_ps(divergence, _mm256_loadu_ps(vertical + i - width));
+            // Carry the preceding horizontal dual across vectors in a register.
+            const auto previous = _mm256_blend_ps(_mm256_permutevar8x32_ps(h, shift), left, 1);
+            divergence = _mm256_add_ps(divergence, previous);
+            left = _mm256_permutevar8x32_ps(h, last_lane);
+            _mm256_storeu_ps(current + i, _mm256_add_ps(_mm256_loadu_ps(auxiliary + i), divergence));
+        }
+    }
+    return x;
+}
+
+FLOW_AVX2 std::size_t tvl1_data_float(const float* flow_y, const float* flow_x,
+                                    const float* gy, const float* gx, const float* rho0,
+                                    const float* strength, const float* cutoff, float attachment,
+                                    float* auxiliary_y, float* auxiliary_x,
+                                    std::size_t begin, std::size_t end) {
+    const auto sign_bit = _mm256_set1_ps(-0.0f);
+    const auto limit = _mm256_set1_ps(attachment);
+    auto i = begin;
+    for (; i + 8 <= end; i += 8) {
+        const auto y = _mm256_loadu_ps(gy + i), x = _mm256_loadu_ps(gx + i);
+        const auto vy = _mm256_loadu_ps(flow_y + i), vx = _mm256_loadu_ps(flow_x + i);
+        const auto dot = _mm256_add_ps(_mm256_mul_ps(y, vy), _mm256_mul_ps(x, vx));
+        const auto rho = _mm256_add_ps(_mm256_loadu_ps(rho0 + i), dot);
+        const auto sign = _mm256_and_ps(rho, sign_bit);
+        const auto magnitude = _mm256_xor_ps(rho, sign);
+        const auto mask = _mm256_cmp_ps(magnitude, _mm256_loadu_ps(cutoff + i), _CMP_LE_OQ);
+        const auto active = _mm256_movemask_ps(mask);
+        __m256 dy, dx;
+        if (active == 255) {
+            const auto norm = _mm256_loadu_ps(strength + i);
+            dy = _mm256_div_ps(_mm256_mul_ps(rho, y), norm);
+            dx = _mm256_div_ps(_mm256_mul_ps(rho, x), norm);
+        } else if (active == 0) {
+            const auto signed_limit = _mm256_or_ps(limit, sign);
+            const auto nan = _mm256_cmp_ps(rho, rho, _CMP_UNORD_Q);
+            const auto clipped = _mm256_blendv_ps(signed_limit, rho, nan);
+            dy = _mm256_mul_ps(clipped, y);
+            dx = _mm256_mul_ps(clipped, x);
+        } else {
+            // Evaluate only the selected expression in each mixed lane.
+            for (auto j = i; j < i + 8; ++j)
+                tvl1_data_pixel(flow_y[j], flow_x[j], gy[j], gx[j], rho0[j], strength[j], cutoff[j],
+                                attachment, auxiliary_y[j], auxiliary_x[j]);
+            continue;
+        }
+        _mm256_storeu_ps(auxiliary_y + i, _mm256_sub_ps(vy, dy));
+        _mm256_storeu_ps(auxiliary_x + i, _mm256_sub_ps(vx, dx));
+    }
+    return i;
+}
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+#undef FLOW_AVX2
+#endif
+
+template<class T>
 void regularize(const T* auxiliary, T* current, T* vertical, T* horizontal,
-                Shape shape, T factor, int workers) {
+                Shape shape, T factor, int workers, [[maybe_unused]] bool vectorized) {
     constexpr T time_step = T(0.25);
     const auto width = shape.width;
     const auto last = width - 1;
-    const auto dual_row = [&](const T* prior, std::size_t y) {
+    const auto primal = [&](std::size_t i, std::size_t y, std::size_t x) {
+        T divergence = -(vertical[i] + horizontal[i]);
+        if (y != 0) divergence += vertical[i - width];
+        if (x != 0) divergence += horizontal[i - 1];
+        current[i] = auxiliary[i] + divergence;
+    };
+    const auto dual_row = [&](const T* prior, std::size_t y, auto fuse) {
         const auto base = y * width;
         const bool bottom = y + 1 == shape.height;
-        const auto update = [&](std::size_t i, T dx) {
+        const auto update = [&](std::size_t x, T dx) {
+            const auto i = base + x;
             const T dy = bottom ? T(0) : prior[i + width] - prior[i];
             const T norm = std::sqrt(dy * dy + dx * dx) * factor + T(1);
             vertical[i] = (vertical[i] - time_step * dy) / norm;
             horizontal[i] = (horizontal[i] - time_step * dx) / norm;
+            if constexpr (decltype(fuse)::value) primal(i, y, x);
         };
-        for (std::size_t x = 0; x < last; ++x)
-            update(base + x, prior[base + x + 1] - prior[base + x]);
-        update(base + last, T(0));
-    };
-    const auto primal_row = [&](std::size_t y) {
-        const auto base = y * width;
-        const auto divergence = [&](std::size_t i) {
-            T value = -(vertical[i] + horizontal[i]);
-            if (y != 0) value += vertical[i - width];
-            return value;
-        };
-        current[base] = auxiliary[base] + divergence(base);
-        for (std::size_t x = 1; x < width; ++x) {
-            const auto i = base + x;
-            current[i] = auxiliary[i] + (divergence(i) + horizontal[i - 1]);
+        update(0, prior[base + 1] - prior[base]);
+        std::size_t x = 1;
+#ifdef SKIMAGEXX_AVX2
+        if constexpr (std::is_same_v<T, float>) {
+            if (vectorized && width > 9)
+                x = regularize_float_row<decltype(fuse)::value>(
+                    prior, auxiliary, current, vertical, horizontal, shape, y, factor);
         }
+#endif
+        for (; x < last; ++x)
+            update(x, prior[base + x + 1] - prior[base + x]);
+        update(last, T(0));
     };
 
     if (workers == 1) {
         // Once the first update has written row y, the second can consume
         // row y-1. The first update still needs the first-pass duals on row y.
-        dual_row(auxiliary, 0);
-        primal_row(0);
+        dual_row(auxiliary, 0, std::true_type{});
         for (std::size_t y = 1; y < shape.height; ++y) {
-            dual_row(auxiliary, y);
-            primal_row(y);
-            dual_row(current, y - 1);
-            primal_row(y - 1);
+            dual_row(auxiliary, y, std::true_type{});
+            dual_row(current, y - 1, std::true_type{});
         }
-        dual_row(current, shape.height - 1);
-        primal_row(shape.height - 1);
+        dual_row(current, shape.height - 1, std::true_type{});
         return;
     }
 
     for (int iteration = 0; iteration < 2; ++iteration) {
         const auto* prior = iteration == 0 ? auxiliary : current;
         detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
-            for (auto y = begin; y < end; ++y) dual_row(prior, y);
+            for (auto y = begin; y < end; ++y) dual_row(prior, y, std::false_type{});
         });
         detail::partition(shape.height, workers, [&](auto begin, auto end, auto) {
-            for (auto y = begin; y < end; ++y) primal_row(y);
+            for (auto y = begin; y < end; ++y)
+                for (std::size_t x = 0; x < width; ++x) primal(y * width + x, y, x);
         });
     }
 }
 
 template<class T>
 struct Tvl1Scratch {
-    // Five image planes, two two-component flows, and four dual planes.
-    static constexpr std::size_t planes = 13;
+    // Six image planes, two two-component flows, and four dual planes.
+    static constexpr std::size_t planes = 14;
     std::unique_ptr<T[]> storage;
 
     explicit Tvl1Scratch(std::size_t count) {
@@ -385,13 +512,15 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
     const auto range = std::make_pair(*extrema.first, *extrema.second);
     auto* warped = scratch.storage.get();
     auto* strength = warped + count;
-    auto* rho0 = strength + count;
+    auto* cutoff = strength + count;
+    auto* rho0 = cutoff + count;
     auto* gy = rho0 + count;
     auto* gx = gy + count;
     auto* auxiliary = gx + count;
     auto* previous = auxiliary + 2 * count;
     auto* projection = previous + 2 * count;
     std::fill_n(projection, 4 * count, T(0));
+    const bool vectorized = std::is_same_v<T, float> && std::isfinite(regularization) && has_avx2();
 
     for (int step = 0; step < num_warp; ++step) {
         if (prefilter) {
@@ -404,6 +533,7 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
             gx[i] = x;
             const T norm = y * y + x * x;
             strength[i] = norm == 0 ? T(1) : norm;
+            if (num_iter != 0) cutoff[i] = attachment * strength[i];
             rho0[i] = (warped[i] - reference[i]) - (y * flow[i] + x * flow[count + i]);
         });
         for (int iter = 0; iter < num_iter; ++iter) {
@@ -411,30 +541,28 @@ void solve_tvl1(const T* reference, const T* moving, T* flow, Shape shape, int w
             // warp when prefiltering is disabled.
             const bool save_previous = !prefilter && iter == 0;
             detail::partition(count, workers, [&](auto begin, auto end, auto) {
-                for (auto i = begin; i < end; ++i) {
-                    const T rho = rho0[i] + (gy[i] * flow[i] + gx[i] * flow[count + i]);
-                    T delta_y, delta_x;
-                    if (std::abs(rho) <= attachment * strength[i]) {
-                        delta_y = (rho * gy[i]) / strength[i];
-                        delta_x = (rho * gx[i]) / strength[i];
-                    } else {
-                        const T signed_attachment = std::isnan(rho) ? rho : std::copysign(attachment, rho);
-                        delta_y = signed_attachment * gy[i];
-                        delta_x = signed_attachment * gx[i];
+                auto i = begin;
+#ifdef SKIMAGEXX_AVX2
+                if constexpr (std::is_same_v<T, float>) {
+                    if (vectorized && std::isfinite(attachment) && end - begin >= 8) {
+                        i = tvl1_data_float(flow, flow + count, gy, gx, rho0, strength, cutoff, attachment,
+                                            auxiliary, auxiliary + count, begin, end);
                     }
-                    auxiliary[i] = flow[i] - delta_y;
-                    auxiliary[count + i] = flow[count + i] - delta_x;
-                    if (save_previous) {
-                        previous[i] = auxiliary[i];
-                        previous[count + i] = auxiliary[count + i];
-                    }
+                }
+#endif
+                for (; i < end; ++i)
+                    tvl1_data_pixel(flow[i], flow[count + i], gy[i], gx[i], rho0[i], strength[i], cutoff[i],
+                                    attachment, auxiliary[i], auxiliary[count + i]);
+                if (save_previous) {
+                    std::copy(auxiliary + begin, auxiliary + end, previous + begin);
+                    std::copy(auxiliary + count + begin, auxiliary + count + end, previous + count + begin);
                 }
             });
             for (std::size_t component = 0; component < 2; ++component) {
                 const auto offset = component * count;
                 regularize(auxiliary + offset, flow + offset,
                            projection + 2 * offset, projection + 2 * offset + count,
-                           shape, regularization, workers);
+                           shape, regularization, workers, vectorized);
             }
         }
         if (!num_iter && !prefilter) {

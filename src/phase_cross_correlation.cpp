@@ -75,16 +75,27 @@ std::vector<std::complex<T>> dft_kernel(
     return kernel;
 }
 
-template<class T>
-std::complex<T> dft_dot(const std::complex<T>* kernel, const std::complex<T>* values,
-                         std::size_t length) {
-    T real = 0;
-    T imag = 0;
+template<std::size_t dots, bool shared_kernel = false, class T>
+std::array<std::complex<T>, dots> dft_dots(const std::complex<T>* kernels,
+                                          const std::complex<T>* values,
+                                          std::size_t length, std::size_t stride) {
+    std::array<T, dots> real{}, imag{};
     for (std::size_t k = 0; k < length; ++k) {
-        real += kernel[k].real() * values[k].real() - kernel[k].imag() * values[k].imag();
-        imag += kernel[k].real() * values[k].imag() + kernel[k].imag() * values[k].real();
+        const T a = values[k].real(), b = values[k].imag();
+        for (std::size_t d = 0; d < dots; ++d) {
+            const auto weight = kernels[d * stride + k];
+            if constexpr (shared_kernel) {
+                real[d] += a * weight.real() - b * weight.imag();
+                imag[d] += a * weight.imag() + b * weight.real();
+            } else {
+                real[d] += weight.real() * a - weight.imag() * b;
+                imag[d] += weight.real() * b + weight.imag() * a;
+            }
+        }
     }
-    return {real, imag};
+    std::array<std::complex<T>, dots> result;
+    for (std::size_t d = 0; d < dots; ++d) result[d] = {real[d], imag[d]};
+    return result;
 }
 
 template<class T>
@@ -108,10 +119,16 @@ std::complex<T> refine_peak(const std::complex<T>* spectrum, std::size_t height,
                 unpacked_row[x] = std::conj(opposite[width - x]);
             row = unpacked_row.data();
         }
-        for (std::size_t x = 0; x < region; ++x) {
-            const auto* kernel = kernels_x.data() + x * width;
-            intermediate[x * height + y] = dft_dot(kernel, row, width);
+        // Reuse each spectrum sample across two outputs. Every dot still
+        // accumulates its terms in ascending frequency order.
+        std::size_t x = 0;
+        for (; x + 1 < region; x += 2) {
+            const auto pair = dft_dots<2>(kernels_x.data() + x * width, row, width, width);
+            intermediate[x * height + y] = pair[0];
+            intermediate[(x + 1) * height + y] = pair[1];
         }
+        if (x < region)
+            intermediate[x * height + y] = dft_dots<1>(kernels_x.data() + x * width, row, width, 0)[0];
     }
     std::array<std::size_t, 2> best{};
     std::complex<T> peak{};
@@ -119,11 +136,9 @@ std::complex<T> refine_peak(const std::complex<T>* spectrum, std::size_t height,
     T best_power = T(-1);
     for (std::size_t y = 0; y < region; ++y) {
         const auto* kernel = kernels_y.data() + y * height;
-        for (std::size_t x = 0; x < region; ++x) {
-            const auto* column = intermediate.data() + x * height;
-            const auto sum = dft_dot(kernel, column, height);
+        const auto consider = [&](std::complex<T> sum, std::size_t x) {
             const T squared = power(sum);
-            if (!(squared > best_power)) continue;
+            if (!(squared > best_power)) return;
             best_power = squared;
             // Preserve first-index ties when distinct powers round to the
             // same magnitude in the working dtype.
@@ -133,7 +148,15 @@ std::complex<T> refine_peak(const std::complex<T>* spectrum, std::size_t height,
                 best = {y, x};
                 peak = sum;
             }
+        };
+        std::size_t x = 0;
+        for (; x + 1 < region; x += 2) {
+            const auto pair = dft_dots<2, true>(intermediate.data() + x * height, kernel, height, height);
+            consider(pair[0], x);
+            consider(pair[1], x + 1);
         }
+        if (x < region)
+            consider(dft_dots<1, true>(intermediate.data() + x * height, kernel, height, 0)[0], x);
     }
     for (std::size_t i = 0; i < shift.size(); ++i)
         shift[i] += (static_cast<T>(best[i]) - static_cast<T>(region / 2)) / static_cast<T>(factor);
@@ -176,6 +199,40 @@ std::complex<T> cross_power(std::complex<T> a, std::complex<T> b, bool normalize
 }
 
 template<class T>
+std::size_t real_peak_index(const T* values, std::size_t size) {
+    // Separate comparison chains, with one final first-index tie break.
+    std::array<T, 4> largest;
+    largest.fill(std::abs(values[0]));
+    std::array<std::size_t, 4> indices{};
+    std::size_t i = 1;
+    for (; i + 4 <= size; i += 4) {
+        for (std::size_t lane = 0; lane < 4; ++lane) {
+            const T magnitude = std::abs(values[i + lane]);
+            if (magnitude > largest[lane]) {
+                largest[lane] = magnitude;
+                indices[lane] = i + lane;
+            }
+        }
+    }
+    std::size_t best = 0;
+    for (std::size_t lane = 1; lane < 4; ++lane) {
+        if (largest[lane] > largest[best] ||
+            (largest[lane] == largest[best] && indices[lane] < indices[best]))
+            best = lane;
+    }
+    auto index = indices[best];
+    T magnitude = largest[best];
+    for (; i < size; ++i) {
+        const T candidate = std::abs(values[i]);
+        if (candidate > magnitude) {
+            magnitude = candidate;
+            index = i;
+        }
+    }
+    return index;
+}
+
+template<class T>
 bool correlate(const std::complex<T>* reference, const std::complex<T>* moving,
                const std::vector<std::size_t>& shape, int workers, PhaseCorrelationOptions options,
                PhaseCorrelationResult<T>& result, std::complex<T>* packed_spectrum = nullptr) {
@@ -204,14 +261,7 @@ bool correlate(const std::complex<T>* reference, const std::complex<T>* moving,
         // The inverse FFT writes every sample before the peak scan reads it.
         std::unique_ptr<T[]> correlation(new T[size]);
         detail::fft_c2r(shape, {0, 1}, spectrum, correlation.get(), workers);
-        T best_magnitude = std::abs(correlation[0]);
-        for (std::size_t i = 1; i < size; ++i) {
-            const T magnitude = std::abs(correlation[i]);
-            if (magnitude > best_magnitude) {
-                best_magnitude = magnitude;
-                index = i;
-            }
-        }
+        index = real_peak_index(correlation.get(), size);
         peak = {correlation[index], T(0)};
     } else {
         full_spectrum.reserve(size);
@@ -255,6 +305,11 @@ template<class T>
 bool cyclic_translation(const T* reference, const T* moving, std::size_t height,
                         std::size_t width, std::array<T, 2>& shift) {
     const auto count = height * width;
+    if (reference == moving) {
+        // Self-registration does not need a pair of spatial maximum scans.
+        shift = {T(0), T(0)};
+        return std::none_of(reference, reference + count, [](T value) { return std::isnan(value); });
+    }
     const auto a = static_cast<std::size_t>(std::max_element(reference, reference + count) - reference);
     const auto b = static_cast<std::size_t>(std::max_element(moving, moving + count) - moving);
     if (reference[a] != moving[b]) return false;
