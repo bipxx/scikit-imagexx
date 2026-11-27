@@ -3,13 +3,14 @@
 from functools import lru_cache
 from pathlib import Path, WindowsPath, PosixPath
 from os import stat
+from os.path import abspath, basename
 from stat import S_ISREG
 from struct import Struct
 
 import numpy as np
 from PIL import Image
 from skimage import io as _stock
-from skimage._shared.utils import DEPRECATED
+from skimage._shared.utils import DEPRECATED, deprecate_parameter, warn
 from skimage.exposure import is_low_contrast
 from skimage.io._plugins import imageio_plugin
 from skimage.io.manage_plugins import plugin_store
@@ -74,7 +75,7 @@ class MultiImage(_stock.MultiImage, ImageCollection):
 
 def _local_path(fname):
     if type(fname) is str:
-        if '://' not in fname and not fname.startswith(('<', '~', 'imageio:')):
+        if '://' not in fname and not fname.startswith(('<', '~', 'imageio:', 'file:\\')):
             return fname
         return ''
     if type(fname) in (Path, WindowsPath, PosixPath):
@@ -106,9 +107,12 @@ def _read_bytes(path):
 
 def _read_png(path):
     try:
-        if not S_ISREG(stat(path).st_mode):
+        info = stat(path)
+        if not S_ISREG(info.st_mode):
             return None
-        with open(path, 'rb') as stream:
+        # Buffer small compressed rasters across Pillow's header seeks and reads.
+        buffer_size = info.st_size if 8192 < info.st_size <= 256 * 1024 else -1
+        with open(path, 'rb', buffering=buffer_size) as stream:
             header = stream.read(_png_header.size)
             if len(header) != _png_header.size:
                 return None
@@ -118,7 +122,6 @@ def _read_png(path):
                 type(limit) is not int or width * height > limit
             )):
                 return None  # Let the provider own diagnostics.
-            stream.seek(0)
             with Image.open(stream, formats=('PNG',)) as image:
                 if (image.mode not in ('1', 'L', 'RGB', 'RGBA', 'I;16')
                         or image.custom_mimetype == 'image/apng'):
@@ -136,10 +139,12 @@ def _read_png(path):
 def imread(fname, as_gray=False, plugin=DEPRECATED, **plugin_args):
     if plugin is DEPRECATED and not plugin_args and as_gray is False and _active('imread', _imageio_read):
         path = _local_path(fname)
+        if path:
+            fname = path
         lower_path = path.lower()
         suffix = lower_path[-4:]
         if suffix == '.png' and not _zip_member(lower_path):
-            result = _read_png(path)
+            result = _read_png(abspath(path))
             if result is not None:
                 return result
         elif suffix in ('.pgm', '.ppm', '.pnm') and not _zip_member(lower_path):
@@ -154,6 +159,12 @@ def imread(fname, as_gray=False, plugin=DEPRECATED, **plugin_args):
     return _imread(fname, as_gray, plugin=plugin, **plugin_args)
 
 
+# Use the upstream decorator frame for the warning's source and registry.
+@deprecate_parameter('plugin', start_version='0.25', stop_version='0.27')
+def _warn_low_contrast(path, *, plugin=DEPRECATED):
+    warn(f'{path} is a low contrast image')
+
+
 def imsave(fname, arr, plugin=DEPRECATED, *, check_contrast=True, **plugin_args):
     if (
         plugin is DEPRECATED and not plugin_args and type(check_contrast) is bool
@@ -161,24 +172,38 @@ def imsave(fname, arr, plugin=DEPRECATED, *, check_contrast=True, **plugin_args)
         and _active('imsave', _imageio_write)
     ):
         path = _local_path(fname)
+        if path:
+            fname = path
         lower_path = path.lower()
         suffix = lower_path[-4:]
         if suffix in ('.png', '.pgm', '.ppm') and not _zip_member(lower_path):
-            if suffix == '.png' and arr.size and (
+            if suffix == '.png' and basename(lower_path) != '.png' and arr.size and (
                 arr.ndim == 2 or (arr.ndim == 3 and arr.shape[-1] in (3, 4))
             ):
-                low_contrast = False
                 if check_contrast:
                     low_contrast = _core.io_gray_png_low_contrast(arr) if arr.ndim == 2 else None
                     if low_contrast is None:
                         low_contrast = is_low_contrast(arr)
-                if not low_contrast:
-                    try:
-                        with Image.fromarray(arr) as image:
-                            image.save(path, format='PNG')
-                        return None
-                    except (OSError, ValueError):
-                        pass  # Retain the provider's file error and message.
+                    if low_contrast:
+                        _warn_low_contrast(path)
+                        # A warning handler may change the active writer.
+                        if not _active('imsave', _imageio_write):
+                            return _imsave(fname, arr, plugin=plugin, check_contrast=False)
+                    check_contrast = False
+                try:
+                    image = Image.fromarray(arr)
+                except (TypeError, ValueError):
+                    pass  # Let the provider report unsupported arrays.
+                else:
+                    with image:
+                        try:
+                            stream = open(abspath(path), 'wb')
+                        except (OSError, ValueError):
+                            pass  # Retain the provider's path diagnostics.
+                        else:
+                            with stream:
+                                image.save(stream, format='PNG')
+                            return None
             elif suffix in ('.pgm', '.ppm') and not check_contrast:
                 header = _core.io_netpbm_header(arr, suffix == '.ppm')
                 if header is not None:
