@@ -113,6 +113,27 @@ void rank_edges(__m256i zero,__m256i nan,__m256i negative,
     }
 }
 
+template<bool DetectRankEdges>
+__m256i double_keys(const double* source,std::size_t stride,__m256i offsets,
+    __m256i& nans,__m256i& negative_zeros,__m256i& positive_zeros) {
+    const auto zeros=_mm256_setzero_si256();
+    const auto sign=_mm256_set1_epi64x(INT64_MIN),magnitude=_mm256_set1_epi64x(INT64_MAX);
+    auto bits=_mm256_castpd_si256(stride==1 ? _mm256_loadu_pd(source) : _mm256_i64gather_pd(source,offsets,8));
+    const auto absolute=_mm256_and_si256(bits,magnitude);
+    const auto zero=_mm256_cmpeq_epi64(absolute,zeros);
+    const auto negative=_mm256_cmpgt_epi64(zeros,bits);
+    const auto nan=_mm256_cmpgt_epi64(absolute,_mm256_set1_epi64x(INT64_C(0x7ff0000000000000)));
+    rank_edges<DetectRankEdges>(zero,nan,negative,nans,negative_zeros,positive_zeros);
+    bits=_mm256_andnot_si256(zero,bits);
+    return _mm256_or_si256(nan,_mm256_xor_si256(bits,_mm256_or_si256(_mm256_andnot_si256(zero,negative),sign)));
+}
+
+void report_rank_edges(__m256i nans,__m256i negative_zeros,__m256i positive_zeros,unsigned& flags) {
+    if(_mm256_movemask_epi8(nans))flags|=1;
+    if(_mm256_movemask_epi8(negative_zeros))flags|=2;
+    if(_mm256_movemask_epi8(positive_zeros))flags|=4;
+}
+
 template<class T>
 std::size_t integer_keys(const void* source,std::uint64_t* output,std::size_t count,std::size_t stride) {
     const auto* input=static_cast<const unsigned char*>(source);
@@ -175,26 +196,15 @@ std::size_t histogram_keys_impl(const void* input,std::uint64_t* output,std::siz
             _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i+4),_mm256_cvtepu32_epi64(_mm256_extracti128_si256(keys,1)));
         }
     } else if(type==PixelType::float64) {
-        const auto offsets=_mm256_setr_epi64x(0,static_cast<long long>(stride),2*static_cast<long long>(stride),3*static_cast<long long>(stride));
-        const auto sign=_mm256_set1_epi64x(std::numeric_limits<long long>::min()),magnitude=_mm256_set1_epi64x(INT64_MAX);
+        const auto step=static_cast<long long>(stride);
+        const auto offsets=_mm256_setr_epi64x(0,step,2*step,3*step);
         for(;i+4<=count;i+=4) {
-            const auto* source=static_cast<const double*>(input)+i*stride;
-            auto bits=_mm256_castpd_si256(stride==1 ? _mm256_loadu_pd(source) : _mm256_i64gather_pd(source,offsets,8));
-            const auto absolute=_mm256_and_si256(bits,magnitude);
-            const auto zero=_mm256_cmpeq_epi64(absolute,zeros);
-            const auto negative=_mm256_cmpgt_epi64(zeros,bits);
-            const auto nan=_mm256_cmpgt_epi64(absolute,_mm256_set1_epi64x(INT64_C(0x7ff0000000000000)));
-            rank_edges<DetectRankEdges>(zero,nan,negative,nans,negative_zeros,positive_zeros);
-            bits=_mm256_andnot_si256(zero,bits);
-            const auto keys=_mm256_or_si256(nan,_mm256_xor_si256(bits,_mm256_or_si256(_mm256_andnot_si256(zero,negative),sign)));
+            const auto keys=double_keys<DetectRankEdges>(static_cast<const double*>(input)+i*stride,stride,
+                offsets,nans,negative_zeros,positive_zeros);
             _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),keys);
         }
     }
-    if constexpr(DetectRankEdges) {
-        if(_mm256_movemask_epi8(nans))*flags|=1;
-        if(_mm256_movemask_epi8(negative_zeros))*flags|=2;
-        if(_mm256_movemask_epi8(positive_zeros))*flags|=4;
-    }
+    if constexpr(DetectRankEdges)report_rank_edges(nans,negative_zeros,positive_zeros,*flags);
     return i;
 }
 }
@@ -205,6 +215,28 @@ std::size_t histogram_keys(const void* input,std::uint64_t* output,std::size_t c
     std::size_t stride,unsigned& flags) {
     return histogram_keys_impl<true>(input,output,count,type,stride,&flags);
 }
+std::size_t indexed_double_prefixes(const double* input,std::uint64_t* output,std::size_t count,
+    std::size_t stride,std::uint32_t start,unsigned* flags) {
+    if(stride>std::size_t(INT32_MAX)/8)return 0;
+    const auto step=static_cast<long long>(stride);
+    const auto offsets=_mm256_setr_epi64x(0,step,2*step,3*step);
+    const auto increment=_mm256_set1_epi64x(4);
+    const auto emit=[&](auto detect) {
+        auto positions=_mm256_setr_epi64x(start,start+1,start+2,start+3);
+        auto nans=_mm256_setzero_si256(),negative_zeros=nans,positive_zeros=nans;
+        std::size_t i=0;
+        for(;i+4<=count;i+=4) {
+            const auto keys=double_keys<decltype(detect)::value>(input+i*stride,stride,offsets,
+                nans,negative_zeros,positive_zeros);
+            _mm256_storeu_si256(reinterpret_cast<__m256i*>(output+i),_mm256_blend_epi32(keys,positions,0x55));
+            positions=_mm256_add_epi64(positions,increment);
+        }
+        if constexpr(decltype(detect)::value)report_rank_edges(nans,negative_zeros,positive_zeros,*flags);
+        return i;
+    };
+    return flags ? emit(std::true_type{}) : emit(std::false_type{});
+}
+
 void histogram_key_bounds(const std::uint64_t* keys,std::size_t count,std::uint64_t& low,std::uint64_t& high) {
     const auto sign=_mm256_set1_epi64x(INT64_MIN);
     auto minimum=_mm256_set1_epi64x(INT64_MAX),maximum=sign;

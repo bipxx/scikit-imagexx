@@ -19,6 +19,7 @@ namespace skimagexx {
 #ifdef SKIMAGEXX_AVX2
 namespace simd {
 std::size_t histogram_keys(const void*,std::uint64_t*,std::size_t,PixelType,std::size_t,unsigned&);
+std::size_t indexed_double_prefixes(const double*,std::uint64_t*,std::size_t,std::size_t,std::uint32_t,unsigned*);
 void histogram_key_bounds(const std::uint64_t*,std::size_t,std::uint64_t&,std::uint64_t&);
 std::size_t rank_dense_labels(const void*,void*,std::size_t,std::uint64_t,const std::size_t*,PixelType,std::size_t);
 }
@@ -334,6 +335,104 @@ void fill_keys(const void* input,std::uint64_t* keys,std::size_t count,std::ptrd
         for(;i<end;++i)keys[i]=read(input,std::ptrdiff_t(i)*pixels+offset);
     });
 }
+// A 32-bit key prefix and the original position fit in one radix record.
+constexpr unsigned double_prefix_bits=16;
+constexpr std::size_t double_radix_bins=256;
+constexpr std::size_t double_order_limit=1<<20;
+struct DoubleOrder {
+    const double* input;
+    std::ptrdiff_t stride;
+    std::size_t count;
+    std::unique_ptr<std::uint64_t[]> records;
+
+    std::uint64_t key(std::uint64_t record) const {
+        return read_key<double>(input,std::ptrdiff_t(std::uint32_t(record))*stride);
+    }
+
+    bool equal(std::uint64_t a,std::uint64_t b) const {
+        return (a>>32)==(b>>32) && key(a)==key(b);
+    }
+};
+
+DoubleOrder order_doubles(const double* input,std::size_t count,std::ptrdiff_t stride,unsigned* rank_flags=nullptr) {
+    DoubleOrder order{input,stride,count,std::unique_ptr<std::uint64_t[]>(new std::uint64_t[count])};
+    auto* records=order.records.get();
+    std::size_t i=0;
+#ifdef SKIMAGEXX_AVX2
+    if(has_avx2() && stride>=0)
+        i=simd::indexed_double_prefixes(input,records,count,std::size_t(stride),0,rank_flags);
+#endif
+    for(;i<count;++i) {
+        const auto offset=std::ptrdiff_t(i)*stride;
+        const auto key=rank_flags ? read_key<double,true>(input,offset,rank_flags) : read_key<double>(input,offset);
+        records[i]=(key&UINT64_C(0xffffffff00000000))|i;
+    }
+    if(rank_flags && ((*rank_flags&1) || (*rank_flags&6)==6))return order;
+
+    const auto first_record=records[0];
+    auto previous=first_record;
+    std::uint64_t different=0;
+    bool unordered=false;
+    for(i=1;i<count;++i) {
+        const auto record=records[i];
+        unordered|=record<previous;
+        previous=record;
+        different|=first_record^record;
+    }
+
+    // Skip common leading bits. Sorting the next two bytes gives small
+    // contiguous runs that can be resolved using the full, unrounded keys.
+    unsigned shift=32;
+    for(auto high=different>>(32+double_prefix_bits);high;high>>=1)++shift;
+    if(unordered) {
+        std::array<std::uint32_t,double_radix_bins> low{},high{};
+        for(i=0;i<count;++i) {
+            const auto prefix=records[i]>>shift;
+            ++low[prefix&255];
+            ++high[(prefix>>8)&255];
+        }
+        const auto offsets=[](auto& histogram) {
+            std::uint32_t start=0;
+            for(auto& bin:histogram) {
+                const auto frequency=bin;
+                bin=start;
+                start+=frequency;
+            }
+        };
+        offsets(low);
+        offsets(high);
+        std::unique_ptr<std::uint64_t[]> temporary(new std::uint64_t[count]);
+        for(i=0;i<count;++i) {
+            const auto record=records[i];
+            temporary[low[(record>>shift)&255]++]=record;
+        }
+        for(i=0;i<count;++i) {
+            const auto record=temporary[i];
+            records[high[(record>>(shift+8))&255]++]=record;
+        }
+    }
+
+    const auto less=[&](auto a,auto b) {
+        if((a>>32)!=(b>>32))return a<b;
+        const auto ka=order.key(a),kb=order.key(b);
+        return ka==kb ? a<b : ka<kb;
+    };
+    const auto end=records+count;
+    for(auto* first=records;first!=end;) {
+        auto* last=first+1;
+        const auto prefix=*first>>shift;
+        while(last!=end && (*last>>shift)==prefix)++last;
+        if(last-first==2) {
+            if(less(first[1],first[0]))std::swap(first[0],first[1]);
+        } else if(last-first>2) {
+            // Repeated reference values can put an entire image in one run.
+            if(last-first<16 || !std::is_sorted(first,last,less))std::sort(first,last,less);
+        }
+        first=last;
+    }
+    return order;
+}
+
 bool signed_integer(PixelType type) {
     return type==PixelType::int8 || type==PixelType::int16 || type==PixelType::int32 || type==PixelType::int64;
 }
@@ -554,6 +653,15 @@ unsigned apply_unsigned(const T* source,std::ptrdiff_t stride,const Distribution
     }
 }
 
+double interpolate_segment(double q,double lower_q,double upper_q,double lower_value,double upper_value,double slope) {
+    auto value=slope*(q-lower_q)+lower_value;
+    if(std::isnan(value)) {
+        value=slope*(q-upper_q)+upper_value;
+        if(std::isnan(value) && lower_value==upper_value)value=lower_value;
+    }
+    return value;
+}
+
 template<class Next>
 auto quantile_interpolator(std::size_t count,Next next) {
     auto [end,first_value]=next();
@@ -582,12 +690,7 @@ auto quantile_interpolator(std::size_t count,Next next) {
             slope=(upper_value-lower_value)/(upper_q-lower_q);
             slope_ready=true;
         }
-        auto value=slope*(q-lower_q)+lower_value;
-        if(std::isnan(value)) {
-            value=slope*(q-upper_q)+upper_value;
-            if(std::isnan(value) && lower_value==upper_value)value=lower_value;
-        }
-        return value;
+        return interpolate_segment(q,lower_q,upper_q,lower_value,upper_value,slope);
     };
 }
 
@@ -604,6 +707,97 @@ std::vector<double> interpolate_quantiles(const Distribution& source,const Distr
         mapped[i]=interpolate(double(total)/double(count));
     }
     return mapped;
+}
+
+template<class Next>
+void scatter_double_quantiles(const DoubleOrder& source_order,const DoubleOrder& reference_order,Next next,
+    double* output,std::size_t reference_count,std::size_t channels) {
+    const auto count=source_order.count;
+    std::uint64_t pending=next();
+    std::size_t ref_end=0;
+    const auto next_group=[&] {
+        const auto first=pending;
+        do {
+            ++ref_end;
+            if(ref_end==reference_count)break;
+            pending=next();
+        } while(reference_order.equal(first,pending));
+        return value_from_key(reference_order.key(first),PixelType::float64);
+    };
+
+    auto upper_value=next_group();
+    auto upper_rank=std::uint64_t(ref_end)*count;
+    double lower_value=0.,lower_q=0.,upper_q=0.,slope=0.;
+    std::size_t lower_end=0,upper_end=ref_end;
+    bool slope_ready=false;
+    const auto* sorted=source_order.records.get();
+    for(std::size_t begin=0;begin<count;) {
+        auto end=begin+1;
+        while(end<count && source_order.equal(sorted[begin],sorted[end]))++end;
+        // Both counts are bounded by double_order_limit, so distinct
+        // fractions remain distinct after rounding to double. Compare the
+        // cross products and use the original divisions only for interpolation.
+        const auto rank=std::uint64_t(end)*reference_count;
+        while(rank>upper_rank) {
+            lower_end=upper_end;
+            lower_value=upper_value;
+            upper_value=next_group();
+            upper_end=ref_end;
+            upper_rank=std::uint64_t(ref_end)*count;
+            slope_ready=false;
+        }
+        auto value=upper_value;
+        if(lower_end && rank!=upper_rank) {
+            if(!slope_ready) {
+                lower_q=double(lower_end)/double(reference_count);
+                upper_q=double(upper_end)/double(reference_count);
+                slope=(upper_value-lower_value)/(upper_q-lower_q);
+                slope_ready=true;
+            }
+            value=interpolate_segment(double(end)/double(count),lower_q,upper_q,lower_value,upper_value,slope);
+        }
+        for(;begin<end;++begin)output[std::size_t(std::uint32_t(sorted[begin]))*channels]=value;
+    }
+}
+
+void match_ordered_doubles(const double* source,const double* reference,double* output,
+    std::size_t count,std::size_t reference_count,std::size_t channels,std::ptrdiff_t source_stride,
+    std::ptrdiff_t reference_stride) {
+    const auto source_order=order_doubles(source,count,source_stride);
+    // A reference that samples the same buffer in original order already has
+    // a sorted order embedded in the source records.
+    if(source==reference && source_stride>0 && reference_stride>=source_stride && reference_stride%source_stride==0) {
+        const auto step=std::size_t(reference_stride/source_stride);
+        if((step&(step-1))==0 && reference_count-1<=(count-1)/step) {
+            const auto limit=(reference_count-1)*step;
+            const auto* records=source_order.records.get();
+            std::array<std::uint64_t,128> samples;
+            auto* current=samples.data();
+            auto* last=current;
+            std::size_t read=0;
+            // Gather in short blocks so random sample membership does not
+            // require a branch per record or a full second order buffer.
+            const auto next=[&] {
+                while(current==last) {
+                    current=last=samples.data();
+                    const auto end=read+std::min(samples.size(),count-read);
+                    for(;read<end;++read) {
+                        const auto record=records[read];
+                        const auto position=std::uint32_t(record);
+                        *last=record;
+                        last+=std::size_t((position<=limit) & ((position&(step-1))==0));
+                    }
+                }
+                return *current++;
+            };
+            scatter_double_quantiles(source_order,source_order,next,output,reference_count,channels);
+            return;
+        }
+    }
+
+    const auto reference_order=order_doubles(reference,reference_count,reference_stride);
+    const auto* records=reference_order.records.get();
+    scatter_double_quantiles(source_order,reference_order,[&]{return *records++;},output,reference_count,channels);
 }
 
 template<class Entry>
@@ -731,6 +925,16 @@ unsigned match_histograms_strided_into(const void* source,const void* reference,
             std::uint64_t sample[256];
             fill_keys(source,sample,std::size(sample),strides.source_pixels,source_offset,st,1);
             if(high_cardinality([&](auto i){return sample[i];},true)) {
+                if(st==PixelType::float64 && rt==PixelType::float64 && ot==PixelType::float64 &&
+                    !half_round && !swap_output && !unsigned_source &&
+                    count<=double_order_limit && reference_count<=double_order_limit) {
+                    match_ordered_doubles(static_cast<const double*>(source)+source_offset,
+                        static_cast<const double*>(reference)+std::ptrdiff_t(channel)*strides.reference_channels,
+                        static_cast<double*>(output)+channel,count,reference_count,channels,
+                        strides.source_pixels,strides.reference_pixels);
+                    if(channel_flags)channel_flags[channel]=0;
+                    continue;
+                }
                 const auto sorted_write=ot==PixelType::float64 && !half_round && !swap_output ? nullptr : write;
                 const auto match=compact_keys(st) ? match_sorted<CompactEntry> : match_sorted<Packed>;
                 const auto notice=match(source,reference,output,count,reference_count,channels,channel,st,rt,
@@ -1002,6 +1206,26 @@ bool rank_order_into(const void* input,std::size_t count,PixelType type,void* ou
 #endif
     for(std::size_t i=1;i<count;++i)if(std::memcmp(input,static_cast<const unsigned char*>(input)+i*bytes,bytes)){uniform=false;break;}
     if(uniform){std::memset(output,0,count*pixel_size(label_type));representatives.assign(1,0);return true;}
+    if(type==PixelType::float64 && workers==1 && count>=4096 && count<=double_order_limit) {
+        const auto* values=static_cast<const double*>(input);
+        if(high_cardinality([&](auto i){return read_key<double>(values,i);},true)) {
+            unsigned flags=0;
+            const auto order=order_doubles(values,count,1,&flags);
+            if((flags&1) || (flags&6)==6)return false;
+            representatives.clear();
+            representatives.reserve(count);
+            const auto* records=order.records.get();
+            with_rank_labels(label_type,output,[&](auto* labels) {
+                using U=std::remove_pointer_t<decltype(labels)>;
+                for(std::size_t i=0;i<count;++i) {
+                    const auto position=std::uint32_t(records[i]);
+                    if(i==0 || !order.equal(records[i-1],records[i]))representatives.push_back(position);
+                    labels[position]=U(representatives.size()-1);
+                }
+            });
+            return true;
+        }
+    }
     if(count<=UINT32_MAX) {
         if(compact_keys(type))return rank_entries<CompactEntry>(input,count,type,read,workers,output,label_type,representatives);
         return rank_entries<Packed>(input,count,type,read,workers,output,label_type,representatives);
