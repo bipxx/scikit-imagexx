@@ -313,8 +313,10 @@ std::vector<Label> components(std::size_t node_count, const std::vector<Edge>& e
     std::vector<Label> numbered(node_count);
     Label next = 0;
     for (std::size_t i = 0; i < node_count; ++i) {
-        const auto representative = root(parents, i);
-        numbered[i] = representative == i ? next++ : numbered[representative];
+        // Every union links the larger root to the smaller one. The direct
+        // parent already has its final component number in this forward pass.
+        const auto parent = parents[i];
+        numbered[i] = parent == i ? next++ : numbered[parent];
     }
     return numbered;
 }

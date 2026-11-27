@@ -11,6 +11,11 @@
 namespace py = pybind11;
 namespace graph = skimagexx::graph_paths;
 
+namespace skimagexx::graph_paths {
+std::pair<Shape, double> route_path(const Grid& grid, const double* costs, Index start, Index end,
+                                  bool geometric);
+}
+
 namespace {
 
 template<class T>
@@ -169,14 +174,8 @@ py::object route(const graph::Grid& grid, const Flat<double>& costs, graph::Inde
     const auto* cost_data = costs.data();
     if (!supported_costs(cost_data, size)) return py::none();
 
-    const graph::Search options{geometric ? graph::Cost::geometric : graph::Cost::destination,
-                                true, true, size};
-    // find_costs initializes both buffers before reading them.
-    const std::unique_ptr<double[]> distance(new double[size]);
-    const std::unique_ptr<graph::Offset[]> predecessor(new graph::Offset[size]);
-    graph::find_costs(grid, cost_data, {start}, {end}, options, distance.get(), predecessor.get());
-    auto path = graph::traceback(grid, distance.get(), predecessor.get(), end);
-    return py::make_tuple(points(grid, path), distance[end]);
+    auto result = graph::route_path(grid, cost_data, start, end, geometric);
+    return py::make_tuple(points(grid, result.first), result.second);
 }
 
 py::object shortest(const Flat<double>& costs, const graph::Shape& shape, int reach,

@@ -379,14 +379,12 @@ def cut_threshold(labels, rag, thresh, in_place=True):
 
 
 def _normalized_relabel(rag, thresh, num_cuts, rng, weights=None, native=False, has_off_diagonal=None):
-    import networkx as nx
     from scipy import sparse
-    from scipy.sparse import linalg
-    from skimage._shared.compat import SCIPY_GE_1_17_0_DEV0
-    from skimage.graph._ncut_cy import argmin2
 
     size = len(rag)
     if not native:
+        import networkx as nx
+
         weights = nx.to_scipy_sparse_array(rag, format='csc')
     # A native matrix with only diagonal nonzeros equals its degree matrix.
     if weights is not None and (not native or size > 2 and has_off_diagonal is not False):
@@ -400,8 +398,19 @@ def _normalized_relabel(rag, thresh, num_cuts, rng, weights=None, native=False, 
             degree = sparse.dia_array((entries, 0), shape=weights.shape).tocsc()
     if (weights is not None and size > 2
             and (has_off_diagonal if has_off_diagonal is not None else (degree != weights).nnz)):
-        scaling = degree.copy()
-        scaling.data = np.reciprocal(np.sqrt(scaling.data, out=scaling.data), out=scaling.data)
+        from scipy.sparse import linalg
+        from skimage._shared.compat import SCIPY_GE_1_17_0_DEV0
+        from skimage.graph._ncut_cy import argmin2
+
+        if native:
+            factors = np.sqrt(degree.data)
+            np.reciprocal(factors, out=factors)
+            scaling = sparse.csc_array(
+                (factors, degree.indices, degree.indptr), shape=degree.shape,
+            )
+        else:
+            scaling = degree.copy()
+            scaling.data = np.reciprocal(np.sqrt(scaling.data, out=scaling.data), out=scaling.data)
         laplacian = scaling @ (degree - weights) @ scaling
         start = rng.random(size)
         kwargs = {'rng': rng} if SCIPY_GE_1_17_0_DEV0 else {}

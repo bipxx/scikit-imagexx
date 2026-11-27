@@ -5,6 +5,7 @@
 #include <memory>
 #include <numeric>
 #include <stdexcept>
+#include <utility>
 #ifdef _MSC_VER
 #include <intrin.h>
 #endif
@@ -14,6 +15,8 @@ namespace {
 
 constexpr auto infinity = std::numeric_limits<double>::infinity();
 constexpr auto max_size = std::numeric_limits<Index>::max() / 2;
+using Node = std::uint32_t;
+constexpr auto absent = std::numeric_limits<Node>::max();
 
 unsigned first_move(std::uint64_t mask) {
 #ifdef _MSC_VER
@@ -31,7 +34,7 @@ unsigned first_move(std::uint64_t mask) {
 // into the vacancy, preserving scikit-image's traceback and callback order.
 class Frontier {
 public:
-    explicit Frontier(Index size) : positions_(size, -1), tree_(first_leaf_ + capacity_, infinity) {}
+    explicit Frontier(Index size) : positions_(size, absent), tree_(first_leaf_ + capacity_, infinity) {}
 
     bool empty() const { return nodes_.empty(); }
     void reset_slots(Shape slots) {
@@ -41,19 +44,20 @@ public:
     Shape remaining_slots() { return std::move(nodes_); }
 
     bool push(double value, Index node, bool replace = false) {
-        auto slot = positions_[node];
-        if (slot < 0) {
-            if (nodes_.size() == capacity_) grow();
-            slot = static_cast<Index>(nodes_.size());
-            positions_[node] = slot;
-            nodes_.push_back(node);
-        } else if (!replace && !(value < tree_[first_leaf_ + slot])) {
-            return false;
+        const auto slot = positions_[node];
+        if (!replace) {
+            if (slot != absent && !(value < tree_[first_leaf_ + slot])) return false;
+            decrease(value, node, slot);
+        } else {
+            const auto leaf = leaf_of(node, slot);
+            tree_[leaf] = value;
+            propagate(leaf);
         }
-        const auto leaf = first_leaf_ + slot;
-        tree_[leaf] = value;
-        propagate(leaf);
         return true;
+    }
+
+    void decrease(double value, Node node) {
+        decrease(value, static_cast<Index>(node), positions_[node]);
     }
 
     std::pair<Index, double> pop() {
@@ -66,18 +70,37 @@ public:
         const auto node = nodes_[slot];
         const auto last = first_leaf_ + nodes_.size() - 1;
         const auto moved = nodes_.back();
-        positions_[moved] = static_cast<Index>(slot);
+        positions_[moved] = static_cast<Node>(slot);
         nodes_[slot] = moved;
-        positions_[node] = -1;
+        positions_[node] = absent;
         nodes_.pop_back();
         tree_[leaf] = tree_[last];
         tree_[last] = infinity;
         propagate(leaf);
-        if (leaf != last) propagate(last);
+        if ((leaf - 1) / 4 != (last - 1) / 4) propagate(last);
         return {node, value};
     }
 
 private:
+    std::size_t leaf_of(Index node, Node slot) {
+        if (slot == absent) {
+            if (nodes_.size() == capacity_) grow();
+            slot = static_cast<Node>(nodes_.size());
+            positions_[node] = slot;
+            nodes_.push_back(node);
+        }
+        return first_leaf_ + slot;
+    }
+
+    void decrease(double value, Index node, Node slot) {
+        const auto leaf = leaf_of(node, slot);
+        tree_[leaf] = value;
+        for (auto parent = (leaf - 1) / 4; parent != 0 && value < tree_[parent];
+             parent = (parent - 1) / 4) {
+            tree_[parent] = value;
+        }
+    }
+
     std::size_t best_child(std::size_t parent) const {
         const auto first = 4 * parent + 1;
         const auto left = first + (tree_[first] <= tree_[first + 1] ? 0 : 1);
@@ -110,7 +133,8 @@ private:
         }
     }
 
-    std::vector<Index> positions_, nodes_;
+    std::vector<Node> positions_;
+    Shape nodes_;
     std::size_t capacity_ = 64;
     std::size_t first_leaf_ = (capacity_ - 1) / 3;
     std::vector<double> tree_;
@@ -221,6 +245,84 @@ Index search(const Grid& grid, const double* costs, const Shape& starts,
     }
     if (pending) *pending = queue.remaining_slots();
     return last_end;
+}
+
+template<std::size_t... moves, class Visit>
+void visit_interior(std::index_sequence<moves...>, Visit visit) {
+    (visit(std::integral_constant<std::size_t, moves>{}), ...);
+}
+
+template<Cost cost_mode, std::size_t count>
+std::pair<Shape, double> search_path_2d(const Grid& grid, const double* costs, const Shape& starts,
+                                       Index end, int axis) {
+    const bool fast_x = grid.strides()[0] == 1;
+    const auto width = static_cast<Node>(grid.shape()[fast_x ? 0 : 1]);
+    const auto size = static_cast<Node>(grid.size());
+    const bool end_on_fast_axis = axis == (fast_x ? 0 : 1);
+    std::array<Node, count> deltas;
+    std::array<double, count> half_lengths;
+    for (std::size_t move = 0; move < count; ++move) {
+        // Unsigned addition also covers negative deltas. Only valid moves are visited.
+        deltas[move] = static_cast<Node>(grid.delta(move));
+        if constexpr (cost_mode == Cost::geometric) half_lengths[move] = grid.length(move) * 0.5;
+    }
+    std::vector<double> tentative(size, infinity);
+    std::vector<std::uint8_t> closed(size);
+    // Block invalid destinations before traversal. Start nodes are still
+    // queued with the reference start cost even if they are blocked.
+    for (Node node = 0; node < size; ++node) {
+        closed[node] = !(costs[node] >= 0 && costs[node] < infinity);
+    }
+    const std::unique_ptr<Offset[]> predecessor(new Offset[size]);
+    Frontier queue(grid.size());
+    for (const auto start : starts) {
+        const auto value = cost_mode == Cost::destination ? costs[start] : 0.0;
+        tentative[start] = value;
+        predecessor[start] = -1;
+        queue.decrease(value, static_cast<Node>(start));
+    }
+    while (!queue.empty()) {
+        const auto entry = queue.pop();
+        const auto node = static_cast<Node>(entry.first);
+        const auto cumulative = entry.second;
+        const auto slow = node / width;
+        const auto fast = node - slow * width;
+        const bool reached = cost_mode == Cost::difference
+            ? (end_on_fast_axis ? fast == width - 1 : node >= size - width)
+            : node == static_cast<Node>(end);
+        if (reached) {
+            return {traceback(grid, tentative.data(), predecessor.get(), entry.first), cumulative};
+        }
+        closed[node] = 1;
+        const auto current = costs[node];
+        const auto relax = [&](auto move) {
+            const auto next = node + deltas[move];
+            if (closed[next]) return;
+            const auto destination = costs[next];
+            auto step = destination;
+            if constexpr (cost_mode == Cost::geometric) {
+                step = half_lengths[move] * (current + destination);
+            } else if constexpr (cost_mode == Cost::difference) {
+                step = std::abs(current - destination);
+            }
+            const auto candidate = cumulative + step;
+            if (candidate < tentative[next]) {
+                tentative[next] = candidate;
+                predecessor[next] = static_cast<Offset>(move);
+                queue.decrease(candidate, next);
+            }
+        };
+        auto mask = fast_x ? grid.moves_2d(fast, slow) : grid.moves_2d(slow, fast);
+        if (mask == (std::uint64_t{1} << count) - 1) {
+            visit_interior(std::make_index_sequence<count>{}, relax);
+        } else {
+            while (mask != 0) {
+                relax(first_move(mask));
+                mask &= mask - 1;
+            }
+        }
+    }
+    throw std::invalid_argument("no minimum-cost path was found to the specified end point");
 }
 
 } // namespace
@@ -338,6 +440,24 @@ Shape traceback(const Grid& grid, const double* distance, const Offset* predeces
     throw std::invalid_argument("invalid traceback offsets");
 }
 
+std::pair<Shape, double> route_path(const Grid& grid, const double* costs, Index start, Index end,
+                                  bool geometric) {
+    const auto moves = grid.offsets().size();
+    if (grid.has_move_masks() && (moves == 8 || moves == 4)) {
+        if (moves == 8) {
+            return geometric ? search_path_2d<Cost::geometric, 8>(grid, costs, {start}, end, -1)
+                             : search_path_2d<Cost::destination, 8>(grid, costs, {start}, end, -1);
+        }
+        return geometric ? search_path_2d<Cost::geometric, 4>(grid, costs, {start}, end, -1)
+                         : search_path_2d<Cost::destination, 4>(grid, costs, {start}, end, -1);
+    }
+    const Search options{geometric ? Cost::geometric : Cost::destination, true, true, grid.size()};
+    const std::unique_ptr<double[]> distance(new double[grid.size()]);
+    const std::unique_ptr<Offset[]> predecessor(new Offset[grid.size()]);
+    find_costs(grid, costs, {start}, {end}, options, distance.get(), predecessor.get());
+    return {traceback(grid, distance.get(), predecessor.get(), end), distance[end]};
+}
+
 std::pair<Shape, double> shortest_path(const Grid& grid, const double* costs, int axis) {
     if (axis < 0 || static_cast<std::size_t>(axis) >= grid.shape().size()) {
         throw std::invalid_argument("graph axis out of bounds");
@@ -347,12 +467,20 @@ std::pair<Shape, double> shortest_path(const Grid& grid, const double* costs, in
     const auto slab = stride * extent;
     Shape starts, ends;
     starts.reserve(grid.size() / extent);
-    ends.reserve(grid.size() / extent);
     for (Index slab_start = 0; slab_start < grid.size(); slab_start += slab) {
         for (Index offset = 0; offset < stride; ++offset) {
             starts.push_back(slab_start + offset);
-            ends.push_back(slab_start + offset + slab - stride);
         }
+    }
+    if (grid.has_move_masks()) {
+        switch (grid.offsets().size()) {
+        case 3: return search_path_2d<Cost::difference, 3>(grid, costs, starts, -1, axis);
+        case 5: return search_path_2d<Cost::difference, 5>(grid, costs, starts, -1, axis);
+        }
+    }
+    ends.reserve(starts.size());
+    for (const auto start : starts) {
+        ends.push_back(start + slab - stride);
     }
     // find_costs initializes both buffers before reading them.
     const std::unique_ptr<double[]> distance(new double[grid.size()]);

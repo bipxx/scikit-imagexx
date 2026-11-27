@@ -227,7 +227,7 @@ py::object normalized_buffers(const py::dict& adjacency, double diagonal,
         if (!integer_node(node, integer_types) || !PyDict_CheckExact(neighbors)) {
             return py::none();
         }
-        positions[py::handle(node)] = py::int_(index++);
+        set_dict_item(positions.ptr(), node, py::int_(index++).ptr());
     }
     std::vector<std::int32_t> offsets{0};
     std::vector<std::int32_t> indices;
@@ -343,13 +343,11 @@ py::object initial_heap(const py::dict& adjacency, const py::tuple& integer_type
 }
 
 void refresh_heap(const py::dict& neighbors, py::handle node, const py::list& heap,
-                  py::handle push) {
-    const py::str heap_item("heap item");
-    const py::str weight("weight");
-    const py::int_ valid(3);
+                  py::handle push, const py::str& heap_item, const py::str& weight,
+                  const py::str& items, const py::int_& valid) {
     // Use a Python items iterator here: a custom weight can mutate the graph
     // during a heap comparison, and the iterator must detect size changes.
-    for (auto pair : neighbors.attr("items")()) {
+    for (auto pair : neighbors.attr(items)()) {
         const auto entries = py::reinterpret_borrow<py::tuple>(pair);
         const auto attrs = entries[1];
         if (attrs.contains(heap_item)) {
@@ -367,12 +365,9 @@ void refresh_heap(const py::dict& neighbors, py::handle node, const py::list& he
     }
 }
 
-void invalidate_heap(py::handle graph, py::handle src, py::handle dst, py::handle atlas_type) {
-    const py::str adjacency("adj");
-    const py::str atlas("_atlas");
-    const py::str values("values");
-    const py::str heap_item("heap item");
-    const py::int_ valid(3);
+void invalidate_heap(py::handle graph, py::handle src, py::handle dst, py::handle atlas_type,
+                     const py::str& heap_item, const py::int_& valid, const py::str& adjacency,
+                     const py::str& atlas, const py::str& values) {
     for (auto node : {src, dst}) {
         py::object neighbors = graph.attr(adjacency)[node];
         if (exact_type(neighbors.ptr(), atlas_type)) {
@@ -399,11 +394,20 @@ void invalidate_heap(py::handle graph, py::handle src, py::handle dst, py::handl
 } // namespace
 
 void bind_graph_rag(py::module_& module) {
+    const py::str heap_item("heap item"), weight_key("weight"), items("items");
+    const py::str adjacency("adj"), atlas("_atlas"), values("values");
+    const py::int_ valid(3);
     module.def("graph_rag_copy_data", &copy_graph_data);
     module.def("graph_rag_normalized_buffers", &normalized_buffers);
     module.def("graph_rag_initial_heap", &initial_heap);
-    module.def("graph_rag_refresh_heap", &refresh_heap);
-    module.def("graph_rag_invalidate_heap", &invalidate_heap);
+    module.def("graph_rag_refresh_heap", [heap_item, weight_key, items, valid](
+               const py::dict& neighbors, py::handle node, const py::list& heap, py::handle push) {
+        refresh_heap(neighbors, node, heap, push, heap_item, weight_key, items, valid);
+    });
+    module.def("graph_rag_invalidate_heap", [heap_item, valid, adjacency, atlas, values](
+               py::handle graph, py::handle src, py::handle dst, py::handle atlas_type) {
+        invalidate_heap(graph, src, dst, atlas_type, heap_item, valid, adjacency, atlas, values);
+    });
     module.def("graph_rag_merge_mapping", &merge_mapping);
     module.def("graph_rag_label_slots", &label_slots<std::int32_t>, py::arg("labels").noconvert());
     module.def("graph_rag_label_slots", &label_slots<std::int64_t>, py::arg("labels").noconvert());
@@ -518,7 +522,7 @@ void bind_graph_rag(py::module_& module) {
             for (const auto& sample : samples) {
                 *lo++ = sample.edge.first;
                 *hi++ = sample.edge.second;
-                *positions++ = static_cast<py::ssize_t>(sample.pixel);
+                *positions++ = static_cast<std::ptrdiff_t>(sample.pixel);
             }
         }
         return py::make_tuple(first, second, pixels);
@@ -611,6 +615,7 @@ void bind_graph_rag(py::module_& module) {
             return position ? static_cast<std::size_t>(PyLong_AsSsize_t(position)) : count;
         };
         const py::str weight("weight");
+        const bool float_threshold = PyFloat_CheckExact(threshold.ptr());
         py::list removed;
         std::vector<rag::Edge> kept;
         kept.reserve(count);
@@ -637,18 +642,19 @@ void bind_graph_rag(py::module_& module) {
                     }
                     throw py::error_already_set();
                 }
-                if (!scalar(value)) {
-                    return py::none();
+                int compare;
+                if (float_threshold && PyFloat_CheckExact(value)) {
+                    compare = PyFloat_AS_DOUBLE(value) >= PyFloat_AS_DOUBLE(threshold.ptr());
+                } else {
+                    if (!scalar(value)) return py::none();
+                    compare = PyObject_RichCompareBool(value, threshold.ptr(), Py_GE);
                 }
-                const bool both_float = PyFloat_CheckExact(value) && PyFloat_CheckExact(threshold.ptr());
-                const int compare = both_float ? PyFloat_AS_DOUBLE(value) >= PyFloat_AS_DOUBLE(threshold.ptr())
-                    : PyObject_RichCompareBool(value, threshold.ptr(), Py_GE);
                 if (compare < 0) {
                     throw py::error_already_set();
                 }
                 if (compare) {
                     removed.append(py::make_tuple(py::handle(node), py::handle(other)));
-                } else {
+                } else if (i != j) {
                     kept.push_back({static_cast<rag::Label>(i), static_cast<rag::Label>(j)});
                 }
             }
