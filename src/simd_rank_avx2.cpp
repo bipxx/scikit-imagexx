@@ -14,6 +14,11 @@ __m256i prefix4(__m256i value) {
 __m256i gather4(const std::int64_t* counts,const std::uint32_t* indices) {
     return _mm256_i32gather_epi64(reinterpret_cast<const long long*>(counts),_mm_loadu_si128(reinterpret_cast<const __m128i*>(indices)),8);
 }
+std::int64_t sum_lanes(__m256i values) {
+    const auto pairs = _mm_add_epi64(_mm256_castsi256_si128(values),
+                                    _mm256_extracti128_si256(values, 1));
+    return _mm_cvtsi128_si64(_mm_add_epi64(pairs, _mm_srli_si128(pairs, 8)));
+}
 }
 void rank_decision_prefix4(const std::int64_t* counts,const std::uint32_t* indices,std::int64_t q,std::int64_t moment,std::int64_t* qout,std::int64_t* mout) {
     const auto values=gather4(counts,indices);
@@ -79,28 +84,43 @@ std::size_t rank_equalize_3x3_u8(const std::uint8_t* window,const std::uint8_t* 
     return i;
 }
 std::int64_t rank_count_prefix(const std::int64_t* data,std::size_t count) {
-    auto sums=_mm256_setzero_si256();std::size_t i=0;
-    for(;i+4<=count;i+=4)sums=_mm256_add_epi64(sums,_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i)));
-    alignas(32) std::int64_t lanes[4];_mm256_store_si256(reinterpret_cast<__m256i*>(lanes),sums);
-    std::int64_t result=lanes[0]+lanes[1]+lanes[2]+lanes[3];
-    for(;i<count;++i)result+=data[i];
+    std::int64_t result = 0;
+    std::size_t i = 0;
+    if (count >= 4) {
+        auto sums = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(data));
+        for (i = 4; i + 4 <= count; i += 4)
+            sums = _mm256_add_epi64(sums, _mm256_loadu_si256(reinterpret_cast<const __m256i*>(data + i)));
+        result = sum_lanes(sums);
+    }
+    for (; i < count; ++i) result += data[i];
     return result;
 }
 void rank_weighted_prefix(const std::int64_t* data,std::size_t count,std::size_t first,std::int64_t& population,std::int64_t& weighted) {
-    auto sums=_mm256_setzero_si256(),products=_mm256_setzero_si256();std::size_t i=0;
-    for(;i+4<=count;i+=4) {
-        const auto values=_mm256_loadu_si256(reinterpret_cast<const __m256i*>(data+i));
-        const auto indices=_mm256_setr_epi64x(first+i,first+i+1,first+i+2,first+i+3);
-        // AVX2 has no packed 64-bit multiply. Reconstruct the low64 product
-        // from unsigned32 halves; this also preserves signed count bits.
-        const auto low=_mm256_mul_epu32(values,indices);
-        const auto high=_mm256_slli_epi64(_mm256_mul_epu32(_mm256_srli_epi64(values,32),indices),32);
-        sums=_mm256_add_epi64(sums,values);products=_mm256_add_epi64(products,_mm256_add_epi64(low,high));
+    std::size_t i = 0;
+    if (count >= 4) {
+        auto sums = _mm256_setzero_si256();
+        auto products = _mm256_setzero_si256();
+        // Duplicate each bin in both halves. The low 32 bits of the high-half
+        // product belong in the high half of the reconstructed 64-bit lane.
+        auto bins = _mm256_add_epi32(_mm256_set1_epi32(static_cast<int>(first)),
+                                    _mm256_setr_epi32(0, 0, 1, 1, 2, 2, 3, 3));
+        const auto step = _mm256_set1_epi32(4);
+        for (; i + 4 <= count; i += 4) {
+            const auto values = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(data + i));
+            const auto low = _mm256_mul_epu32(values, bins);
+            const auto high = _mm256_blend_epi32(_mm256_setzero_si256(),
+                                                 _mm256_mullo_epi32(values, bins), 0xaa);
+            sums = _mm256_add_epi64(sums, values);
+            products = _mm256_add_epi64(products, _mm256_add_epi64(low, high));
+            bins = _mm256_add_epi32(bins, step);
+        }
+        population += sum_lanes(sums);
+        weighted += sum_lanes(products);
     }
-    alignas(32) std::int64_t counts[4],weights[4];
-    _mm256_store_si256(reinterpret_cast<__m256i*>(counts),sums);_mm256_store_si256(reinterpret_cast<__m256i*>(weights),products);
-    for(int lane=0;lane<4;++lane){population+=counts[lane];weighted+=weights[lane];}
-    for(;i<count;++i){population+=data[i];weighted+=data[i]*std::int64_t(first+i);}
+    for (; i < count; ++i) {
+        population += data[i];
+        weighted += data[i] * std::int64_t(first + i);
+    }
 }
 std::uint64_t rank_sum(const void* input,std::size_t count,bool wide) {
     std::uint64_t result=0;std::size_t i=0;

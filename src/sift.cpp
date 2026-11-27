@@ -221,14 +221,15 @@ void localize(const Dog<T>& dog, const ScaleSpace<T>& space, const SiftOptions& 
     const double delta = std::ldexp(1.0 / p.upsampling, octave);
     const double contrast = (std::pow(2.0, 1.0 / p.n_scales) - 1) /
                             (std::pow(2.0, 1.0 / 3) - 1) * p.c_dog;
+    const double screening_contrast = contrast * 0.8;
     const double edge = (p.c_edge + 1) * (p.c_edge + 1) / p.c_edge;
     const auto col = std::ptrdiff_t(dog.scales), row = col * dog.width;
-    std::array<std::ptrdiff_t, 26> neighbors{};
+    std::array<std::ptrdiff_t, 24> neighbors{};
     std::size_t n = 0;
     for (int r = -1; r <= 1; ++r)
         for (int c = -1; c <= 1; ++c)
             for (int s = -1; s <= 1; ++s)
-                if (r || c || s) neighbors[n++] = r * row + c * col + s;
+                if (r || c) neighbors[n++] = r * row + c * col + s;
     bool any = false;
     const std::array<int, 3> limits{dog.height - 1, dog.width - 1, dog.scales - 1};
     for (int r = 1; r < limits[0]; ++r) {
@@ -236,13 +237,18 @@ void localize(const Dog<T>& dog, const ScaleSpace<T>& space, const SiftOptions& 
         for (int c = 1; c < limits[1]; ++c, pixel += col) {
             for (int s = 1; s < limits[2]; ++s) {
                 const auto* center = pixel + s;
-                if (std::abs(center[0]) < contrast * 0.8) continue;
-                if (center[0] == center[neighbors[0]]) continue;
-                const bool minimum = center[0] < center[neighbors[0]];
+                const T value_at_center = *center;
+                if (std::abs(value_at_center) < screening_contrast) continue;
+                const T first_neighbor = center[neighbors[0]];
+                if (value_at_center == first_neighbor) continue;
+                const bool minimum = value_at_center < first_neighbor;
                 const auto fails = [&](auto offset) {
-                    return minimum ? center[offset] <= center[0] : center[offset] >= center[0];
+                    return minimum ? center[offset] <= value_at_center : center[offset] >= value_at_center;
                 };
-                if (std::any_of(neighbors.begin() + 1, neighbors.end(), fails)) continue;
+                // Adjacent scales are contiguous in memory and can reject
+                // candidates before reading from other pixels.
+                if (fails(-1) || fails(1) ||
+                    std::any_of(neighbors.begin() + 1, neighbors.end(), fails)) continue;
                 any = true;
                 std::array<int, 3> key{r, c, s};
                 Refinement<T> fit{};

@@ -293,6 +293,7 @@ constexpr Pair pattern[] = {
 static_assert(std::size(pattern) == orb_descriptor_size);
 constexpr int pattern_min = -13;
 constexpr int pattern_max = 12;
+constexpr int pattern_extent = pattern_max - pattern_min + 1;
 static_assert([] {
     const auto in_range = [](Offset p) {
         return p.row >= pattern_min && p.row <= pattern_max
@@ -302,6 +303,28 @@ static_assert([] {
         if (!in_range(pair.first) || !in_range(pair.second)) return false;
     return true;
 }());
+
+constexpr auto index_pattern() {
+    struct IndexedPattern {
+        std::array<Offset, 2 * orb_descriptor_size> positions{};
+        std::array<std::array<unsigned, 2>, orb_descriptor_size> pairs{};
+        unsigned count = 0;
+    } indexed;
+    std::array<unsigned, pattern_extent * pattern_extent> lookup{};
+    const auto add = [&](Offset point) {
+        auto& id = lookup[(point.row - pattern_min) * pattern_extent + point.col - pattern_min];
+        if (!id) {
+            indexed.positions[indexed.count++] = point;
+            id = indexed.count;
+        }
+        return id - 1;
+    };
+    for (std::size_t i = 0; i < orb_descriptor_size; ++i)
+        indexed.pairs[i] = {add(pattern[i].first), add(pattern[i].second)};
+    return indexed;
+}
+
+constexpr auto indexed_pattern = index_pattern();
 
 std::size_t checked_count(const void* input, std::size_t rows, std::size_t cols) {
     if (!input || !rows || !cols)
@@ -531,7 +554,8 @@ OrbDescriptors extract(const T* image, Index rows, Index cols, const double* poi
                 T sine;
                 T cosine;
             };
-            RotationProducts rotation[pattern_max - pattern_min + 1];
+            RotationProducts rotation[pattern_extent];
+            std::array<T, indexed_pattern.count> samples;
             for (auto i = begin; i < end; ++i) {
                 const auto index = selected ? selected[i] : i;
                 const auto* center = image + Index(points[2 * index]) * cols + Index(points[2 * index + 1]);
@@ -539,16 +563,17 @@ OrbDescriptors extract(const T* image, Index rows, Index cols, const double* poi
                 const T cosine = T(std::cos(double(angles[index])));
                 for (int coord = pattern_min; coord <= pattern_max; ++coord)
                     rotation[coord - pattern_min] = {sine * T(coord), cosine * T(coord)};
-                const auto sample = [&](Offset p) {
+                for (std::size_t j = 0; j < samples.size(); ++j) {
+                    const auto p = indexed_pattern.positions[j];
                     const auto& r = rotation[p.row - pattern_min];
                     const auto& c = rotation[p.col - pattern_min];
                     const Index row = nearest(r.sine + c.cosine);
                     const Index col = nearest(r.cosine - c.sine);
-                    return center[row * cols + col];
-                };
+                    samples[j] = center[row * cols + col];
+                }
                 auto* descriptor = result.data.data() + i * orb_descriptor_size;
-                for (const auto& pair : pattern)
-                    *descriptor++ = std::uint8_t(sample(pair.first) < sample(pair.second));
+                for (const auto& pair : indexed_pattern.pairs)
+                    *descriptor++ = std::uint8_t(samples[pair[0]] < samples[pair[1]]);
             }
         });
     return result;

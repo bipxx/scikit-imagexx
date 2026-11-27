@@ -49,11 +49,14 @@ bool thin_into(const std::uint8_t* input, std::size_t height, std::size_t width,
     auto* const first = padded.data() + stride + 1;
     for (std::size_t row = 0; row < height; ++row) {
         auto* state = first + row * stride;
-        for (std::size_t col = 0; col < width; ++col) {
-            const auto value = *input++;
-            if (canonical_boolean && value > 1) return false;
-            state[col] = value != 0;
+        if (canonical_boolean) {
+            if (std::any_of(input, input + width, [](auto value) { return value > 1; }))
+                return false;
+            std::copy_n(input, width, state);
+        } else {
+            std::transform(input, input + width, state, [](auto value) { return value != 0; });
         }
+        input += width;
     }
 
     const auto pitch = static_cast<std::ptrdiff_t>(stride);
@@ -100,9 +103,10 @@ bool thin_into(const std::uint8_t* input, std::size_t height, std::size_t width,
                     const auto j = static_cast<std::uint32_t>(i + delta);
                     if (!padded[j]) continue;
                     const auto pending = upcoming & ~queued[j];
+                    if (!pending) continue;
                     if (pending & 1) frontier[0].push_back(j);
                     if (pending & 2) frontier[1].push_back(j);
-                    queued[j] |= static_cast<std::uint8_t>(pending);
+                    queued[j] |= static_cast<std::uint8_t>(upcoming);
                 }
             }
         }

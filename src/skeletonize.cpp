@@ -28,6 +28,12 @@ constexpr std::array<std::uint8_t, 256> classes{
     3, 3, 0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0
 };
 
+static_assert([] {
+    for (unsigned code = 0; code < classes.size(); ++code)
+        if ((code & 0xaa) == 0xaa && classes[code]) return false;
+    return true;
+}());
+
 unsigned neighborhood(const std::uint8_t* middle, std::ptrdiff_t pitch) {
     const auto* above = middle - pitch;
     const auto* below = middle + pitch;
@@ -100,9 +106,11 @@ bool detail::skeletonize_zhang_padded(
     const auto stride = static_cast<std::ptrdiff_t>(pitch);
     for (std::uint32_t index = static_cast<std::uint32_t>(pitch + 1);
          index < state.size() - pitch; ++index) {
-        if (!state[index])
+        const auto* pixel = state.data() + index;
+        // No phase removes a center with all four cardinal neighbors set.
+        if (!*pixel || (pixel[-1] & pixel[1] & pixel[-stride] & pixel[stride]))
             continue;
-        const auto phases = classes[neighborhood(state.data() + index, stride)];
+        const auto phases = classes[neighborhood(pixel, stride)];
         if (phases & 1)
             frontier[0].push_back(index);
         if (phases & 2)

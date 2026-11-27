@@ -107,12 +107,14 @@ bool medial_axis_ordered(
     std::vector<Site> sites(priority_count);
     std::size_t count = 0;
     for (std::size_t row = 0; row < rows; ++row) {
+        const auto row_offset = (row + 1) * pitch + 1;
+        const auto* pixels = state.data() + row_offset;
+        const auto* row_distances = distances + row * columns;
         for (std::size_t col = 0; col < columns; ++col) {
-            const auto offset = (row + 1) * pitch + col + 1;
-            if (!state[offset]) {
+            if (!pixels[col]) {
                 continue;
             }
-            const auto distance = distances[row * columns + col];
+            const auto distance = row_distances[col];
             if (count == priority_count || !std::isfinite(distance) || distance < 0) {
                 return false;
             }
@@ -121,8 +123,8 @@ bool medial_axis_ordered(
                 return false;
             }
             sites[std::size_t(priority)] = {
-                distance, static_cast<std::uint32_t>(offset),
-                corner[neighborhood(state.data() + offset, signed_pitch)]
+                distance, static_cast<std::uint32_t>(row_offset + col),
+                corner[neighborhood(pixels + col, signed_pitch)]
             };
         }
     }
@@ -132,9 +134,8 @@ bool medial_axis_ordered(
     // Scores and ranks are fixed before deletion. Each table lookup sees the
     // updates from all earlier sites, exactly once in that ordered pass.
     const auto visit = [&](const Site& site) {
-        if (!keep[neighborhood(state.data() + site.offset, signed_pitch)]) {
-            state[site.offset] = 0;
-        }
+        auto* pixel = state.data() + site.offset;
+        *pixel = keep[neighborhood(pixel, signed_pitch)];
     };
     if (!sweep_buckets(sites, visit)) {
         std::stable_sort(sites.begin(), sites.end(), [](const Site& a, const Site& b) {

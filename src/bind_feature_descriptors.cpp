@@ -40,7 +40,7 @@ Pixel prepare(const py::array& array, int min_ndim = 2, int max_ndim = 2) {
 }
 
 template<class T>
-bool finite_pixels(const T* p, py::ssize_t size) {
+bool finite_pixels(const T* p, std::size_t size) {
     if constexpr (std::is_floating_point_v<T>) {
         return std::all_of(p, p + size, [](T v) { return std::isfinite(v); });
     }
@@ -70,18 +70,18 @@ py::object hog_result(const py::array& array, const HogOptions& o, bool visualiz
     auto* hist = output.mutable_data();
     auto* view_data = visualize ? view.mutable_data() : nullptr;
     const auto* source = static_cast<const Input*>(array.data());
-    const auto count = array.size();
+    const auto count = static_cast<std::size_t>(array.size());
     bool supported = true;
     {
         py::gil_scoped_release release;
         if (transform_sqrt) {
-            std::vector<Output> transformed(static_cast<std::size_t>(count));
-            for (py::ssize_t i = 0; i < count; ++i) {
+            std::vector<Output> transformed(count);
+            for (std::size_t i = 0; i < count; ++i) {
                 if (!(source[i] >= 0) || !std::isfinite(source[i])) {
                     supported = false;
                     break;
                 }
-                transformed[static_cast<std::size_t>(i)] = std::sqrt(Output(source[i]));
+                transformed[i] = std::sqrt(Output(source[i]));
             }
             if (supported) hog_into(transformed.data(), o, hist, view_data);
         } else {
@@ -104,9 +104,11 @@ py::object daisy_result(const py::array& array, const DaisyOptions& o,
     py::array_t<Output> output({py::ssize_t(oh), py::ssize_t(ow), width});
     const auto* source = static_cast<const Input*>(array.data());
     auto* dest = output.mutable_data();
+    const auto* sigma_values = sigmas.data();
+    const auto* radius_values = radii.data();
     {
         py::gil_scoped_release release;
-        daisy_into(source, o, sigmas.data(), radii.data(), dest);
+        daisy_into(source, o, sigma_values, radius_values, dest);
     }
     return output;
 }
@@ -146,12 +148,14 @@ py::object basic_result(const py::array& array, const BasicFeatureOptions& o, co
     py::array_t<float> output({py::ssize_t(o.rows), py::ssize_t(o.cols), features});
     auto* dest = output.mutable_data();
     const auto* source = static_cast<const T*>(array.data());
-    const auto count = array.size();
+    const auto count = static_cast<std::size_t>(array.size());
+    const auto* sigma_values = sigmas.data();
+    const auto sigma_count = static_cast<int>(sigmas.size());
     bool supported;
     {
         py::gil_scoped_release release;
         supported = finite_pixels(source, count);
-        if (supported) multiscale_basic_features_into(source, o, sigmas.data(), static_cast<int>(sigmas.size()), dest);
+        if (supported) multiscale_basic_features_into(source, o, sigma_values, sigma_count, dest);
     }
     if (!supported) return py::none();
     return output;

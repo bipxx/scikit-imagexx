@@ -439,11 +439,17 @@ void daisy_sample_rows(const T* histogram, const DaisyOptions& o, const DaisySca
                 auto* vertical = padded + radius;
                 auto* filtered = padded + o.cols + 2 * radius;
                 const auto first = static_cast<std::ptrdiff_t>(r) - radius;
-                for (std::size_t k = 0; k < taps; ++k) {
-                    const auto y = first + static_cast<std::ptrdiff_t>(k);
-                    const auto reflected = y < 0 ? scale.top[y + radius] :
-                        y >= o.rows ? scale.bottom[y - o.rows] : y;
-                    sources[k] = histogram + std::size_t(reflected) * o.cols;
+                if (first >= 0 && r + radius < o.rows) {
+                    const auto* source = histogram + std::size_t(first) * o.cols;
+                    for (std::size_t k = 0; k < taps; ++k, source += o.cols)
+                        sources[k] = source;
+                } else {
+                    for (std::size_t k = 0; k < taps; ++k) {
+                        const auto y = first + static_cast<std::ptrdiff_t>(k);
+                        const auto reflected = y < 0 ? scale.top[y + radius] :
+                            y >= o.rows ? scale.bottom[y - o.rows] : y;
+                        sources[k] = histogram + std::size_t(reflected) * o.cols;
+                    }
                 }
                 daisy_convolve(sources, vertical, o.cols, scale.weights, vectorized);
                 for (std::ptrdiff_t k = 0; k < radius; ++k) {
@@ -592,13 +598,16 @@ void daisy_into(const Input* image, const DaisyOptions& o, const double* sigmas,
     }
     if (o.norm == DaisyNorm::off) return;
     const auto chunk = o.norm == DaisyNorm::per_histogram ? o.orientations : width;
+    const bool l1 = o.norm == DaisyNorm::l1;
     for (std::size_t i = 0; i < std::size_t(oh) * ow * width; i += chunk) {
         auto* dest = output + i;
         Output total = 0;
-        for (int k = 0; k < chunk; ++k) {
-            total += o.norm == DaisyNorm::l1 ? dest[k] : dest[k] * dest[k];
+        if (l1) {
+            for (int k = 0; k < chunk; ++k) total += dest[k];
+        } else {
+            for (int k = 0; k < chunk; ++k) total += dest[k] * dest[k];
+            total = std::sqrt(total);
         }
-        if (o.norm != DaisyNorm::l1) total = std::sqrt(total);
         for (int k = 0; k < chunk; ++k) dest[k] /= total;
     }
 }
