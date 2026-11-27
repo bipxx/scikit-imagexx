@@ -15,27 +15,23 @@
 #include <type_traits>
 #include <vector>
 
-#if defined(SKIMAGEXX_AVX2) && (defined(__x86_64__) || defined(__i386__) || defined(_M_X64) || defined(_M_IX86))
-#include <immintrin.h>
-#define SLIC_AVX2
-#if defined(__GNUC__) || defined(__clang__)
-#define SLIC_AVX2_TARGET __attribute__((target("avx2"), noinline))
-#else
-#define SLIC_AVX2_TARGET __declspec(noinline)
-#endif
-#endif
-
 namespace skimagexx {
-#ifdef SLIC_AVX2
+#ifdef SKIMAGEXX_AVX2
 namespace simd {
-extern std::ptrdiff_t slic_assign_fixed(const float* image, const float* center, const float* x_distances,
-                                       float* distances, std::int32_t* nearest, std::ptrdiff_t length,
-                                       std::ptrdiff_t pixels, std::int32_t label, float spatial_yz,
-                                       float spatial_weight, bool rgb, bool& change);
-extern std::ptrdiff_t slic_assign_fixed(const double* image, const double* center, const double* x_distances,
-                                       double* distances, std::int32_t* nearest, std::ptrdiff_t length,
-                                       std::ptrdiff_t pixels, std::int32_t label, double spatial_yz,
-                                       double spatial_weight, bool rgb, bool& change);
+#define SLIC_SIMD_DECL(T) \
+    std::ptrdiff_t slic_assign_row(const T* image, const T* center, const T* x_distances, \
+                                  T* distances, std::int32_t* nearest, std::ptrdiff_t length, \
+                                  std::ptrdiff_t channels, std::ptrdiff_t pixels, std::int32_t label, \
+                                  T color_scale, T spatial_yz, T spatial_weight, bool& change); \
+    bool slic_accumulate_rgb(const T* image, const std::int32_t* nearest, T* centers, \
+                             std::ptrdiff_t* members, std::ptrdiff_t depth, std::ptrdiff_t height, \
+                             std::ptrdiff_t width, std::int32_t start);
+SLIC_SIMD_DECL(float)
+SLIC_SIMD_DECL(double)
+#undef SLIC_SIMD_DECL
+void slic_assign_four_rgb(const double* image, const double* centers, double* x_distances,
+                          std::int32_t* nearest, std::ptrdiff_t height, std::ptrdiff_t width,
+                          double sx, double sy, double spatial_weight, std::int32_t start);
 }
 #endif
 namespace {
@@ -222,73 +218,13 @@ T color_distance(const T* values, const T* center, Index channels, Index plane_s
     return result;
 }
 
-#ifdef SLIC_AVX2
-template<class T, Index FixedChannels, bool Scale>
-SLIC_AVX2_TARGET Index assign_vector(const T* image, const T* center, const T* x_distances,
-                                    T* distances, Label* nearest, Index length, Index channels,
-                                    Index pixels, Label label, T color_scale, T spatial_yz,
-                                    T spatial_weight, bool& change) {
-    Index x = 0;
-    int changed = 0;
-    const auto labels = _mm256_set1_epi32(label);
-    const auto count = FixedChannels ? FixedChannels : channels;
-    if constexpr (std::is_same_v<T, double>) {
-        const auto yz = _mm256_set1_pd(spatial_yz);
-        const auto weight = _mm256_set1_pd(spatial_weight);
-        const auto scale = _mm256_set1_pd(color_scale);
-        const auto mask_lanes = _mm256_setr_epi32(0, 2, 4, 6, 0, 0, 0, 0);
-        for (; x + 4 <= length; x += 4) {
-            auto color = _mm256_setzero_pd();
-            for (Index c = 0; c < count; ++c) {
-                const auto difference = _mm256_sub_pd(_mm256_loadu_pd(image + c * pixels + x),
-                                                       _mm256_set1_pd(center[c]));
-                color = _mm256_add_pd(color, _mm256_mul_pd(difference, difference));
-            }
-            if constexpr (Scale)
-                color = _mm256_div_pd(color, scale);
-            const auto space = _mm256_add_pd(yz, _mm256_loadu_pd(x_distances + x));
-            const auto distance = _mm256_add_pd(_mm256_mul_pd(space, weight), color);
-            const auto previous = _mm256_loadu_pd(distances + x);
-            const auto mask = _mm256_cmp_pd(previous, distance, _CMP_GT_OQ);
-            const auto label_mask = _mm256_permutevar8x32_epi32(_mm256_castpd_si256(mask), mask_lanes);
-            _mm256_storeu_pd(distances + x, _mm256_blendv_pd(previous, distance, mask));
-            _mm_maskstore_epi32(nearest + x, _mm256_castsi256_si128(label_mask),
-                                _mm256_castsi256_si128(labels));
-            changed |= _mm256_movemask_pd(mask);
-        }
-    } else {
-        const auto yz = _mm256_set1_ps(spatial_yz);
-        const auto weight = _mm256_set1_ps(spatial_weight);
-        const auto scale = _mm256_set1_ps(color_scale);
-        for (; x + 8 <= length; x += 8) {
-            auto color = _mm256_setzero_ps();
-            for (Index c = 0; c < count; ++c) {
-                const auto difference = _mm256_sub_ps(_mm256_loadu_ps(image + c * pixels + x),
-                                                       _mm256_set1_ps(center[c]));
-                color = _mm256_add_ps(color, _mm256_mul_ps(difference, difference));
-            }
-            if constexpr (Scale)
-                color = _mm256_div_ps(color, scale);
-            const auto space = _mm256_add_ps(yz, _mm256_loadu_ps(x_distances + x));
-            const auto distance = _mm256_add_ps(_mm256_mul_ps(space, weight), color);
-            const auto previous = _mm256_loadu_ps(distances + x);
-            const auto mask = _mm256_cmp_ps(previous, distance, _CMP_GT_OQ);
-            _mm256_storeu_ps(distances + x, _mm256_blendv_ps(previous, distance, mask));
-            _mm256_maskstore_epi32(nearest + x, _mm256_castps_si256(mask), labels);
-            changed |= _mm256_movemask_ps(mask);
-        }
-    }
-    change |= changed != 0;
-    return x;
-}
-#endif
-
 template<class T, Index FixedChannels>
 bool cluster(const T* image, const Volume& volume, const Grid& seeds,
              const SlicOptions& options, Label* nearest) {
     const auto [depth, height, width] = volume.shape;
     const Index channels = FixedChannels ? FixedChannels : volume.channels;
     const Index features = 3 + channels;
+    const Index center_stride = FixedChannels == 3 ? 8 : features;  // SIMD centroid layout.
     const auto [z0, y0, x0] = seeds.start;
     const auto [seed_z, seed_y, seed_x] = seeds.step;
     const auto windows = grid(volume, seeds.count);
@@ -304,120 +240,158 @@ bool cluster(const T* image, const Volume& volume, const Grid& seeds,
         ? std::numeric_limits<T>::infinity() : std::numeric_limits<T>::max();
     const auto start = static_cast<Label>(options.start_label);
     const Label missing = start - 1;
-#ifdef SLIC_AVX2
+#ifdef SKIMAGEXX_AVX2
     const bool vectorized = has_avx2();
+    const bool try_full_window = std::is_same_v<T, double> && FixedChannels == 3 &&
+        vectorized && !options.slic_zero && depth == 1 && seeds.count == 4 && width % 4 == 0;
+#else
+    constexpr bool try_full_window = false;
 #endif
 
-    std::vector<T> centers(seeds.count * features);
+    std::vector<T> centers(seeds.count * center_stride);
     std::vector<Index> members(seeds.count);
     std::vector<T> maximum_color(seeds.count, T(1));
-    std::vector<T> distances(volume.pixels);
-    std::vector<T> x_distances(width);
+    std::unique_ptr<T[]> distances(new T[volume.pixels]);
+    std::vector<T> x_distances(try_full_window ? 4 * width : width);
+    std::vector<T> y_distances(height);
     Index seed = 0;
     for (Index z = z0; z < depth; z += seed_z)
         for (Index y = y0; y < height; y += seed_y)
             for (Index x = x0; x < width; x += seed_x, ++seed) {
-                centers[seed * features] = static_cast<T>(z);
-                centers[seed * features + 1] = static_cast<T>(y);
-                centers[seed * features + 2] = static_cast<T>(x);
+                centers[seed * center_stride] = static_cast<T>(z);
+                centers[seed * center_stride + 1] = static_cast<T>(y);
+                centers[seed * center_stride + 2] = static_cast<T>(x);
             }
     std::fill_n(nearest, volume.pixels, missing);
     for (std::size_t iteration = 0; iteration < options.max_num_iter; ++iteration) {
-        std::fill(distances.begin(), distances.end(), initial_distance);
         bool change = false;
-        for (Index k = 0; k < seeds.count; ++k) {
-            if (iteration && !members[k])
-                continue;
-            const T* center = centers.data() + k * features;
-            const T cz = center[0];
-            const T cy = center[1];
-            const T cx = center[2];
-            const Index z_min = static_cast<Index>(std::max(cz - T(window_z), T(0)));
-            const Index y_min = static_cast<Index>(std::max(cy - T(window_y), T(0)));
-            const Index x_min = static_cast<Index>(std::max(cx - T(window_x), T(0)));
-            const Index z_max = static_cast<Index>(std::min(cz + T(window_z) + T(1), T(depth)));
-            const Index y_max = static_cast<Index>(std::min(cy + T(window_y) + T(1), T(height)));
-            const Index x_max = static_cast<Index>(std::min(cx + T(window_x) + T(1), T(width)));
-            const T color_scale = options.slic_zero ? maximum_color[k] : T(1);
-            for (Index x = x_min; x < x_max; ++x)
-                x_distances[x] = square(sx * (cx - T(x)));
-            const Label label = static_cast<Label>(k) + start;
-            const auto assign = [&](auto scaled) {
-                constexpr bool Scale = decltype(scaled)::value;
-                for (Index z = z_min; z < z_max; ++z) {
-                    const T dz = square(sz * (cz - T(z)));
-                    for (Index y = y_min; y < y_max; ++y) {
-                        const T spatial_yz = dz + square(sy * (cy - T(y)));
-                        Index offset = z * volume.plane + y * width + x_min;
-                        Index x = x_min;
-#ifdef SLIC_AVX2
-                        if (vectorized && x_max - x_min >= Index(32 / sizeof(T))) {
-                            Index consumed;
-                            if constexpr (FixedChannels != 0 && !Scale) {
-                                consumed = simd::slic_assign_fixed(
+#ifdef SKIMAGEXX_AVX2
+        if constexpr (std::is_same_v<T, double> && FixedChannels == 3) {
+            if (try_full_window) {
+                // Reuse each pixel vector across seeds when all four search
+                // windows cover the plane and every seed is active.
+                bool full_window = true;
+                for (Index k = 0; k < seeds.count; ++k) {
+                    const T* center = centers.data() + k * center_stride;
+                    const T cy = center[1], cx = center[2];
+                    full_window &= (!iteration || members[k] != 0) &&
+                        cy <= T(window_y) && cy + T(window_y) + T(1) >= T(height) &&
+                        cx <= T(window_x) && cx + T(window_x) + T(1) >= T(width);
+                }
+                if (full_window) {
+                    simd::slic_assign_four_rgb(image, centers.data(), x_distances.data(), nearest,
+                                              height, width, sx, sy, spatial_weight, start);
+                    change = true;
+                }
+            }
+        }
+#endif
+        if (!change) {
+            std::fill_n(distances.get(), volume.pixels, initial_distance);
+            for (Index k = 0; k < seeds.count; ++k) {
+                if (iteration && !members[k])
+                    continue;
+                const T* center = centers.data() + k * center_stride;
+                const T cz = center[0];
+                const T cy = center[1];
+                const T cx = center[2];
+                const Index z_min = static_cast<Index>(std::max(cz - T(window_z), T(0)));
+                const Index y_min = static_cast<Index>(std::max(cy - T(window_y), T(0)));
+                const Index x_min = static_cast<Index>(std::max(cx - T(window_x), T(0)));
+                const Index z_max = static_cast<Index>(std::min(cz + T(window_z) + T(1), T(depth)));
+                const Index y_max = static_cast<Index>(std::min(cy + T(window_y) + T(1), T(height)));
+                const Index x_max = static_cast<Index>(std::min(cx + T(window_x) + T(1), T(width)));
+                const T color_scale = options.slic_zero ? maximum_color[k] : T(1);
+                for (Index x = x_min; x < x_max; ++x)
+                    x_distances[x] = square(sx * (cx - T(x)));
+                for (Index y = y_min; y < y_max; ++y)
+                    y_distances[y] = square(sy * (cy - T(y)));
+                const Label label = static_cast<Label>(k) + start;
+                const auto assign = [&](auto scaled) {
+                    constexpr bool Scale = decltype(scaled)::value;
+                    for (Index z = z_min; z < z_max; ++z) {
+                        const T dz = square(sz * (cz - T(z)));
+                        for (Index y = y_min; y < y_max; ++y) {
+                            const T spatial_yz = dz + y_distances[y];
+                            Index offset = z * volume.plane + y * width + x_min;
+                            Index x = x_min;
+#ifdef SKIMAGEXX_AVX2
+                            if (vectorized && x_max - x_min >= Index(32 / sizeof(T))) {
+                                const Index consumed = simd::slic_assign_row(
                                     image + offset, center + 3, x_distances.data() + x_min,
-                                    distances.data() + offset, nearest + offset, x_max - x_min,
-                                    volume.pixels, label, spatial_yz, spatial_weight, FixedChannels == 3, change);
-                            } else {
-                                consumed = assign_vector<T, FixedChannels, Scale>(
-                                    image + offset, center + 3, x_distances.data() + x_min,
-                                    distances.data() + offset, nearest + offset, x_max - x_min,
+                                    distances.get() + offset, nearest + offset, x_max - x_min,
                                     channels, volume.pixels, label, color_scale, spatial_yz,
                                     spatial_weight, change);
+                                offset += consumed;
+                                x += consumed;
                             }
-                            offset += consumed;
-                            x += consumed;
-                        }
 #endif
-                        for (; x < x_max; ++x, ++offset) {
-                            T color = color_distance(image + offset, center + 3, channels, volume.pixels);
-                            if constexpr (Scale)
-                                color /= color_scale;
-                            const T distance = (spatial_yz + x_distances[x]) * spatial_weight + color;
-                            if (distances[offset] > distance) {
-                                nearest[offset] = label;
-                                distances[offset] = distance;
-                                change = true;
+                            for (; x < x_max; ++x, ++offset) {
+                                T color = color_distance(image + offset, center + 3, channels, volume.pixels);
+                                if constexpr (Scale)
+                                    color /= color_scale;
+                                const T distance = (spatial_yz + x_distances[x]) * spatial_weight + color;
+                                if (distances[offset] > distance) {
+                                    nearest[offset] = label;
+                                    distances[offset] = distance;
+                                    change = true;
+                                }
                             }
                         }
                     }
-                }
-            };
-            if (color_scale == T(1))
-                assign(std::false_type{});
-            else
-                assign(std::true_type{});
+                };
+                if (color_scale == T(1))
+                    assign(std::false_type{});
+                else
+                    assign(std::true_type{});
+            }
         }
         if (!change)
             break;
 
+        if (iteration + 1 == options.max_num_iter)
+            return std::find(nearest, nearest + volume.pixels, missing) == nearest + volume.pixels;
+
         std::fill(members.begin(), members.end(), 0);
         std::fill(centers.begin(), centers.end(), T(0));
-        Index offset = 0;
-        for (Index z = 0; z < depth; ++z)
-            for (Index y = 0; y < height; ++y)
-                for (Index x = 0; x < width; ++x, ++offset) {
-                    if (nearest[offset] == missing)
-                        return false;
-                    const Index k = nearest[offset] - start;
-                    ++members[k];
-                    T* center = centers.data() + k * features;
-                    center[0] += static_cast<T>(z);
-                    center[1] += static_cast<T>(y);
-                    center[2] += static_cast<T>(x);
-                    for (Index c = 0; c < channels; ++c)
-                        center[c + 3] += image[c * volume.pixels + offset];
-                }
+        bool accumulated = false;
+#ifdef SKIMAGEXX_AVX2
+        if constexpr (FixedChannels == 3) {
+            if (vectorized) {
+                if (!simd::slic_accumulate_rgb(image, nearest, centers.data(), members.data(),
+                                              depth, height, width, start))
+                    return false;
+                accumulated = true;
+            }
+        }
+#endif
+        if (!accumulated) {
+            Index offset = 0;
+            for (Index z = 0; z < depth; ++z)
+                for (Index y = 0; y < height; ++y)
+                    for (Index x = 0; x < width; ++x, ++offset) {
+                        if (nearest[offset] == missing)
+                            return false;
+                        const Index k = nearest[offset] - start;
+                        ++members[k];
+                        T* center = centers.data() + k * center_stride;
+                        center[0] += static_cast<T>(z);
+                        center[1] += static_cast<T>(y);
+                        center[2] += static_cast<T>(x);
+                        for (Index c = 0; c < channels; ++c)
+                            center[c + 3] += image[c * volume.pixels + offset];
+                    }
+        }
         for (Index k = 0; k < seeds.count; ++k) {
             if (!members[k])
                 continue;
             for (Index c = 0; c < features; ++c)
-                centers[k * features + c] /= static_cast<T>(members[k]);
+                centers[k * center_stride + c] /= static_cast<T>(members[k]);
         }
         if (options.slic_zero)
             for (Index p = 0; p < volume.pixels; ++p) {
                 const Index k = nearest[p] - start;
-                const T color = color_distance(image + p, centers.data() + k * features + 3,
+                const T color = color_distance(image + p, centers.data() + k * center_stride + 3,
                                                channels, volume.pixels);
                 if (maximum_color[k] < color)
                     maximum_color[k] = color;
@@ -440,7 +414,7 @@ bool run_slic(const T* image, const Volume& volume, const SlicOptions& options, 
 
     Index min_size = 0;
     Index max_size = 0;
-    std::vector<Label> nearest(volume.pixels);
+    std::unique_ptr<Label[]> nearest(new Label[volume.pixels]);
     if (options.enforce_connectivity) {
         const double nominal = double(volume.pixels) / double(seeds.count);
         const double min = options.min_size_factor * nominal;
@@ -450,17 +424,17 @@ bool run_slic(const T* image, const Volume& volume, const SlicOptions& options, 
         min_size = static_cast<Index>(std::min(min, double(volume.pixels) + 1));
         max_size = static_cast<Index>(std::min(max, double(volume.pixels)));
     }
-    const bool ok = volume.channels == 1 ? cluster<T, 1>(image, volume, seeds, options, nearest.data()) :
-                    volume.channels == 3 ? cluster<T, 3>(image, volume, seeds, options, nearest.data()) :
-                                           cluster<T, 0>(image, volume, seeds, options, nearest.data());
+    const bool ok = volume.channels == 1 ? cluster<T, 1>(image, volume, seeds, options, nearest.get()) :
+                    volume.channels == 3 ? cluster<T, 3>(image, volume, seeds, options, nearest.get()) :
+                                           cluster<T, 0>(image, volume, seeds, options, nearest.get());
     if (!ok)
         return false;
     if (!options.enforce_connectivity)
-        std::copy(nearest.begin(), nearest.end(), output);
+        std::copy_n(nearest.get(), volume.pixels, output);
     else if (volume.shape[0] == 1)
-        connect_2d(volume, nearest.data(), output, min_size, max_size, options.start_label);
+        connect_2d(volume, nearest.get(), output, min_size, max_size, options.start_label);
     else
-        connect(volume, nearest.data(), output, min_size, max_size, options.start_label);
+        connect(volume, nearest.get(), output, min_size, max_size, options.start_label);
     return true;
 }
 
@@ -509,18 +483,24 @@ bool slic_into(const T* image, std::size_t image_size,
 }
 
 template<class T>
+bool slic_planar_into(const T* features, std::size_t image_size,
+                      const std::array<std::size_t, 4>& shape, const SlicOptions& options,
+                      std::ptrdiff_t* output, std::size_t output_size) {
+    const Volume volume = image_layout(features, image_size, shape, output, output_size);
+    // This bound also keeps large float32 centroid sums finite.
+    for (std::size_t i = 0; i < image_size; ++i)
+        if (!(std::abs(features[i]) <= T(1 << 20)))
+            return false;
+    return run_slic(features, volume, options, output);
+}
+
+template<class T>
 bool slic_prepared_into(const T* features, std::size_t image_size,
                         const std::array<std::size_t, 4>& shape, const SlicOptions& options,
                         std::ptrdiff_t* output, std::size_t output_size) {
+    if (shape[3] == 1)
+        return slic_planar_into(features, image_size, shape, options, output, output_size);
     const Volume volume = image_layout(features, image_size, shape, output, output_size);
-    // Normalized Lab/smoothed features with the admitted compactness bound
-    // fit comfortably in this range, including large float32 centroid sums.
-    if (volume.channels == 1) {
-        for (Index p = 0; p < volume.pixels; ++p)
-            if (!(std::abs(features[p]) <= T(1 << 20)))
-                return false;
-        return run_slic(features, volume, options, output);
-    }
     std::unique_ptr<T[]> planes(new T[image_size]);
     for (Index c = 0; c < volume.channels; ++c)
         for (Index p = 0; p < volume.pixels; ++p) {
@@ -531,6 +511,11 @@ bool slic_prepared_into(const T* features, std::size_t image_size,
         }
     return run_slic(planes.get(), volume, options, output);
 }
+
+template bool slic_planar_into(const float*, std::size_t, const std::array<std::size_t, 4>&,
+                              const SlicOptions&, std::ptrdiff_t*, std::size_t);
+template bool slic_planar_into(const double*, std::size_t, const std::array<std::size_t, 4>&,
+                              const SlicOptions&, std::ptrdiff_t*, std::size_t);
 
 template bool slic_into(const std::uint8_t*, std::size_t, const std::array<std::size_t, 4>&,
                         const SlicOptions&, std::ptrdiff_t*, std::size_t);

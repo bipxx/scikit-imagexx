@@ -11,6 +11,12 @@
 #include <memory>
 #include <type_traits>
 
+namespace skimagexx {
+template<class T>
+bool slic_planar_into(const T*, std::size_t, const std::array<std::size_t, 4>&,
+                      const SlicOptions&, std::ptrdiff_t*, std::size_t);
+}
+
 namespace py = pybind11;
 
 namespace {
@@ -52,15 +58,18 @@ Input admissible(const py::array& image, const py::type& ndarray, unsigned spati
 template<class T>
 bool call(const py::array& image, const std::array<std::size_t, 4>& shape,
           const skimagexx::SlicOptions& options, py::array_t<py::ssize_t>& labels,
-          bool prepared) {
+          bool prepared, bool planar) {
     const auto* input = static_cast<const T*>(image.data());
     const auto image_size = static_cast<std::size_t>(image.size());
     auto* output = labels.mutable_data();
     const auto label_size = static_cast<std::size_t>(labels.size());
     py::gil_scoped_release release;
-    if constexpr (!std::is_same_v<T, std::uint8_t>)
+    if constexpr (!std::is_same_v<T, std::uint8_t>) {
+        if (planar)
+            return skimagexx::slic_planar_into(input, image_size, shape, options, output, label_size);
         if (prepared)
             return skimagexx::slic_prepared_into(input, image_size, shape, options, output, label_size);
+    }
     return skimagexx::slic_into(input, image_size, shape, options, output, label_size);
 }
 
@@ -76,33 +85,35 @@ void bind_slic(py::module_& module) {
         const py::array& image, unsigned rank, std::size_t count, double compactness,
         std::size_t iterations, const std::array<double, 3>& spacing, bool connectivity,
         double min_size_factor, double max_size_factor, bool zero, py::ssize_t start_label,
-        bool prepared) -> py::object {
+        bool prepared, bool planar) -> py::object {
         const auto kind = admissible(image, ndarray, rank);
-        if (kind == Input::unsupported || (prepared && kind == Input::u8))
+        if (kind == Input::unsupported || (prepared && kind == Input::u8) ||
+            (planar && (!prepared || image.ndim() != rank + 1)))
             return py::none();
         const skimagexx::SlicOptions options{count, compactness, iterations, spacing, connectivity,
                                             min_size_factor, max_size_factor, zero, start_label};
         std::array<std::size_t, 4> shape{1, 1, 1, 1};
+        const auto* spatial = image.shape() + planar;
         for (unsigned axis = 0; axis < rank; ++axis)
-            shape[3 - rank + axis] = static_cast<std::size_t>(image.shape(axis));
+            shape[3 - rank + axis] = static_cast<std::size_t>(spatial[axis]);
         if (image.ndim() != rank)
-            shape[3] = static_cast<std::size_t>(image.shape(rank));
+            shape[3] = static_cast<std::size_t>(image.shape(planar ? 0 : rank));
         // Keep the public result as a writable view with independent storage.
         std::unique_ptr<py::ssize_t[]> storage(new py::ssize_t[image.size() / shape[3]]);
         py::capsule owner(storage.get(), [](void* data) { delete[] static_cast<py::ssize_t*>(data); });
         auto* const data = storage.release();
         py::array_t<py::ssize_t> labels(
-            py::array::ShapeContainer(image.shape(), image.shape() + rank), data, owner);
+            py::array::ShapeContainer(spatial, spatial + rank), data, owner);
         bool success = false;
         switch (kind) {
         case Input::u8:
-            success = call<std::uint8_t>(image, shape, options, labels, prepared);
+            success = call<std::uint8_t>(image, shape, options, labels, prepared, planar);
             break;
         case Input::f32:
-            success = call<float>(image, shape, options, labels, prepared);
+            success = call<float>(image, shape, options, labels, prepared, planar);
             break;
         case Input::f64:
-            success = call<double>(image, shape, options, labels, prepared);
+            success = call<double>(image, shape, options, labels, prepared, planar);
             break;
         case Input::unsupported:
             break;
@@ -113,5 +124,5 @@ void bind_slic(py::module_& module) {
     }, py::arg("image").noconvert(), py::arg("spatial_rank"), py::arg("n_segments"),
        py::arg("compactness"), py::arg("max_num_iter"), py::arg("spacing"),
        py::arg("enforce_connectivity"), py::arg("min_size_factor"), py::arg("max_size_factor"),
-       py::arg("slic_zero"), py::arg("start_label"), py::arg("prepared") = false);
+       py::arg("slic_zero"), py::arg("start_label"), py::arg("prepared") = false, py::arg("planar") = false);
 }

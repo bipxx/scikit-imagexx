@@ -10,19 +10,13 @@
 #include <utility>
 #include <vector>
 
-#if defined(SKIMAGEXX_AVX2) && (defined(__GNUC__) || defined(__clang__))
-#include <immintrin.h>
-#define FELZENSZWALB_AVX2 __attribute__((target("avx2,no-fma"), noinline))
-#elif defined(SKIMAGEXX_AVX2) && defined(_MSC_VER)
-#include <immintrin.h>
-#define FELZENSZWALB_AVX2 __declspec(noinline)
-#endif
-
 namespace skimagexx {
-#ifdef FELZENSZWALB_AVX2
+#ifdef SKIMAGEXX_AVX2
 namespace simd {
 extern std::ptrdiff_t felzenszwalb_rgb_cost_row(const double* a, const double* b,
                                               double* out, std::ptrdiff_t cols);
+extern std::ptrdiff_t felzenszwalb_gray_cost_row(const double* a, const double* b,
+                                               double* out, std::ptrdiff_t cols, bool paired);
 }
 #endif
 namespace {
@@ -60,35 +54,10 @@ struct GridEdges {
     }
 };
 
-#ifdef FELZENSZWALB_AVX2
-template<Index Channels>
-FELZENSZWALB_AVX2 Index fill_cost_row_avx2(const double* a, const double* b, double* out, Index cols) {
-    const auto offsets = _mm256_setr_epi64x(0, Channels, 2 * Channels, 3 * Channels);
-    const Index end = cols - cols % 4;
-    for (Index col = 0; col < end; col += 4, a += 4 * Channels, b += 4 * Channels) {
-        auto squared = _mm256_setzero_pd();
-        for (Index channel = 0; channel < Channels; ++channel) {
-            __m256d first, second;
-            if constexpr (Channels == 1) {
-                first = _mm256_loadu_pd(a);
-                second = _mm256_loadu_pd(b);
-            } else {
-                first = _mm256_i64gather_pd(a + channel, offsets, sizeof(double));
-                second = _mm256_i64gather_pd(b + channel, offsets, sizeof(double));
-            }
-            const auto difference = _mm256_sub_pd(first, second);
-            squared = _mm256_add_pd(squared, _mm256_mul_pd(difference, difference));
-        }
-        _mm256_storeu_pd(out + col, _mm256_sqrt_pd(squared));
-    }
-    return end;
-}
-#endif
-
 template<Index fixed_channels>
 void fill_costs(const double* image, double* out, Index height, Index width, Index channels) {
     const auto count = fixed_channels ? fixed_channels : channels;
-#ifdef FELZENSZWALB_AVX2
+#ifdef SKIMAGEXX_AVX2
     const bool vectorized = fixed_channels && has_avx2();
 #endif
     const auto fill = [&](Index rows, Index cols, Index first, Index delta) {
@@ -97,13 +66,13 @@ void fill_costs(const double* image, double* out, Index height, Index width, Ind
             const auto* a = image + (row * width + first) * channels;
             const auto* b = a + delta * channels;
             Index col = 0;
-#ifdef FELZENSZWALB_AVX2
+#ifdef SKIMAGEXX_AVX2
             if constexpr (fixed_channels != 0) {
                 if (vectorized && cols >= 4) {
                     if constexpr (fixed_channels == 3)
                         col = simd::felzenszwalb_rgb_cost_row(a, b, out, cols);
                     else
-                        col = fill_cost_row_avx2<fixed_channels>(a, b, out, cols);
+                        col = simd::felzenszwalb_gray_cost_row(a, b, out, cols, fixed_channels == 2);
                     a += col * channels;
                     b += col * channels;
                     out += col;
@@ -121,7 +90,9 @@ void fill_costs(const double* image, double* out, Index height, Index width, Ind
         }
     };
     fill(height, width - 1, 0, 1);
-    fill(height - 1, width, 0, width);
+    // Vertical edges form one contiguous span in both image streams.
+    if (height > 1)
+        fill(1, (height - 1) * width, 0, width);
     fill(height - 1, width - 1, 0, width + 1);
     fill(height - 1, width - 1, 1, width - 1);
 }

@@ -25,17 +25,18 @@ def _sigma_values(sigma, rank):
     return None
 
 
-def _prepare_features(image, rank, lab, sigma, spacing, compactness):
+def _prepare_features(image, rank, lab, sigma, spacing, compactness, smoothed):
     # Preprocessing follows scikit-image 0.26.0 slic_superpixels.py.
     # Copyright 2009-2022 the scikit-image team, BSD-3-Clause.
     if image.dtype == np.dtype(np.uint8):
         working = np.multiply(image, 1. / 255., dtype=np.float64)
+        low, high = working.min(), working.max()
+        working -= low
     else:
-        working = image.copy()
-    low, high = working.min(), working.max()
-    if not np.isfinite(low) or not np.isfinite(high):
-        return None
-    working -= low
+        low, high = image.min(), image.max()
+        if not np.isfinite(low) or not np.isfinite(high):
+            return None
+        working = np.subtract(image, low)
     if high != low:
         working /= high - low
 
@@ -49,16 +50,21 @@ def _prepare_features(image, rank, lab, sigma, spacing, compactness):
         from skimage.color import rgb2lab
 
         working = rgb2lab(working)
-    if type(sigma) is tuple:
-        widths = np.asarray(sigma, dtype=working.dtype)
-    else:
-        widths = np.full(3, sigma, dtype=working.dtype)
-        widths /= np.asarray(spacing, dtype=working.dtype)
-    if (widths > 0).any():
-        working = gaussian(working, [*widths, 0], mode='reflect', preserve_range=True)
-    working = np.ascontiguousarray(working.reshape(image.shape))
+    if smoothed:
+        if type(sigma) is tuple:
+            widths = np.asarray(sigma, dtype=working.dtype)
+        else:
+            widths = np.full(3, sigma, dtype=working.dtype)
+            widths /= np.asarray(spacing, dtype=working.dtype)
+        if (widths > 0).any():
+            working = gaussian(working, [*widths, 0], mode='reflect', preserve_range=True)
+    working = working.reshape(image.shape)
+    if image.ndim != rank and image.shape[-1] > 1:
+        # Pack and scale the feature planes in one pass for native assignment.
+        return np.multiply(np.moveaxis(working, -1, 0), 1. / compactness, order='C'), True
+    working = np.ascontiguousarray(working)
     working *= 1. / compactness
-    return working
+    return working, False
 
 
 def slic(
@@ -109,12 +115,15 @@ def slic(
                     # Avoid delegating a scalar sigma whose effective radius
                     # is excessive relative to an admitted spacing.
                     if type(widths) is tuple or widths <= 32 * min(sampling):
-                        features = _prepare_features(image, rank, lab, widths, sampling, compactness)
-                        if features is not None:
+                        prepared = _prepare_features(
+                            image, rank, lab, widths, sampling, compactness, smoothed,
+                        )
+                        if prepared is not None:
+                            features, planar = prepared
                             result = _core.slic_grid(
                                 features, rank, n_segments, compactness, max_num_iter, sampling,
                                 enforce_connectivity, min_size_factor, max_size_factor, slic_zero,
-                                start_label, prepared=True,
+                                start_label, prepared=True, planar=planar,
                             )
                             if result is not None:
                                 return result

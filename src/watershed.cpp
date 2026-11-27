@@ -8,6 +8,7 @@
 #include <bitset>
 #include <cmath>
 #include <cstring>
+#include <deque>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -62,7 +63,11 @@ public:
     explicit FloodHeap(std::size_t capacity)
         : items_(new Entry[capacity]), capacity_(capacity) {}
 
-    bool empty() const { return size_ == 0; }
+    bool empty() const {
+        if constexpr (UsePlateauQueue)
+            return size_ == 0 && plateau_.empty();
+        return size_ == 0;
+    }
 
     static double value(const Entry& item) {
         if constexpr (Ordered) {
@@ -77,8 +82,6 @@ public:
     }
 
     WATERSHED_INLINE void push(double value, std::uint32_t age, Position index, Position source) {
-        if (size_ == capacity_)
-            grow();
         const auto priority = [&] {
             if constexpr (Ordered)
                 return order_key(value);
@@ -91,6 +94,16 @@ public:
             else
                 return Entry{priority, age, index};
         }();
+        if constexpr (UsePlateauQueue) {
+            // A clamped neighbor has the priority just popped. Its age is
+            // newer than every queued entry at that priority, so append it.
+            if (priority == plateau_priority_) {
+                plateau_.push_back(item);
+                return;
+            }
+        }
+        if (size_ == capacity_)
+            grow();
         auto child = size_++;
         auto* items = items_.get();
         while (child) {
@@ -105,7 +118,16 @@ public:
 
     WATERSHED_INLINE Entry pop() {
         auto* items = items_.get();
+        if constexpr (UsePlateauQueue) {
+            if (!plateau_.empty() && (size_ == 0 || smaller(plateau_.front(), items[0]))) {
+                const Entry result = plateau_.front();
+                plateau_.pop_front();
+                return result;
+            }
+        }
         const Entry result = items[0];
+        if constexpr (UsePlateauQueue)
+            plateau_priority_ = result.priority;
         if (--size_ == 0)
             return result;
         const Entry last = items[size_];
@@ -141,6 +163,7 @@ public:
 
 private:
     static constexpr std::size_t arity = Ordered ? 4 : 2;
+    static constexpr bool UsePlateauQueue = Ordered && !TrackSource;
 
     static WATERSHED_INLINE bool smaller(const Entry& a, const Entry& b) {
         if constexpr (Ordered)
@@ -158,6 +181,8 @@ private:
         capacity_ = capacity;
     }
 
+    std::conditional_t<UsePlateauQueue, std::deque<Entry>, std::array<Entry, 0>> plateau_;
+    std::uint64_t plateau_priority_ = 0;  // No finite elevation maps to zero.
     std::unique_ptr<Entry[]> items_;
     std::size_t size_ = 0;
     std::size_t capacity_ = 0;
