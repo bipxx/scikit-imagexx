@@ -54888,7 +54888,25 @@
     "retained_for_reparse_review": "build/worktrees/max-tree-compare-public-header"
   },
   "latest_accepted_qualification": {
-    "source": "6baf1092a48d3f0c8004d4e91f5a61583b07aa98",
+    "source": "84ab4c0e6975c8f87fadf3af0914e820d9a465e3",
+    "source_tree": "8ef801de8898925850853ebcd2f75b90a50a5dbc",
+    "run": 45930018204,
+    "image_paths": 408,
+    "packaged_assets": 37,
+    "native_class_paths": 27,
+    "metadata_paths": 3,
+    "exception_metadata_providers": 2,
+    "upstream_only": 0,
+    "receipt": "build/evidence/u182-post-haar/opt-wave6-v1/whole-product-root-admission-v1.json",
+    "sha256": "c11eb2e989474572144153cdfb912181c850be1a3bfd6af6b669baff8f3ea051",
+    "benchmark_comparison": "build/evidence/u182-post-haar/opt-wave6-v1/benchmark-comparison.json",
+    "matrix_benchmark": "build/evidence/u182-post-haar/opt-wave6-v1/matrix-benchmark.json",
+    "archive_retained": false,
+    "scope": "Wave 6 optimization across 12 parallel Codex CLI scopes (37 retained modified implementation files + v63/v54 pins; pre-Wave-6 574 merged local branches deleted 967->393) on 477/477 shipped inventory: 1-thread slower APIs 72->43->32->26->18->19, median 2.387x->2.522x->3.183x->3.359x->3.49x->3.494x, geomean 2.557x->2.996x->3.48x->3.692x->3.835x->3.835x; scaling matrix 109/109 ok. Exact four profiles (modern 140280246644/15170823369, minimum 140280246759/15171418778, debug 140280246467/15171053558, windows 140280246743/15172635490), 0 failed commands, 896 installed SDK checks (224 per profile across 112 families), 46879/48952/46738/45588 rehashed manifest records; D:/Scratch/opt-wave6 retired (+21539246080 B, 360119181312 B free).",
+    "main_delivery": "84ab4c0e6975c8f87fadf3af0914e820d9a465e3",
+    "delivery_status": "PASS_EXACT_OPT_WAVE6_MAIN_DELIVERED",
+    "previous": {
+      "source": "6baf1092a48d3f0c8004d4e91f5a61583b07aa98",
     "source_tree": "31e5fb73d36ebb9e9fd30f22ee04531083d98758",
     "run": 45909884606,
     "image_paths": 408,
@@ -55106,6 +55124,7 @@
           }
         }
       }
+    }
     }
   },
   "rolling_source_retirement": {
