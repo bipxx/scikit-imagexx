@@ -11,7 +11,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT = 'coverage/contracts/speed-parity-current-source-v54.json'
-CONTEXT_SHA256 = 'ae9e533b54212c6ec7ea6cce0aeae0b66d8f4e9e55fb50d7db620e922378ae77'
+CONTEXT_SHA256 = 'cc9bcba275d270c68d8f18147049a67790d26ae9f67117918c1cc967d56e29a8'
 RUNTIME = ('tests/test_mark_boundaries_fast_paths.py', 'tests/test_draw_multiblock_lbp_batched.py',
            'tests/test_flood_assignment_protocol.py', 'tests/test_flood_copy_protocol.py',
            'tests/test_flood_disjoint_assignment.py')
